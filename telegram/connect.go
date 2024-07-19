@@ -64,10 +64,7 @@ func (c *Client) reconnectUntilClosed(ctx context.Context) error {
 
 	return backoff.RetryNotify(func() error {
 		if err := c.runUntilRestart(ctx); err != nil {
-			if c.isPermanentError(err) {
-				return backoff.Permanent(err)
-			}
-			return err
+			return backoff.Permanent(err)
 		}
 
 		return nil
