@@ -31,19 +31,19 @@ var (
 	_ = tdjson.Encoder{}
 )
 
-// MessageText represents TL type `messageText#c13562aa`.
+// MessageText represents TL type `messageText#68654c84`.
 type MessageText struct {
 	// Text of the message
 	Text FormattedText
 	// A link preview attached to the message; may be null
-	WebPage WebPage
+	LinkPreview LinkPreview
 	// Options which were used for generation of the link preview; may be null if default
 	// options were used
 	LinkPreviewOptions LinkPreviewOptions
 }
 
 // MessageTextTypeID is TL type id of MessageText.
-const MessageTextTypeID = 0xc13562aa
+const MessageTextTypeID = 0x68654c84
 
 // construct implements constructor of MessageContentClass.
 func (m MessageText) construct() MessageContentClass { return &m }
@@ -65,7 +65,7 @@ func (m *MessageText) Zero() bool {
 	if !(m.Text.Zero()) {
 		return false
 	}
-	if !(m.WebPage.Zero()) {
+	if !(m.LinkPreview.Zero()) {
 		return false
 	}
 	if !(m.LinkPreviewOptions.Zero()) {
@@ -112,8 +112,8 @@ func (m *MessageText) TypeInfo() tdp.Type {
 			SchemaName: "text",
 		},
 		{
-			Name:       "WebPage",
-			SchemaName: "web_page",
+			Name:       "LinkPreview",
+			SchemaName: "link_preview",
 		},
 		{
 			Name:       "LinkPreviewOptions",
@@ -126,7 +126,7 @@ func (m *MessageText) TypeInfo() tdp.Type {
 // Encode implements bin.Encoder.
 func (m *MessageText) Encode(b *bin.Buffer) error {
 	if m == nil {
-		return fmt.Errorf("can't encode messageText#c13562aa as nil")
+		return fmt.Errorf("can't encode messageText#68654c84 as nil")
 	}
 	b.PutID(MessageTextTypeID)
 	return m.EncodeBare(b)
@@ -135,16 +135,16 @@ func (m *MessageText) Encode(b *bin.Buffer) error {
 // EncodeBare implements bin.BareEncoder.
 func (m *MessageText) EncodeBare(b *bin.Buffer) error {
 	if m == nil {
-		return fmt.Errorf("can't encode messageText#c13562aa as nil")
+		return fmt.Errorf("can't encode messageText#68654c84 as nil")
 	}
 	if err := m.Text.Encode(b); err != nil {
-		return fmt.Errorf("unable to encode messageText#c13562aa: field text: %w", err)
+		return fmt.Errorf("unable to encode messageText#68654c84: field text: %w", err)
 	}
-	if err := m.WebPage.Encode(b); err != nil {
-		return fmt.Errorf("unable to encode messageText#c13562aa: field web_page: %w", err)
+	if err := m.LinkPreview.Encode(b); err != nil {
+		return fmt.Errorf("unable to encode messageText#68654c84: field link_preview: %w", err)
 	}
 	if err := m.LinkPreviewOptions.Encode(b); err != nil {
-		return fmt.Errorf("unable to encode messageText#c13562aa: field link_preview_options: %w", err)
+		return fmt.Errorf("unable to encode messageText#68654c84: field link_preview_options: %w", err)
 	}
 	return nil
 }
@@ -152,10 +152,10 @@ func (m *MessageText) EncodeBare(b *bin.Buffer) error {
 // Decode implements bin.Decoder.
 func (m *MessageText) Decode(b *bin.Buffer) error {
 	if m == nil {
-		return fmt.Errorf("can't decode messageText#c13562aa to nil")
+		return fmt.Errorf("can't decode messageText#68654c84 to nil")
 	}
 	if err := b.ConsumeID(MessageTextTypeID); err != nil {
-		return fmt.Errorf("unable to decode messageText#c13562aa: %w", err)
+		return fmt.Errorf("unable to decode messageText#68654c84: %w", err)
 	}
 	return m.DecodeBare(b)
 }
@@ -163,21 +163,21 @@ func (m *MessageText) Decode(b *bin.Buffer) error {
 // DecodeBare implements bin.BareDecoder.
 func (m *MessageText) DecodeBare(b *bin.Buffer) error {
 	if m == nil {
-		return fmt.Errorf("can't decode messageText#c13562aa to nil")
+		return fmt.Errorf("can't decode messageText#68654c84 to nil")
 	}
 	{
 		if err := m.Text.Decode(b); err != nil {
-			return fmt.Errorf("unable to decode messageText#c13562aa: field text: %w", err)
+			return fmt.Errorf("unable to decode messageText#68654c84: field text: %w", err)
 		}
 	}
 	{
-		if err := m.WebPage.Decode(b); err != nil {
-			return fmt.Errorf("unable to decode messageText#c13562aa: field web_page: %w", err)
+		if err := m.LinkPreview.Decode(b); err != nil {
+			return fmt.Errorf("unable to decode messageText#68654c84: field link_preview: %w", err)
 		}
 	}
 	{
 		if err := m.LinkPreviewOptions.Decode(b); err != nil {
-			return fmt.Errorf("unable to decode messageText#c13562aa: field link_preview_options: %w", err)
+			return fmt.Errorf("unable to decode messageText#68654c84: field link_preview_options: %w", err)
 		}
 	}
 	return nil
@@ -186,24 +186,24 @@ func (m *MessageText) DecodeBare(b *bin.Buffer) error {
 // EncodeTDLibJSON implements tdjson.TDLibEncoder.
 func (m *MessageText) EncodeTDLibJSON(b tdjson.Encoder) error {
 	if m == nil {
-		return fmt.Errorf("can't encode messageText#c13562aa as nil")
+		return fmt.Errorf("can't encode messageText#68654c84 as nil")
 	}
 	b.ObjStart()
 	b.PutID("messageText")
 	b.Comma()
 	b.FieldStart("text")
 	if err := m.Text.EncodeTDLibJSON(b); err != nil {
-		return fmt.Errorf("unable to encode messageText#c13562aa: field text: %w", err)
+		return fmt.Errorf("unable to encode messageText#68654c84: field text: %w", err)
 	}
 	b.Comma()
-	b.FieldStart("web_page")
-	if err := m.WebPage.EncodeTDLibJSON(b); err != nil {
-		return fmt.Errorf("unable to encode messageText#c13562aa: field web_page: %w", err)
+	b.FieldStart("link_preview")
+	if err := m.LinkPreview.EncodeTDLibJSON(b); err != nil {
+		return fmt.Errorf("unable to encode messageText#68654c84: field link_preview: %w", err)
 	}
 	b.Comma()
 	b.FieldStart("link_preview_options")
 	if err := m.LinkPreviewOptions.EncodeTDLibJSON(b); err != nil {
-		return fmt.Errorf("unable to encode messageText#c13562aa: field link_preview_options: %w", err)
+		return fmt.Errorf("unable to encode messageText#68654c84: field link_preview_options: %w", err)
 	}
 	b.Comma()
 	b.StripComma()
@@ -214,26 +214,26 @@ func (m *MessageText) EncodeTDLibJSON(b tdjson.Encoder) error {
 // DecodeTDLibJSON implements tdjson.TDLibDecoder.
 func (m *MessageText) DecodeTDLibJSON(b tdjson.Decoder) error {
 	if m == nil {
-		return fmt.Errorf("can't decode messageText#c13562aa to nil")
+		return fmt.Errorf("can't decode messageText#68654c84 to nil")
 	}
 
 	return b.Obj(func(b tdjson.Decoder, key []byte) error {
 		switch string(key) {
 		case tdjson.TypeField:
 			if err := b.ConsumeID("messageText"); err != nil {
-				return fmt.Errorf("unable to decode messageText#c13562aa: %w", err)
+				return fmt.Errorf("unable to decode messageText#68654c84: %w", err)
 			}
 		case "text":
 			if err := m.Text.DecodeTDLibJSON(b); err != nil {
-				return fmt.Errorf("unable to decode messageText#c13562aa: field text: %w", err)
+				return fmt.Errorf("unable to decode messageText#68654c84: field text: %w", err)
 			}
-		case "web_page":
-			if err := m.WebPage.DecodeTDLibJSON(b); err != nil {
-				return fmt.Errorf("unable to decode messageText#c13562aa: field web_page: %w", err)
+		case "link_preview":
+			if err := m.LinkPreview.DecodeTDLibJSON(b); err != nil {
+				return fmt.Errorf("unable to decode messageText#68654c84: field link_preview: %w", err)
 			}
 		case "link_preview_options":
 			if err := m.LinkPreviewOptions.DecodeTDLibJSON(b); err != nil {
-				return fmt.Errorf("unable to decode messageText#c13562aa: field link_preview_options: %w", err)
+				return fmt.Errorf("unable to decode messageText#68654c84: field link_preview_options: %w", err)
 			}
 		default:
 			return b.Skip()
@@ -250,12 +250,12 @@ func (m *MessageText) GetText() (value FormattedText) {
 	return m.Text
 }
 
-// GetWebPage returns value of WebPage field.
-func (m *MessageText) GetWebPage() (value WebPage) {
+// GetLinkPreview returns value of LinkPreview field.
+func (m *MessageText) GetLinkPreview() (value LinkPreview) {
 	if m == nil {
 		return
 	}
-	return m.WebPage
+	return m.LinkPreview
 }
 
 // GetLinkPreviewOptions returns value of LinkPreviewOptions field.
@@ -272,8 +272,8 @@ type MessageAnimation struct {
 	Animation Animation
 	// Animation caption
 	Caption FormattedText
-	// True, if caption must be shown above the animation; otherwise, caption must be shown
-	// below the animation
+	// True, if the caption must be shown above the animation; otherwise, the caption must be
+	// shown below the animation
 	ShowCaptionAboveMedia bool
 	// True, if the animation preview must be covered by a spoiler animation
 	HasSpoiler bool
@@ -970,14 +970,317 @@ func (m *MessageDocument) GetCaption() (value FormattedText) {
 	return m.Caption
 }
 
+// MessagePaidMedia represents TL type `messagePaidMedia#3e5fd7c2`.
+type MessagePaidMedia struct {
+	// Number of stars needed to buy access to the media in the message
+	StarCount int64
+	// Information about the media
+	Media []PaidMediaClass
+	// Media caption
+	Caption FormattedText
+	// True, if the caption must be shown above the media; otherwise, the caption must be
+	// shown below the media
+	ShowCaptionAboveMedia bool
+}
+
+// MessagePaidMediaTypeID is TL type id of MessagePaidMedia.
+const MessagePaidMediaTypeID = 0x3e5fd7c2
+
+// construct implements constructor of MessageContentClass.
+func (m MessagePaidMedia) construct() MessageContentClass { return &m }
+
+// Ensuring interfaces in compile-time for MessagePaidMedia.
+var (
+	_ bin.Encoder     = &MessagePaidMedia{}
+	_ bin.Decoder     = &MessagePaidMedia{}
+	_ bin.BareEncoder = &MessagePaidMedia{}
+	_ bin.BareDecoder = &MessagePaidMedia{}
+
+	_ MessageContentClass = &MessagePaidMedia{}
+)
+
+func (m *MessagePaidMedia) Zero() bool {
+	if m == nil {
+		return true
+	}
+	if !(m.StarCount == 0) {
+		return false
+	}
+	if !(m.Media == nil) {
+		return false
+	}
+	if !(m.Caption.Zero()) {
+		return false
+	}
+	if !(m.ShowCaptionAboveMedia == false) {
+		return false
+	}
+
+	return true
+}
+
+// String implements fmt.Stringer.
+func (m *MessagePaidMedia) String() string {
+	if m == nil {
+		return "MessagePaidMedia(nil)"
+	}
+	type Alias MessagePaidMedia
+	return fmt.Sprintf("MessagePaidMedia%+v", Alias(*m))
+}
+
+// TypeID returns type id in TL schema.
+//
+// See https://core.telegram.org/mtproto/TL-tl#remarks.
+func (*MessagePaidMedia) TypeID() uint32 {
+	return MessagePaidMediaTypeID
+}
+
+// TypeName returns name of type in TL schema.
+func (*MessagePaidMedia) TypeName() string {
+	return "messagePaidMedia"
+}
+
+// TypeInfo returns info about TL type.
+func (m *MessagePaidMedia) TypeInfo() tdp.Type {
+	typ := tdp.Type{
+		Name: "messagePaidMedia",
+		ID:   MessagePaidMediaTypeID,
+	}
+	if m == nil {
+		typ.Null = true
+		return typ
+	}
+	typ.Fields = []tdp.Field{
+		{
+			Name:       "StarCount",
+			SchemaName: "star_count",
+		},
+		{
+			Name:       "Media",
+			SchemaName: "media",
+		},
+		{
+			Name:       "Caption",
+			SchemaName: "caption",
+		},
+		{
+			Name:       "ShowCaptionAboveMedia",
+			SchemaName: "show_caption_above_media",
+		},
+	}
+	return typ
+}
+
+// Encode implements bin.Encoder.
+func (m *MessagePaidMedia) Encode(b *bin.Buffer) error {
+	if m == nil {
+		return fmt.Errorf("can't encode messagePaidMedia#3e5fd7c2 as nil")
+	}
+	b.PutID(MessagePaidMediaTypeID)
+	return m.EncodeBare(b)
+}
+
+// EncodeBare implements bin.BareEncoder.
+func (m *MessagePaidMedia) EncodeBare(b *bin.Buffer) error {
+	if m == nil {
+		return fmt.Errorf("can't encode messagePaidMedia#3e5fd7c2 as nil")
+	}
+	b.PutInt53(m.StarCount)
+	b.PutInt(len(m.Media))
+	for idx, v := range m.Media {
+		if v == nil {
+			return fmt.Errorf("unable to encode messagePaidMedia#3e5fd7c2: field media element with index %d is nil", idx)
+		}
+		if err := v.EncodeBare(b); err != nil {
+			return fmt.Errorf("unable to encode bare messagePaidMedia#3e5fd7c2: field media element with index %d: %w", idx, err)
+		}
+	}
+	if err := m.Caption.Encode(b); err != nil {
+		return fmt.Errorf("unable to encode messagePaidMedia#3e5fd7c2: field caption: %w", err)
+	}
+	b.PutBool(m.ShowCaptionAboveMedia)
+	return nil
+}
+
+// Decode implements bin.Decoder.
+func (m *MessagePaidMedia) Decode(b *bin.Buffer) error {
+	if m == nil {
+		return fmt.Errorf("can't decode messagePaidMedia#3e5fd7c2 to nil")
+	}
+	if err := b.ConsumeID(MessagePaidMediaTypeID); err != nil {
+		return fmt.Errorf("unable to decode messagePaidMedia#3e5fd7c2: %w", err)
+	}
+	return m.DecodeBare(b)
+}
+
+// DecodeBare implements bin.BareDecoder.
+func (m *MessagePaidMedia) DecodeBare(b *bin.Buffer) error {
+	if m == nil {
+		return fmt.Errorf("can't decode messagePaidMedia#3e5fd7c2 to nil")
+	}
+	{
+		value, err := b.Int53()
+		if err != nil {
+			return fmt.Errorf("unable to decode messagePaidMedia#3e5fd7c2: field star_count: %w", err)
+		}
+		m.StarCount = value
+	}
+	{
+		headerLen, err := b.Int()
+		if err != nil {
+			return fmt.Errorf("unable to decode messagePaidMedia#3e5fd7c2: field media: %w", err)
+		}
+
+		if headerLen > 0 {
+			m.Media = make([]PaidMediaClass, 0, headerLen%bin.PreallocateLimit)
+		}
+		for idx := 0; idx < headerLen; idx++ {
+			value, err := DecodePaidMedia(b)
+			if err != nil {
+				return fmt.Errorf("unable to decode messagePaidMedia#3e5fd7c2: field media: %w", err)
+			}
+			m.Media = append(m.Media, value)
+		}
+	}
+	{
+		if err := m.Caption.Decode(b); err != nil {
+			return fmt.Errorf("unable to decode messagePaidMedia#3e5fd7c2: field caption: %w", err)
+		}
+	}
+	{
+		value, err := b.Bool()
+		if err != nil {
+			return fmt.Errorf("unable to decode messagePaidMedia#3e5fd7c2: field show_caption_above_media: %w", err)
+		}
+		m.ShowCaptionAboveMedia = value
+	}
+	return nil
+}
+
+// EncodeTDLibJSON implements tdjson.TDLibEncoder.
+func (m *MessagePaidMedia) EncodeTDLibJSON(b tdjson.Encoder) error {
+	if m == nil {
+		return fmt.Errorf("can't encode messagePaidMedia#3e5fd7c2 as nil")
+	}
+	b.ObjStart()
+	b.PutID("messagePaidMedia")
+	b.Comma()
+	b.FieldStart("star_count")
+	b.PutInt53(m.StarCount)
+	b.Comma()
+	b.FieldStart("media")
+	b.ArrStart()
+	for idx, v := range m.Media {
+		if v == nil {
+			return fmt.Errorf("unable to encode messagePaidMedia#3e5fd7c2: field media element with index %d is nil", idx)
+		}
+		if err := v.EncodeTDLibJSON(b); err != nil {
+			return fmt.Errorf("unable to encode messagePaidMedia#3e5fd7c2: field media element with index %d: %w", idx, err)
+		}
+		b.Comma()
+	}
+	b.StripComma()
+	b.ArrEnd()
+	b.Comma()
+	b.FieldStart("caption")
+	if err := m.Caption.EncodeTDLibJSON(b); err != nil {
+		return fmt.Errorf("unable to encode messagePaidMedia#3e5fd7c2: field caption: %w", err)
+	}
+	b.Comma()
+	b.FieldStart("show_caption_above_media")
+	b.PutBool(m.ShowCaptionAboveMedia)
+	b.Comma()
+	b.StripComma()
+	b.ObjEnd()
+	return nil
+}
+
+// DecodeTDLibJSON implements tdjson.TDLibDecoder.
+func (m *MessagePaidMedia) DecodeTDLibJSON(b tdjson.Decoder) error {
+	if m == nil {
+		return fmt.Errorf("can't decode messagePaidMedia#3e5fd7c2 to nil")
+	}
+
+	return b.Obj(func(b tdjson.Decoder, key []byte) error {
+		switch string(key) {
+		case tdjson.TypeField:
+			if err := b.ConsumeID("messagePaidMedia"); err != nil {
+				return fmt.Errorf("unable to decode messagePaidMedia#3e5fd7c2: %w", err)
+			}
+		case "star_count":
+			value, err := b.Int53()
+			if err != nil {
+				return fmt.Errorf("unable to decode messagePaidMedia#3e5fd7c2: field star_count: %w", err)
+			}
+			m.StarCount = value
+		case "media":
+			if err := b.Arr(func(b tdjson.Decoder) error {
+				value, err := DecodeTDLibJSONPaidMedia(b)
+				if err != nil {
+					return fmt.Errorf("unable to decode messagePaidMedia#3e5fd7c2: field media: %w", err)
+				}
+				m.Media = append(m.Media, value)
+				return nil
+			}); err != nil {
+				return fmt.Errorf("unable to decode messagePaidMedia#3e5fd7c2: field media: %w", err)
+			}
+		case "caption":
+			if err := m.Caption.DecodeTDLibJSON(b); err != nil {
+				return fmt.Errorf("unable to decode messagePaidMedia#3e5fd7c2: field caption: %w", err)
+			}
+		case "show_caption_above_media":
+			value, err := b.Bool()
+			if err != nil {
+				return fmt.Errorf("unable to decode messagePaidMedia#3e5fd7c2: field show_caption_above_media: %w", err)
+			}
+			m.ShowCaptionAboveMedia = value
+		default:
+			return b.Skip()
+		}
+		return nil
+	})
+}
+
+// GetStarCount returns value of StarCount field.
+func (m *MessagePaidMedia) GetStarCount() (value int64) {
+	if m == nil {
+		return
+	}
+	return m.StarCount
+}
+
+// GetMedia returns value of Media field.
+func (m *MessagePaidMedia) GetMedia() (value []PaidMediaClass) {
+	if m == nil {
+		return
+	}
+	return m.Media
+}
+
+// GetCaption returns value of Caption field.
+func (m *MessagePaidMedia) GetCaption() (value FormattedText) {
+	if m == nil {
+		return
+	}
+	return m.Caption
+}
+
+// GetShowCaptionAboveMedia returns value of ShowCaptionAboveMedia field.
+func (m *MessagePaidMedia) GetShowCaptionAboveMedia() (value bool) {
+	if m == nil {
+		return
+	}
+	return m.ShowCaptionAboveMedia
+}
+
 // MessagePhoto represents TL type `messagePhoto#754c7e1f`.
 type MessagePhoto struct {
 	// The photo
 	Photo Photo
 	// Photo caption
 	Caption FormattedText
-	// True, if caption must be shown above the photo; otherwise, caption must be shown below
-	// the photo
+	// True, if the caption must be shown above the photo; otherwise, the caption must be
+	// shown below the photo
 	ShowCaptionAboveMedia bool
 	// True, if the photo preview must be covered by a spoiler animation
 	HasSpoiler bool
@@ -1479,8 +1782,8 @@ type MessageVideo struct {
 	Video Video
 	// Video caption
 	Caption FormattedText
-	// True, if caption must be shown above the video; otherwise, caption must be shown below
-	// the video
+	// True, if the caption must be shown above the video; otherwise, the caption must be
+	// shown below the video
 	ShowCaptionAboveMedia bool
 	// True, if the video preview must be covered by a spoiler animation
 	HasSpoiler bool
@@ -4501,7 +4804,7 @@ func (m *MessageStory) GetViaMention() (value bool) {
 	return m.ViaMention
 }
 
-// MessageInvoice represents TL type `messageInvoice#d8201a53`.
+// MessageInvoice represents TL type `messageInvoice#fadfd46`.
 type MessageInvoice struct {
 	// Information about the product
 	ProductInfo ProductInfo
@@ -4517,12 +4820,14 @@ type MessageInvoice struct {
 	NeedShippingAddress bool
 	// The identifier of the message with the receipt, after the product has been purchased
 	ReceiptMessageID int64
-	// Extended media attached to the invoice; may be null
-	ExtendedMedia MessageExtendedMediaClass
+	// Extended media attached to the invoice; may be null if none
+	PaidMedia PaidMediaClass
+	// Extended media caption; may be null if none
+	PaidMediaCaption FormattedText
 }
 
 // MessageInvoiceTypeID is TL type id of MessageInvoice.
-const MessageInvoiceTypeID = 0xd8201a53
+const MessageInvoiceTypeID = 0xfadfd46
 
 // construct implements constructor of MessageContentClass.
 func (m MessageInvoice) construct() MessageContentClass { return &m }
@@ -4562,7 +4867,10 @@ func (m *MessageInvoice) Zero() bool {
 	if !(m.ReceiptMessageID == 0) {
 		return false
 	}
-	if !(m.ExtendedMedia == nil) {
+	if !(m.PaidMedia == nil) {
+		return false
+	}
+	if !(m.PaidMediaCaption.Zero()) {
 		return false
 	}
 
@@ -4630,8 +4938,12 @@ func (m *MessageInvoice) TypeInfo() tdp.Type {
 			SchemaName: "receipt_message_id",
 		},
 		{
-			Name:       "ExtendedMedia",
-			SchemaName: "extended_media",
+			Name:       "PaidMedia",
+			SchemaName: "paid_media",
+		},
+		{
+			Name:       "PaidMediaCaption",
+			SchemaName: "paid_media_caption",
 		},
 	}
 	return typ
@@ -4640,7 +4952,7 @@ func (m *MessageInvoice) TypeInfo() tdp.Type {
 // Encode implements bin.Encoder.
 func (m *MessageInvoice) Encode(b *bin.Buffer) error {
 	if m == nil {
-		return fmt.Errorf("can't encode messageInvoice#d8201a53 as nil")
+		return fmt.Errorf("can't encode messageInvoice#fadfd46 as nil")
 	}
 	b.PutID(MessageInvoiceTypeID)
 	return m.EncodeBare(b)
@@ -4649,10 +4961,10 @@ func (m *MessageInvoice) Encode(b *bin.Buffer) error {
 // EncodeBare implements bin.BareEncoder.
 func (m *MessageInvoice) EncodeBare(b *bin.Buffer) error {
 	if m == nil {
-		return fmt.Errorf("can't encode messageInvoice#d8201a53 as nil")
+		return fmt.Errorf("can't encode messageInvoice#fadfd46 as nil")
 	}
 	if err := m.ProductInfo.Encode(b); err != nil {
-		return fmt.Errorf("unable to encode messageInvoice#d8201a53: field product_info: %w", err)
+		return fmt.Errorf("unable to encode messageInvoice#fadfd46: field product_info: %w", err)
 	}
 	b.PutString(m.Currency)
 	b.PutInt53(m.TotalAmount)
@@ -4660,11 +4972,14 @@ func (m *MessageInvoice) EncodeBare(b *bin.Buffer) error {
 	b.PutBool(m.IsTest)
 	b.PutBool(m.NeedShippingAddress)
 	b.PutInt53(m.ReceiptMessageID)
-	if m.ExtendedMedia == nil {
-		return fmt.Errorf("unable to encode messageInvoice#d8201a53: field extended_media is nil")
+	if m.PaidMedia == nil {
+		return fmt.Errorf("unable to encode messageInvoice#fadfd46: field paid_media is nil")
 	}
-	if err := m.ExtendedMedia.Encode(b); err != nil {
-		return fmt.Errorf("unable to encode messageInvoice#d8201a53: field extended_media: %w", err)
+	if err := m.PaidMedia.Encode(b); err != nil {
+		return fmt.Errorf("unable to encode messageInvoice#fadfd46: field paid_media: %w", err)
+	}
+	if err := m.PaidMediaCaption.Encode(b); err != nil {
+		return fmt.Errorf("unable to encode messageInvoice#fadfd46: field paid_media_caption: %w", err)
 	}
 	return nil
 }
@@ -4672,10 +4987,10 @@ func (m *MessageInvoice) EncodeBare(b *bin.Buffer) error {
 // Decode implements bin.Decoder.
 func (m *MessageInvoice) Decode(b *bin.Buffer) error {
 	if m == nil {
-		return fmt.Errorf("can't decode messageInvoice#d8201a53 to nil")
+		return fmt.Errorf("can't decode messageInvoice#fadfd46 to nil")
 	}
 	if err := b.ConsumeID(MessageInvoiceTypeID); err != nil {
-		return fmt.Errorf("unable to decode messageInvoice#d8201a53: %w", err)
+		return fmt.Errorf("unable to decode messageInvoice#fadfd46: %w", err)
 	}
 	return m.DecodeBare(b)
 }
@@ -4683,61 +4998,66 @@ func (m *MessageInvoice) Decode(b *bin.Buffer) error {
 // DecodeBare implements bin.BareDecoder.
 func (m *MessageInvoice) DecodeBare(b *bin.Buffer) error {
 	if m == nil {
-		return fmt.Errorf("can't decode messageInvoice#d8201a53 to nil")
+		return fmt.Errorf("can't decode messageInvoice#fadfd46 to nil")
 	}
 	{
 		if err := m.ProductInfo.Decode(b); err != nil {
-			return fmt.Errorf("unable to decode messageInvoice#d8201a53: field product_info: %w", err)
+			return fmt.Errorf("unable to decode messageInvoice#fadfd46: field product_info: %w", err)
 		}
 	}
 	{
 		value, err := b.String()
 		if err != nil {
-			return fmt.Errorf("unable to decode messageInvoice#d8201a53: field currency: %w", err)
+			return fmt.Errorf("unable to decode messageInvoice#fadfd46: field currency: %w", err)
 		}
 		m.Currency = value
 	}
 	{
 		value, err := b.Int53()
 		if err != nil {
-			return fmt.Errorf("unable to decode messageInvoice#d8201a53: field total_amount: %w", err)
+			return fmt.Errorf("unable to decode messageInvoice#fadfd46: field total_amount: %w", err)
 		}
 		m.TotalAmount = value
 	}
 	{
 		value, err := b.String()
 		if err != nil {
-			return fmt.Errorf("unable to decode messageInvoice#d8201a53: field start_parameter: %w", err)
+			return fmt.Errorf("unable to decode messageInvoice#fadfd46: field start_parameter: %w", err)
 		}
 		m.StartParameter = value
 	}
 	{
 		value, err := b.Bool()
 		if err != nil {
-			return fmt.Errorf("unable to decode messageInvoice#d8201a53: field is_test: %w", err)
+			return fmt.Errorf("unable to decode messageInvoice#fadfd46: field is_test: %w", err)
 		}
 		m.IsTest = value
 	}
 	{
 		value, err := b.Bool()
 		if err != nil {
-			return fmt.Errorf("unable to decode messageInvoice#d8201a53: field need_shipping_address: %w", err)
+			return fmt.Errorf("unable to decode messageInvoice#fadfd46: field need_shipping_address: %w", err)
 		}
 		m.NeedShippingAddress = value
 	}
 	{
 		value, err := b.Int53()
 		if err != nil {
-			return fmt.Errorf("unable to decode messageInvoice#d8201a53: field receipt_message_id: %w", err)
+			return fmt.Errorf("unable to decode messageInvoice#fadfd46: field receipt_message_id: %w", err)
 		}
 		m.ReceiptMessageID = value
 	}
 	{
-		value, err := DecodeMessageExtendedMedia(b)
+		value, err := DecodePaidMedia(b)
 		if err != nil {
-			return fmt.Errorf("unable to decode messageInvoice#d8201a53: field extended_media: %w", err)
+			return fmt.Errorf("unable to decode messageInvoice#fadfd46: field paid_media: %w", err)
 		}
-		m.ExtendedMedia = value
+		m.PaidMedia = value
+	}
+	{
+		if err := m.PaidMediaCaption.Decode(b); err != nil {
+			return fmt.Errorf("unable to decode messageInvoice#fadfd46: field paid_media_caption: %w", err)
+		}
 	}
 	return nil
 }
@@ -4745,14 +5065,14 @@ func (m *MessageInvoice) DecodeBare(b *bin.Buffer) error {
 // EncodeTDLibJSON implements tdjson.TDLibEncoder.
 func (m *MessageInvoice) EncodeTDLibJSON(b tdjson.Encoder) error {
 	if m == nil {
-		return fmt.Errorf("can't encode messageInvoice#d8201a53 as nil")
+		return fmt.Errorf("can't encode messageInvoice#fadfd46 as nil")
 	}
 	b.ObjStart()
 	b.PutID("messageInvoice")
 	b.Comma()
 	b.FieldStart("product_info")
 	if err := m.ProductInfo.EncodeTDLibJSON(b); err != nil {
-		return fmt.Errorf("unable to encode messageInvoice#d8201a53: field product_info: %w", err)
+		return fmt.Errorf("unable to encode messageInvoice#fadfd46: field product_info: %w", err)
 	}
 	b.Comma()
 	b.FieldStart("currency")
@@ -4773,12 +5093,17 @@ func (m *MessageInvoice) EncodeTDLibJSON(b tdjson.Encoder) error {
 	b.FieldStart("receipt_message_id")
 	b.PutInt53(m.ReceiptMessageID)
 	b.Comma()
-	b.FieldStart("extended_media")
-	if m.ExtendedMedia == nil {
-		return fmt.Errorf("unable to encode messageInvoice#d8201a53: field extended_media is nil")
+	b.FieldStart("paid_media")
+	if m.PaidMedia == nil {
+		return fmt.Errorf("unable to encode messageInvoice#fadfd46: field paid_media is nil")
 	}
-	if err := m.ExtendedMedia.EncodeTDLibJSON(b); err != nil {
-		return fmt.Errorf("unable to encode messageInvoice#d8201a53: field extended_media: %w", err)
+	if err := m.PaidMedia.EncodeTDLibJSON(b); err != nil {
+		return fmt.Errorf("unable to encode messageInvoice#fadfd46: field paid_media: %w", err)
+	}
+	b.Comma()
+	b.FieldStart("paid_media_caption")
+	if err := m.PaidMediaCaption.EncodeTDLibJSON(b); err != nil {
+		return fmt.Errorf("unable to encode messageInvoice#fadfd46: field paid_media_caption: %w", err)
 	}
 	b.Comma()
 	b.StripComma()
@@ -4789,61 +5114,65 @@ func (m *MessageInvoice) EncodeTDLibJSON(b tdjson.Encoder) error {
 // DecodeTDLibJSON implements tdjson.TDLibDecoder.
 func (m *MessageInvoice) DecodeTDLibJSON(b tdjson.Decoder) error {
 	if m == nil {
-		return fmt.Errorf("can't decode messageInvoice#d8201a53 to nil")
+		return fmt.Errorf("can't decode messageInvoice#fadfd46 to nil")
 	}
 
 	return b.Obj(func(b tdjson.Decoder, key []byte) error {
 		switch string(key) {
 		case tdjson.TypeField:
 			if err := b.ConsumeID("messageInvoice"); err != nil {
-				return fmt.Errorf("unable to decode messageInvoice#d8201a53: %w", err)
+				return fmt.Errorf("unable to decode messageInvoice#fadfd46: %w", err)
 			}
 		case "product_info":
 			if err := m.ProductInfo.DecodeTDLibJSON(b); err != nil {
-				return fmt.Errorf("unable to decode messageInvoice#d8201a53: field product_info: %w", err)
+				return fmt.Errorf("unable to decode messageInvoice#fadfd46: field product_info: %w", err)
 			}
 		case "currency":
 			value, err := b.String()
 			if err != nil {
-				return fmt.Errorf("unable to decode messageInvoice#d8201a53: field currency: %w", err)
+				return fmt.Errorf("unable to decode messageInvoice#fadfd46: field currency: %w", err)
 			}
 			m.Currency = value
 		case "total_amount":
 			value, err := b.Int53()
 			if err != nil {
-				return fmt.Errorf("unable to decode messageInvoice#d8201a53: field total_amount: %w", err)
+				return fmt.Errorf("unable to decode messageInvoice#fadfd46: field total_amount: %w", err)
 			}
 			m.TotalAmount = value
 		case "start_parameter":
 			value, err := b.String()
 			if err != nil {
-				return fmt.Errorf("unable to decode messageInvoice#d8201a53: field start_parameter: %w", err)
+				return fmt.Errorf("unable to decode messageInvoice#fadfd46: field start_parameter: %w", err)
 			}
 			m.StartParameter = value
 		case "is_test":
 			value, err := b.Bool()
 			if err != nil {
-				return fmt.Errorf("unable to decode messageInvoice#d8201a53: field is_test: %w", err)
+				return fmt.Errorf("unable to decode messageInvoice#fadfd46: field is_test: %w", err)
 			}
 			m.IsTest = value
 		case "need_shipping_address":
 			value, err := b.Bool()
 			if err != nil {
-				return fmt.Errorf("unable to decode messageInvoice#d8201a53: field need_shipping_address: %w", err)
+				return fmt.Errorf("unable to decode messageInvoice#fadfd46: field need_shipping_address: %w", err)
 			}
 			m.NeedShippingAddress = value
 		case "receipt_message_id":
 			value, err := b.Int53()
 			if err != nil {
-				return fmt.Errorf("unable to decode messageInvoice#d8201a53: field receipt_message_id: %w", err)
+				return fmt.Errorf("unable to decode messageInvoice#fadfd46: field receipt_message_id: %w", err)
 			}
 			m.ReceiptMessageID = value
-		case "extended_media":
-			value, err := DecodeTDLibJSONMessageExtendedMedia(b)
+		case "paid_media":
+			value, err := DecodeTDLibJSONPaidMedia(b)
 			if err != nil {
-				return fmt.Errorf("unable to decode messageInvoice#d8201a53: field extended_media: %w", err)
+				return fmt.Errorf("unable to decode messageInvoice#fadfd46: field paid_media: %w", err)
 			}
-			m.ExtendedMedia = value
+			m.PaidMedia = value
+		case "paid_media_caption":
+			if err := m.PaidMediaCaption.DecodeTDLibJSON(b); err != nil {
+				return fmt.Errorf("unable to decode messageInvoice#fadfd46: field paid_media_caption: %w", err)
+			}
 		default:
 			return b.Skip()
 		}
@@ -4907,12 +5236,20 @@ func (m *MessageInvoice) GetReceiptMessageID() (value int64) {
 	return m.ReceiptMessageID
 }
 
-// GetExtendedMedia returns value of ExtendedMedia field.
-func (m *MessageInvoice) GetExtendedMedia() (value MessageExtendedMediaClass) {
+// GetPaidMedia returns value of PaidMedia field.
+func (m *MessageInvoice) GetPaidMedia() (value PaidMediaClass) {
 	if m == nil {
 		return
 	}
-	return m.ExtendedMedia
+	return m.PaidMedia
+}
+
+// GetPaidMediaCaption returns value of PaidMediaCaption field.
+func (m *MessageInvoice) GetPaidMediaCaption() (value FormattedText) {
+	if m == nil {
+		return
+	}
+	return m.PaidMediaCaption
 }
 
 // MessageCall represents TL type `messageCall#201ede00`.
@@ -10965,6 +11302,352 @@ func (m *MessagePaymentSuccessfulBot) GetProviderPaymentChargeID() (value string
 	return m.ProviderPaymentChargeID
 }
 
+// MessagePaymentRefunded represents TL type `messagePaymentRefunded#11bcb8f3`.
+type MessagePaymentRefunded struct {
+	// Identifier of the previous owner of the Telegram stars that refunds them
+	OwnerID MessageSenderClass
+	// Currency for the price of the product
+	Currency string
+	// Total price for the product, in the smallest units of the currency
+	TotalAmount int64
+	// Invoice payload; only for bots
+	InvoicePayload []byte
+	// Telegram payment identifier
+	TelegramPaymentChargeID string
+	// Provider payment identifier
+	ProviderPaymentChargeID string
+}
+
+// MessagePaymentRefundedTypeID is TL type id of MessagePaymentRefunded.
+const MessagePaymentRefundedTypeID = 0x11bcb8f3
+
+// construct implements constructor of MessageContentClass.
+func (m MessagePaymentRefunded) construct() MessageContentClass { return &m }
+
+// Ensuring interfaces in compile-time for MessagePaymentRefunded.
+var (
+	_ bin.Encoder     = &MessagePaymentRefunded{}
+	_ bin.Decoder     = &MessagePaymentRefunded{}
+	_ bin.BareEncoder = &MessagePaymentRefunded{}
+	_ bin.BareDecoder = &MessagePaymentRefunded{}
+
+	_ MessageContentClass = &MessagePaymentRefunded{}
+)
+
+func (m *MessagePaymentRefunded) Zero() bool {
+	if m == nil {
+		return true
+	}
+	if !(m.OwnerID == nil) {
+		return false
+	}
+	if !(m.Currency == "") {
+		return false
+	}
+	if !(m.TotalAmount == 0) {
+		return false
+	}
+	if !(m.InvoicePayload == nil) {
+		return false
+	}
+	if !(m.TelegramPaymentChargeID == "") {
+		return false
+	}
+	if !(m.ProviderPaymentChargeID == "") {
+		return false
+	}
+
+	return true
+}
+
+// String implements fmt.Stringer.
+func (m *MessagePaymentRefunded) String() string {
+	if m == nil {
+		return "MessagePaymentRefunded(nil)"
+	}
+	type Alias MessagePaymentRefunded
+	return fmt.Sprintf("MessagePaymentRefunded%+v", Alias(*m))
+}
+
+// TypeID returns type id in TL schema.
+//
+// See https://core.telegram.org/mtproto/TL-tl#remarks.
+func (*MessagePaymentRefunded) TypeID() uint32 {
+	return MessagePaymentRefundedTypeID
+}
+
+// TypeName returns name of type in TL schema.
+func (*MessagePaymentRefunded) TypeName() string {
+	return "messagePaymentRefunded"
+}
+
+// TypeInfo returns info about TL type.
+func (m *MessagePaymentRefunded) TypeInfo() tdp.Type {
+	typ := tdp.Type{
+		Name: "messagePaymentRefunded",
+		ID:   MessagePaymentRefundedTypeID,
+	}
+	if m == nil {
+		typ.Null = true
+		return typ
+	}
+	typ.Fields = []tdp.Field{
+		{
+			Name:       "OwnerID",
+			SchemaName: "owner_id",
+		},
+		{
+			Name:       "Currency",
+			SchemaName: "currency",
+		},
+		{
+			Name:       "TotalAmount",
+			SchemaName: "total_amount",
+		},
+		{
+			Name:       "InvoicePayload",
+			SchemaName: "invoice_payload",
+		},
+		{
+			Name:       "TelegramPaymentChargeID",
+			SchemaName: "telegram_payment_charge_id",
+		},
+		{
+			Name:       "ProviderPaymentChargeID",
+			SchemaName: "provider_payment_charge_id",
+		},
+	}
+	return typ
+}
+
+// Encode implements bin.Encoder.
+func (m *MessagePaymentRefunded) Encode(b *bin.Buffer) error {
+	if m == nil {
+		return fmt.Errorf("can't encode messagePaymentRefunded#11bcb8f3 as nil")
+	}
+	b.PutID(MessagePaymentRefundedTypeID)
+	return m.EncodeBare(b)
+}
+
+// EncodeBare implements bin.BareEncoder.
+func (m *MessagePaymentRefunded) EncodeBare(b *bin.Buffer) error {
+	if m == nil {
+		return fmt.Errorf("can't encode messagePaymentRefunded#11bcb8f3 as nil")
+	}
+	if m.OwnerID == nil {
+		return fmt.Errorf("unable to encode messagePaymentRefunded#11bcb8f3: field owner_id is nil")
+	}
+	if err := m.OwnerID.Encode(b); err != nil {
+		return fmt.Errorf("unable to encode messagePaymentRefunded#11bcb8f3: field owner_id: %w", err)
+	}
+	b.PutString(m.Currency)
+	b.PutInt53(m.TotalAmount)
+	b.PutBytes(m.InvoicePayload)
+	b.PutString(m.TelegramPaymentChargeID)
+	b.PutString(m.ProviderPaymentChargeID)
+	return nil
+}
+
+// Decode implements bin.Decoder.
+func (m *MessagePaymentRefunded) Decode(b *bin.Buffer) error {
+	if m == nil {
+		return fmt.Errorf("can't decode messagePaymentRefunded#11bcb8f3 to nil")
+	}
+	if err := b.ConsumeID(MessagePaymentRefundedTypeID); err != nil {
+		return fmt.Errorf("unable to decode messagePaymentRefunded#11bcb8f3: %w", err)
+	}
+	return m.DecodeBare(b)
+}
+
+// DecodeBare implements bin.BareDecoder.
+func (m *MessagePaymentRefunded) DecodeBare(b *bin.Buffer) error {
+	if m == nil {
+		return fmt.Errorf("can't decode messagePaymentRefunded#11bcb8f3 to nil")
+	}
+	{
+		value, err := DecodeMessageSender(b)
+		if err != nil {
+			return fmt.Errorf("unable to decode messagePaymentRefunded#11bcb8f3: field owner_id: %w", err)
+		}
+		m.OwnerID = value
+	}
+	{
+		value, err := b.String()
+		if err != nil {
+			return fmt.Errorf("unable to decode messagePaymentRefunded#11bcb8f3: field currency: %w", err)
+		}
+		m.Currency = value
+	}
+	{
+		value, err := b.Int53()
+		if err != nil {
+			return fmt.Errorf("unable to decode messagePaymentRefunded#11bcb8f3: field total_amount: %w", err)
+		}
+		m.TotalAmount = value
+	}
+	{
+		value, err := b.Bytes()
+		if err != nil {
+			return fmt.Errorf("unable to decode messagePaymentRefunded#11bcb8f3: field invoice_payload: %w", err)
+		}
+		m.InvoicePayload = value
+	}
+	{
+		value, err := b.String()
+		if err != nil {
+			return fmt.Errorf("unable to decode messagePaymentRefunded#11bcb8f3: field telegram_payment_charge_id: %w", err)
+		}
+		m.TelegramPaymentChargeID = value
+	}
+	{
+		value, err := b.String()
+		if err != nil {
+			return fmt.Errorf("unable to decode messagePaymentRefunded#11bcb8f3: field provider_payment_charge_id: %w", err)
+		}
+		m.ProviderPaymentChargeID = value
+	}
+	return nil
+}
+
+// EncodeTDLibJSON implements tdjson.TDLibEncoder.
+func (m *MessagePaymentRefunded) EncodeTDLibJSON(b tdjson.Encoder) error {
+	if m == nil {
+		return fmt.Errorf("can't encode messagePaymentRefunded#11bcb8f3 as nil")
+	}
+	b.ObjStart()
+	b.PutID("messagePaymentRefunded")
+	b.Comma()
+	b.FieldStart("owner_id")
+	if m.OwnerID == nil {
+		return fmt.Errorf("unable to encode messagePaymentRefunded#11bcb8f3: field owner_id is nil")
+	}
+	if err := m.OwnerID.EncodeTDLibJSON(b); err != nil {
+		return fmt.Errorf("unable to encode messagePaymentRefunded#11bcb8f3: field owner_id: %w", err)
+	}
+	b.Comma()
+	b.FieldStart("currency")
+	b.PutString(m.Currency)
+	b.Comma()
+	b.FieldStart("total_amount")
+	b.PutInt53(m.TotalAmount)
+	b.Comma()
+	b.FieldStart("invoice_payload")
+	b.PutBytes(m.InvoicePayload)
+	b.Comma()
+	b.FieldStart("telegram_payment_charge_id")
+	b.PutString(m.TelegramPaymentChargeID)
+	b.Comma()
+	b.FieldStart("provider_payment_charge_id")
+	b.PutString(m.ProviderPaymentChargeID)
+	b.Comma()
+	b.StripComma()
+	b.ObjEnd()
+	return nil
+}
+
+// DecodeTDLibJSON implements tdjson.TDLibDecoder.
+func (m *MessagePaymentRefunded) DecodeTDLibJSON(b tdjson.Decoder) error {
+	if m == nil {
+		return fmt.Errorf("can't decode messagePaymentRefunded#11bcb8f3 to nil")
+	}
+
+	return b.Obj(func(b tdjson.Decoder, key []byte) error {
+		switch string(key) {
+		case tdjson.TypeField:
+			if err := b.ConsumeID("messagePaymentRefunded"); err != nil {
+				return fmt.Errorf("unable to decode messagePaymentRefunded#11bcb8f3: %w", err)
+			}
+		case "owner_id":
+			value, err := DecodeTDLibJSONMessageSender(b)
+			if err != nil {
+				return fmt.Errorf("unable to decode messagePaymentRefunded#11bcb8f3: field owner_id: %w", err)
+			}
+			m.OwnerID = value
+		case "currency":
+			value, err := b.String()
+			if err != nil {
+				return fmt.Errorf("unable to decode messagePaymentRefunded#11bcb8f3: field currency: %w", err)
+			}
+			m.Currency = value
+		case "total_amount":
+			value, err := b.Int53()
+			if err != nil {
+				return fmt.Errorf("unable to decode messagePaymentRefunded#11bcb8f3: field total_amount: %w", err)
+			}
+			m.TotalAmount = value
+		case "invoice_payload":
+			value, err := b.Bytes()
+			if err != nil {
+				return fmt.Errorf("unable to decode messagePaymentRefunded#11bcb8f3: field invoice_payload: %w", err)
+			}
+			m.InvoicePayload = value
+		case "telegram_payment_charge_id":
+			value, err := b.String()
+			if err != nil {
+				return fmt.Errorf("unable to decode messagePaymentRefunded#11bcb8f3: field telegram_payment_charge_id: %w", err)
+			}
+			m.TelegramPaymentChargeID = value
+		case "provider_payment_charge_id":
+			value, err := b.String()
+			if err != nil {
+				return fmt.Errorf("unable to decode messagePaymentRefunded#11bcb8f3: field provider_payment_charge_id: %w", err)
+			}
+			m.ProviderPaymentChargeID = value
+		default:
+			return b.Skip()
+		}
+		return nil
+	})
+}
+
+// GetOwnerID returns value of OwnerID field.
+func (m *MessagePaymentRefunded) GetOwnerID() (value MessageSenderClass) {
+	if m == nil {
+		return
+	}
+	return m.OwnerID
+}
+
+// GetCurrency returns value of Currency field.
+func (m *MessagePaymentRefunded) GetCurrency() (value string) {
+	if m == nil {
+		return
+	}
+	return m.Currency
+}
+
+// GetTotalAmount returns value of TotalAmount field.
+func (m *MessagePaymentRefunded) GetTotalAmount() (value int64) {
+	if m == nil {
+		return
+	}
+	return m.TotalAmount
+}
+
+// GetInvoicePayload returns value of InvoicePayload field.
+func (m *MessagePaymentRefunded) GetInvoicePayload() (value []byte) {
+	if m == nil {
+		return
+	}
+	return m.InvoicePayload
+}
+
+// GetTelegramPaymentChargeID returns value of TelegramPaymentChargeID field.
+func (m *MessagePaymentRefunded) GetTelegramPaymentChargeID() (value string) {
+	if m == nil {
+		return
+	}
+	return m.TelegramPaymentChargeID
+}
+
+// GetProviderPaymentChargeID returns value of ProviderPaymentChargeID field.
+func (m *MessagePaymentRefunded) GetProviderPaymentChargeID() (value string) {
+	if m == nil {
+		return
+	}
+	return m.ProviderPaymentChargeID
+}
+
 // MessageGiftedPremium represents TL type `messageGiftedPremium#78d1d0a`.
 type MessageGiftedPremium struct {
 	// The identifier of a user that gifted Telegram Premium; 0 if the gift was anonymous
@@ -14911,10 +15594,11 @@ const MessageContentClassName = "MessageContent"
 //	    panic(err)
 //	}
 //	switch v := g.(type) {
-//	case *tdapi.MessageText: // messageText#c13562aa
+//	case *tdapi.MessageText: // messageText#68654c84
 //	case *tdapi.MessageAnimation: // messageAnimation#8ecb1128
 //	case *tdapi.MessageAudio: // messageAudio#107e741c
 //	case *tdapi.MessageDocument: // messageDocument#2394ab77
+//	case *tdapi.MessagePaidMedia: // messagePaidMedia#3e5fd7c2
 //	case *tdapi.MessagePhoto: // messagePhoto#754c7e1f
 //	case *tdapi.MessageSticker: // messageSticker#e5f0dcca
 //	case *tdapi.MessageVideo: // messageVideo#adc2be09
@@ -14932,7 +15616,7 @@ const MessageContentClassName = "MessageContent"
 //	case *tdapi.MessageGame: // messageGame#fbdc6976
 //	case *tdapi.MessagePoll: // messagePoll#d888b24d
 //	case *tdapi.MessageStory: // messageStory#3329f2d4
-//	case *tdapi.MessageInvoice: // messageInvoice#d8201a53
+//	case *tdapi.MessageInvoice: // messageInvoice#fadfd46
 //	case *tdapi.MessageCall: // messageCall#201ede00
 //	case *tdapi.MessageVideoChatScheduled: // messageVideoChatScheduled#916c1db7
 //	case *tdapi.MessageVideoChatStarted: // messageVideoChatStarted#1f114559
@@ -14964,6 +15648,7 @@ const MessageContentClassName = "MessageContent"
 //	case *tdapi.MessageGameScore: // messageGameScore#50299d7f
 //	case *tdapi.MessagePaymentSuccessful: // messagePaymentSuccessful#53d93cdc
 //	case *tdapi.MessagePaymentSuccessfulBot: // messagePaymentSuccessfulBot#68e13eb9
+//	case *tdapi.MessagePaymentRefunded: // messagePaymentRefunded#11bcb8f3
 //	case *tdapi.MessageGiftedPremium: // messageGiftedPremium#78d1d0a
 //	case *tdapi.MessagePremiumGiftCode: // messagePremiumGiftCode#26bd1bf3
 //	case *tdapi.MessagePremiumGiveawayCreated: // messagePremiumGiveawayCreated#270f2c44
@@ -15012,7 +15697,7 @@ func DecodeMessageContent(buf *bin.Buffer) (MessageContentClass, error) {
 	}
 	switch id {
 	case MessageTextTypeID:
-		// Decoding messageText#c13562aa.
+		// Decoding messageText#68654c84.
 		v := MessageText{}
 		if err := v.Decode(buf); err != nil {
 			return nil, fmt.Errorf("unable to decode MessageContentClass: %w", err)
@@ -15035,6 +15720,13 @@ func DecodeMessageContent(buf *bin.Buffer) (MessageContentClass, error) {
 	case MessageDocumentTypeID:
 		// Decoding messageDocument#2394ab77.
 		v := MessageDocument{}
+		if err := v.Decode(buf); err != nil {
+			return nil, fmt.Errorf("unable to decode MessageContentClass: %w", err)
+		}
+		return &v, nil
+	case MessagePaidMediaTypeID:
+		// Decoding messagePaidMedia#3e5fd7c2.
+		v := MessagePaidMedia{}
 		if err := v.Decode(buf); err != nil {
 			return nil, fmt.Errorf("unable to decode MessageContentClass: %w", err)
 		}
@@ -15159,7 +15851,7 @@ func DecodeMessageContent(buf *bin.Buffer) (MessageContentClass, error) {
 		}
 		return &v, nil
 	case MessageInvoiceTypeID:
-		// Decoding messageInvoice#d8201a53.
+		// Decoding messageInvoice#fadfd46.
 		v := MessageInvoice{}
 		if err := v.Decode(buf); err != nil {
 			return nil, fmt.Errorf("unable to decode MessageContentClass: %w", err)
@@ -15382,6 +16074,13 @@ func DecodeMessageContent(buf *bin.Buffer) (MessageContentClass, error) {
 			return nil, fmt.Errorf("unable to decode MessageContentClass: %w", err)
 		}
 		return &v, nil
+	case MessagePaymentRefundedTypeID:
+		// Decoding messagePaymentRefunded#11bcb8f3.
+		v := MessagePaymentRefunded{}
+		if err := v.Decode(buf); err != nil {
+			return nil, fmt.Errorf("unable to decode MessageContentClass: %w", err)
+		}
+		return &v, nil
 	case MessageGiftedPremiumTypeID:
 		// Decoding messageGiftedPremium#78d1d0a.
 		v := MessageGiftedPremium{}
@@ -15507,7 +16206,7 @@ func DecodeTDLibJSONMessageContent(buf tdjson.Decoder) (MessageContentClass, err
 	}
 	switch id {
 	case "messageText":
-		// Decoding messageText#c13562aa.
+		// Decoding messageText#68654c84.
 		v := MessageText{}
 		if err := v.DecodeTDLibJSON(buf); err != nil {
 			return nil, fmt.Errorf("unable to decode MessageContentClass: %w", err)
@@ -15530,6 +16229,13 @@ func DecodeTDLibJSONMessageContent(buf tdjson.Decoder) (MessageContentClass, err
 	case "messageDocument":
 		// Decoding messageDocument#2394ab77.
 		v := MessageDocument{}
+		if err := v.DecodeTDLibJSON(buf); err != nil {
+			return nil, fmt.Errorf("unable to decode MessageContentClass: %w", err)
+		}
+		return &v, nil
+	case "messagePaidMedia":
+		// Decoding messagePaidMedia#3e5fd7c2.
+		v := MessagePaidMedia{}
 		if err := v.DecodeTDLibJSON(buf); err != nil {
 			return nil, fmt.Errorf("unable to decode MessageContentClass: %w", err)
 		}
@@ -15654,7 +16360,7 @@ func DecodeTDLibJSONMessageContent(buf tdjson.Decoder) (MessageContentClass, err
 		}
 		return &v, nil
 	case "messageInvoice":
-		// Decoding messageInvoice#d8201a53.
+		// Decoding messageInvoice#fadfd46.
 		v := MessageInvoice{}
 		if err := v.DecodeTDLibJSON(buf); err != nil {
 			return nil, fmt.Errorf("unable to decode MessageContentClass: %w", err)
@@ -15873,6 +16579,13 @@ func DecodeTDLibJSONMessageContent(buf tdjson.Decoder) (MessageContentClass, err
 	case "messagePaymentSuccessfulBot":
 		// Decoding messagePaymentSuccessfulBot#68e13eb9.
 		v := MessagePaymentSuccessfulBot{}
+		if err := v.DecodeTDLibJSON(buf); err != nil {
+			return nil, fmt.Errorf("unable to decode MessageContentClass: %w", err)
+		}
+		return &v, nil
+	case "messagePaymentRefunded":
+		// Decoding messagePaymentRefunded#11bcb8f3.
+		v := MessagePaymentRefunded{}
 		if err := v.DecodeTDLibJSON(buf); err != nil {
 			return nil, fmt.Errorf("unable to decode MessageContentClass: %w", err)
 		}
