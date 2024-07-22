@@ -2,6 +2,7 @@ package telegram
 
 import (
 	"context"
+	"strings"
 	"time"
 
 	"github.com/cenkalti/backoff/v4"
@@ -54,7 +55,7 @@ func (c *Client) runUntilRestart(ctx context.Context) error {
 }
 
 func (c *Client) isPermanentError(err error) bool {
-	return errors.Is(err, exchange.ErrKeyFingerprintNotFound)
+	return errors.Is(err, exchange.ErrKeyFingerprintNotFound) || strings.Contains(err.Error(), "406")
 }
 
 func (c *Client) reconnectUntilClosed(ctx context.Context) error {
@@ -64,7 +65,10 @@ func (c *Client) reconnectUntilClosed(ctx context.Context) error {
 
 	return backoff.RetryNotify(func() error {
 		if err := c.runUntilRestart(ctx); err != nil {
-			return backoff.Permanent(err)
+			if c.isPermanentError(err) {
+				return backoff.Permanent(err)
+			}
+			return err
 		}
 
 		return nil
