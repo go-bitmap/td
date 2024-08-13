@@ -526,16 +526,16 @@ func (i *InputInvoicePremiumGiftCode) GetOption() (value PremiumGiftCodeOption) 
 	return i.Option
 }
 
-// InputInvoiceStars represents TL type `inputInvoiceStars#65f00ce3`.
+// InputInvoiceStars represents TL type `inputInvoiceStars#1da33ad8`.
 //
 // See https://core.telegram.org/constructor/inputInvoiceStars for reference.
 type InputInvoiceStars struct {
-	// Purpose field of InputInvoiceStars.
-	Purpose InputStorePaymentPurposeClass
+	// Option field of InputInvoiceStars.
+	Option StarsTopupOption
 }
 
 // InputInvoiceStarsTypeID is TL type id of InputInvoiceStars.
-const InputInvoiceStarsTypeID = 0x65f00ce3
+const InputInvoiceStarsTypeID = 0x1da33ad8
 
 // construct implements constructor of InputInvoiceClass.
 func (i InputInvoiceStars) construct() InputInvoiceClass { return &i }
@@ -554,7 +554,7 @@ func (i *InputInvoiceStars) Zero() bool {
 	if i == nil {
 		return true
 	}
-	if !(i.Purpose == nil) {
+	if !(i.Option.Zero()) {
 		return false
 	}
 
@@ -572,9 +572,9 @@ func (i *InputInvoiceStars) String() string {
 
 // FillFrom fills InputInvoiceStars from given interface.
 func (i *InputInvoiceStars) FillFrom(from interface {
-	GetPurpose() (value InputStorePaymentPurposeClass)
+	GetOption() (value StarsTopupOption)
 }) {
-	i.Purpose = from.GetPurpose()
+	i.Option = from.GetOption()
 }
 
 // TypeID returns type id in TL schema.
@@ -601,8 +601,8 @@ func (i *InputInvoiceStars) TypeInfo() tdp.Type {
 	}
 	typ.Fields = []tdp.Field{
 		{
-			Name:       "Purpose",
-			SchemaName: "purpose",
+			Name:       "Option",
+			SchemaName: "option",
 		},
 	}
 	return typ
@@ -611,7 +611,7 @@ func (i *InputInvoiceStars) TypeInfo() tdp.Type {
 // Encode implements bin.Encoder.
 func (i *InputInvoiceStars) Encode(b *bin.Buffer) error {
 	if i == nil {
-		return fmt.Errorf("can't encode inputInvoiceStars#65f00ce3 as nil")
+		return fmt.Errorf("can't encode inputInvoiceStars#1da33ad8 as nil")
 	}
 	b.PutID(InputInvoiceStarsTypeID)
 	return i.EncodeBare(b)
@@ -620,13 +620,10 @@ func (i *InputInvoiceStars) Encode(b *bin.Buffer) error {
 // EncodeBare implements bin.BareEncoder.
 func (i *InputInvoiceStars) EncodeBare(b *bin.Buffer) error {
 	if i == nil {
-		return fmt.Errorf("can't encode inputInvoiceStars#65f00ce3 as nil")
+		return fmt.Errorf("can't encode inputInvoiceStars#1da33ad8 as nil")
 	}
-	if i.Purpose == nil {
-		return fmt.Errorf("unable to encode inputInvoiceStars#65f00ce3: field purpose is nil")
-	}
-	if err := i.Purpose.Encode(b); err != nil {
-		return fmt.Errorf("unable to encode inputInvoiceStars#65f00ce3: field purpose: %w", err)
+	if err := i.Option.Encode(b); err != nil {
+		return fmt.Errorf("unable to encode inputInvoiceStars#1da33ad8: field option: %w", err)
 	}
 	return nil
 }
@@ -634,10 +631,10 @@ func (i *InputInvoiceStars) EncodeBare(b *bin.Buffer) error {
 // Decode implements bin.Decoder.
 func (i *InputInvoiceStars) Decode(b *bin.Buffer) error {
 	if i == nil {
-		return fmt.Errorf("can't decode inputInvoiceStars#65f00ce3 to nil")
+		return fmt.Errorf("can't decode inputInvoiceStars#1da33ad8 to nil")
 	}
 	if err := b.ConsumeID(InputInvoiceStarsTypeID); err != nil {
-		return fmt.Errorf("unable to decode inputInvoiceStars#65f00ce3: %w", err)
+		return fmt.Errorf("unable to decode inputInvoiceStars#1da33ad8: %w", err)
 	}
 	return i.DecodeBare(b)
 }
@@ -645,24 +642,22 @@ func (i *InputInvoiceStars) Decode(b *bin.Buffer) error {
 // DecodeBare implements bin.BareDecoder.
 func (i *InputInvoiceStars) DecodeBare(b *bin.Buffer) error {
 	if i == nil {
-		return fmt.Errorf("can't decode inputInvoiceStars#65f00ce3 to nil")
+		return fmt.Errorf("can't decode inputInvoiceStars#1da33ad8 to nil")
 	}
 	{
-		value, err := DecodeInputStorePaymentPurpose(b)
-		if err != nil {
-			return fmt.Errorf("unable to decode inputInvoiceStars#65f00ce3: field purpose: %w", err)
+		if err := i.Option.Decode(b); err != nil {
+			return fmt.Errorf("unable to decode inputInvoiceStars#1da33ad8: field option: %w", err)
 		}
-		i.Purpose = value
 	}
 	return nil
 }
 
-// GetPurpose returns value of Purpose field.
-func (i *InputInvoiceStars) GetPurpose() (value InputStorePaymentPurposeClass) {
+// GetOption returns value of Option field.
+func (i *InputInvoiceStars) GetOption() (value StarsTopupOption) {
 	if i == nil {
 		return
 	}
-	return i.Purpose
+	return i.Option
 }
 
 // InputInvoiceClassName is schema name of InputInvoiceClass.
@@ -682,7 +677,7 @@ const InputInvoiceClassName = "InputInvoice"
 //	case *tg.InputInvoiceMessage: // inputInvoiceMessage#c5b56859
 //	case *tg.InputInvoiceSlug: // inputInvoiceSlug#c326caef
 //	case *tg.InputInvoicePremiumGiftCode: // inputInvoicePremiumGiftCode#98986c0d
-//	case *tg.InputInvoiceStars: // inputInvoiceStars#65f00ce3
+//	case *tg.InputInvoiceStars: // inputInvoiceStars#1da33ad8
 //	default: panic(v)
 //	}
 type InputInvoiceClass interface {
@@ -733,7 +728,7 @@ func DecodeInputInvoice(buf *bin.Buffer) (InputInvoiceClass, error) {
 		}
 		return &v, nil
 	case InputInvoiceStarsTypeID:
-		// Decoding inputInvoiceStars#65f00ce3.
+		// Decoding inputInvoiceStars#1da33ad8.
 		v := InputInvoiceStars{}
 		if err := v.Decode(buf); err != nil {
 			return nil, fmt.Errorf("unable to decode InputInvoiceClass: %w", err)
