@@ -32,7 +32,7 @@ var (
 )
 
 // Layer version of schema.
-const Layer = 187
+const Layer = 188
 
 // TypesMap returns mapping from type ids to TL type names.
 func TypesMap() map[uint32]string {
@@ -137,7 +137,7 @@ func TypesMap() map[uint32]string {
 		MessageMediaGeoTypeID:                                    "messageMediaGeo#56e0d474",
 		MessageMediaContactTypeID:                                "messageMediaContact#70322949",
 		MessageMediaUnsupportedTypeID:                            "messageMediaUnsupported#9f84f49e",
-		MessageMediaDocumentTypeID:                               "messageMediaDocument#4cf4d72d",
+		MessageMediaDocumentTypeID:                               "messageMediaDocument#dd570bd5",
 		MessageMediaWebPageTypeID:                                "messageMediaWebPage#ddf10c3b",
 		MessageMediaVenueTypeID:                                  "messageMediaVenue#2ec0533f",
 		MessageMediaGameTypeID:                                   "messageMediaGame#fdb19008",
@@ -527,7 +527,7 @@ func TypesMap() map[uint32]string {
 		DocumentAttributeImageSizeTypeID:                         "documentAttributeImageSize#6c37c15c",
 		DocumentAttributeAnimatedTypeID:                          "documentAttributeAnimated#11b58939",
 		DocumentAttributeStickerTypeID:                           "documentAttributeSticker#6319d612",
-		DocumentAttributeVideoTypeID:                             "documentAttributeVideo#17399fad",
+		DocumentAttributeVideoTypeID:                             "documentAttributeVideo#43c57c48",
 		DocumentAttributeAudioTypeID:                             "documentAttributeAudio#9852f9c6",
 		DocumentAttributeFilenameTypeID:                          "documentAttributeFilename#15590068",
 		DocumentAttributeHasStickersTypeID:                       "documentAttributeHasStickers#9801d2f7",
@@ -587,6 +587,7 @@ func TypesMap() map[uint32]string {
 		KeyboardButtonSimpleWebViewTypeID:                        "keyboardButtonSimpleWebView#a0c0505c",
 		KeyboardButtonRequestPeerTypeID:                          "keyboardButtonRequestPeer#53d7bfd8",
 		InputKeyboardButtonRequestPeerTypeID:                     "inputKeyboardButtonRequestPeer#c9662d05",
+		KeyboardButtonCopyTypeID:                                 "keyboardButtonCopy#75d2698e",
 		KeyboardButtonRowTypeID:                                  "keyboardButtonRow#77608b83",
 		ReplyKeyboardHideTypeID:                                  "replyKeyboardHide#a03e5b85",
 		ReplyKeyboardForceReplyTypeID:                            "replyKeyboardForceReply#86b40b08",
@@ -1874,7 +1875,7 @@ func TypesMap() map[uint32]string {
 		ChannelsToggleAntiSpamRequestTypeID:                                     "channels.toggleAntiSpam#68f3e4eb",
 		ChannelsReportAntiSpamFalsePositiveRequestTypeID:                        "channels.reportAntiSpamFalsePositive#a850a693",
 		ChannelsToggleParticipantsHiddenRequestTypeID:                           "channels.toggleParticipantsHidden#6a6e7854",
-		ChannelsClickSponsoredMessageRequestTypeID:                              "channels.clickSponsoredMessage#18afbc93",
+		ChannelsClickSponsoredMessageRequestTypeID:                              "channels.clickSponsoredMessage#1445d75",
 		ChannelsUpdateColorRequestTypeID:                                        "channels.updateColor#d8aa3671",
 		ChannelsToggleViewForumAsMessagesRequestTypeID:                          "channels.toggleViewForumAsMessages#9738bb15",
 		ChannelsGetChannelRecommendationsRequestTypeID:                          "channels.getChannelRecommendations#25a71742",
@@ -2614,6 +2615,7 @@ func NamesMap() map[string]uint32 {
 		"keyboardButtonSimpleWebView":                        KeyboardButtonSimpleWebViewTypeID,
 		"keyboardButtonRequestPeer":                          KeyboardButtonRequestPeerTypeID,
 		"inputKeyboardButtonRequestPeer":                     InputKeyboardButtonRequestPeerTypeID,
+		"keyboardButtonCopy":                                 KeyboardButtonCopyTypeID,
 		"keyboardButtonRow":                                  KeyboardButtonRowTypeID,
 		"replyKeyboardHide":                                  ReplyKeyboardHideTypeID,
 		"replyKeyboardForceReply":                            ReplyKeyboardForceReplyTypeID,
@@ -4641,6 +4643,7 @@ func TypesConstructorMap() map[uint32]func() bin.Object {
 		KeyboardButtonSimpleWebViewTypeID:                        func() bin.Object { return &KeyboardButtonSimpleWebView{} },
 		KeyboardButtonRequestPeerTypeID:                          func() bin.Object { return &KeyboardButtonRequestPeer{} },
 		InputKeyboardButtonRequestPeerTypeID:                     func() bin.Object { return &InputKeyboardButtonRequestPeer{} },
+		KeyboardButtonCopyTypeID:                                 func() bin.Object { return &KeyboardButtonCopy{} },
 		KeyboardButtonRowTypeID:                                  func() bin.Object { return &KeyboardButtonRow{} },
 		ReplyKeyboardHideTypeID:                                  func() bin.Object { return &ReplyKeyboardHide{} },
 		ReplyKeyboardForceReplyTypeID:                            func() bin.Object { return &ReplyKeyboardForceReply{} },
@@ -6778,6 +6781,7 @@ func ClassConstructorsMap() map[string][]uint32 {
 			KeyboardButtonSimpleWebViewTypeID,
 			KeyboardButtonRequestPeerTypeID,
 			InputKeyboardButtonRequestPeerTypeID,
+			KeyboardButtonCopyTypeID,
 		},
 		LangPackStringClassName: {
 			LangPackStringTypeID,
