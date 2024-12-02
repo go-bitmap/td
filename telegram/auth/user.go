@@ -50,14 +50,7 @@ func (c *Client) Password(ctx context.Context, password string) (*tg.AuthAuthori
 
 // SendCodeOptions defines how to send auth code to user.
 type SendCodeOptions struct {
-	// AllowFlashCall allows phone verification via phone calls.
-	AllowFlashCall bool
-	// Pass true if the phone number is used on the current device.
-	// Ignored if AllowFlashCall is not set.
-	CurrentNumber bool
-	// If a token that will be included in eventually sent SMSs is required:
-	// required in newer versions of android, to use the android SMS receiver APIs.
-	AllowAppHash bool
+	tg.CodeSettings
 }
 
 // SendCode requests code for provided phone number, returning code hash
@@ -65,22 +58,12 @@ type SendCodeOptions struct {
 //
 // This method should be called first in user authentication flow.
 func (c *Client) SendCode(ctx context.Context, phone string, options SendCodeOptions) (tg.AuthSentCodeClass, error) {
-	var settings tg.CodeSettings
-	if options.AllowAppHash {
-		settings.SetAllowAppHash(true)
-	}
-	if options.AllowFlashCall {
-		settings.SetAllowFlashcall(true)
-	}
-	if options.CurrentNumber {
-		settings.SetCurrentNumber(true)
-	}
-
+	options.SetFlags()
 	sentCode, err := c.api.AuthSendCode(ctx, &tg.AuthSendCodeRequest{
 		PhoneNumber: phone,
 		APIID:       c.appID,
 		APIHash:     c.appHash,
-		Settings:    settings,
+		Settings:    options.CodeSettings,
 	})
 	if err != nil {
 		return nil, errors.Wrap(err, "send code")
