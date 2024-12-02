@@ -2,7 +2,6 @@ package telegram
 
 import (
 	"context"
-	"strings"
 	"time"
 
 	"github.com/cenkalti/backoff/v4"
