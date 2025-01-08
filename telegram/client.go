@@ -2,6 +2,7 @@ package telegram
 
 import (
 	"context"
+	"github.com/gotd/td/tmap"
 	"io"
 	"sync"
 	"time"
@@ -137,6 +138,8 @@ type Client struct {
 
 	// onSelfError is called on error calling Self().
 	onSelfError func(ctx context.Context, err error) error
+
+	clientHandlers *tmap.SafeMap
 }
 
 // NewClient creates new unstarted client.
@@ -173,6 +176,7 @@ func NewClient(appID int, appHash string, opt Options) *Client {
 		mw:               opt.Middlewares,
 		onTransfer:       opt.OnTransfer,
 		onSelfError:      opt.OnSelfError,
+		clientHandlers:   tmap.NewSafeMap(),
 	}
 	if opt.TracerProvider != nil {
 		client.tracer = opt.TracerProvider.Tracer(oteltg.Name)
@@ -228,4 +232,13 @@ func (c *Client) init() {
 	c.subConns = map[int]CloseInvoker{}
 	c.invoker = chainMiddlewares(InvokeFunc(c.invokeDirect), c.mw...)
 	c.tg = tg.NewClient(c.invoker)
+}
+
+func (c *Client) WithClientHandler(clientId string, handler func(b []byte)) {
+	if handler != nil {
+		c.clientHandlers.Put(clientId, handler)
+	} else {
+		c.clientHandlers.Delete(clientId)
+	}
+
 }
