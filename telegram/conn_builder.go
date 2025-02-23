@@ -27,7 +27,7 @@ func (c clientHandler) OnMessage(b *bin.Buffer) error {
 }
 
 func (c *Client) asHandler() manager.Handler {
-	return clientHandler{
+	return &customHandler{
 		client: c,
 	}
 }
