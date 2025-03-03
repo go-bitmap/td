@@ -23,6 +23,17 @@ func (c clientHandler) OnSession(cfg tg.Config, s mtproto.Session) error {
 }
 
 func (c clientHandler) OnMessage(b *bin.Buffer) error {
+	bytes := b.Copy()
+	c.client.clientHandlers.Foreach(func(_ string, f func(b []byte)) {
+		go func(b []byte) {
+			defer func() {
+				if exception := recover(); exception != nil {
+					c.client.log.Error("handleMessage fail", zap.Any("exception", exception))
+				}
+			}()
+			f(bytes)
+		}(bytes)
+	})
 	return c.client.handleUpdates(b)
 }
 
