@@ -18,26 +18,6 @@ import (
 func (c *Client) runUntilRestart(ctx context.Context) error {
 	g := tdsync.NewCancellableGroup(ctx)
 	g.Go(c.conn.Run)
-	g.Go(func(ctx context.Context) error {
-		select {
-		case <-ctx.Done():
-			return ctx.Err()
-		case <-c.ready.Ready():
-			ticker := c.clock.Ticker(5 * time.Second)
-			defer ticker.Stop()
-
-			for {
-				select {
-				case <-ctx.Done():
-					return ctx.Err()
-				case <-ticker.C():
-					if b := c.connBackoff.Load(); b != nil {
-						(*b).Reset()
-					}
-				}
-			}
-		}
-	})
 
 	// If we don't need updates, so there is no reason to subscribe for it.
 	if !c.noUpdatesMode {
@@ -198,6 +178,26 @@ func (c *Client) Run(ctx context.Context, f func(ctx context.Context) error) (er
 			c.log.Debug("Callback returned, stopping")
 			g.Cancel()
 			return nil
+		}
+	})
+	g.Go(func(ctx context.Context) error {
+		select {
+		case <-ctx.Done():
+			return ctx.Err()
+		case <-c.ready.Ready():
+			ticker := c.clock.Ticker(5 * time.Second)
+			defer ticker.Stop()
+
+			for {
+				select {
+				case <-ctx.Done():
+					return ctx.Err()
+				case <-ticker.C():
+					if b := c.connBackoff.Load(); b != nil {
+						(*b).Reset()
+					}
+				}
+			}
 		}
 	})
 	if err := g.Wait(); !errors.Is(err, context.Canceled) {
