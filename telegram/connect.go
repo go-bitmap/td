@@ -180,26 +180,26 @@ func (c *Client) Run(ctx context.Context, f func(ctx context.Context) error) (er
 			return nil
 		}
 	})
-	g.Go(func(ctx context.Context) error {
-		select {
-		case <-ctx.Done():
-			return ctx.Err()
-		case <-c.ready.Ready():
-			ticker := c.clock.Ticker(5 * time.Second)
-			defer ticker.Stop()
-
-			for {
-				select {
-				case <-ctx.Done():
-					return ctx.Err()
-				case <-ticker.C():
-					if b := c.connBackoff.Load(); b != nil {
-						(*b).Reset()
-					}
-				}
-			}
-		}
-	})
+	//g.Go(func(ctx context.Context) error {
+	//	select {
+	//	case <-ctx.Done():
+	//		return ctx.Err()
+	//	case <-c.ready.Ready():
+	//		ticker := c.clock.Ticker(5 * time.Second)
+	//		defer ticker.Stop()
+	//
+	//		for {
+	//			select {
+	//			case <-ctx.Done():
+	//				return ctx.Err()
+	//			case <-ticker.C():
+	//				if b := c.connBackoff.Load(); b != nil {
+	//					(*b).Reset()
+	//				}
+	//			}
+	//		}
+	//	}
+	//})
 	if err := g.Wait(); !errors.Is(err, context.Canceled) {
 		return err
 	}
