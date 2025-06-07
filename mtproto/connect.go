@@ -40,7 +40,7 @@ func (c *Conn) connect(ctx context.Context) (rErr error) {
 		c.log.Info("Generating new auth key", zapf)
 		start := c.clock.Now()
 		if err := c.createAuthKey(ctx); err != nil {
-			c.log.Error("create auth key failed", zapf)
+			c.log.Error("create auth key failed", zapf, zap.Error(err))
 			return errors.Wrap(err, "create auth key")
 		}
 

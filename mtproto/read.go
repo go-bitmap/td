@@ -124,7 +124,7 @@ func (c *Conn) handleAuthKeyNotFound(ctx context.Context) error {
 	}
 	c.log.Info("Re-generating keys (server not found key that we provided)", zapf)
 	if err := c.createAuthKey(ctx); err != nil {
-		c.log.Error("failed to create auth key", zapf)
+		c.log.Error("failed to create auth key", zapf, zap.Error(err))
 		return errors.Wrap(err, "unable to create auth key")
 	}
 	c.log.Info("Re-created auth keys", zapf)
