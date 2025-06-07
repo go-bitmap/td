@@ -112,19 +112,22 @@ func (c *Conn) noUpdates(err error) bool {
 }
 
 func (c *Conn) handleAuthKeyNotFound(ctx context.Context) error {
+	onwer := ctx.Value(AuthKeyOwnerKey{})
+	zapf := zap.Any(AuthKeyOnwer, onwer)
 	if c.session().ID == 0 {
 		// The 404 error can also be caused by zero session id.
 		// See https://github.com/gotd/td/issues/107
 		//
 		// We should recover from this in createAuthKey, but in general
 		// this code branch should be unreachable.
-		c.log.Warn("BUG: zero session id found")
+		c.log.Warn("BUG: zero session id found", zapf)
 	}
-	c.log.Warn("Re-generating keys (server not found key that we provided)")
+	c.log.Info("Re-generating keys (server not found key that we provided)", zapf)
 	if err := c.createAuthKey(ctx); err != nil {
+		c.log.Error("failed to create auth key", zapf)
 		return errors.Wrap(err, "unable to create auth key")
 	}
-	c.log.Info("Re-created auth keys")
+	c.log.Info("Re-created auth keys", zapf)
 	// Request will be retried by ack loop.
 	// Probably we can speed-up this.
 	return nil

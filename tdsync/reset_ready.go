@@ -1,6 +1,9 @@
 package tdsync
 
-import "sync"
+import (
+	"sync"
+	"sync/atomic"
+)
 
 // ResetReady is like Ready, but can be Reset.
 type ResetReady struct {
@@ -38,4 +41,10 @@ func (r *ResetReady) Ready() <-chan struct{} {
 	r.lock.Lock()
 	defer r.lock.Unlock()
 	return r.ready.Ready()
+}
+
+func (r *ResetReady) Done() int32 {
+	r.lock.Lock()
+	defer r.lock.Unlock()
+	return atomic.LoadInt32(&r.ready.done)
 }

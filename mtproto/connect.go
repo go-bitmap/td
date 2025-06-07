@@ -10,6 +10,12 @@ import (
 	"github.com/gotd/td/exchange"
 )
 
+type AuthKeyOwnerKey struct{}
+
+const (
+	AuthKeyOnwer = "ako"
+)
+
 // connect establishes connection using configured transport, creating
 // new auth key if needed.
 func (c *Conn) connect(ctx context.Context) (rErr error) {
@@ -28,25 +34,29 @@ func (c *Conn) connect(ctx context.Context) (rErr error) {
 	}()
 
 	session := c.session()
+	onwer := ctx.Value(AuthKeyOwnerKey{})
+	zapf := zap.Any(AuthKeyOnwer, onwer)
 	if session.Key.Zero() {
-		c.log.Info("Generating new auth key")
+		c.log.Info("Generating new auth key", zapf)
 		start := c.clock.Now()
 		if err := c.createAuthKey(ctx); err != nil {
+			c.log.Error("create auth key failed", zapf)
 			return errors.Wrap(err, "create auth key")
 		}
 
 		c.log.Info("Auth key generated",
 			zap.Duration("duration", c.clock.Now().Sub(start)),
+			zapf,
 		)
 		return nil
 	}
 
-	c.log.Info("Key already exists")
+	c.log.Info("Key already exists", zapf)
 	if session.ID == 0 {
 		// NB: Telegram can return 404 error if session id is zero.
 		//
 		// See https://github.com/gotd/td/issues/107.
-		c.log.Debug("Generating new session id")
+		c.log.Debug("Generating new session id", zapf)
 		if err := c.newSessionID(); err != nil {
 			return err
 		}
