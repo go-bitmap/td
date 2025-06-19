@@ -15,6 +15,8 @@ import (
 	"github.com/gotd/td/tgerr"
 )
 
+type TDInternalInvoke struct{}
+
 func (c *Client) runUntilRestart(ctx context.Context) error {
 	g := tdsync.NewCancellableGroup(ctx)
 	g.Go(c.conn.Run)
@@ -24,6 +26,7 @@ func (c *Client) runUntilRestart(ctx context.Context) error {
 		g.Go(func(ctx context.Context) error {
 			// Call method which requires authorization, to subscribe for updates.
 			// See https://core.telegram.org/api/updates#subscribing-to-updates.
+			ctx = context.WithValue(ctx, TDInternalInvoke{}, struct{}{})
 			self, err := c.Self(ctx)
 			if err != nil {
 				// Ignore unauthorized errors.
