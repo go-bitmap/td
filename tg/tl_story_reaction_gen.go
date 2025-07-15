@@ -32,15 +32,12 @@ var (
 )
 
 // StoryReaction represents TL type `storyReaction#6090d6d5`.
-// How a certain peer reacted to a story
-//
-// See https://core.telegram.org/constructor/storyReaction for reference.
 type StoryReaction struct {
-	// The peer
+	// PeerID field of StoryReaction.
 	PeerID PeerClass
-	// Reaction date
+	// Date field of StoryReaction.
 	Date int
-	// The reaction
+	// Reaction field of StoryReaction.
 	Reaction ReactionClass
 }
 
@@ -84,17 +81,6 @@ func (s *StoryReaction) String() string {
 	}
 	type Alias StoryReaction
 	return fmt.Sprintf("StoryReaction%+v", Alias(*s))
-}
-
-// FillFrom fills StoryReaction from given interface.
-func (s *StoryReaction) FillFrom(from interface {
-	GetPeerID() (value PeerClass)
-	GetDate() (value int)
-	GetReaction() (value ReactionClass)
-}) {
-	s.PeerID = from.GetPeerID()
-	s.Date = from.GetDate()
-	s.Reaction = from.GetReaction()
 }
 
 // TypeID returns type id in TL schema.
@@ -231,11 +217,8 @@ func (s *StoryReaction) GetReaction() (value ReactionClass) {
 }
 
 // StoryReactionPublicForward represents TL type `storyReactionPublicForward#bbab2643`.
-// A certain peer has forwarded the story as a message to a public chat or channel.
-//
-// See https://core.telegram.org/constructor/storyReactionPublicForward for reference.
 type StoryReactionPublicForward struct {
-	// The message with the forwarded story.
+	// Message field of StoryReactionPublicForward.
 	Message MessageClass
 }
 
@@ -273,13 +256,6 @@ func (s *StoryReactionPublicForward) String() string {
 	}
 	type Alias StoryReactionPublicForward
 	return fmt.Sprintf("StoryReactionPublicForward%+v", Alias(*s))
-}
-
-// FillFrom fills StoryReactionPublicForward from given interface.
-func (s *StoryReactionPublicForward) FillFrom(from interface {
-	GetMessage() (value MessageClass)
-}) {
-	s.Message = from.GetMessage()
 }
 
 // TypeID returns type id in TL schema.
@@ -371,13 +347,10 @@ func (s *StoryReactionPublicForward) GetMessage() (value MessageClass) {
 }
 
 // StoryReactionPublicRepost represents TL type `storyReactionPublicRepost#cfcd0f13`.
-// A certain peer has reposted the story.
-//
-// See https://core.telegram.org/constructor/storyReactionPublicRepost for reference.
 type StoryReactionPublicRepost struct {
-	// The peer that reposted the story.
+	// PeerID field of StoryReactionPublicRepost.
 	PeerID PeerClass
-	// The reposted story.
+	// Story field of StoryReactionPublicRepost.
 	Story StoryItemClass
 }
 
@@ -418,15 +391,6 @@ func (s *StoryReactionPublicRepost) String() string {
 	}
 	type Alias StoryReactionPublicRepost
 	return fmt.Sprintf("StoryReactionPublicRepost%+v", Alias(*s))
-}
-
-// FillFrom fills StoryReactionPublicRepost from given interface.
-func (s *StoryReactionPublicRepost) FillFrom(from interface {
-	GetPeerID() (value PeerClass)
-	GetStory() (value StoryItemClass)
-}) {
-	s.PeerID = from.GetPeerID()
-	s.Story = from.GetStory()
 }
 
 // TypeID returns type id in TL schema.
@@ -546,8 +510,6 @@ func (s *StoryReactionPublicRepost) GetStory() (value StoryItemClass) {
 const StoryReactionClassName = "StoryReaction"
 
 // StoryReactionClass represents StoryReaction generic type.
-//
-// See https://core.telegram.org/type/StoryReaction for reference.
 //
 // Constructors:
 //   - [StoryReaction]

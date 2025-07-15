@@ -32,13 +32,10 @@ var (
 )
 
 // MessagesEditChatPhotoRequest represents TL type `messages.editChatPhoto#35ddd674`.
-// Changes chat photo and sends a service message on it
-//
-// See https://core.telegram.org/method/messages.editChatPhoto for reference.
 type MessagesEditChatPhotoRequest struct {
-	// Chat ID
+	// ChatID field of MessagesEditChatPhotoRequest.
 	ChatID int64
-	// Photo to be set
+	// Photo field of MessagesEditChatPhotoRequest.
 	Photo InputChatPhotoClass
 }
 
@@ -74,15 +71,6 @@ func (e *MessagesEditChatPhotoRequest) String() string {
 	}
 	type Alias MessagesEditChatPhotoRequest
 	return fmt.Sprintf("MessagesEditChatPhotoRequest%+v", Alias(*e))
-}
-
-// FillFrom fills MessagesEditChatPhotoRequest from given interface.
-func (e *MessagesEditChatPhotoRequest) FillFrom(from interface {
-	GetChatID() (value int64)
-	GetPhoto() (value InputChatPhotoClass)
-}) {
-	e.ChatID = from.GetChatID()
-	e.Photo = from.GetPhoto()
 }
 
 // TypeID returns type id in TL schema.
@@ -194,20 +182,6 @@ func (e *MessagesEditChatPhotoRequest) GetPhoto() (value InputChatPhotoClass) {
 }
 
 // MessagesEditChatPhoto invokes method messages.editChatPhoto#35ddd674 returning error if any.
-// Changes chat photo and sends a service message on it
-//
-// Possible errors:
-//
-//	400 CHAT_ID_INVALID: The provided chat id is invalid.
-//	400 CHAT_NOT_MODIFIED: No changes were made to chat information because the new information you passed is identical to the current information.
-//	400 IMAGE_PROCESS_FAILED: Failure while processing image.
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//	400 PHOTO_CROP_SIZE_SMALL: Photo is too small.
-//	400 PHOTO_EXT_INVALID: The extension of the photo is invalid.
-//	400 PHOTO_INVALID: Photo invalid.
-//
-// See https://core.telegram.org/method/messages.editChatPhoto for reference.
-// Can be used by bots.
 func (c *Client) MessagesEditChatPhoto(ctx context.Context, request *MessagesEditChatPhotoRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

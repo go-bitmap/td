@@ -32,11 +32,8 @@ var (
 )
 
 // MessagesUninstallStickerSetRequest represents TL type `messages.uninstallStickerSet#f96e55de`.
-// Uninstall a stickerset
-//
-// See https://core.telegram.org/method/messages.uninstallStickerSet for reference.
 type MessagesUninstallStickerSetRequest struct {
-	// The stickerset to uninstall
+	// Stickerset field of MessagesUninstallStickerSetRequest.
 	Stickerset InputStickerSetClass
 }
 
@@ -69,13 +66,6 @@ func (u *MessagesUninstallStickerSetRequest) String() string {
 	}
 	type Alias MessagesUninstallStickerSetRequest
 	return fmt.Sprintf("MessagesUninstallStickerSetRequest%+v", Alias(*u))
-}
-
-// FillFrom fills MessagesUninstallStickerSetRequest from given interface.
-func (u *MessagesUninstallStickerSetRequest) FillFrom(from interface {
-	GetStickerset() (value InputStickerSetClass)
-}) {
-	u.Stickerset = from.GetStickerset()
 }
 
 // TypeID returns type id in TL schema.
@@ -167,13 +157,6 @@ func (u *MessagesUninstallStickerSetRequest) GetStickerset() (value InputSticker
 }
 
 // MessagesUninstallStickerSet invokes method messages.uninstallStickerSet#f96e55de returning error if any.
-// Uninstall a stickerset
-//
-// Possible errors:
-//
-//	406 STICKERSET_INVALID: The provided sticker set is invalid.
-//
-// See https://core.telegram.org/method/messages.uninstallStickerSet for reference.
 func (c *Client) MessagesUninstallStickerSet(ctx context.Context, stickerset InputStickerSetClass) (bool, error) {
 	var result BoolBox
 

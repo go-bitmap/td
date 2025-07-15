@@ -32,42 +32,18 @@ var (
 )
 
 // MessagesSetChatAvailableReactionsRequest represents TL type `messages.setChatAvailableReactions#864b2581`.
-// Change the set of message reactions »¹ that can be used in a certain group,
-// supergroup or channel
-//
-// Links:
-//  1. https://core.telegram.org/api/reactions
-//
-// See https://core.telegram.org/method/messages.setChatAvailableReactions for reference.
 type MessagesSetChatAvailableReactionsRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessagesSetChatAvailableReactionsRequest.
 	Flags bin.Fields
-	// Group where to apply changes
+	// Peer field of MessagesSetChatAvailableReactionsRequest.
 	Peer InputPeerClass
-	// Allowed reaction emojis
+	// AvailableReactions field of MessagesSetChatAvailableReactionsRequest.
 	AvailableReactions ChatReactionsClass
-	// This flag may be used to impose a custom limit of unique reactions (i.e. a
-	// customizable version of appConfig.reactions_uniq_max¹); this field and the other info
-	// set by the method will then be available to users in channelFull² and chatFull³. If
-	// this flag is not set, the previously configured reactions_limit will not be altered.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/config#reactions-uniq-max
-	//  2) https://core.telegram.org/constructor/channelFull
-	//  3) https://core.telegram.org/constructor/chatFull
+	// ReactionsLimit field of MessagesSetChatAvailableReactionsRequest.
 	//
 	// Use SetReactionsLimit and GetReactionsLimit helpers.
 	ReactionsLimit int
-	// If this flag is set and a Bool¹ is passed, the method will enable or disable paid
-	// message reactions »². If this flag is not set, the previously stored setting will
-	// not be changed.
-	//
-	// Links:
-	//  1) https://core.telegram.org/type/Bool
-	//  2) https://core.telegram.org/api/reactions#paid-reactions
+	// PaidEnabled field of MessagesSetChatAvailableReactionsRequest.
 	//
 	// Use SetPaidEnabled and GetPaidEnabled helpers.
 	PaidEnabled bool
@@ -114,25 +90,6 @@ func (s *MessagesSetChatAvailableReactionsRequest) String() string {
 	}
 	type Alias MessagesSetChatAvailableReactionsRequest
 	return fmt.Sprintf("MessagesSetChatAvailableReactionsRequest%+v", Alias(*s))
-}
-
-// FillFrom fills MessagesSetChatAvailableReactionsRequest from given interface.
-func (s *MessagesSetChatAvailableReactionsRequest) FillFrom(from interface {
-	GetPeer() (value InputPeerClass)
-	GetAvailableReactions() (value ChatReactionsClass)
-	GetReactionsLimit() (value int, ok bool)
-	GetPaidEnabled() (value bool, ok bool)
-}) {
-	s.Peer = from.GetPeer()
-	s.AvailableReactions = from.GetAvailableReactions()
-	if val, ok := from.GetReactionsLimit(); ok {
-		s.ReactionsLimit = val
-	}
-
-	if val, ok := from.GetPaidEnabled(); ok {
-		s.PaidEnabled = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -334,19 +291,6 @@ func (s *MessagesSetChatAvailableReactionsRequest) GetPaidEnabled() (value bool,
 }
 
 // MessagesSetChatAvailableReactions invokes method messages.setChatAvailableReactions#864b2581 returning error if any.
-// Change the set of message reactions »¹ that can be used in a certain group,
-// supergroup or channel
-//
-// Links:
-//  1. https://core.telegram.org/api/reactions
-//
-// Possible errors:
-//
-//	400 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
-//	400 CHAT_NOT_MODIFIED: No changes were made to chat information because the new information you passed is identical to the current information.
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//
-// See https://core.telegram.org/method/messages.setChatAvailableReactions for reference.
 func (c *Client) MessagesSetChatAvailableReactions(ctx context.Context, request *MessagesSetChatAvailableReactionsRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

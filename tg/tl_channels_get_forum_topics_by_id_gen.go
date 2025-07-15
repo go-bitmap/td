@@ -32,13 +32,10 @@ var (
 )
 
 // ChannelsGetForumTopicsByIDRequest represents TL type `channels.getForumTopicsByID#b0831eb9`.
-// Get forum topics by their ID
-//
-// See https://core.telegram.org/method/channels.getForumTopicsByID for reference.
 type ChannelsGetForumTopicsByIDRequest struct {
-	// Forum
+	// Channel field of ChannelsGetForumTopicsByIDRequest.
 	Channel InputChannelClass
-	// Topic IDs
+	// Topics field of ChannelsGetForumTopicsByIDRequest.
 	Topics []int
 }
 
@@ -74,15 +71,6 @@ func (g *ChannelsGetForumTopicsByIDRequest) String() string {
 	}
 	type Alias ChannelsGetForumTopicsByIDRequest
 	return fmt.Sprintf("ChannelsGetForumTopicsByIDRequest%+v", Alias(*g))
-}
-
-// FillFrom fills ChannelsGetForumTopicsByIDRequest from given interface.
-func (g *ChannelsGetForumTopicsByIDRequest) FillFrom(from interface {
-	GetChannel() (value InputChannelClass)
-	GetTopics() (value []int)
-}) {
-	g.Channel = from.GetChannel()
-	g.Topics = from.GetTopics()
 }
 
 // TypeID returns type id in TL schema.
@@ -206,21 +194,7 @@ func (g *ChannelsGetForumTopicsByIDRequest) GetTopics() (value []int) {
 	return g.Topics
 }
 
-// GetChannelAsNotEmpty returns mapped value of Channel field.
-func (g *ChannelsGetForumTopicsByIDRequest) GetChannelAsNotEmpty() (NotEmptyInputChannel, bool) {
-	return g.Channel.AsNotEmpty()
-}
-
 // ChannelsGetForumTopicsByID invokes method channels.getForumTopicsByID#b0831eb9 returning error if any.
-// Get forum topics by their ID
-//
-// Possible errors:
-//
-//	400 CHANNEL_FORUM_MISSING: This supergroup is not a forum.
-//	400 CHANNEL_INVALID: The provided channel is invalid.
-//	400 TOPICS_EMPTY: You specified no topic IDs.
-//
-// See https://core.telegram.org/method/channels.getForumTopicsByID for reference.
 func (c *Client) ChannelsGetForumTopicsByID(ctx context.Context, request *ChannelsGetForumTopicsByIDRequest) (*MessagesForumTopics, error) {
 	var result MessagesForumTopics
 

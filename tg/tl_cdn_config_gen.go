@@ -32,17 +32,8 @@ var (
 )
 
 // CDNConfig represents TL type `cdnConfig#5725e40a`.
-// Configuration for CDN¹ file downloads.
-//
-// Links:
-//  1. https://core.telegram.org/cdn
-//
-// See https://core.telegram.org/constructor/cdnConfig for reference.
 type CDNConfig struct {
-	// Vector of public keys to use only during handshakes to CDN¹ DCs.
-	//
-	// Links:
-	//  1) https://core.telegram.org/cdn
+	// PublicKeys field of CDNConfig.
 	PublicKeys []CDNPublicKey
 }
 
@@ -75,13 +66,6 @@ func (c *CDNConfig) String() string {
 	}
 	type Alias CDNConfig
 	return fmt.Sprintf("CDNConfig%+v", Alias(*c))
-}
-
-// FillFrom fills CDNConfig from given interface.
-func (c *CDNConfig) FillFrom(from interface {
-	GetPublicKeys() (value []CDNPublicKey)
-}) {
-	c.PublicKeys = from.GetPublicKeys()
 }
 
 // TypeID returns type id in TL schema.

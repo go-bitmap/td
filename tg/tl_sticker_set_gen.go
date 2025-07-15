@@ -32,74 +32,54 @@ var (
 )
 
 // StickerSet represents TL type `stickerSet#2dd14edc`.
-// Represents a stickerset (stickerpack)
-//
-// See https://core.telegram.org/constructor/stickerSet for reference.
 type StickerSet struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of StickerSet.
 	Flags bin.Fields
-	// Whether this stickerset was archived (due to too many saved stickers in the current
-	// account)
+	// Archived field of StickerSet.
 	Archived bool
-	// Is this stickerset official
+	// Official field of StickerSet.
 	Official bool
-	// Is this a mask stickerset
+	// Masks field of StickerSet.
 	Masks bool
-	// This is a custom emoji stickerset
+	// Emojis field of StickerSet.
 	Emojis bool
-	// Whether the color of this TGS custom emoji stickerset should be changed to the text
-	// color when used in messages, the accent color if used as emoji status, white on chat
-	// photos, or another appropriate color based on context.
+	// TextColor field of StickerSet.
 	TextColor bool
-	// If set, this custom emoji stickerset can be used in channel/supergroup emoji
-	// statuses¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/emoji-status
+	// ChannelEmojiStatus field of StickerSet.
 	ChannelEmojiStatus bool
-	// Whether we created this stickerset
+	// Creator field of StickerSet.
 	Creator bool
-	// When was this stickerset installed
+	// InstalledDate field of StickerSet.
 	//
 	// Use SetInstalledDate and GetInstalledDate helpers.
 	InstalledDate int
-	// ID of the stickerset
+	// ID field of StickerSet.
 	ID int64
-	// Access hash of stickerset
+	// AccessHash field of StickerSet.
 	AccessHash int64
-	// Title of stickerset
+	// Title field of StickerSet.
 	Title string
-	// Short name of stickerset, used when sharing stickerset using stickerset deep links¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/links#stickerset-links
+	// ShortName field of StickerSet.
 	ShortName string
-	// Stickerset thumbnail
+	// Thumbs field of StickerSet.
 	//
 	// Use SetThumbs and GetThumbs helpers.
 	Thumbs []PhotoSizeClass
-	// DC ID of thumbnail
+	// ThumbDCID field of StickerSet.
 	//
 	// Use SetThumbDCID and GetThumbDCID helpers.
 	ThumbDCID int
-	// Thumbnail version
+	// ThumbVersion field of StickerSet.
 	//
 	// Use SetThumbVersion and GetThumbVersion helpers.
 	ThumbVersion int
-	// Document ID of custom emoji thumbnail, fetch the document using messages
-	// getCustomEmojiDocuments¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/messages.getCustomEmojiDocuments
+	// ThumbDocumentID field of StickerSet.
 	//
 	// Use SetThumbDocumentID and GetThumbDocumentID helpers.
 	ThumbDocumentID int64
-	// Number of stickers in pack
+	// Count field of StickerSet.
 	Count int
-	// Hash
+	// Hash field of StickerSet.
 	Hash int
 }
 
@@ -186,62 +166,6 @@ func (s *StickerSet) String() string {
 	}
 	type Alias StickerSet
 	return fmt.Sprintf("StickerSet%+v", Alias(*s))
-}
-
-// FillFrom fills StickerSet from given interface.
-func (s *StickerSet) FillFrom(from interface {
-	GetArchived() (value bool)
-	GetOfficial() (value bool)
-	GetMasks() (value bool)
-	GetEmojis() (value bool)
-	GetTextColor() (value bool)
-	GetChannelEmojiStatus() (value bool)
-	GetCreator() (value bool)
-	GetInstalledDate() (value int, ok bool)
-	GetID() (value int64)
-	GetAccessHash() (value int64)
-	GetTitle() (value string)
-	GetShortName() (value string)
-	GetThumbs() (value []PhotoSizeClass, ok bool)
-	GetThumbDCID() (value int, ok bool)
-	GetThumbVersion() (value int, ok bool)
-	GetThumbDocumentID() (value int64, ok bool)
-	GetCount() (value int)
-	GetHash() (value int)
-}) {
-	s.Archived = from.GetArchived()
-	s.Official = from.GetOfficial()
-	s.Masks = from.GetMasks()
-	s.Emojis = from.GetEmojis()
-	s.TextColor = from.GetTextColor()
-	s.ChannelEmojiStatus = from.GetChannelEmojiStatus()
-	s.Creator = from.GetCreator()
-	if val, ok := from.GetInstalledDate(); ok {
-		s.InstalledDate = val
-	}
-
-	s.ID = from.GetID()
-	s.AccessHash = from.GetAccessHash()
-	s.Title = from.GetTitle()
-	s.ShortName = from.GetShortName()
-	if val, ok := from.GetThumbs(); ok {
-		s.Thumbs = val
-	}
-
-	if val, ok := from.GetThumbDCID(); ok {
-		s.ThumbDCID = val
-	}
-
-	if val, ok := from.GetThumbVersion(); ok {
-		s.ThumbVersion = val
-	}
-
-	if val, ok := from.GetThumbDocumentID(); ok {
-		s.ThumbDocumentID = val
-	}
-
-	s.Count = from.GetCount()
-	s.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -832,12 +756,4 @@ func (s *StickerSet) GetHash() (value int) {
 		return
 	}
 	return s.Hash
-}
-
-// MapThumbs returns field Thumbs wrapped in PhotoSizeClassArray helper.
-func (s *StickerSet) MapThumbs() (value PhotoSizeClassArray, ok bool) {
-	if !s.Flags.Has(4) {
-		return value, false
-	}
-	return PhotoSizeClassArray(s.Thumbs), true
 }

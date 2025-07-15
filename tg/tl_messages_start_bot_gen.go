@@ -32,23 +32,14 @@ var (
 )
 
 // MessagesStartBotRequest represents TL type `messages.startBot#e6df7378`.
-// Start a conversation with a bot using a deep linking parameter¹
-//
-// Links:
-//  1. https://core.telegram.org/api/links#bot-links
-//
-// See https://core.telegram.org/method/messages.startBot for reference.
 type MessagesStartBotRequest struct {
-	// The bot
+	// Bot field of MessagesStartBotRequest.
 	Bot InputUserClass
-	// The chat where to start the bot, can be the bot's private chat or a group
+	// Peer field of MessagesStartBotRequest.
 	Peer InputPeerClass
-	// Random ID to avoid resending the same message
+	// RandomID field of MessagesStartBotRequest.
 	RandomID int64
-	// Deep linking parameter¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/links#bot-links
+	// StartParam field of MessagesStartBotRequest.
 	StartParam string
 }
 
@@ -90,19 +81,6 @@ func (s *MessagesStartBotRequest) String() string {
 	}
 	type Alias MessagesStartBotRequest
 	return fmt.Sprintf("MessagesStartBotRequest%+v", Alias(*s))
-}
-
-// FillFrom fills MessagesStartBotRequest from given interface.
-func (s *MessagesStartBotRequest) FillFrom(from interface {
-	GetBot() (value InputUserClass)
-	GetPeer() (value InputPeerClass)
-	GetRandomID() (value int64)
-	GetStartParam() (value string)
-}) {
-	s.Bot = from.GetBot()
-	s.Peer = from.GetPeer()
-	s.RandomID = from.GetRandomID()
-	s.StartParam = from.GetStartParam()
 }
 
 // TypeID returns type id in TL schema.
@@ -259,25 +237,6 @@ func (s *MessagesStartBotRequest) GetStartParam() (value string) {
 }
 
 // MessagesStartBot invokes method messages.startBot#e6df7378 returning error if any.
-// Start a conversation with a bot using a deep linking parameter¹
-//
-// Links:
-//  1. https://core.telegram.org/api/links#bot-links
-//
-// Possible errors:
-//
-//	400 BOT_INVALID: This is not a valid bot.
-//	400 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
-//	403 CHAT_WRITE_FORBIDDEN: You can't write in this chat.
-//	400 INPUT_USER_DEACTIVATED: The specified user was deleted.
-//	400 MSG_ID_INVALID: Invalid message ID provided.
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//	500 RANDOM_ID_DUPLICATE: You provided a random ID that was already used.
-//	400 START_PARAM_EMPTY: The start parameter is empty.
-//	400 START_PARAM_INVALID: Start parameter invalid.
-//	400 START_PARAM_TOO_LONG: Start parameter is too long.
-//
-// See https://core.telegram.org/method/messages.startBot for reference.
 func (c *Client) MessagesStartBot(ctx context.Context, request *MessagesStartBotRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

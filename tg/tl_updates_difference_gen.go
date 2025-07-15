@@ -32,13 +32,10 @@ var (
 )
 
 // UpdatesDifferenceEmpty represents TL type `updates.differenceEmpty#5d75a138`.
-// No events.
-//
-// See https://core.telegram.org/constructor/updates.differenceEmpty for reference.
 type UpdatesDifferenceEmpty struct {
-	// Current date
+	// Date field of UpdatesDifferenceEmpty.
 	Date int
-	// Number of sent updates
+	// Seq field of UpdatesDifferenceEmpty.
 	Seq int
 }
 
@@ -79,15 +76,6 @@ func (d *UpdatesDifferenceEmpty) String() string {
 	}
 	type Alias UpdatesDifferenceEmpty
 	return fmt.Sprintf("UpdatesDifferenceEmpty%+v", Alias(*d))
-}
-
-// FillFrom fills UpdatesDifferenceEmpty from given interface.
-func (d *UpdatesDifferenceEmpty) FillFrom(from interface {
-	GetDate() (value int)
-	GetSeq() (value int)
-}) {
-	d.Date = from.GetDate()
-	d.Seq = from.GetSeq()
 }
 
 // TypeID returns type id in TL schema.
@@ -194,21 +182,18 @@ func (d *UpdatesDifferenceEmpty) GetSeq() (value int) {
 }
 
 // UpdatesDifference represents TL type `updates.difference#f49ca0`.
-// Full list of occurred events.
-//
-// See https://core.telegram.org/constructor/updates.difference for reference.
 type UpdatesDifference struct {
-	// List of new messages
+	// NewMessages field of UpdatesDifference.
 	NewMessages []MessageClass
-	// List of new encrypted secret chat messages
+	// NewEncryptedMessages field of UpdatesDifference.
 	NewEncryptedMessages []EncryptedMessageClass
-	// List of updates
+	// OtherUpdates field of UpdatesDifference.
 	OtherUpdates []UpdateClass
-	// List of chats mentioned in events
+	// Chats field of UpdatesDifference.
 	Chats []ChatClass
-	// List of users mentioned in events
+	// Users field of UpdatesDifference.
 	Users []UserClass
-	// Current state
+	// State field of UpdatesDifference.
 	State UpdatesState
 }
 
@@ -261,23 +246,6 @@ func (d *UpdatesDifference) String() string {
 	}
 	type Alias UpdatesDifference
 	return fmt.Sprintf("UpdatesDifference%+v", Alias(*d))
-}
-
-// FillFrom fills UpdatesDifference from given interface.
-func (d *UpdatesDifference) FillFrom(from interface {
-	GetNewMessages() (value []MessageClass)
-	GetNewEncryptedMessages() (value []EncryptedMessageClass)
-	GetOtherUpdates() (value []UpdateClass)
-	GetChats() (value []ChatClass)
-	GetUsers() (value []UserClass)
-	GetState() (value UpdatesState)
-}) {
-	d.NewMessages = from.GetNewMessages()
-	d.NewEncryptedMessages = from.GetNewEncryptedMessages()
-	d.OtherUpdates = from.GetOtherUpdates()
-	d.Chats = from.GetChats()
-	d.Users = from.GetUsers()
-	d.State = from.GetState()
 }
 
 // TypeID returns type id in TL schema.
@@ -553,50 +521,19 @@ func (d *UpdatesDifference) GetState() (value UpdatesState) {
 	return d.State
 }
 
-// MapNewMessages returns field NewMessages wrapped in MessageClassArray helper.
-func (d *UpdatesDifference) MapNewMessages() (value MessageClassArray) {
-	return MessageClassArray(d.NewMessages)
-}
-
-// MapNewEncryptedMessages returns field NewEncryptedMessages wrapped in EncryptedMessageClassArray helper.
-func (d *UpdatesDifference) MapNewEncryptedMessages() (value EncryptedMessageClassArray) {
-	return EncryptedMessageClassArray(d.NewEncryptedMessages)
-}
-
-// MapOtherUpdates returns field OtherUpdates wrapped in UpdateClassArray helper.
-func (d *UpdatesDifference) MapOtherUpdates() (value UpdateClassArray) {
-	return UpdateClassArray(d.OtherUpdates)
-}
-
-// MapChats returns field Chats wrapped in ChatClassArray helper.
-func (d *UpdatesDifference) MapChats() (value ChatClassArray) {
-	return ChatClassArray(d.Chats)
-}
-
-// MapUsers returns field Users wrapped in UserClassArray helper.
-func (d *UpdatesDifference) MapUsers() (value UserClassArray) {
-	return UserClassArray(d.Users)
-}
-
 // UpdatesDifferenceSlice represents TL type `updates.differenceSlice#a8fb1981`.
-// Incomplete list of occurred events.
-//
-// See https://core.telegram.org/constructor/updates.differenceSlice for reference.
 type UpdatesDifferenceSlice struct {
-	// List of new messages
+	// NewMessages field of UpdatesDifferenceSlice.
 	NewMessages []MessageClass
-	// New messages from the encrypted event sequence¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/updates
+	// NewEncryptedMessages field of UpdatesDifferenceSlice.
 	NewEncryptedMessages []EncryptedMessageClass
-	// List of updates
+	// OtherUpdates field of UpdatesDifferenceSlice.
 	OtherUpdates []UpdateClass
-	// List of chats mentioned in events
+	// Chats field of UpdatesDifferenceSlice.
 	Chats []ChatClass
-	// List of users mentioned in events
+	// Users field of UpdatesDifferenceSlice.
 	Users []UserClass
-	// Intermediary state
+	// IntermediateState field of UpdatesDifferenceSlice.
 	IntermediateState UpdatesState
 }
 
@@ -649,23 +586,6 @@ func (d *UpdatesDifferenceSlice) String() string {
 	}
 	type Alias UpdatesDifferenceSlice
 	return fmt.Sprintf("UpdatesDifferenceSlice%+v", Alias(*d))
-}
-
-// FillFrom fills UpdatesDifferenceSlice from given interface.
-func (d *UpdatesDifferenceSlice) FillFrom(from interface {
-	GetNewMessages() (value []MessageClass)
-	GetNewEncryptedMessages() (value []EncryptedMessageClass)
-	GetOtherUpdates() (value []UpdateClass)
-	GetChats() (value []ChatClass)
-	GetUsers() (value []UserClass)
-	GetIntermediateState() (value UpdatesState)
-}) {
-	d.NewMessages = from.GetNewMessages()
-	d.NewEncryptedMessages = from.GetNewEncryptedMessages()
-	d.OtherUpdates = from.GetOtherUpdates()
-	d.Chats = from.GetChats()
-	d.Users = from.GetUsers()
-	d.IntermediateState = from.GetIntermediateState()
 }
 
 // TypeID returns type id in TL schema.
@@ -941,40 +861,9 @@ func (d *UpdatesDifferenceSlice) GetIntermediateState() (value UpdatesState) {
 	return d.IntermediateState
 }
 
-// MapNewMessages returns field NewMessages wrapped in MessageClassArray helper.
-func (d *UpdatesDifferenceSlice) MapNewMessages() (value MessageClassArray) {
-	return MessageClassArray(d.NewMessages)
-}
-
-// MapNewEncryptedMessages returns field NewEncryptedMessages wrapped in EncryptedMessageClassArray helper.
-func (d *UpdatesDifferenceSlice) MapNewEncryptedMessages() (value EncryptedMessageClassArray) {
-	return EncryptedMessageClassArray(d.NewEncryptedMessages)
-}
-
-// MapOtherUpdates returns field OtherUpdates wrapped in UpdateClassArray helper.
-func (d *UpdatesDifferenceSlice) MapOtherUpdates() (value UpdateClassArray) {
-	return UpdateClassArray(d.OtherUpdates)
-}
-
-// MapChats returns field Chats wrapped in ChatClassArray helper.
-func (d *UpdatesDifferenceSlice) MapChats() (value ChatClassArray) {
-	return ChatClassArray(d.Chats)
-}
-
-// MapUsers returns field Users wrapped in UserClassArray helper.
-func (d *UpdatesDifferenceSlice) MapUsers() (value UserClassArray) {
-	return UserClassArray(d.Users)
-}
-
 // UpdatesDifferenceTooLong represents TL type `updates.differenceTooLong#4afe8f6d`.
-// The difference is too long¹, and the specified state must be used to refetch updates.
-//
-// Links:
-//  1. https://core.telegram.org/api/updates#recovering-gaps
-//
-// See https://core.telegram.org/constructor/updates.differenceTooLong for reference.
 type UpdatesDifferenceTooLong struct {
-	// The new state to use.
+	// Pts field of UpdatesDifferenceTooLong.
 	Pts int
 }
 
@@ -1012,13 +901,6 @@ func (d *UpdatesDifferenceTooLong) String() string {
 	}
 	type Alias UpdatesDifferenceTooLong
 	return fmt.Sprintf("UpdatesDifferenceTooLong%+v", Alias(*d))
-}
-
-// FillFrom fills UpdatesDifferenceTooLong from given interface.
-func (d *UpdatesDifferenceTooLong) FillFrom(from interface {
-	GetPts() (value int)
-}) {
-	d.Pts = from.GetPts()
 }
 
 // TypeID returns type id in TL schema.
@@ -1108,8 +990,6 @@ func (d *UpdatesDifferenceTooLong) GetPts() (value int) {
 const UpdatesDifferenceClassName = "updates.Difference"
 
 // UpdatesDifferenceClass represents updates.Difference generic type.
-//
-// See https://core.telegram.org/type/updates.Difference for reference.
 //
 // Constructors:
 //   - [UpdatesDifferenceEmpty]

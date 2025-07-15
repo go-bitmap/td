@@ -32,8 +32,6 @@ var (
 )
 
 // PaymentsResaleStarGifts represents TL type `payments.resaleStarGifts#947a12df`.
-//
-// See https://core.telegram.org/constructor/payments.resaleStarGifts for reference.
 type PaymentsResaleStarGifts struct {
 	// Flags field of PaymentsResaleStarGifts.
 	Flags bin.Fields
@@ -116,39 +114,6 @@ func (r *PaymentsResaleStarGifts) String() string {
 	}
 	type Alias PaymentsResaleStarGifts
 	return fmt.Sprintf("PaymentsResaleStarGifts%+v", Alias(*r))
-}
-
-// FillFrom fills PaymentsResaleStarGifts from given interface.
-func (r *PaymentsResaleStarGifts) FillFrom(from interface {
-	GetCount() (value int)
-	GetGifts() (value []StarGiftClass)
-	GetNextOffset() (value string, ok bool)
-	GetAttributes() (value []StarGiftAttributeClass, ok bool)
-	GetAttributesHash() (value int64, ok bool)
-	GetChats() (value []ChatClass)
-	GetCounters() (value []StarGiftAttributeCounter, ok bool)
-	GetUsers() (value []UserClass)
-}) {
-	r.Count = from.GetCount()
-	r.Gifts = from.GetGifts()
-	if val, ok := from.GetNextOffset(); ok {
-		r.NextOffset = val
-	}
-
-	if val, ok := from.GetAttributes(); ok {
-		r.Attributes = val
-	}
-
-	if val, ok := from.GetAttributesHash(); ok {
-		r.AttributesHash = val
-	}
-
-	r.Chats = from.GetChats()
-	if val, ok := from.GetCounters(); ok {
-		r.Counters = val
-	}
-
-	r.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -536,27 +501,4 @@ func (r *PaymentsResaleStarGifts) GetUsers() (value []UserClass) {
 		return
 	}
 	return r.Users
-}
-
-// MapGifts returns field Gifts wrapped in StarGiftClassArray helper.
-func (r *PaymentsResaleStarGifts) MapGifts() (value StarGiftClassArray) {
-	return StarGiftClassArray(r.Gifts)
-}
-
-// MapAttributes returns field Attributes wrapped in StarGiftAttributeClassArray helper.
-func (r *PaymentsResaleStarGifts) MapAttributes() (value StarGiftAttributeClassArray, ok bool) {
-	if !r.Flags.Has(1) {
-		return value, false
-	}
-	return StarGiftAttributeClassArray(r.Attributes), true
-}
-
-// MapChats returns field Chats wrapped in ChatClassArray helper.
-func (r *PaymentsResaleStarGifts) MapChats() (value ChatClassArray) {
-	return ChatClassArray(r.Chats)
-}
-
-// MapUsers returns field Users wrapped in UserClassArray helper.
-func (r *PaymentsResaleStarGifts) MapUsers() (value UserClassArray) {
-	return UserClassArray(r.Users)
 }

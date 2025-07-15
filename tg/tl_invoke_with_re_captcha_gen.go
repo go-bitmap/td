@@ -32,8 +32,6 @@ var (
 )
 
 // InvokeWithReCaptchaRequest represents TL type `invokeWithReCaptcha#adbb0f94`.
-//
-// See https://core.telegram.org/constructor/invokeWithReCaptcha for reference.
 type InvokeWithReCaptchaRequest struct {
 	// Token field of InvokeWithReCaptchaRequest.
 	Token string
@@ -73,15 +71,6 @@ func (i *InvokeWithReCaptchaRequest) String() string {
 	}
 	type Alias InvokeWithReCaptchaRequest
 	return fmt.Sprintf("InvokeWithReCaptchaRequest%+v", Alias(*i))
-}
-
-// FillFrom fills InvokeWithReCaptchaRequest from given interface.
-func (i *InvokeWithReCaptchaRequest) FillFrom(from interface {
-	GetToken() (value string)
-	GetQuery() (value bin.Object)
-}) {
-	i.Token = from.GetToken()
-	i.Query = from.GetQuery()
 }
 
 // TypeID returns type id in TL schema.

@@ -32,14 +32,8 @@ var (
 )
 
 // MessagesViewSponsoredMessageRequest represents TL type `messages.viewSponsoredMessage#269e3643`.
-// Mark a specific sponsored message »¹ as read
-//
-// Links:
-//  1. https://core.telegram.org/api/sponsored-messages
-//
-// See https://core.telegram.org/method/messages.viewSponsoredMessage for reference.
 type MessagesViewSponsoredMessageRequest struct {
-	// The ad's unique ID.
+	// RandomID field of MessagesViewSponsoredMessageRequest.
 	RandomID []byte
 }
 
@@ -72,13 +66,6 @@ func (v *MessagesViewSponsoredMessageRequest) String() string {
 	}
 	type Alias MessagesViewSponsoredMessageRequest
 	return fmt.Sprintf("MessagesViewSponsoredMessageRequest%+v", Alias(*v))
-}
-
-// FillFrom fills MessagesViewSponsoredMessageRequest from given interface.
-func (v *MessagesViewSponsoredMessageRequest) FillFrom(from interface {
-	GetRandomID() (value []byte)
-}) {
-	v.RandomID = from.GetRandomID()
 }
 
 // TypeID returns type id in TL schema.
@@ -165,12 +152,6 @@ func (v *MessagesViewSponsoredMessageRequest) GetRandomID() (value []byte) {
 }
 
 // MessagesViewSponsoredMessage invokes method messages.viewSponsoredMessage#269e3643 returning error if any.
-// Mark a specific sponsored message »¹ as read
-//
-// Links:
-//  1. https://core.telegram.org/api/sponsored-messages
-//
-// See https://core.telegram.org/method/messages.viewSponsoredMessage for reference.
 func (c *Client) MessagesViewSponsoredMessage(ctx context.Context, randomid []byte) (bool, error) {
 	var result BoolBox
 

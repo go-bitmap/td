@@ -32,17 +32,14 @@ var (
 )
 
 // EmojiKeywordsDifference represents TL type `emojiKeywordsDifference#5cc761bd`.
-// Changes to emoji keywords
-//
-// See https://core.telegram.org/constructor/emojiKeywordsDifference for reference.
 type EmojiKeywordsDifference struct {
-	// Language code for keywords
+	// LangCode field of EmojiKeywordsDifference.
 	LangCode string
-	// Previous emoji keyword list version
+	// FromVersion field of EmojiKeywordsDifference.
 	FromVersion int
-	// Current version of emoji keyword list
+	// Version field of EmojiKeywordsDifference.
 	Version int
-	// Emojis associated to keywords
+	// Keywords field of EmojiKeywordsDifference.
 	Keywords []EmojiKeywordClass
 }
 
@@ -84,19 +81,6 @@ func (e *EmojiKeywordsDifference) String() string {
 	}
 	type Alias EmojiKeywordsDifference
 	return fmt.Sprintf("EmojiKeywordsDifference%+v", Alias(*e))
-}
-
-// FillFrom fills EmojiKeywordsDifference from given interface.
-func (e *EmojiKeywordsDifference) FillFrom(from interface {
-	GetLangCode() (value string)
-	GetFromVersion() (value int)
-	GetVersion() (value int)
-	GetKeywords() (value []EmojiKeywordClass)
-}) {
-	e.LangCode = from.GetLangCode()
-	e.FromVersion = from.GetFromVersion()
-	e.Version = from.GetVersion()
-	e.Keywords = from.GetKeywords()
 }
 
 // TypeID returns type id in TL schema.
@@ -258,9 +242,4 @@ func (e *EmojiKeywordsDifference) GetKeywords() (value []EmojiKeywordClass) {
 		return
 	}
 	return e.Keywords
-}
-
-// MapKeywords returns field Keywords wrapped in EmojiKeywordClassArray helper.
-func (e *EmojiKeywordsDifference) MapKeywords() (value EmojiKeywordClassArray) {
-	return EmojiKeywordClassArray(e.Keywords)
 }

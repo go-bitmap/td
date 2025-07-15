@@ -32,18 +32,8 @@ var (
 )
 
 // AccountGetPasswordSettingsRequest represents TL type `account.getPasswordSettings#9cd4eaf9`.
-// Get private info associated to the password info (recovery email, telegram passport¹
-// info & so on)
-//
-// Links:
-//  1. https://core.telegram.org/passport
-//
-// See https://core.telegram.org/method/account.getPasswordSettings for reference.
 type AccountGetPasswordSettingsRequest struct {
-	// The password (see SRP¹)
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/srp
+	// Password field of AccountGetPasswordSettingsRequest.
 	Password InputCheckPasswordSRPClass
 }
 
@@ -76,13 +66,6 @@ func (g *AccountGetPasswordSettingsRequest) String() string {
 	}
 	type Alias AccountGetPasswordSettingsRequest
 	return fmt.Sprintf("AccountGetPasswordSettingsRequest%+v", Alias(*g))
-}
-
-// FillFrom fills AccountGetPasswordSettingsRequest from given interface.
-func (g *AccountGetPasswordSettingsRequest) FillFrom(from interface {
-	GetPassword() (value InputCheckPasswordSRPClass)
-}) {
-	g.Password = from.GetPassword()
 }
 
 // TypeID returns type id in TL schema.
@@ -173,23 +156,7 @@ func (g *AccountGetPasswordSettingsRequest) GetPassword() (value InputCheckPassw
 	return g.Password
 }
 
-// GetPasswordAsNotEmpty returns mapped value of Password field.
-func (g *AccountGetPasswordSettingsRequest) GetPasswordAsNotEmpty() (*InputCheckPasswordSRP, bool) {
-	return g.Password.AsNotEmpty()
-}
-
 // AccountGetPasswordSettings invokes method account.getPasswordSettings#9cd4eaf9 returning error if any.
-// Get private info associated to the password info (recovery email, telegram passport¹
-// info & so on)
-//
-// Links:
-//  1. https://core.telegram.org/passport
-//
-// Possible errors:
-//
-//	400 PASSWORD_HASH_INVALID: The provided password hash is invalid.
-//
-// See https://core.telegram.org/method/account.getPasswordSettings for reference.
 func (c *Client) AccountGetPasswordSettings(ctx context.Context, password InputCheckPasswordSRPClass) (*AccountPasswordSettings, error) {
 	var result AccountPasswordSettings
 

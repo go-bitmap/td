@@ -32,28 +32,18 @@ var (
 )
 
 // AccountUpdateConnectedBotRequest represents TL type `account.updateConnectedBot#66a08c7e`.
-// Connect a business bot »¹ to the current account, or to change the current
-// connection settings.
-//
-// Links:
-//  1. https://core.telegram.org/api/business#connected-bots
-//
-// See https://core.telegram.org/method/account.updateConnectedBot for reference.
 type AccountUpdateConnectedBotRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of AccountUpdateConnectedBotRequest.
 	Flags bin.Fields
-	// Whether to fully disconnect the bot from the current account.
+	// Deleted field of AccountUpdateConnectedBotRequest.
 	Deleted bool
 	// Rights field of AccountUpdateConnectedBotRequest.
 	//
 	// Use SetRights and GetRights helpers.
 	Rights BusinessBotRights
-	// The bot to connect or disconnect
+	// Bot field of AccountUpdateConnectedBotRequest.
 	Bot InputUserClass
-	// Configuration for the business connection
+	// Recipients field of AccountUpdateConnectedBotRequest.
 	Recipients InputBusinessBotRecipients
 }
 
@@ -98,22 +88,6 @@ func (u *AccountUpdateConnectedBotRequest) String() string {
 	}
 	type Alias AccountUpdateConnectedBotRequest
 	return fmt.Sprintf("AccountUpdateConnectedBotRequest%+v", Alias(*u))
-}
-
-// FillFrom fills AccountUpdateConnectedBotRequest from given interface.
-func (u *AccountUpdateConnectedBotRequest) FillFrom(from interface {
-	GetDeleted() (value bool)
-	GetRights() (value BusinessBotRights, ok bool)
-	GetBot() (value InputUserClass)
-	GetRecipients() (value InputBusinessBotRecipients)
-}) {
-	u.Deleted = from.GetDeleted()
-	if val, ok := from.GetRights(); ok {
-		u.Rights = val
-	}
-
-	u.Bot = from.GetBot()
-	u.Recipients = from.GetRecipients()
 }
 
 // TypeID returns type id in TL schema.
@@ -302,19 +276,6 @@ func (u *AccountUpdateConnectedBotRequest) GetRecipients() (value InputBusinessB
 }
 
 // AccountUpdateConnectedBot invokes method account.updateConnectedBot#66a08c7e returning error if any.
-// Connect a business bot »¹ to the current account, or to change the current
-// connection settings.
-//
-// Links:
-//  1. https://core.telegram.org/api/business#connected-bots
-//
-// Possible errors:
-//
-//	400 BOT_BUSINESS_MISSING: The specified bot is not a business bot (the user.bot_business flag is not set).
-//	400 BUSINESS_RECIPIENTS_EMPTY: You didn't set any flag in inputBusinessBotRecipients, thus the bot cannot work with any peer.
-//	403 PREMIUM_ACCOUNT_REQUIRED: A premium account is required to execute this action.
-//
-// See https://core.telegram.org/method/account.updateConnectedBot for reference.
 func (c *Client) AccountUpdateConnectedBot(ctx context.Context, request *AccountUpdateConnectedBotRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

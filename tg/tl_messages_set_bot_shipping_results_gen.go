@@ -32,29 +32,16 @@ var (
 )
 
 // MessagesSetBotShippingResultsRequest represents TL type `messages.setBotShippingResults#e5f672fa`.
-// If you sent an invoice requesting a shipping address and the parameter is_flexible was
-// specified, the bot will receive an updateBotShippingQuery¹ update. Use this method to
-// reply to shipping queries.
-//
-// Links:
-//  1. https://core.telegram.org/constructor/updateBotShippingQuery
-//
-// See https://core.telegram.org/method/messages.setBotShippingResults for reference.
 type MessagesSetBotShippingResultsRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessagesSetBotShippingResultsRequest.
 	Flags bin.Fields
-	// Unique identifier for the query to be answered
+	// QueryID field of MessagesSetBotShippingResultsRequest.
 	QueryID int64
-	// Error message in human readable form that explains why it is impossible to complete
-	// the order (e.g. "Sorry, delivery to your desired address is unavailable"). Telegram
-	// will display this message to the user.
+	// Error field of MessagesSetBotShippingResultsRequest.
 	//
 	// Use SetError and GetError helpers.
 	Error string
-	// A vector of available shipping options.
+	// ShippingOptions field of MessagesSetBotShippingResultsRequest.
 	//
 	// Use SetShippingOptions and GetShippingOptions helpers.
 	ShippingOptions []ShippingOption
@@ -98,23 +85,6 @@ func (s *MessagesSetBotShippingResultsRequest) String() string {
 	}
 	type Alias MessagesSetBotShippingResultsRequest
 	return fmt.Sprintf("MessagesSetBotShippingResultsRequest%+v", Alias(*s))
-}
-
-// FillFrom fills MessagesSetBotShippingResultsRequest from given interface.
-func (s *MessagesSetBotShippingResultsRequest) FillFrom(from interface {
-	GetQueryID() (value int64)
-	GetError() (value string, ok bool)
-	GetShippingOptions() (value []ShippingOption, ok bool)
-}) {
-	s.QueryID = from.GetQueryID()
-	if val, ok := from.GetError(); ok {
-		s.Error = val
-	}
-
-	if val, ok := from.GetShippingOptions(); ok {
-		s.ShippingOptions = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -301,20 +271,6 @@ func (s *MessagesSetBotShippingResultsRequest) GetShippingOptions() (value []Shi
 }
 
 // MessagesSetBotShippingResults invokes method messages.setBotShippingResults#e5f672fa returning error if any.
-// If you sent an invoice requesting a shipping address and the parameter is_flexible was
-// specified, the bot will receive an updateBotShippingQuery¹ update. Use this method to
-// reply to shipping queries.
-//
-// Links:
-//  1. https://core.telegram.org/constructor/updateBotShippingQuery
-//
-// Possible errors:
-//
-//	400 QUERY_ID_INVALID: The query ID is invalid.
-//	400 USER_BOT_REQUIRED: This method can only be called by a bot.
-//
-// See https://core.telegram.org/method/messages.setBotShippingResults for reference.
-// Can be used by bots.
 func (c *Client) MessagesSetBotShippingResults(ctx context.Context, request *MessagesSetBotShippingResultsRequest) (bool, error) {
 	var result BoolBox
 

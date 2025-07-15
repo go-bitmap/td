@@ -32,26 +32,14 @@ var (
 )
 
 // AuthImportBotAuthorizationRequest represents TL type `auth.importBotAuthorization#67a3ff2c`.
-// Login as a bot
-//
-// See https://core.telegram.org/method/auth.importBotAuthorization for reference.
 type AuthImportBotAuthorizationRequest struct {
-	// Reserved for future use
+	// Flags field of AuthImportBotAuthorizationRequest.
 	Flags int
-	// Application identifier (see. App configuration¹)
-	//
-	// Links:
-	//  1) https://core.telegram.org/myapp
+	// APIID field of AuthImportBotAuthorizationRequest.
 	APIID int
-	// Application identifier hash (see. App configuration¹)
-	//
-	// Links:
-	//  1) https://core.telegram.org/myapp
+	// APIHash field of AuthImportBotAuthorizationRequest.
 	APIHash string
-	// Bot token (see bots¹)
-	//
-	// Links:
-	//  1) https://core.telegram.org/bots
+	// BotAuthToken field of AuthImportBotAuthorizationRequest.
 	BotAuthToken string
 }
 
@@ -93,19 +81,6 @@ func (i *AuthImportBotAuthorizationRequest) String() string {
 	}
 	type Alias AuthImportBotAuthorizationRequest
 	return fmt.Sprintf("AuthImportBotAuthorizationRequest%+v", Alias(*i))
-}
-
-// FillFrom fills AuthImportBotAuthorizationRequest from given interface.
-func (i *AuthImportBotAuthorizationRequest) FillFrom(from interface {
-	GetFlags() (value int)
-	GetAPIID() (value int)
-	GetAPIHash() (value string)
-	GetBotAuthToken() (value string)
-}) {
-	i.Flags = from.GetFlags()
-	i.APIID = from.GetAPIID()
-	i.APIHash = from.GetAPIHash()
-	i.BotAuthToken = from.GetBotAuthToken()
 }
 
 // TypeID returns type id in TL schema.
@@ -252,17 +227,6 @@ func (i *AuthImportBotAuthorizationRequest) GetBotAuthToken() (value string) {
 }
 
 // AuthImportBotAuthorization invokes method auth.importBotAuthorization#67a3ff2c returning error if any.
-// Login as a bot
-//
-// Possible errors:
-//
-//	400 ACCESS_TOKEN_EXPIRED: Access token expired.
-//	400 ACCESS_TOKEN_INVALID: Access token invalid.
-//	400 API_ID_INVALID: API ID invalid.
-//	400 API_ID_PUBLISHED_FLOOD: This API id was published somewhere, you can't use it now.
-//
-// See https://core.telegram.org/method/auth.importBotAuthorization for reference.
-// Can be used by bots.
 func (c *Client) AuthImportBotAuthorization(ctx context.Context, request *AuthImportBotAuthorizationRequest) (AuthAuthorizationClass, error) {
 	var result AuthAuthorizationBox
 

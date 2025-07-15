@@ -32,14 +32,8 @@ var (
 )
 
 // MessagesImportChatInviteRequest represents TL type `messages.importChatInvite#6c50051c`.
-// Import a chat invite and join a private chat/supergroup/channel
-//
-// See https://core.telegram.org/method/messages.importChatInvite for reference.
 type MessagesImportChatInviteRequest struct {
-	// hash from a chat invite deep link¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/links#chat-invite-links
+	// Hash field of MessagesImportChatInviteRequest.
 	Hash string
 }
 
@@ -72,13 +66,6 @@ func (i *MessagesImportChatInviteRequest) String() string {
 	}
 	type Alias MessagesImportChatInviteRequest
 	return fmt.Sprintf("MessagesImportChatInviteRequest%+v", Alias(*i))
-}
-
-// FillFrom fills MessagesImportChatInviteRequest from given interface.
-func (i *MessagesImportChatInviteRequest) FillFrom(from interface {
-	GetHash() (value string)
-}) {
-	i.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -165,26 +152,6 @@ func (i *MessagesImportChatInviteRequest) GetHash() (value string) {
 }
 
 // MessagesImportChatInvite invokes method messages.importChatInvite#6c50051c returning error if any.
-// Import a chat invite and join a private chat/supergroup/channel
-//
-// Possible errors:
-//
-//	400 CHANNELS_TOO_MUCH: You have joined too many channels/supergroups.
-//	400 CHANNEL_INVALID: The provided channel is invalid.
-//	400 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
-//	400 CHAT_INVALID: Invalid chat.
-//	400 INVITE_HASH_EMPTY: The invite hash is empty.
-//	406 INVITE_HASH_EXPIRED: The invite link has expired.
-//	400 INVITE_HASH_INVALID: The invite hash is invalid.
-//	400 INVITE_REQUEST_SENT: You have successfully requested to join this chat or channel.
-//	400 MSG_ID_INVALID: Invalid message ID provided.
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//	400 STARS_PAYMENT_REQUIRED: To import this chat invite link, you must first pay for the associated Telegram Star subscription ».
-//	400 USERS_TOO_MUCH: The maximum number of users has been exceeded (to create a chat, for example).
-//	400 USER_ALREADY_PARTICIPANT: The user is already in the group.
-//	400 USER_CHANNELS_TOO_MUCH: One of the users you tried to add is already in too many channels/supergroups.
-//
-// See https://core.telegram.org/method/messages.importChatInvite for reference.
 func (c *Client) MessagesImportChatInvite(ctx context.Context, hash string) (UpdatesClass, error) {
 	var result UpdatesBox
 

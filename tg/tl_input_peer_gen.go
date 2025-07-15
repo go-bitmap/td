@@ -32,9 +32,6 @@ var (
 )
 
 // InputPeerEmpty represents TL type `inputPeerEmpty#7f3b18ea`.
-// An empty constructor, no user or chat is defined.
-//
-// See https://core.telegram.org/constructor/inputPeerEmpty for reference.
 type InputPeerEmpty struct {
 }
 
@@ -134,9 +131,6 @@ func (i *InputPeerEmpty) DecodeBare(b *bin.Buffer) error {
 }
 
 // InputPeerSelf represents TL type `inputPeerSelf#7da07ec9`.
-// Defines the current user.
-//
-// See https://core.telegram.org/constructor/inputPeerSelf for reference.
 type InputPeerSelf struct {
 }
 
@@ -236,11 +230,8 @@ func (i *InputPeerSelf) DecodeBare(b *bin.Buffer) error {
 }
 
 // InputPeerChat represents TL type `inputPeerChat#35a95cb9`.
-// Defines a chat for further interaction.
-//
-// See https://core.telegram.org/constructor/inputPeerChat for reference.
 type InputPeerChat struct {
-	// Chat identifier
+	// ChatID field of InputPeerChat.
 	ChatID int64
 }
 
@@ -278,13 +269,6 @@ func (i *InputPeerChat) String() string {
 	}
 	type Alias InputPeerChat
 	return fmt.Sprintf("InputPeerChat%+v", Alias(*i))
-}
-
-// FillFrom fills InputPeerChat from given interface.
-func (i *InputPeerChat) FillFrom(from interface {
-	GetChatID() (value int64)
-}) {
-	i.ChatID = from.GetChatID()
 }
 
 // TypeID returns type id in TL schema.
@@ -371,16 +355,10 @@ func (i *InputPeerChat) GetChatID() (value int64) {
 }
 
 // InputPeerUser represents TL type `inputPeerUser#dde8a54c`.
-// Defines a user for further interaction.
-//
-// See https://core.telegram.org/constructor/inputPeerUser for reference.
 type InputPeerUser struct {
-	// User identifier
+	// UserID field of InputPeerUser.
 	UserID int64
-	// access_hash value from the user¹ constructor
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/user
+	// AccessHash field of InputPeerUser.
 	AccessHash int64
 }
 
@@ -421,15 +399,6 @@ func (i *InputPeerUser) String() string {
 	}
 	type Alias InputPeerUser
 	return fmt.Sprintf("InputPeerUser%+v", Alias(*i))
-}
-
-// FillFrom fills InputPeerUser from given interface.
-func (i *InputPeerUser) FillFrom(from interface {
-	GetUserID() (value int64)
-	GetAccessHash() (value int64)
-}) {
-	i.UserID = from.GetUserID()
-	i.AccessHash = from.GetAccessHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -536,16 +505,10 @@ func (i *InputPeerUser) GetAccessHash() (value int64) {
 }
 
 // InputPeerChannel represents TL type `inputPeerChannel#27bcbbfc`.
-// Defines a channel for further interaction.
-//
-// See https://core.telegram.org/constructor/inputPeerChannel for reference.
 type InputPeerChannel struct {
-	// Channel identifier
+	// ChannelID field of InputPeerChannel.
 	ChannelID int64
-	// access_hash value from the channel¹ constructor
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/channel
+	// AccessHash field of InputPeerChannel.
 	AccessHash int64
 }
 
@@ -586,15 +549,6 @@ func (i *InputPeerChannel) String() string {
 	}
 	type Alias InputPeerChannel
 	return fmt.Sprintf("InputPeerChannel%+v", Alias(*i))
-}
-
-// FillFrom fills InputPeerChannel from given interface.
-func (i *InputPeerChannel) FillFrom(from interface {
-	GetChannelID() (value int64)
-	GetAccessHash() (value int64)
-}) {
-	i.ChannelID = from.GetChannelID()
-	i.AccessHash = from.GetAccessHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -701,18 +655,12 @@ func (i *InputPeerChannel) GetAccessHash() (value int64) {
 }
 
 // InputPeerUserFromMessage represents TL type `inputPeerUserFromMessage#a87b0a1c`.
-// Defines a min¹ user that was seen in a certain message of a certain chat.
-//
-// Links:
-//  1. https://core.telegram.org/api/min
-//
-// See https://core.telegram.org/constructor/inputPeerUserFromMessage for reference.
 type InputPeerUserFromMessage struct {
-	// The chat where the user was seen
+	// Peer field of InputPeerUserFromMessage.
 	Peer InputPeerClass
-	// The message ID
+	// MsgID field of InputPeerUserFromMessage.
 	MsgID int
-	// The identifier of the user that was seen
+	// UserID field of InputPeerUserFromMessage.
 	UserID int64
 }
 
@@ -756,17 +704,6 @@ func (i *InputPeerUserFromMessage) String() string {
 	}
 	type Alias InputPeerUserFromMessage
 	return fmt.Sprintf("InputPeerUserFromMessage%+v", Alias(*i))
-}
-
-// FillFrom fills InputPeerUserFromMessage from given interface.
-func (i *InputPeerUserFromMessage) FillFrom(from interface {
-	GetPeer() (value InputPeerClass)
-	GetMsgID() (value int)
-	GetUserID() (value int64)
-}) {
-	i.Peer = from.GetPeer()
-	i.MsgID = from.GetMsgID()
-	i.UserID = from.GetUserID()
 }
 
 // TypeID returns type id in TL schema.
@@ -898,18 +835,12 @@ func (i *InputPeerUserFromMessage) GetUserID() (value int64) {
 }
 
 // InputPeerChannelFromMessage represents TL type `inputPeerChannelFromMessage#bd2a0840`.
-// Defines a min¹ channel that was seen in a certain message of a certain chat.
-//
-// Links:
-//  1. https://core.telegram.org/api/min
-//
-// See https://core.telegram.org/constructor/inputPeerChannelFromMessage for reference.
 type InputPeerChannelFromMessage struct {
-	// The chat where the channel's message was seen
+	// Peer field of InputPeerChannelFromMessage.
 	Peer InputPeerClass
-	// The message ID
+	// MsgID field of InputPeerChannelFromMessage.
 	MsgID int
-	// The identifier of the channel that was seen
+	// ChannelID field of InputPeerChannelFromMessage.
 	ChannelID int64
 }
 
@@ -953,17 +884,6 @@ func (i *InputPeerChannelFromMessage) String() string {
 	}
 	type Alias InputPeerChannelFromMessage
 	return fmt.Sprintf("InputPeerChannelFromMessage%+v", Alias(*i))
-}
-
-// FillFrom fills InputPeerChannelFromMessage from given interface.
-func (i *InputPeerChannelFromMessage) FillFrom(from interface {
-	GetPeer() (value InputPeerClass)
-	GetMsgID() (value int)
-	GetChannelID() (value int64)
-}) {
-	i.Peer = from.GetPeer()
-	i.MsgID = from.GetMsgID()
-	i.ChannelID = from.GetChannelID()
 }
 
 // TypeID returns type id in TL schema.
@@ -1098,8 +1018,6 @@ func (i *InputPeerChannelFromMessage) GetChannelID() (value int64) {
 const InputPeerClassName = "InputPeer"
 
 // InputPeerClass represents InputPeer generic type.
-//
-// See https://core.telegram.org/type/InputPeer for reference.
 //
 // Constructors:
 //   - [InputPeerEmpty]

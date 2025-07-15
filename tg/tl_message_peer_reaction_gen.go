@@ -32,36 +32,20 @@ var (
 )
 
 // MessagePeerReaction represents TL type `messagePeerReaction#8c79b63c`.
-// How a certain peer reacted to the message
-//
-// See https://core.telegram.org/constructor/messagePeerReaction for reference.
 type MessagePeerReaction struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessagePeerReaction.
 	Flags bin.Fields
-	// Whether the specified message reaction »¹ should elicit a bigger and longer reaction
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/reactions
+	// Big field of MessagePeerReaction.
 	Big bool
-	// Whether the reaction wasn't yet marked as read by the current user
+	// Unread field of MessagePeerReaction.
 	Unread bool
-	// Starting from layer 159, messages.sendReaction¹ will send reactions from the peer
-	// (user or channel) specified using messages.saveDefaultSendAs². If set, this flag
-	// indicates that this reaction was sent by us, even if the peer doesn't point to the
-	// current account.
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/messages.sendReaction
-	//  2) https://core.telegram.org/method/messages.saveDefaultSendAs
+	// My field of MessagePeerReaction.
 	My bool
-	// Peer that reacted to the message
+	// PeerID field of MessagePeerReaction.
 	PeerID PeerClass
-	// When was this reaction added
+	// Date field of MessagePeerReaction.
 	Date int
-	// Reaction emoji
+	// Reaction field of MessagePeerReaction.
 	Reaction ReactionClass
 }
 
@@ -112,23 +96,6 @@ func (m *MessagePeerReaction) String() string {
 	}
 	type Alias MessagePeerReaction
 	return fmt.Sprintf("MessagePeerReaction%+v", Alias(*m))
-}
-
-// FillFrom fills MessagePeerReaction from given interface.
-func (m *MessagePeerReaction) FillFrom(from interface {
-	GetBig() (value bool)
-	GetUnread() (value bool)
-	GetMy() (value bool)
-	GetPeerID() (value PeerClass)
-	GetDate() (value int)
-	GetReaction() (value ReactionClass)
-}) {
-	m.Big = from.GetBig()
-	m.Unread = from.GetUnread()
-	m.My = from.GetMy()
-	m.PeerID = from.GetPeerID()
-	m.Date = from.GetDate()
-	m.Reaction = from.GetReaction()
 }
 
 // TypeID returns type id in TL schema.

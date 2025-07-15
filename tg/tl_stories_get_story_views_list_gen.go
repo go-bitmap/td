@@ -32,52 +32,26 @@ var (
 )
 
 // StoriesGetStoryViewsListRequest represents TL type `stories.getStoryViewsList#7ed23c57`.
-// Obtain the list of users that have viewed a specific story we posted¹
-//
-// Links:
-//  1. https://core.telegram.org/api/stories
-//
-// See https://core.telegram.org/method/stories.getStoryViewsList for reference.
 type StoriesGetStoryViewsListRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of StoriesGetStoryViewsListRequest.
 	Flags bin.Fields
-	// Whether to only fetch view reaction/views made by our contacts¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/contacts
+	// JustContacts field of StoriesGetStoryViewsListRequest.
 	JustContacts bool
-	// Whether to return storyView¹ info about users that reacted to the story (i.e. if set,
-	// the server will first sort results by view date as usual, and then also additionally
-	// sort the list by putting storyView²s with an associated reaction first in the list).
-	// Ignored if forwards_first is set.
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/storyView
-	//  2) https://core.telegram.org/constructor/storyView
+	// ReactionsFirst field of StoriesGetStoryViewsListRequest.
 	ReactionsFirst bool
-	// If set, returns forwards and reposts first, then reactions, then other views;
-	// otherwise returns interactions sorted just by interaction date.
+	// ForwardsFirst field of StoriesGetStoryViewsListRequest.
 	ForwardsFirst bool
-	// Peer where the story was posted
+	// Peer field of StoriesGetStoryViewsListRequest.
 	Peer InputPeerClass
-	// Search for specific peers
+	// Q field of StoriesGetStoryViewsListRequest.
 	//
 	// Use SetQ and GetQ helpers.
 	Q string
-	// Story ID
+	// ID field of StoriesGetStoryViewsListRequest.
 	ID int
-	// Offset for pagination, obtained from stories.storyViewsList¹.next_offset
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/stories.storyViewsList
+	// Offset field of StoriesGetStoryViewsListRequest.
 	Offset string
-	// Maximum number of results to return, see pagination¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets
+	// Limit field of StoriesGetStoryViewsListRequest.
 	Limit int
 }
 
@@ -134,30 +108,6 @@ func (g *StoriesGetStoryViewsListRequest) String() string {
 	}
 	type Alias StoriesGetStoryViewsListRequest
 	return fmt.Sprintf("StoriesGetStoryViewsListRequest%+v", Alias(*g))
-}
-
-// FillFrom fills StoriesGetStoryViewsListRequest from given interface.
-func (g *StoriesGetStoryViewsListRequest) FillFrom(from interface {
-	GetJustContacts() (value bool)
-	GetReactionsFirst() (value bool)
-	GetForwardsFirst() (value bool)
-	GetPeer() (value InputPeerClass)
-	GetQ() (value string, ok bool)
-	GetID() (value int)
-	GetOffset() (value string)
-	GetLimit() (value int)
-}) {
-	g.JustContacts = from.GetJustContacts()
-	g.ReactionsFirst = from.GetReactionsFirst()
-	g.ForwardsFirst = from.GetForwardsFirst()
-	g.Peer = from.GetPeer()
-	if val, ok := from.GetQ(); ok {
-		g.Q = val
-	}
-
-	g.ID = from.GetID()
-	g.Offset = from.GetOffset()
-	g.Limit = from.GetLimit()
 }
 
 // TypeID returns type id in TL schema.
@@ -442,17 +392,6 @@ func (g *StoriesGetStoryViewsListRequest) GetLimit() (value int) {
 }
 
 // StoriesGetStoryViewsList invokes method stories.getStoryViewsList#7ed23c57 returning error if any.
-// Obtain the list of users that have viewed a specific story we posted¹
-//
-// Links:
-//  1. https://core.telegram.org/api/stories
-//
-// Possible errors:
-//
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//	400 STORY_ID_INVALID: The specified story ID is invalid.
-//
-// See https://core.telegram.org/method/stories.getStoryViewsList for reference.
 func (c *Client) StoriesGetStoryViewsList(ctx context.Context, request *StoriesGetStoryViewsListRequest) (*StoriesStoryViewsList, error) {
 	var result StoriesStoryViewsList
 

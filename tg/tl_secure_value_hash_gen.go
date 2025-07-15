@@ -32,13 +32,10 @@ var (
 )
 
 // SecureValueHash represents TL type `secureValueHash#ed1ecdb0`.
-// Secure value hash
-//
-// See https://core.telegram.org/constructor/secureValueHash for reference.
 type SecureValueHash struct {
-	// Secure value type
+	// Type field of SecureValueHash.
 	Type SecureValueTypeClass
-	// Hash
+	// Hash field of SecureValueHash.
 	Hash []byte
 }
 
@@ -74,15 +71,6 @@ func (s *SecureValueHash) String() string {
 	}
 	type Alias SecureValueHash
 	return fmt.Sprintf("SecureValueHash%+v", Alias(*s))
-}
-
-// FillFrom fills SecureValueHash from given interface.
-func (s *SecureValueHash) FillFrom(from interface {
-	GetType() (value SecureValueTypeClass)
-	GetHash() (value []byte)
-}) {
-	s.Type = from.GetType()
-	s.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.

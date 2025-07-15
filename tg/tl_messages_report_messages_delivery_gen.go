@@ -32,8 +32,6 @@ var (
 )
 
 // MessagesReportMessagesDeliveryRequest represents TL type `messages.reportMessagesDelivery#5a6d7395`.
-//
-// See https://core.telegram.org/method/messages.reportMessagesDelivery for reference.
 type MessagesReportMessagesDeliveryRequest struct {
 	// Flags field of MessagesReportMessagesDeliveryRequest.
 	Flags bin.Fields
@@ -83,17 +81,6 @@ func (r *MessagesReportMessagesDeliveryRequest) String() string {
 	}
 	type Alias MessagesReportMessagesDeliveryRequest
 	return fmt.Sprintf("MessagesReportMessagesDeliveryRequest%+v", Alias(*r))
-}
-
-// FillFrom fills MessagesReportMessagesDeliveryRequest from given interface.
-func (r *MessagesReportMessagesDeliveryRequest) FillFrom(from interface {
-	GetPush() (value bool)
-	GetPeer() (value InputPeerClass)
-	GetID() (value []int)
-}) {
-	r.Push = from.GetPush()
-	r.Peer = from.GetPeer()
-	r.ID = from.GetID()
 }
 
 // TypeID returns type id in TL schema.
@@ -259,8 +246,6 @@ func (r *MessagesReportMessagesDeliveryRequest) GetID() (value []int) {
 }
 
 // MessagesReportMessagesDelivery invokes method messages.reportMessagesDelivery#5a6d7395 returning error if any.
-//
-// See https://core.telegram.org/method/messages.reportMessagesDelivery for reference.
 func (c *Client) MessagesReportMessagesDelivery(ctx context.Context, request *MessagesReportMessagesDeliveryRequest) (bool, error) {
 	var result BoolBox
 

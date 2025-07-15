@@ -32,16 +32,10 @@ var (
 )
 
 // ChannelsCheckUsernameRequest represents TL type `channels.checkUsername#10e6bd2c`.
-// Check if a username is free and can be assigned to a channel/supergroup
-//
-// See https://core.telegram.org/method/channels.checkUsername for reference.
 type ChannelsCheckUsernameRequest struct {
-	// The channel/supergroup¹ that will assigned the specified username
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/channel
+	// Channel field of ChannelsCheckUsernameRequest.
 	Channel InputChannelClass
-	// The username to check
+	// Username field of ChannelsCheckUsernameRequest.
 	Username string
 }
 
@@ -77,15 +71,6 @@ func (c *ChannelsCheckUsernameRequest) String() string {
 	}
 	type Alias ChannelsCheckUsernameRequest
 	return fmt.Sprintf("ChannelsCheckUsernameRequest%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelsCheckUsernameRequest from given interface.
-func (c *ChannelsCheckUsernameRequest) FillFrom(from interface {
-	GetChannel() (value InputChannelClass)
-	GetUsername() (value string)
-}) {
-	c.Channel = from.GetChannel()
-	c.Username = from.GetUsername()
 }
 
 // TypeID returns type id in TL schema.
@@ -196,27 +181,7 @@ func (c *ChannelsCheckUsernameRequest) GetUsername() (value string) {
 	return c.Username
 }
 
-// GetChannelAsNotEmpty returns mapped value of Channel field.
-func (c *ChannelsCheckUsernameRequest) GetChannelAsNotEmpty() (NotEmptyInputChannel, bool) {
-	return c.Channel.AsNotEmpty()
-}
-
 // ChannelsCheckUsername invokes method channels.checkUsername#10e6bd2c returning error if any.
-// Check if a username is free and can be assigned to a channel/supergroup
-//
-// Possible errors:
-//
-//	400 CHANNELS_ADMIN_PUBLIC_TOO_MUCH: You're admin of too many public channels, make some channels private to change the username of this channel.
-//	400 CHANNEL_INVALID: The provided channel is invalid.
-//	400 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
-//	400 CHAT_ID_INVALID: The provided chat id is invalid.
-//	400 MSG_ID_INVALID: Invalid message ID provided.
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//	400 USERNAME_INVALID: The provided username is not valid.
-//	400 USERNAME_OCCUPIED: The provided username is already occupied.
-//	400 USERNAME_PURCHASE_AVAILABLE: The specified username can be purchased on https://fragment.com.
-//
-// See https://core.telegram.org/method/channels.checkUsername for reference.
 func (c *Client) ChannelsCheckUsername(ctx context.Context, request *ChannelsCheckUsernameRequest) (bool, error) {
 	var result BoolBox
 

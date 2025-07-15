@@ -32,13 +32,10 @@ var (
 )
 
 // ChannelsDeleteParticipantHistoryRequest represents TL type `channels.deleteParticipantHistory#367544db`.
-// Delete all messages sent by a specific participant of a given supergroup
-//
-// See https://core.telegram.org/method/channels.deleteParticipantHistory for reference.
 type ChannelsDeleteParticipantHistoryRequest struct {
-	// Supergroup
+	// Channel field of ChannelsDeleteParticipantHistoryRequest.
 	Channel InputChannelClass
-	// The participant whose messages should be deleted
+	// Participant field of ChannelsDeleteParticipantHistoryRequest.
 	Participant InputPeerClass
 }
 
@@ -74,15 +71,6 @@ func (d *ChannelsDeleteParticipantHistoryRequest) String() string {
 	}
 	type Alias ChannelsDeleteParticipantHistoryRequest
 	return fmt.Sprintf("ChannelsDeleteParticipantHistoryRequest%+v", Alias(*d))
-}
-
-// FillFrom fills ChannelsDeleteParticipantHistoryRequest from given interface.
-func (d *ChannelsDeleteParticipantHistoryRequest) FillFrom(from interface {
-	GetChannel() (value InputChannelClass)
-	GetParticipant() (value InputPeerClass)
-}) {
-	d.Channel = from.GetChannel()
-	d.Participant = from.GetParticipant()
 }
 
 // TypeID returns type id in TL schema.
@@ -198,24 +186,7 @@ func (d *ChannelsDeleteParticipantHistoryRequest) GetParticipant() (value InputP
 	return d.Participant
 }
 
-// GetChannelAsNotEmpty returns mapped value of Channel field.
-func (d *ChannelsDeleteParticipantHistoryRequest) GetChannelAsNotEmpty() (NotEmptyInputChannel, bool) {
-	return d.Channel.AsNotEmpty()
-}
-
 // ChannelsDeleteParticipantHistory invokes method channels.deleteParticipantHistory#367544db returning error if any.
-// Delete all messages sent by a specific participant of a given supergroup
-//
-// Possible errors:
-//
-//	400 CHANNEL_INVALID: The provided channel is invalid.
-//	400 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
-//	400 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
-//	403 CHAT_WRITE_FORBIDDEN: You can't write in this chat.
-//	400 MSG_ID_INVALID: Invalid message ID provided.
-//	400 PARTICIPANT_ID_INVALID: The specified participant ID is invalid.
-//
-// See https://core.telegram.org/method/channels.deleteParticipantHistory for reference.
 func (c *Client) ChannelsDeleteParticipantHistory(ctx context.Context, request *ChannelsDeleteParticipantHistoryRequest) (*MessagesAffectedHistory, error) {
 	var result MessagesAffectedHistory
 

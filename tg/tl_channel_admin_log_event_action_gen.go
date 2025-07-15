@@ -32,13 +32,10 @@ var (
 )
 
 // ChannelAdminLogEventActionChangeTitle represents TL type `channelAdminLogEventActionChangeTitle#e6dfb825`.
-// Channel/supergroup title was changed
-//
-// See https://core.telegram.org/constructor/channelAdminLogEventActionChangeTitle for reference.
 type ChannelAdminLogEventActionChangeTitle struct {
-	// Previous title
+	// PrevValue field of ChannelAdminLogEventActionChangeTitle.
 	PrevValue string
-	// New title
+	// NewValue field of ChannelAdminLogEventActionChangeTitle.
 	NewValue string
 }
 
@@ -79,15 +76,6 @@ func (c *ChannelAdminLogEventActionChangeTitle) String() string {
 	}
 	type Alias ChannelAdminLogEventActionChangeTitle
 	return fmt.Sprintf("ChannelAdminLogEventActionChangeTitle%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelAdminLogEventActionChangeTitle from given interface.
-func (c *ChannelAdminLogEventActionChangeTitle) FillFrom(from interface {
-	GetPrevValue() (value string)
-	GetNewValue() (value string)
-}) {
-	c.PrevValue = from.GetPrevValue()
-	c.NewValue = from.GetNewValue()
 }
 
 // TypeID returns type id in TL schema.
@@ -194,13 +182,10 @@ func (c *ChannelAdminLogEventActionChangeTitle) GetNewValue() (value string) {
 }
 
 // ChannelAdminLogEventActionChangeAbout represents TL type `channelAdminLogEventActionChangeAbout#55188a2e`.
-// The description was changed
-//
-// See https://core.telegram.org/constructor/channelAdminLogEventActionChangeAbout for reference.
 type ChannelAdminLogEventActionChangeAbout struct {
-	// Previous description
+	// PrevValue field of ChannelAdminLogEventActionChangeAbout.
 	PrevValue string
-	// New description
+	// NewValue field of ChannelAdminLogEventActionChangeAbout.
 	NewValue string
 }
 
@@ -241,15 +226,6 @@ func (c *ChannelAdminLogEventActionChangeAbout) String() string {
 	}
 	type Alias ChannelAdminLogEventActionChangeAbout
 	return fmt.Sprintf("ChannelAdminLogEventActionChangeAbout%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelAdminLogEventActionChangeAbout from given interface.
-func (c *ChannelAdminLogEventActionChangeAbout) FillFrom(from interface {
-	GetPrevValue() (value string)
-	GetNewValue() (value string)
-}) {
-	c.PrevValue = from.GetPrevValue()
-	c.NewValue = from.GetNewValue()
 }
 
 // TypeID returns type id in TL schema.
@@ -356,13 +332,10 @@ func (c *ChannelAdminLogEventActionChangeAbout) GetNewValue() (value string) {
 }
 
 // ChannelAdminLogEventActionChangeUsername represents TL type `channelAdminLogEventActionChangeUsername#6a4afc38`.
-// Channel/supergroup username was changed
-//
-// See https://core.telegram.org/constructor/channelAdminLogEventActionChangeUsername for reference.
 type ChannelAdminLogEventActionChangeUsername struct {
-	// Old username
+	// PrevValue field of ChannelAdminLogEventActionChangeUsername.
 	PrevValue string
-	// New username
+	// NewValue field of ChannelAdminLogEventActionChangeUsername.
 	NewValue string
 }
 
@@ -405,15 +378,6 @@ func (c *ChannelAdminLogEventActionChangeUsername) String() string {
 	}
 	type Alias ChannelAdminLogEventActionChangeUsername
 	return fmt.Sprintf("ChannelAdminLogEventActionChangeUsername%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelAdminLogEventActionChangeUsername from given interface.
-func (c *ChannelAdminLogEventActionChangeUsername) FillFrom(from interface {
-	GetPrevValue() (value string)
-	GetNewValue() (value string)
-}) {
-	c.PrevValue = from.GetPrevValue()
-	c.NewValue = from.GetNewValue()
 }
 
 // TypeID returns type id in TL schema.
@@ -520,13 +484,10 @@ func (c *ChannelAdminLogEventActionChangeUsername) GetNewValue() (value string) 
 }
 
 // ChannelAdminLogEventActionChangePhoto represents TL type `channelAdminLogEventActionChangePhoto#434bd2af`.
-// The channel/supergroup's picture was changed
-//
-// See https://core.telegram.org/constructor/channelAdminLogEventActionChangePhoto for reference.
 type ChannelAdminLogEventActionChangePhoto struct {
-	// Previous picture
+	// PrevPhoto field of ChannelAdminLogEventActionChangePhoto.
 	PrevPhoto PhotoClass
-	// New picture
+	// NewPhoto field of ChannelAdminLogEventActionChangePhoto.
 	NewPhoto PhotoClass
 }
 
@@ -567,15 +528,6 @@ func (c *ChannelAdminLogEventActionChangePhoto) String() string {
 	}
 	type Alias ChannelAdminLogEventActionChangePhoto
 	return fmt.Sprintf("ChannelAdminLogEventActionChangePhoto%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelAdminLogEventActionChangePhoto from given interface.
-func (c *ChannelAdminLogEventActionChangePhoto) FillFrom(from interface {
-	GetPrevPhoto() (value PhotoClass)
-	GetNewPhoto() (value PhotoClass)
-}) {
-	c.PrevPhoto = from.GetPrevPhoto()
-	c.NewPhoto = from.GetNewPhoto()
 }
 
 // TypeID returns type id in TL schema.
@@ -692,11 +644,8 @@ func (c *ChannelAdminLogEventActionChangePhoto) GetNewPhoto() (value PhotoClass)
 }
 
 // ChannelAdminLogEventActionToggleInvites represents TL type `channelAdminLogEventActionToggleInvites#1b7907ae`.
-// Invites were enabled/disabled
-//
-// See https://core.telegram.org/constructor/channelAdminLogEventActionToggleInvites for reference.
 type ChannelAdminLogEventActionToggleInvites struct {
-	// New value
+	// NewValue field of ChannelAdminLogEventActionToggleInvites.
 	NewValue bool
 }
 
@@ -736,13 +685,6 @@ func (c *ChannelAdminLogEventActionToggleInvites) String() string {
 	}
 	type Alias ChannelAdminLogEventActionToggleInvites
 	return fmt.Sprintf("ChannelAdminLogEventActionToggleInvites%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelAdminLogEventActionToggleInvites from given interface.
-func (c *ChannelAdminLogEventActionToggleInvites) FillFrom(from interface {
-	GetNewValue() (value bool)
-}) {
-	c.NewValue = from.GetNewValue()
 }
 
 // TypeID returns type id in TL schema.
@@ -829,11 +771,8 @@ func (c *ChannelAdminLogEventActionToggleInvites) GetNewValue() (value bool) {
 }
 
 // ChannelAdminLogEventActionToggleSignatures represents TL type `channelAdminLogEventActionToggleSignatures#26ae0971`.
-// Channel signatures were enabled/disabled
-//
-// See https://core.telegram.org/constructor/channelAdminLogEventActionToggleSignatures for reference.
 type ChannelAdminLogEventActionToggleSignatures struct {
-	// New value
+	// NewValue field of ChannelAdminLogEventActionToggleSignatures.
 	NewValue bool
 }
 
@@ -873,13 +812,6 @@ func (c *ChannelAdminLogEventActionToggleSignatures) String() string {
 	}
 	type Alias ChannelAdminLogEventActionToggleSignatures
 	return fmt.Sprintf("ChannelAdminLogEventActionToggleSignatures%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelAdminLogEventActionToggleSignatures from given interface.
-func (c *ChannelAdminLogEventActionToggleSignatures) FillFrom(from interface {
-	GetNewValue() (value bool)
-}) {
-	c.NewValue = from.GetNewValue()
 }
 
 // TypeID returns type id in TL schema.
@@ -966,11 +898,8 @@ func (c *ChannelAdminLogEventActionToggleSignatures) GetNewValue() (value bool) 
 }
 
 // ChannelAdminLogEventActionUpdatePinned represents TL type `channelAdminLogEventActionUpdatePinned#e9e82c18`.
-// A message was pinned
-//
-// See https://core.telegram.org/constructor/channelAdminLogEventActionUpdatePinned for reference.
 type ChannelAdminLogEventActionUpdatePinned struct {
-	// The message that was pinned
+	// Message field of ChannelAdminLogEventActionUpdatePinned.
 	Message MessageClass
 }
 
@@ -1010,13 +939,6 @@ func (c *ChannelAdminLogEventActionUpdatePinned) String() string {
 	}
 	type Alias ChannelAdminLogEventActionUpdatePinned
 	return fmt.Sprintf("ChannelAdminLogEventActionUpdatePinned%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelAdminLogEventActionUpdatePinned from given interface.
-func (c *ChannelAdminLogEventActionUpdatePinned) FillFrom(from interface {
-	GetMessage() (value MessageClass)
-}) {
-	c.Message = from.GetMessage()
 }
 
 // TypeID returns type id in TL schema.
@@ -1108,13 +1030,10 @@ func (c *ChannelAdminLogEventActionUpdatePinned) GetMessage() (value MessageClas
 }
 
 // ChannelAdminLogEventActionEditMessage represents TL type `channelAdminLogEventActionEditMessage#709b2405`.
-// A message was edited
-//
-// See https://core.telegram.org/constructor/channelAdminLogEventActionEditMessage for reference.
 type ChannelAdminLogEventActionEditMessage struct {
-	// Old message
+	// PrevMessage field of ChannelAdminLogEventActionEditMessage.
 	PrevMessage MessageClass
-	// New message
+	// NewMessage field of ChannelAdminLogEventActionEditMessage.
 	NewMessage MessageClass
 }
 
@@ -1155,15 +1074,6 @@ func (c *ChannelAdminLogEventActionEditMessage) String() string {
 	}
 	type Alias ChannelAdminLogEventActionEditMessage
 	return fmt.Sprintf("ChannelAdminLogEventActionEditMessage%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelAdminLogEventActionEditMessage from given interface.
-func (c *ChannelAdminLogEventActionEditMessage) FillFrom(from interface {
-	GetPrevMessage() (value MessageClass)
-	GetNewMessage() (value MessageClass)
-}) {
-	c.PrevMessage = from.GetPrevMessage()
-	c.NewMessage = from.GetNewMessage()
 }
 
 // TypeID returns type id in TL schema.
@@ -1280,11 +1190,8 @@ func (c *ChannelAdminLogEventActionEditMessage) GetNewMessage() (value MessageCl
 }
 
 // ChannelAdminLogEventActionDeleteMessage represents TL type `channelAdminLogEventActionDeleteMessage#42e047bb`.
-// A message was deleted
-//
-// See https://core.telegram.org/constructor/channelAdminLogEventActionDeleteMessage for reference.
 type ChannelAdminLogEventActionDeleteMessage struct {
-	// The message that was deleted
+	// Message field of ChannelAdminLogEventActionDeleteMessage.
 	Message MessageClass
 }
 
@@ -1324,13 +1231,6 @@ func (c *ChannelAdminLogEventActionDeleteMessage) String() string {
 	}
 	type Alias ChannelAdminLogEventActionDeleteMessage
 	return fmt.Sprintf("ChannelAdminLogEventActionDeleteMessage%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelAdminLogEventActionDeleteMessage from given interface.
-func (c *ChannelAdminLogEventActionDeleteMessage) FillFrom(from interface {
-	GetMessage() (value MessageClass)
-}) {
-	c.Message = from.GetMessage()
 }
 
 // TypeID returns type id in TL schema.
@@ -1422,10 +1322,6 @@ func (c *ChannelAdminLogEventActionDeleteMessage) GetMessage() (value MessageCla
 }
 
 // ChannelAdminLogEventActionParticipantJoin represents TL type `channelAdminLogEventActionParticipantJoin#183040d3`.
-// A user has joined the group (in the case of big groups, info of the user that has
-// joined isn't shown)
-//
-// See https://core.telegram.org/constructor/channelAdminLogEventActionParticipantJoin for reference.
 type ChannelAdminLogEventActionParticipantJoin struct {
 }
 
@@ -1527,10 +1423,6 @@ func (c *ChannelAdminLogEventActionParticipantJoin) DecodeBare(b *bin.Buffer) er
 }
 
 // ChannelAdminLogEventActionParticipantLeave represents TL type `channelAdminLogEventActionParticipantLeave#f89777f2`.
-// A user left the channel/supergroup (in the case of big groups, info of the user that
-// has joined isn't shown)
-//
-// See https://core.telegram.org/constructor/channelAdminLogEventActionParticipantLeave for reference.
 type ChannelAdminLogEventActionParticipantLeave struct {
 }
 
@@ -1632,11 +1524,8 @@ func (c *ChannelAdminLogEventActionParticipantLeave) DecodeBare(b *bin.Buffer) e
 }
 
 // ChannelAdminLogEventActionParticipantInvite represents TL type `channelAdminLogEventActionParticipantInvite#e31c34d8`.
-// A user was invited to the group
-//
-// See https://core.telegram.org/constructor/channelAdminLogEventActionParticipantInvite for reference.
 type ChannelAdminLogEventActionParticipantInvite struct {
-	// The user that was invited
+	// Participant field of ChannelAdminLogEventActionParticipantInvite.
 	Participant ChannelParticipantClass
 }
 
@@ -1676,13 +1565,6 @@ func (c *ChannelAdminLogEventActionParticipantInvite) String() string {
 	}
 	type Alias ChannelAdminLogEventActionParticipantInvite
 	return fmt.Sprintf("ChannelAdminLogEventActionParticipantInvite%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelAdminLogEventActionParticipantInvite from given interface.
-func (c *ChannelAdminLogEventActionParticipantInvite) FillFrom(from interface {
-	GetParticipant() (value ChannelParticipantClass)
-}) {
-	c.Participant = from.GetParticipant()
 }
 
 // TypeID returns type id in TL schema.
@@ -1774,16 +1656,10 @@ func (c *ChannelAdminLogEventActionParticipantInvite) GetParticipant() (value Ch
 }
 
 // ChannelAdminLogEventActionParticipantToggleBan represents TL type `channelAdminLogEventActionParticipantToggleBan#e6d83d7e`.
-// The banned rights¹ of a user were changed
-//
-// Links:
-//  1. https://core.telegram.org/api/rights
-//
-// See https://core.telegram.org/constructor/channelAdminLogEventActionParticipantToggleBan for reference.
 type ChannelAdminLogEventActionParticipantToggleBan struct {
-	// Old banned rights of user
+	// PrevParticipant field of ChannelAdminLogEventActionParticipantToggleBan.
 	PrevParticipant ChannelParticipantClass
-	// New banned rights of user
+	// NewParticipant field of ChannelAdminLogEventActionParticipantToggleBan.
 	NewParticipant ChannelParticipantClass
 }
 
@@ -1826,15 +1702,6 @@ func (c *ChannelAdminLogEventActionParticipantToggleBan) String() string {
 	}
 	type Alias ChannelAdminLogEventActionParticipantToggleBan
 	return fmt.Sprintf("ChannelAdminLogEventActionParticipantToggleBan%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelAdminLogEventActionParticipantToggleBan from given interface.
-func (c *ChannelAdminLogEventActionParticipantToggleBan) FillFrom(from interface {
-	GetPrevParticipant() (value ChannelParticipantClass)
-	GetNewParticipant() (value ChannelParticipantClass)
-}) {
-	c.PrevParticipant = from.GetPrevParticipant()
-	c.NewParticipant = from.GetNewParticipant()
 }
 
 // TypeID returns type id in TL schema.
@@ -1951,16 +1818,10 @@ func (c *ChannelAdminLogEventActionParticipantToggleBan) GetNewParticipant() (va
 }
 
 // ChannelAdminLogEventActionParticipantToggleAdmin represents TL type `channelAdminLogEventActionParticipantToggleAdmin#d5676710`.
-// The admin rights¹ of a user were changed
-//
-// Links:
-//  1. https://core.telegram.org/api/rights
-//
-// See https://core.telegram.org/constructor/channelAdminLogEventActionParticipantToggleAdmin for reference.
 type ChannelAdminLogEventActionParticipantToggleAdmin struct {
-	// Previous admin rights
+	// PrevParticipant field of ChannelAdminLogEventActionParticipantToggleAdmin.
 	PrevParticipant ChannelParticipantClass
-	// New admin rights
+	// NewParticipant field of ChannelAdminLogEventActionParticipantToggleAdmin.
 	NewParticipant ChannelParticipantClass
 }
 
@@ -2003,15 +1864,6 @@ func (c *ChannelAdminLogEventActionParticipantToggleAdmin) String() string {
 	}
 	type Alias ChannelAdminLogEventActionParticipantToggleAdmin
 	return fmt.Sprintf("ChannelAdminLogEventActionParticipantToggleAdmin%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelAdminLogEventActionParticipantToggleAdmin from given interface.
-func (c *ChannelAdminLogEventActionParticipantToggleAdmin) FillFrom(from interface {
-	GetPrevParticipant() (value ChannelParticipantClass)
-	GetNewParticipant() (value ChannelParticipantClass)
-}) {
-	c.PrevParticipant = from.GetPrevParticipant()
-	c.NewParticipant = from.GetNewParticipant()
 }
 
 // TypeID returns type id in TL schema.
@@ -2128,13 +1980,10 @@ func (c *ChannelAdminLogEventActionParticipantToggleAdmin) GetNewParticipant() (
 }
 
 // ChannelAdminLogEventActionChangeStickerSet represents TL type `channelAdminLogEventActionChangeStickerSet#b1c3caa7`.
-// The supergroup's stickerset was changed
-//
-// See https://core.telegram.org/constructor/channelAdminLogEventActionChangeStickerSet for reference.
 type ChannelAdminLogEventActionChangeStickerSet struct {
-	// Previous stickerset
+	// PrevStickerset field of ChannelAdminLogEventActionChangeStickerSet.
 	PrevStickerset InputStickerSetClass
-	// New stickerset
+	// NewStickerset field of ChannelAdminLogEventActionChangeStickerSet.
 	NewStickerset InputStickerSetClass
 }
 
@@ -2177,15 +2026,6 @@ func (c *ChannelAdminLogEventActionChangeStickerSet) String() string {
 	}
 	type Alias ChannelAdminLogEventActionChangeStickerSet
 	return fmt.Sprintf("ChannelAdminLogEventActionChangeStickerSet%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelAdminLogEventActionChangeStickerSet from given interface.
-func (c *ChannelAdminLogEventActionChangeStickerSet) FillFrom(from interface {
-	GetPrevStickerset() (value InputStickerSetClass)
-	GetNewStickerset() (value InputStickerSetClass)
-}) {
-	c.PrevStickerset = from.GetPrevStickerset()
-	c.NewStickerset = from.GetNewStickerset()
 }
 
 // TypeID returns type id in TL schema.
@@ -2302,14 +2142,8 @@ func (c *ChannelAdminLogEventActionChangeStickerSet) GetNewStickerset() (value I
 }
 
 // ChannelAdminLogEventActionTogglePreHistoryHidden represents TL type `channelAdminLogEventActionTogglePreHistoryHidden#5f5c95f1`.
-// The hidden prehistory setting was changed¹
-//
-// Links:
-//  1. https://core.telegram.org/method/channels.togglePreHistoryHidden
-//
-// See https://core.telegram.org/constructor/channelAdminLogEventActionTogglePreHistoryHidden for reference.
 type ChannelAdminLogEventActionTogglePreHistoryHidden struct {
-	// New value
+	// NewValue field of ChannelAdminLogEventActionTogglePreHistoryHidden.
 	NewValue bool
 }
 
@@ -2349,13 +2183,6 @@ func (c *ChannelAdminLogEventActionTogglePreHistoryHidden) String() string {
 	}
 	type Alias ChannelAdminLogEventActionTogglePreHistoryHidden
 	return fmt.Sprintf("ChannelAdminLogEventActionTogglePreHistoryHidden%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelAdminLogEventActionTogglePreHistoryHidden from given interface.
-func (c *ChannelAdminLogEventActionTogglePreHistoryHidden) FillFrom(from interface {
-	GetNewValue() (value bool)
-}) {
-	c.NewValue = from.GetNewValue()
 }
 
 // TypeID returns type id in TL schema.
@@ -2442,19 +2269,10 @@ func (c *ChannelAdminLogEventActionTogglePreHistoryHidden) GetNewValue() (value 
 }
 
 // ChannelAdminLogEventActionDefaultBannedRights represents TL type `channelAdminLogEventActionDefaultBannedRights#2df5fc0a`.
-// The default banned rights were modified
-//
-// See https://core.telegram.org/constructor/channelAdminLogEventActionDefaultBannedRights for reference.
 type ChannelAdminLogEventActionDefaultBannedRights struct {
-	// Previous global banned rights¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/rights
+	// PrevBannedRights field of ChannelAdminLogEventActionDefaultBannedRights.
 	PrevBannedRights ChatBannedRights
-	// New global banned rights¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/rights
+	// NewBannedRights field of ChannelAdminLogEventActionDefaultBannedRights.
 	NewBannedRights ChatBannedRights
 }
 
@@ -2497,15 +2315,6 @@ func (c *ChannelAdminLogEventActionDefaultBannedRights) String() string {
 	}
 	type Alias ChannelAdminLogEventActionDefaultBannedRights
 	return fmt.Sprintf("ChannelAdminLogEventActionDefaultBannedRights%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelAdminLogEventActionDefaultBannedRights from given interface.
-func (c *ChannelAdminLogEventActionDefaultBannedRights) FillFrom(from interface {
-	GetPrevBannedRights() (value ChatBannedRights)
-	GetNewBannedRights() (value ChatBannedRights)
-}) {
-	c.PrevBannedRights = from.GetPrevBannedRights()
-	c.NewBannedRights = from.GetNewBannedRights()
 }
 
 // TypeID returns type id in TL schema.
@@ -2612,11 +2421,8 @@ func (c *ChannelAdminLogEventActionDefaultBannedRights) GetNewBannedRights() (va
 }
 
 // ChannelAdminLogEventActionStopPoll represents TL type `channelAdminLogEventActionStopPoll#8f079643`.
-// A poll was stopped
-//
-// See https://core.telegram.org/constructor/channelAdminLogEventActionStopPoll for reference.
 type ChannelAdminLogEventActionStopPoll struct {
-	// The poll that was stopped
+	// Message field of ChannelAdminLogEventActionStopPoll.
 	Message MessageClass
 }
 
@@ -2654,13 +2460,6 @@ func (c *ChannelAdminLogEventActionStopPoll) String() string {
 	}
 	type Alias ChannelAdminLogEventActionStopPoll
 	return fmt.Sprintf("ChannelAdminLogEventActionStopPoll%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelAdminLogEventActionStopPoll from given interface.
-func (c *ChannelAdminLogEventActionStopPoll) FillFrom(from interface {
-	GetMessage() (value MessageClass)
-}) {
-	c.Message = from.GetMessage()
 }
 
 // TypeID returns type id in TL schema.
@@ -2752,13 +2551,10 @@ func (c *ChannelAdminLogEventActionStopPoll) GetMessage() (value MessageClass) {
 }
 
 // ChannelAdminLogEventActionChangeLinkedChat represents TL type `channelAdminLogEventActionChangeLinkedChat#50c7ac8`.
-// The linked chat was changed
-//
-// See https://core.telegram.org/constructor/channelAdminLogEventActionChangeLinkedChat for reference.
 type ChannelAdminLogEventActionChangeLinkedChat struct {
-	// Previous linked chat
+	// PrevValue field of ChannelAdminLogEventActionChangeLinkedChat.
 	PrevValue int64
-	// New linked chat
+	// NewValue field of ChannelAdminLogEventActionChangeLinkedChat.
 	NewValue int64
 }
 
@@ -2801,15 +2597,6 @@ func (c *ChannelAdminLogEventActionChangeLinkedChat) String() string {
 	}
 	type Alias ChannelAdminLogEventActionChangeLinkedChat
 	return fmt.Sprintf("ChannelAdminLogEventActionChangeLinkedChat%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelAdminLogEventActionChangeLinkedChat from given interface.
-func (c *ChannelAdminLogEventActionChangeLinkedChat) FillFrom(from interface {
-	GetPrevValue() (value int64)
-	GetNewValue() (value int64)
-}) {
-	c.PrevValue = from.GetPrevValue()
-	c.NewValue = from.GetNewValue()
 }
 
 // TypeID returns type id in TL schema.
@@ -2916,13 +2703,10 @@ func (c *ChannelAdminLogEventActionChangeLinkedChat) GetNewValue() (value int64)
 }
 
 // ChannelAdminLogEventActionChangeLocation represents TL type `channelAdminLogEventActionChangeLocation#e6b76ae`.
-// The geogroup location was changed
-//
-// See https://core.telegram.org/constructor/channelAdminLogEventActionChangeLocation for reference.
 type ChannelAdminLogEventActionChangeLocation struct {
-	// Previous location
+	// PrevValue field of ChannelAdminLogEventActionChangeLocation.
 	PrevValue ChannelLocationClass
-	// New location
+	// NewValue field of ChannelAdminLogEventActionChangeLocation.
 	NewValue ChannelLocationClass
 }
 
@@ -2965,15 +2749,6 @@ func (c *ChannelAdminLogEventActionChangeLocation) String() string {
 	}
 	type Alias ChannelAdminLogEventActionChangeLocation
 	return fmt.Sprintf("ChannelAdminLogEventActionChangeLocation%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelAdminLogEventActionChangeLocation from given interface.
-func (c *ChannelAdminLogEventActionChangeLocation) FillFrom(from interface {
-	GetPrevValue() (value ChannelLocationClass)
-	GetNewValue() (value ChannelLocationClass)
-}) {
-	c.PrevValue = from.GetPrevValue()
-	c.NewValue = from.GetNewValue()
 }
 
 // TypeID returns type id in TL schema.
@@ -3090,16 +2865,10 @@ func (c *ChannelAdminLogEventActionChangeLocation) GetNewValue() (value ChannelL
 }
 
 // ChannelAdminLogEventActionToggleSlowMode represents TL type `channelAdminLogEventActionToggleSlowMode#53909779`.
-// Slow mode setting for supergroups was changed¹
-//
-// Links:
-//  1. https://core.telegram.org/method/channels.toggleSlowMode
-//
-// See https://core.telegram.org/constructor/channelAdminLogEventActionToggleSlowMode for reference.
 type ChannelAdminLogEventActionToggleSlowMode struct {
-	// Previous slow mode value
+	// PrevValue field of ChannelAdminLogEventActionToggleSlowMode.
 	PrevValue int
-	// New slow mode value
+	// NewValue field of ChannelAdminLogEventActionToggleSlowMode.
 	NewValue int
 }
 
@@ -3142,15 +2911,6 @@ func (c *ChannelAdminLogEventActionToggleSlowMode) String() string {
 	}
 	type Alias ChannelAdminLogEventActionToggleSlowMode
 	return fmt.Sprintf("ChannelAdminLogEventActionToggleSlowMode%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelAdminLogEventActionToggleSlowMode from given interface.
-func (c *ChannelAdminLogEventActionToggleSlowMode) FillFrom(from interface {
-	GetPrevValue() (value int)
-	GetNewValue() (value int)
-}) {
-	c.PrevValue = from.GetPrevValue()
-	c.NewValue = from.GetNewValue()
 }
 
 // TypeID returns type id in TL schema.
@@ -3257,11 +3017,8 @@ func (c *ChannelAdminLogEventActionToggleSlowMode) GetNewValue() (value int) {
 }
 
 // ChannelAdminLogEventActionStartGroupCall represents TL type `channelAdminLogEventActionStartGroupCall#23209745`.
-// A group call was started
-//
-// See https://core.telegram.org/constructor/channelAdminLogEventActionStartGroupCall for reference.
 type ChannelAdminLogEventActionStartGroupCall struct {
-	// Group call
+	// Call field of ChannelAdminLogEventActionStartGroupCall.
 	Call InputGroupCallClass
 }
 
@@ -3301,13 +3058,6 @@ func (c *ChannelAdminLogEventActionStartGroupCall) String() string {
 	}
 	type Alias ChannelAdminLogEventActionStartGroupCall
 	return fmt.Sprintf("ChannelAdminLogEventActionStartGroupCall%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelAdminLogEventActionStartGroupCall from given interface.
-func (c *ChannelAdminLogEventActionStartGroupCall) FillFrom(from interface {
-	GetCall() (value InputGroupCallClass)
-}) {
-	c.Call = from.GetCall()
 }
 
 // TypeID returns type id in TL schema.
@@ -3399,11 +3149,8 @@ func (c *ChannelAdminLogEventActionStartGroupCall) GetCall() (value InputGroupCa
 }
 
 // ChannelAdminLogEventActionDiscardGroupCall represents TL type `channelAdminLogEventActionDiscardGroupCall#db9f9140`.
-// A group call was terminated
-//
-// See https://core.telegram.org/constructor/channelAdminLogEventActionDiscardGroupCall for reference.
 type ChannelAdminLogEventActionDiscardGroupCall struct {
-	// The group call that was terminated
+	// Call field of ChannelAdminLogEventActionDiscardGroupCall.
 	Call InputGroupCallClass
 }
 
@@ -3443,13 +3190,6 @@ func (c *ChannelAdminLogEventActionDiscardGroupCall) String() string {
 	}
 	type Alias ChannelAdminLogEventActionDiscardGroupCall
 	return fmt.Sprintf("ChannelAdminLogEventActionDiscardGroupCall%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelAdminLogEventActionDiscardGroupCall from given interface.
-func (c *ChannelAdminLogEventActionDiscardGroupCall) FillFrom(from interface {
-	GetCall() (value InputGroupCallClass)
-}) {
-	c.Call = from.GetCall()
 }
 
 // TypeID returns type id in TL schema.
@@ -3541,11 +3281,8 @@ func (c *ChannelAdminLogEventActionDiscardGroupCall) GetCall() (value InputGroup
 }
 
 // ChannelAdminLogEventActionParticipantMute represents TL type `channelAdminLogEventActionParticipantMute#f92424d2`.
-// A group call participant was muted
-//
-// See https://core.telegram.org/constructor/channelAdminLogEventActionParticipantMute for reference.
 type ChannelAdminLogEventActionParticipantMute struct {
-	// The participant that was muted
+	// Participant field of ChannelAdminLogEventActionParticipantMute.
 	Participant GroupCallParticipant
 }
 
@@ -3585,13 +3322,6 @@ func (c *ChannelAdminLogEventActionParticipantMute) String() string {
 	}
 	type Alias ChannelAdminLogEventActionParticipantMute
 	return fmt.Sprintf("ChannelAdminLogEventActionParticipantMute%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelAdminLogEventActionParticipantMute from given interface.
-func (c *ChannelAdminLogEventActionParticipantMute) FillFrom(from interface {
-	GetParticipant() (value GroupCallParticipant)
-}) {
-	c.Participant = from.GetParticipant()
 }
 
 // TypeID returns type id in TL schema.
@@ -3678,11 +3408,8 @@ func (c *ChannelAdminLogEventActionParticipantMute) GetParticipant() (value Grou
 }
 
 // ChannelAdminLogEventActionParticipantUnmute represents TL type `channelAdminLogEventActionParticipantUnmute#e64429c0`.
-// A group call participant was unmuted
-//
-// See https://core.telegram.org/constructor/channelAdminLogEventActionParticipantUnmute for reference.
 type ChannelAdminLogEventActionParticipantUnmute struct {
-	// The participant that was unmuted
+	// Participant field of ChannelAdminLogEventActionParticipantUnmute.
 	Participant GroupCallParticipant
 }
 
@@ -3722,13 +3449,6 @@ func (c *ChannelAdminLogEventActionParticipantUnmute) String() string {
 	}
 	type Alias ChannelAdminLogEventActionParticipantUnmute
 	return fmt.Sprintf("ChannelAdminLogEventActionParticipantUnmute%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelAdminLogEventActionParticipantUnmute from given interface.
-func (c *ChannelAdminLogEventActionParticipantUnmute) FillFrom(from interface {
-	GetParticipant() (value GroupCallParticipant)
-}) {
-	c.Participant = from.GetParticipant()
 }
 
 // TypeID returns type id in TL schema.
@@ -3815,11 +3535,8 @@ func (c *ChannelAdminLogEventActionParticipantUnmute) GetParticipant() (value Gr
 }
 
 // ChannelAdminLogEventActionToggleGroupCallSetting represents TL type `channelAdminLogEventActionToggleGroupCallSetting#56d6a247`.
-// Group call settings were changed
-//
-// See https://core.telegram.org/constructor/channelAdminLogEventActionToggleGroupCallSetting for reference.
 type ChannelAdminLogEventActionToggleGroupCallSetting struct {
-	// Whether all users are muted by default upon joining
+	// JoinMuted field of ChannelAdminLogEventActionToggleGroupCallSetting.
 	JoinMuted bool
 }
 
@@ -3859,13 +3576,6 @@ func (c *ChannelAdminLogEventActionToggleGroupCallSetting) String() string {
 	}
 	type Alias ChannelAdminLogEventActionToggleGroupCallSetting
 	return fmt.Sprintf("ChannelAdminLogEventActionToggleGroupCallSetting%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelAdminLogEventActionToggleGroupCallSetting from given interface.
-func (c *ChannelAdminLogEventActionToggleGroupCallSetting) FillFrom(from interface {
-	GetJoinMuted() (value bool)
-}) {
-	c.JoinMuted = from.GetJoinMuted()
 }
 
 // TypeID returns type id in TL schema.
@@ -3952,27 +3662,12 @@ func (c *ChannelAdminLogEventActionToggleGroupCallSetting) GetJoinMuted() (value
 }
 
 // ChannelAdminLogEventActionParticipantJoinByInvite represents TL type `channelAdminLogEventActionParticipantJoinByInvite#fe9fc158`.
-// A user joined the supergroup/channel¹ using a specific invite link
-//
-// Links:
-//  1. https://core.telegram.org/api/channel
-//
-// See https://core.telegram.org/constructor/channelAdminLogEventActionParticipantJoinByInvite for reference.
 type ChannelAdminLogEventActionParticipantJoinByInvite struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of ChannelAdminLogEventActionParticipantJoinByInvite.
 	Flags bin.Fields
-	// The participant joined by importing a chat folder deep link »¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/links#chat-folder-links
+	// ViaChatlist field of ChannelAdminLogEventActionParticipantJoinByInvite.
 	ViaChatlist bool
-	// The invite link used to join the supergroup/channel¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/channel
+	// Invite field of ChannelAdminLogEventActionParticipantJoinByInvite.
 	Invite ExportedChatInviteClass
 }
 
@@ -4018,15 +3713,6 @@ func (c *ChannelAdminLogEventActionParticipantJoinByInvite) String() string {
 	}
 	type Alias ChannelAdminLogEventActionParticipantJoinByInvite
 	return fmt.Sprintf("ChannelAdminLogEventActionParticipantJoinByInvite%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelAdminLogEventActionParticipantJoinByInvite from given interface.
-func (c *ChannelAdminLogEventActionParticipantJoinByInvite) FillFrom(from interface {
-	GetViaChatlist() (value bool)
-	GetInvite() (value ExportedChatInviteClass)
-}) {
-	c.ViaChatlist = from.GetViaChatlist()
-	c.Invite = from.GetInvite()
 }
 
 // TypeID returns type id in TL schema.
@@ -4159,11 +3845,8 @@ func (c *ChannelAdminLogEventActionParticipantJoinByInvite) GetInvite() (value E
 }
 
 // ChannelAdminLogEventActionExportedInviteDelete represents TL type `channelAdminLogEventActionExportedInviteDelete#5a50fca4`.
-// A chat invite was deleted
-//
-// See https://core.telegram.org/constructor/channelAdminLogEventActionExportedInviteDelete for reference.
 type ChannelAdminLogEventActionExportedInviteDelete struct {
-	// The deleted chat invite
+	// Invite field of ChannelAdminLogEventActionExportedInviteDelete.
 	Invite ExportedChatInviteClass
 }
 
@@ -4203,13 +3886,6 @@ func (c *ChannelAdminLogEventActionExportedInviteDelete) String() string {
 	}
 	type Alias ChannelAdminLogEventActionExportedInviteDelete
 	return fmt.Sprintf("ChannelAdminLogEventActionExportedInviteDelete%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelAdminLogEventActionExportedInviteDelete from given interface.
-func (c *ChannelAdminLogEventActionExportedInviteDelete) FillFrom(from interface {
-	GetInvite() (value ExportedChatInviteClass)
-}) {
-	c.Invite = from.GetInvite()
 }
 
 // TypeID returns type id in TL schema.
@@ -4301,11 +3977,8 @@ func (c *ChannelAdminLogEventActionExportedInviteDelete) GetInvite() (value Expo
 }
 
 // ChannelAdminLogEventActionExportedInviteRevoke represents TL type `channelAdminLogEventActionExportedInviteRevoke#410a134e`.
-// A specific invite link was revoked
-//
-// See https://core.telegram.org/constructor/channelAdminLogEventActionExportedInviteRevoke for reference.
 type ChannelAdminLogEventActionExportedInviteRevoke struct {
-	// The invite link that was revoked
+	// Invite field of ChannelAdminLogEventActionExportedInviteRevoke.
 	Invite ExportedChatInviteClass
 }
 
@@ -4345,13 +4018,6 @@ func (c *ChannelAdminLogEventActionExportedInviteRevoke) String() string {
 	}
 	type Alias ChannelAdminLogEventActionExportedInviteRevoke
 	return fmt.Sprintf("ChannelAdminLogEventActionExportedInviteRevoke%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelAdminLogEventActionExportedInviteRevoke from given interface.
-func (c *ChannelAdminLogEventActionExportedInviteRevoke) FillFrom(from interface {
-	GetInvite() (value ExportedChatInviteClass)
-}) {
-	c.Invite = from.GetInvite()
 }
 
 // TypeID returns type id in TL schema.
@@ -4443,13 +4109,10 @@ func (c *ChannelAdminLogEventActionExportedInviteRevoke) GetInvite() (value Expo
 }
 
 // ChannelAdminLogEventActionExportedInviteEdit represents TL type `channelAdminLogEventActionExportedInviteEdit#e90ebb59`.
-// A chat invite was edited
-//
-// See https://core.telegram.org/constructor/channelAdminLogEventActionExportedInviteEdit for reference.
 type ChannelAdminLogEventActionExportedInviteEdit struct {
-	// Previous chat invite information
+	// PrevInvite field of ChannelAdminLogEventActionExportedInviteEdit.
 	PrevInvite ExportedChatInviteClass
-	// New chat invite information
+	// NewInvite field of ChannelAdminLogEventActionExportedInviteEdit.
 	NewInvite ExportedChatInviteClass
 }
 
@@ -4492,15 +4155,6 @@ func (c *ChannelAdminLogEventActionExportedInviteEdit) String() string {
 	}
 	type Alias ChannelAdminLogEventActionExportedInviteEdit
 	return fmt.Sprintf("ChannelAdminLogEventActionExportedInviteEdit%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelAdminLogEventActionExportedInviteEdit from given interface.
-func (c *ChannelAdminLogEventActionExportedInviteEdit) FillFrom(from interface {
-	GetPrevInvite() (value ExportedChatInviteClass)
-	GetNewInvite() (value ExportedChatInviteClass)
-}) {
-	c.PrevInvite = from.GetPrevInvite()
-	c.NewInvite = from.GetNewInvite()
 }
 
 // TypeID returns type id in TL schema.
@@ -4617,12 +4271,8 @@ func (c *ChannelAdminLogEventActionExportedInviteEdit) GetNewInvite() (value Exp
 }
 
 // ChannelAdminLogEventActionParticipantVolume represents TL type `channelAdminLogEventActionParticipantVolume#3e7f6847`.
-// channelAdminLogEvent.user_id has set the volume of participant.peer to participant
-// volume
-//
-// See https://core.telegram.org/constructor/channelAdminLogEventActionParticipantVolume for reference.
 type ChannelAdminLogEventActionParticipantVolume struct {
-	// The participant whose volume was changed
+	// Participant field of ChannelAdminLogEventActionParticipantVolume.
 	Participant GroupCallParticipant
 }
 
@@ -4662,13 +4312,6 @@ func (c *ChannelAdminLogEventActionParticipantVolume) String() string {
 	}
 	type Alias ChannelAdminLogEventActionParticipantVolume
 	return fmt.Sprintf("ChannelAdminLogEventActionParticipantVolume%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelAdminLogEventActionParticipantVolume from given interface.
-func (c *ChannelAdminLogEventActionParticipantVolume) FillFrom(from interface {
-	GetParticipant() (value GroupCallParticipant)
-}) {
-	c.Participant = from.GetParticipant()
 }
 
 // TypeID returns type id in TL schema.
@@ -4755,13 +4398,10 @@ func (c *ChannelAdminLogEventActionParticipantVolume) GetParticipant() (value Gr
 }
 
 // ChannelAdminLogEventActionChangeHistoryTTL represents TL type `channelAdminLogEventActionChangeHistoryTTL#6e941a38`.
-// The Time-To-Live of messages in this chat was changed
-//
-// See https://core.telegram.org/constructor/channelAdminLogEventActionChangeHistoryTTL for reference.
 type ChannelAdminLogEventActionChangeHistoryTTL struct {
-	// Previous value
+	// PrevValue field of ChannelAdminLogEventActionChangeHistoryTTL.
 	PrevValue int
-	// New value
+	// NewValue field of ChannelAdminLogEventActionChangeHistoryTTL.
 	NewValue int
 }
 
@@ -4804,15 +4444,6 @@ func (c *ChannelAdminLogEventActionChangeHistoryTTL) String() string {
 	}
 	type Alias ChannelAdminLogEventActionChangeHistoryTTL
 	return fmt.Sprintf("ChannelAdminLogEventActionChangeHistoryTTL%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelAdminLogEventActionChangeHistoryTTL from given interface.
-func (c *ChannelAdminLogEventActionChangeHistoryTTL) FillFrom(from interface {
-	GetPrevValue() (value int)
-	GetNewValue() (value int)
-}) {
-	c.PrevValue = from.GetPrevValue()
-	c.NewValue = from.GetNewValue()
 }
 
 // TypeID returns type id in TL schema.
@@ -4919,13 +4550,10 @@ func (c *ChannelAdminLogEventActionChangeHistoryTTL) GetNewValue() (value int) {
 }
 
 // ChannelAdminLogEventActionParticipantJoinByRequest represents TL type `channelAdminLogEventActionParticipantJoinByRequest#afb6144a`.
-// A new member was accepted to the chat by an admin
-//
-// See https://core.telegram.org/constructor/channelAdminLogEventActionParticipantJoinByRequest for reference.
 type ChannelAdminLogEventActionParticipantJoinByRequest struct {
-	// The invite link that was used to join the chat
+	// Invite field of ChannelAdminLogEventActionParticipantJoinByRequest.
 	Invite ExportedChatInviteClass
-	// ID of the admin that approved the invite
+	// ApprovedBy field of ChannelAdminLogEventActionParticipantJoinByRequest.
 	ApprovedBy int64
 }
 
@@ -4968,15 +4596,6 @@ func (c *ChannelAdminLogEventActionParticipantJoinByRequest) String() string {
 	}
 	type Alias ChannelAdminLogEventActionParticipantJoinByRequest
 	return fmt.Sprintf("ChannelAdminLogEventActionParticipantJoinByRequest%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelAdminLogEventActionParticipantJoinByRequest from given interface.
-func (c *ChannelAdminLogEventActionParticipantJoinByRequest) FillFrom(from interface {
-	GetInvite() (value ExportedChatInviteClass)
-	GetApprovedBy() (value int64)
-}) {
-	c.Invite = from.GetInvite()
-	c.ApprovedBy = from.GetApprovedBy()
 }
 
 // TypeID returns type id in TL schema.
@@ -5088,11 +4707,8 @@ func (c *ChannelAdminLogEventActionParticipantJoinByRequest) GetApprovedBy() (va
 }
 
 // ChannelAdminLogEventActionToggleNoForwards represents TL type `channelAdminLogEventActionToggleNoForwards#cb2ac766`.
-// Forwards were enabled or disabled
-//
-// See https://core.telegram.org/constructor/channelAdminLogEventActionToggleNoForwards for reference.
 type ChannelAdminLogEventActionToggleNoForwards struct {
-	// Old value
+	// NewValue field of ChannelAdminLogEventActionToggleNoForwards.
 	NewValue bool
 }
 
@@ -5132,13 +4748,6 @@ func (c *ChannelAdminLogEventActionToggleNoForwards) String() string {
 	}
 	type Alias ChannelAdminLogEventActionToggleNoForwards
 	return fmt.Sprintf("ChannelAdminLogEventActionToggleNoForwards%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelAdminLogEventActionToggleNoForwards from given interface.
-func (c *ChannelAdminLogEventActionToggleNoForwards) FillFrom(from interface {
-	GetNewValue() (value bool)
-}) {
-	c.NewValue = from.GetNewValue()
 }
 
 // TypeID returns type id in TL schema.
@@ -5225,11 +4834,8 @@ func (c *ChannelAdminLogEventActionToggleNoForwards) GetNewValue() (value bool) 
 }
 
 // ChannelAdminLogEventActionSendMessage represents TL type `channelAdminLogEventActionSendMessage#278f2868`.
-// A message was posted in a channel
-//
-// See https://core.telegram.org/constructor/channelAdminLogEventActionSendMessage for reference.
 type ChannelAdminLogEventActionSendMessage struct {
-	// The message that was sent
+	// Message field of ChannelAdminLogEventActionSendMessage.
 	Message MessageClass
 }
 
@@ -5267,13 +4873,6 @@ func (c *ChannelAdminLogEventActionSendMessage) String() string {
 	}
 	type Alias ChannelAdminLogEventActionSendMessage
 	return fmt.Sprintf("ChannelAdminLogEventActionSendMessage%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelAdminLogEventActionSendMessage from given interface.
-func (c *ChannelAdminLogEventActionSendMessage) FillFrom(from interface {
-	GetMessage() (value MessageClass)
-}) {
-	c.Message = from.GetMessage()
 }
 
 // TypeID returns type id in TL schema.
@@ -5365,16 +4964,10 @@ func (c *ChannelAdminLogEventActionSendMessage) GetMessage() (value MessageClass
 }
 
 // ChannelAdminLogEventActionChangeAvailableReactions represents TL type `channelAdminLogEventActionChangeAvailableReactions#be4e0ef8`.
-// The set of allowed message reactions »¹ for this channel has changed
-//
-// Links:
-//  1. https://core.telegram.org/api/reactions
-//
-// See https://core.telegram.org/constructor/channelAdminLogEventActionChangeAvailableReactions for reference.
 type ChannelAdminLogEventActionChangeAvailableReactions struct {
-	// Previously allowed reaction emojis
+	// PrevValue field of ChannelAdminLogEventActionChangeAvailableReactions.
 	PrevValue ChatReactionsClass
-	// New allowed reaction emojis
+	// NewValue field of ChannelAdminLogEventActionChangeAvailableReactions.
 	NewValue ChatReactionsClass
 }
 
@@ -5417,15 +5010,6 @@ func (c *ChannelAdminLogEventActionChangeAvailableReactions) String() string {
 	}
 	type Alias ChannelAdminLogEventActionChangeAvailableReactions
 	return fmt.Sprintf("ChannelAdminLogEventActionChangeAvailableReactions%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelAdminLogEventActionChangeAvailableReactions from given interface.
-func (c *ChannelAdminLogEventActionChangeAvailableReactions) FillFrom(from interface {
-	GetPrevValue() (value ChatReactionsClass)
-	GetNewValue() (value ChatReactionsClass)
-}) {
-	c.PrevValue = from.GetPrevValue()
-	c.NewValue = from.GetNewValue()
 }
 
 // TypeID returns type id in TL schema.
@@ -5542,13 +5126,10 @@ func (c *ChannelAdminLogEventActionChangeAvailableReactions) GetNewValue() (valu
 }
 
 // ChannelAdminLogEventActionChangeUsernames represents TL type `channelAdminLogEventActionChangeUsernames#f04fb3a9`.
-// The list of usernames associated with the channel was changed
-//
-// See https://core.telegram.org/constructor/channelAdminLogEventActionChangeUsernames for reference.
 type ChannelAdminLogEventActionChangeUsernames struct {
-	// Previous set of usernames
+	// PrevValue field of ChannelAdminLogEventActionChangeUsernames.
 	PrevValue []string
-	// New set of usernames
+	// NewValue field of ChannelAdminLogEventActionChangeUsernames.
 	NewValue []string
 }
 
@@ -5591,15 +5172,6 @@ func (c *ChannelAdminLogEventActionChangeUsernames) String() string {
 	}
 	type Alias ChannelAdminLogEventActionChangeUsernames
 	return fmt.Sprintf("ChannelAdminLogEventActionChangeUsernames%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelAdminLogEventActionChangeUsernames from given interface.
-func (c *ChannelAdminLogEventActionChangeUsernames) FillFrom(from interface {
-	GetPrevValue() (value []string)
-	GetNewValue() (value []string)
-}) {
-	c.PrevValue = from.GetPrevValue()
-	c.NewValue = from.GetNewValue()
 }
 
 // TypeID returns type id in TL schema.
@@ -5732,17 +5304,8 @@ func (c *ChannelAdminLogEventActionChangeUsernames) GetNewValue() (value []strin
 }
 
 // ChannelAdminLogEventActionToggleForum represents TL type `channelAdminLogEventActionToggleForum#2cc6383`.
-// Forum¹ functionality was enabled or disabled.
-//
-// Links:
-//  1. https://core.telegram.org/api/forum
-//
-// See https://core.telegram.org/constructor/channelAdminLogEventActionToggleForum for reference.
 type ChannelAdminLogEventActionToggleForum struct {
-	// Whether forum¹ functionality was enabled or disabled.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/forum
+	// NewValue field of ChannelAdminLogEventActionToggleForum.
 	NewValue bool
 }
 
@@ -5780,13 +5343,6 @@ func (c *ChannelAdminLogEventActionToggleForum) String() string {
 	}
 	type Alias ChannelAdminLogEventActionToggleForum
 	return fmt.Sprintf("ChannelAdminLogEventActionToggleForum%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelAdminLogEventActionToggleForum from given interface.
-func (c *ChannelAdminLogEventActionToggleForum) FillFrom(from interface {
-	GetNewValue() (value bool)
-}) {
-	c.NewValue = from.GetNewValue()
 }
 
 // TypeID returns type id in TL schema.
@@ -5873,17 +5429,8 @@ func (c *ChannelAdminLogEventActionToggleForum) GetNewValue() (value bool) {
 }
 
 // ChannelAdminLogEventActionCreateTopic represents TL type `channelAdminLogEventActionCreateTopic#58707d28`.
-// A forum topic¹ was created
-//
-// Links:
-//  1. https://core.telegram.org/api/forum#forum-topics
-//
-// See https://core.telegram.org/constructor/channelAdminLogEventActionCreateTopic for reference.
 type ChannelAdminLogEventActionCreateTopic struct {
-	// The forum topic¹ that was created
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/forum#forum-topics
+	// Topic field of ChannelAdminLogEventActionCreateTopic.
 	Topic ForumTopicClass
 }
 
@@ -5921,13 +5468,6 @@ func (c *ChannelAdminLogEventActionCreateTopic) String() string {
 	}
 	type Alias ChannelAdminLogEventActionCreateTopic
 	return fmt.Sprintf("ChannelAdminLogEventActionCreateTopic%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelAdminLogEventActionCreateTopic from given interface.
-func (c *ChannelAdminLogEventActionCreateTopic) FillFrom(from interface {
-	GetTopic() (value ForumTopicClass)
-}) {
-	c.Topic = from.GetTopic()
 }
 
 // TypeID returns type id in TL schema.
@@ -6019,16 +5559,10 @@ func (c *ChannelAdminLogEventActionCreateTopic) GetTopic() (value ForumTopicClas
 }
 
 // ChannelAdminLogEventActionEditTopic represents TL type `channelAdminLogEventActionEditTopic#f06fe208`.
-// A forum topic¹ was edited
-//
-// Links:
-//  1. https://core.telegram.org/api/forum#forum-topics
-//
-// See https://core.telegram.org/constructor/channelAdminLogEventActionEditTopic for reference.
 type ChannelAdminLogEventActionEditTopic struct {
-	// Previous topic information
+	// PrevTopic field of ChannelAdminLogEventActionEditTopic.
 	PrevTopic ForumTopicClass
-	// New topic information
+	// NewTopic field of ChannelAdminLogEventActionEditTopic.
 	NewTopic ForumTopicClass
 }
 
@@ -6069,15 +5603,6 @@ func (c *ChannelAdminLogEventActionEditTopic) String() string {
 	}
 	type Alias ChannelAdminLogEventActionEditTopic
 	return fmt.Sprintf("ChannelAdminLogEventActionEditTopic%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelAdminLogEventActionEditTopic from given interface.
-func (c *ChannelAdminLogEventActionEditTopic) FillFrom(from interface {
-	GetPrevTopic() (value ForumTopicClass)
-	GetNewTopic() (value ForumTopicClass)
-}) {
-	c.PrevTopic = from.GetPrevTopic()
-	c.NewTopic = from.GetNewTopic()
 }
 
 // TypeID returns type id in TL schema.
@@ -6194,17 +5719,8 @@ func (c *ChannelAdminLogEventActionEditTopic) GetNewTopic() (value ForumTopicCla
 }
 
 // ChannelAdminLogEventActionDeleteTopic represents TL type `channelAdminLogEventActionDeleteTopic#ae168909`.
-// A forum topic¹ was deleted
-//
-// Links:
-//  1. https://core.telegram.org/api/forum#forum-topics
-//
-// See https://core.telegram.org/constructor/channelAdminLogEventActionDeleteTopic for reference.
 type ChannelAdminLogEventActionDeleteTopic struct {
-	// The forum topic¹ that was deleted
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/forum#forum-topics
+	// Topic field of ChannelAdminLogEventActionDeleteTopic.
 	Topic ForumTopicClass
 }
 
@@ -6242,13 +5758,6 @@ func (c *ChannelAdminLogEventActionDeleteTopic) String() string {
 	}
 	type Alias ChannelAdminLogEventActionDeleteTopic
 	return fmt.Sprintf("ChannelAdminLogEventActionDeleteTopic%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelAdminLogEventActionDeleteTopic from given interface.
-func (c *ChannelAdminLogEventActionDeleteTopic) FillFrom(from interface {
-	GetTopic() (value ForumTopicClass)
-}) {
-	c.Topic = from.GetTopic()
 }
 
 // TypeID returns type id in TL schema.
@@ -6340,23 +5849,14 @@ func (c *ChannelAdminLogEventActionDeleteTopic) GetTopic() (value ForumTopicClas
 }
 
 // ChannelAdminLogEventActionPinTopic represents TL type `channelAdminLogEventActionPinTopic#5d8d353b`.
-// A forum topic¹ was pinned or unpinned
-//
-// Links:
-//  1. https://core.telegram.org/api/forum#forum-topics
-//
-// See https://core.telegram.org/constructor/channelAdminLogEventActionPinTopic for reference.
 type ChannelAdminLogEventActionPinTopic struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of ChannelAdminLogEventActionPinTopic.
 	Flags bin.Fields
-	// Previous topic information
+	// PrevTopic field of ChannelAdminLogEventActionPinTopic.
 	//
 	// Use SetPrevTopic and GetPrevTopic helpers.
 	PrevTopic ForumTopicClass
-	// New topic information
+	// NewTopic field of ChannelAdminLogEventActionPinTopic.
 	//
 	// Use SetNewTopic and GetNewTopic helpers.
 	NewTopic ForumTopicClass
@@ -6402,21 +5902,6 @@ func (c *ChannelAdminLogEventActionPinTopic) String() string {
 	}
 	type Alias ChannelAdminLogEventActionPinTopic
 	return fmt.Sprintf("ChannelAdminLogEventActionPinTopic%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelAdminLogEventActionPinTopic from given interface.
-func (c *ChannelAdminLogEventActionPinTopic) FillFrom(from interface {
-	GetPrevTopic() (value ForumTopicClass, ok bool)
-	GetNewTopic() (value ForumTopicClass, ok bool)
-}) {
-	if val, ok := from.GetPrevTopic(); ok {
-		c.PrevTopic = val
-	}
-
-	if val, ok := from.GetNewTopic(); ok {
-		c.NewTopic = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -6578,14 +6063,8 @@ func (c *ChannelAdminLogEventActionPinTopic) GetNewTopic() (value ForumTopicClas
 }
 
 // ChannelAdminLogEventActionToggleAntiSpam represents TL type `channelAdminLogEventActionToggleAntiSpam#64f36dfc`.
-// Native antispam¹ functionality was enabled or disabled.
-//
-// Links:
-//  1. https://core.telegram.org/api/antispam
-//
-// See https://core.telegram.org/constructor/channelAdminLogEventActionToggleAntiSpam for reference.
 type ChannelAdminLogEventActionToggleAntiSpam struct {
-	// Whether antispam functionality was enabled or disabled.
+	// NewValue field of ChannelAdminLogEventActionToggleAntiSpam.
 	NewValue bool
 }
 
@@ -6625,13 +6104,6 @@ func (c *ChannelAdminLogEventActionToggleAntiSpam) String() string {
 	}
 	type Alias ChannelAdminLogEventActionToggleAntiSpam
 	return fmt.Sprintf("ChannelAdminLogEventActionToggleAntiSpam%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelAdminLogEventActionToggleAntiSpam from given interface.
-func (c *ChannelAdminLogEventActionToggleAntiSpam) FillFrom(from interface {
-	GetNewValue() (value bool)
-}) {
-	c.NewValue = from.GetNewValue()
 }
 
 // TypeID returns type id in TL schema.
@@ -6718,16 +6190,10 @@ func (c *ChannelAdminLogEventActionToggleAntiSpam) GetNewValue() (value bool) {
 }
 
 // ChannelAdminLogEventActionChangePeerColor represents TL type `channelAdminLogEventActionChangePeerColor#5796e780`.
-// The message accent color¹ was changed
-//
-// Links:
-//  1. https://core.telegram.org/api/colors
-//
-// See https://core.telegram.org/constructor/channelAdminLogEventActionChangePeerColor for reference.
 type ChannelAdminLogEventActionChangePeerColor struct {
-	// Previous accent palette
+	// PrevValue field of ChannelAdminLogEventActionChangePeerColor.
 	PrevValue PeerColor
-	// New accent palette
+	// NewValue field of ChannelAdminLogEventActionChangePeerColor.
 	NewValue PeerColor
 }
 
@@ -6770,15 +6236,6 @@ func (c *ChannelAdminLogEventActionChangePeerColor) String() string {
 	}
 	type Alias ChannelAdminLogEventActionChangePeerColor
 	return fmt.Sprintf("ChannelAdminLogEventActionChangePeerColor%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelAdminLogEventActionChangePeerColor from given interface.
-func (c *ChannelAdminLogEventActionChangePeerColor) FillFrom(from interface {
-	GetPrevValue() (value PeerColor)
-	GetNewValue() (value PeerColor)
-}) {
-	c.PrevValue = from.GetPrevValue()
-	c.NewValue = from.GetNewValue()
 }
 
 // TypeID returns type id in TL schema.
@@ -6885,16 +6342,10 @@ func (c *ChannelAdminLogEventActionChangePeerColor) GetNewValue() (value PeerCol
 }
 
 // ChannelAdminLogEventActionChangeProfilePeerColor represents TL type `channelAdminLogEventActionChangeProfilePeerColor#5e477b25`.
-// The profile accent color¹ was changed
-//
-// Links:
-//  1. https://core.telegram.org/api/colors
-//
-// See https://core.telegram.org/constructor/channelAdminLogEventActionChangeProfilePeerColor for reference.
 type ChannelAdminLogEventActionChangeProfilePeerColor struct {
-	// Previous accent palette
+	// PrevValue field of ChannelAdminLogEventActionChangeProfilePeerColor.
 	PrevValue PeerColor
-	// New accent palette
+	// NewValue field of ChannelAdminLogEventActionChangeProfilePeerColor.
 	NewValue PeerColor
 }
 
@@ -6937,15 +6388,6 @@ func (c *ChannelAdminLogEventActionChangeProfilePeerColor) String() string {
 	}
 	type Alias ChannelAdminLogEventActionChangeProfilePeerColor
 	return fmt.Sprintf("ChannelAdminLogEventActionChangeProfilePeerColor%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelAdminLogEventActionChangeProfilePeerColor from given interface.
-func (c *ChannelAdminLogEventActionChangeProfilePeerColor) FillFrom(from interface {
-	GetPrevValue() (value PeerColor)
-	GetNewValue() (value PeerColor)
-}) {
-	c.PrevValue = from.GetPrevValue()
-	c.NewValue = from.GetNewValue()
 }
 
 // TypeID returns type id in TL schema.
@@ -7052,16 +6494,10 @@ func (c *ChannelAdminLogEventActionChangeProfilePeerColor) GetNewValue() (value 
 }
 
 // ChannelAdminLogEventActionChangeWallpaper represents TL type `channelAdminLogEventActionChangeWallpaper#31bb5d52`.
-// The wallpaper¹ was changed
-//
-// Links:
-//  1. https://core.telegram.org/api/wallpapers
-//
-// See https://core.telegram.org/constructor/channelAdminLogEventActionChangeWallpaper for reference.
 type ChannelAdminLogEventActionChangeWallpaper struct {
-	// Previous wallpaper
+	// PrevValue field of ChannelAdminLogEventActionChangeWallpaper.
 	PrevValue WallPaperClass
-	// New wallpaper
+	// NewValue field of ChannelAdminLogEventActionChangeWallpaper.
 	NewValue WallPaperClass
 }
 
@@ -7104,15 +6540,6 @@ func (c *ChannelAdminLogEventActionChangeWallpaper) String() string {
 	}
 	type Alias ChannelAdminLogEventActionChangeWallpaper
 	return fmt.Sprintf("ChannelAdminLogEventActionChangeWallpaper%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelAdminLogEventActionChangeWallpaper from given interface.
-func (c *ChannelAdminLogEventActionChangeWallpaper) FillFrom(from interface {
-	GetPrevValue() (value WallPaperClass)
-	GetNewValue() (value WallPaperClass)
-}) {
-	c.PrevValue = from.GetPrevValue()
-	c.NewValue = from.GetNewValue()
 }
 
 // TypeID returns type id in TL schema.
@@ -7229,16 +6656,10 @@ func (c *ChannelAdminLogEventActionChangeWallpaper) GetNewValue() (value WallPap
 }
 
 // ChannelAdminLogEventActionChangeEmojiStatus represents TL type `channelAdminLogEventActionChangeEmojiStatus#3ea9feb1`.
-// The emoji status¹ was changed
-//
-// Links:
-//  1. https://core.telegram.org/api/emoji-status
-//
-// See https://core.telegram.org/constructor/channelAdminLogEventActionChangeEmojiStatus for reference.
 type ChannelAdminLogEventActionChangeEmojiStatus struct {
-	// Previous emoji status
+	// PrevValue field of ChannelAdminLogEventActionChangeEmojiStatus.
 	PrevValue EmojiStatusClass
-	// New emoji status
+	// NewValue field of ChannelAdminLogEventActionChangeEmojiStatus.
 	NewValue EmojiStatusClass
 }
 
@@ -7281,15 +6702,6 @@ func (c *ChannelAdminLogEventActionChangeEmojiStatus) String() string {
 	}
 	type Alias ChannelAdminLogEventActionChangeEmojiStatus
 	return fmt.Sprintf("ChannelAdminLogEventActionChangeEmojiStatus%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelAdminLogEventActionChangeEmojiStatus from given interface.
-func (c *ChannelAdminLogEventActionChangeEmojiStatus) FillFrom(from interface {
-	GetPrevValue() (value EmojiStatusClass)
-	GetNewValue() (value EmojiStatusClass)
-}) {
-	c.PrevValue = from.GetPrevValue()
-	c.NewValue = from.GetNewValue()
 }
 
 // TypeID returns type id in TL schema.
@@ -7406,16 +6818,10 @@ func (c *ChannelAdminLogEventActionChangeEmojiStatus) GetNewValue() (value Emoji
 }
 
 // ChannelAdminLogEventActionChangeEmojiStickerSet represents TL type `channelAdminLogEventActionChangeEmojiStickerSet#46d840ab`.
-// The supergroup's custom emoji stickerset¹ was changed.
-//
-// Links:
-//  1. https://core.telegram.org/api/boost#setting-a-custom-emoji-stickerset-for-supergroups
-//
-// See https://core.telegram.org/constructor/channelAdminLogEventActionChangeEmojiStickerSet for reference.
 type ChannelAdminLogEventActionChangeEmojiStickerSet struct {
-	// Old value
+	// PrevStickerset field of ChannelAdminLogEventActionChangeEmojiStickerSet.
 	PrevStickerset InputStickerSetClass
-	// New value
+	// NewStickerset field of ChannelAdminLogEventActionChangeEmojiStickerSet.
 	NewStickerset InputStickerSetClass
 }
 
@@ -7458,15 +6864,6 @@ func (c *ChannelAdminLogEventActionChangeEmojiStickerSet) String() string {
 	}
 	type Alias ChannelAdminLogEventActionChangeEmojiStickerSet
 	return fmt.Sprintf("ChannelAdminLogEventActionChangeEmojiStickerSet%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelAdminLogEventActionChangeEmojiStickerSet from given interface.
-func (c *ChannelAdminLogEventActionChangeEmojiStickerSet) FillFrom(from interface {
-	GetPrevStickerset() (value InputStickerSetClass)
-	GetNewStickerset() (value InputStickerSetClass)
-}) {
-	c.PrevStickerset = from.GetPrevStickerset()
-	c.NewStickerset = from.GetNewStickerset()
 }
 
 // TypeID returns type id in TL schema.
@@ -7583,11 +6980,8 @@ func (c *ChannelAdminLogEventActionChangeEmojiStickerSet) GetNewStickerset() (va
 }
 
 // ChannelAdminLogEventActionToggleSignatureProfiles represents TL type `channelAdminLogEventActionToggleSignatureProfiles#60a79c79`.
-// Channel signature profiles were enabled/disabled.
-//
-// See https://core.telegram.org/constructor/channelAdminLogEventActionToggleSignatureProfiles for reference.
 type ChannelAdminLogEventActionToggleSignatureProfiles struct {
-	// New value
+	// NewValue field of ChannelAdminLogEventActionToggleSignatureProfiles.
 	NewValue bool
 }
 
@@ -7627,13 +7021,6 @@ func (c *ChannelAdminLogEventActionToggleSignatureProfiles) String() string {
 	}
 	type Alias ChannelAdminLogEventActionToggleSignatureProfiles
 	return fmt.Sprintf("ChannelAdminLogEventActionToggleSignatureProfiles%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelAdminLogEventActionToggleSignatureProfiles from given interface.
-func (c *ChannelAdminLogEventActionToggleSignatureProfiles) FillFrom(from interface {
-	GetNewValue() (value bool)
-}) {
-	c.NewValue = from.GetNewValue()
 }
 
 // TypeID returns type id in TL schema.
@@ -7720,16 +7107,10 @@ func (c *ChannelAdminLogEventActionToggleSignatureProfiles) GetNewValue() (value
 }
 
 // ChannelAdminLogEventActionParticipantSubExtend represents TL type `channelAdminLogEventActionParticipantSubExtend#64642db3`.
-// A paid subscriber has extended their Telegram Star subscription »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/stars#star-subscriptions
-//
-// See https://core.telegram.org/constructor/channelAdminLogEventActionParticipantSubExtend for reference.
 type ChannelAdminLogEventActionParticipantSubExtend struct {
-	// Same as new_participant.
+	// PrevParticipant field of ChannelAdminLogEventActionParticipantSubExtend.
 	PrevParticipant ChannelParticipantClass
-	// The subscriber that extended the subscription.
+	// NewParticipant field of ChannelAdminLogEventActionParticipantSubExtend.
 	NewParticipant ChannelParticipantClass
 }
 
@@ -7772,15 +7153,6 @@ func (c *ChannelAdminLogEventActionParticipantSubExtend) String() string {
 	}
 	type Alias ChannelAdminLogEventActionParticipantSubExtend
 	return fmt.Sprintf("ChannelAdminLogEventActionParticipantSubExtend%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelAdminLogEventActionParticipantSubExtend from given interface.
-func (c *ChannelAdminLogEventActionParticipantSubExtend) FillFrom(from interface {
-	GetPrevParticipant() (value ChannelParticipantClass)
-	GetNewParticipant() (value ChannelParticipantClass)
-}) {
-	c.PrevParticipant = from.GetPrevParticipant()
-	c.NewParticipant = from.GetNewParticipant()
 }
 
 // TypeID returns type id in TL schema.
@@ -7897,8 +7269,6 @@ func (c *ChannelAdminLogEventActionParticipantSubExtend) GetNewParticipant() (va
 }
 
 // ChannelAdminLogEventActionToggleAutotranslation represents TL type `channelAdminLogEventActionToggleAutotranslation#c517f77e`.
-//
-// See https://core.telegram.org/constructor/channelAdminLogEventActionToggleAutotranslation for reference.
 type ChannelAdminLogEventActionToggleAutotranslation struct {
 	// NewValue field of ChannelAdminLogEventActionToggleAutotranslation.
 	NewValue bool
@@ -7940,13 +7310,6 @@ func (c *ChannelAdminLogEventActionToggleAutotranslation) String() string {
 	}
 	type Alias ChannelAdminLogEventActionToggleAutotranslation
 	return fmt.Sprintf("ChannelAdminLogEventActionToggleAutotranslation%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelAdminLogEventActionToggleAutotranslation from given interface.
-func (c *ChannelAdminLogEventActionToggleAutotranslation) FillFrom(from interface {
-	GetNewValue() (value bool)
-}) {
-	c.NewValue = from.GetNewValue()
 }
 
 // TypeID returns type id in TL schema.
@@ -8036,8 +7399,6 @@ func (c *ChannelAdminLogEventActionToggleAutotranslation) GetNewValue() (value b
 const ChannelAdminLogEventActionClassName = "ChannelAdminLogEventAction"
 
 // ChannelAdminLogEventActionClass represents ChannelAdminLogEventAction generic type.
-//
-// See https://core.telegram.org/type/ChannelAdminLogEventAction for reference.
 //
 // Constructors:
 //   - [ChannelAdminLogEventActionChangeTitle]

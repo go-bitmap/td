@@ -32,17 +32,14 @@ var (
 )
 
 // ChannelAdminLogEvent represents TL type `channelAdminLogEvent#1fad68cd`.
-// Admin log event
-//
-// See https://core.telegram.org/constructor/channelAdminLogEvent for reference.
 type ChannelAdminLogEvent struct {
-	// Event ID
+	// ID field of ChannelAdminLogEvent.
 	ID int64
-	// Date
+	// Date field of ChannelAdminLogEvent.
 	Date int
-	// User ID
+	// UserID field of ChannelAdminLogEvent.
 	UserID int64
-	// Action
+	// Action field of ChannelAdminLogEvent.
 	Action ChannelAdminLogEventActionClass
 }
 
@@ -84,19 +81,6 @@ func (c *ChannelAdminLogEvent) String() string {
 	}
 	type Alias ChannelAdminLogEvent
 	return fmt.Sprintf("ChannelAdminLogEvent%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelAdminLogEvent from given interface.
-func (c *ChannelAdminLogEvent) FillFrom(from interface {
-	GetID() (value int64)
-	GetDate() (value int)
-	GetUserID() (value int64)
-	GetAction() (value ChannelAdminLogEventActionClass)
-}) {
-	c.ID = from.GetID()
-	c.Date = from.GetDate()
-	c.UserID = from.GetUserID()
-	c.Action = from.GetAction()
 }
 
 // TypeID returns type id in TL schema.

@@ -32,14 +32,8 @@ var (
 )
 
 // ChatlistsHideChatlistUpdatesRequest represents TL type `chatlists.hideChatlistUpdates#66e486fb`.
-// Dismiss new pending peers recently added to a chat folder deep link »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/links#chat-folder-links
-//
-// See https://core.telegram.org/method/chatlists.hideChatlistUpdates for reference.
 type ChatlistsHideChatlistUpdatesRequest struct {
-	// The folder
+	// Chatlist field of ChatlistsHideChatlistUpdatesRequest.
 	Chatlist InputChatlistDialogFilter
 }
 
@@ -72,13 +66,6 @@ func (h *ChatlistsHideChatlistUpdatesRequest) String() string {
 	}
 	type Alias ChatlistsHideChatlistUpdatesRequest
 	return fmt.Sprintf("ChatlistsHideChatlistUpdatesRequest%+v", Alias(*h))
-}
-
-// FillFrom fills ChatlistsHideChatlistUpdatesRequest from given interface.
-func (h *ChatlistsHideChatlistUpdatesRequest) FillFrom(from interface {
-	GetChatlist() (value InputChatlistDialogFilter)
-}) {
-	h.Chatlist = from.GetChatlist()
 }
 
 // TypeID returns type id in TL schema.
@@ -165,17 +152,6 @@ func (h *ChatlistsHideChatlistUpdatesRequest) GetChatlist() (value InputChatlist
 }
 
 // ChatlistsHideChatlistUpdates invokes method chatlists.hideChatlistUpdates#66e486fb returning error if any.
-// Dismiss new pending peers recently added to a chat folder deep link »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/links#chat-folder-links
-//
-// Possible errors:
-//
-//	400 FILTER_ID_INVALID: The specified filter ID is invalid.
-//	400 FILTER_NOT_SUPPORTED: The specified filter cannot be used in this context.
-//
-// See https://core.telegram.org/method/chatlists.hideChatlistUpdates for reference.
 func (c *Client) ChatlistsHideChatlistUpdates(ctx context.Context, chatlist InputChatlistDialogFilter) (bool, error) {
 	var result BoolBox
 

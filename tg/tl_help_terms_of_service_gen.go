@@ -32,28 +32,18 @@ var (
 )
 
 // HelpTermsOfService represents TL type `help.termsOfService#780a0310`.
-// Info about the latest telegram Terms Of Service
-//
-// See https://core.telegram.org/constructor/help.termsOfService for reference.
 type HelpTermsOfService struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of HelpTermsOfService.
 	Flags bin.Fields
-	// Whether a prompt must be showed to the user, in order to accept the new terms.
+	// Popup field of HelpTermsOfService.
 	Popup bool
-	// ID of the new terms
+	// ID field of HelpTermsOfService.
 	ID DataJSON
-	// Text of the new terms
+	// Text field of HelpTermsOfService.
 	Text string
-	// Message entities for styled text¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/entities
+	// Entities field of HelpTermsOfService.
 	Entities []MessageEntityClass
-	// Minimum age required to sign up to telegram, the user must confirm that they is older
-	// than the minimum age.
+	// MinAgeConfirm field of HelpTermsOfService.
 	//
 	// Use SetMinAgeConfirm and GetMinAgeConfirm helpers.
 	MinAgeConfirm int
@@ -103,24 +93,6 @@ func (t *HelpTermsOfService) String() string {
 	}
 	type Alias HelpTermsOfService
 	return fmt.Sprintf("HelpTermsOfService%+v", Alias(*t))
-}
-
-// FillFrom fills HelpTermsOfService from given interface.
-func (t *HelpTermsOfService) FillFrom(from interface {
-	GetPopup() (value bool)
-	GetID() (value DataJSON)
-	GetText() (value string)
-	GetEntities() (value []MessageEntityClass)
-	GetMinAgeConfirm() (value int, ok bool)
-}) {
-	t.Popup = from.GetPopup()
-	t.ID = from.GetID()
-	t.Text = from.GetText()
-	t.Entities = from.GetEntities()
-	if val, ok := from.GetMinAgeConfirm(); ok {
-		t.MinAgeConfirm = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -339,9 +311,4 @@ func (t *HelpTermsOfService) GetMinAgeConfirm() (value int, ok bool) {
 		return value, false
 	}
 	return t.MinAgeConfirm, true
-}
-
-// MapEntities returns field Entities wrapped in MessageEntityClassArray helper.
-func (t *HelpTermsOfService) MapEntities() (value MessageEntityClassArray) {
-	return MessageEntityClassArray(t.Entities)
 }

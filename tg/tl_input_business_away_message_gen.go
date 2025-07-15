@@ -32,31 +32,16 @@ var (
 )
 
 // InputBusinessAwayMessage represents TL type `inputBusinessAwayMessage#832175e0`.
-// Describes a Telegram Business away message¹, automatically sent to users writing to
-// us when we're offline, during closing hours, while we're on vacation, or in some other
-// custom time period when we cannot immediately answer to the user.
-//
-// Links:
-//  1. https://core.telegram.org/api/business#away-messages
-//
-// See https://core.telegram.org/constructor/inputBusinessAwayMessage for reference.
 type InputBusinessAwayMessage struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of InputBusinessAwayMessage.
 	Flags bin.Fields
-	// If set, the messages will not be sent if the account was online in the last 10 minutes.
+	// OfflineOnly field of InputBusinessAwayMessage.
 	OfflineOnly bool
-	// ID of a quick reply shorcut, containing the away messages to send, see here » for
-	// more info¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/business#quick-reply-shortcuts
+	// ShortcutID field of InputBusinessAwayMessage.
 	ShortcutID int
-	// Specifies when should the away messages be sent.
+	// Schedule field of InputBusinessAwayMessage.
 	Schedule BusinessAwayMessageScheduleClass
-	// Allowed recipients for the away messages.
+	// Recipients field of InputBusinessAwayMessage.
 	Recipients InputBusinessRecipients
 }
 
@@ -101,19 +86,6 @@ func (i *InputBusinessAwayMessage) String() string {
 	}
 	type Alias InputBusinessAwayMessage
 	return fmt.Sprintf("InputBusinessAwayMessage%+v", Alias(*i))
-}
-
-// FillFrom fills InputBusinessAwayMessage from given interface.
-func (i *InputBusinessAwayMessage) FillFrom(from interface {
-	GetOfflineOnly() (value bool)
-	GetShortcutID() (value int)
-	GetSchedule() (value BusinessAwayMessageScheduleClass)
-	GetRecipients() (value InputBusinessRecipients)
-}) {
-	i.OfflineOnly = from.GetOfflineOnly()
-	i.ShortcutID = from.GetShortcutID()
-	i.Schedule = from.GetSchedule()
-	i.Recipients = from.GetRecipients()
 }
 
 // TypeID returns type id in TL schema.

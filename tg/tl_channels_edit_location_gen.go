@@ -32,21 +32,12 @@ var (
 )
 
 // ChannelsEditLocationRequest represents TL type `channels.editLocation#58e63f6d`.
-// Edit location of geogroup, see here »¹ for more info on geogroups.
-//
-// Links:
-//  1. https://core.telegram.org/api/nearby
-//
-// See https://core.telegram.org/method/channels.editLocation for reference.
 type ChannelsEditLocationRequest struct {
-	// Geogroup¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/channel
+	// Channel field of ChannelsEditLocationRequest.
 	Channel InputChannelClass
-	// New geolocation
+	// GeoPoint field of ChannelsEditLocationRequest.
 	GeoPoint InputGeoPointClass
-	// Address string
+	// Address field of ChannelsEditLocationRequest.
 	Address string
 }
 
@@ -85,17 +76,6 @@ func (e *ChannelsEditLocationRequest) String() string {
 	}
 	type Alias ChannelsEditLocationRequest
 	return fmt.Sprintf("ChannelsEditLocationRequest%+v", Alias(*e))
-}
-
-// FillFrom fills ChannelsEditLocationRequest from given interface.
-func (e *ChannelsEditLocationRequest) FillFrom(from interface {
-	GetChannel() (value InputChannelClass)
-	GetGeoPoint() (value InputGeoPointClass)
-	GetAddress() (value string)
-}) {
-	e.Channel = from.GetChannel()
-	e.GeoPoint = from.GetGeoPoint()
-	e.Address = from.GetAddress()
 }
 
 // TypeID returns type id in TL schema.
@@ -231,31 +211,7 @@ func (e *ChannelsEditLocationRequest) GetAddress() (value string) {
 	return e.Address
 }
 
-// GetChannelAsNotEmpty returns mapped value of Channel field.
-func (e *ChannelsEditLocationRequest) GetChannelAsNotEmpty() (NotEmptyInputChannel, bool) {
-	return e.Channel.AsNotEmpty()
-}
-
-// GetGeoPointAsNotEmpty returns mapped value of GeoPoint field.
-func (e *ChannelsEditLocationRequest) GetGeoPointAsNotEmpty() (*InputGeoPoint, bool) {
-	return e.GeoPoint.AsNotEmpty()
-}
-
 // ChannelsEditLocation invokes method channels.editLocation#58e63f6d returning error if any.
-// Edit location of geogroup, see here »¹ for more info on geogroups.
-//
-// Links:
-//  1. https://core.telegram.org/api/nearby
-//
-// Possible errors:
-//
-//	400 CHANNEL_INVALID: The provided channel is invalid.
-//	400 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
-//	400 CHAT_NOT_MODIFIED: No changes were made to chat information because the new information you passed is identical to the current information.
-//	400 MEGAGROUP_GEO_REQUIRED: This method can only be invoked on a geogroup.
-//	400 MEGAGROUP_REQUIRED: You can only use this method on a supergroup.
-//
-// See https://core.telegram.org/method/channels.editLocation for reference.
 func (c *Client) ChannelsEditLocation(ctx context.Context, request *ChannelsEditLocationRequest) (bool, error) {
 	var result BoolBox
 

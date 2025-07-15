@@ -32,9 +32,6 @@ var (
 )
 
 // TopPeerCategoryBotsPM represents TL type `topPeerCategoryBotsPM#ab661b5b`.
-// Most used bots
-//
-// See https://core.telegram.org/constructor/topPeerCategoryBotsPM for reference.
 type TopPeerCategoryBotsPM struct {
 }
 
@@ -134,9 +131,6 @@ func (t *TopPeerCategoryBotsPM) DecodeBare(b *bin.Buffer) error {
 }
 
 // TopPeerCategoryBotsInline represents TL type `topPeerCategoryBotsInline#148677e2`.
-// Most used inline bots
-//
-// See https://core.telegram.org/constructor/topPeerCategoryBotsInline for reference.
 type TopPeerCategoryBotsInline struct {
 }
 
@@ -236,9 +230,6 @@ func (t *TopPeerCategoryBotsInline) DecodeBare(b *bin.Buffer) error {
 }
 
 // TopPeerCategoryCorrespondents represents TL type `topPeerCategoryCorrespondents#637b7ed`.
-// Users we've chatted most frequently with
-//
-// See https://core.telegram.org/constructor/topPeerCategoryCorrespondents for reference.
 type TopPeerCategoryCorrespondents struct {
 }
 
@@ -338,9 +329,6 @@ func (t *TopPeerCategoryCorrespondents) DecodeBare(b *bin.Buffer) error {
 }
 
 // TopPeerCategoryGroups represents TL type `topPeerCategoryGroups#bd17a14a`.
-// Often-opened groups and supergroups
-//
-// See https://core.telegram.org/constructor/topPeerCategoryGroups for reference.
 type TopPeerCategoryGroups struct {
 }
 
@@ -440,9 +428,6 @@ func (t *TopPeerCategoryGroups) DecodeBare(b *bin.Buffer) error {
 }
 
 // TopPeerCategoryChannels represents TL type `topPeerCategoryChannels#161d9628`.
-// Most frequently visited channels
-//
-// See https://core.telegram.org/constructor/topPeerCategoryChannels for reference.
 type TopPeerCategoryChannels struct {
 }
 
@@ -542,9 +527,6 @@ func (t *TopPeerCategoryChannels) DecodeBare(b *bin.Buffer) error {
 }
 
 // TopPeerCategoryPhoneCalls represents TL type `topPeerCategoryPhoneCalls#1e76a78c`.
-// Most frequently called users
-//
-// See https://core.telegram.org/constructor/topPeerCategoryPhoneCalls for reference.
 type TopPeerCategoryPhoneCalls struct {
 }
 
@@ -644,9 +626,6 @@ func (t *TopPeerCategoryPhoneCalls) DecodeBare(b *bin.Buffer) error {
 }
 
 // TopPeerCategoryForwardUsers represents TL type `topPeerCategoryForwardUsers#a8406ca9`.
-// Users to which the users often forwards messages to
-//
-// See https://core.telegram.org/constructor/topPeerCategoryForwardUsers for reference.
 type TopPeerCategoryForwardUsers struct {
 }
 
@@ -746,9 +725,6 @@ func (t *TopPeerCategoryForwardUsers) DecodeBare(b *bin.Buffer) error {
 }
 
 // TopPeerCategoryForwardChats represents TL type `topPeerCategoryForwardChats#fbeec0f0`.
-// Chats to which the users often forwards messages to
-//
-// See https://core.telegram.org/constructor/topPeerCategoryForwardChats for reference.
 type TopPeerCategoryForwardChats struct {
 }
 
@@ -848,12 +824,6 @@ func (t *TopPeerCategoryForwardChats) DecodeBare(b *bin.Buffer) error {
 }
 
 // TopPeerCategoryBotsApp represents TL type `topPeerCategoryBotsApp#fd9e7bec`.
-// Most frequently used Main Mini Bot Apps¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/bots/webapps#main-mini-apps
-//
-// See https://core.telegram.org/constructor/topPeerCategoryBotsApp for reference.
 type TopPeerCategoryBotsApp struct {
 }
 
@@ -956,8 +926,6 @@ func (t *TopPeerCategoryBotsApp) DecodeBare(b *bin.Buffer) error {
 const TopPeerCategoryClassName = "TopPeerCategory"
 
 // TopPeerCategoryClass represents TopPeerCategory generic type.
-//
-// See https://core.telegram.org/type/TopPeerCategory for reference.
 //
 // Constructors:
 //   - [TopPeerCategoryBotsPM]

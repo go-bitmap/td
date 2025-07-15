@@ -32,9 +32,6 @@ var (
 )
 
 // UserStatusEmpty represents TL type `userStatusEmpty#9d05049`.
-// User status has not been set yet.
-//
-// See https://core.telegram.org/constructor/userStatusEmpty for reference.
 type UserStatusEmpty struct {
 }
 
@@ -134,11 +131,8 @@ func (u *UserStatusEmpty) DecodeBare(b *bin.Buffer) error {
 }
 
 // UserStatusOnline represents TL type `userStatusOnline#edb93949`.
-// Online status of the user.
-//
-// See https://core.telegram.org/constructor/userStatusOnline for reference.
 type UserStatusOnline struct {
-	// Time to expiration of the current online status
+	// Expires field of UserStatusOnline.
 	Expires int
 }
 
@@ -176,13 +170,6 @@ func (u *UserStatusOnline) String() string {
 	}
 	type Alias UserStatusOnline
 	return fmt.Sprintf("UserStatusOnline%+v", Alias(*u))
-}
-
-// FillFrom fills UserStatusOnline from given interface.
-func (u *UserStatusOnline) FillFrom(from interface {
-	GetExpires() (value int)
-}) {
-	u.Expires = from.GetExpires()
 }
 
 // TypeID returns type id in TL schema.
@@ -269,11 +256,8 @@ func (u *UserStatusOnline) GetExpires() (value int) {
 }
 
 // UserStatusOffline represents TL type `userStatusOffline#8c703f`.
-// The user's offline status.
-//
-// See https://core.telegram.org/constructor/userStatusOffline for reference.
 type UserStatusOffline struct {
-	// Time the user was last seen online
+	// WasOnline field of UserStatusOffline.
 	WasOnline int
 }
 
@@ -311,13 +295,6 @@ func (u *UserStatusOffline) String() string {
 	}
 	type Alias UserStatusOffline
 	return fmt.Sprintf("UserStatusOffline%+v", Alias(*u))
-}
-
-// FillFrom fills UserStatusOffline from given interface.
-func (u *UserStatusOffline) FillFrom(from interface {
-	GetWasOnline() (value int)
-}) {
-	u.WasOnline = from.GetWasOnline()
 }
 
 // TypeID returns type id in TL schema.
@@ -404,22 +381,10 @@ func (u *UserStatusOffline) GetWasOnline() (value int) {
 }
 
 // UserStatusRecently represents TL type `userStatusRecently#7b197dc8`.
-// Online status: last seen recently
-//
-// See https://core.telegram.org/constructor/userStatusRecently for reference.
 type UserStatusRecently struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of UserStatusRecently.
 	Flags bin.Fields
-	// If set, the exact user status of this user is actually available to us, but to view it
-	// we must first purchase a Premium¹ subscription, or allow this user to see our exact
-	// last online status. See here »² for more info.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/premium
-	//  2) https://core.telegram.org/constructor/privacyKeyStatusTimestamp
+	// ByMe field of UserStatusRecently.
 	ByMe bool
 }
 
@@ -460,13 +425,6 @@ func (u *UserStatusRecently) String() string {
 	}
 	type Alias UserStatusRecently
 	return fmt.Sprintf("UserStatusRecently%+v", Alias(*u))
-}
-
-// FillFrom fills UserStatusRecently from given interface.
-func (u *UserStatusRecently) FillFrom(from interface {
-	GetByMe() (value bool)
-}) {
-	u.ByMe = from.GetByMe()
 }
 
 // TypeID returns type id in TL schema.
@@ -574,22 +532,10 @@ func (u *UserStatusRecently) GetByMe() (value bool) {
 }
 
 // UserStatusLastWeek represents TL type `userStatusLastWeek#541a1d1a`.
-// Online status: last seen last week
-//
-// See https://core.telegram.org/constructor/userStatusLastWeek for reference.
 type UserStatusLastWeek struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of UserStatusLastWeek.
 	Flags bin.Fields
-	// If set, the exact user status of this user is actually available to us, but to view it
-	// we must first purchase a Premium¹ subscription, or allow this user to see our exact
-	// last online status. See here »² for more info.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/premium
-	//  2) https://core.telegram.org/constructor/privacyKeyStatusTimestamp
+	// ByMe field of UserStatusLastWeek.
 	ByMe bool
 }
 
@@ -630,13 +576,6 @@ func (u *UserStatusLastWeek) String() string {
 	}
 	type Alias UserStatusLastWeek
 	return fmt.Sprintf("UserStatusLastWeek%+v", Alias(*u))
-}
-
-// FillFrom fills UserStatusLastWeek from given interface.
-func (u *UserStatusLastWeek) FillFrom(from interface {
-	GetByMe() (value bool)
-}) {
-	u.ByMe = from.GetByMe()
 }
 
 // TypeID returns type id in TL schema.
@@ -744,22 +683,10 @@ func (u *UserStatusLastWeek) GetByMe() (value bool) {
 }
 
 // UserStatusLastMonth represents TL type `userStatusLastMonth#65899777`.
-// Online status: last seen last month
-//
-// See https://core.telegram.org/constructor/userStatusLastMonth for reference.
 type UserStatusLastMonth struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of UserStatusLastMonth.
 	Flags bin.Fields
-	// If set, the exact user status of this user is actually available to us, but to view it
-	// we must first purchase a Premium¹ subscription, or allow this user to see our exact
-	// last online status. See here »² for more info.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/premium
-	//  2) https://core.telegram.org/constructor/privacyKeyStatusTimestamp
+	// ByMe field of UserStatusLastMonth.
 	ByMe bool
 }
 
@@ -800,13 +727,6 @@ func (u *UserStatusLastMonth) String() string {
 	}
 	type Alias UserStatusLastMonth
 	return fmt.Sprintf("UserStatusLastMonth%+v", Alias(*u))
-}
-
-// FillFrom fills UserStatusLastMonth from given interface.
-func (u *UserStatusLastMonth) FillFrom(from interface {
-	GetByMe() (value bool)
-}) {
-	u.ByMe = from.GetByMe()
 }
 
 // TypeID returns type id in TL schema.
@@ -917,8 +837,6 @@ func (u *UserStatusLastMonth) GetByMe() (value bool) {
 const UserStatusClassName = "UserStatus"
 
 // UserStatusClass represents UserStatus generic type.
-//
-// See https://core.telegram.org/type/UserStatus for reference.
 //
 // Constructors:
 //   - [UserStatusEmpty]

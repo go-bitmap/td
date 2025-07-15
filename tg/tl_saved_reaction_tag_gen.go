@@ -32,28 +32,16 @@ var (
 )
 
 // SavedReactionTag represents TL type `savedReactionTag#cb6ff828`.
-// Info about a saved message reaction tag »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/saved-messages#tags
-//
-// See https://core.telegram.org/constructor/savedReactionTag for reference.
 type SavedReactionTag struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of SavedReactionTag.
 	Flags bin.Fields
-	// Reaction¹ associated to the tag.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/reactions
+	// Reaction field of SavedReactionTag.
 	Reaction ReactionClass
-	// Custom tag name assigned by the user (max 12 UTF-8 chars).
+	// Title field of SavedReactionTag.
 	//
 	// Use SetTitle and GetTitle helpers.
 	Title string
-	// Number of messages tagged with this tag.
+	// Count field of SavedReactionTag.
 	Count int
 }
 
@@ -95,20 +83,6 @@ func (s *SavedReactionTag) String() string {
 	}
 	type Alias SavedReactionTag
 	return fmt.Sprintf("SavedReactionTag%+v", Alias(*s))
-}
-
-// FillFrom fills SavedReactionTag from given interface.
-func (s *SavedReactionTag) FillFrom(from interface {
-	GetReaction() (value ReactionClass)
-	GetTitle() (value string, ok bool)
-	GetCount() (value int)
-}) {
-	s.Reaction = from.GetReaction()
-	if val, ok := from.GetTitle(); ok {
-		s.Title = val
-	}
-
-	s.Count = from.GetCount()
 }
 
 // TypeID returns type id in TL schema.

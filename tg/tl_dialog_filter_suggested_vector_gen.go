@@ -68,13 +68,6 @@ func (vec *DialogFilterSuggestedVector) String() string {
 	return fmt.Sprintf("DialogFilterSuggestedVector%+v", Alias(*vec))
 }
 
-// FillFrom fills DialogFilterSuggestedVector from given interface.
-func (vec *DialogFilterSuggestedVector) FillFrom(from interface {
-	GetElems() (value []DialogFilterSuggested)
-}) {
-	vec.Elems = from.GetElems()
-}
-
 // TypeID returns type id in TL schema.
 //
 // See https://core.telegram.org/mtproto/TL-tl#remarks.

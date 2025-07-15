@@ -32,9 +32,6 @@ var (
 )
 
 // InputDocumentEmpty represents TL type `inputDocumentEmpty#72f0eaae`.
-// Empty constructor.
-//
-// See https://core.telegram.org/constructor/inputDocumentEmpty for reference.
 type InputDocumentEmpty struct {
 }
 
@@ -134,21 +131,12 @@ func (i *InputDocumentEmpty) DecodeBare(b *bin.Buffer) error {
 }
 
 // InputDocument represents TL type `inputDocument#1abfb575`.
-// Defines a document for subsequent interaction.
-//
-// See https://core.telegram.org/constructor/inputDocument for reference.
 type InputDocument struct {
-	// Document ID
+	// ID field of InputDocument.
 	ID int64
-	// access_hash parameter from the document¹ constructor
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/document
+	// AccessHash field of InputDocument.
 	AccessHash int64
-	// File reference¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/file_reference
+	// FileReference field of InputDocument.
 	FileReference []byte
 }
 
@@ -192,17 +180,6 @@ func (i *InputDocument) String() string {
 	}
 	type Alias InputDocument
 	return fmt.Sprintf("InputDocument%+v", Alias(*i))
-}
-
-// FillFrom fills InputDocument from given interface.
-func (i *InputDocument) FillFrom(from interface {
-	GetID() (value int64)
-	GetAccessHash() (value int64)
-	GetFileReference() (value []byte)
-}) {
-	i.ID = from.GetID()
-	i.AccessHash = from.GetAccessHash()
-	i.FileReference = from.GetFileReference()
 }
 
 // TypeID returns type id in TL schema.
@@ -333,8 +310,6 @@ const InputDocumentClassName = "InputDocument"
 
 // InputDocumentClass represents InputDocument generic type.
 //
-// See https://core.telegram.org/type/InputDocument for reference.
-//
 // Constructors:
 //   - [InputDocumentEmpty]
 //   - [InputDocument]
@@ -367,29 +342,6 @@ type InputDocumentClass interface {
 	String() string
 	// Zero returns true if current object has a zero value.
 	Zero() bool
-
-	// AsNotEmpty tries to map InputDocumentClass to InputDocument.
-	AsNotEmpty() (*InputDocument, bool)
-}
-
-// AsInputDocumentFileLocation tries to map InputDocument to InputDocumentFileLocation.
-func (i *InputDocument) AsInputDocumentFileLocation() *InputDocumentFileLocation {
-	value := new(InputDocumentFileLocation)
-	value.ID = i.GetID()
-	value.AccessHash = i.GetAccessHash()
-	value.FileReference = i.GetFileReference()
-
-	return value
-}
-
-// AsNotEmpty tries to map InputDocumentEmpty to InputDocument.
-func (i *InputDocumentEmpty) AsNotEmpty() (*InputDocument, bool) {
-	return nil, false
-}
-
-// AsNotEmpty tries to map InputDocument to InputDocument.
-func (i *InputDocument) AsNotEmpty() (*InputDocument, bool) {
-	return i, true
 }
 
 // DecodeInputDocument implements binary de-serialization for InputDocumentClass.

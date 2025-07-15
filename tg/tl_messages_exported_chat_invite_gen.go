@@ -32,13 +32,10 @@ var (
 )
 
 // MessagesExportedChatInvite represents TL type `messages.exportedChatInvite#1871be50`.
-// Info about a chat invite
-//
-// See https://core.telegram.org/constructor/messages.exportedChatInvite for reference.
 type MessagesExportedChatInvite struct {
-	// Info about the chat invite
+	// Invite field of MessagesExportedChatInvite.
 	Invite ExportedChatInviteClass
-	// Mentioned users
+	// Users field of MessagesExportedChatInvite.
 	Users []UserClass
 }
 
@@ -79,15 +76,6 @@ func (e *MessagesExportedChatInvite) String() string {
 	}
 	type Alias MessagesExportedChatInvite
 	return fmt.Sprintf("MessagesExportedChatInvite%+v", Alias(*e))
-}
-
-// FillFrom fills MessagesExportedChatInvite from given interface.
-func (e *MessagesExportedChatInvite) FillFrom(from interface {
-	GetInvite() (value ExportedChatInviteClass)
-	GetUsers() (value []UserClass)
-}) {
-	e.Invite = from.GetInvite()
-	e.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -216,21 +204,13 @@ func (e *MessagesExportedChatInvite) GetUsers() (value []UserClass) {
 	return e.Users
 }
 
-// MapUsers returns field Users wrapped in UserClassArray helper.
-func (e *MessagesExportedChatInvite) MapUsers() (value UserClassArray) {
-	return UserClassArray(e.Users)
-}
-
 // MessagesExportedChatInviteReplaced represents TL type `messages.exportedChatInviteReplaced#222600ef`.
-// The specified chat invite was replaced with another one
-//
-// See https://core.telegram.org/constructor/messages.exportedChatInviteReplaced for reference.
 type MessagesExportedChatInviteReplaced struct {
-	// The replaced chat invite
+	// Invite field of MessagesExportedChatInviteReplaced.
 	Invite ExportedChatInviteClass
-	// The invite that replaces the previous invite
+	// NewInvite field of MessagesExportedChatInviteReplaced.
 	NewInvite ExportedChatInviteClass
-	// Mentioned users
+	// Users field of MessagesExportedChatInviteReplaced.
 	Users []UserClass
 }
 
@@ -274,17 +254,6 @@ func (e *MessagesExportedChatInviteReplaced) String() string {
 	}
 	type Alias MessagesExportedChatInviteReplaced
 	return fmt.Sprintf("MessagesExportedChatInviteReplaced%+v", Alias(*e))
-}
-
-// FillFrom fills MessagesExportedChatInviteReplaced from given interface.
-func (e *MessagesExportedChatInviteReplaced) FillFrom(from interface {
-	GetInvite() (value ExportedChatInviteClass)
-	GetNewInvite() (value ExportedChatInviteClass)
-	GetUsers() (value []UserClass)
-}) {
-	e.Invite = from.GetInvite()
-	e.NewInvite = from.GetNewInvite()
-	e.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -438,17 +407,10 @@ func (e *MessagesExportedChatInviteReplaced) GetUsers() (value []UserClass) {
 	return e.Users
 }
 
-// MapUsers returns field Users wrapped in UserClassArray helper.
-func (e *MessagesExportedChatInviteReplaced) MapUsers() (value UserClassArray) {
-	return UserClassArray(e.Users)
-}
-
 // MessagesExportedChatInviteClassName is schema name of MessagesExportedChatInviteClass.
 const MessagesExportedChatInviteClassName = "messages.ExportedChatInvite"
 
 // MessagesExportedChatInviteClass represents messages.ExportedChatInvite generic type.
-//
-// See https://core.telegram.org/type/messages.ExportedChatInvite for reference.
 //
 // Constructors:
 //   - [MessagesExportedChatInvite]
@@ -483,13 +445,10 @@ type MessagesExportedChatInviteClass interface {
 	// Zero returns true if current object has a zero value.
 	Zero() bool
 
-	// Info about the chat invite
+	// Invite field of MessagesExportedChatInvite.
 	GetInvite() (value ExportedChatInviteClass)
-
-	// Mentioned users
+	// Users field of MessagesExportedChatInvite.
 	GetUsers() (value []UserClass)
-	// Mentioned users
-	MapUsers() (value UserClassArray)
 }
 
 // DecodeMessagesExportedChatInvite implements binary de-serialization for MessagesExportedChatInviteClass.

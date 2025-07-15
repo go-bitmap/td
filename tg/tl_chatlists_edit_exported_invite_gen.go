@@ -32,30 +32,18 @@ var (
 )
 
 // ChatlistsEditExportedInviteRequest represents TL type `chatlists.editExportedInvite#653db63d`.
-// Edit a chat folder deep link »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/links#chat-folder-links
-//
-// See https://core.telegram.org/method/chatlists.editExportedInvite for reference.
 type ChatlistsEditExportedInviteRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of ChatlistsEditExportedInviteRequest.
 	Flags bin.Fields
-	// Folder ID
+	// Chatlist field of ChatlistsEditExportedInviteRequest.
 	Chatlist InputChatlistDialogFilter
-	// slug obtained from the chat folder deep link »¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/links#chat-folder-links
+	// Slug field of ChatlistsEditExportedInviteRequest.
 	Slug string
-	// If set, sets a new name for the link
+	// Title field of ChatlistsEditExportedInviteRequest.
 	//
 	// Use SetTitle and GetTitle helpers.
 	Title string
-	// If set, changes the list of peers shared with the link
+	// Peers field of ChatlistsEditExportedInviteRequest.
 	//
 	// Use SetPeers and GetPeers helpers.
 	Peers []InputPeerClass
@@ -102,25 +90,6 @@ func (e *ChatlistsEditExportedInviteRequest) String() string {
 	}
 	type Alias ChatlistsEditExportedInviteRequest
 	return fmt.Sprintf("ChatlistsEditExportedInviteRequest%+v", Alias(*e))
-}
-
-// FillFrom fills ChatlistsEditExportedInviteRequest from given interface.
-func (e *ChatlistsEditExportedInviteRequest) FillFrom(from interface {
-	GetChatlist() (value InputChatlistDialogFilter)
-	GetSlug() (value string)
-	GetTitle() (value string, ok bool)
-	GetPeers() (value []InputPeerClass, ok bool)
-}) {
-	e.Chatlist = from.GetChatlist()
-	e.Slug = from.GetSlug()
-	if val, ok := from.GetTitle(); ok {
-		e.Title = val
-	}
-
-	if val, ok := from.GetPeers(); ok {
-		e.Peers = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -329,30 +298,7 @@ func (e *ChatlistsEditExportedInviteRequest) GetPeers() (value []InputPeerClass,
 	return e.Peers, true
 }
 
-// MapPeers returns field Peers wrapped in InputPeerClassArray helper.
-func (e *ChatlistsEditExportedInviteRequest) MapPeers() (value InputPeerClassArray, ok bool) {
-	if !e.Flags.Has(2) {
-		return value, false
-	}
-	return InputPeerClassArray(e.Peers), true
-}
-
 // ChatlistsEditExportedInvite invokes method chatlists.editExportedInvite#653db63d returning error if any.
-// Edit a chat folder deep link »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/links#chat-folder-links
-//
-// Possible errors:
-//
-//	400 CHANNEL_INVALID: The provided channel is invalid.
-//	400 FILTER_ID_INVALID: The specified filter ID is invalid.
-//	400 FILTER_NOT_SUPPORTED: The specified filter cannot be used in this context.
-//	400 INVITE_SLUG_EMPTY: The specified invite slug is empty.
-//	400 INVITE_SLUG_EXPIRED: The specified chat folder link has expired.
-//	400 PEERS_LIST_EMPTY: The specified list of peers is empty.
-//
-// See https://core.telegram.org/method/chatlists.editExportedInvite for reference.
 func (c *Client) ChatlistsEditExportedInvite(ctx context.Context, request *ChatlistsEditExportedInviteRequest) (*ExportedChatlistInvite, error) {
 	var result ExportedChatlistInvite
 

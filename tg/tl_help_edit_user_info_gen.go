@@ -32,18 +32,12 @@ var (
 )
 
 // HelpEditUserInfoRequest represents TL type `help.editUserInfo#66b91b70`.
-// Internal use
-//
-// See https://core.telegram.org/method/help.editUserInfo for reference.
 type HelpEditUserInfoRequest struct {
-	// User
+	// UserID field of HelpEditUserInfoRequest.
 	UserID InputUserClass
-	// Message
+	// Message field of HelpEditUserInfoRequest.
 	Message string
-	// Message entities for styled text¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/entities
+	// Entities field of HelpEditUserInfoRequest.
 	Entities []MessageEntityClass
 }
 
@@ -82,17 +76,6 @@ func (e *HelpEditUserInfoRequest) String() string {
 	}
 	type Alias HelpEditUserInfoRequest
 	return fmt.Sprintf("HelpEditUserInfoRequest%+v", Alias(*e))
-}
-
-// FillFrom fills HelpEditUserInfoRequest from given interface.
-func (e *HelpEditUserInfoRequest) FillFrom(from interface {
-	GetUserID() (value InputUserClass)
-	GetMessage() (value string)
-	GetEntities() (value []MessageEntityClass)
-}) {
-	e.UserID = from.GetUserID()
-	e.Message = from.GetMessage()
-	e.Entities = from.GetEntities()
 }
 
 // TypeID returns type id in TL schema.
@@ -241,20 +224,7 @@ func (e *HelpEditUserInfoRequest) GetEntities() (value []MessageEntityClass) {
 	return e.Entities
 }
 
-// MapEntities returns field Entities wrapped in MessageEntityClassArray helper.
-func (e *HelpEditUserInfoRequest) MapEntities() (value MessageEntityClassArray) {
-	return MessageEntityClassArray(e.Entities)
-}
-
 // HelpEditUserInfo invokes method help.editUserInfo#66b91b70 returning error if any.
-// Internal use
-//
-// Possible errors:
-//
-//	400 ENTITY_BOUNDS_INVALID: A specified entity offset or length is invalid, see here » for info on how to properly compute the entity offset/length.
-//	403 USER_INVALID: Invalid user provided.
-//
-// See https://core.telegram.org/method/help.editUserInfo for reference.
 func (c *Client) HelpEditUserInfo(ctx context.Context, request *HelpEditUserInfoRequest) (HelpUserInfoClass, error) {
 	var result HelpUserInfoBox
 

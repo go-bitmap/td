@@ -32,13 +32,10 @@ var (
 )
 
 // PhoneLeaveGroupCallRequest represents TL type `phone.leaveGroupCall#500377f9`.
-// Leave a group call
-//
-// See https://core.telegram.org/method/phone.leaveGroupCall for reference.
 type PhoneLeaveGroupCallRequest struct {
-	// The group call
+	// Call field of PhoneLeaveGroupCallRequest.
 	Call InputGroupCallClass
-	// Your source ID
+	// Source field of PhoneLeaveGroupCallRequest.
 	Source int
 }
 
@@ -74,15 +71,6 @@ func (l *PhoneLeaveGroupCallRequest) String() string {
 	}
 	type Alias PhoneLeaveGroupCallRequest
 	return fmt.Sprintf("PhoneLeaveGroupCallRequest%+v", Alias(*l))
-}
-
-// FillFrom fills PhoneLeaveGroupCallRequest from given interface.
-func (l *PhoneLeaveGroupCallRequest) FillFrom(from interface {
-	GetCall() (value InputGroupCallClass)
-	GetSource() (value int)
-}) {
-	l.Call = from.GetCall()
-	l.Source = from.GetSource()
 }
 
 // TypeID returns type id in TL schema.
@@ -194,13 +182,6 @@ func (l *PhoneLeaveGroupCallRequest) GetSource() (value int) {
 }
 
 // PhoneLeaveGroupCall invokes method phone.leaveGroupCall#500377f9 returning error if any.
-// Leave a group call
-//
-// Possible errors:
-//
-//	400 GROUPCALL_INVALID: The specified group call is invalid.
-//
-// See https://core.telegram.org/method/phone.leaveGroupCall for reference.
 func (c *Client) PhoneLeaveGroupCall(ctx context.Context, request *PhoneLeaveGroupCallRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

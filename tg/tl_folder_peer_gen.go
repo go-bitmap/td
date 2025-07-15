@@ -32,16 +32,10 @@ var (
 )
 
 // FolderPeer represents TL type `folderPeer#e9baa668`.
-// Peer in a folder
-//
-// See https://core.telegram.org/constructor/folderPeer for reference.
 type FolderPeer struct {
-	// Folder peer info
+	// Peer field of FolderPeer.
 	Peer PeerClass
-	// Peer folder ID, for more info click here¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/folders#peer-folders
+	// FolderID field of FolderPeer.
 	FolderID int
 }
 
@@ -77,15 +71,6 @@ func (f *FolderPeer) String() string {
 	}
 	type Alias FolderPeer
 	return fmt.Sprintf("FolderPeer%+v", Alias(*f))
-}
-
-// FillFrom fills FolderPeer from given interface.
-func (f *FolderPeer) FillFrom(from interface {
-	GetPeer() (value PeerClass)
-	GetFolderID() (value int)
-}) {
-	f.Peer = from.GetPeer()
-	f.FolderID = from.GetFolderID()
 }
 
 // TypeID returns type id in TL schema.

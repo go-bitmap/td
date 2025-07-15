@@ -32,8 +32,6 @@ var (
 )
 
 // DisallowedGiftsSettings represents TL type `disallowedGiftsSettings#71f276c4`.
-//
-// See https://core.telegram.org/constructor/disallowedGiftsSettings for reference.
 type DisallowedGiftsSettings struct {
 	// Flags field of DisallowedGiftsSettings.
 	Flags bin.Fields
@@ -88,19 +86,6 @@ func (d *DisallowedGiftsSettings) String() string {
 	}
 	type Alias DisallowedGiftsSettings
 	return fmt.Sprintf("DisallowedGiftsSettings%+v", Alias(*d))
-}
-
-// FillFrom fills DisallowedGiftsSettings from given interface.
-func (d *DisallowedGiftsSettings) FillFrom(from interface {
-	GetDisallowUnlimitedStargifts() (value bool)
-	GetDisallowLimitedStargifts() (value bool)
-	GetDisallowUniqueStargifts() (value bool)
-	GetDisallowPremiumGifts() (value bool)
-}) {
-	d.DisallowUnlimitedStargifts = from.GetDisallowUnlimitedStargifts()
-	d.DisallowLimitedStargifts = from.GetDisallowLimitedStargifts()
-	d.DisallowUniqueStargifts = from.GetDisallowUniqueStargifts()
-	d.DisallowPremiumGifts = from.GetDisallowPremiumGifts()
 }
 
 // TypeID returns type id in TL schema.

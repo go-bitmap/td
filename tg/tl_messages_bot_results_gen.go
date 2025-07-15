@@ -32,41 +32,30 @@ var (
 )
 
 // MessagesBotResults represents TL type `messages.botResults#e021f2f6`.
-// Result of a query to an inline bot
-//
-// See https://core.telegram.org/constructor/messages.botResults for reference.
 type MessagesBotResults struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessagesBotResults.
 	Flags bin.Fields
-	// Whether the result is a picture gallery
+	// Gallery field of MessagesBotResults.
 	Gallery bool
-	// Query ID
+	// QueryID field of MessagesBotResults.
 	QueryID int64
-	// The next offset to use when navigating through results
+	// NextOffset field of MessagesBotResults.
 	//
 	// Use SetNextOffset and GetNextOffset helpers.
 	NextOffset string
-	// Shown as a button on top of the remaining inline result list; if clicked, redirects
-	// the user to a private chat with the bot with the specified start parameter.
+	// SwitchPm field of MessagesBotResults.
 	//
 	// Use SetSwitchPm and GetSwitchPm helpers.
 	SwitchPm InlineBotSwitchPM
-	// Shown as a button on top of the remaining inline result list; if clicked, opens the
-	// specified inline mode mini app¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/bots/webapps#inline-mode-mini-apps
+	// SwitchWebview field of MessagesBotResults.
 	//
 	// Use SetSwitchWebview and GetSwitchWebview helpers.
 	SwitchWebview InlineBotWebView
-	// The results
+	// Results field of MessagesBotResults.
 	Results []BotInlineResultClass
-	// Caching validity of the results
+	// CacheTime field of MessagesBotResults.
 	CacheTime int
-	// Users mentioned in the results
+	// Users field of MessagesBotResults.
 	Users []UserClass
 }
 
@@ -123,36 +112,6 @@ func (b *MessagesBotResults) String() string {
 	}
 	type Alias MessagesBotResults
 	return fmt.Sprintf("MessagesBotResults%+v", Alias(*b))
-}
-
-// FillFrom fills MessagesBotResults from given interface.
-func (b *MessagesBotResults) FillFrom(from interface {
-	GetGallery() (value bool)
-	GetQueryID() (value int64)
-	GetNextOffset() (value string, ok bool)
-	GetSwitchPm() (value InlineBotSwitchPM, ok bool)
-	GetSwitchWebview() (value InlineBotWebView, ok bool)
-	GetResults() (value []BotInlineResultClass)
-	GetCacheTime() (value int)
-	GetUsers() (value []UserClass)
-}) {
-	b.Gallery = from.GetGallery()
-	b.QueryID = from.GetQueryID()
-	if val, ok := from.GetNextOffset(); ok {
-		b.NextOffset = val
-	}
-
-	if val, ok := from.GetSwitchPm(); ok {
-		b.SwitchPm = val
-	}
-
-	if val, ok := from.GetSwitchWebview(); ok {
-		b.SwitchWebview = val
-	}
-
-	b.Results = from.GetResults()
-	b.CacheTime = from.GetCacheTime()
-	b.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -481,14 +440,4 @@ func (b *MessagesBotResults) GetUsers() (value []UserClass) {
 		return
 	}
 	return b.Users
-}
-
-// MapResults returns field Results wrapped in BotInlineResultClassArray helper.
-func (b *MessagesBotResults) MapResults() (value BotInlineResultClassArray) {
-	return BotInlineResultClassArray(b.Results)
-}
-
-// MapUsers returns field Users wrapped in UserClassArray helper.
-func (b *MessagesBotResults) MapUsers() (value UserClassArray) {
-	return UserClassArray(b.Users)
 }

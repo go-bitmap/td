@@ -32,29 +32,16 @@ var (
 )
 
 // PaymentsSuggestedStarRefBots represents TL type `payments.suggestedStarRefBots#b4d5d859`.
-// A list of suggested mini apps¹ with available affiliate programs²
-//
-// Links:
-//  1. https://core.telegram.org/api/bots/webapps
-//  2. https://core.telegram.org/api/bots/referrals
-//
-// See https://core.telegram.org/constructor/payments.suggestedStarRefBots for reference.
 type PaymentsSuggestedStarRefBots struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of PaymentsSuggestedStarRefBots.
 	Flags bin.Fields
-	// Total number of results (for pagination)
+	// Count field of PaymentsSuggestedStarRefBots.
 	Count int
-	// Suggested affiliate programs (full or partial list to be fetched using pagination)
+	// SuggestedBots field of PaymentsSuggestedStarRefBots.
 	SuggestedBots []StarRefProgram
-	// Peers mentioned in suggested_bots
+	// Users field of PaymentsSuggestedStarRefBots.
 	Users []UserClass
-	// Next offset for pagination¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets
+	// NextOffset field of PaymentsSuggestedStarRefBots.
 	//
 	// Use SetNextOffset and GetNextOffset helpers.
 	NextOffset string
@@ -101,22 +88,6 @@ func (s *PaymentsSuggestedStarRefBots) String() string {
 	}
 	type Alias PaymentsSuggestedStarRefBots
 	return fmt.Sprintf("PaymentsSuggestedStarRefBots%+v", Alias(*s))
-}
-
-// FillFrom fills PaymentsSuggestedStarRefBots from given interface.
-func (s *PaymentsSuggestedStarRefBots) FillFrom(from interface {
-	GetCount() (value int)
-	GetSuggestedBots() (value []StarRefProgram)
-	GetUsers() (value []UserClass)
-	GetNextOffset() (value string, ok bool)
-}) {
-	s.Count = from.GetCount()
-	s.SuggestedBots = from.GetSuggestedBots()
-	s.Users = from.GetUsers()
-	if val, ok := from.GetNextOffset(); ok {
-		s.NextOffset = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -322,9 +293,4 @@ func (s *PaymentsSuggestedStarRefBots) GetNextOffset() (value string, ok bool) {
 		return value, false
 	}
 	return s.NextOffset, true
-}
-
-// MapUsers returns field Users wrapped in UserClassArray helper.
-func (s *PaymentsSuggestedStarRefBots) MapUsers() (value UserClassArray) {
-	return UserClassArray(s.Users)
 }

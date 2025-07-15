@@ -32,13 +32,10 @@ var (
 )
 
 // PhoneJoinGroupCallPresentationRequest represents TL type `phone.joinGroupCallPresentation#cbea6bc4`.
-// Start screen sharing in a call
-//
-// See https://core.telegram.org/method/phone.joinGroupCallPresentation for reference.
 type PhoneJoinGroupCallPresentationRequest struct {
-	// The group call
+	// Call field of PhoneJoinGroupCallPresentationRequest.
 	Call InputGroupCallClass
-	// WebRTC parameters
+	// Params field of PhoneJoinGroupCallPresentationRequest.
 	Params DataJSON
 }
 
@@ -74,15 +71,6 @@ func (j *PhoneJoinGroupCallPresentationRequest) String() string {
 	}
 	type Alias PhoneJoinGroupCallPresentationRequest
 	return fmt.Sprintf("PhoneJoinGroupCallPresentationRequest%+v", Alias(*j))
-}
-
-// FillFrom fills PhoneJoinGroupCallPresentationRequest from given interface.
-func (j *PhoneJoinGroupCallPresentationRequest) FillFrom(from interface {
-	GetCall() (value InputGroupCallClass)
-	GetParams() (value DataJSON)
-}) {
-	j.Call = from.GetCall()
-	j.Params = from.GetParams()
 }
 
 // TypeID returns type id in TL schema.
@@ -194,14 +182,6 @@ func (j *PhoneJoinGroupCallPresentationRequest) GetParams() (value DataJSON) {
 }
 
 // PhoneJoinGroupCallPresentation invokes method phone.joinGroupCallPresentation#cbea6bc4 returning error if any.
-// Start screen sharing in a call
-//
-// Possible errors:
-//
-//	400 GROUPCALL_INVALID: The specified group call is invalid.
-//	403 PARTICIPANT_JOIN_MISSING: Trying to enable a presentation, when the user hasn't joined the Video Chat with phone.joinGroupCall.
-//
-// See https://core.telegram.org/method/phone.joinGroupCallPresentation for reference.
 func (c *Client) PhoneJoinGroupCallPresentation(ctx context.Context, request *PhoneJoinGroupCallPresentationRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

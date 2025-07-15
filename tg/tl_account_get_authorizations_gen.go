@@ -32,9 +32,6 @@ var (
 )
 
 // AccountGetAuthorizationsRequest represents TL type `account.getAuthorizations#e320c158`.
-// Get logged-in sessions
-//
-// See https://core.telegram.org/method/account.getAuthorizations for reference.
 type AccountGetAuthorizationsRequest struct {
 }
 
@@ -129,9 +126,6 @@ func (g *AccountGetAuthorizationsRequest) DecodeBare(b *bin.Buffer) error {
 }
 
 // AccountGetAuthorizations invokes method account.getAuthorizations#e320c158 returning error if any.
-// Get logged-in sessions
-//
-// See https://core.telegram.org/method/account.getAuthorizations for reference.
 func (c *Client) AccountGetAuthorizations(ctx context.Context) (*AccountAuthorizations, error) {
 	var result AccountAuthorizations
 

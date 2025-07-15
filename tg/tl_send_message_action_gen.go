@@ -32,9 +32,6 @@ var (
 )
 
 // SendMessageTypingAction represents TL type `sendMessageTypingAction#16bf744e`.
-// User is typing.
-//
-// See https://core.telegram.org/constructor/sendMessageTypingAction for reference.
 type SendMessageTypingAction struct {
 }
 
@@ -134,10 +131,6 @@ func (s *SendMessageTypingAction) DecodeBare(b *bin.Buffer) error {
 }
 
 // SendMessageCancelAction represents TL type `sendMessageCancelAction#fd5ec8f5`.
-// Invalidate all previous action updates. E.g. when user deletes entered text or aborts
-// a video upload.
-//
-// See https://core.telegram.org/constructor/sendMessageCancelAction for reference.
 type SendMessageCancelAction struct {
 }
 
@@ -237,9 +230,6 @@ func (s *SendMessageCancelAction) DecodeBare(b *bin.Buffer) error {
 }
 
 // SendMessageRecordVideoAction represents TL type `sendMessageRecordVideoAction#a187d66f`.
-// User is recording a video.
-//
-// See https://core.telegram.org/constructor/sendMessageRecordVideoAction for reference.
 type SendMessageRecordVideoAction struct {
 }
 
@@ -339,11 +329,8 @@ func (s *SendMessageRecordVideoAction) DecodeBare(b *bin.Buffer) error {
 }
 
 // SendMessageUploadVideoAction represents TL type `sendMessageUploadVideoAction#e9763aec`.
-// User is uploading a video.
-//
-// See https://core.telegram.org/constructor/sendMessageUploadVideoAction for reference.
 type SendMessageUploadVideoAction struct {
-	// Progress percentage
+	// Progress field of SendMessageUploadVideoAction.
 	Progress int
 }
 
@@ -381,13 +368,6 @@ func (s *SendMessageUploadVideoAction) String() string {
 	}
 	type Alias SendMessageUploadVideoAction
 	return fmt.Sprintf("SendMessageUploadVideoAction%+v", Alias(*s))
-}
-
-// FillFrom fills SendMessageUploadVideoAction from given interface.
-func (s *SendMessageUploadVideoAction) FillFrom(from interface {
-	GetProgress() (value int)
-}) {
-	s.Progress = from.GetProgress()
 }
 
 // TypeID returns type id in TL schema.
@@ -474,9 +454,6 @@ func (s *SendMessageUploadVideoAction) GetProgress() (value int) {
 }
 
 // SendMessageRecordAudioAction represents TL type `sendMessageRecordAudioAction#d52f73f7`.
-// User is recording a voice message.
-//
-// See https://core.telegram.org/constructor/sendMessageRecordAudioAction for reference.
 type SendMessageRecordAudioAction struct {
 }
 
@@ -576,11 +553,8 @@ func (s *SendMessageRecordAudioAction) DecodeBare(b *bin.Buffer) error {
 }
 
 // SendMessageUploadAudioAction represents TL type `sendMessageUploadAudioAction#f351d7ab`.
-// User is uploading a voice message.
-//
-// See https://core.telegram.org/constructor/sendMessageUploadAudioAction for reference.
 type SendMessageUploadAudioAction struct {
-	// Progress percentage
+	// Progress field of SendMessageUploadAudioAction.
 	Progress int
 }
 
@@ -618,13 +592,6 @@ func (s *SendMessageUploadAudioAction) String() string {
 	}
 	type Alias SendMessageUploadAudioAction
 	return fmt.Sprintf("SendMessageUploadAudioAction%+v", Alias(*s))
-}
-
-// FillFrom fills SendMessageUploadAudioAction from given interface.
-func (s *SendMessageUploadAudioAction) FillFrom(from interface {
-	GetProgress() (value int)
-}) {
-	s.Progress = from.GetProgress()
 }
 
 // TypeID returns type id in TL schema.
@@ -711,11 +678,8 @@ func (s *SendMessageUploadAudioAction) GetProgress() (value int) {
 }
 
 // SendMessageUploadPhotoAction represents TL type `sendMessageUploadPhotoAction#d1d34a26`.
-// User is uploading a photo.
-//
-// See https://core.telegram.org/constructor/sendMessageUploadPhotoAction for reference.
 type SendMessageUploadPhotoAction struct {
-	// Progress percentage
+	// Progress field of SendMessageUploadPhotoAction.
 	Progress int
 }
 
@@ -753,13 +717,6 @@ func (s *SendMessageUploadPhotoAction) String() string {
 	}
 	type Alias SendMessageUploadPhotoAction
 	return fmt.Sprintf("SendMessageUploadPhotoAction%+v", Alias(*s))
-}
-
-// FillFrom fills SendMessageUploadPhotoAction from given interface.
-func (s *SendMessageUploadPhotoAction) FillFrom(from interface {
-	GetProgress() (value int)
-}) {
-	s.Progress = from.GetProgress()
 }
 
 // TypeID returns type id in TL schema.
@@ -846,11 +803,8 @@ func (s *SendMessageUploadPhotoAction) GetProgress() (value int) {
 }
 
 // SendMessageUploadDocumentAction represents TL type `sendMessageUploadDocumentAction#aa0cd9e4`.
-// User is uploading a file.
-//
-// See https://core.telegram.org/constructor/sendMessageUploadDocumentAction for reference.
 type SendMessageUploadDocumentAction struct {
-	// Progress percentage
+	// Progress field of SendMessageUploadDocumentAction.
 	Progress int
 }
 
@@ -888,13 +842,6 @@ func (s *SendMessageUploadDocumentAction) String() string {
 	}
 	type Alias SendMessageUploadDocumentAction
 	return fmt.Sprintf("SendMessageUploadDocumentAction%+v", Alias(*s))
-}
-
-// FillFrom fills SendMessageUploadDocumentAction from given interface.
-func (s *SendMessageUploadDocumentAction) FillFrom(from interface {
-	GetProgress() (value int)
-}) {
-	s.Progress = from.GetProgress()
 }
 
 // TypeID returns type id in TL schema.
@@ -981,9 +928,6 @@ func (s *SendMessageUploadDocumentAction) GetProgress() (value int) {
 }
 
 // SendMessageGeoLocationAction represents TL type `sendMessageGeoLocationAction#176f8ba1`.
-// User is selecting a location to share.
-//
-// See https://core.telegram.org/constructor/sendMessageGeoLocationAction for reference.
 type SendMessageGeoLocationAction struct {
 }
 
@@ -1083,9 +1027,6 @@ func (s *SendMessageGeoLocationAction) DecodeBare(b *bin.Buffer) error {
 }
 
 // SendMessageChooseContactAction represents TL type `sendMessageChooseContactAction#628cbc6f`.
-// User is selecting a contact to share.
-//
-// See https://core.telegram.org/constructor/sendMessageChooseContactAction for reference.
 type SendMessageChooseContactAction struct {
 }
 
@@ -1185,9 +1126,6 @@ func (s *SendMessageChooseContactAction) DecodeBare(b *bin.Buffer) error {
 }
 
 // SendMessageGamePlayAction represents TL type `sendMessageGamePlayAction#dd6a8f48`.
-// User is playing a game
-//
-// See https://core.telegram.org/constructor/sendMessageGamePlayAction for reference.
 type SendMessageGamePlayAction struct {
 }
 
@@ -1287,9 +1225,6 @@ func (s *SendMessageGamePlayAction) DecodeBare(b *bin.Buffer) error {
 }
 
 // SendMessageRecordRoundAction represents TL type `sendMessageRecordRoundAction#88f27fbc`.
-// User is recording a round video to share
-//
-// See https://core.telegram.org/constructor/sendMessageRecordRoundAction for reference.
 type SendMessageRecordRoundAction struct {
 }
 
@@ -1389,11 +1324,8 @@ func (s *SendMessageRecordRoundAction) DecodeBare(b *bin.Buffer) error {
 }
 
 // SendMessageUploadRoundAction represents TL type `sendMessageUploadRoundAction#243e1c66`.
-// User is uploading a round video
-//
-// See https://core.telegram.org/constructor/sendMessageUploadRoundAction for reference.
 type SendMessageUploadRoundAction struct {
-	// Progress percentage
+	// Progress field of SendMessageUploadRoundAction.
 	Progress int
 }
 
@@ -1431,13 +1363,6 @@ func (s *SendMessageUploadRoundAction) String() string {
 	}
 	type Alias SendMessageUploadRoundAction
 	return fmt.Sprintf("SendMessageUploadRoundAction%+v", Alias(*s))
-}
-
-// FillFrom fills SendMessageUploadRoundAction from given interface.
-func (s *SendMessageUploadRoundAction) FillFrom(from interface {
-	GetProgress() (value int)
-}) {
-	s.Progress = from.GetProgress()
 }
 
 // TypeID returns type id in TL schema.
@@ -1524,9 +1449,6 @@ func (s *SendMessageUploadRoundAction) GetProgress() (value int) {
 }
 
 // SpeakingInGroupCallAction represents TL type `speakingInGroupCallAction#d92c2285`.
-// User is currently speaking in the group call
-//
-// See https://core.telegram.org/constructor/speakingInGroupCallAction for reference.
 type SpeakingInGroupCallAction struct {
 }
 
@@ -1626,11 +1548,8 @@ func (s *SpeakingInGroupCallAction) DecodeBare(b *bin.Buffer) error {
 }
 
 // SendMessageHistoryImportAction represents TL type `sendMessageHistoryImportAction#dbda9246`.
-// Chat history is being imported
-//
-// See https://core.telegram.org/constructor/sendMessageHistoryImportAction for reference.
 type SendMessageHistoryImportAction struct {
-	// Progress percentage
+	// Progress field of SendMessageHistoryImportAction.
 	Progress int
 }
 
@@ -1668,13 +1587,6 @@ func (s *SendMessageHistoryImportAction) String() string {
 	}
 	type Alias SendMessageHistoryImportAction
 	return fmt.Sprintf("SendMessageHistoryImportAction%+v", Alias(*s))
-}
-
-// FillFrom fills SendMessageHistoryImportAction from given interface.
-func (s *SendMessageHistoryImportAction) FillFrom(from interface {
-	GetProgress() (value int)
-}) {
-	s.Progress = from.GetProgress()
 }
 
 // TypeID returns type id in TL schema.
@@ -1761,9 +1673,6 @@ func (s *SendMessageHistoryImportAction) GetProgress() (value int) {
 }
 
 // SendMessageChooseStickerAction represents TL type `sendMessageChooseStickerAction#b05ac6b1`.
-// User is choosing a sticker
-//
-// See https://core.telegram.org/constructor/sendMessageChooseStickerAction for reference.
 type SendMessageChooseStickerAction struct {
 }
 
@@ -1863,22 +1772,12 @@ func (s *SendMessageChooseStickerAction) DecodeBare(b *bin.Buffer) error {
 }
 
 // SendMessageEmojiInteraction represents TL type `sendMessageEmojiInteraction#25972bcb`.
-// User has clicked on an animated emoji triggering a reaction, click here for more info
-// »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/animated-emojis#emoji-reactions
-//
-// See https://core.telegram.org/constructor/sendMessageEmojiInteraction for reference.
 type SendMessageEmojiInteraction struct {
-	// Emoji
+	// Emoticon field of SendMessageEmojiInteraction.
 	Emoticon string
-	// Message ID of the animated emoji that was clicked
+	// MsgID field of SendMessageEmojiInteraction.
 	MsgID int
-	// A JSON object with interaction info, click here for more info »¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/animated-emojis#emoji-reactions
+	// Interaction field of SendMessageEmojiInteraction.
 	Interaction DataJSON
 }
 
@@ -1922,17 +1821,6 @@ func (s *SendMessageEmojiInteraction) String() string {
 	}
 	type Alias SendMessageEmojiInteraction
 	return fmt.Sprintf("SendMessageEmojiInteraction%+v", Alias(*s))
-}
-
-// FillFrom fills SendMessageEmojiInteraction from given interface.
-func (s *SendMessageEmojiInteraction) FillFrom(from interface {
-	GetEmoticon() (value string)
-	GetMsgID() (value int)
-	GetInteraction() (value DataJSON)
-}) {
-	s.Emoticon = from.GetEmoticon()
-	s.MsgID = from.GetMsgID()
-	s.Interaction = from.GetInteraction()
 }
 
 // TypeID returns type id in TL schema.
@@ -2059,15 +1947,8 @@ func (s *SendMessageEmojiInteraction) GetInteraction() (value DataJSON) {
 }
 
 // SendMessageEmojiInteractionSeen represents TL type `sendMessageEmojiInteractionSeen#b665902e`.
-// User is watching an animated emoji reaction triggered by another user, click here for
-// more info »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/animated-emojis#emoji-reactions
-//
-// See https://core.telegram.org/constructor/sendMessageEmojiInteractionSeen for reference.
 type SendMessageEmojiInteractionSeen struct {
-	// Emoji
+	// Emoticon field of SendMessageEmojiInteractionSeen.
 	Emoticon string
 }
 
@@ -2105,13 +1986,6 @@ func (s *SendMessageEmojiInteractionSeen) String() string {
 	}
 	type Alias SendMessageEmojiInteractionSeen
 	return fmt.Sprintf("SendMessageEmojiInteractionSeen%+v", Alias(*s))
-}
-
-// FillFrom fills SendMessageEmojiInteractionSeen from given interface.
-func (s *SendMessageEmojiInteractionSeen) FillFrom(from interface {
-	GetEmoticon() (value string)
-}) {
-	s.Emoticon = from.GetEmoticon()
 }
 
 // TypeID returns type id in TL schema.
@@ -2201,8 +2075,6 @@ func (s *SendMessageEmojiInteractionSeen) GetEmoticon() (value string) {
 const SendMessageActionClassName = "SendMessageAction"
 
 // SendMessageActionClass represents SendMessageAction generic type.
-//
-// See https://core.telegram.org/type/SendMessageAction for reference.
 //
 // Constructors:
 //   - [SendMessageTypingAction]

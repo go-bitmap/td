@@ -32,9 +32,6 @@ var (
 )
 
 // BoolFalse represents TL type `boolFalse#bc799737`.
-// Constructor may be interpreted as a booleanfalse value.
-//
-// See https://core.telegram.org/constructor/boolFalse for reference.
 type BoolFalse struct {
 }
 
@@ -134,9 +131,6 @@ func (b *BoolFalse) DecodeBare(buf *bin.Buffer) error {
 }
 
 // BoolTrue represents TL type `boolTrue#997275b5`.
-// The constructor can be interpreted as a booleantrue value.
-//
-// See https://core.telegram.org/constructor/boolTrue for reference.
 type BoolTrue struct {
 }
 
@@ -239,8 +233,6 @@ func (b *BoolTrue) DecodeBare(buf *bin.Buffer) error {
 const BoolClassName = "Bool"
 
 // BoolClass represents Bool generic type.
-//
-// See https://core.telegram.org/type/Bool for reference.
 //
 // Constructors:
 //   - [BoolFalse]

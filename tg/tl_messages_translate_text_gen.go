@@ -32,33 +32,22 @@ var (
 )
 
 // MessagesTranslateTextRequest represents TL type `messages.translateText#63183030`.
-// Translate a given text.
-// Styled text entities¹ will only be preserved for Telegram Premium² users.
-//
-// Links:
-//  1. https://core.telegram.org/api/entities
-//  2. https://core.telegram.org/api/premium
-//
-// See https://core.telegram.org/method/messages.translateText for reference.
 type MessagesTranslateTextRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessagesTranslateTextRequest.
 	Flags bin.Fields
-	// If the text is a chat message, the peer ID
+	// Peer field of MessagesTranslateTextRequest.
 	//
 	// Use SetPeer and GetPeer helpers.
 	Peer InputPeerClass
-	// A list of message IDs to translate
+	// ID field of MessagesTranslateTextRequest.
 	//
 	// Use SetID and GetID helpers.
 	ID []int
-	// A list of styled messages to translate
+	// Text field of MessagesTranslateTextRequest.
 	//
 	// Use SetText and GetText helpers.
 	Text []TextWithEntities
-	// Two-letter ISO 639-1 language code of the language to which the message is translated
+	// ToLang field of MessagesTranslateTextRequest.
 	ToLang string
 }
 
@@ -103,28 +92,6 @@ func (t *MessagesTranslateTextRequest) String() string {
 	}
 	type Alias MessagesTranslateTextRequest
 	return fmt.Sprintf("MessagesTranslateTextRequest%+v", Alias(*t))
-}
-
-// FillFrom fills MessagesTranslateTextRequest from given interface.
-func (t *MessagesTranslateTextRequest) FillFrom(from interface {
-	GetPeer() (value InputPeerClass, ok bool)
-	GetID() (value []int, ok bool)
-	GetText() (value []TextWithEntities, ok bool)
-	GetToLang() (value string)
-}) {
-	if val, ok := from.GetPeer(); ok {
-		t.Peer = val
-	}
-
-	if val, ok := from.GetID(); ok {
-		t.ID = val
-	}
-
-	if val, ok := from.GetText(); ok {
-		t.Text = val
-	}
-
-	t.ToLang = from.GetToLang()
 }
 
 // TypeID returns type id in TL schema.
@@ -365,24 +332,6 @@ func (t *MessagesTranslateTextRequest) GetToLang() (value string) {
 }
 
 // MessagesTranslateText invokes method messages.translateText#63183030 returning error if any.
-// Translate a given text.
-// Styled text entities¹ will only be preserved for Telegram Premium² users.
-//
-// Links:
-//  1. https://core.telegram.org/api/entities
-//  2. https://core.telegram.org/api/premium
-//
-// Possible errors:
-//
-//	400 INPUT_TEXT_EMPTY: The specified text is empty.
-//	400 INPUT_TEXT_TOO_LONG: The specified text is too long.
-//	400 MSG_ID_INVALID: Invalid message ID provided.
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//	400 TO_LANG_INVALID: The specified destination language is invalid.
-//	500 TRANSLATE_REQ_FAILED: Translation failed, please try again later.
-//	400 TRANSLATE_REQ_QUOTA_EXCEEDED: Translation is currently unavailable due to a temporary server-side lack of resources.
-//
-// See https://core.telegram.org/method/messages.translateText for reference.
 func (c *Client) MessagesTranslateText(ctx context.Context, request *MessagesTranslateTextRequest) (*MessagesTranslateResult, error) {
 	var result MessagesTranslateResult
 

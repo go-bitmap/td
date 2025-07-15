@@ -32,17 +32,14 @@ var (
 )
 
 // PostInteractionCountersMessage represents TL type `postInteractionCountersMessage#e7058e7f`.
-// Interaction counters for a message.
-//
-// See https://core.telegram.org/constructor/postInteractionCountersMessage for reference.
 type PostInteractionCountersMessage struct {
-	// Message ID
+	// MsgID field of PostInteractionCountersMessage.
 	MsgID int
-	// Number of views
+	// Views field of PostInteractionCountersMessage.
 	Views int
-	// Number of forwards to public channels
+	// Forwards field of PostInteractionCountersMessage.
 	Forwards int
-	// Number of reactions
+	// Reactions field of PostInteractionCountersMessage.
 	Reactions int
 }
 
@@ -89,19 +86,6 @@ func (p *PostInteractionCountersMessage) String() string {
 	}
 	type Alias PostInteractionCountersMessage
 	return fmt.Sprintf("PostInteractionCountersMessage%+v", Alias(*p))
-}
-
-// FillFrom fills PostInteractionCountersMessage from given interface.
-func (p *PostInteractionCountersMessage) FillFrom(from interface {
-	GetMsgID() (value int)
-	GetViews() (value int)
-	GetForwards() (value int)
-	GetReactions() (value int)
-}) {
-	p.MsgID = from.GetMsgID()
-	p.Views = from.GetViews()
-	p.Forwards = from.GetForwards()
-	p.Reactions = from.GetReactions()
 }
 
 // TypeID returns type id in TL schema.
@@ -248,17 +232,14 @@ func (p *PostInteractionCountersMessage) GetReactions() (value int) {
 }
 
 // PostInteractionCountersStory represents TL type `postInteractionCountersStory#8a480e27`.
-// Interaction counters for a story.
-//
-// See https://core.telegram.org/constructor/postInteractionCountersStory for reference.
 type PostInteractionCountersStory struct {
-	// Story ID
+	// StoryID field of PostInteractionCountersStory.
 	StoryID int
-	// Number of views
+	// Views field of PostInteractionCountersStory.
 	Views int
-	// Number of forwards and reposts to public chats and channels
+	// Forwards field of PostInteractionCountersStory.
 	Forwards int
-	// Number of reactions
+	// Reactions field of PostInteractionCountersStory.
 	Reactions int
 }
 
@@ -305,19 +286,6 @@ func (p *PostInteractionCountersStory) String() string {
 	}
 	type Alias PostInteractionCountersStory
 	return fmt.Sprintf("PostInteractionCountersStory%+v", Alias(*p))
-}
-
-// FillFrom fills PostInteractionCountersStory from given interface.
-func (p *PostInteractionCountersStory) FillFrom(from interface {
-	GetStoryID() (value int)
-	GetViews() (value int)
-	GetForwards() (value int)
-	GetReactions() (value int)
-}) {
-	p.StoryID = from.GetStoryID()
-	p.Views = from.GetViews()
-	p.Forwards = from.GetForwards()
-	p.Reactions = from.GetReactions()
 }
 
 // TypeID returns type id in TL schema.
@@ -468,8 +436,6 @@ const PostInteractionCountersClassName = "PostInteractionCounters"
 
 // PostInteractionCountersClass represents PostInteractionCounters generic type.
 //
-// See https://core.telegram.org/type/PostInteractionCounters for reference.
-//
 // Constructors:
 //   - [PostInteractionCountersMessage]
 //   - [PostInteractionCountersStory]
@@ -503,13 +469,11 @@ type PostInteractionCountersClass interface {
 	// Zero returns true if current object has a zero value.
 	Zero() bool
 
-	// Number of views
+	// Views field of PostInteractionCountersMessage.
 	GetViews() (value int)
-
-	// Number of forwards to public channels
+	// Forwards field of PostInteractionCountersMessage.
 	GetForwards() (value int)
-
-	// Number of reactions
+	// Reactions field of PostInteractionCountersMessage.
 	GetReactions() (value int)
 }
 

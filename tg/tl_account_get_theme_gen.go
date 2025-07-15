@@ -32,13 +32,10 @@ var (
 )
 
 // AccountGetThemeRequest represents TL type `account.getTheme#3a5869ec`.
-// Get theme information
-//
-// See https://core.telegram.org/method/account.getTheme for reference.
 type AccountGetThemeRequest struct {
-	// Theme format, a string that identifies the theming engines supported by the client
+	// Format field of AccountGetThemeRequest.
 	Format string
-	// Theme
+	// Theme field of AccountGetThemeRequest.
 	Theme InputThemeClass
 }
 
@@ -74,15 +71,6 @@ func (g *AccountGetThemeRequest) String() string {
 	}
 	type Alias AccountGetThemeRequest
 	return fmt.Sprintf("AccountGetThemeRequest%+v", Alias(*g))
-}
-
-// FillFrom fills AccountGetThemeRequest from given interface.
-func (g *AccountGetThemeRequest) FillFrom(from interface {
-	GetFormat() (value string)
-	GetTheme() (value InputThemeClass)
-}) {
-	g.Format = from.GetFormat()
-	g.Theme = from.GetTheme()
 }
 
 // TypeID returns type id in TL schema.
@@ -194,14 +182,6 @@ func (g *AccountGetThemeRequest) GetTheme() (value InputThemeClass) {
 }
 
 // AccountGetTheme invokes method account.getTheme#3a5869ec returning error if any.
-// Get theme information
-//
-// Possible errors:
-//
-//	400 THEME_FORMAT_INVALID: Invalid theme format provided.
-//	400 THEME_INVALID: Invalid theme provided.
-//
-// See https://core.telegram.org/method/account.getTheme for reference.
 func (c *Client) AccountGetTheme(ctx context.Context, request *AccountGetThemeRequest) (*Theme, error) {
 	var result Theme
 

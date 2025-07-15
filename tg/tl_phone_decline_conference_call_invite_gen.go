@@ -32,8 +32,6 @@ var (
 )
 
 // PhoneDeclineConferenceCallInviteRequest represents TL type `phone.declineConferenceCallInvite#3c479971`.
-//
-// See https://core.telegram.org/method/phone.declineConferenceCallInvite for reference.
 type PhoneDeclineConferenceCallInviteRequest struct {
 	// MsgID field of PhoneDeclineConferenceCallInviteRequest.
 	MsgID int
@@ -68,13 +66,6 @@ func (d *PhoneDeclineConferenceCallInviteRequest) String() string {
 	}
 	type Alias PhoneDeclineConferenceCallInviteRequest
 	return fmt.Sprintf("PhoneDeclineConferenceCallInviteRequest%+v", Alias(*d))
-}
-
-// FillFrom fills PhoneDeclineConferenceCallInviteRequest from given interface.
-func (d *PhoneDeclineConferenceCallInviteRequest) FillFrom(from interface {
-	GetMsgID() (value int)
-}) {
-	d.MsgID = from.GetMsgID()
 }
 
 // TypeID returns type id in TL schema.
@@ -161,8 +152,6 @@ func (d *PhoneDeclineConferenceCallInviteRequest) GetMsgID() (value int) {
 }
 
 // PhoneDeclineConferenceCallInvite invokes method phone.declineConferenceCallInvite#3c479971 returning error if any.
-//
-// See https://core.telegram.org/method/phone.declineConferenceCallInvite for reference.
 func (c *Client) PhoneDeclineConferenceCallInvite(ctx context.Context, msgid int) (UpdatesClass, error) {
 	var result UpdatesBox
 

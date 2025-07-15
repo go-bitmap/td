@@ -32,9 +32,6 @@ var (
 )
 
 // Null represents TL type `null#56730bcc`.
-// Corresponds to an arbitrary empty object.
-//
-// See https://core.telegram.org/constructor/null for reference.
 type Null struct {
 }
 

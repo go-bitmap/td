@@ -32,21 +32,14 @@ var (
 )
 
 // PhoneToggleGroupCallSettingsRequest represents TL type `phone.toggleGroupCallSettings#74bbb43d`.
-// Change group call settings
-//
-// See https://core.telegram.org/method/phone.toggleGroupCallSettings for reference.
 type PhoneToggleGroupCallSettingsRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of PhoneToggleGroupCallSettingsRequest.
 	Flags bin.Fields
-	// Invalidate existing invite links
+	// ResetInviteHash field of PhoneToggleGroupCallSettingsRequest.
 	ResetInviteHash bool
-	// Group call
+	// Call field of PhoneToggleGroupCallSettingsRequest.
 	Call InputGroupCallClass
-	// Whether all users will that join this group call are muted by default upon joining the
-	// group call
+	// JoinMuted field of PhoneToggleGroupCallSettingsRequest.
 	//
 	// Use SetJoinMuted and GetJoinMuted helpers.
 	JoinMuted bool
@@ -90,20 +83,6 @@ func (t *PhoneToggleGroupCallSettingsRequest) String() string {
 	}
 	type Alias PhoneToggleGroupCallSettingsRequest
 	return fmt.Sprintf("PhoneToggleGroupCallSettingsRequest%+v", Alias(*t))
-}
-
-// FillFrom fills PhoneToggleGroupCallSettingsRequest from given interface.
-func (t *PhoneToggleGroupCallSettingsRequest) FillFrom(from interface {
-	GetResetInviteHash() (value bool)
-	GetCall() (value InputGroupCallClass)
-	GetJoinMuted() (value bool, ok bool)
-}) {
-	t.ResetInviteHash = from.GetResetInviteHash()
-	t.Call = from.GetCall()
-	if val, ok := from.GetJoinMuted(); ok {
-		t.JoinMuted = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -272,14 +251,6 @@ func (t *PhoneToggleGroupCallSettingsRequest) GetJoinMuted() (value bool, ok boo
 }
 
 // PhoneToggleGroupCallSettings invokes method phone.toggleGroupCallSettings#74bbb43d returning error if any.
-// Change group call settings
-//
-// Possible errors:
-//
-//	400 GROUPCALL_INVALID: The specified group call is invalid.
-//	400 GROUPCALL_NOT_MODIFIED: Group call settings weren't modified.
-//
-// See https://core.telegram.org/method/phone.toggleGroupCallSettings for reference.
 func (c *Client) PhoneToggleGroupCallSettings(ctx context.Context, request *PhoneToggleGroupCallSettingsRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

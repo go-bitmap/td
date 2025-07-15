@@ -32,11 +32,8 @@ var (
 )
 
 // MessagesSentEncryptedMessage represents TL type `messages.sentEncryptedMessage#560f8935`.
-// Message without file attachments sent to an encrypted file.
-//
-// See https://core.telegram.org/constructor/messages.sentEncryptedMessage for reference.
 type MessagesSentEncryptedMessage struct {
-	// Date of sending
+	// Date field of MessagesSentEncryptedMessage.
 	Date int
 }
 
@@ -74,13 +71,6 @@ func (s *MessagesSentEncryptedMessage) String() string {
 	}
 	type Alias MessagesSentEncryptedMessage
 	return fmt.Sprintf("MessagesSentEncryptedMessage%+v", Alias(*s))
-}
-
-// FillFrom fills MessagesSentEncryptedMessage from given interface.
-func (s *MessagesSentEncryptedMessage) FillFrom(from interface {
-	GetDate() (value int)
-}) {
-	s.Date = from.GetDate()
 }
 
 // TypeID returns type id in TL schema.
@@ -167,13 +157,10 @@ func (s *MessagesSentEncryptedMessage) GetDate() (value int) {
 }
 
 // MessagesSentEncryptedFile represents TL type `messages.sentEncryptedFile#9493ff32`.
-// Message with a file enclosure sent to a protected chat
-//
-// See https://core.telegram.org/constructor/messages.sentEncryptedFile for reference.
 type MessagesSentEncryptedFile struct {
-	// Sending date
+	// Date field of MessagesSentEncryptedFile.
 	Date int
-	// Attached file
+	// File field of MessagesSentEncryptedFile.
 	File EncryptedFileClass
 }
 
@@ -214,15 +201,6 @@ func (s *MessagesSentEncryptedFile) String() string {
 	}
 	type Alias MessagesSentEncryptedFile
 	return fmt.Sprintf("MessagesSentEncryptedFile%+v", Alias(*s))
-}
-
-// FillFrom fills MessagesSentEncryptedFile from given interface.
-func (s *MessagesSentEncryptedFile) FillFrom(from interface {
-	GetDate() (value int)
-	GetFile() (value EncryptedFileClass)
-}) {
-	s.Date = from.GetDate()
-	s.File = from.GetFile()
 }
 
 // TypeID returns type id in TL schema.
@@ -338,8 +316,6 @@ const MessagesSentEncryptedMessageClassName = "messages.SentEncryptedMessage"
 
 // MessagesSentEncryptedMessageClass represents messages.SentEncryptedMessage generic type.
 //
-// See https://core.telegram.org/type/messages.SentEncryptedMessage for reference.
-//
 // Constructors:
 //   - [MessagesSentEncryptedMessage]
 //   - [MessagesSentEncryptedFile]
@@ -373,7 +349,7 @@ type MessagesSentEncryptedMessageClass interface {
 	// Zero returns true if current object has a zero value.
 	Zero() bool
 
-	// Date of sending
+	// Date field of MessagesSentEncryptedMessage.
 	GetDate() (value int)
 }
 

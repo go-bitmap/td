@@ -32,21 +32,10 @@ var (
 )
 
 // ChatlistsJoinChatlistUpdatesRequest represents TL type `chatlists.joinChatlistUpdates#e089f8f5`.
-// Join channels and supergroups recently added to a chat folder deep link »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/links#chat-folder-links
-//
-// See https://core.telegram.org/method/chatlists.joinChatlistUpdates for reference.
 type ChatlistsJoinChatlistUpdatesRequest struct {
-	// The folder
+	// Chatlist field of ChatlistsJoinChatlistUpdatesRequest.
 	Chatlist InputChatlistDialogFilter
-	// List of new chats to join, fetched using chatlists.getChatlistUpdates¹ and filtered
-	// as specified in the documentation »².
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/chatlists.getChatlistUpdates
-	//  2) https://core.telegram.org/api/folders#shared-folders
+	// Peers field of ChatlistsJoinChatlistUpdatesRequest.
 	Peers []InputPeerClass
 }
 
@@ -82,15 +71,6 @@ func (j *ChatlistsJoinChatlistUpdatesRequest) String() string {
 	}
 	type Alias ChatlistsJoinChatlistUpdatesRequest
 	return fmt.Sprintf("ChatlistsJoinChatlistUpdatesRequest%+v", Alias(*j))
-}
-
-// FillFrom fills ChatlistsJoinChatlistUpdatesRequest from given interface.
-func (j *ChatlistsJoinChatlistUpdatesRequest) FillFrom(from interface {
-	GetChatlist() (value InputChatlistDialogFilter)
-	GetPeers() (value []InputPeerClass)
-}) {
-	j.Chatlist = from.GetChatlist()
-	j.Peers = from.GetPeers()
 }
 
 // TypeID returns type id in TL schema.
@@ -214,23 +194,7 @@ func (j *ChatlistsJoinChatlistUpdatesRequest) GetPeers() (value []InputPeerClass
 	return j.Peers
 }
 
-// MapPeers returns field Peers wrapped in InputPeerClassArray helper.
-func (j *ChatlistsJoinChatlistUpdatesRequest) MapPeers() (value InputPeerClassArray) {
-	return InputPeerClassArray(j.Peers)
-}
-
 // ChatlistsJoinChatlistUpdates invokes method chatlists.joinChatlistUpdates#e089f8f5 returning error if any.
-// Join channels and supergroups recently added to a chat folder deep link »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/links#chat-folder-links
-//
-// Possible errors:
-//
-//	400 FILTER_ID_INVALID: The specified filter ID is invalid.
-//	400 FILTER_INCLUDE_EMPTY: The include_peers vector of the filter is empty.
-//
-// See https://core.telegram.org/method/chatlists.joinChatlistUpdates for reference.
 func (c *Client) ChatlistsJoinChatlistUpdates(ctx context.Context, request *ChatlistsJoinChatlistUpdatesRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

@@ -32,16 +32,10 @@ var (
 )
 
 // AuthLoginToken represents TL type `auth.loginToken#629f1980`.
-// Login token (for QR code login¹)
-//
-// Links:
-//  1. https://core.telegram.org/api/qr-login
-//
-// See https://core.telegram.org/constructor/auth.loginToken for reference.
 type AuthLoginToken struct {
-	// Expiration date of QR code
+	// Expires field of AuthLoginToken.
 	Expires int
-	// Token to render in QR code
+	// Token field of AuthLoginToken.
 	Token []byte
 }
 
@@ -82,15 +76,6 @@ func (l *AuthLoginToken) String() string {
 	}
 	type Alias AuthLoginToken
 	return fmt.Sprintf("AuthLoginToken%+v", Alias(*l))
-}
-
-// FillFrom fills AuthLoginToken from given interface.
-func (l *AuthLoginToken) FillFrom(from interface {
-	GetExpires() (value int)
-	GetToken() (value []byte)
-}) {
-	l.Expires = from.GetExpires()
-	l.Token = from.GetToken()
 }
 
 // TypeID returns type id in TL schema.
@@ -197,13 +182,10 @@ func (l *AuthLoginToken) GetToken() (value []byte) {
 }
 
 // AuthLoginTokenMigrateTo represents TL type `auth.loginTokenMigrateTo#68e9916`.
-// Repeat the query to the specified DC
-//
-// See https://core.telegram.org/constructor/auth.loginTokenMigrateTo for reference.
 type AuthLoginTokenMigrateTo struct {
-	// DC ID
+	// DCID field of AuthLoginTokenMigrateTo.
 	DCID int
-	// Token to use for login
+	// Token field of AuthLoginTokenMigrateTo.
 	Token []byte
 }
 
@@ -244,15 +226,6 @@ func (l *AuthLoginTokenMigrateTo) String() string {
 	}
 	type Alias AuthLoginTokenMigrateTo
 	return fmt.Sprintf("AuthLoginTokenMigrateTo%+v", Alias(*l))
-}
-
-// FillFrom fills AuthLoginTokenMigrateTo from given interface.
-func (l *AuthLoginTokenMigrateTo) FillFrom(from interface {
-	GetDCID() (value int)
-	GetToken() (value []byte)
-}) {
-	l.DCID = from.GetDCID()
-	l.Token = from.GetToken()
 }
 
 // TypeID returns type id in TL schema.
@@ -359,11 +332,8 @@ func (l *AuthLoginTokenMigrateTo) GetToken() (value []byte) {
 }
 
 // AuthLoginTokenSuccess represents TL type `auth.loginTokenSuccess#390d5c5e`.
-// Login via token (QR code) succeeded!
-//
-// See https://core.telegram.org/constructor/auth.loginTokenSuccess for reference.
 type AuthLoginTokenSuccess struct {
-	// Authorization info
+	// Authorization field of AuthLoginTokenSuccess.
 	Authorization AuthAuthorizationClass
 }
 
@@ -401,13 +371,6 @@ func (l *AuthLoginTokenSuccess) String() string {
 	}
 	type Alias AuthLoginTokenSuccess
 	return fmt.Sprintf("AuthLoginTokenSuccess%+v", Alias(*l))
-}
-
-// FillFrom fills AuthLoginTokenSuccess from given interface.
-func (l *AuthLoginTokenSuccess) FillFrom(from interface {
-	GetAuthorization() (value AuthAuthorizationClass)
-}) {
-	l.Authorization = from.GetAuthorization()
 }
 
 // TypeID returns type id in TL schema.
@@ -502,8 +465,6 @@ func (l *AuthLoginTokenSuccess) GetAuthorization() (value AuthAuthorizationClass
 const AuthLoginTokenClassName = "auth.LoginToken"
 
 // AuthLoginTokenClass represents auth.LoginToken generic type.
-//
-// See https://core.telegram.org/type/auth.LoginToken for reference.
 //
 // Constructors:
 //   - [AuthLoginToken]

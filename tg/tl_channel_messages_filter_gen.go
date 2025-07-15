@@ -32,9 +32,6 @@ var (
 )
 
 // ChannelMessagesFilterEmpty represents TL type `channelMessagesFilterEmpty#94d42ee7`.
-// No filter
-//
-// See https://core.telegram.org/constructor/channelMessagesFilterEmpty for reference.
 type ChannelMessagesFilterEmpty struct {
 }
 
@@ -134,18 +131,12 @@ func (c *ChannelMessagesFilterEmpty) DecodeBare(b *bin.Buffer) error {
 }
 
 // ChannelMessagesFilter represents TL type `channelMessagesFilter#cd77d957`.
-// Filter for getting only certain types of channel messages
-//
-// See https://core.telegram.org/constructor/channelMessagesFilter for reference.
 type ChannelMessagesFilter struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of ChannelMessagesFilter.
 	Flags bin.Fields
-	// Whether to exclude new messages from the search
+	// ExcludeNewMessages field of ChannelMessagesFilter.
 	ExcludeNewMessages bool
-	// A range of messages to fetch
+	// Ranges field of ChannelMessagesFilter.
 	Ranges []MessageRange
 }
 
@@ -189,15 +180,6 @@ func (c *ChannelMessagesFilter) String() string {
 	}
 	type Alias ChannelMessagesFilter
 	return fmt.Sprintf("ChannelMessagesFilter%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelMessagesFilter from given interface.
-func (c *ChannelMessagesFilter) FillFrom(from interface {
-	GetExcludeNewMessages() (value bool)
-	GetRanges() (value []MessageRange)
-}) {
-	c.ExcludeNewMessages = from.GetExcludeNewMessages()
-	c.Ranges = from.GetRanges()
 }
 
 // TypeID returns type id in TL schema.
@@ -344,8 +326,6 @@ const ChannelMessagesFilterClassName = "ChannelMessagesFilter"
 
 // ChannelMessagesFilterClass represents ChannelMessagesFilter generic type.
 //
-// See https://core.telegram.org/type/ChannelMessagesFilter for reference.
-//
 // Constructors:
 //   - [ChannelMessagesFilterEmpty]
 //   - [ChannelMessagesFilter]
@@ -378,19 +358,6 @@ type ChannelMessagesFilterClass interface {
 	String() string
 	// Zero returns true if current object has a zero value.
 	Zero() bool
-
-	// AsNotEmpty tries to map ChannelMessagesFilterClass to ChannelMessagesFilter.
-	AsNotEmpty() (*ChannelMessagesFilter, bool)
-}
-
-// AsNotEmpty tries to map ChannelMessagesFilterEmpty to ChannelMessagesFilter.
-func (c *ChannelMessagesFilterEmpty) AsNotEmpty() (*ChannelMessagesFilter, bool) {
-	return nil, false
-}
-
-// AsNotEmpty tries to map ChannelMessagesFilter to ChannelMessagesFilter.
-func (c *ChannelMessagesFilter) AsNotEmpty() (*ChannelMessagesFilter, bool) {
-	return c, true
 }
 
 // DecodeChannelMessagesFilter implements binary de-serialization for ChannelMessagesFilterClass.

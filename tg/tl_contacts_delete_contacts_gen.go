@@ -32,11 +32,8 @@ var (
 )
 
 // ContactsDeleteContactsRequest represents TL type `contacts.deleteContacts#96a0e00`.
-// Deletes several contacts from the list.
-//
-// See https://core.telegram.org/method/contacts.deleteContacts for reference.
 type ContactsDeleteContactsRequest struct {
-	// User ID list
+	// ID field of ContactsDeleteContactsRequest.
 	ID []InputUserClass
 }
 
@@ -69,13 +66,6 @@ func (d *ContactsDeleteContactsRequest) String() string {
 	}
 	type Alias ContactsDeleteContactsRequest
 	return fmt.Sprintf("ContactsDeleteContactsRequest%+v", Alias(*d))
-}
-
-// FillFrom fills ContactsDeleteContactsRequest from given interface.
-func (d *ContactsDeleteContactsRequest) FillFrom(from interface {
-	GetID() (value []InputUserClass)
-}) {
-	d.ID = from.GetID()
 }
 
 // TypeID returns type id in TL schema.
@@ -179,19 +169,7 @@ func (d *ContactsDeleteContactsRequest) GetID() (value []InputUserClass) {
 	return d.ID
 }
 
-// MapID returns field ID wrapped in InputUserClassArray helper.
-func (d *ContactsDeleteContactsRequest) MapID() (value InputUserClassArray) {
-	return InputUserClassArray(d.ID)
-}
-
 // ContactsDeleteContacts invokes method contacts.deleteContacts#96a0e00 returning error if any.
-// Deletes several contacts from the list.
-//
-// Possible errors:
-//
-//	400 MSG_ID_INVALID: Invalid message ID provided.
-//
-// See https://core.telegram.org/method/contacts.deleteContacts for reference.
 func (c *Client) ContactsDeleteContacts(ctx context.Context, id []InputUserClass) (UpdatesClass, error) {
 	var result UpdatesBox
 

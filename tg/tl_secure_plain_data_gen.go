@@ -32,15 +32,8 @@ var (
 )
 
 // SecurePlainPhone represents TL type `securePlainPhone#7d6099dd`.
-// Phone number to use in telegram passport¹: it must be verified, first »².
-//
-// Links:
-//  1. https://core.telegram.org/passport
-//  2. https://core.telegram.org/passport/encryption#secureplaindata
-//
-// See https://core.telegram.org/constructor/securePlainPhone for reference.
 type SecurePlainPhone struct {
-	// Phone number
+	// Phone field of SecurePlainPhone.
 	Phone string
 }
 
@@ -78,13 +71,6 @@ func (s *SecurePlainPhone) String() string {
 	}
 	type Alias SecurePlainPhone
 	return fmt.Sprintf("SecurePlainPhone%+v", Alias(*s))
-}
-
-// FillFrom fills SecurePlainPhone from given interface.
-func (s *SecurePlainPhone) FillFrom(from interface {
-	GetPhone() (value string)
-}) {
-	s.Phone = from.GetPhone()
 }
 
 // TypeID returns type id in TL schema.
@@ -171,15 +157,8 @@ func (s *SecurePlainPhone) GetPhone() (value string) {
 }
 
 // SecurePlainEmail represents TL type `securePlainEmail#21ec5a5f`.
-// Email address to use in telegram passport¹: it must be verified, first »².
-//
-// Links:
-//  1. https://core.telegram.org/passport
-//  2. https://core.telegram.org/passport/encryption#secureplaindata
-//
-// See https://core.telegram.org/constructor/securePlainEmail for reference.
 type SecurePlainEmail struct {
-	// Email address
+	// Email field of SecurePlainEmail.
 	Email string
 }
 
@@ -217,13 +196,6 @@ func (s *SecurePlainEmail) String() string {
 	}
 	type Alias SecurePlainEmail
 	return fmt.Sprintf("SecurePlainEmail%+v", Alias(*s))
-}
-
-// FillFrom fills SecurePlainEmail from given interface.
-func (s *SecurePlainEmail) FillFrom(from interface {
-	GetEmail() (value string)
-}) {
-	s.Email = from.GetEmail()
 }
 
 // TypeID returns type id in TL schema.
@@ -313,8 +285,6 @@ func (s *SecurePlainEmail) GetEmail() (value string) {
 const SecurePlainDataClassName = "SecurePlainData"
 
 // SecurePlainDataClass represents SecurePlainData generic type.
-//
-// See https://core.telegram.org/type/SecurePlainData for reference.
 //
 // Constructors:
 //   - [SecurePlainPhone]

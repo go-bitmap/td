@@ -32,44 +32,32 @@ var (
 )
 
 // LangPackLanguage represents TL type `langPackLanguage#eeca5ce3`.
-// Identifies a localization pack
-//
-// See https://core.telegram.org/constructor/langPackLanguage for reference.
 type LangPackLanguage struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of LangPackLanguage.
 	Flags bin.Fields
-	// Whether the language pack is official
+	// Official field of LangPackLanguage.
 	Official bool
-	// Is this a localization pack for an RTL language
+	// Rtl field of LangPackLanguage.
 	Rtl bool
-	// Is this a beta localization pack?
+	// Beta field of LangPackLanguage.
 	Beta bool
-	// Language name
+	// Name field of LangPackLanguage.
 	Name string
-	// Language name in the language itself
+	// NativeName field of LangPackLanguage.
 	NativeName string
-	// Language code (pack identifier)
+	// LangCode field of LangPackLanguage.
 	LangCode string
-	// Identifier of a base language pack; may be empty. If a string is missed in the
-	// language pack, then it should be fetched from base language pack. Unsupported in
-	// custom language packs
+	// BaseLangCode field of LangPackLanguage.
 	//
 	// Use SetBaseLangCode and GetBaseLangCode helpers.
 	BaseLangCode string
-	// A language code to be used to apply plural forms. See https://www.unicode
-	// org/cldr/charts/latest/supplemental/language_plural_rules.html¹ for more info
-	//
-	// Links:
-	//  1) https://www.unicode.org/cldr/charts/latest/supplemental/language_plural_rules.html
+	// PluralCode field of LangPackLanguage.
 	PluralCode string
-	// Total number of non-deleted strings from the language pack
+	// StringsCount field of LangPackLanguage.
 	StringsCount int
-	// Total number of translated strings from the language pack
+	// TranslatedCount field of LangPackLanguage.
 	TranslatedCount int
-	// Link to language translation interface; empty for custom local language packs
+	// TranslationsURL field of LangPackLanguage.
 	TranslationsURL string
 }
 
@@ -135,36 +123,6 @@ func (l *LangPackLanguage) String() string {
 	}
 	type Alias LangPackLanguage
 	return fmt.Sprintf("LangPackLanguage%+v", Alias(*l))
-}
-
-// FillFrom fills LangPackLanguage from given interface.
-func (l *LangPackLanguage) FillFrom(from interface {
-	GetOfficial() (value bool)
-	GetRtl() (value bool)
-	GetBeta() (value bool)
-	GetName() (value string)
-	GetNativeName() (value string)
-	GetLangCode() (value string)
-	GetBaseLangCode() (value string, ok bool)
-	GetPluralCode() (value string)
-	GetStringsCount() (value int)
-	GetTranslatedCount() (value int)
-	GetTranslationsURL() (value string)
-}) {
-	l.Official = from.GetOfficial()
-	l.Rtl = from.GetRtl()
-	l.Beta = from.GetBeta()
-	l.Name = from.GetName()
-	l.NativeName = from.GetNativeName()
-	l.LangCode = from.GetLangCode()
-	if val, ok := from.GetBaseLangCode(); ok {
-		l.BaseLangCode = val
-	}
-
-	l.PluralCode = from.GetPluralCode()
-	l.StringsCount = from.GetStringsCount()
-	l.TranslatedCount = from.GetTranslatedCount()
-	l.TranslationsURL = from.GetTranslationsURL()
 }
 
 // TypeID returns type id in TL schema.

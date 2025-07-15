@@ -32,15 +32,12 @@ var (
 )
 
 // MessagesGetGameHighScoresRequest represents TL type `messages.getGameHighScores#e822649d`.
-// Get highscores of a game
-//
-// See https://core.telegram.org/method/messages.getGameHighScores for reference.
 type MessagesGetGameHighScoresRequest struct {
-	// Where was the game sent
+	// Peer field of MessagesGetGameHighScoresRequest.
 	Peer InputPeerClass
-	// ID of message with game media attachment
+	// ID field of MessagesGetGameHighScoresRequest.
 	ID int
-	// Get high scores made by a certain user
+	// UserID field of MessagesGetGameHighScoresRequest.
 	UserID InputUserClass
 }
 
@@ -79,17 +76,6 @@ func (g *MessagesGetGameHighScoresRequest) String() string {
 	}
 	type Alias MessagesGetGameHighScoresRequest
 	return fmt.Sprintf("MessagesGetGameHighScoresRequest%+v", Alias(*g))
-}
-
-// FillFrom fills MessagesGetGameHighScoresRequest from given interface.
-func (g *MessagesGetGameHighScoresRequest) FillFrom(from interface {
-	GetPeer() (value InputPeerClass)
-	GetID() (value int)
-	GetUserID() (value InputUserClass)
-}) {
-	g.Peer = from.GetPeer()
-	g.ID = from.GetID()
-	g.UserID = from.GetUserID()
 }
 
 // TypeID returns type id in TL schema.
@@ -226,16 +212,6 @@ func (g *MessagesGetGameHighScoresRequest) GetUserID() (value InputUserClass) {
 }
 
 // MessagesGetGameHighScores invokes method messages.getGameHighScores#e822649d returning error if any.
-// Get highscores of a game
-//
-// Possible errors:
-//
-//	400 MESSAGE_ID_INVALID: The provided message id is invalid.
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//	400 USER_BOT_REQUIRED: This method can only be called by a bot.
-//
-// See https://core.telegram.org/method/messages.getGameHighScores for reference.
-// Can be used by bots.
 func (c *Client) MessagesGetGameHighScores(ctx context.Context, request *MessagesGetGameHighScoresRequest) (*MessagesHighScores, error) {
 	var result MessagesHighScores
 

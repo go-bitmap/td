@@ -32,13 +32,10 @@ var (
 )
 
 // PeerBlocked represents TL type `peerBlocked#e8fd8014`.
-// Information about a blocked peer
-//
-// See https://core.telegram.org/constructor/peerBlocked for reference.
 type PeerBlocked struct {
-	// Peer ID
+	// PeerID field of PeerBlocked.
 	PeerID PeerClass
-	// When was the peer blocked
+	// Date field of PeerBlocked.
 	Date int
 }
 
@@ -74,15 +71,6 @@ func (p *PeerBlocked) String() string {
 	}
 	type Alias PeerBlocked
 	return fmt.Sprintf("PeerBlocked%+v", Alias(*p))
-}
-
-// FillFrom fills PeerBlocked from given interface.
-func (p *PeerBlocked) FillFrom(from interface {
-	GetPeerID() (value PeerClass)
-	GetDate() (value int)
-}) {
-	p.PeerID = from.GetPeerID()
-	p.Date = from.GetDate()
 }
 
 // TypeID returns type id in TL schema.

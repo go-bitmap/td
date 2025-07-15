@@ -32,15 +32,12 @@ var (
 )
 
 // PeerLocated represents TL type `peerLocated#ca461b5d`.
-// Peer geolocated nearby
-//
-// See https://core.telegram.org/constructor/peerLocated for reference.
 type PeerLocated struct {
-	// Peer
+	// Peer field of PeerLocated.
 	Peer PeerClass
-	// Validity period of current data
+	// Expires field of PeerLocated.
 	Expires int
-	// Distance from the peer in meters
+	// Distance field of PeerLocated.
 	Distance int
 }
 
@@ -84,17 +81,6 @@ func (p *PeerLocated) String() string {
 	}
 	type Alias PeerLocated
 	return fmt.Sprintf("PeerLocated%+v", Alias(*p))
-}
-
-// FillFrom fills PeerLocated from given interface.
-func (p *PeerLocated) FillFrom(from interface {
-	GetPeer() (value PeerClass)
-	GetExpires() (value int)
-	GetDistance() (value int)
-}) {
-	p.Peer = from.GetPeer()
-	p.Expires = from.GetExpires()
-	p.Distance = from.GetDistance()
 }
 
 // TypeID returns type id in TL schema.
@@ -226,11 +212,8 @@ func (p *PeerLocated) GetDistance() (value int) {
 }
 
 // PeerSelfLocated represents TL type `peerSelfLocated#f8ec284b`.
-// Current peer
-//
-// See https://core.telegram.org/constructor/peerSelfLocated for reference.
 type PeerSelfLocated struct {
-	// Expiry of geolocation info for current peer
+	// Expires field of PeerSelfLocated.
 	Expires int
 }
 
@@ -268,13 +251,6 @@ func (p *PeerSelfLocated) String() string {
 	}
 	type Alias PeerSelfLocated
 	return fmt.Sprintf("PeerSelfLocated%+v", Alias(*p))
-}
-
-// FillFrom fills PeerSelfLocated from given interface.
-func (p *PeerSelfLocated) FillFrom(from interface {
-	GetExpires() (value int)
-}) {
-	p.Expires = from.GetExpires()
 }
 
 // TypeID returns type id in TL schema.
@@ -365,8 +341,6 @@ const PeerLocatedClassName = "PeerLocated"
 
 // PeerLocatedClass represents PeerLocated generic type.
 //
-// See https://core.telegram.org/type/PeerLocated for reference.
-//
 // Constructors:
 //   - [PeerLocated]
 //   - [PeerSelfLocated]
@@ -400,7 +374,7 @@ type PeerLocatedClass interface {
 	// Zero returns true if current object has a zero value.
 	Zero() bool
 
-	// Validity period of current data
+	// Expires field of PeerLocated.
 	GetExpires() (value int)
 }
 

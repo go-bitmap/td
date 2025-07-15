@@ -32,50 +32,32 @@ var (
 )
 
 // ContactsGetTopPeersRequest represents TL type `contacts.getTopPeers#973478b6`.
-// Get most used peers
-//
-// See https://core.telegram.org/method/contacts.getTopPeers for reference.
 type ContactsGetTopPeersRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of ContactsGetTopPeersRequest.
 	Flags bin.Fields
-	// Users we've chatted most frequently with
+	// Correspondents field of ContactsGetTopPeersRequest.
 	Correspondents bool
-	// Most used bots
+	// BotsPm field of ContactsGetTopPeersRequest.
 	BotsPm bool
-	// Most used inline bots
+	// BotsInline field of ContactsGetTopPeersRequest.
 	BotsInline bool
-	// Most frequently called users
+	// PhoneCalls field of ContactsGetTopPeersRequest.
 	PhoneCalls bool
-	// Users to which the users often forwards messages to
+	// ForwardUsers field of ContactsGetTopPeersRequest.
 	ForwardUsers bool
-	// Chats to which the users often forwards messages to
+	// ForwardChats field of ContactsGetTopPeersRequest.
 	ForwardChats bool
-	// Often-opened groups and supergroups
+	// Groups field of ContactsGetTopPeersRequest.
 	Groups bool
-	// Most frequently visited channels
+	// Channels field of ContactsGetTopPeersRequest.
 	Channels bool
-	// Most frequently used Main Mini Bot Apps¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/bots/webapps#main-mini-apps
+	// BotsApp field of ContactsGetTopPeersRequest.
 	BotsApp bool
-	// Offset for pagination¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets
+	// Offset field of ContactsGetTopPeersRequest.
 	Offset int
-	// Maximum number of results to return, see pagination¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets
+	// Limit field of ContactsGetTopPeersRequest.
 	Limit int
-	// Hash used for caching, for more info click here¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets#hash-generation
+	// Hash field of ContactsGetTopPeersRequest.
 	Hash int64
 }
 
@@ -144,35 +126,6 @@ func (g *ContactsGetTopPeersRequest) String() string {
 	}
 	type Alias ContactsGetTopPeersRequest
 	return fmt.Sprintf("ContactsGetTopPeersRequest%+v", Alias(*g))
-}
-
-// FillFrom fills ContactsGetTopPeersRequest from given interface.
-func (g *ContactsGetTopPeersRequest) FillFrom(from interface {
-	GetCorrespondents() (value bool)
-	GetBotsPm() (value bool)
-	GetBotsInline() (value bool)
-	GetPhoneCalls() (value bool)
-	GetForwardUsers() (value bool)
-	GetForwardChats() (value bool)
-	GetGroups() (value bool)
-	GetChannels() (value bool)
-	GetBotsApp() (value bool)
-	GetOffset() (value int)
-	GetLimit() (value int)
-	GetHash() (value int64)
-}) {
-	g.Correspondents = from.GetCorrespondents()
-	g.BotsPm = from.GetBotsPm()
-	g.BotsInline = from.GetBotsInline()
-	g.PhoneCalls = from.GetPhoneCalls()
-	g.ForwardUsers = from.GetForwardUsers()
-	g.ForwardChats = from.GetForwardChats()
-	g.Groups = from.GetGroups()
-	g.Channels = from.GetChannels()
-	g.BotsApp = from.GetBotsApp()
-	g.Offset = from.GetOffset()
-	g.Limit = from.GetLimit()
-	g.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -564,13 +517,6 @@ func (g *ContactsGetTopPeersRequest) GetHash() (value int64) {
 }
 
 // ContactsGetTopPeers invokes method contacts.getTopPeers#973478b6 returning error if any.
-// Get most used peers
-//
-// Possible errors:
-//
-//	400 TYPES_EMPTY: No top peer type was provided.
-//
-// See https://core.telegram.org/method/contacts.getTopPeers for reference.
 func (c *Client) ContactsGetTopPeers(ctx context.Context, request *ContactsGetTopPeersRequest) (ContactsTopPeersClass, error) {
 	var result ContactsTopPeersBox
 

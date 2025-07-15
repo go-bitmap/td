@@ -32,69 +32,36 @@ var (
 )
 
 // InputSecureValue represents TL type `inputSecureValue#db21d0a7`.
-// Secure value, for more info see the passport docs »¹
-//
-// Links:
-//  1. https://core.telegram.org/passport/encryption#encryption
-//
-// See https://core.telegram.org/constructor/inputSecureValue for reference.
 type InputSecureValue struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of InputSecureValue.
 	Flags bin.Fields
-	// Secure passport¹ value type
-	//
-	// Links:
-	//  1) https://core.telegram.org/passport
+	// Type field of InputSecureValue.
 	Type SecureValueTypeClass
-	// Encrypted Telegram Passport¹ element data
-	//
-	// Links:
-	//  1) https://core.telegram.org/passport
+	// Data field of InputSecureValue.
 	//
 	// Use SetData and GetData helpers.
 	Data SecureData
-	// Encrypted passport¹ file with the front side of the document
-	//
-	// Links:
-	//  1) https://core.telegram.org/passport
+	// FrontSide field of InputSecureValue.
 	//
 	// Use SetFrontSide and GetFrontSide helpers.
 	FrontSide InputSecureFileClass
-	// Encrypted passport¹ file with the reverse side of the document
-	//
-	// Links:
-	//  1) https://core.telegram.org/passport
+	// ReverseSide field of InputSecureValue.
 	//
 	// Use SetReverseSide and GetReverseSide helpers.
 	ReverseSide InputSecureFileClass
-	// Encrypted passport¹ file with a selfie of the user holding the document
-	//
-	// Links:
-	//  1) https://core.telegram.org/passport
+	// Selfie field of InputSecureValue.
 	//
 	// Use SetSelfie and GetSelfie helpers.
 	Selfie InputSecureFileClass
-	// Array of encrypted passport¹ files with translated versions of the provided documents
-	//
-	// Links:
-	//  1) https://core.telegram.org/passport
+	// Translation field of InputSecureValue.
 	//
 	// Use SetTranslation and GetTranslation helpers.
 	Translation []InputSecureFileClass
-	// Array of encrypted passport¹ files with photos the of the documents
-	//
-	// Links:
-	//  1) https://core.telegram.org/passport
+	// Files field of InputSecureValue.
 	//
 	// Use SetFiles and GetFiles helpers.
 	Files []InputSecureFileClass
-	// Plaintext verified passport¹ data
-	//
-	// Links:
-	//  1) https://core.telegram.org/passport
+	// PlainData field of InputSecureValue.
 	//
 	// Use SetPlainData and GetPlainData helpers.
 	PlainData SecurePlainDataClass
@@ -153,48 +120,6 @@ func (i *InputSecureValue) String() string {
 	}
 	type Alias InputSecureValue
 	return fmt.Sprintf("InputSecureValue%+v", Alias(*i))
-}
-
-// FillFrom fills InputSecureValue from given interface.
-func (i *InputSecureValue) FillFrom(from interface {
-	GetType() (value SecureValueTypeClass)
-	GetData() (value SecureData, ok bool)
-	GetFrontSide() (value InputSecureFileClass, ok bool)
-	GetReverseSide() (value InputSecureFileClass, ok bool)
-	GetSelfie() (value InputSecureFileClass, ok bool)
-	GetTranslation() (value []InputSecureFileClass, ok bool)
-	GetFiles() (value []InputSecureFileClass, ok bool)
-	GetPlainData() (value SecurePlainDataClass, ok bool)
-}) {
-	i.Type = from.GetType()
-	if val, ok := from.GetData(); ok {
-		i.Data = val
-	}
-
-	if val, ok := from.GetFrontSide(); ok {
-		i.FrontSide = val
-	}
-
-	if val, ok := from.GetReverseSide(); ok {
-		i.ReverseSide = val
-	}
-
-	if val, ok := from.GetSelfie(); ok {
-		i.Selfie = val
-	}
-
-	if val, ok := from.GetTranslation(); ok {
-		i.Translation = val
-	}
-
-	if val, ok := from.GetFiles(); ok {
-		i.Files = val
-	}
-
-	if val, ok := from.GetPlainData(); ok {
-		i.PlainData = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -604,20 +529,4 @@ func (i *InputSecureValue) GetPlainData() (value SecurePlainDataClass, ok bool) 
 		return value, false
 	}
 	return i.PlainData, true
-}
-
-// MapTranslation returns field Translation wrapped in InputSecureFileClassArray helper.
-func (i *InputSecureValue) MapTranslation() (value InputSecureFileClassArray, ok bool) {
-	if !i.Flags.Has(6) {
-		return value, false
-	}
-	return InputSecureFileClassArray(i.Translation), true
-}
-
-// MapFiles returns field Files wrapped in InputSecureFileClassArray helper.
-func (i *InputSecureValue) MapFiles() (value InputSecureFileClassArray, ok bool) {
-	if !i.Flags.Has(4) {
-		return value, false
-	}
-	return InputSecureFileClassArray(i.Files), true
 }

@@ -32,16 +32,10 @@ var (
 )
 
 // ImportedContact represents TL type `importedContact#c13e3c50`.
-// Successfully imported contact.
-//
-// See https://core.telegram.org/constructor/importedContact for reference.
 type ImportedContact struct {
-	// User identifier
+	// UserID field of ImportedContact.
 	UserID int64
-	// The contact's client identifier (passed to one of the InputContact¹ constructors)
-	//
-	// Links:
-	//  1) https://core.telegram.org/type/InputContact
+	// ClientID field of ImportedContact.
 	ClientID int64
 }
 
@@ -77,15 +71,6 @@ func (i *ImportedContact) String() string {
 	}
 	type Alias ImportedContact
 	return fmt.Sprintf("ImportedContact%+v", Alias(*i))
-}
-
-// FillFrom fills ImportedContact from given interface.
-func (i *ImportedContact) FillFrom(from interface {
-	GetUserID() (value int64)
-	GetClientID() (value int64)
-}) {
-	i.UserID = from.GetUserID()
-	i.ClientID = from.GetClientID()
 }
 
 // TypeID returns type id in TL schema.

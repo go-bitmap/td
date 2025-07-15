@@ -32,19 +32,12 @@ var (
 )
 
 // PaymentsStarsRevenueStats represents TL type `payments.starsRevenueStats#c92bb73b`.
-// Star revenue statistics, see here »¹ for more info.
-// Note that all balances and currency amounts and graph values are in Stars.
-//
-// Links:
-//  1. https://core.telegram.org/api/stars
-//
-// See https://core.telegram.org/constructor/payments.starsRevenueStats for reference.
 type PaymentsStarsRevenueStats struct {
-	// Star revenue graph (number of earned stars)
+	// RevenueGraph field of PaymentsStarsRevenueStats.
 	RevenueGraph StatsGraphClass
-	// Current balance, current withdrawable balance and overall earned Telegram Stars
+	// Status field of PaymentsStarsRevenueStats.
 	Status StarsRevenueStatus
-	// Current conversion rate of Telegram Stars to USD
+	// UsdRate field of PaymentsStarsRevenueStats.
 	UsdRate float64
 }
 
@@ -83,17 +76,6 @@ func (s *PaymentsStarsRevenueStats) String() string {
 	}
 	type Alias PaymentsStarsRevenueStats
 	return fmt.Sprintf("PaymentsStarsRevenueStats%+v", Alias(*s))
-}
-
-// FillFrom fills PaymentsStarsRevenueStats from given interface.
-func (s *PaymentsStarsRevenueStats) FillFrom(from interface {
-	GetRevenueGraph() (value StatsGraphClass)
-	GetStatus() (value StarsRevenueStatus)
-	GetUsdRate() (value float64)
-}) {
-	s.RevenueGraph = from.GetRevenueGraph()
-	s.Status = from.GetStatus()
-	s.UsdRate = from.GetUsdRate()
 }
 
 // TypeID returns type id in TL schema.

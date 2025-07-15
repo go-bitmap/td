@@ -32,70 +32,44 @@ var (
 )
 
 // Dialog represents TL type `dialog#d58a08c6`.
-// Chat
-//
-// See https://core.telegram.org/constructor/dialog for reference.
 type Dialog struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of Dialog.
 	Flags bin.Fields
-	// Is the dialog pinned
+	// Pinned field of Dialog.
 	Pinned bool
-	// Whether the chat was manually marked as unread
+	// UnreadMark field of Dialog.
 	UnreadMark bool
-	// Users may also choose to display messages from all topics of a forum¹ as if they were
-	// sent to a normal group, using a "View as messages" setting in the local client.  This
-	// setting only affects the current account, and is synced to other logged in sessions
-	// using the channels.toggleViewForumAsMessages² method; invoking this method will
-	// update the value of this flag.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/forum
-	//  2) https://core.telegram.org/method/channels.toggleViewForumAsMessages
+	// ViewForumAsMessages field of Dialog.
 	ViewForumAsMessages bool
-	// The chat
+	// Peer field of Dialog.
 	Peer PeerClass
-	// The latest message ID
+	// TopMessage field of Dialog.
 	TopMessage int
-	// Position up to which all incoming messages are read.
+	// ReadInboxMaxID field of Dialog.
 	ReadInboxMaxID int
-	// Position up to which all outgoing messages are read.
+	// ReadOutboxMaxID field of Dialog.
 	ReadOutboxMaxID int
-	// Number of unread messages
+	// UnreadCount field of Dialog.
 	UnreadCount int
-	// Number of unread mentions¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/mentions
+	// UnreadMentionsCount field of Dialog.
 	UnreadMentionsCount int
-	// Number of unread reactions to messages you sent
+	// UnreadReactionsCount field of Dialog.
 	UnreadReactionsCount int
-	// Notification settings
+	// NotifySettings field of Dialog.
 	NotifySettings PeerNotifySettings
-	// PTS¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/updates
+	// Pts field of Dialog.
 	//
 	// Use SetPts and GetPts helpers.
 	Pts int
-	// Message draft¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/drafts
+	// Draft field of Dialog.
 	//
 	// Use SetDraft and GetDraft helpers.
 	Draft DraftMessageClass
-	// Peer folder ID, for more info click here¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/folders#peer-folders
+	// FolderID field of Dialog.
 	//
 	// Use SetFolderID and GetFolderID helpers.
 	FolderID int
-	// Time-to-live of all messages sent in this dialog
+	// TTLPeriod field of Dialog.
 	//
 	// Use SetTTLPeriod and GetTTLPeriod helpers.
 	TTLPeriod int
@@ -180,53 +154,6 @@ func (d *Dialog) String() string {
 	}
 	type Alias Dialog
 	return fmt.Sprintf("Dialog%+v", Alias(*d))
-}
-
-// FillFrom fills Dialog from given interface.
-func (d *Dialog) FillFrom(from interface {
-	GetPinned() (value bool)
-	GetUnreadMark() (value bool)
-	GetViewForumAsMessages() (value bool)
-	GetPeer() (value PeerClass)
-	GetTopMessage() (value int)
-	GetReadInboxMaxID() (value int)
-	GetReadOutboxMaxID() (value int)
-	GetUnreadCount() (value int)
-	GetUnreadMentionsCount() (value int)
-	GetUnreadReactionsCount() (value int)
-	GetNotifySettings() (value PeerNotifySettings)
-	GetPts() (value int, ok bool)
-	GetDraft() (value DraftMessageClass, ok bool)
-	GetFolderID() (value int, ok bool)
-	GetTTLPeriod() (value int, ok bool)
-}) {
-	d.Pinned = from.GetPinned()
-	d.UnreadMark = from.GetUnreadMark()
-	d.ViewForumAsMessages = from.GetViewForumAsMessages()
-	d.Peer = from.GetPeer()
-	d.TopMessage = from.GetTopMessage()
-	d.ReadInboxMaxID = from.GetReadInboxMaxID()
-	d.ReadOutboxMaxID = from.GetReadOutboxMaxID()
-	d.UnreadCount = from.GetUnreadCount()
-	d.UnreadMentionsCount = from.GetUnreadMentionsCount()
-	d.UnreadReactionsCount = from.GetUnreadReactionsCount()
-	d.NotifySettings = from.GetNotifySettings()
-	if val, ok := from.GetPts(); ok {
-		d.Pts = val
-	}
-
-	if val, ok := from.GetDraft(); ok {
-		d.Draft = val
-	}
-
-	if val, ok := from.GetFolderID(); ok {
-		d.FolderID = val
-	}
-
-	if val, ok := from.GetTTLPeriod(); ok {
-		d.TTLPeriod = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -704,30 +631,24 @@ func (d *Dialog) GetTTLPeriod() (value int, ok bool) {
 }
 
 // DialogFolder represents TL type `dialogFolder#71bd134c`.
-// Dialog in folder
-//
-// See https://core.telegram.org/constructor/dialogFolder for reference.
 type DialogFolder struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of DialogFolder.
 	Flags bin.Fields
-	// Is this folder pinned
+	// Pinned field of DialogFolder.
 	Pinned bool
-	// The folder
+	// Folder field of DialogFolder.
 	Folder Folder
-	// Peer in folder
+	// Peer field of DialogFolder.
 	Peer PeerClass
-	// Latest message ID of dialog
+	// TopMessage field of DialogFolder.
 	TopMessage int
-	// Number of unread muted peers in folder
+	// UnreadMutedPeersCount field of DialogFolder.
 	UnreadMutedPeersCount int
-	// Number of unread unmuted peers in folder
+	// UnreadUnmutedPeersCount field of DialogFolder.
 	UnreadUnmutedPeersCount int
-	// Number of unread messages from muted peers in folder
+	// UnreadMutedMessagesCount field of DialogFolder.
 	UnreadMutedMessagesCount int
-	// Number of unread messages from unmuted peers in folder
+	// UnreadUnmutedMessagesCount field of DialogFolder.
 	UnreadUnmutedMessagesCount int
 }
 
@@ -789,27 +710,6 @@ func (d *DialogFolder) String() string {
 	}
 	type Alias DialogFolder
 	return fmt.Sprintf("DialogFolder%+v", Alias(*d))
-}
-
-// FillFrom fills DialogFolder from given interface.
-func (d *DialogFolder) FillFrom(from interface {
-	GetPinned() (value bool)
-	GetFolder() (value Folder)
-	GetPeer() (value PeerClass)
-	GetTopMessage() (value int)
-	GetUnreadMutedPeersCount() (value int)
-	GetUnreadUnmutedPeersCount() (value int)
-	GetUnreadMutedMessagesCount() (value int)
-	GetUnreadUnmutedMessagesCount() (value int)
-}) {
-	d.Pinned = from.GetPinned()
-	d.Folder = from.GetFolder()
-	d.Peer = from.GetPeer()
-	d.TopMessage = from.GetTopMessage()
-	d.UnreadMutedPeersCount = from.GetUnreadMutedPeersCount()
-	d.UnreadUnmutedPeersCount = from.GetUnreadUnmutedPeersCount()
-	d.UnreadMutedMessagesCount = from.GetUnreadMutedMessagesCount()
-	d.UnreadUnmutedMessagesCount = from.GetUnreadUnmutedMessagesCount()
 }
 
 // TypeID returns type id in TL schema.
@@ -1066,8 +966,6 @@ const DialogClassName = "Dialog"
 
 // DialogClass represents Dialog generic type.
 //
-// See https://core.telegram.org/type/Dialog for reference.
-//
 // Constructors:
 //   - [Dialog]
 //   - [DialogFolder]
@@ -1101,24 +999,12 @@ type DialogClass interface {
 	// Zero returns true if current object has a zero value.
 	Zero() bool
 
-	// Is the dialog pinned
+	// Pinned field of Dialog.
 	GetPinned() (value bool)
-
-	// The chat
+	// Peer field of Dialog.
 	GetPeer() (value PeerClass)
-
-	// The latest message ID
+	// TopMessage field of Dialog.
 	GetTopMessage() (value int)
-}
-
-// AsInputDialogPeerFolder tries to map Dialog to InputDialogPeerFolder.
-func (d *Dialog) AsInputDialogPeerFolder() *InputDialogPeerFolder {
-	value := new(InputDialogPeerFolder)
-	if fieldValue, ok := d.GetFolderID(); ok {
-		value.FolderID = fieldValue
-	}
-
-	return value
 }
 
 // DecodeDialog implements binary de-serialization for DialogClass.

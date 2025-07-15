@@ -32,20 +32,14 @@ var (
 )
 
 // PaymentsValidateRequestedInfoRequest represents TL type `payments.validateRequestedInfo#b6c8f12b`.
-// Submit requested order information for validation
-//
-// See https://core.telegram.org/method/payments.validateRequestedInfo for reference.
 type PaymentsValidateRequestedInfoRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of PaymentsValidateRequestedInfoRequest.
 	Flags bin.Fields
-	// Save order information to re-use it for future orders
+	// Save field of PaymentsValidateRequestedInfoRequest.
 	Save bool
-	// Invoice
+	// Invoice field of PaymentsValidateRequestedInfoRequest.
 	Invoice InputInvoiceClass
-	// Requested order information
+	// Info field of PaymentsValidateRequestedInfoRequest.
 	Info PaymentRequestedInfo
 }
 
@@ -87,17 +81,6 @@ func (v *PaymentsValidateRequestedInfoRequest) String() string {
 	}
 	type Alias PaymentsValidateRequestedInfoRequest
 	return fmt.Sprintf("PaymentsValidateRequestedInfoRequest%+v", Alias(*v))
-}
-
-// FillFrom fills PaymentsValidateRequestedInfoRequest from given interface.
-func (v *PaymentsValidateRequestedInfoRequest) FillFrom(from interface {
-	GetSave() (value bool)
-	GetInvoice() (value InputInvoiceClass)
-	GetInfo() (value PaymentRequestedInfo)
-}) {
-	v.Save = from.GetSave()
-	v.Invoice = from.GetInvoice()
-	v.Info = from.GetInfo()
 }
 
 // TypeID returns type id in TL schema.
@@ -250,14 +233,6 @@ func (v *PaymentsValidateRequestedInfoRequest) GetInfo() (value PaymentRequested
 }
 
 // PaymentsValidateRequestedInfo invokes method payments.validateRequestedInfo#b6c8f12b returning error if any.
-// Submit requested order information for validation
-//
-// Possible errors:
-//
-//	400 MESSAGE_ID_INVALID: The provided message id is invalid.
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//
-// See https://core.telegram.org/method/payments.validateRequestedInfo for reference.
 func (c *Client) PaymentsValidateRequestedInfo(ctx context.Context, request *PaymentsValidateRequestedInfoRequest) (*PaymentsValidatedRequestedInfo, error) {
 	var result PaymentsValidatedRequestedInfo
 

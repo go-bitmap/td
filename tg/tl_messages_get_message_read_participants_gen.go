@@ -32,21 +32,10 @@ var (
 )
 
 // MessagesGetMessageReadParticipantsRequest represents TL type `messages.getMessageReadParticipants#31c1c44f`.
-// Get which users read a specific message: only available for groups and supergroups
-// with less than chat_read_mark_size_threshold members¹, read receipts will be stored
-// for chat_read_mark_expire_period seconds after the message was sent², see client
-// configuration for more info »³.
-//
-// Links:
-//  1. https://core.telegram.org/api/config#chat-read-mark-size-threshold
-//  2. https://core.telegram.org/api/config#chat-read-mark-expire-period
-//  3. https://core.telegram.org/api/config#client-configuration
-//
-// See https://core.telegram.org/method/messages.getMessageReadParticipants for reference.
 type MessagesGetMessageReadParticipantsRequest struct {
-	// Dialog
+	// Peer field of MessagesGetMessageReadParticipantsRequest.
 	Peer InputPeerClass
-	// Message ID
+	// MsgID field of MessagesGetMessageReadParticipantsRequest.
 	MsgID int
 }
 
@@ -82,15 +71,6 @@ func (g *MessagesGetMessageReadParticipantsRequest) String() string {
 	}
 	type Alias MessagesGetMessageReadParticipantsRequest
 	return fmt.Sprintf("MessagesGetMessageReadParticipantsRequest%+v", Alias(*g))
-}
-
-// FillFrom fills MessagesGetMessageReadParticipantsRequest from given interface.
-func (g *MessagesGetMessageReadParticipantsRequest) FillFrom(from interface {
-	GetPeer() (value InputPeerClass)
-	GetMsgID() (value int)
-}) {
-	g.Peer = from.GetPeer()
-	g.MsgID = from.GetMsgID()
 }
 
 // TypeID returns type id in TL schema.
@@ -202,24 +182,6 @@ func (g *MessagesGetMessageReadParticipantsRequest) GetMsgID() (value int) {
 }
 
 // MessagesGetMessageReadParticipants invokes method messages.getMessageReadParticipants#31c1c44f returning error if any.
-// Get which users read a specific message: only available for groups and supergroups
-// with less than chat_read_mark_size_threshold members¹, read receipts will be stored
-// for chat_read_mark_expire_period seconds after the message was sent², see client
-// configuration for more info »³.
-//
-// Links:
-//  1. https://core.telegram.org/api/config#chat-read-mark-size-threshold
-//  2. https://core.telegram.org/api/config#chat-read-mark-expire-period
-//  3. https://core.telegram.org/api/config#client-configuration
-//
-// Possible errors:
-//
-//	400 CHAT_TOO_BIG: This method is not available for groups with more than chat_read_mark_size_threshold members, see client configuration ».
-//	400 MSG_ID_INVALID: Invalid message ID provided.
-//	400 MSG_TOO_OLD: chat_read_mark_expire_period seconds have passed since the message was sent, read receipts were deleted.
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//
-// See https://core.telegram.org/method/messages.getMessageReadParticipants for reference.
 func (c *Client) MessagesGetMessageReadParticipants(ctx context.Context, request *MessagesGetMessageReadParticipantsRequest) ([]ReadParticipantDate, error) {
 	var result ReadParticipantDateVector
 

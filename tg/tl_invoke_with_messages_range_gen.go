@@ -32,13 +32,10 @@ var (
 )
 
 // InvokeWithMessagesRangeRequest represents TL type `invokeWithMessagesRange#365275f2`.
-// Invoke with the given message range
-//
-// See https://core.telegram.org/constructor/invokeWithMessagesRange for reference.
 type InvokeWithMessagesRangeRequest struct {
-	// Message range
+	// Range field of InvokeWithMessagesRangeRequest.
 	Range MessageRange
-	// Query
+	// Query field of InvokeWithMessagesRangeRequest.
 	Query bin.Object
 }
 
@@ -74,15 +71,6 @@ func (i *InvokeWithMessagesRangeRequest) String() string {
 	}
 	type Alias InvokeWithMessagesRangeRequest
 	return fmt.Sprintf("InvokeWithMessagesRangeRequest%+v", Alias(*i))
-}
-
-// FillFrom fills InvokeWithMessagesRangeRequest from given interface.
-func (i *InvokeWithMessagesRangeRequest) FillFrom(from interface {
-	GetRange() (value MessageRange)
-	GetQuery() (value bin.Object)
-}) {
-	i.Range = from.GetRange()
-	i.Query = from.GetQuery()
 }
 
 // TypeID returns type id in TL schema.

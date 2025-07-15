@@ -32,13 +32,10 @@ var (
 )
 
 // BotsResetBotCommandsRequest represents TL type `bots.resetBotCommands#3d8de0f9`.
-// Clear bot commands for the specified bot scope and language code
-//
-// See https://core.telegram.org/method/bots.resetBotCommands for reference.
 type BotsResetBotCommandsRequest struct {
-	// Command scope
+	// Scope field of BotsResetBotCommandsRequest.
 	Scope BotCommandScopeClass
-	// Language code
+	// LangCode field of BotsResetBotCommandsRequest.
 	LangCode string
 }
 
@@ -74,15 +71,6 @@ func (r *BotsResetBotCommandsRequest) String() string {
 	}
 	type Alias BotsResetBotCommandsRequest
 	return fmt.Sprintf("BotsResetBotCommandsRequest%+v", Alias(*r))
-}
-
-// FillFrom fills BotsResetBotCommandsRequest from given interface.
-func (r *BotsResetBotCommandsRequest) FillFrom(from interface {
-	GetScope() (value BotCommandScopeClass)
-	GetLangCode() (value string)
-}) {
-	r.Scope = from.GetScope()
-	r.LangCode = from.GetLangCode()
 }
 
 // TypeID returns type id in TL schema.
@@ -194,15 +182,6 @@ func (r *BotsResetBotCommandsRequest) GetLangCode() (value string) {
 }
 
 // BotsResetBotCommands invokes method bots.resetBotCommands#3d8de0f9 returning error if any.
-// Clear bot commands for the specified bot scope and language code
-//
-// Possible errors:
-//
-//	400 LANG_CODE_INVALID: The specified language code is invalid.
-//	400 USER_BOT_REQUIRED: This method can only be called by a bot.
-//
-// See https://core.telegram.org/method/bots.resetBotCommands for reference.
-// Can be used by bots.
 func (c *Client) BotsResetBotCommands(ctx context.Context, request *BotsResetBotCommandsRequest) (bool, error) {
 	var result BoolBox
 

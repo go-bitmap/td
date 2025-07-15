@@ -32,17 +32,8 @@ var (
 )
 
 // HelpGetAppConfigRequest represents TL type `help.getAppConfig#61e3f854`.
-// Get app-specific configuration, see client configuration¹ for more info on the result.
-//
-// Links:
-//  1. https://core.telegram.org/api/config#client-configuration
-//
-// See https://core.telegram.org/method/help.getAppConfig for reference.
 type HelpGetAppConfigRequest struct {
-	// Hash used for caching, for more info click here¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets#hash-generation
+	// Hash field of HelpGetAppConfigRequest.
 	Hash int
 }
 
@@ -75,13 +66,6 @@ func (g *HelpGetAppConfigRequest) String() string {
 	}
 	type Alias HelpGetAppConfigRequest
 	return fmt.Sprintf("HelpGetAppConfigRequest%+v", Alias(*g))
-}
-
-// FillFrom fills HelpGetAppConfigRequest from given interface.
-func (g *HelpGetAppConfigRequest) FillFrom(from interface {
-	GetHash() (value int)
-}) {
-	g.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -168,12 +152,6 @@ func (g *HelpGetAppConfigRequest) GetHash() (value int) {
 }
 
 // HelpGetAppConfig invokes method help.getAppConfig#61e3f854 returning error if any.
-// Get app-specific configuration, see client configuration¹ for more info on the result.
-//
-// Links:
-//  1. https://core.telegram.org/api/config#client-configuration
-//
-// See https://core.telegram.org/method/help.getAppConfig for reference.
 func (c *Client) HelpGetAppConfig(ctx context.Context, hash int) (HelpAppConfigClass, error) {
 	var result HelpAppConfigBox
 

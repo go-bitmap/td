@@ -32,13 +32,10 @@ var (
 )
 
 // InputTheme represents TL type `inputTheme#3c5693e9`.
-// Theme
-//
-// See https://core.telegram.org/constructor/inputTheme for reference.
 type InputTheme struct {
-	// ID
+	// ID field of InputTheme.
 	ID int64
-	// Access hash
+	// AccessHash field of InputTheme.
 	AccessHash int64
 }
 
@@ -79,15 +76,6 @@ func (i *InputTheme) String() string {
 	}
 	type Alias InputTheme
 	return fmt.Sprintf("InputTheme%+v", Alias(*i))
-}
-
-// FillFrom fills InputTheme from given interface.
-func (i *InputTheme) FillFrom(from interface {
-	GetID() (value int64)
-	GetAccessHash() (value int64)
-}) {
-	i.ID = from.GetID()
-	i.AccessHash = from.GetAccessHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -194,14 +182,8 @@ func (i *InputTheme) GetAccessHash() (value int64) {
 }
 
 // InputThemeSlug represents TL type `inputThemeSlug#f5890df1`.
-// Theme by theme ID
-//
-// See https://core.telegram.org/constructor/inputThemeSlug for reference.
 type InputThemeSlug struct {
-	// Unique theme ID obtained from a theme deep link »¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/links#theme-links
+	// Slug field of InputThemeSlug.
 	Slug string
 }
 
@@ -239,13 +221,6 @@ func (i *InputThemeSlug) String() string {
 	}
 	type Alias InputThemeSlug
 	return fmt.Sprintf("InputThemeSlug%+v", Alias(*i))
-}
-
-// FillFrom fills InputThemeSlug from given interface.
-func (i *InputThemeSlug) FillFrom(from interface {
-	GetSlug() (value string)
-}) {
-	i.Slug = from.GetSlug()
 }
 
 // TypeID returns type id in TL schema.
@@ -335,8 +310,6 @@ func (i *InputThemeSlug) GetSlug() (value string) {
 const InputThemeClassName = "InputTheme"
 
 // InputThemeClass represents InputTheme generic type.
-//
-// See https://core.telegram.org/type/InputTheme for reference.
 //
 // Constructors:
 //   - [InputTheme]

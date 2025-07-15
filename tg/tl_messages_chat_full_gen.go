@@ -32,21 +32,12 @@ var (
 )
 
 // MessagesChatFull represents TL type `messages.chatFull#e5d7d19c`.
-// Full info about a channel¹, supergroup², gigagroup³ or basic group⁴.
-//
-// Links:
-//  1. https://core.telegram.org/api/channel#channels
-//  2. https://core.telegram.org/api/channel#supergroups
-//  3. https://core.telegram.org/api/channel#gigagroups
-//  4. https://core.telegram.org/api/channel#basic-groups
-//
-// See https://core.telegram.org/constructor/messages.chatFull for reference.
 type MessagesChatFull struct {
-	// Full info
+	// FullChat field of MessagesChatFull.
 	FullChat ChatFullClass
-	// Mentioned chats
+	// Chats field of MessagesChatFull.
 	Chats []ChatClass
-	// Mentioned users
+	// Users field of MessagesChatFull.
 	Users []UserClass
 }
 
@@ -85,17 +76,6 @@ func (c *MessagesChatFull) String() string {
 	}
 	type Alias MessagesChatFull
 	return fmt.Sprintf("MessagesChatFull%+v", Alias(*c))
-}
-
-// FillFrom fills MessagesChatFull from given interface.
-func (c *MessagesChatFull) FillFrom(from interface {
-	GetFullChat() (value ChatFullClass)
-	GetChats() (value []ChatClass)
-	GetUsers() (value []UserClass)
-}) {
-	c.FullChat = from.GetFullChat()
-	c.Chats = from.GetChats()
-	c.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -260,14 +240,4 @@ func (c *MessagesChatFull) GetUsers() (value []UserClass) {
 		return
 	}
 	return c.Users
-}
-
-// MapChats returns field Chats wrapped in ChatClassArray helper.
-func (c *MessagesChatFull) MapChats() (value ChatClassArray) {
-	return ChatClassArray(c.Chats)
-}
-
-// MapUsers returns field Users wrapped in UserClassArray helper.
-func (c *MessagesChatFull) MapUsers() (value UserClassArray) {
-	return UserClassArray(c.Users)
 }

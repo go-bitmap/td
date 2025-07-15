@@ -32,13 +32,10 @@ var (
 )
 
 // StickerSetCovered represents TL type `stickerSetCovered#6410a5d2`.
-// Stickerset with a single sticker as preview
-//
-// See https://core.telegram.org/constructor/stickerSetCovered for reference.
 type StickerSetCovered struct {
-	// Stickerset
+	// Set field of StickerSetCovered.
 	Set StickerSet
-	// Preview
+	// Cover field of StickerSetCovered.
 	Cover DocumentClass
 }
 
@@ -79,15 +76,6 @@ func (s *StickerSetCovered) String() string {
 	}
 	type Alias StickerSetCovered
 	return fmt.Sprintf("StickerSetCovered%+v", Alias(*s))
-}
-
-// FillFrom fills StickerSetCovered from given interface.
-func (s *StickerSetCovered) FillFrom(from interface {
-	GetSet() (value StickerSet)
-	GetCover() (value DocumentClass)
-}) {
-	s.Set = from.GetSet()
-	s.Cover = from.GetCover()
 }
 
 // TypeID returns type id in TL schema.
@@ -199,13 +187,10 @@ func (s *StickerSetCovered) GetCover() (value DocumentClass) {
 }
 
 // StickerSetMultiCovered represents TL type `stickerSetMultiCovered#3407e51b`.
-// Stickerset, with multiple stickers as preview
-//
-// See https://core.telegram.org/constructor/stickerSetMultiCovered for reference.
 type StickerSetMultiCovered struct {
-	// Stickerset
+	// Set field of StickerSetMultiCovered.
 	Set StickerSet
-	// Preview stickers
+	// Covers field of StickerSetMultiCovered.
 	Covers []DocumentClass
 }
 
@@ -246,15 +231,6 @@ func (s *StickerSetMultiCovered) String() string {
 	}
 	type Alias StickerSetMultiCovered
 	return fmt.Sprintf("StickerSetMultiCovered%+v", Alias(*s))
-}
-
-// FillFrom fills StickerSetMultiCovered from given interface.
-func (s *StickerSetMultiCovered) FillFrom(from interface {
-	GetSet() (value StickerSet)
-	GetCovers() (value []DocumentClass)
-}) {
-	s.Set = from.GetSet()
-	s.Covers = from.GetCovers()
 }
 
 // TypeID returns type id in TL schema.
@@ -378,29 +354,15 @@ func (s *StickerSetMultiCovered) GetCovers() (value []DocumentClass) {
 	return s.Covers
 }
 
-// MapCovers returns field Covers wrapped in DocumentClassArray helper.
-func (s *StickerSetMultiCovered) MapCovers() (value DocumentClassArray) {
-	return DocumentClassArray(s.Covers)
-}
-
 // StickerSetFullCovered represents TL type `stickerSetFullCovered#40d13c0e`.
-// Stickerset preview with all stickers of the stickerset included.
-// Currently used only for custom emoji stickersets¹, to avoid a further call to
-// messages.getStickerSet².
-//
-// Links:
-//  1. https://core.telegram.org/api/custom-emoji
-//  2. https://core.telegram.org/method/messages.getStickerSet
-//
-// See https://core.telegram.org/constructor/stickerSetFullCovered for reference.
 type StickerSetFullCovered struct {
-	// Stickerset
+	// Set field of StickerSetFullCovered.
 	Set StickerSet
-	// Emoji information about every sticker in the stickerset
+	// Packs field of StickerSetFullCovered.
 	Packs []StickerPack
-	// Keywords for some or every sticker in the stickerset.
+	// Keywords field of StickerSetFullCovered.
 	Keywords []StickerKeyword
-	// Stickers
+	// Documents field of StickerSetFullCovered.
 	Documents []DocumentClass
 }
 
@@ -447,19 +409,6 @@ func (s *StickerSetFullCovered) String() string {
 	}
 	type Alias StickerSetFullCovered
 	return fmt.Sprintf("StickerSetFullCovered%+v", Alias(*s))
-}
-
-// FillFrom fills StickerSetFullCovered from given interface.
-func (s *StickerSetFullCovered) FillFrom(from interface {
-	GetSet() (value StickerSet)
-	GetPacks() (value []StickerPack)
-	GetKeywords() (value []StickerKeyword)
-	GetDocuments() (value []DocumentClass)
-}) {
-	s.Set = from.GetSet()
-	s.Packs = from.GetPacks()
-	s.Keywords = from.GetKeywords()
-	s.Documents = from.GetDocuments()
 }
 
 // TypeID returns type id in TL schema.
@@ -653,17 +602,9 @@ func (s *StickerSetFullCovered) GetDocuments() (value []DocumentClass) {
 	return s.Documents
 }
 
-// MapDocuments returns field Documents wrapped in DocumentClassArray helper.
-func (s *StickerSetFullCovered) MapDocuments() (value DocumentClassArray) {
-	return DocumentClassArray(s.Documents)
-}
-
 // StickerSetNoCovered represents TL type `stickerSetNoCovered#77b15d1c`.
-// Just the stickerset information, with no previews.
-//
-// See https://core.telegram.org/constructor/stickerSetNoCovered for reference.
 type StickerSetNoCovered struct {
-	// Stickerset information.
+	// Set field of StickerSetNoCovered.
 	Set StickerSet
 }
 
@@ -701,13 +642,6 @@ func (s *StickerSetNoCovered) String() string {
 	}
 	type Alias StickerSetNoCovered
 	return fmt.Sprintf("StickerSetNoCovered%+v", Alias(*s))
-}
-
-// FillFrom fills StickerSetNoCovered from given interface.
-func (s *StickerSetNoCovered) FillFrom(from interface {
-	GetSet() (value StickerSet)
-}) {
-	s.Set = from.GetSet()
 }
 
 // TypeID returns type id in TL schema.
@@ -798,8 +732,6 @@ const StickerSetCoveredClassName = "StickerSetCovered"
 
 // StickerSetCoveredClass represents StickerSetCovered generic type.
 //
-// See https://core.telegram.org/type/StickerSetCovered for reference.
-//
 // Constructors:
 //   - [StickerSetCovered]
 //   - [StickerSetMultiCovered]
@@ -837,7 +769,7 @@ type StickerSetCoveredClass interface {
 	// Zero returns true if current object has a zero value.
 	Zero() bool
 
-	// Stickerset
+	// Set field of StickerSetCovered.
 	GetSet() (value StickerSet)
 }
 

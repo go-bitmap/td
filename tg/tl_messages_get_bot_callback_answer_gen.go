@@ -32,31 +32,20 @@ var (
 )
 
 // MessagesGetBotCallbackAnswerRequest represents TL type `messages.getBotCallbackAnswer#9342ca07`.
-// Press an inline callback button and get a callback answer from the bot
-//
-// See https://core.telegram.org/method/messages.getBotCallbackAnswer for reference.
 type MessagesGetBotCallbackAnswerRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessagesGetBotCallbackAnswerRequest.
 	Flags bin.Fields
-	// Whether this is a "play game" button
+	// Game field of MessagesGetBotCallbackAnswerRequest.
 	Game bool
-	// Where was the inline keyboard sent
+	// Peer field of MessagesGetBotCallbackAnswerRequest.
 	Peer InputPeerClass
-	// ID of the Message with the inline keyboard
+	// MsgID field of MessagesGetBotCallbackAnswerRequest.
 	MsgID int
-	// Callback data
+	// Data field of MessagesGetBotCallbackAnswerRequest.
 	//
 	// Use SetData and GetData helpers.
 	Data []byte
-	// For buttons requiring you to verify your identity with your 2FA password¹, the SRP
-	// payload generated using SRP².
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/keyboardButtonCallback
-	//  2) https://core.telegram.org/api/srp
+	// Password field of MessagesGetBotCallbackAnswerRequest.
 	//
 	// Use SetPassword and GetPassword helpers.
 	Password InputCheckPasswordSRPClass
@@ -106,27 +95,6 @@ func (g *MessagesGetBotCallbackAnswerRequest) String() string {
 	}
 	type Alias MessagesGetBotCallbackAnswerRequest
 	return fmt.Sprintf("MessagesGetBotCallbackAnswerRequest%+v", Alias(*g))
-}
-
-// FillFrom fills MessagesGetBotCallbackAnswerRequest from given interface.
-func (g *MessagesGetBotCallbackAnswerRequest) FillFrom(from interface {
-	GetGame() (value bool)
-	GetPeer() (value InputPeerClass)
-	GetMsgID() (value int)
-	GetData() (value []byte, ok bool)
-	GetPassword() (value InputCheckPasswordSRPClass, ok bool)
-}) {
-	g.Game = from.GetGame()
-	g.Peer = from.GetPeer()
-	g.MsgID = from.GetMsgID()
-	if val, ok := from.GetData(); ok {
-		g.Data = val
-	}
-
-	if val, ok := from.GetPassword(); ok {
-		g.Password = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -355,30 +323,7 @@ func (g *MessagesGetBotCallbackAnswerRequest) GetPassword() (value InputCheckPas
 	return g.Password, true
 }
 
-// GetPasswordAsNotEmpty returns mapped value of Password conditional field and
-// boolean which is true if field was set.
-func (g *MessagesGetBotCallbackAnswerRequest) GetPasswordAsNotEmpty() (*InputCheckPasswordSRP, bool) {
-	if value, ok := g.GetPassword(); ok {
-		return value.AsNotEmpty()
-	}
-	return nil, false
-}
-
 // MessagesGetBotCallbackAnswer invokes method messages.getBotCallbackAnswer#9342ca07 returning error if any.
-// Press an inline callback button and get a callback answer from the bot
-//
-// Possible errors:
-//
-//	400 BOT_RESPONSE_TIMEOUT: A timeout occurred while fetching data from the bot.
-//	400 CHANNEL_INVALID: The provided channel is invalid.
-//	400 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
-//	400 DATA_INVALID: Encrypted data invalid.
-//	400 MESSAGE_ID_INVALID: The provided message id is invalid.
-//	400 PASSWORD_MISSING: You must enable 2FA before executing this operation.
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//	-503 Timeout: Timeout while fetching data.
-//
-// See https://core.telegram.org/method/messages.getBotCallbackAnswer for reference.
 func (c *Client) MessagesGetBotCallbackAnswer(ctx context.Context, request *MessagesGetBotCallbackAnswerRequest) (*MessagesBotCallbackAnswer, error) {
 	var result MessagesBotCallbackAnswer
 

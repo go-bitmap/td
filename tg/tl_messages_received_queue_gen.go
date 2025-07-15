@@ -32,13 +32,8 @@ var (
 )
 
 // MessagesReceivedQueueRequest represents TL type `messages.receivedQueue#55a5bb66`.
-// Confirms receipt of messages in a secret chat by client, cancels push notifications.
-// The method returns a list of random_ids of messages for which push notifications were
-// cancelled.
-//
-// See https://core.telegram.org/method/messages.receivedQueue for reference.
 type MessagesReceivedQueueRequest struct {
-	// Maximum qts value available at the client
+	// MaxQts field of MessagesReceivedQueueRequest.
 	MaxQts int
 }
 
@@ -71,13 +66,6 @@ func (r *MessagesReceivedQueueRequest) String() string {
 	}
 	type Alias MessagesReceivedQueueRequest
 	return fmt.Sprintf("MessagesReceivedQueueRequest%+v", Alias(*r))
-}
-
-// FillFrom fills MessagesReceivedQueueRequest from given interface.
-func (r *MessagesReceivedQueueRequest) FillFrom(from interface {
-	GetMaxQts() (value int)
-}) {
-	r.MaxQts = from.GetMaxQts()
 }
 
 // TypeID returns type id in TL schema.
@@ -164,16 +152,6 @@ func (r *MessagesReceivedQueueRequest) GetMaxQts() (value int) {
 }
 
 // MessagesReceivedQueue invokes method messages.receivedQueue#55a5bb66 returning error if any.
-// Confirms receipt of messages in a secret chat by client, cancels push notifications.
-// The method returns a list of random_ids of messages for which push notifications were
-// cancelled.
-//
-// Possible errors:
-//
-//	400 MAX_QTS_INVALID: The specified max_qts is invalid.
-//	500 MSG_WAIT_FAILED: A waiting call returned an error.
-//
-// See https://core.telegram.org/method/messages.receivedQueue for reference.
 func (c *Client) MessagesReceivedQueue(ctx context.Context, maxqts int) ([]int64, error) {
 	var result LongVector
 

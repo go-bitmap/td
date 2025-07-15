@@ -32,9 +32,6 @@ var (
 )
 
 // ReactionEmpty represents TL type `reactionEmpty#79f5d419`.
-// No reaction
-//
-// See https://core.telegram.org/constructor/reactionEmpty for reference.
 type ReactionEmpty struct {
 }
 
@@ -134,11 +131,8 @@ func (r *ReactionEmpty) DecodeBare(b *bin.Buffer) error {
 }
 
 // ReactionEmoji represents TL type `reactionEmoji#1b2286b8`.
-// Normal emoji message reaction
-//
-// See https://core.telegram.org/constructor/reactionEmoji for reference.
 type ReactionEmoji struct {
-	// Emoji
+	// Emoticon field of ReactionEmoji.
 	Emoticon string
 }
 
@@ -176,13 +170,6 @@ func (r *ReactionEmoji) String() string {
 	}
 	type Alias ReactionEmoji
 	return fmt.Sprintf("ReactionEmoji%+v", Alias(*r))
-}
-
-// FillFrom fills ReactionEmoji from given interface.
-func (r *ReactionEmoji) FillFrom(from interface {
-	GetEmoticon() (value string)
-}) {
-	r.Emoticon = from.GetEmoticon()
 }
 
 // TypeID returns type id in TL schema.
@@ -269,17 +256,8 @@ func (r *ReactionEmoji) GetEmoticon() (value string) {
 }
 
 // ReactionCustomEmoji represents TL type `reactionCustomEmoji#8935fc73`.
-// Custom emoji¹ message reaction
-//
-// Links:
-//  1. https://core.telegram.org/api/custom-emoji
-//
-// See https://core.telegram.org/constructor/reactionCustomEmoji for reference.
 type ReactionCustomEmoji struct {
-	// Custom emoji document ID¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/custom-emoji
+	// DocumentID field of ReactionCustomEmoji.
 	DocumentID int64
 }
 
@@ -317,13 +295,6 @@ func (r *ReactionCustomEmoji) String() string {
 	}
 	type Alias ReactionCustomEmoji
 	return fmt.Sprintf("ReactionCustomEmoji%+v", Alias(*r))
-}
-
-// FillFrom fills ReactionCustomEmoji from given interface.
-func (r *ReactionCustomEmoji) FillFrom(from interface {
-	GetDocumentID() (value int64)
-}) {
-	r.DocumentID = from.GetDocumentID()
 }
 
 // TypeID returns type id in TL schema.
@@ -410,12 +381,6 @@ func (r *ReactionCustomEmoji) GetDocumentID() (value int64) {
 }
 
 // ReactionPaid represents TL type `reactionPaid#523da4eb`.
-// Represents a paid Telegram Star reaction »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/reactions#paid-reactions
-//
-// See https://core.telegram.org/constructor/reactionPaid for reference.
 type ReactionPaid struct {
 }
 
@@ -518,8 +483,6 @@ func (r *ReactionPaid) DecodeBare(b *bin.Buffer) error {
 const ReactionClassName = "Reaction"
 
 // ReactionClass represents Reaction generic type.
-//
-// See https://core.telegram.org/type/Reaction for reference.
 //
 // Constructors:
 //   - [ReactionEmpty]

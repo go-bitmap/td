@@ -32,43 +32,28 @@ var (
 )
 
 // PollResults represents TL type `pollResults#7adf2420`.
-// Results of poll
-//
-// See https://core.telegram.org/constructor/pollResults for reference.
 type PollResults struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of PollResults.
 	Flags bin.Fields
-	// Similar to min¹ objects, used for poll constructors that are the same for all users
-	// so they don't have the option chosen by the current user (you can use messages
-	// getPollResults² to get the full poll results).
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/min
-	//  2) https://core.telegram.org/method/messages.getPollResults
+	// Min field of PollResults.
 	Min bool
-	// Poll results
+	// Results field of PollResults.
 	//
 	// Use SetResults and GetResults helpers.
 	Results []PollAnswerVoters
-	// Total number of people that voted in the poll
+	// TotalVoters field of PollResults.
 	//
 	// Use SetTotalVoters and GetTotalVoters helpers.
 	TotalVoters int
-	// IDs of the last users that recently voted in the poll
+	// RecentVoters field of PollResults.
 	//
 	// Use SetRecentVoters and GetRecentVoters helpers.
 	RecentVoters []PeerClass
-	// Explanation of quiz solution
+	// Solution field of PollResults.
 	//
 	// Use SetSolution and GetSolution helpers.
 	Solution string
-	// Message entities for styled text in quiz solution¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/entities
+	// SolutionEntities field of PollResults.
 	//
 	// Use SetSolutionEntities and GetSolutionEntities helpers.
 	SolutionEntities []MessageEntityClass
@@ -121,38 +106,6 @@ func (p *PollResults) String() string {
 	}
 	type Alias PollResults
 	return fmt.Sprintf("PollResults%+v", Alias(*p))
-}
-
-// FillFrom fills PollResults from given interface.
-func (p *PollResults) FillFrom(from interface {
-	GetMin() (value bool)
-	GetResults() (value []PollAnswerVoters, ok bool)
-	GetTotalVoters() (value int, ok bool)
-	GetRecentVoters() (value []PeerClass, ok bool)
-	GetSolution() (value string, ok bool)
-	GetSolutionEntities() (value []MessageEntityClass, ok bool)
-}) {
-	p.Min = from.GetMin()
-	if val, ok := from.GetResults(); ok {
-		p.Results = val
-	}
-
-	if val, ok := from.GetTotalVoters(); ok {
-		p.TotalVoters = val
-	}
-
-	if val, ok := from.GetRecentVoters(); ok {
-		p.RecentVoters = val
-	}
-
-	if val, ok := from.GetSolution(); ok {
-		p.Solution = val
-	}
-
-	if val, ok := from.GetSolutionEntities(); ok {
-		p.SolutionEntities = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -488,20 +441,4 @@ func (p *PollResults) GetSolutionEntities() (value []MessageEntityClass, ok bool
 		return value, false
 	}
 	return p.SolutionEntities, true
-}
-
-// MapRecentVoters returns field RecentVoters wrapped in PeerClassArray helper.
-func (p *PollResults) MapRecentVoters() (value PeerClassArray, ok bool) {
-	if !p.Flags.Has(3) {
-		return value, false
-	}
-	return PeerClassArray(p.RecentVoters), true
-}
-
-// MapSolutionEntities returns field SolutionEntities wrapped in MessageEntityClassArray helper.
-func (p *PollResults) MapSolutionEntities() (value MessageEntityClassArray, ok bool) {
-	if !p.Flags.Has(4) {
-		return value, false
-	}
-	return MessageEntityClassArray(p.SolutionEntities), true
 }

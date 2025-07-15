@@ -32,9 +32,6 @@ var (
 )
 
 // ContactsContactsNotModified represents TL type `contacts.contactsNotModified#b74ba9d2`.
-// Contact list on the server is the same as the list on the client.
-//
-// See https://core.telegram.org/constructor/contacts.contactsNotModified for reference.
 type ContactsContactsNotModified struct {
 }
 
@@ -134,15 +131,12 @@ func (c *ContactsContactsNotModified) DecodeBare(b *bin.Buffer) error {
 }
 
 // ContactsContacts represents TL type `contacts.contacts#eae87e42`.
-// The current user's contact list and info on users.
-//
-// See https://core.telegram.org/constructor/contacts.contacts for reference.
 type ContactsContacts struct {
-	// Contact list
+	// Contacts field of ContactsContacts.
 	Contacts []Contact
-	// Number of contacts that were saved successfully
+	// SavedCount field of ContactsContacts.
 	SavedCount int
-	// User list
+	// Users field of ContactsContacts.
 	Users []UserClass
 }
 
@@ -186,17 +180,6 @@ func (c *ContactsContacts) String() string {
 	}
 	type Alias ContactsContacts
 	return fmt.Sprintf("ContactsContacts%+v", Alias(*c))
-}
-
-// FillFrom fills ContactsContacts from given interface.
-func (c *ContactsContacts) FillFrom(from interface {
-	GetContacts() (value []Contact)
-	GetSavedCount() (value int)
-	GetUsers() (value []UserClass)
-}) {
-	c.Contacts = from.GetContacts()
-	c.SavedCount = from.GetSavedCount()
-	c.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -355,17 +338,10 @@ func (c *ContactsContacts) GetUsers() (value []UserClass) {
 	return c.Users
 }
 
-// MapUsers returns field Users wrapped in UserClassArray helper.
-func (c *ContactsContacts) MapUsers() (value UserClassArray) {
-	return UserClassArray(c.Users)
-}
-
 // ContactsContactsClassName is schema name of ContactsContactsClass.
 const ContactsContactsClassName = "contacts.Contacts"
 
 // ContactsContactsClass represents contacts.Contacts generic type.
-//
-// See https://core.telegram.org/type/contacts.Contacts for reference.
 //
 // Constructors:
 //   - [ContactsContactsNotModified]
@@ -399,19 +375,6 @@ type ContactsContactsClass interface {
 	String() string
 	// Zero returns true if current object has a zero value.
 	Zero() bool
-
-	// AsModified tries to map ContactsContactsClass to ContactsContacts.
-	AsModified() (*ContactsContacts, bool)
-}
-
-// AsModified tries to map ContactsContactsNotModified to ContactsContacts.
-func (c *ContactsContactsNotModified) AsModified() (*ContactsContacts, bool) {
-	return nil, false
-}
-
-// AsModified tries to map ContactsContacts to ContactsContacts.
-func (c *ContactsContacts) AsModified() (*ContactsContacts, bool) {
-	return c, true
 }
 
 // DecodeContactsContacts implements binary de-serialization for ContactsContactsClass.

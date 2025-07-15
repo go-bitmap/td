@@ -32,13 +32,10 @@ var (
 )
 
 // PhoneSaveCallDebugRequest represents TL type `phone.saveCallDebug#277add7e`.
-// Send phone call debug data to server
-//
-// See https://core.telegram.org/method/phone.saveCallDebug for reference.
 type PhoneSaveCallDebugRequest struct {
-	// Phone call
+	// Peer field of PhoneSaveCallDebugRequest.
 	Peer InputPhoneCall
-	// Debug statistics obtained from libtgvoip
+	// Debug field of PhoneSaveCallDebugRequest.
 	Debug DataJSON
 }
 
@@ -74,15 +71,6 @@ func (s *PhoneSaveCallDebugRequest) String() string {
 	}
 	type Alias PhoneSaveCallDebugRequest
 	return fmt.Sprintf("PhoneSaveCallDebugRequest%+v", Alias(*s))
-}
-
-// FillFrom fills PhoneSaveCallDebugRequest from given interface.
-func (s *PhoneSaveCallDebugRequest) FillFrom(from interface {
-	GetPeer() (value InputPhoneCall)
-	GetDebug() (value DataJSON)
-}) {
-	s.Peer = from.GetPeer()
-	s.Debug = from.GetDebug()
 }
 
 // TypeID returns type id in TL schema.
@@ -189,14 +177,6 @@ func (s *PhoneSaveCallDebugRequest) GetDebug() (value DataJSON) {
 }
 
 // PhoneSaveCallDebug invokes method phone.saveCallDebug#277add7e returning error if any.
-// Send phone call debug data to server
-//
-// Possible errors:
-//
-//	400 CALL_PEER_INVALID: The provided call peer object is invalid.
-//	400 DATA_JSON_INVALID: The provided JSON data is invalid.
-//
-// See https://core.telegram.org/method/phone.saveCallDebug for reference.
 func (c *Client) PhoneSaveCallDebug(ctx context.Context, request *PhoneSaveCallDebugRequest) (bool, error) {
 	var result BoolBox
 

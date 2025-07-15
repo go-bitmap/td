@@ -32,27 +32,20 @@ var (
 )
 
 // PhoneToggleGroupCallRecordRequest represents TL type `phone.toggleGroupCallRecord#f128c708`.
-// Start or stop recording a group call: the recorded audio and video streams will be
-// automatically sent to Saved messages (the chat with ourselves).
-//
-// See https://core.telegram.org/method/phone.toggleGroupCallRecord for reference.
 type PhoneToggleGroupCallRecordRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of PhoneToggleGroupCallRecordRequest.
 	Flags bin.Fields
-	// Whether to start or stop recording
+	// Start field of PhoneToggleGroupCallRecordRequest.
 	Start bool
-	// Whether to also record video streams
+	// Video field of PhoneToggleGroupCallRecordRequest.
 	Video bool
-	// The group call or livestream
+	// Call field of PhoneToggleGroupCallRecordRequest.
 	Call InputGroupCallClass
-	// Recording title
+	// Title field of PhoneToggleGroupCallRecordRequest.
 	//
 	// Use SetTitle and GetTitle helpers.
 	Title string
-	// If video stream recording is enabled, whether to record in portrait or landscape mode
+	// VideoPortrait field of PhoneToggleGroupCallRecordRequest.
 	//
 	// Use SetVideoPortrait and GetVideoPortrait helpers.
 	VideoPortrait bool
@@ -102,27 +95,6 @@ func (t *PhoneToggleGroupCallRecordRequest) String() string {
 	}
 	type Alias PhoneToggleGroupCallRecordRequest
 	return fmt.Sprintf("PhoneToggleGroupCallRecordRequest%+v", Alias(*t))
-}
-
-// FillFrom fills PhoneToggleGroupCallRecordRequest from given interface.
-func (t *PhoneToggleGroupCallRecordRequest) FillFrom(from interface {
-	GetStart() (value bool)
-	GetVideo() (value bool)
-	GetCall() (value InputGroupCallClass)
-	GetTitle() (value string, ok bool)
-	GetVideoPortrait() (value bool, ok bool)
-}) {
-	t.Start = from.GetStart()
-	t.Video = from.GetVideo()
-	t.Call = from.GetCall()
-	if val, ok := from.GetTitle(); ok {
-		t.Title = val
-	}
-
-	if val, ok := from.GetVideoPortrait(); ok {
-		t.VideoPortrait = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -355,16 +327,6 @@ func (t *PhoneToggleGroupCallRecordRequest) GetVideoPortrait() (value bool, ok b
 }
 
 // PhoneToggleGroupCallRecord invokes method phone.toggleGroupCallRecord#f128c708 returning error if any.
-// Start or stop recording a group call: the recorded audio and video streams will be
-// automatically sent to Saved messages (the chat with ourselves).
-//
-// Possible errors:
-//
-//	403 GROUPCALL_FORBIDDEN: The group call has already ended.
-//	400 GROUPCALL_INVALID: The specified group call is invalid.
-//	400 GROUPCALL_NOT_MODIFIED: Group call settings weren't modified.
-//
-// See https://core.telegram.org/method/phone.toggleGroupCallRecord for reference.
 func (c *Client) PhoneToggleGroupCallRecord(ctx context.Context, request *PhoneToggleGroupCallRecordRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

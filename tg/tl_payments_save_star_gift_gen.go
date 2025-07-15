@@ -32,19 +32,10 @@ var (
 )
 
 // PaymentsSaveStarGiftRequest represents TL type `payments.saveStarGift#2a2a697c`.
-// Display or remove a received gift »¹ from our profile.
-//
-// Links:
-//  1. https://core.telegram.org/api/gifts
-//
-// See https://core.telegram.org/method/payments.saveStarGift for reference.
 type PaymentsSaveStarGiftRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of PaymentsSaveStarGiftRequest.
 	Flags bin.Fields
-	// If set, hides the gift from our profile.
+	// Unsave field of PaymentsSaveStarGiftRequest.
 	Unsave bool
 	// Stargift field of PaymentsSaveStarGiftRequest.
 	Stargift InputSavedStarGiftClass
@@ -85,15 +76,6 @@ func (s *PaymentsSaveStarGiftRequest) String() string {
 	}
 	type Alias PaymentsSaveStarGiftRequest
 	return fmt.Sprintf("PaymentsSaveStarGiftRequest%+v", Alias(*s))
-}
-
-// FillFrom fills PaymentsSaveStarGiftRequest from given interface.
-func (s *PaymentsSaveStarGiftRequest) FillFrom(from interface {
-	GetUnsave() (value bool)
-	GetStargift() (value InputSavedStarGiftClass)
-}) {
-	s.Unsave = from.GetUnsave()
-	s.Stargift = from.GetStargift()
 }
 
 // TypeID returns type id in TL schema.
@@ -226,16 +208,6 @@ func (s *PaymentsSaveStarGiftRequest) GetStargift() (value InputSavedStarGiftCla
 }
 
 // PaymentsSaveStarGift invokes method payments.saveStarGift#2a2a697c returning error if any.
-// Display or remove a received gift »¹ from our profile.
-//
-// Links:
-//  1. https://core.telegram.org/api/gifts
-//
-// Possible errors:
-//
-//	400 USER_ID_INVALID: The provided user ID is invalid.
-//
-// See https://core.telegram.org/method/payments.saveStarGift for reference.
 func (c *Client) PaymentsSaveStarGift(ctx context.Context, request *PaymentsSaveStarGiftRequest) (bool, error) {
 	var result BoolBox
 

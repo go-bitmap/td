@@ -32,44 +32,24 @@ var (
 )
 
 // MessagesGetRepliesRequest represents TL type `messages.getReplies#22ddd30c`.
-// Get messages in a reply thread
-//
-// See https://core.telegram.org/method/messages.getReplies for reference.
 type MessagesGetRepliesRequest struct {
-	// Peer
+	// Peer field of MessagesGetRepliesRequest.
 	Peer InputPeerClass
-	// Message ID
+	// MsgID field of MessagesGetRepliesRequest.
 	MsgID int
-	// Offsets for pagination, for more info click here¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets
+	// OffsetID field of MessagesGetRepliesRequest.
 	OffsetID int
-	// Offsets for pagination, for more info click here¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets
+	// OffsetDate field of MessagesGetRepliesRequest.
 	OffsetDate int
-	// Offsets for pagination, for more info click here¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets
+	// AddOffset field of MessagesGetRepliesRequest.
 	AddOffset int
-	// Maximum number of results to return, see pagination¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets
+	// Limit field of MessagesGetRepliesRequest.
 	Limit int
-	// If a positive value was transferred, the method will return only messages with ID
-	// smaller than max_id
+	// MaxID field of MessagesGetRepliesRequest.
 	MaxID int
-	// If a positive value was transferred, the method will return only messages with ID
-	// bigger than min_id
+	// MinID field of MessagesGetRepliesRequest.
 	MinID int
-	// Hash used for caching, for more info click here¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets#hash-generation
+	// Hash field of MessagesGetRepliesRequest.
 	Hash int64
 }
 
@@ -126,29 +106,6 @@ func (g *MessagesGetRepliesRequest) String() string {
 	}
 	type Alias MessagesGetRepliesRequest
 	return fmt.Sprintf("MessagesGetRepliesRequest%+v", Alias(*g))
-}
-
-// FillFrom fills MessagesGetRepliesRequest from given interface.
-func (g *MessagesGetRepliesRequest) FillFrom(from interface {
-	GetPeer() (value InputPeerClass)
-	GetMsgID() (value int)
-	GetOffsetID() (value int)
-	GetOffsetDate() (value int)
-	GetAddOffset() (value int)
-	GetLimit() (value int)
-	GetMaxID() (value int)
-	GetMinID() (value int)
-	GetHash() (value int64)
-}) {
-	g.Peer = from.GetPeer()
-	g.MsgID = from.GetMsgID()
-	g.OffsetID = from.GetOffsetID()
-	g.OffsetDate = from.GetOffsetDate()
-	g.AddOffset = from.GetAddOffset()
-	g.Limit = from.GetLimit()
-	g.MaxID = from.GetMaxID()
-	g.MinID = from.GetMinID()
-	g.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -400,17 +357,6 @@ func (g *MessagesGetRepliesRequest) GetHash() (value int64) {
 }
 
 // MessagesGetReplies invokes method messages.getReplies#22ddd30c returning error if any.
-// Get messages in a reply thread
-//
-// Possible errors:
-//
-//	400 CHANNEL_INVALID: The provided channel is invalid.
-//	400 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
-//	400 MSG_ID_INVALID: Invalid message ID provided.
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//	400 TOPIC_ID_INVALID: The specified topic ID is invalid.
-//
-// See https://core.telegram.org/method/messages.getReplies for reference.
 func (c *Client) MessagesGetReplies(ctx context.Context, request *MessagesGetRepliesRequest) (MessagesMessagesClass, error) {
 	var result MessagesMessagesBox
 

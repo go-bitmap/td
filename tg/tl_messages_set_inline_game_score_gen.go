@@ -32,27 +32,18 @@ var (
 )
 
 // MessagesSetInlineGameScoreRequest represents TL type `messages.setInlineGameScore#15ad9f64`.
-// Use this method to set the score of the specified user in a game sent as an inline
-// message (bots only).
-//
-// See https://core.telegram.org/method/messages.setInlineGameScore for reference.
 type MessagesSetInlineGameScoreRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessagesSetInlineGameScoreRequest.
 	Flags bin.Fields
-	// Set this flag if the game message should be automatically edited to include the
-	// current scoreboard
+	// EditMessage field of MessagesSetInlineGameScoreRequest.
 	EditMessage bool
-	// Set this flag if the high score is allowed to decrease. This can be useful when fixing
-	// mistakes or banning cheaters
+	// Force field of MessagesSetInlineGameScoreRequest.
 	Force bool
-	// ID of the inline message
+	// ID field of MessagesSetInlineGameScoreRequest.
 	ID InputBotInlineMessageIDClass
-	// User identifier
+	// UserID field of MessagesSetInlineGameScoreRequest.
 	UserID InputUserClass
-	// New score
+	// Score field of MessagesSetInlineGameScoreRequest.
 	Score int
 }
 
@@ -100,21 +91,6 @@ func (s *MessagesSetInlineGameScoreRequest) String() string {
 	}
 	type Alias MessagesSetInlineGameScoreRequest
 	return fmt.Sprintf("MessagesSetInlineGameScoreRequest%+v", Alias(*s))
-}
-
-// FillFrom fills MessagesSetInlineGameScoreRequest from given interface.
-func (s *MessagesSetInlineGameScoreRequest) FillFrom(from interface {
-	GetEditMessage() (value bool)
-	GetForce() (value bool)
-	GetID() (value InputBotInlineMessageIDClass)
-	GetUserID() (value InputUserClass)
-	GetScore() (value int)
-}) {
-	s.EditMessage = from.GetEditMessage()
-	s.Force = from.GetForce()
-	s.ID = from.GetID()
-	s.UserID = from.GetUserID()
-	s.Score = from.GetScore()
 }
 
 // TypeID returns type id in TL schema.
@@ -320,16 +296,6 @@ func (s *MessagesSetInlineGameScoreRequest) GetScore() (value int) {
 }
 
 // MessagesSetInlineGameScore invokes method messages.setInlineGameScore#15ad9f64 returning error if any.
-// Use this method to set the score of the specified user in a game sent as an inline
-// message (bots only).
-//
-// Possible errors:
-//
-//	400 MESSAGE_ID_INVALID: The provided message id is invalid.
-//	400 USER_BOT_REQUIRED: This method can only be called by a bot.
-//
-// See https://core.telegram.org/method/messages.setInlineGameScore for reference.
-// Can be used by bots.
 func (c *Client) MessagesSetInlineGameScore(ctx context.Context, request *MessagesSetInlineGameScoreRequest) (bool, error) {
 	var result BoolBox
 

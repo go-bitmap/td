@@ -32,45 +32,26 @@ var (
 )
 
 // ConnectedBotStarRef represents TL type `connectedBotStarRef#19a13f71`.
-// Info about an active affiliate program we have with a Mini App¹
-//
-// Links:
-//  1. https://core.telegram.org/api/bots/referrals#becoming-an-affiliate
-//
-// See https://core.telegram.org/constructor/connectedBotStarRef for reference.
 type ConnectedBotStarRef struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of ConnectedBotStarRef.
 	Flags bin.Fields
-	// If set, this affiliation was revoked by the affiliate using payments
-	// editConnectedStarRefBot¹, or by the affiliation program owner using bots
-	// updateStarRefProgram²
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/payments.editConnectedStarRefBot
-	//  2) https://core.telegram.org/method/bots.updateStarRefProgram
+	// Revoked field of ConnectedBotStarRef.
 	Revoked bool
-	// Referral link¹ to be shared
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/links#referral-links
+	// URL field of ConnectedBotStarRef.
 	URL string
-	// When did we affiliate with bot_id
+	// Date field of ConnectedBotStarRef.
 	Date int
-	// ID of the mini app that created the affiliate program
+	// BotID field of ConnectedBotStarRef.
 	BotID int64
-	// The number of Telegram Stars received by the affiliate for each 1000 Telegram Stars
-	// received by bot_id
+	// CommissionPermille field of ConnectedBotStarRef.
 	CommissionPermille int
-	// Number of months the program will be active; if not set, there is no expiration date.
+	// DurationMonths field of ConnectedBotStarRef.
 	//
 	// Use SetDurationMonths and GetDurationMonths helpers.
 	DurationMonths int
-	// The number of users that used the affiliate program
+	// Participants field of ConnectedBotStarRef.
 	Participants int64
-	// The number of Telegram Stars that were earned by the affiliate program
+	// Revenue field of ConnectedBotStarRef.
 	Revenue int64
 }
 
@@ -127,30 +108,6 @@ func (c *ConnectedBotStarRef) String() string {
 	}
 	type Alias ConnectedBotStarRef
 	return fmt.Sprintf("ConnectedBotStarRef%+v", Alias(*c))
-}
-
-// FillFrom fills ConnectedBotStarRef from given interface.
-func (c *ConnectedBotStarRef) FillFrom(from interface {
-	GetRevoked() (value bool)
-	GetURL() (value string)
-	GetDate() (value int)
-	GetBotID() (value int64)
-	GetCommissionPermille() (value int)
-	GetDurationMonths() (value int, ok bool)
-	GetParticipants() (value int64)
-	GetRevenue() (value int64)
-}) {
-	c.Revoked = from.GetRevoked()
-	c.URL = from.GetURL()
-	c.Date = from.GetDate()
-	c.BotID = from.GetBotID()
-	c.CommissionPermille = from.GetCommissionPermille()
-	if val, ok := from.GetDurationMonths(); ok {
-		c.DurationMonths = val
-	}
-
-	c.Participants = from.GetParticipants()
-	c.Revenue = from.GetRevenue()
 }
 
 // TypeID returns type id in TL schema.

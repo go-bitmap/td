@@ -32,30 +32,22 @@ var (
 )
 
 // MessagesGetHistoryRequest represents TL type `messages.getHistory#4423e6c5`.
-// Returns the conversation history with one interlocutor / within a chat
-//
-// See https://core.telegram.org/method/messages.getHistory for reference.
 type MessagesGetHistoryRequest struct {
-	// Target peer
+	// Peer field of MessagesGetHistoryRequest.
 	Peer InputPeerClass
-	// Only return messages starting from the specified message ID
+	// OffsetID field of MessagesGetHistoryRequest.
 	OffsetID int
-	// Only return messages sent before the specified date
+	// OffsetDate field of MessagesGetHistoryRequest.
 	OffsetDate int
-	// Number of list elements to be skipped, negative values are also accepted.
+	// AddOffset field of MessagesGetHistoryRequest.
 	AddOffset int
-	// Number of results to return
+	// Limit field of MessagesGetHistoryRequest.
 	Limit int
-	// If a positive value was transferred, the method will return only messages with IDs
-	// less than max_id
+	// MaxID field of MessagesGetHistoryRequest.
 	MaxID int
-	// If a positive value was transferred, the method will return only messages with IDs
-	// more than min_id
+	// MinID field of MessagesGetHistoryRequest.
 	MinID int
-	// Result hash¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets
+	// Hash field of MessagesGetHistoryRequest.
 	Hash int64
 }
 
@@ -109,27 +101,6 @@ func (g *MessagesGetHistoryRequest) String() string {
 	}
 	type Alias MessagesGetHistoryRequest
 	return fmt.Sprintf("MessagesGetHistoryRequest%+v", Alias(*g))
-}
-
-// FillFrom fills MessagesGetHistoryRequest from given interface.
-func (g *MessagesGetHistoryRequest) FillFrom(from interface {
-	GetPeer() (value InputPeerClass)
-	GetOffsetID() (value int)
-	GetOffsetDate() (value int)
-	GetAddOffset() (value int)
-	GetLimit() (value int)
-	GetMaxID() (value int)
-	GetMinID() (value int)
-	GetHash() (value int64)
-}) {
-	g.Peer = from.GetPeer()
-	g.OffsetID = from.GetOffsetID()
-	g.OffsetDate = from.GetOffsetDate()
-	g.AddOffset = from.GetAddOffset()
-	g.Limit = from.GetLimit()
-	g.MaxID = from.GetMaxID()
-	g.MinID = from.GetMinID()
-	g.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -361,18 +332,6 @@ func (g *MessagesGetHistoryRequest) GetHash() (value int64) {
 }
 
 // MessagesGetHistory invokes method messages.getHistory#4423e6c5 returning error if any.
-// Returns the conversation history with one interlocutor / within a chat
-//
-// Possible errors:
-//
-//	400 CHANNEL_INVALID: The provided channel is invalid.
-//	406 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
-//	400 CHAT_ID_INVALID: The provided chat id is invalid.
-//	400 MSG_ID_INVALID: Invalid message ID provided.
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//	400 TAKEOUT_INVALID: The specified takeout ID is invalid.
-//
-// See https://core.telegram.org/method/messages.getHistory for reference.
 func (c *Client) MessagesGetHistory(ctx context.Context, request *MessagesGetHistoryRequest) (MessagesMessagesClass, error) {
 	var result MessagesMessagesBox
 

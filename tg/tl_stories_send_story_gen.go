@@ -32,74 +32,44 @@ var (
 )
 
 // StoriesSendStoryRequest represents TL type `stories.sendStory#e4e6694b`.
-// Uploads a Telegram Story¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/stories
-//
-// See https://core.telegram.org/method/stories.sendStory for reference.
 type StoriesSendStoryRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of StoriesSendStoryRequest.
 	Flags bin.Fields
-	// Whether to add the story to the profile automatically upon expiration. If not set, the
-	// story will only be added to the archive, see here »¹ for more info.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/stories
+	// Pinned field of StoriesSendStoryRequest.
 	Pinned bool
-	// If set, disables forwards, screenshots, and downloads.
+	// Noforwards field of StoriesSendStoryRequest.
 	Noforwards bool
-	// Set this flag when reposting stories with fwd_from_id+fwd_from_id, if the media was
-	// modified before reposting.
+	// FwdModified field of StoriesSendStoryRequest.
 	FwdModified bool
-	// The peer to send the story as.
+	// Peer field of StoriesSendStoryRequest.
 	Peer InputPeerClass
-	// The story media.
+	// Media field of StoriesSendStoryRequest.
 	Media InputMediaClass
-	// Media areas¹ associated to the story, see here »² for more info.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/stories#media-areas
-	//  2) https://core.telegram.org/api/stories#media-areas
+	// MediaAreas field of StoriesSendStoryRequest.
 	//
 	// Use SetMediaAreas and GetMediaAreas helpers.
 	MediaAreas []MediaAreaClass
-	// Story caption.
+	// Caption field of StoriesSendStoryRequest.
 	//
 	// Use SetCaption and GetCaption helpers.
 	Caption string
-	// Message entities for styled text¹, if allowed by the stories_entities client
-	// configuration parameter »².
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/entities
-	//  2) https://core.telegram.org/api/config#stories-entities
+	// Entities field of StoriesSendStoryRequest.
 	//
 	// Use SetEntities and GetEntities helpers.
 	Entities []MessageEntityClass
-	// Privacy rules¹ for the story, indicating who can or can't view the story.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/privacy
+	// PrivacyRules field of StoriesSendStoryRequest.
 	PrivacyRules []InputPrivacyRuleClass
-	// Unique client message ID required to prevent message resending.
+	// RandomID field of StoriesSendStoryRequest.
 	RandomID int64
-	// Period after which the story is moved to archive (and to the profile if pinned is set)
-	// in seconds; must be one of 6 * 3600, 12 * 3600, 86400, or 2 * 86400 for Telegram
-	// Premium users, and 86400 otherwise.
+	// Period field of StoriesSendStoryRequest.
 	//
 	// Use SetPeriod and GetPeriod helpers.
 	Period int
-	// If set, indicates that this story is a repost of story with ID fwd_from_story posted
-	// by the peer in fwd_from_id.
+	// FwdFromID field of StoriesSendStoryRequest.
 	//
 	// Use SetFwdFromID and GetFwdFromID helpers.
 	FwdFromID InputPeerClass
-	// If set, indicates that this story is a repost of story with ID fwd_from_story posted
-	// by the peer in fwd_from_id.
+	// FwdFromStory field of StoriesSendStoryRequest.
 	//
 	// Use SetFwdFromStory and GetFwdFromStory helpers.
 	FwdFromStory int
@@ -173,55 +143,6 @@ func (s *StoriesSendStoryRequest) String() string {
 	}
 	type Alias StoriesSendStoryRequest
 	return fmt.Sprintf("StoriesSendStoryRequest%+v", Alias(*s))
-}
-
-// FillFrom fills StoriesSendStoryRequest from given interface.
-func (s *StoriesSendStoryRequest) FillFrom(from interface {
-	GetPinned() (value bool)
-	GetNoforwards() (value bool)
-	GetFwdModified() (value bool)
-	GetPeer() (value InputPeerClass)
-	GetMedia() (value InputMediaClass)
-	GetMediaAreas() (value []MediaAreaClass, ok bool)
-	GetCaption() (value string, ok bool)
-	GetEntities() (value []MessageEntityClass, ok bool)
-	GetPrivacyRules() (value []InputPrivacyRuleClass)
-	GetRandomID() (value int64)
-	GetPeriod() (value int, ok bool)
-	GetFwdFromID() (value InputPeerClass, ok bool)
-	GetFwdFromStory() (value int, ok bool)
-}) {
-	s.Pinned = from.GetPinned()
-	s.Noforwards = from.GetNoforwards()
-	s.FwdModified = from.GetFwdModified()
-	s.Peer = from.GetPeer()
-	s.Media = from.GetMedia()
-	if val, ok := from.GetMediaAreas(); ok {
-		s.MediaAreas = val
-	}
-
-	if val, ok := from.GetCaption(); ok {
-		s.Caption = val
-	}
-
-	if val, ok := from.GetEntities(); ok {
-		s.Entities = val
-	}
-
-	s.PrivacyRules = from.GetPrivacyRules()
-	s.RandomID = from.GetRandomID()
-	if val, ok := from.GetPeriod(); ok {
-		s.Period = val
-	}
-
-	if val, ok := from.GetFwdFromID(); ok {
-		s.FwdFromID = val
-	}
-
-	if val, ok := from.GetFwdFromStory(); ok {
-		s.FwdFromStory = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -749,48 +670,7 @@ func (s *StoriesSendStoryRequest) GetFwdFromStory() (value int, ok bool) {
 	return s.FwdFromStory, true
 }
 
-// MapMediaAreas returns field MediaAreas wrapped in MediaAreaClassArray helper.
-func (s *StoriesSendStoryRequest) MapMediaAreas() (value MediaAreaClassArray, ok bool) {
-	if !s.Flags.Has(5) {
-		return value, false
-	}
-	return MediaAreaClassArray(s.MediaAreas), true
-}
-
-// MapEntities returns field Entities wrapped in MessageEntityClassArray helper.
-func (s *StoriesSendStoryRequest) MapEntities() (value MessageEntityClassArray, ok bool) {
-	if !s.Flags.Has(1) {
-		return value, false
-	}
-	return MessageEntityClassArray(s.Entities), true
-}
-
-// MapPrivacyRules returns field PrivacyRules wrapped in InputPrivacyRuleClassArray helper.
-func (s *StoriesSendStoryRequest) MapPrivacyRules() (value InputPrivacyRuleClassArray) {
-	return InputPrivacyRuleClassArray(s.PrivacyRules)
-}
-
 // StoriesSendStory invokes method stories.sendStory#e4e6694b returning error if any.
-// Uploads a Telegram Story¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/stories
-//
-// Possible errors:
-//
-//	400 BOOSTS_REQUIRED: The specified channel must first be boosted by its users in order to perform this action.
-//	400 IMAGE_PROCESS_FAILED: Failure while processing image.
-//	400 MEDIA_EMPTY: The provided media object is invalid.
-//	400 MEDIA_FILE_INVALID: The specified media file is invalid.
-//	400 MEDIA_TYPE_INVALID: The specified media type cannot be used in stories.
-//	400 MEDIA_VIDEO_STORY_MISSING: A non-story video cannot be repubblished as a story (emitted when trying to resend a non-story video as a story using inputDocument).
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//	400 PREMIUM_ACCOUNT_REQUIRED: A premium account is required to execute this action.
-//	400 STORIES_TOO_MUCH: You have hit the maximum active stories limit as specified by the story_expiring_limit_* client configuration parameters: you should buy a Premium subscription, delete an active story, or wait for the oldest story to expire.
-//	400 STORY_PERIOD_INVALID: The specified story period is invalid for this account.
-//	400 VENUE_ID_INVALID: The specified venue ID is invalid.
-//
-// See https://core.telegram.org/method/stories.sendStory for reference.
 func (c *Client) StoriesSendStory(ctx context.Context, request *StoriesSendStoryRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

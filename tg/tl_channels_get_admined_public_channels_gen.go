@@ -32,42 +32,14 @@ var (
 )
 
 // ChannelsGetAdminedPublicChannelsRequest represents TL type `channels.getAdminedPublicChannels#f8b036af`.
-// Get channels/supergroups/geogroups¹ we're admin in. Usually called when the user
-// exceeds the limit² for owned public channels/supergroups/geogroups³, and the user is
-// given the choice to remove one of his channels/supergroups/geogroups.
-//
-// Links:
-//  1. https://core.telegram.org/api/channel
-//  2. https://core.telegram.org/constructor/config
-//  3. https://core.telegram.org/api/channel
-//
-// See https://core.telegram.org/method/channels.getAdminedPublicChannels for reference.
 type ChannelsGetAdminedPublicChannelsRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of ChannelsGetAdminedPublicChannelsRequest.
 	Flags bin.Fields
-	// Get geogroups
+	// ByLocation field of ChannelsGetAdminedPublicChannelsRequest.
 	ByLocation bool
-	// If set and the user has reached the limit of owned public
-	// channels/supergroups/geogroups¹, instead of returning the channel list one of the
-	// specified errors² will be returned.Useful to check if a new public channel can indeed
-	// be created, even before asking the user to enter a channel username to use in channels
-	// checkUsername³/channels.updateUsername⁴.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/channel
-	//  2) https://core.telegram.org#possible-errors
-	//  3) https://core.telegram.org/method/channels.checkUsername
-	//  4) https://core.telegram.org/method/channels.updateUsername
+	// CheckLimit field of ChannelsGetAdminedPublicChannelsRequest.
 	CheckLimit bool
-	// Set this flag to only fetch the full list of channels that may be passed to account
-	// updatePersonalChannel¹ to display them on our profile page².
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/account.updatePersonalChannel
-	//  2) https://core.telegram.org/api/profile#personal-channel
+	// ForPersonal field of ChannelsGetAdminedPublicChannelsRequest.
 	ForPersonal bool
 }
 
@@ -109,17 +81,6 @@ func (g *ChannelsGetAdminedPublicChannelsRequest) String() string {
 	}
 	type Alias ChannelsGetAdminedPublicChannelsRequest
 	return fmt.Sprintf("ChannelsGetAdminedPublicChannelsRequest%+v", Alias(*g))
-}
-
-// FillFrom fills ChannelsGetAdminedPublicChannelsRequest from given interface.
-func (g *ChannelsGetAdminedPublicChannelsRequest) FillFrom(from interface {
-	GetByLocation() (value bool)
-	GetCheckLimit() (value bool)
-	GetForPersonal() (value bool)
-}) {
-	g.ByLocation = from.GetByLocation()
-	g.CheckLimit = from.GetCheckLimit()
-	g.ForPersonal = from.GetForPersonal()
 }
 
 // TypeID returns type id in TL schema.
@@ -283,21 +244,6 @@ func (g *ChannelsGetAdminedPublicChannelsRequest) GetForPersonal() (value bool) 
 }
 
 // ChannelsGetAdminedPublicChannels invokes method channels.getAdminedPublicChannels#f8b036af returning error if any.
-// Get channels/supergroups/geogroups¹ we're admin in. Usually called when the user
-// exceeds the limit² for owned public channels/supergroups/geogroups³, and the user is
-// given the choice to remove one of his channels/supergroups/geogroups.
-//
-// Links:
-//  1. https://core.telegram.org/api/channel
-//  2. https://core.telegram.org/constructor/config
-//  3. https://core.telegram.org/api/channel
-//
-// Possible errors:
-//
-//	400 CHANNELS_ADMIN_LOCATED_TOO_MUCH: The user has reached the limit of public geogroups.
-//	400 CHANNELS_ADMIN_PUBLIC_TOO_MUCH: You're admin of too many public channels, make some channels private to change the username of this channel.
-//
-// See https://core.telegram.org/method/channels.getAdminedPublicChannels for reference.
 func (c *Client) ChannelsGetAdminedPublicChannels(ctx context.Context, request *ChannelsGetAdminedPublicChannelsRequest) (MessagesChatsClass, error) {
 	var result MessagesChatsBox
 

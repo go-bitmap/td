@@ -32,37 +32,24 @@ var (
 )
 
 // MessagesAcceptURLAuthRequest represents TL type `messages.acceptUrlAuth#b12c7125`.
-// Use this to accept a Seamless Telegram Login authorization request, for more info
-// click here »¹
-//
-// Links:
-//  1. https://core.telegram.org/api/url-authorization
-//
-// See https://core.telegram.org/method/messages.acceptUrlAuth for reference.
 type MessagesAcceptURLAuthRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessagesAcceptURLAuthRequest.
 	Flags bin.Fields
-	// Set this flag to allow the bot to send messages to you (if requested)
+	// WriteAllowed field of MessagesAcceptURLAuthRequest.
 	WriteAllowed bool
-	// The location of the message
+	// Peer field of MessagesAcceptURLAuthRequest.
 	//
 	// Use SetPeer and GetPeer helpers.
 	Peer InputPeerClass
-	// Message ID of the message with the login button
+	// MsgID field of MessagesAcceptURLAuthRequest.
 	//
 	// Use SetMsgID and GetMsgID helpers.
 	MsgID int
-	// ID of the login button
+	// ButtonID field of MessagesAcceptURLAuthRequest.
 	//
 	// Use SetButtonID and GetButtonID helpers.
 	ButtonID int
-	// URL used for link URL authorization, click here for more info »¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/url-authorization#link-url-authorization
+	// URL field of MessagesAcceptURLAuthRequest.
 	//
 	// Use SetURL and GetURL helpers.
 	URL string
@@ -112,33 +99,6 @@ func (a *MessagesAcceptURLAuthRequest) String() string {
 	}
 	type Alias MessagesAcceptURLAuthRequest
 	return fmt.Sprintf("MessagesAcceptURLAuthRequest%+v", Alias(*a))
-}
-
-// FillFrom fills MessagesAcceptURLAuthRequest from given interface.
-func (a *MessagesAcceptURLAuthRequest) FillFrom(from interface {
-	GetWriteAllowed() (value bool)
-	GetPeer() (value InputPeerClass, ok bool)
-	GetMsgID() (value int, ok bool)
-	GetButtonID() (value int, ok bool)
-	GetURL() (value string, ok bool)
-}) {
-	a.WriteAllowed = from.GetWriteAllowed()
-	if val, ok := from.GetPeer(); ok {
-		a.Peer = val
-	}
-
-	if val, ok := from.GetMsgID(); ok {
-		a.MsgID = val
-	}
-
-	if val, ok := from.GetButtonID(); ok {
-		a.ButtonID = val
-	}
-
-	if val, ok := from.GetURL(); ok {
-		a.URL = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -395,13 +355,6 @@ func (a *MessagesAcceptURLAuthRequest) GetURL() (value string, ok bool) {
 }
 
 // MessagesAcceptURLAuth invokes method messages.acceptUrlAuth#b12c7125 returning error if any.
-// Use this to accept a Seamless Telegram Login authorization request, for more info
-// click here »¹
-//
-// Links:
-//  1. https://core.telegram.org/api/url-authorization
-//
-// See https://core.telegram.org/method/messages.acceptUrlAuth for reference.
 func (c *Client) MessagesAcceptURLAuth(ctx context.Context, request *MessagesAcceptURLAuthRequest) (URLAuthResultClass, error) {
 	var result URLAuthResultBox
 

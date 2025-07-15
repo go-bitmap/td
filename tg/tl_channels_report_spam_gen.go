@@ -32,16 +32,12 @@ var (
 )
 
 // ChannelsReportSpamRequest represents TL type `channels.reportSpam#f44a8315`.
-// Reports some messages from a user in a supergroup as spam; requires administrator
-// rights in the supergroup
-//
-// See https://core.telegram.org/method/channels.reportSpam for reference.
 type ChannelsReportSpamRequest struct {
-	// Supergroup
+	// Channel field of ChannelsReportSpamRequest.
 	Channel InputChannelClass
-	// Participant whose messages should be reported
+	// Participant field of ChannelsReportSpamRequest.
 	Participant InputPeerClass
-	// IDs of spam messages
+	// ID field of ChannelsReportSpamRequest.
 	ID []int
 }
 
@@ -80,17 +76,6 @@ func (r *ChannelsReportSpamRequest) String() string {
 	}
 	type Alias ChannelsReportSpamRequest
 	return fmt.Sprintf("ChannelsReportSpamRequest%+v", Alias(*r))
-}
-
-// FillFrom fills ChannelsReportSpamRequest from given interface.
-func (r *ChannelsReportSpamRequest) FillFrom(from interface {
-	GetChannel() (value InputChannelClass)
-	GetParticipant() (value InputPeerClass)
-	GetID() (value []int)
-}) {
-	r.Channel = from.GetChannel()
-	r.Participant = from.GetParticipant()
-	r.ID = from.GetID()
 }
 
 // TypeID returns type id in TL schema.
@@ -239,24 +224,7 @@ func (r *ChannelsReportSpamRequest) GetID() (value []int) {
 	return r.ID
 }
 
-// GetChannelAsNotEmpty returns mapped value of Channel field.
-func (r *ChannelsReportSpamRequest) GetChannelAsNotEmpty() (NotEmptyInputChannel, bool) {
-	return r.Channel.AsNotEmpty()
-}
-
 // ChannelsReportSpam invokes method channels.reportSpam#f44a8315 returning error if any.
-// Reports some messages from a user in a supergroup as spam; requires administrator
-// rights in the supergroup
-//
-// Possible errors:
-//
-//	400 CHANNEL_INVALID: The provided channel is invalid.
-//	400 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
-//	400 INPUT_USER_DEACTIVATED: The specified user was deleted.
-//	400 MSG_ID_INVALID: Invalid message ID provided.
-//	400 USER_ID_INVALID: The provided user ID is invalid.
-//
-// See https://core.telegram.org/method/channels.reportSpam for reference.
 func (c *Client) ChannelsReportSpam(ctx context.Context, request *ChannelsReportSpamRequest) (bool, error) {
 	var result BoolBox
 

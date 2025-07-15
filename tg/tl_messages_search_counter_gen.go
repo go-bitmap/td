@@ -32,24 +32,14 @@ var (
 )
 
 // MessagesSearchCounter represents TL type `messages.searchCounter#e844ebff`.
-// Indicates how many results would be found by a messages.search¹ call with the same
-// parameters
-//
-// Links:
-//  1. https://core.telegram.org/method/messages.search
-//
-// See https://core.telegram.org/constructor/messages.searchCounter for reference.
 type MessagesSearchCounter struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessagesSearchCounter.
 	Flags bin.Fields
-	// If set, the results may be inexact
+	// Inexact field of MessagesSearchCounter.
 	Inexact bool
-	// Provided message filter
+	// Filter field of MessagesSearchCounter.
 	Filter MessagesFilterClass
-	// Number of results that were found server-side
+	// Count field of MessagesSearchCounter.
 	Count int
 }
 
@@ -91,17 +81,6 @@ func (s *MessagesSearchCounter) String() string {
 	}
 	type Alias MessagesSearchCounter
 	return fmt.Sprintf("MessagesSearchCounter%+v", Alias(*s))
-}
-
-// FillFrom fills MessagesSearchCounter from given interface.
-func (s *MessagesSearchCounter) FillFrom(from interface {
-	GetInexact() (value bool)
-	GetFilter() (value MessagesFilterClass)
-	GetCount() (value int)
-}) {
-	s.Inexact = from.GetInexact()
-	s.Filter = from.GetFilter()
-	s.Count = from.GetCount()
 }
 
 // TypeID returns type id in TL schema.

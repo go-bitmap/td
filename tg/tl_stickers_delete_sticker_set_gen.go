@@ -32,11 +32,8 @@ var (
 )
 
 // StickersDeleteStickerSetRequest represents TL type `stickers.deleteStickerSet#87704394`.
-// Deletes a stickerset we created.
-//
-// See https://core.telegram.org/method/stickers.deleteStickerSet for reference.
 type StickersDeleteStickerSetRequest struct {
-	// Stickerset to delete
+	// Stickerset field of StickersDeleteStickerSetRequest.
 	Stickerset InputStickerSetClass
 }
 
@@ -69,13 +66,6 @@ func (d *StickersDeleteStickerSetRequest) String() string {
 	}
 	type Alias StickersDeleteStickerSetRequest
 	return fmt.Sprintf("StickersDeleteStickerSetRequest%+v", Alias(*d))
-}
-
-// FillFrom fills StickersDeleteStickerSetRequest from given interface.
-func (d *StickersDeleteStickerSetRequest) FillFrom(from interface {
-	GetStickerset() (value InputStickerSetClass)
-}) {
-	d.Stickerset = from.GetStickerset()
 }
 
 // TypeID returns type id in TL schema.
@@ -167,14 +157,6 @@ func (d *StickersDeleteStickerSetRequest) GetStickerset() (value InputStickerSet
 }
 
 // StickersDeleteStickerSet invokes method stickers.deleteStickerSet#87704394 returning error if any.
-// Deletes a stickerset we created.
-//
-// Possible errors:
-//
-//	400 STICKERSET_INVALID: The provided sticker set is invalid.
-//
-// See https://core.telegram.org/method/stickers.deleteStickerSet for reference.
-// Can be used by bots.
 func (c *Client) StickersDeleteStickerSet(ctx context.Context, stickerset InputStickerSetClass) (bool, error) {
 	var result BoolBox
 

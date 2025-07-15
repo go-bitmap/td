@@ -32,9 +32,6 @@ var (
 )
 
 // InputChannelEmpty represents TL type `inputChannelEmpty#ee8c1e86`.
-// Represents the absence of a channel
-//
-// See https://core.telegram.org/constructor/inputChannelEmpty for reference.
 type InputChannelEmpty struct {
 }
 
@@ -134,16 +131,10 @@ func (i *InputChannelEmpty) DecodeBare(b *bin.Buffer) error {
 }
 
 // InputChannel represents TL type `inputChannel#f35aec28`.
-// Represents a channel
-//
-// See https://core.telegram.org/constructor/inputChannel for reference.
 type InputChannel struct {
-	// Channel ID
+	// ChannelID field of InputChannel.
 	ChannelID int64
-	// Access hash taken from the channel¹ constructor
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/channel
+	// AccessHash field of InputChannel.
 	AccessHash int64
 }
 
@@ -184,15 +175,6 @@ func (i *InputChannel) String() string {
 	}
 	type Alias InputChannel
 	return fmt.Sprintf("InputChannel%+v", Alias(*i))
-}
-
-// FillFrom fills InputChannel from given interface.
-func (i *InputChannel) FillFrom(from interface {
-	GetChannelID() (value int64)
-	GetAccessHash() (value int64)
-}) {
-	i.ChannelID = from.GetChannelID()
-	i.AccessHash = from.GetAccessHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -299,18 +281,12 @@ func (i *InputChannel) GetAccessHash() (value int64) {
 }
 
 // InputChannelFromMessage represents TL type `inputChannelFromMessage#5b934f9d`.
-// Defines a min¹ channel that was seen in a certain message of a certain chat.
-//
-// Links:
-//  1. https://core.telegram.org/api/min
-//
-// See https://core.telegram.org/constructor/inputChannelFromMessage for reference.
 type InputChannelFromMessage struct {
-	// The chat where the channel was seen
+	// Peer field of InputChannelFromMessage.
 	Peer InputPeerClass
-	// The message ID in the chat where the channel was seen
+	// MsgID field of InputChannelFromMessage.
 	MsgID int
-	// The channel ID
+	// ChannelID field of InputChannelFromMessage.
 	ChannelID int64
 }
 
@@ -354,17 +330,6 @@ func (i *InputChannelFromMessage) String() string {
 	}
 	type Alias InputChannelFromMessage
 	return fmt.Sprintf("InputChannelFromMessage%+v", Alias(*i))
-}
-
-// FillFrom fills InputChannelFromMessage from given interface.
-func (i *InputChannelFromMessage) FillFrom(from interface {
-	GetPeer() (value InputPeerClass)
-	GetMsgID() (value int)
-	GetChannelID() (value int64)
-}) {
-	i.Peer = from.GetPeer()
-	i.MsgID = from.GetMsgID()
-	i.ChannelID = from.GetChannelID()
 }
 
 // TypeID returns type id in TL schema.
@@ -500,8 +465,6 @@ const InputChannelClassName = "InputChannel"
 
 // InputChannelClass represents InputChannel generic type.
 //
-// See https://core.telegram.org/type/InputChannel for reference.
-//
 // Constructors:
 //   - [InputChannelEmpty]
 //   - [InputChannel]
@@ -536,50 +499,6 @@ type InputChannelClass interface {
 	String() string
 	// Zero returns true if current object has a zero value.
 	Zero() bool
-
-	// AsNotEmpty tries to map InputChannelClass to NotEmptyInputChannel.
-	AsNotEmpty() (NotEmptyInputChannel, bool)
-}
-
-// NotEmptyInputChannel represents NotEmpty subset of InputChannelClass.
-type NotEmptyInputChannel interface {
-	bin.Encoder
-	bin.Decoder
-	bin.BareEncoder
-	bin.BareDecoder
-	construct() InputChannelClass
-
-	// TypeID returns type id in TL schema.
-	//
-	// See https://core.telegram.org/mtproto/TL-tl#remarks.
-	TypeID() uint32
-	// TypeName returns name of type in TL schema.
-	TypeName() string
-	// String implements fmt.Stringer.
-	String() string
-	// Zero returns true if current object has a zero value.
-	Zero() bool
-
-	// Channel ID
-	GetChannelID() (value int64)
-}
-
-// AsNotEmpty tries to map InputChannelEmpty to NotEmptyInputChannel.
-func (i *InputChannelEmpty) AsNotEmpty() (NotEmptyInputChannel, bool) {
-	value, ok := (InputChannelClass(i)).(NotEmptyInputChannel)
-	return value, ok
-}
-
-// AsNotEmpty tries to map InputChannel to NotEmptyInputChannel.
-func (i *InputChannel) AsNotEmpty() (NotEmptyInputChannel, bool) {
-	value, ok := (InputChannelClass(i)).(NotEmptyInputChannel)
-	return value, ok
-}
-
-// AsNotEmpty tries to map InputChannelFromMessage to NotEmptyInputChannel.
-func (i *InputChannelFromMessage) AsNotEmpty() (NotEmptyInputChannel, bool) {
-	value, ok := (InputChannelClass(i)).(NotEmptyInputChannel)
-	return value, ok
 }
 
 // DecodeInputChannel implements binary de-serialization for InputChannelClass.

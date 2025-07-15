@@ -32,18 +32,10 @@ var (
 )
 
 // StarsSubscriptionPricing represents TL type `starsSubscriptionPricing#5416d58`.
-// Pricing of a Telegram Star subscription »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/invites#paid-invite-links
-//
-// See https://core.telegram.org/constructor/starsSubscriptionPricing for reference.
 type StarsSubscriptionPricing struct {
-	// The user should pay amount stars every period seconds to gain and maintain access to
-	// the channel. Currently the only allowed subscription period is 30*24*60*60, i.e. the
-	// user will be debited amount stars every month.
+	// Period field of StarsSubscriptionPricing.
 	Period int
-	// Price of the subscription in Telegram Stars.
+	// Amount field of StarsSubscriptionPricing.
 	Amount int64
 }
 
@@ -79,15 +71,6 @@ func (s *StarsSubscriptionPricing) String() string {
 	}
 	type Alias StarsSubscriptionPricing
 	return fmt.Sprintf("StarsSubscriptionPricing%+v", Alias(*s))
-}
-
-// FillFrom fills StarsSubscriptionPricing from given interface.
-func (s *StarsSubscriptionPricing) FillFrom(from interface {
-	GetPeriod() (value int)
-	GetAmount() (value int64)
-}) {
-	s.Period = from.GetPeriod()
-	s.Amount = from.GetAmount()
 }
 
 // TypeID returns type id in TL schema.

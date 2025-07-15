@@ -32,21 +32,14 @@ var (
 )
 
 // ChannelsToggleSignaturesRequest represents TL type `channels.toggleSignatures#418d549c`.
-// Enable/disable message signatures in channels
-//
-// See https://core.telegram.org/method/channels.toggleSignatures for reference.
 type ChannelsToggleSignaturesRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of ChannelsToggleSignaturesRequest.
 	Flags bin.Fields
-	// If set, enables message signatures.
+	// SignaturesEnabled field of ChannelsToggleSignaturesRequest.
 	SignaturesEnabled bool
-	// If set, messages from channel admins will link to their profiles, just like for group
-	// messages: can only be set if the signatures_enabled flag is set.
+	// ProfilesEnabled field of ChannelsToggleSignaturesRequest.
 	ProfilesEnabled bool
-	// Channel
+	// Channel field of ChannelsToggleSignaturesRequest.
 	Channel InputChannelClass
 }
 
@@ -88,17 +81,6 @@ func (t *ChannelsToggleSignaturesRequest) String() string {
 	}
 	type Alias ChannelsToggleSignaturesRequest
 	return fmt.Sprintf("ChannelsToggleSignaturesRequest%+v", Alias(*t))
-}
-
-// FillFrom fills ChannelsToggleSignaturesRequest from given interface.
-func (t *ChannelsToggleSignaturesRequest) FillFrom(from interface {
-	GetSignaturesEnabled() (value bool)
-	GetProfilesEnabled() (value bool)
-	GetChannel() (value InputChannelClass)
-}) {
-	t.SignaturesEnabled = from.GetSignaturesEnabled()
-	t.ProfilesEnabled = from.GetProfilesEnabled()
-	t.Channel = from.GetChannel()
 }
 
 // TypeID returns type id in TL schema.
@@ -258,22 +240,7 @@ func (t *ChannelsToggleSignaturesRequest) GetChannel() (value InputChannelClass)
 	return t.Channel
 }
 
-// GetChannelAsNotEmpty returns mapped value of Channel field.
-func (t *ChannelsToggleSignaturesRequest) GetChannelAsNotEmpty() (NotEmptyInputChannel, bool) {
-	return t.Channel.AsNotEmpty()
-}
-
 // ChannelsToggleSignatures invokes method channels.toggleSignatures#418d549c returning error if any.
-// Enable/disable message signatures in channels
-//
-// Possible errors:
-//
-//	400 CHANNEL_INVALID: The provided channel is invalid.
-//	400 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
-//	400 CHAT_ID_INVALID: The provided chat id is invalid.
-//	400 CHAT_NOT_MODIFIED: No changes were made to chat information because the new information you passed is identical to the current information.
-//
-// See https://core.telegram.org/method/channels.toggleSignatures for reference.
 func (c *Client) ChannelsToggleSignatures(ctx context.Context, request *ChannelsToggleSignaturesRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

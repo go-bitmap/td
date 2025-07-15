@@ -32,9 +32,6 @@ var (
 )
 
 // SecureFileEmpty represents TL type `secureFileEmpty#64199744`.
-// Empty constructor
-//
-// See https://core.telegram.org/constructor/secureFileEmpty for reference.
 type SecureFileEmpty struct {
 }
 
@@ -134,27 +131,20 @@ func (s *SecureFileEmpty) DecodeBare(b *bin.Buffer) error {
 }
 
 // SecureFile represents TL type `secureFile#7d09c27e`.
-// Secure passport¹ file, for more info see the passport docs »²
-//
-// Links:
-//  1. https://core.telegram.org/passport
-//  2. https://core.telegram.org/passport/encryption#inputsecurefile
-//
-// See https://core.telegram.org/constructor/secureFile for reference.
 type SecureFile struct {
-	// ID
+	// ID field of SecureFile.
 	ID int64
-	// Access hash
+	// AccessHash field of SecureFile.
 	AccessHash int64
-	// File size
+	// Size field of SecureFile.
 	Size int64
-	// DC ID
+	// DCID field of SecureFile.
 	DCID int
-	// Date of upload
+	// Date field of SecureFile.
 	Date int
-	// File hash
+	// FileHash field of SecureFile.
 	FileHash []byte
-	// Secret
+	// Secret field of SecureFile.
 	Secret []byte
 }
 
@@ -210,25 +200,6 @@ func (s *SecureFile) String() string {
 	}
 	type Alias SecureFile
 	return fmt.Sprintf("SecureFile%+v", Alias(*s))
-}
-
-// FillFrom fills SecureFile from given interface.
-func (s *SecureFile) FillFrom(from interface {
-	GetID() (value int64)
-	GetAccessHash() (value int64)
-	GetSize() (value int64)
-	GetDCID() (value int)
-	GetDate() (value int)
-	GetFileHash() (value []byte)
-	GetSecret() (value []byte)
-}) {
-	s.ID = from.GetID()
-	s.AccessHash = from.GetAccessHash()
-	s.Size = from.GetSize()
-	s.DCID = from.GetDCID()
-	s.Date = from.GetDate()
-	s.FileHash = from.GetFileHash()
-	s.Secret = from.GetSecret()
 }
 
 // TypeID returns type id in TL schema.
@@ -439,8 +410,6 @@ const SecureFileClassName = "SecureFile"
 
 // SecureFileClass represents SecureFile generic type.
 //
-// See https://core.telegram.org/type/SecureFile for reference.
-//
 // Constructors:
 //   - [SecureFileEmpty]
 //   - [SecureFile]
@@ -473,37 +442,6 @@ type SecureFileClass interface {
 	String() string
 	// Zero returns true if current object has a zero value.
 	Zero() bool
-
-	// AsNotEmpty tries to map SecureFileClass to SecureFile.
-	AsNotEmpty() (*SecureFile, bool)
-}
-
-// AsInputSecureFileLocation tries to map SecureFile to InputSecureFileLocation.
-func (s *SecureFile) AsInputSecureFileLocation() *InputSecureFileLocation {
-	value := new(InputSecureFileLocation)
-	value.ID = s.GetID()
-	value.AccessHash = s.GetAccessHash()
-
-	return value
-}
-
-// AsInput tries to map SecureFile to InputSecureFile.
-func (s *SecureFile) AsInput() *InputSecureFile {
-	value := new(InputSecureFile)
-	value.ID = s.GetID()
-	value.AccessHash = s.GetAccessHash()
-
-	return value
-}
-
-// AsNotEmpty tries to map SecureFileEmpty to SecureFile.
-func (s *SecureFileEmpty) AsNotEmpty() (*SecureFile, bool) {
-	return nil, false
-}
-
-// AsNotEmpty tries to map SecureFile to SecureFile.
-func (s *SecureFile) AsNotEmpty() (*SecureFile, bool) {
-	return s, true
 }
 
 // DecodeSecureFile implements binary de-serialization for SecureFileClass.

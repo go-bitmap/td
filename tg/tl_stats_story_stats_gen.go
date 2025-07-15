@@ -32,18 +32,10 @@ var (
 )
 
 // StatsStoryStats represents TL type `stats.storyStats#50cd067c`.
-// Contains statistics¹ about a story².
-//
-// Links:
-//  1. https://core.telegram.org/api/stats
-//  2. https://core.telegram.org/api/stories
-//
-// See https://core.telegram.org/constructor/stats.storyStats for reference.
 type StatsStoryStats struct {
-	// A graph containing the number of story views and shares
+	// ViewsGraph field of StatsStoryStats.
 	ViewsGraph StatsGraphClass
-	// A bar graph containing the number of story reactions categorized by "emotion" (i.e.
-	// Positive, Negative, Other, etc...)
+	// ReactionsByEmotionGraph field of StatsStoryStats.
 	ReactionsByEmotionGraph StatsGraphClass
 }
 
@@ -79,15 +71,6 @@ func (s *StatsStoryStats) String() string {
 	}
 	type Alias StatsStoryStats
 	return fmt.Sprintf("StatsStoryStats%+v", Alias(*s))
-}
-
-// FillFrom fills StatsStoryStats from given interface.
-func (s *StatsStoryStats) FillFrom(from interface {
-	GetViewsGraph() (value StatsGraphClass)
-	GetReactionsByEmotionGraph() (value StatsGraphClass)
-}) {
-	s.ViewsGraph = from.GetViewsGraph()
-	s.ReactionsByEmotionGraph = from.GetReactionsByEmotionGraph()
 }
 
 // TypeID returns type id in TL schema.

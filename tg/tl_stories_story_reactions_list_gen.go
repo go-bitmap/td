@@ -32,31 +32,18 @@ var (
 )
 
 // StoriesStoryReactionsList represents TL type `stories.storyReactionsList#aa5f789c`.
-// List of peers that reacted to or intercated with a specific story¹
-//
-// Links:
-//  1. https://core.telegram.org/api/stories
-//
-// See https://core.telegram.org/constructor/stories.storyReactionsList for reference.
 type StoriesStoryReactionsList struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of StoriesStoryReactionsList.
 	Flags bin.Fields
-	// Total number of reactions matching query
+	// Count field of StoriesStoryReactionsList.
 	Count int
-	// List of peers that reacted to or interacted with a specific story
+	// Reactions field of StoriesStoryReactionsList.
 	Reactions []StoryReactionClass
-	// Mentioned chats
+	// Chats field of StoriesStoryReactionsList.
 	Chats []ChatClass
-	// Mentioned users
+	// Users field of StoriesStoryReactionsList.
 	Users []UserClass
-	// If set, indicates the next offset to use to load more results by invoking stories
-	// getStoryReactionsList¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/stories.getStoryReactionsList
+	// NextOffset field of StoriesStoryReactionsList.
 	//
 	// Use SetNextOffset and GetNextOffset helpers.
 	NextOffset string
@@ -106,24 +93,6 @@ func (s *StoriesStoryReactionsList) String() string {
 	}
 	type Alias StoriesStoryReactionsList
 	return fmt.Sprintf("StoriesStoryReactionsList%+v", Alias(*s))
-}
-
-// FillFrom fills StoriesStoryReactionsList from given interface.
-func (s *StoriesStoryReactionsList) FillFrom(from interface {
-	GetCount() (value int)
-	GetReactions() (value []StoryReactionClass)
-	GetChats() (value []ChatClass)
-	GetUsers() (value []UserClass)
-	GetNextOffset() (value string, ok bool)
-}) {
-	s.Count = from.GetCount()
-	s.Reactions = from.GetReactions()
-	s.Chats = from.GetChats()
-	s.Users = from.GetUsers()
-	if val, ok := from.GetNextOffset(); ok {
-		s.NextOffset = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -370,19 +339,4 @@ func (s *StoriesStoryReactionsList) GetNextOffset() (value string, ok bool) {
 		return value, false
 	}
 	return s.NextOffset, true
-}
-
-// MapReactions returns field Reactions wrapped in StoryReactionClassArray helper.
-func (s *StoriesStoryReactionsList) MapReactions() (value StoryReactionClassArray) {
-	return StoryReactionClassArray(s.Reactions)
-}
-
-// MapChats returns field Chats wrapped in ChatClassArray helper.
-func (s *StoriesStoryReactionsList) MapChats() (value ChatClassArray) {
-	return ChatClassArray(s.Chats)
-}
-
-// MapUsers returns field Users wrapped in UserClassArray helper.
-func (s *StoriesStoryReactionsList) MapUsers() (value UserClassArray) {
-	return UserClassArray(s.Users)
 }

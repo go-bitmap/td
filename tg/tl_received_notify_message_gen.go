@@ -32,13 +32,10 @@ var (
 )
 
 // ReceivedNotifyMessage represents TL type `receivedNotifyMessage#a384b779`.
-// Message ID, for which PUSH-notifications were cancelled.
-//
-// See https://core.telegram.org/constructor/receivedNotifyMessage for reference.
 type ReceivedNotifyMessage struct {
-	// Message ID, for which PUSH-notifications were canceled
+	// ID field of ReceivedNotifyMessage.
 	ID int
-	// Reserved for future use
+	// Flags field of ReceivedNotifyMessage.
 	Flags int
 }
 
@@ -74,15 +71,6 @@ func (r *ReceivedNotifyMessage) String() string {
 	}
 	type Alias ReceivedNotifyMessage
 	return fmt.Sprintf("ReceivedNotifyMessage%+v", Alias(*r))
-}
-
-// FillFrom fills ReceivedNotifyMessage from given interface.
-func (r *ReceivedNotifyMessage) FillFrom(from interface {
-	GetID() (value int)
-	GetFlags() (value int)
-}) {
-	r.ID = from.GetID()
-	r.Flags = from.GetFlags()
 }
 
 // TypeID returns type id in TL schema.

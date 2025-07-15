@@ -32,19 +32,10 @@ var (
 )
 
 // MessagesFoundStickersNotModified represents TL type `messages.foundStickersNotModified#6010c534`.
-// No new stickers were found for the specified query
-//
-// See https://core.telegram.org/constructor/messages.foundStickersNotModified for reference.
 type MessagesFoundStickersNotModified struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessagesFoundStickersNotModified.
 	Flags bin.Fields
-	// Offset for pagination¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets
+	// NextOffset field of MessagesFoundStickersNotModified.
 	//
 	// Use SetNextOffset and GetNextOffset helpers.
 	NextOffset int
@@ -87,16 +78,6 @@ func (f *MessagesFoundStickersNotModified) String() string {
 	}
 	type Alias MessagesFoundStickersNotModified
 	return fmt.Sprintf("MessagesFoundStickersNotModified%+v", Alias(*f))
-}
-
-// FillFrom fills MessagesFoundStickersNotModified from given interface.
-func (f *MessagesFoundStickersNotModified) FillFrom(from interface {
-	GetNextOffset() (value int, ok bool)
-}) {
-	if val, ok := from.GetNextOffset(); ok {
-		f.NextOffset = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -212,28 +193,16 @@ func (f *MessagesFoundStickersNotModified) GetNextOffset() (value int, ok bool) 
 }
 
 // MessagesFoundStickers represents TL type `messages.foundStickers#82c9e290`.
-// Found stickers
-//
-// See https://core.telegram.org/constructor/messages.foundStickers for reference.
 type MessagesFoundStickers struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessagesFoundStickers.
 	Flags bin.Fields
-	// Offset for pagination¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets
+	// NextOffset field of MessagesFoundStickers.
 	//
 	// Use SetNextOffset and GetNextOffset helpers.
 	NextOffset int
-	// Hash used for caching, for more info click here¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets#hash-generation
+	// Hash field of MessagesFoundStickers.
 	Hash int64
-	// Found stickers
+	// Stickers field of MessagesFoundStickers.
 	Stickers []DocumentClass
 }
 
@@ -280,20 +249,6 @@ func (f *MessagesFoundStickers) String() string {
 	}
 	type Alias MessagesFoundStickers
 	return fmt.Sprintf("MessagesFoundStickers%+v", Alias(*f))
-}
-
-// FillFrom fills MessagesFoundStickers from given interface.
-func (f *MessagesFoundStickers) FillFrom(from interface {
-	GetNextOffset() (value int, ok bool)
-	GetHash() (value int64)
-	GetStickers() (value []DocumentClass)
-}) {
-	if val, ok := from.GetNextOffset(); ok {
-		f.NextOffset = val
-	}
-
-	f.Hash = from.GetHash()
-	f.Stickers = from.GetStickers()
 }
 
 // TypeID returns type id in TL schema.
@@ -466,17 +421,10 @@ func (f *MessagesFoundStickers) GetStickers() (value []DocumentClass) {
 	return f.Stickers
 }
 
-// MapStickers returns field Stickers wrapped in DocumentClassArray helper.
-func (f *MessagesFoundStickers) MapStickers() (value DocumentClassArray) {
-	return DocumentClassArray(f.Stickers)
-}
-
 // MessagesFoundStickersClassName is schema name of MessagesFoundStickersClass.
 const MessagesFoundStickersClassName = "messages.FoundStickers"
 
 // MessagesFoundStickersClass represents messages.FoundStickers generic type.
-//
-// See https://core.telegram.org/type/messages.FoundStickers for reference.
 //
 // Constructors:
 //   - [MessagesFoundStickersNotModified]
@@ -511,24 +459,8 @@ type MessagesFoundStickersClass interface {
 	// Zero returns true if current object has a zero value.
 	Zero() bool
 
-	// Offset for pagination¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets
+	// NextOffset field of MessagesFoundStickersNotModified.
 	GetNextOffset() (value int, ok bool)
-
-	// AsModified tries to map MessagesFoundStickersClass to MessagesFoundStickers.
-	AsModified() (*MessagesFoundStickers, bool)
-}
-
-// AsModified tries to map MessagesFoundStickersNotModified to MessagesFoundStickers.
-func (f *MessagesFoundStickersNotModified) AsModified() (*MessagesFoundStickers, bool) {
-	return nil, false
-}
-
-// AsModified tries to map MessagesFoundStickers to MessagesFoundStickers.
-func (f *MessagesFoundStickers) AsModified() (*MessagesFoundStickers, bool) {
-	return f, true
 }
 
 // DecodeMessagesFoundStickers implements binary de-serialization for MessagesFoundStickersClass.

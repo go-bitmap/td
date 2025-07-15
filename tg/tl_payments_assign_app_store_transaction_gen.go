@@ -32,14 +32,10 @@ var (
 )
 
 // PaymentsAssignAppStoreTransactionRequest represents TL type `payments.assignAppStoreTransaction#80ed747d`.
-// Informs server about a purchase made through the App Store: for official applications
-// only.
-//
-// See https://core.telegram.org/method/payments.assignAppStoreTransaction for reference.
 type PaymentsAssignAppStoreTransactionRequest struct {
-	// Receipt
+	// Receipt field of PaymentsAssignAppStoreTransactionRequest.
 	Receipt []byte
-	// Payment purpose
+	// Purpose field of PaymentsAssignAppStoreTransactionRequest.
 	Purpose InputStorePaymentPurposeClass
 }
 
@@ -75,15 +71,6 @@ func (a *PaymentsAssignAppStoreTransactionRequest) String() string {
 	}
 	type Alias PaymentsAssignAppStoreTransactionRequest
 	return fmt.Sprintf("PaymentsAssignAppStoreTransactionRequest%+v", Alias(*a))
-}
-
-// FillFrom fills PaymentsAssignAppStoreTransactionRequest from given interface.
-func (a *PaymentsAssignAppStoreTransactionRequest) FillFrom(from interface {
-	GetReceipt() (value []byte)
-	GetPurpose() (value InputStorePaymentPurposeClass)
-}) {
-	a.Receipt = from.GetReceipt()
-	a.Purpose = from.GetPurpose()
 }
 
 // TypeID returns type id in TL schema.
@@ -195,14 +182,6 @@ func (a *PaymentsAssignAppStoreTransactionRequest) GetPurpose() (value InputStor
 }
 
 // PaymentsAssignAppStoreTransaction invokes method payments.assignAppStoreTransaction#80ed747d returning error if any.
-// Informs server about a purchase made through the App Store: for official applications
-// only.
-//
-// Possible errors:
-//
-//	400 RECEIPT_EMPTY: The specified receipt is empty.
-//
-// See https://core.telegram.org/method/payments.assignAppStoreTransaction for reference.
 func (c *Client) PaymentsAssignAppStoreTransaction(ctx context.Context, request *PaymentsAssignAppStoreTransactionRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

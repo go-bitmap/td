@@ -32,17 +32,14 @@ var (
 )
 
 // MessagesStickerSet represents TL type `messages.stickerSet#6e153f16`.
-// Stickerset and stickers inside it
-//
-// See https://core.telegram.org/constructor/messages.stickerSet for reference.
 type MessagesStickerSet struct {
-	// The stickerset
+	// Set field of MessagesStickerSet.
 	Set StickerSet
-	// Emoji info for stickers
+	// Packs field of MessagesStickerSet.
 	Packs []StickerPack
-	// Keywords for some or every sticker in the stickerset.
+	// Keywords field of MessagesStickerSet.
 	Keywords []StickerKeyword
-	// Stickers in stickerset
+	// Documents field of MessagesStickerSet.
 	Documents []DocumentClass
 }
 
@@ -89,19 +86,6 @@ func (s *MessagesStickerSet) String() string {
 	}
 	type Alias MessagesStickerSet
 	return fmt.Sprintf("MessagesStickerSet%+v", Alias(*s))
-}
-
-// FillFrom fills MessagesStickerSet from given interface.
-func (s *MessagesStickerSet) FillFrom(from interface {
-	GetSet() (value StickerSet)
-	GetPacks() (value []StickerPack)
-	GetKeywords() (value []StickerKeyword)
-	GetDocuments() (value []DocumentClass)
-}) {
-	s.Set = from.GetSet()
-	s.Packs = from.GetPacks()
-	s.Keywords = from.GetKeywords()
-	s.Documents = from.GetDocuments()
 }
 
 // TypeID returns type id in TL schema.
@@ -295,15 +279,7 @@ func (s *MessagesStickerSet) GetDocuments() (value []DocumentClass) {
 	return s.Documents
 }
 
-// MapDocuments returns field Documents wrapped in DocumentClassArray helper.
-func (s *MessagesStickerSet) MapDocuments() (value DocumentClassArray) {
-	return DocumentClassArray(s.Documents)
-}
-
 // MessagesStickerSetNotModified represents TL type `messages.stickerSetNotModified#d3f924eb`.
-// The stickerset hasn't changed
-//
-// See https://core.telegram.org/constructor/messages.stickerSetNotModified for reference.
 type MessagesStickerSetNotModified struct {
 }
 
@@ -407,8 +383,6 @@ const MessagesStickerSetClassName = "messages.StickerSet"
 
 // MessagesStickerSetClass represents messages.StickerSet generic type.
 //
-// See https://core.telegram.org/type/messages.StickerSet for reference.
-//
 // Constructors:
 //   - [MessagesStickerSet]
 //   - [MessagesStickerSetNotModified]
@@ -441,19 +415,6 @@ type MessagesStickerSetClass interface {
 	String() string
 	// Zero returns true if current object has a zero value.
 	Zero() bool
-
-	// AsModified tries to map MessagesStickerSetClass to MessagesStickerSet.
-	AsModified() (*MessagesStickerSet, bool)
-}
-
-// AsModified tries to map MessagesStickerSet to MessagesStickerSet.
-func (s *MessagesStickerSet) AsModified() (*MessagesStickerSet, bool) {
-	return s, true
-}
-
-// AsModified tries to map MessagesStickerSetNotModified to MessagesStickerSet.
-func (s *MessagesStickerSetNotModified) AsModified() (*MessagesStickerSet, bool) {
-	return nil, false
 }
 
 // DecodeMessagesStickerSet implements binary de-serialization for MessagesStickerSetClass.

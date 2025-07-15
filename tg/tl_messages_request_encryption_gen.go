@@ -32,19 +32,12 @@ var (
 )
 
 // MessagesRequestEncryptionRequest represents TL type `messages.requestEncryption#f64daf43`.
-// Sends a request to start a secret chat to the user.
-//
-// See https://core.telegram.org/method/messages.requestEncryption for reference.
 type MessagesRequestEncryptionRequest struct {
-	// User ID
+	// UserID field of MessagesRequestEncryptionRequest.
 	UserID InputUserClass
-	// Unique client request ID required to prevent resending. This also doubles as the chat
-	// ID.
+	// RandomID field of MessagesRequestEncryptionRequest.
 	RandomID int
-	// A = g ^ a mod p, see Wikipedia¹
-	//
-	// Links:
-	//  1) https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange
+	// GA field of MessagesRequestEncryptionRequest.
 	GA []byte
 }
 
@@ -83,17 +76,6 @@ func (r *MessagesRequestEncryptionRequest) String() string {
 	}
 	type Alias MessagesRequestEncryptionRequest
 	return fmt.Sprintf("MessagesRequestEncryptionRequest%+v", Alias(*r))
-}
-
-// FillFrom fills MessagesRequestEncryptionRequest from given interface.
-func (r *MessagesRequestEncryptionRequest) FillFrom(from interface {
-	GetUserID() (value InputUserClass)
-	GetRandomID() (value int)
-	GetGA() (value []byte)
-}) {
-	r.UserID = from.GetUserID()
-	r.RandomID = from.GetRandomID()
-	r.GA = from.GetGA()
 }
 
 // TypeID returns type id in TL schema.
@@ -225,15 +207,6 @@ func (r *MessagesRequestEncryptionRequest) GetGA() (value []byte) {
 }
 
 // MessagesRequestEncryption invokes method messages.requestEncryption#f64daf43 returning error if any.
-// Sends a request to start a secret chat to the user.
-//
-// Possible errors:
-//
-//	400 DH_G_A_INVALID: g_a invalid.
-//	400 INPUT_USER_DEACTIVATED: The specified user was deleted.
-//	400 USER_ID_INVALID: The provided user ID is invalid.
-//
-// See https://core.telegram.org/method/messages.requestEncryption for reference.
 func (c *Client) MessagesRequestEncryption(ctx context.Context, request *MessagesRequestEncryptionRequest) (EncryptedChatClass, error) {
 	var result EncryptedChatBox
 

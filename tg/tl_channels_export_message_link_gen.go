@@ -32,25 +32,16 @@ var (
 )
 
 // ChannelsExportMessageLinkRequest represents TL type `channels.exportMessageLink#e63fadeb`.
-// Get link and embed info of a message in a channel/supergroup¹
-//
-// Links:
-//  1. https://core.telegram.org/api/channel
-//
-// See https://core.telegram.org/method/channels.exportMessageLink for reference.
 type ChannelsExportMessageLinkRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of ChannelsExportMessageLinkRequest.
 	Flags bin.Fields
-	// Whether to include other grouped media (for albums)
+	// Grouped field of ChannelsExportMessageLinkRequest.
 	Grouped bool
-	// Whether to also include a thread ID, if available, inside of the link
+	// Thread field of ChannelsExportMessageLinkRequest.
 	Thread bool
-	// Channel
+	// Channel field of ChannelsExportMessageLinkRequest.
 	Channel InputChannelClass
-	// Message ID
+	// ID field of ChannelsExportMessageLinkRequest.
 	ID int
 }
 
@@ -95,19 +86,6 @@ func (e *ChannelsExportMessageLinkRequest) String() string {
 	}
 	type Alias ChannelsExportMessageLinkRequest
 	return fmt.Sprintf("ChannelsExportMessageLinkRequest%+v", Alias(*e))
-}
-
-// FillFrom fills ChannelsExportMessageLinkRequest from given interface.
-func (e *ChannelsExportMessageLinkRequest) FillFrom(from interface {
-	GetGrouped() (value bool)
-	GetThread() (value bool)
-	GetChannel() (value InputChannelClass)
-	GetID() (value int)
-}) {
-	e.Grouped = from.GetGrouped()
-	e.Thread = from.GetThread()
-	e.Channel = from.GetChannel()
-	e.ID = from.GetID()
 }
 
 // TypeID returns type id in TL schema.
@@ -287,25 +265,7 @@ func (e *ChannelsExportMessageLinkRequest) GetID() (value int) {
 	return e.ID
 }
 
-// GetChannelAsNotEmpty returns mapped value of Channel field.
-func (e *ChannelsExportMessageLinkRequest) GetChannelAsNotEmpty() (NotEmptyInputChannel, bool) {
-	return e.Channel.AsNotEmpty()
-}
-
 // ChannelsExportMessageLink invokes method channels.exportMessageLink#e63fadeb returning error if any.
-// Get link and embed info of a message in a channel/supergroup¹
-//
-// Links:
-//  1. https://core.telegram.org/api/channel
-//
-// Possible errors:
-//
-//	400 CHANNEL_INVALID: The provided channel is invalid.
-//	400 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
-//	400 MESSAGE_ID_INVALID: The provided message id is invalid.
-//	400 MSG_ID_INVALID: Invalid message ID provided.
-//
-// See https://core.telegram.org/method/channels.exportMessageLink for reference.
 func (c *Client) ChannelsExportMessageLink(ctx context.Context, request *ChannelsExportMessageLinkRequest) (*ExportedMessageLink, error) {
 	var result ExportedMessageLink
 

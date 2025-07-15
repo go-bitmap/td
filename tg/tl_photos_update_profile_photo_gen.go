@@ -32,24 +32,16 @@ var (
 )
 
 // PhotosUpdateProfilePhotoRequest represents TL type `photos.updateProfilePhoto#9e82039`.
-// Installs a previously uploaded photo as a profile photo.
-//
-// See https://core.telegram.org/method/photos.updateProfilePhoto for reference.
 type PhotosUpdateProfilePhotoRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of PhotosUpdateProfilePhotoRequest.
 	Flags bin.Fields
-	// If set, the chosen profile photo will be shown to users that can't display your main
-	// profile photo due to your privacy settings.
+	// Fallback field of PhotosUpdateProfilePhotoRequest.
 	Fallback bool
-	// Can contain info of a bot we own, to change the profile photo of that bot, instead of
-	// the current user.
+	// Bot field of PhotosUpdateProfilePhotoRequest.
 	//
 	// Use SetBot and GetBot helpers.
 	Bot InputUserClass
-	// Input photo
+	// ID field of PhotosUpdateProfilePhotoRequest.
 	ID InputPhotoClass
 }
 
@@ -91,20 +83,6 @@ func (u *PhotosUpdateProfilePhotoRequest) String() string {
 	}
 	type Alias PhotosUpdateProfilePhotoRequest
 	return fmt.Sprintf("PhotosUpdateProfilePhotoRequest%+v", Alias(*u))
-}
-
-// FillFrom fills PhotosUpdateProfilePhotoRequest from given interface.
-func (u *PhotosUpdateProfilePhotoRequest) FillFrom(from interface {
-	GetFallback() (value bool)
-	GetBot() (value InputUserClass, ok bool)
-	GetID() (value InputPhotoClass)
-}) {
-	u.Fallback = from.GetFallback()
-	if val, ok := from.GetBot(); ok {
-		u.Bot = val
-	}
-
-	u.ID = from.GetID()
 }
 
 // TypeID returns type id in TL schema.
@@ -277,26 +255,7 @@ func (u *PhotosUpdateProfilePhotoRequest) GetID() (value InputPhotoClass) {
 	return u.ID
 }
 
-// GetIDAsNotEmpty returns mapped value of ID field.
-func (u *PhotosUpdateProfilePhotoRequest) GetIDAsNotEmpty() (*InputPhoto, bool) {
-	return u.ID.AsNotEmpty()
-}
-
 // PhotosUpdateProfilePhoto invokes method photos.updateProfilePhoto#9e82039 returning error if any.
-// Installs a previously uploaded photo as a profile photo.
-//
-// Possible errors:
-//
-//	400 ALBUM_PHOTOS_TOO_MANY: You have uploaded too many profile photos, delete some before retrying.
-//	400 FILE_PARTS_INVALID: The number of file parts is invalid.
-//	400 IMAGE_PROCESS_FAILED: Failure while processing image.
-//	400 LOCATION_INVALID: The provided location is invalid.
-//	400 PHOTO_CROP_SIZE_SMALL: Photo is too small.
-//	400 PHOTO_EXT_INVALID: The extension of the photo is invalid.
-//	400 PHOTO_ID_INVALID: Photo ID invalid.
-//
-// See https://core.telegram.org/method/photos.updateProfilePhoto for reference.
-// Can be used by bots.
 func (c *Client) PhotosUpdateProfilePhoto(ctx context.Context, request *PhotosUpdateProfilePhotoRequest) (*PhotosPhoto, error) {
 	var result PhotosPhoto
 

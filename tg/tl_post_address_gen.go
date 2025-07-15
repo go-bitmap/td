@@ -32,21 +32,18 @@ var (
 )
 
 // PostAddress represents TL type `postAddress#1e8caaeb`.
-// Shipping address
-//
-// See https://core.telegram.org/constructor/postAddress for reference.
 type PostAddress struct {
-	// First line for the address
+	// StreetLine1 field of PostAddress.
 	StreetLine1 string
-	// Second line for the address
+	// StreetLine2 field of PostAddress.
 	StreetLine2 string
-	// City
+	// City field of PostAddress.
 	City string
-	// State, if applicable (empty otherwise)
+	// State field of PostAddress.
 	State string
-	// ISO 3166-1 alpha-2 country code
+	// CountryISO2 field of PostAddress.
 	CountryISO2 string
-	// Address post code
+	// PostCode field of PostAddress.
 	PostCode string
 }
 
@@ -94,23 +91,6 @@ func (p *PostAddress) String() string {
 	}
 	type Alias PostAddress
 	return fmt.Sprintf("PostAddress%+v", Alias(*p))
-}
-
-// FillFrom fills PostAddress from given interface.
-func (p *PostAddress) FillFrom(from interface {
-	GetStreetLine1() (value string)
-	GetStreetLine2() (value string)
-	GetCity() (value string)
-	GetState() (value string)
-	GetCountryISO2() (value string)
-	GetPostCode() (value string)
-}) {
-	p.StreetLine1 = from.GetStreetLine1()
-	p.StreetLine2 = from.GetStreetLine2()
-	p.City = from.GetCity()
-	p.State = from.GetState()
-	p.CountryISO2 = from.GetCountryISO2()
-	p.PostCode = from.GetPostCode()
 }
 
 // TypeID returns type id in TL schema.

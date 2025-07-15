@@ -32,95 +32,48 @@ var (
 )
 
 // PeerSettings represents TL type `peerSettings#f47741f7`.
-// List of actions that are possible when interacting with this user, to be shown as
-// suggested actions in the chat action bar »¹, see here »² for more info.
-//
-// Links:
-//  1. https://core.telegram.org/api/action-bar
-//  2. https://core.telegram.org/api/action-bar
-//
-// See https://core.telegram.org/constructor/peerSettings for reference.
 type PeerSettings struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of PeerSettings.
 	Flags bin.Fields
-	// Whether we can still report the user for spam
+	// ReportSpam field of PeerSettings.
 	ReportSpam bool
-	// Whether we can add the user as contact
+	// AddContact field of PeerSettings.
 	AddContact bool
-	// Whether we can block the user
+	// BlockContact field of PeerSettings.
 	BlockContact bool
-	// Whether we can share the user's contact
+	// ShareContact field of PeerSettings.
 	ShareContact bool
-	// Whether a special exception for contacts is needed
+	// NeedContactsException field of PeerSettings.
 	NeedContactsException bool
-	// Whether we can report a geogroup as irrelevant for this location
+	// ReportGeo field of PeerSettings.
 	ReportGeo bool
-	// Whether this peer was automatically archived according to privacy settings¹ and can
-	// be unarchived
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/globalPrivacySettings
+	// Autoarchived field of PeerSettings.
 	Autoarchived bool
-	// If set, this is a recently created group chat to which new members can be invited
+	// InviteMembers field of PeerSettings.
 	InviteMembers bool
-	// This flag is set if request_chat_title and request_chat_date fields are set and the
-	// join request »¹ is related to a channel (otherwise if only the request fields are
-	// set, the join request »² is related to a chat).
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/invites#join-requests
-	//  2) https://core.telegram.org/api/invites#join-requests
+	// RequestChatBroadcast field of PeerSettings.
 	RequestChatBroadcast bool
-	// This flag is set if both business_bot_id and business_bot_manage_url are set and all
-	// connected business bots »¹ were paused in this chat using account
-	// toggleConnectedBotPaused »².
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/business#connected-bots
-	//  2) https://core.telegram.org/method/account.toggleConnectedBotPaused
+	// BusinessBotPaused field of PeerSettings.
 	BusinessBotPaused bool
-	// This flag is set if both business_bot_id and business_bot_manage_url are set and
-	// connected business bots »¹ can reply to messages in this chat, as specified by the
-	// settings during initial configuration².
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/business#connected-bots
-	//  2) https://core.telegram.org/api/business#connected-bots
+	// BusinessBotCanReply field of PeerSettings.
 	BusinessBotCanReply bool
-	// Distance in meters between us and this peer
+	// GeoDistance field of PeerSettings.
 	//
 	// Use SetGeoDistance and GetGeoDistance helpers.
 	GeoDistance int
-	// If set, this is a private chat with an administrator of a chat or channel to which the
-	// user sent a join request, and this field contains the chat/channel's title.
+	// RequestChatTitle field of PeerSettings.
 	//
 	// Use SetRequestChatTitle and GetRequestChatTitle helpers.
 	RequestChatTitle string
-	// If set, this is a private chat with an administrator of a chat or channel to which the
-	// user sent a join request, and this field contains the timestamp when the join request
-	// »¹ was sent.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/invites#join-requests
+	// RequestChatDate field of PeerSettings.
 	//
 	// Use SetRequestChatDate and GetRequestChatDate helpers.
 	RequestChatDate int
-	// Contains the ID of the business bot »¹ managing this chat, used to display info
-	// about the bot in the action bar.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/business#connected-bots
+	// BusinessBotID field of PeerSettings.
 	//
 	// Use SetBusinessBotID and GetBusinessBotID helpers.
 	BusinessBotID int64
-	// Contains a deep link »¹, used to open a management menu in the business bot. This
-	// flag is set if and only if business_bot_id is set.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/links
+	// BusinessBotManageURL field of PeerSettings.
 	//
 	// Use SetBusinessBotManageURL and GetBusinessBotManageURL helpers.
 	BusinessBotManageURL string
@@ -238,83 +191,6 @@ func (p *PeerSettings) String() string {
 	}
 	type Alias PeerSettings
 	return fmt.Sprintf("PeerSettings%+v", Alias(*p))
-}
-
-// FillFrom fills PeerSettings from given interface.
-func (p *PeerSettings) FillFrom(from interface {
-	GetReportSpam() (value bool)
-	GetAddContact() (value bool)
-	GetBlockContact() (value bool)
-	GetShareContact() (value bool)
-	GetNeedContactsException() (value bool)
-	GetReportGeo() (value bool)
-	GetAutoarchived() (value bool)
-	GetInviteMembers() (value bool)
-	GetRequestChatBroadcast() (value bool)
-	GetBusinessBotPaused() (value bool)
-	GetBusinessBotCanReply() (value bool)
-	GetGeoDistance() (value int, ok bool)
-	GetRequestChatTitle() (value string, ok bool)
-	GetRequestChatDate() (value int, ok bool)
-	GetBusinessBotID() (value int64, ok bool)
-	GetBusinessBotManageURL() (value string, ok bool)
-	GetChargePaidMessageStars() (value int64, ok bool)
-	GetRegistrationMonth() (value string, ok bool)
-	GetPhoneCountry() (value string, ok bool)
-	GetNameChangeDate() (value int, ok bool)
-	GetPhotoChangeDate() (value int, ok bool)
-}) {
-	p.ReportSpam = from.GetReportSpam()
-	p.AddContact = from.GetAddContact()
-	p.BlockContact = from.GetBlockContact()
-	p.ShareContact = from.GetShareContact()
-	p.NeedContactsException = from.GetNeedContactsException()
-	p.ReportGeo = from.GetReportGeo()
-	p.Autoarchived = from.GetAutoarchived()
-	p.InviteMembers = from.GetInviteMembers()
-	p.RequestChatBroadcast = from.GetRequestChatBroadcast()
-	p.BusinessBotPaused = from.GetBusinessBotPaused()
-	p.BusinessBotCanReply = from.GetBusinessBotCanReply()
-	if val, ok := from.GetGeoDistance(); ok {
-		p.GeoDistance = val
-	}
-
-	if val, ok := from.GetRequestChatTitle(); ok {
-		p.RequestChatTitle = val
-	}
-
-	if val, ok := from.GetRequestChatDate(); ok {
-		p.RequestChatDate = val
-	}
-
-	if val, ok := from.GetBusinessBotID(); ok {
-		p.BusinessBotID = val
-	}
-
-	if val, ok := from.GetBusinessBotManageURL(); ok {
-		p.BusinessBotManageURL = val
-	}
-
-	if val, ok := from.GetChargePaidMessageStars(); ok {
-		p.ChargePaidMessageStars = val
-	}
-
-	if val, ok := from.GetRegistrationMonth(); ok {
-		p.RegistrationMonth = val
-	}
-
-	if val, ok := from.GetPhoneCountry(); ok {
-		p.PhoneCountry = val
-	}
-
-	if val, ok := from.GetNameChangeDate(); ok {
-		p.NameChangeDate = val
-	}
-
-	if val, ok := from.GetPhotoChangeDate(); ok {
-		p.PhotoChangeDate = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.

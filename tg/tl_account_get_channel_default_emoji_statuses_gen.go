@@ -32,17 +32,8 @@ var (
 )
 
 // AccountGetChannelDefaultEmojiStatusesRequest represents TL type `account.getChannelDefaultEmojiStatuses#7727a7d5`.
-// Get a list of default suggested channel emoji statuses¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/emoji-status
-//
-// See https://core.telegram.org/method/account.getChannelDefaultEmojiStatuses for reference.
 type AccountGetChannelDefaultEmojiStatusesRequest struct {
-	// Hash used for caching, for more info click here¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets#hash-generation
+	// Hash field of AccountGetChannelDefaultEmojiStatusesRequest.
 	Hash int64
 }
 
@@ -75,13 +66,6 @@ func (g *AccountGetChannelDefaultEmojiStatusesRequest) String() string {
 	}
 	type Alias AccountGetChannelDefaultEmojiStatusesRequest
 	return fmt.Sprintf("AccountGetChannelDefaultEmojiStatusesRequest%+v", Alias(*g))
-}
-
-// FillFrom fills AccountGetChannelDefaultEmojiStatusesRequest from given interface.
-func (g *AccountGetChannelDefaultEmojiStatusesRequest) FillFrom(from interface {
-	GetHash() (value int64)
-}) {
-	g.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -168,12 +152,6 @@ func (g *AccountGetChannelDefaultEmojiStatusesRequest) GetHash() (value int64) {
 }
 
 // AccountGetChannelDefaultEmojiStatuses invokes method account.getChannelDefaultEmojiStatuses#7727a7d5 returning error if any.
-// Get a list of default suggested channel emoji statuses¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/emoji-status
-//
-// See https://core.telegram.org/method/account.getChannelDefaultEmojiStatuses for reference.
 func (c *Client) AccountGetChannelDefaultEmojiStatuses(ctx context.Context, hash int64) (AccountEmojiStatusesClass, error) {
 	var result AccountEmojiStatusesBox
 

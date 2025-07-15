@@ -32,13 +32,10 @@ var (
 )
 
 // ContactsSearchRequest represents TL type `contacts.search#11f812d8`.
-// Returns users found by username substring.
-//
-// See https://core.telegram.org/method/contacts.search for reference.
 type ContactsSearchRequest struct {
-	// Target substring
+	// Q field of ContactsSearchRequest.
 	Q string
-	// Maximum number of users to be returned
+	// Limit field of ContactsSearchRequest.
 	Limit int
 }
 
@@ -74,15 +71,6 @@ func (s *ContactsSearchRequest) String() string {
 	}
 	type Alias ContactsSearchRequest
 	return fmt.Sprintf("ContactsSearchRequest%+v", Alias(*s))
-}
-
-// FillFrom fills ContactsSearchRequest from given interface.
-func (s *ContactsSearchRequest) FillFrom(from interface {
-	GetQ() (value string)
-	GetLimit() (value int)
-}) {
-	s.Q = from.GetQ()
-	s.Limit = from.GetLimit()
 }
 
 // TypeID returns type id in TL schema.
@@ -189,14 +177,6 @@ func (s *ContactsSearchRequest) GetLimit() (value int) {
 }
 
 // ContactsSearch invokes method contacts.search#11f812d8 returning error if any.
-// Returns users found by username substring.
-//
-// Possible errors:
-//
-//	400 QUERY_TOO_SHORT: The query string is too short.
-//	400 SEARCH_QUERY_EMPTY: The search query is empty.
-//
-// See https://core.telegram.org/method/contacts.search for reference.
 func (c *Client) ContactsSearch(ctx context.Context, request *ContactsSearchRequest) (*ContactsFound, error) {
 	var result ContactsFound
 

@@ -32,21 +32,12 @@ var (
 )
 
 // MessagesToggleSavedDialogPinRequest represents TL type `messages.toggleSavedDialogPin#ac81bbde`.
-// Pin or unpin a saved message dialog »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/saved-messages
-//
-// See https://core.telegram.org/method/messages.toggleSavedDialogPin for reference.
 type MessagesToggleSavedDialogPinRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessagesToggleSavedDialogPinRequest.
 	Flags bin.Fields
-	// Whether to pin or unpin the dialog
+	// Pinned field of MessagesToggleSavedDialogPinRequest.
 	Pinned bool
-	// The dialog to pin
+	// Peer field of MessagesToggleSavedDialogPinRequest.
 	Peer InputDialogPeerClass
 }
 
@@ -85,15 +76,6 @@ func (t *MessagesToggleSavedDialogPinRequest) String() string {
 	}
 	type Alias MessagesToggleSavedDialogPinRequest
 	return fmt.Sprintf("MessagesToggleSavedDialogPinRequest%+v", Alias(*t))
-}
-
-// FillFrom fills MessagesToggleSavedDialogPinRequest from given interface.
-func (t *MessagesToggleSavedDialogPinRequest) FillFrom(from interface {
-	GetPinned() (value bool)
-	GetPeer() (value InputDialogPeerClass)
-}) {
-	t.Pinned = from.GetPinned()
-	t.Peer = from.GetPeer()
 }
 
 // TypeID returns type id in TL schema.
@@ -226,16 +208,6 @@ func (t *MessagesToggleSavedDialogPinRequest) GetPeer() (value InputDialogPeerCl
 }
 
 // MessagesToggleSavedDialogPin invokes method messages.toggleSavedDialogPin#ac81bbde returning error if any.
-// Pin or unpin a saved message dialog »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/saved-messages
-//
-// Possible errors:
-//
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//
-// See https://core.telegram.org/method/messages.toggleSavedDialogPin for reference.
 func (c *Client) MessagesToggleSavedDialogPin(ctx context.Context, request *MessagesToggleSavedDialogPinRequest) (bool, error) {
 	var result BoolBox
 

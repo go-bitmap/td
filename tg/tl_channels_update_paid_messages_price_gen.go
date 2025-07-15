@@ -32,8 +32,6 @@ var (
 )
 
 // ChannelsUpdatePaidMessagesPriceRequest represents TL type `channels.updatePaidMessagesPrice#4b12327b`.
-//
-// See https://core.telegram.org/method/channels.updatePaidMessagesPrice for reference.
 type ChannelsUpdatePaidMessagesPriceRequest struct {
 	// Flags field of ChannelsUpdatePaidMessagesPriceRequest.
 	Flags bin.Fields
@@ -83,17 +81,6 @@ func (u *ChannelsUpdatePaidMessagesPriceRequest) String() string {
 	}
 	type Alias ChannelsUpdatePaidMessagesPriceRequest
 	return fmt.Sprintf("ChannelsUpdatePaidMessagesPriceRequest%+v", Alias(*u))
-}
-
-// FillFrom fills ChannelsUpdatePaidMessagesPriceRequest from given interface.
-func (u *ChannelsUpdatePaidMessagesPriceRequest) FillFrom(from interface {
-	GetBroadcastMessagesAllowed() (value bool)
-	GetChannel() (value InputChannelClass)
-	GetSendPaidMessagesStars() (value int64)
-}) {
-	u.BroadcastMessagesAllowed = from.GetBroadcastMessagesAllowed()
-	u.Channel = from.GetChannel()
-	u.SendPaidMessagesStars = from.GetSendPaidMessagesStars()
 }
 
 // TypeID returns type id in TL schema.
@@ -245,14 +232,7 @@ func (u *ChannelsUpdatePaidMessagesPriceRequest) GetSendPaidMessagesStars() (val
 	return u.SendPaidMessagesStars
 }
 
-// GetChannelAsNotEmpty returns mapped value of Channel field.
-func (u *ChannelsUpdatePaidMessagesPriceRequest) GetChannelAsNotEmpty() (NotEmptyInputChannel, bool) {
-	return u.Channel.AsNotEmpty()
-}
-
 // ChannelsUpdatePaidMessagesPrice invokes method channels.updatePaidMessagesPrice#4b12327b returning error if any.
-//
-// See https://core.telegram.org/method/channels.updatePaidMessagesPrice for reference.
 func (c *Client) ChannelsUpdatePaidMessagesPrice(ctx context.Context, request *ChannelsUpdatePaidMessagesPriceRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

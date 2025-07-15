@@ -32,39 +32,20 @@ var (
 )
 
 // FactCheck represents TL type `factCheck#b89bfccf`.
-// Represents a fact-check »¹ created by an independent fact-checker.
-//
-// Links:
-//  1. https://core.telegram.org/api/factcheck
-//
-// See https://core.telegram.org/constructor/factCheck for reference.
 type FactCheck struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of FactCheck.
 	Flags bin.Fields
-	// If set, the country/text fields will not be set, and the fact check must be fetched
-	// manually by the client (if it isn't already cached with the key specified in hash)
-	// using bundled messages.getFactCheck¹ requests, when the message with the factcheck
-	// scrolls into view.
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/messages.getFactCheck
+	// NeedCheck field of FactCheck.
 	NeedCheck bool
-	// A two-letter ISO 3166-1 alpha-2 country code of the country for which the fact-check
-	// should be shown.
+	// Country field of FactCheck.
 	//
 	// Use SetCountry and GetCountry helpers.
 	Country string
-	// The fact-check.
+	// Text field of FactCheck.
 	//
 	// Use SetText and GetText helpers.
 	Text TextWithEntities
-	// Hash used for caching, for more info click here¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets#hash-generation
+	// Hash field of FactCheck.
 	Hash int64
 }
 
@@ -109,25 +90,6 @@ func (f *FactCheck) String() string {
 	}
 	type Alias FactCheck
 	return fmt.Sprintf("FactCheck%+v", Alias(*f))
-}
-
-// FillFrom fills FactCheck from given interface.
-func (f *FactCheck) FillFrom(from interface {
-	GetNeedCheck() (value bool)
-	GetCountry() (value string, ok bool)
-	GetText() (value TextWithEntities, ok bool)
-	GetHash() (value int64)
-}) {
-	f.NeedCheck = from.GetNeedCheck()
-	if val, ok := from.GetCountry(); ok {
-		f.Country = val
-	}
-
-	if val, ok := from.GetText(); ok {
-		f.Text = val
-	}
-
-	f.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.

@@ -32,38 +32,26 @@ var (
 )
 
 // BotAppSettings represents TL type `botAppSettings#c99b1950`.
-// Mini app »¹ settings
-//
-// Links:
-//  1. https://core.telegram.org/api/bots/webapps
-//
-// See https://core.telegram.org/constructor/botAppSettings for reference.
 type BotAppSettings struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of BotAppSettings.
 	Flags bin.Fields
-	// SVG placeholder logo, compressed using the same format used for vector thumbnails »¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/files#vector-thumbnails
+	// PlaceholderPath field of BotAppSettings.
 	//
 	// Use SetPlaceholderPath and GetPlaceholderPath helpers.
 	PlaceholderPath []byte
-	// Default light mode background color
+	// BackgroundColor field of BotAppSettings.
 	//
 	// Use SetBackgroundColor and GetBackgroundColor helpers.
 	BackgroundColor int
-	// Default dark mode background color
+	// BackgroundDarkColor field of BotAppSettings.
 	//
 	// Use SetBackgroundDarkColor and GetBackgroundDarkColor helpers.
 	BackgroundDarkColor int
-	// Default light mode header color
+	// HeaderColor field of BotAppSettings.
 	//
 	// Use SetHeaderColor and GetHeaderColor helpers.
 	HeaderColor int
-	// Default dark mode header color
+	// HeaderDarkColor field of BotAppSettings.
 	//
 	// Use SetHeaderDarkColor and GetHeaderDarkColor helpers.
 	HeaderDarkColor int
@@ -113,36 +101,6 @@ func (b *BotAppSettings) String() string {
 	}
 	type Alias BotAppSettings
 	return fmt.Sprintf("BotAppSettings%+v", Alias(*b))
-}
-
-// FillFrom fills BotAppSettings from given interface.
-func (b *BotAppSettings) FillFrom(from interface {
-	GetPlaceholderPath() (value []byte, ok bool)
-	GetBackgroundColor() (value int, ok bool)
-	GetBackgroundDarkColor() (value int, ok bool)
-	GetHeaderColor() (value int, ok bool)
-	GetHeaderDarkColor() (value int, ok bool)
-}) {
-	if val, ok := from.GetPlaceholderPath(); ok {
-		b.PlaceholderPath = val
-	}
-
-	if val, ok := from.GetBackgroundColor(); ok {
-		b.BackgroundColor = val
-	}
-
-	if val, ok := from.GetBackgroundDarkColor(); ok {
-		b.BackgroundDarkColor = val
-	}
-
-	if val, ok := from.GetHeaderColor(); ok {
-		b.HeaderColor = val
-	}
-
-	if val, ok := from.GetHeaderDarkColor(); ok {
-		b.HeaderDarkColor = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.

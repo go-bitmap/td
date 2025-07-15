@@ -32,14 +32,10 @@ var (
 )
 
 // PaymentsAssignPlayMarketTransactionRequest represents TL type `payments.assignPlayMarketTransaction#dffd50d3`.
-// Informs server about a purchase made through the Play Store: for official applications
-// only.
-//
-// See https://core.telegram.org/method/payments.assignPlayMarketTransaction for reference.
 type PaymentsAssignPlayMarketTransactionRequest struct {
-	// Receipt
+	// Receipt field of PaymentsAssignPlayMarketTransactionRequest.
 	Receipt DataJSON
-	// Payment purpose
+	// Purpose field of PaymentsAssignPlayMarketTransactionRequest.
 	Purpose InputStorePaymentPurposeClass
 }
 
@@ -75,15 +71,6 @@ func (a *PaymentsAssignPlayMarketTransactionRequest) String() string {
 	}
 	type Alias PaymentsAssignPlayMarketTransactionRequest
 	return fmt.Sprintf("PaymentsAssignPlayMarketTransactionRequest%+v", Alias(*a))
-}
-
-// FillFrom fills PaymentsAssignPlayMarketTransactionRequest from given interface.
-func (a *PaymentsAssignPlayMarketTransactionRequest) FillFrom(from interface {
-	GetReceipt() (value DataJSON)
-	GetPurpose() (value InputStorePaymentPurposeClass)
-}) {
-	a.Receipt = from.GetReceipt()
-	a.Purpose = from.GetPurpose()
 }
 
 // TypeID returns type id in TL schema.
@@ -195,14 +182,6 @@ func (a *PaymentsAssignPlayMarketTransactionRequest) GetPurpose() (value InputSt
 }
 
 // PaymentsAssignPlayMarketTransaction invokes method payments.assignPlayMarketTransaction#dffd50d3 returning error if any.
-// Informs server about a purchase made through the Play Store: for official applications
-// only.
-//
-// Possible errors:
-//
-//	400 DATA_JSON_INVALID: The provided JSON data is invalid.
-//
-// See https://core.telegram.org/method/payments.assignPlayMarketTransaction for reference.
 func (c *Client) PaymentsAssignPlayMarketTransaction(ctx context.Context, request *PaymentsAssignPlayMarketTransactionRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

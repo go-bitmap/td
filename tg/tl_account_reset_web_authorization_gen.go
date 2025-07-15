@@ -32,17 +32,8 @@ var (
 )
 
 // AccountResetWebAuthorizationRequest represents TL type `account.resetWebAuthorization#2d01b9ef`.
-// Log out an active web telegram login¹ session
-//
-// Links:
-//  1. https://core.telegram.org/widgets/login
-//
-// See https://core.telegram.org/method/account.resetWebAuthorization for reference.
 type AccountResetWebAuthorizationRequest struct {
-	// Session¹ hash
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/webAuthorization
+	// Hash field of AccountResetWebAuthorizationRequest.
 	Hash int64
 }
 
@@ -75,13 +66,6 @@ func (r *AccountResetWebAuthorizationRequest) String() string {
 	}
 	type Alias AccountResetWebAuthorizationRequest
 	return fmt.Sprintf("AccountResetWebAuthorizationRequest%+v", Alias(*r))
-}
-
-// FillFrom fills AccountResetWebAuthorizationRequest from given interface.
-func (r *AccountResetWebAuthorizationRequest) FillFrom(from interface {
-	GetHash() (value int64)
-}) {
-	r.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -168,16 +152,6 @@ func (r *AccountResetWebAuthorizationRequest) GetHash() (value int64) {
 }
 
 // AccountResetWebAuthorization invokes method account.resetWebAuthorization#2d01b9ef returning error if any.
-// Log out an active web telegram login¹ session
-//
-// Links:
-//  1. https://core.telegram.org/widgets/login
-//
-// Possible errors:
-//
-//	400 HASH_INVALID: The provided hash is invalid.
-//
-// See https://core.telegram.org/method/account.resetWebAuthorization for reference.
 func (c *Client) AccountResetWebAuthorization(ctx context.Context, hash int64) (bool, error) {
 	var result BoolBox
 

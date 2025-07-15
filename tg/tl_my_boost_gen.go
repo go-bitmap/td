@@ -32,37 +32,20 @@ var (
 )
 
 // MyBoost represents TL type `myBoost#c448415c`.
-// Contains information about a single boost slot »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/boost
-//
-// See https://core.telegram.org/constructor/myBoost for reference.
 type MyBoost struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MyBoost.
 	Flags bin.Fields
-	// Boost slot ID »¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/boost
+	// Slot field of MyBoost.
 	Slot int
-	// If set, indicates this slot is currently occupied, i.e. we are boosting¹ this peer.
-	// Note that we can assign multiple boost slots to the same peer.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/boost
+	// Peer field of MyBoost.
 	//
 	// Use SetPeer and GetPeer helpers.
 	Peer PeerClass
-	// When (unixtime) we started boosting the peer, 0 otherwise.
+	// Date field of MyBoost.
 	Date int
-	// Indicates the (unixtime) expiration date of the boost in peer (0 if peer is not set).
+	// Expires field of MyBoost.
 	Expires int
-	// If peer is set, indicates the (unixtime) date after which this boost can be reassigned
-	// to another channel.
+	// CooldownUntilDate field of MyBoost.
 	//
 	// Use SetCooldownUntilDate and GetCooldownUntilDate helpers.
 	CooldownUntilDate int
@@ -112,27 +95,6 @@ func (m *MyBoost) String() string {
 	}
 	type Alias MyBoost
 	return fmt.Sprintf("MyBoost%+v", Alias(*m))
-}
-
-// FillFrom fills MyBoost from given interface.
-func (m *MyBoost) FillFrom(from interface {
-	GetSlot() (value int)
-	GetPeer() (value PeerClass, ok bool)
-	GetDate() (value int)
-	GetExpires() (value int)
-	GetCooldownUntilDate() (value int, ok bool)
-}) {
-	m.Slot = from.GetSlot()
-	if val, ok := from.GetPeer(); ok {
-		m.Peer = val
-	}
-
-	m.Date = from.GetDate()
-	m.Expires = from.GetExpires()
-	if val, ok := from.GetCooldownUntilDate(); ok {
-		m.CooldownUntilDate = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.

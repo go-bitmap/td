@@ -32,20 +32,10 @@ var (
 )
 
 // PaymentsGetStarsGiftOptionsRequest represents TL type `payments.getStarsGiftOptions#d3c96bc8`.
-// Obtain a list of Telegram Stars gift options »¹ as starsGiftOption² constructors.
-//
-// Links:
-//  1. https://core.telegram.org/api/stars#buying-or-gifting-stars
-//  2. https://core.telegram.org/constructor/starsGiftOption
-//
-// See https://core.telegram.org/method/payments.getStarsGiftOptions for reference.
 type PaymentsGetStarsGiftOptionsRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of PaymentsGetStarsGiftOptionsRequest.
 	Flags bin.Fields
-	// Receiver of the gift (optional).
+	// UserID field of PaymentsGetStarsGiftOptionsRequest.
 	//
 	// Use SetUserID and GetUserID helpers.
 	UserID InputUserClass
@@ -83,16 +73,6 @@ func (g *PaymentsGetStarsGiftOptionsRequest) String() string {
 	}
 	type Alias PaymentsGetStarsGiftOptionsRequest
 	return fmt.Sprintf("PaymentsGetStarsGiftOptionsRequest%+v", Alias(*g))
-}
-
-// FillFrom fills PaymentsGetStarsGiftOptionsRequest from given interface.
-func (g *PaymentsGetStarsGiftOptionsRequest) FillFrom(from interface {
-	GetUserID() (value InputUserClass, ok bool)
-}) {
-	if val, ok := from.GetUserID(); ok {
-		g.UserID = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -213,18 +193,6 @@ func (g *PaymentsGetStarsGiftOptionsRequest) GetUserID() (value InputUserClass, 
 }
 
 // PaymentsGetStarsGiftOptions invokes method payments.getStarsGiftOptions#d3c96bc8 returning error if any.
-// Obtain a list of Telegram Stars gift options »¹ as starsGiftOption² constructors.
-//
-// Links:
-//  1. https://core.telegram.org/api/stars#buying-or-gifting-stars
-//  2. https://core.telegram.org/constructor/starsGiftOption
-//
-// Possible errors:
-//
-//	400 USER_GIFT_UNAVAILABLE: Gifts are not available in the current region (stars_gifts_enabled is equal to false).
-//	400 USER_ID_INVALID: The provided user ID is invalid.
-//
-// See https://core.telegram.org/method/payments.getStarsGiftOptions for reference.
 func (c *Client) PaymentsGetStarsGiftOptions(ctx context.Context, request *PaymentsGetStarsGiftOptionsRequest) ([]StarsGiftOption, error) {
 	var result StarsGiftOptionVector
 

@@ -32,22 +32,16 @@ var (
 )
 
 // GroupCallParticipantVideo represents TL type `groupCallParticipantVideo#67753ac8`.
-// Info about a video stream
-//
-// See https://core.telegram.org/constructor/groupCallParticipantVideo for reference.
 type GroupCallParticipantVideo struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of GroupCallParticipantVideo.
 	Flags bin.Fields
-	// Whether the stream is currently paused
+	// Paused field of GroupCallParticipantVideo.
 	Paused bool
-	// Endpoint
+	// Endpoint field of GroupCallParticipantVideo.
 	Endpoint string
-	// Source groups
+	// SourceGroups field of GroupCallParticipantVideo.
 	SourceGroups []GroupCallParticipantVideoSourceGroup
-	// Audio source ID
+	// AudioSource field of GroupCallParticipantVideo.
 	//
 	// Use SetAudioSource and GetAudioSource helpers.
 	AudioSource int
@@ -94,22 +88,6 @@ func (g *GroupCallParticipantVideo) String() string {
 	}
 	type Alias GroupCallParticipantVideo
 	return fmt.Sprintf("GroupCallParticipantVideo%+v", Alias(*g))
-}
-
-// FillFrom fills GroupCallParticipantVideo from given interface.
-func (g *GroupCallParticipantVideo) FillFrom(from interface {
-	GetPaused() (value bool)
-	GetEndpoint() (value string)
-	GetSourceGroups() (value []GroupCallParticipantVideoSourceGroup)
-	GetAudioSource() (value int, ok bool)
-}) {
-	g.Paused = from.GetPaused()
-	g.Endpoint = from.GetEndpoint()
-	g.SourceGroups = from.GetSourceGroups()
-	if val, ok := from.GetAudioSource(); ok {
-		g.AudioSource = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.

@@ -32,34 +32,22 @@ var (
 )
 
 // MessageExtendedMediaPreview represents TL type `messageExtendedMediaPreview#ad628cc8`.
-// Paid media preview for not yet purchased paid media, see here »¹ for more info.
-//
-// Links:
-//  1. https://core.telegram.org/api/paid-media
-//
-// See https://core.telegram.org/constructor/messageExtendedMediaPreview for reference.
 type MessageExtendedMediaPreview struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessageExtendedMediaPreview.
 	Flags bin.Fields
-	// Width
+	// W field of MessageExtendedMediaPreview.
 	//
 	// Use SetW and GetW helpers.
 	W int
-	// Height
+	// H field of MessageExtendedMediaPreview.
 	//
 	// Use SetH and GetH helpers.
 	H int
-	// Extremely low resolution thumbnail¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/files#stripped-thumbnails
+	// Thumb field of MessageExtendedMediaPreview.
 	//
 	// Use SetThumb and GetThumb helpers.
 	Thumb PhotoSizeClass
-	// Video duration for videos.
+	// VideoDuration field of MessageExtendedMediaPreview.
 	//
 	// Use SetVideoDuration and GetVideoDuration helpers.
 	VideoDuration int
@@ -111,31 +99,6 @@ func (m *MessageExtendedMediaPreview) String() string {
 	}
 	type Alias MessageExtendedMediaPreview
 	return fmt.Sprintf("MessageExtendedMediaPreview%+v", Alias(*m))
-}
-
-// FillFrom fills MessageExtendedMediaPreview from given interface.
-func (m *MessageExtendedMediaPreview) FillFrom(from interface {
-	GetW() (value int, ok bool)
-	GetH() (value int, ok bool)
-	GetThumb() (value PhotoSizeClass, ok bool)
-	GetVideoDuration() (value int, ok bool)
-}) {
-	if val, ok := from.GetW(); ok {
-		m.W = val
-	}
-
-	if val, ok := from.GetH(); ok {
-		m.H = val
-	}
-
-	if val, ok := from.GetThumb(); ok {
-		m.Thumb = val
-	}
-
-	if val, ok := from.GetVideoDuration(); ok {
-		m.VideoDuration = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -364,14 +327,8 @@ func (m *MessageExtendedMediaPreview) GetVideoDuration() (value int, ok bool) {
 }
 
 // MessageExtendedMedia represents TL type `messageExtendedMedia#ee479c64`.
-// Already purchased paid media, see here »¹ for more info.
-//
-// Links:
-//  1. https://core.telegram.org/api/paid-media
-//
-// See https://core.telegram.org/constructor/messageExtendedMedia for reference.
 type MessageExtendedMedia struct {
-	// The media we purchased.
+	// Media field of MessageExtendedMedia.
 	Media MessageMediaClass
 }
 
@@ -409,13 +366,6 @@ func (m *MessageExtendedMedia) String() string {
 	}
 	type Alias MessageExtendedMedia
 	return fmt.Sprintf("MessageExtendedMedia%+v", Alias(*m))
-}
-
-// FillFrom fills MessageExtendedMedia from given interface.
-func (m *MessageExtendedMedia) FillFrom(from interface {
-	GetMedia() (value MessageMediaClass)
-}) {
-	m.Media = from.GetMedia()
 }
 
 // TypeID returns type id in TL schema.
@@ -510,8 +460,6 @@ func (m *MessageExtendedMedia) GetMedia() (value MessageMediaClass) {
 const MessageExtendedMediaClassName = "MessageExtendedMedia"
 
 // MessageExtendedMediaClass represents MessageExtendedMedia generic type.
-//
-// See https://core.telegram.org/type/MessageExtendedMedia for reference.
 //
 // Constructors:
 //   - [MessageExtendedMediaPreview]

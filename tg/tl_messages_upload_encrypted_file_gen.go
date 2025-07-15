@@ -32,13 +32,10 @@ var (
 )
 
 // MessagesUploadEncryptedFileRequest represents TL type `messages.uploadEncryptedFile#5057c497`.
-// Upload encrypted file and associate it to a secret chat
-//
-// See https://core.telegram.org/method/messages.uploadEncryptedFile for reference.
 type MessagesUploadEncryptedFileRequest struct {
-	// The secret chat to associate the file to
+	// Peer field of MessagesUploadEncryptedFileRequest.
 	Peer InputEncryptedChat
-	// The file
+	// File field of MessagesUploadEncryptedFileRequest.
 	File InputEncryptedFileClass
 }
 
@@ -74,15 +71,6 @@ func (u *MessagesUploadEncryptedFileRequest) String() string {
 	}
 	type Alias MessagesUploadEncryptedFileRequest
 	return fmt.Sprintf("MessagesUploadEncryptedFileRequest%+v", Alias(*u))
-}
-
-// FillFrom fills MessagesUploadEncryptedFileRequest from given interface.
-func (u *MessagesUploadEncryptedFileRequest) FillFrom(from interface {
-	GetPeer() (value InputEncryptedChat)
-	GetFile() (value InputEncryptedFileClass)
-}) {
-	u.Peer = from.GetPeer()
-	u.File = from.GetFile()
 }
 
 // TypeID returns type id in TL schema.
@@ -193,19 +181,7 @@ func (u *MessagesUploadEncryptedFileRequest) GetFile() (value InputEncryptedFile
 	return u.File
 }
 
-// GetFileAsNotEmpty returns mapped value of File field.
-func (u *MessagesUploadEncryptedFileRequest) GetFileAsNotEmpty() (NotEmptyInputEncryptedFile, bool) {
-	return u.File.AsNotEmpty()
-}
-
 // MessagesUploadEncryptedFile invokes method messages.uploadEncryptedFile#5057c497 returning error if any.
-// Upload encrypted file and associate it to a secret chat
-//
-// Possible errors:
-//
-//	400 CHAT_ID_INVALID: The provided chat id is invalid.
-//
-// See https://core.telegram.org/method/messages.uploadEncryptedFile for reference.
 func (c *Client) MessagesUploadEncryptedFile(ctx context.Context, request *MessagesUploadEncryptedFileRequest) (EncryptedFileClass, error) {
 	var result EncryptedFileBox
 

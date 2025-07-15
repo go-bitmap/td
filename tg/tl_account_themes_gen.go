@@ -32,9 +32,6 @@ var (
 )
 
 // AccountThemesNotModified represents TL type `account.themesNotModified#f41eb622`.
-// No new themes were installed
-//
-// See https://core.telegram.org/constructor/account.themesNotModified for reference.
 type AccountThemesNotModified struct {
 }
 
@@ -134,16 +131,10 @@ func (t *AccountThemesNotModified) DecodeBare(b *bin.Buffer) error {
 }
 
 // AccountThemes represents TL type `account.themes#9a3d8c6d`.
-// Installed themes
-//
-// See https://core.telegram.org/constructor/account.themes for reference.
 type AccountThemes struct {
-	// Hash used for caching, for more info click here¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets#hash-generation
+	// Hash field of AccountThemes.
 	Hash int64
-	// Themes
+	// Themes field of AccountThemes.
 	Themes []Theme
 }
 
@@ -184,15 +175,6 @@ func (t *AccountThemes) String() string {
 	}
 	type Alias AccountThemes
 	return fmt.Sprintf("AccountThemes%+v", Alias(*t))
-}
-
-// FillFrom fills AccountThemes from given interface.
-func (t *AccountThemes) FillFrom(from interface {
-	GetHash() (value int64)
-	GetThemes() (value []Theme)
-}) {
-	t.Hash = from.GetHash()
-	t.Themes = from.GetThemes()
 }
 
 // TypeID returns type id in TL schema.
@@ -318,8 +300,6 @@ const AccountThemesClassName = "account.Themes"
 
 // AccountThemesClass represents account.Themes generic type.
 //
-// See https://core.telegram.org/type/account.Themes for reference.
-//
 // Constructors:
 //   - [AccountThemesNotModified]
 //   - [AccountThemes]
@@ -352,19 +332,6 @@ type AccountThemesClass interface {
 	String() string
 	// Zero returns true if current object has a zero value.
 	Zero() bool
-
-	// AsModified tries to map AccountThemesClass to AccountThemes.
-	AsModified() (*AccountThemes, bool)
-}
-
-// AsModified tries to map AccountThemesNotModified to AccountThemes.
-func (t *AccountThemesNotModified) AsModified() (*AccountThemes, bool) {
-	return nil, false
-}
-
-// AsModified tries to map AccountThemes to AccountThemes.
-func (t *AccountThemes) AsModified() (*AccountThemes, bool) {
-	return t, true
 }
 
 // DecodeAccountThemes implements binary de-serialization for AccountThemesClass.

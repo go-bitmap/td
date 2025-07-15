@@ -32,14 +32,8 @@ var (
 )
 
 // InputQuickReplyShortcut represents TL type `inputQuickReplyShortcut#24596d41`.
-// Selects a quick reply shortcut¹ by name.
-//
-// Links:
-//  1. https://core.telegram.org/api/business#quick-reply-shortcuts
-//
-// See https://core.telegram.org/constructor/inputQuickReplyShortcut for reference.
 type InputQuickReplyShortcut struct {
-	// Shortcut name.
+	// Shortcut field of InputQuickReplyShortcut.
 	Shortcut string
 }
 
@@ -77,13 +71,6 @@ func (i *InputQuickReplyShortcut) String() string {
 	}
 	type Alias InputQuickReplyShortcut
 	return fmt.Sprintf("InputQuickReplyShortcut%+v", Alias(*i))
-}
-
-// FillFrom fills InputQuickReplyShortcut from given interface.
-func (i *InputQuickReplyShortcut) FillFrom(from interface {
-	GetShortcut() (value string)
-}) {
-	i.Shortcut = from.GetShortcut()
 }
 
 // TypeID returns type id in TL schema.
@@ -170,14 +157,8 @@ func (i *InputQuickReplyShortcut) GetShortcut() (value string) {
 }
 
 // InputQuickReplyShortcutID represents TL type `inputQuickReplyShortcutId#1190cf1`.
-// Selects a quick reply shortcut¹ by its numeric ID.
-//
-// Links:
-//  1. https://core.telegram.org/api/business#quick-reply-shortcuts
-//
-// See https://core.telegram.org/constructor/inputQuickReplyShortcutId for reference.
 type InputQuickReplyShortcutID struct {
-	// Shortcut ID.
+	// ShortcutID field of InputQuickReplyShortcutID.
 	ShortcutID int
 }
 
@@ -215,13 +196,6 @@ func (i *InputQuickReplyShortcutID) String() string {
 	}
 	type Alias InputQuickReplyShortcutID
 	return fmt.Sprintf("InputQuickReplyShortcutID%+v", Alias(*i))
-}
-
-// FillFrom fills InputQuickReplyShortcutID from given interface.
-func (i *InputQuickReplyShortcutID) FillFrom(from interface {
-	GetShortcutID() (value int)
-}) {
-	i.ShortcutID = from.GetShortcutID()
 }
 
 // TypeID returns type id in TL schema.
@@ -311,8 +285,6 @@ func (i *InputQuickReplyShortcutID) GetShortcutID() (value int) {
 const InputQuickReplyShortcutClassName = "InputQuickReplyShortcut"
 
 // InputQuickReplyShortcutClass represents InputQuickReplyShortcut generic type.
-//
-// See https://core.telegram.org/type/InputQuickReplyShortcut for reference.
 //
 // Constructors:
 //   - [InputQuickReplyShortcut]

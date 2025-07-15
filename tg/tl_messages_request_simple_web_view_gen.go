@@ -32,51 +32,32 @@ var (
 )
 
 // MessagesRequestSimpleWebViewRequest represents TL type `messages.requestSimpleWebView#413a3e73`.
-// Open a bot mini app¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/bots/webapps
-//
-// See https://core.telegram.org/method/messages.requestSimpleWebView for reference.
 type MessagesRequestSimpleWebViewRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessagesRequestSimpleWebViewRequest.
 	Flags bin.Fields
-	// Whether the webapp was opened by clicking on the switch_webview button shown on top of
-	// the inline results list returned by messages.getInlineBotResults¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/messages.getInlineBotResults
+	// FromSwitchWebview field of MessagesRequestSimpleWebViewRequest.
 	FromSwitchWebview bool
-	// Set this flag if opening the Mini App from the installed side menu entry »¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/bots/attach
+	// FromSideMenu field of MessagesRequestSimpleWebViewRequest.
 	FromSideMenu bool
-	// Deprecated.
+	// Compact field of MessagesRequestSimpleWebViewRequest.
 	Compact bool
-	// Requests to open the app in fullscreen mode.
+	// Fullscreen field of MessagesRequestSimpleWebViewRequest.
 	Fullscreen bool
-	// Bot that owns the mini app
+	// Bot field of MessagesRequestSimpleWebViewRequest.
 	Bot InputUserClass
-	// Web app URL, if opening from a keyboard button or inline result
+	// URL field of MessagesRequestSimpleWebViewRequest.
 	//
 	// Use SetURL and GetURL helpers.
 	URL string
-	// Deprecated.
+	// StartParam field of MessagesRequestSimpleWebViewRequest.
 	//
 	// Use SetStartParam and GetStartParam helpers.
 	StartParam string
-	// Theme parameters »¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/bots/webapps#theme-parameters
+	// ThemeParams field of MessagesRequestSimpleWebViewRequest.
 	//
 	// Use SetThemeParams and GetThemeParams helpers.
 	ThemeParams DataJSON
-	// Short name of the application; 0-64 English letters, digits, and underscores
+	// Platform field of MessagesRequestSimpleWebViewRequest.
 	Platform string
 }
 
@@ -136,38 +117,6 @@ func (r *MessagesRequestSimpleWebViewRequest) String() string {
 	}
 	type Alias MessagesRequestSimpleWebViewRequest
 	return fmt.Sprintf("MessagesRequestSimpleWebViewRequest%+v", Alias(*r))
-}
-
-// FillFrom fills MessagesRequestSimpleWebViewRequest from given interface.
-func (r *MessagesRequestSimpleWebViewRequest) FillFrom(from interface {
-	GetFromSwitchWebview() (value bool)
-	GetFromSideMenu() (value bool)
-	GetCompact() (value bool)
-	GetFullscreen() (value bool)
-	GetBot() (value InputUserClass)
-	GetURL() (value string, ok bool)
-	GetStartParam() (value string, ok bool)
-	GetThemeParams() (value DataJSON, ok bool)
-	GetPlatform() (value string)
-}) {
-	r.FromSwitchWebview = from.GetFromSwitchWebview()
-	r.FromSideMenu = from.GetFromSideMenu()
-	r.Compact = from.GetCompact()
-	r.Fullscreen = from.GetFullscreen()
-	r.Bot = from.GetBot()
-	if val, ok := from.GetURL(); ok {
-		r.URL = val
-	}
-
-	if val, ok := from.GetStartParam(); ok {
-		r.StartParam = val
-	}
-
-	if val, ok := from.GetThemeParams(); ok {
-		r.ThemeParams = val
-	}
-
-	r.Platform = from.GetPlatform()
 }
 
 // TypeID returns type id in TL schema.
@@ -512,17 +461,6 @@ func (r *MessagesRequestSimpleWebViewRequest) GetPlatform() (value string) {
 }
 
 // MessagesRequestSimpleWebView invokes method messages.requestSimpleWebView#413a3e73 returning error if any.
-// Open a bot mini app¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/bots/webapps
-//
-// Possible errors:
-//
-//	400 BOT_INVALID: This is not a valid bot.
-//	400 URL_INVALID: Invalid URL provided.
-//
-// See https://core.telegram.org/method/messages.requestSimpleWebView for reference.
 func (c *Client) MessagesRequestSimpleWebView(ctx context.Context, request *MessagesRequestSimpleWebViewRequest) (*WebViewResultURL, error) {
 	var result WebViewResultURL
 

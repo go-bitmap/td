@@ -32,13 +32,10 @@ var (
 )
 
 // ChannelsReorderUsernamesRequest represents TL type `channels.reorderUsernames#b45ced1d`.
-// Reorder active usernames
-//
-// See https://core.telegram.org/method/channels.reorderUsernames for reference.
 type ChannelsReorderUsernamesRequest struct {
-	// The supergroup or channel
+	// Channel field of ChannelsReorderUsernamesRequest.
 	Channel InputChannelClass
-	// The new order for active usernames. All active usernames must be specified.
+	// Order field of ChannelsReorderUsernamesRequest.
 	Order []string
 }
 
@@ -74,15 +71,6 @@ func (r *ChannelsReorderUsernamesRequest) String() string {
 	}
 	type Alias ChannelsReorderUsernamesRequest
 	return fmt.Sprintf("ChannelsReorderUsernamesRequest%+v", Alias(*r))
-}
-
-// FillFrom fills ChannelsReorderUsernamesRequest from given interface.
-func (r *ChannelsReorderUsernamesRequest) FillFrom(from interface {
-	GetChannel() (value InputChannelClass)
-	GetOrder() (value []string)
-}) {
-	r.Channel = from.GetChannel()
-	r.Order = from.GetOrder()
 }
 
 // TypeID returns type id in TL schema.
@@ -206,20 +194,7 @@ func (r *ChannelsReorderUsernamesRequest) GetOrder() (value []string) {
 	return r.Order
 }
 
-// GetChannelAsNotEmpty returns mapped value of Channel field.
-func (r *ChannelsReorderUsernamesRequest) GetChannelAsNotEmpty() (NotEmptyInputChannel, bool) {
-	return r.Channel.AsNotEmpty()
-}
-
 // ChannelsReorderUsernames invokes method channels.reorderUsernames#b45ced1d returning error if any.
-// Reorder active usernames
-//
-// Possible errors:
-//
-//	400 CHANNEL_INVALID: The provided channel is invalid.
-//	400 CHAT_NOT_MODIFIED: No changes were made to chat information because the new information you passed is identical to the current information.
-//
-// See https://core.telegram.org/method/channels.reorderUsernames for reference.
 func (c *Client) ChannelsReorderUsernames(ctx context.Context, request *ChannelsReorderUsernamesRequest) (bool, error) {
 	var result BoolBox
 

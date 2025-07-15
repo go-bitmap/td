@@ -32,26 +32,16 @@ var (
 )
 
 // MessagesPreparedInlineMessage represents TL type `messages.preparedInlineMessage#ff57708d`.
-// Represents a prepared inline message received via a bot's mini app, that can be sent
-// to some chats »¹
-//
-// Links:
-//  1. https://core.telegram.org/api/bots/inline#21-using-a-prepared-inline-message
-//
-// See https://core.telegram.org/constructor/messages.preparedInlineMessage for reference.
 type MessagesPreparedInlineMessage struct {
-	// The query_id to pass to messages.sendInlineBotResult¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/messages.sendInlineBotResult
+	// QueryID field of MessagesPreparedInlineMessage.
 	QueryID int64
-	// The contents of the message, to be shown in a preview
+	// Result field of MessagesPreparedInlineMessage.
 	Result BotInlineResultClass
-	// Types of chats where this message can be sent
+	// PeerTypes field of MessagesPreparedInlineMessage.
 	PeerTypes []InlineQueryPeerTypeClass
-	// Caching validity of the results
+	// CacheTime field of MessagesPreparedInlineMessage.
 	CacheTime int
-	// Users mentioned in the results
+	// Users field of MessagesPreparedInlineMessage.
 	Users []UserClass
 }
 
@@ -96,21 +86,6 @@ func (p *MessagesPreparedInlineMessage) String() string {
 	}
 	type Alias MessagesPreparedInlineMessage
 	return fmt.Sprintf("MessagesPreparedInlineMessage%+v", Alias(*p))
-}
-
-// FillFrom fills MessagesPreparedInlineMessage from given interface.
-func (p *MessagesPreparedInlineMessage) FillFrom(from interface {
-	GetQueryID() (value int64)
-	GetResult() (value BotInlineResultClass)
-	GetPeerTypes() (value []InlineQueryPeerTypeClass)
-	GetCacheTime() (value int)
-	GetUsers() (value []UserClass)
-}) {
-	p.QueryID = from.GetQueryID()
-	p.Result = from.GetResult()
-	p.PeerTypes = from.GetPeerTypes()
-	p.CacheTime = from.GetCacheTime()
-	p.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -315,14 +290,4 @@ func (p *MessagesPreparedInlineMessage) GetUsers() (value []UserClass) {
 		return
 	}
 	return p.Users
-}
-
-// MapPeerTypes returns field PeerTypes wrapped in InlineQueryPeerTypeClassArray helper.
-func (p *MessagesPreparedInlineMessage) MapPeerTypes() (value InlineQueryPeerTypeClassArray) {
-	return InlineQueryPeerTypeClassArray(p.PeerTypes)
-}
-
-// MapUsers returns field Users wrapped in UserClassArray helper.
-func (p *MessagesPreparedInlineMessage) MapUsers() (value UserClassArray) {
-	return UserClassArray(p.Users)
 }

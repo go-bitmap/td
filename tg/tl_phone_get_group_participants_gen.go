@@ -32,29 +32,16 @@ var (
 )
 
 // PhoneGetGroupParticipantsRequest represents TL type `phone.getGroupParticipants#c558d8ab`.
-// Get group call participants
-//
-// See https://core.telegram.org/method/phone.getGroupParticipants for reference.
 type PhoneGetGroupParticipantsRequest struct {
-	// Group call
+	// Call field of PhoneGetGroupParticipantsRequest.
 	Call InputGroupCallClass
-	// If specified, will fetch group participant info about the specified peers
+	// IDs field of PhoneGetGroupParticipantsRequest.
 	IDs []InputPeerClass
-	// If specified, will fetch group participant info about the specified WebRTC source IDs
+	// Sources field of PhoneGetGroupParticipantsRequest.
 	Sources []int
-	// Offset for results, taken from the next_offset field of phone.groupParticipants¹,
-	// initially an empty string. Note: if no more results are available, the method call
-	// will return an empty next_offset; thus, avoid providing the next_offset returned in
-	// phone.groupParticipants² if it is empty, to avoid an infinite loop.
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/phone.groupParticipants
-	//  2) https://core.telegram.org/constructor/phone.groupParticipants
+	// Offset field of PhoneGetGroupParticipantsRequest.
 	Offset string
-	// Maximum number of results to return, see pagination¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets
+	// Limit field of PhoneGetGroupParticipantsRequest.
 	Limit int
 }
 
@@ -99,21 +86,6 @@ func (g *PhoneGetGroupParticipantsRequest) String() string {
 	}
 	type Alias PhoneGetGroupParticipantsRequest
 	return fmt.Sprintf("PhoneGetGroupParticipantsRequest%+v", Alias(*g))
-}
-
-// FillFrom fills PhoneGetGroupParticipantsRequest from given interface.
-func (g *PhoneGetGroupParticipantsRequest) FillFrom(from interface {
-	GetCall() (value InputGroupCallClass)
-	GetIDs() (value []InputPeerClass)
-	GetSources() (value []int)
-	GetOffset() (value string)
-	GetLimit() (value int)
-}) {
-	g.Call = from.GetCall()
-	g.IDs = from.GetIDs()
-	g.Sources = from.GetSources()
-	g.Offset = from.GetOffset()
-	g.Limit = from.GetLimit()
 }
 
 // TypeID returns type id in TL schema.
@@ -315,19 +287,7 @@ func (g *PhoneGetGroupParticipantsRequest) GetLimit() (value int) {
 	return g.Limit
 }
 
-// MapIDs returns field IDs wrapped in InputPeerClassArray helper.
-func (g *PhoneGetGroupParticipantsRequest) MapIDs() (value InputPeerClassArray) {
-	return InputPeerClassArray(g.IDs)
-}
-
 // PhoneGetGroupParticipants invokes method phone.getGroupParticipants#c558d8ab returning error if any.
-// Get group call participants
-//
-// Possible errors:
-//
-//	400 GROUPCALL_INVALID: The specified group call is invalid.
-//
-// See https://core.telegram.org/method/phone.getGroupParticipants for reference.
 func (c *Client) PhoneGetGroupParticipants(ctx context.Context, request *PhoneGetGroupParticipantsRequest) (*PhoneGroupParticipants, error) {
 	var result PhoneGroupParticipants
 

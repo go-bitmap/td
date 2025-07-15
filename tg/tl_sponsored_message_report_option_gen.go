@@ -32,19 +32,10 @@ var (
 )
 
 // SponsoredMessageReportOption represents TL type `sponsoredMessageReportOption#430d3150`.
-// A report option for a sponsored message »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/sponsored-messages#reporting-sponsored-messages
-//
-// See https://core.telegram.org/constructor/sponsoredMessageReportOption for reference.
 type SponsoredMessageReportOption struct {
-	// Localized description of the option.
+	// Text field of SponsoredMessageReportOption.
 	Text string
-	// Option identifier to pass to channels.reportSponsoredMessage¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/channels.reportSponsoredMessage
+	// Option field of SponsoredMessageReportOption.
 	Option []byte
 }
 
@@ -80,15 +71,6 @@ func (s *SponsoredMessageReportOption) String() string {
 	}
 	type Alias SponsoredMessageReportOption
 	return fmt.Sprintf("SponsoredMessageReportOption%+v", Alias(*s))
-}
-
-// FillFrom fills SponsoredMessageReportOption from given interface.
-func (s *SponsoredMessageReportOption) FillFrom(from interface {
-	GetText() (value string)
-	GetOption() (value []byte)
-}) {
-	s.Text = from.GetText()
-	s.Option = from.GetOption()
 }
 
 // TypeID returns type id in TL schema.

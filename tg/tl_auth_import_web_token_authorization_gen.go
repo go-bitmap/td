@@ -32,21 +32,12 @@ var (
 )
 
 // AuthImportWebTokenAuthorizationRequest represents TL type `auth.importWebTokenAuthorization#2db873a9`.
-// Login by importing an authorization token
-//
-// See https://core.telegram.org/method/auth.importWebTokenAuthorization for reference.
 type AuthImportWebTokenAuthorizationRequest struct {
-	// API ID¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/obtaining_api_id
+	// APIID field of AuthImportWebTokenAuthorizationRequest.
 	APIID int
-	// API hash¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/obtaining_api_id
+	// APIHash field of AuthImportWebTokenAuthorizationRequest.
 	APIHash string
-	// The authorization token
+	// WebAuthToken field of AuthImportWebTokenAuthorizationRequest.
 	WebAuthToken string
 }
 
@@ -85,17 +76,6 @@ func (i *AuthImportWebTokenAuthorizationRequest) String() string {
 	}
 	type Alias AuthImportWebTokenAuthorizationRequest
 	return fmt.Sprintf("AuthImportWebTokenAuthorizationRequest%+v", Alias(*i))
-}
-
-// FillFrom fills AuthImportWebTokenAuthorizationRequest from given interface.
-func (i *AuthImportWebTokenAuthorizationRequest) FillFrom(from interface {
-	GetAPIID() (value int)
-	GetAPIHash() (value string)
-	GetWebAuthToken() (value string)
-}) {
-	i.APIID = from.GetAPIID()
-	i.APIHash = from.GetAPIHash()
-	i.WebAuthToken = from.GetWebAuthToken()
 }
 
 // TypeID returns type id in TL schema.
@@ -222,13 +202,6 @@ func (i *AuthImportWebTokenAuthorizationRequest) GetWebAuthToken() (value string
 }
 
 // AuthImportWebTokenAuthorization invokes method auth.importWebTokenAuthorization#2db873a9 returning error if any.
-// Login by importing an authorization token
-//
-// Possible errors:
-//
-//	400 API_ID_INVALID: API ID invalid.
-//
-// See https://core.telegram.org/method/auth.importWebTokenAuthorization for reference.
 func (c *Client) AuthImportWebTokenAuthorization(ctx context.Context, request *AuthImportWebTokenAuthorizationRequest) (AuthAuthorizationClass, error) {
 	var result AuthAuthorizationBox
 

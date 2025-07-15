@@ -32,18 +32,12 @@ var (
 )
 
 // UpdateNewMessage represents TL type `updateNewMessage#1f2b0afd`.
-// New message in a private chat or in a basic group¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/channel#basic-groups
-//
-// See https://core.telegram.org/constructor/updateNewMessage for reference.
 type UpdateNewMessage struct {
-	// Message
+	// Message field of UpdateNewMessage.
 	Message MessageClass
-	// New quantity of actions in a message box
+	// Pts field of UpdateNewMessage.
 	Pts int
-	// Number of generated events
+	// PtsCount field of UpdateNewMessage.
 	PtsCount int
 }
 
@@ -87,17 +81,6 @@ func (u *UpdateNewMessage) String() string {
 	}
 	type Alias UpdateNewMessage
 	return fmt.Sprintf("UpdateNewMessage%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateNewMessage from given interface.
-func (u *UpdateNewMessage) FillFrom(from interface {
-	GetMessage() (value MessageClass)
-	GetPts() (value int)
-	GetPtsCount() (value int)
-}) {
-	u.Message = from.GetMessage()
-	u.Pts = from.GetPts()
-	u.PtsCount = from.GetPtsCount()
 }
 
 // TypeID returns type id in TL schema.
@@ -229,16 +212,10 @@ func (u *UpdateNewMessage) GetPtsCount() (value int) {
 }
 
 // UpdateMessageID represents TL type `updateMessageID#4e90bfd6`.
-// Sent message with random_id client identifier was assigned an identifier.
-//
-// See https://core.telegram.org/constructor/updateMessageID for reference.
 type UpdateMessageID struct {
-	// id identifier of a respective Message¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/type/Message
+	// ID field of UpdateMessageID.
 	ID int
-	// Previously transferred client random_id identifier
+	// RandomID field of UpdateMessageID.
 	RandomID int64
 }
 
@@ -279,15 +256,6 @@ func (u *UpdateMessageID) String() string {
 	}
 	type Alias UpdateMessageID
 	return fmt.Sprintf("UpdateMessageID%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateMessageID from given interface.
-func (u *UpdateMessageID) FillFrom(from interface {
-	GetID() (value int)
-	GetRandomID() (value int64)
-}) {
-	u.ID = from.GetID()
-	u.RandomID = from.GetRandomID()
 }
 
 // TypeID returns type id in TL schema.
@@ -394,18 +362,12 @@ func (u *UpdateMessageID) GetRandomID() (value int64) {
 }
 
 // UpdateDeleteMessages represents TL type `updateDeleteMessages#a20db0e5`.
-// Messages were deleted.
-//
-// See https://core.telegram.org/constructor/updateDeleteMessages for reference.
 type UpdateDeleteMessages struct {
-	// List of identifiers of deleted messages
+	// Messages field of UpdateDeleteMessages.
 	Messages []int
-	// New quality of actions in a message box
+	// Pts field of UpdateDeleteMessages.
 	Pts int
-	// Number of generated events¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/updates
+	// PtsCount field of UpdateDeleteMessages.
 	PtsCount int
 }
 
@@ -449,17 +411,6 @@ func (u *UpdateDeleteMessages) String() string {
 	}
 	type Alias UpdateDeleteMessages
 	return fmt.Sprintf("UpdateDeleteMessages%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateDeleteMessages from given interface.
-func (u *UpdateDeleteMessages) FillFrom(from interface {
-	GetMessages() (value []int)
-	GetPts() (value int)
-	GetPtsCount() (value int)
-}) {
-	u.Messages = from.GetMessages()
-	u.Pts = from.GetPts()
-	u.PtsCount = from.GetPtsCount()
 }
 
 // TypeID returns type id in TL schema.
@@ -599,15 +550,10 @@ func (u *UpdateDeleteMessages) GetPtsCount() (value int) {
 }
 
 // UpdateUserTyping represents TL type `updateUserTyping#c01e857f`.
-// The user is preparing a message; typing, recording, uploading, etc. This update is
-// valid for 6 seconds. If no further updates of this kind are received after 6 seconds,
-// it should be considered that the user stopped doing whatever they were doing
-//
-// See https://core.telegram.org/constructor/updateUserTyping for reference.
 type UpdateUserTyping struct {
-	// User id
+	// UserID field of UpdateUserTyping.
 	UserID int64
-	// Action type
+	// Action field of UpdateUserTyping.
 	Action SendMessageActionClass
 }
 
@@ -648,15 +594,6 @@ func (u *UpdateUserTyping) String() string {
 	}
 	type Alias UpdateUserTyping
 	return fmt.Sprintf("UpdateUserTyping%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateUserTyping from given interface.
-func (u *UpdateUserTyping) FillFrom(from interface {
-	GetUserID() (value int64)
-	GetAction() (value SendMessageActionClass)
-}) {
-	u.UserID = from.GetUserID()
-	u.Action = from.GetAction()
 }
 
 // TypeID returns type id in TL schema.
@@ -768,17 +705,12 @@ func (u *UpdateUserTyping) GetAction() (value SendMessageActionClass) {
 }
 
 // UpdateChatUserTyping represents TL type `updateChatUserTyping#83487af0`.
-// The user is preparing a message in a group; typing, recording, uploading, etc. This
-// update is valid for 6 seconds. If no further updates of this kind are received after 6
-// seconds, it should be considered that the user stopped doing whatever they were doing
-//
-// See https://core.telegram.org/constructor/updateChatUserTyping for reference.
 type UpdateChatUserTyping struct {
-	// Group id
+	// ChatID field of UpdateChatUserTyping.
 	ChatID int64
-	// Peer that started typing (can be the chat itself, in case of anonymous admins).
+	// FromID field of UpdateChatUserTyping.
 	FromID PeerClass
-	// Type of action
+	// Action field of UpdateChatUserTyping.
 	Action SendMessageActionClass
 }
 
@@ -822,17 +754,6 @@ func (u *UpdateChatUserTyping) String() string {
 	}
 	type Alias UpdateChatUserTyping
 	return fmt.Sprintf("UpdateChatUserTyping%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateChatUserTyping from given interface.
-func (u *UpdateChatUserTyping) FillFrom(from interface {
-	GetChatID() (value int64)
-	GetFromID() (value PeerClass)
-	GetAction() (value SendMessageActionClass)
-}) {
-	u.ChatID = from.GetChatID()
-	u.FromID = from.GetFromID()
-	u.Action = from.GetAction()
 }
 
 // TypeID returns type id in TL schema.
@@ -969,11 +890,8 @@ func (u *UpdateChatUserTyping) GetAction() (value SendMessageActionClass) {
 }
 
 // UpdateChatParticipants represents TL type `updateChatParticipants#7761198`.
-// Composition of chat participants changed.
-//
-// See https://core.telegram.org/constructor/updateChatParticipants for reference.
 type UpdateChatParticipants struct {
-	// Updated chat participants
+	// Participants field of UpdateChatParticipants.
 	Participants ChatParticipantsClass
 }
 
@@ -1011,13 +929,6 @@ func (u *UpdateChatParticipants) String() string {
 	}
 	type Alias UpdateChatParticipants
 	return fmt.Sprintf("UpdateChatParticipants%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateChatParticipants from given interface.
-func (u *UpdateChatParticipants) FillFrom(from interface {
-	GetParticipants() (value ChatParticipantsClass)
-}) {
-	u.Participants = from.GetParticipants()
 }
 
 // TypeID returns type id in TL schema.
@@ -1109,13 +1020,10 @@ func (u *UpdateChatParticipants) GetParticipants() (value ChatParticipantsClass)
 }
 
 // UpdateUserStatus represents TL type `updateUserStatus#e5bdf8de`.
-// Contact status update.
-//
-// See https://core.telegram.org/constructor/updateUserStatus for reference.
 type UpdateUserStatus struct {
-	// User identifier
+	// UserID field of UpdateUserStatus.
 	UserID int64
-	// New status
+	// Status field of UpdateUserStatus.
 	Status UserStatusClass
 }
 
@@ -1156,15 +1064,6 @@ func (u *UpdateUserStatus) String() string {
 	}
 	type Alias UpdateUserStatus
 	return fmt.Sprintf("UpdateUserStatus%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateUserStatus from given interface.
-func (u *UpdateUserStatus) FillFrom(from interface {
-	GetUserID() (value int64)
-	GetStatus() (value UserStatusClass)
-}) {
-	u.UserID = from.GetUserID()
-	u.Status = from.GetStatus()
 }
 
 // TypeID returns type id in TL schema.
@@ -1276,25 +1175,14 @@ func (u *UpdateUserStatus) GetStatus() (value UserStatusClass) {
 }
 
 // UpdateUserName represents TL type `updateUserName#a7848924`.
-// Changes the user's first name, last name and username.
-//
-// See https://core.telegram.org/constructor/updateUserName for reference.
 type UpdateUserName struct {
-	// User identifier
+	// UserID field of UpdateUserName.
 	UserID int64
-	// New first name. Corresponds to the new value of real_first_name field of the
-	// userFull¹ constructor.
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/userFull
+	// FirstName field of UpdateUserName.
 	FirstName string
-	// New last name. Corresponds to the new value of real_last_name field of the userFull¹
-	// constructor.
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/userFull
+	// LastName field of UpdateUserName.
 	LastName string
-	// Usernames.
+	// Usernames field of UpdateUserName.
 	Usernames []Username
 }
 
@@ -1341,19 +1229,6 @@ func (u *UpdateUserName) String() string {
 	}
 	type Alias UpdateUserName
 	return fmt.Sprintf("UpdateUserName%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateUserName from given interface.
-func (u *UpdateUserName) FillFrom(from interface {
-	GetUserID() (value int64)
-	GetFirstName() (value string)
-	GetLastName() (value string)
-	GetUsernames() (value []Username)
-}) {
-	u.UserID = from.GetUserID()
-	u.FirstName = from.GetFirstName()
-	u.LastName = from.GetLastName()
-	u.Usernames = from.GetUsernames()
 }
 
 // TypeID returns type id in TL schema.
@@ -1515,34 +1390,22 @@ func (u *UpdateUserName) GetUsernames() (value []Username) {
 }
 
 // UpdateNewAuthorization represents TL type `updateNewAuthorization#8951abef`.
-// A new session logged into the current user's account through an unknown device.
-//
-// See https://core.telegram.org/constructor/updateNewAuthorization for reference.
 type UpdateNewAuthorization struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of UpdateNewAuthorization.
 	Flags bin.Fields
-	// Whether the session is unconfirmed, see here »¹ for more info.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/auth#confirming-login
+	// Unconfirmed field of UpdateNewAuthorization.
 	Unconfirmed bool
-	// Hash used for caching, for more info click here¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets#hash-generation
+	// Hash field of UpdateNewAuthorization.
 	Hash int64
-	// Authorization date
+	// Date field of UpdateNewAuthorization.
 	//
 	// Use SetDate and GetDate helpers.
 	Date int
-	// Name of device, for example Android
+	// Device field of UpdateNewAuthorization.
 	//
 	// Use SetDevice and GetDevice helpers.
 	Device string
-	// Location, for example USA, NY (IP=1.2.3.4)
+	// Location field of UpdateNewAuthorization.
 	//
 	// Use SetLocation and GetLocation helpers.
 	Location string
@@ -1597,30 +1460,6 @@ func (u *UpdateNewAuthorization) String() string {
 	}
 	type Alias UpdateNewAuthorization
 	return fmt.Sprintf("UpdateNewAuthorization%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateNewAuthorization from given interface.
-func (u *UpdateNewAuthorization) FillFrom(from interface {
-	GetUnconfirmed() (value bool)
-	GetHash() (value int64)
-	GetDate() (value int, ok bool)
-	GetDevice() (value string, ok bool)
-	GetLocation() (value string, ok bool)
-}) {
-	u.Unconfirmed = from.GetUnconfirmed()
-	u.Hash = from.GetHash()
-	if val, ok := from.GetDate(); ok {
-		u.Date = val
-	}
-
-	if val, ok := from.GetDevice(); ok {
-		u.Device = val
-	}
-
-	if val, ok := from.GetLocation(); ok {
-		u.Location = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -1856,16 +1695,10 @@ func (u *UpdateNewAuthorization) GetLocation() (value string, ok bool) {
 }
 
 // UpdateNewEncryptedMessage represents TL type `updateNewEncryptedMessage#12bcbd9a`.
-// New encrypted message.
-//
-// See https://core.telegram.org/constructor/updateNewEncryptedMessage for reference.
 type UpdateNewEncryptedMessage struct {
-	// Message
+	// Message field of UpdateNewEncryptedMessage.
 	Message EncryptedMessageClass
-	// New qts value, see updates »¹ for more info.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/updates
+	// Qts field of UpdateNewEncryptedMessage.
 	Qts int
 }
 
@@ -1906,15 +1739,6 @@ func (u *UpdateNewEncryptedMessage) String() string {
 	}
 	type Alias UpdateNewEncryptedMessage
 	return fmt.Sprintf("UpdateNewEncryptedMessage%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateNewEncryptedMessage from given interface.
-func (u *UpdateNewEncryptedMessage) FillFrom(from interface {
-	GetMessage() (value EncryptedMessageClass)
-	GetQts() (value int)
-}) {
-	u.Message = from.GetMessage()
-	u.Qts = from.GetQts()
 }
 
 // TypeID returns type id in TL schema.
@@ -2026,13 +1850,8 @@ func (u *UpdateNewEncryptedMessage) GetQts() (value int) {
 }
 
 // UpdateEncryptedChatTyping represents TL type `updateEncryptedChatTyping#1710f156`.
-// Interlocutor is typing a message in an encrypted chat. Update period is 6 second. If
-// upon this time there is no repeated update, it shall be considered that the
-// interlocutor stopped typing.
-//
-// See https://core.telegram.org/constructor/updateEncryptedChatTyping for reference.
 type UpdateEncryptedChatTyping struct {
-	// Chat ID
+	// ChatID field of UpdateEncryptedChatTyping.
 	ChatID int
 }
 
@@ -2070,13 +1889,6 @@ func (u *UpdateEncryptedChatTyping) String() string {
 	}
 	type Alias UpdateEncryptedChatTyping
 	return fmt.Sprintf("UpdateEncryptedChatTyping%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateEncryptedChatTyping from given interface.
-func (u *UpdateEncryptedChatTyping) FillFrom(from interface {
-	GetChatID() (value int)
-}) {
-	u.ChatID = from.GetChatID()
 }
 
 // TypeID returns type id in TL schema.
@@ -2163,13 +1975,10 @@ func (u *UpdateEncryptedChatTyping) GetChatID() (value int) {
 }
 
 // UpdateEncryption represents TL type `updateEncryption#b4a2e88d`.
-// Change of state in an encrypted chat.
-//
-// See https://core.telegram.org/constructor/updateEncryption for reference.
 type UpdateEncryption struct {
-	// Encrypted chat
+	// Chat field of UpdateEncryption.
 	Chat EncryptedChatClass
-	// Date of change
+	// Date field of UpdateEncryption.
 	Date int
 }
 
@@ -2210,15 +2019,6 @@ func (u *UpdateEncryption) String() string {
 	}
 	type Alias UpdateEncryption
 	return fmt.Sprintf("UpdateEncryption%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateEncryption from given interface.
-func (u *UpdateEncryption) FillFrom(from interface {
-	GetChat() (value EncryptedChatClass)
-	GetDate() (value int)
-}) {
-	u.Chat = from.GetChat()
-	u.Date = from.GetDate()
 }
 
 // TypeID returns type id in TL schema.
@@ -2330,15 +2130,12 @@ func (u *UpdateEncryption) GetDate() (value int) {
 }
 
 // UpdateEncryptedMessagesRead represents TL type `updateEncryptedMessagesRead#38fe25b7`.
-// Communication history in an encrypted chat was marked as read.
-//
-// See https://core.telegram.org/constructor/updateEncryptedMessagesRead for reference.
 type UpdateEncryptedMessagesRead struct {
-	// Chat ID
+	// ChatID field of UpdateEncryptedMessagesRead.
 	ChatID int
-	// Maximum value of data for read messages
+	// MaxDate field of UpdateEncryptedMessagesRead.
 	MaxDate int
-	// Time when messages were read
+	// Date field of UpdateEncryptedMessagesRead.
 	Date int
 }
 
@@ -2382,17 +2179,6 @@ func (u *UpdateEncryptedMessagesRead) String() string {
 	}
 	type Alias UpdateEncryptedMessagesRead
 	return fmt.Sprintf("UpdateEncryptedMessagesRead%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateEncryptedMessagesRead from given interface.
-func (u *UpdateEncryptedMessagesRead) FillFrom(from interface {
-	GetChatID() (value int)
-	GetMaxDate() (value int)
-	GetDate() (value int)
-}) {
-	u.ChatID = from.GetChatID()
-	u.MaxDate = from.GetMaxDate()
-	u.Date = from.GetDate()
 }
 
 // TypeID returns type id in TL schema.
@@ -2519,19 +2305,16 @@ func (u *UpdateEncryptedMessagesRead) GetDate() (value int) {
 }
 
 // UpdateChatParticipantAdd represents TL type `updateChatParticipantAdd#3dda5451`.
-// New group member.
-//
-// See https://core.telegram.org/constructor/updateChatParticipantAdd for reference.
 type UpdateChatParticipantAdd struct {
-	// Group ID
+	// ChatID field of UpdateChatParticipantAdd.
 	ChatID int64
-	// ID of the new member
+	// UserID field of UpdateChatParticipantAdd.
 	UserID int64
-	// ID of the user, who added member to the group
+	// InviterID field of UpdateChatParticipantAdd.
 	InviterID int64
-	// When was the participant added
+	// Date field of UpdateChatParticipantAdd.
 	Date int
-	// Chat version number
+	// Version field of UpdateChatParticipantAdd.
 	Version int
 }
 
@@ -2581,21 +2364,6 @@ func (u *UpdateChatParticipantAdd) String() string {
 	}
 	type Alias UpdateChatParticipantAdd
 	return fmt.Sprintf("UpdateChatParticipantAdd%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateChatParticipantAdd from given interface.
-func (u *UpdateChatParticipantAdd) FillFrom(from interface {
-	GetChatID() (value int64)
-	GetUserID() (value int64)
-	GetInviterID() (value int64)
-	GetDate() (value int)
-	GetVersion() (value int)
-}) {
-	u.ChatID = from.GetChatID()
-	u.UserID = from.GetUserID()
-	u.InviterID = from.GetInviterID()
-	u.Date = from.GetDate()
-	u.Version = from.GetVersion()
 }
 
 // TypeID returns type id in TL schema.
@@ -2762,15 +2530,12 @@ func (u *UpdateChatParticipantAdd) GetVersion() (value int) {
 }
 
 // UpdateChatParticipantDelete represents TL type `updateChatParticipantDelete#e32f3d77`.
-// A member has left the group.
-//
-// See https://core.telegram.org/constructor/updateChatParticipantDelete for reference.
 type UpdateChatParticipantDelete struct {
-	// Group ID
+	// ChatID field of UpdateChatParticipantDelete.
 	ChatID int64
-	// ID of the user
+	// UserID field of UpdateChatParticipantDelete.
 	UserID int64
-	// Used in basic groups to reorder updates and make sure that all of them was received.
+	// Version field of UpdateChatParticipantDelete.
 	Version int
 }
 
@@ -2814,17 +2579,6 @@ func (u *UpdateChatParticipantDelete) String() string {
 	}
 	type Alias UpdateChatParticipantDelete
 	return fmt.Sprintf("UpdateChatParticipantDelete%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateChatParticipantDelete from given interface.
-func (u *UpdateChatParticipantDelete) FillFrom(from interface {
-	GetChatID() (value int64)
-	GetUserID() (value int64)
-	GetVersion() (value int)
-}) {
-	u.ChatID = from.GetChatID()
-	u.UserID = from.GetUserID()
-	u.Version = from.GetVersion()
 }
 
 // TypeID returns type id in TL schema.
@@ -2951,11 +2705,8 @@ func (u *UpdateChatParticipantDelete) GetVersion() (value int) {
 }
 
 // UpdateDCOptions represents TL type `updateDcOptions#8e5e9873`.
-// Changes in the data center configuration options.
-//
-// See https://core.telegram.org/constructor/updateDcOptions for reference.
 type UpdateDCOptions struct {
-	// New connection options
+	// DCOptions field of UpdateDCOptions.
 	DCOptions []DCOption
 }
 
@@ -2993,13 +2744,6 @@ func (u *UpdateDCOptions) String() string {
 	}
 	type Alias UpdateDCOptions
 	return fmt.Sprintf("UpdateDCOptions%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateDCOptions from given interface.
-func (u *UpdateDCOptions) FillFrom(from interface {
-	GetDCOptions() (value []DCOption)
-}) {
-	u.DCOptions = from.GetDCOptions()
 }
 
 // TypeID returns type id in TL schema.
@@ -3101,13 +2845,10 @@ func (u *UpdateDCOptions) GetDCOptions() (value []DCOption) {
 }
 
 // UpdateNotifySettings represents TL type `updateNotifySettings#bec268ef`.
-// Changes in notification settings.
-//
-// See https://core.telegram.org/constructor/updateNotifySettings for reference.
 type UpdateNotifySettings struct {
-	// Notification source
+	// Peer field of UpdateNotifySettings.
 	Peer NotifyPeerClass
-	// New notification settings
+	// NotifySettings field of UpdateNotifySettings.
 	NotifySettings PeerNotifySettings
 }
 
@@ -3148,15 +2889,6 @@ func (u *UpdateNotifySettings) String() string {
 	}
 	type Alias UpdateNotifySettings
 	return fmt.Sprintf("UpdateNotifySettings%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateNotifySettings from given interface.
-func (u *UpdateNotifySettings) FillFrom(from interface {
-	GetPeer() (value NotifyPeerClass)
-	GetNotifySettings() (value PeerNotifySettings)
-}) {
-	u.Peer = from.GetPeer()
-	u.NotifySettings = from.GetNotifySettings()
 }
 
 // TypeID returns type id in TL schema.
@@ -3268,46 +3000,24 @@ func (u *UpdateNotifySettings) GetNotifySettings() (value PeerNotifySettings) {
 }
 
 // UpdateServiceNotification represents TL type `updateServiceNotification#ebe46819`.
-// A service message for the user.
-// The app must show the message to the user upon receiving this update. In case the
-// popup parameter was passed, the text message must be displayed in a popup alert
-// immediately upon receipt. It is recommended to handle the text as you would an
-// ordinary message in terms of highlighting links, etc. The message must also be stored
-// locally as part of the message history with the user id 777000 (Telegram
-// Notifications).
-//
-// See https://core.telegram.org/constructor/updateServiceNotification for reference.
 type UpdateServiceNotification struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of UpdateServiceNotification.
 	Flags bin.Fields
-	// If set, the message must be displayed in a popup.
+	// Popup field of UpdateServiceNotification.
 	Popup bool
-	// If set, any eventual webpage preview will be shown on top of the message instead of at
-	// the bottom.
+	// InvertMedia field of UpdateServiceNotification.
 	InvertMedia bool
-	// When was the notification receivedThe message must also be stored locally as part of
-	// the message history with the user id 777000 (Telegram Notifications).
+	// InboxDate field of UpdateServiceNotification.
 	//
 	// Use SetInboxDate and GetInboxDate helpers.
 	InboxDate int
-	// String, identical in format and contents to the type¹ field in API errors. Describes
-	// type of service message. It is acceptable to ignore repeated messages of the same type
-	// within a short period of time (15 minutes).
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/errors#error-type
+	// Type field of UpdateServiceNotification.
 	Type string
-	// Message text
+	// Message field of UpdateServiceNotification.
 	Message string
-	// Media content (optional)
+	// Media field of UpdateServiceNotification.
 	Media MessageMediaClass
-	// Message entities for styled text¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/entities
+	// Entities field of UpdateServiceNotification.
 	Entities []MessageEntityClass
 }
 
@@ -3366,28 +3076,6 @@ func (u *UpdateServiceNotification) String() string {
 	}
 	type Alias UpdateServiceNotification
 	return fmt.Sprintf("UpdateServiceNotification%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateServiceNotification from given interface.
-func (u *UpdateServiceNotification) FillFrom(from interface {
-	GetPopup() (value bool)
-	GetInvertMedia() (value bool)
-	GetInboxDate() (value int, ok bool)
-	GetType() (value string)
-	GetMessage() (value string)
-	GetMedia() (value MessageMediaClass)
-	GetEntities() (value []MessageEntityClass)
-}) {
-	u.Popup = from.GetPopup()
-	u.InvertMedia = from.GetInvertMedia()
-	if val, ok := from.GetInboxDate(); ok {
-		u.InboxDate = val
-	}
-
-	u.Type = from.GetType()
-	u.Message = from.GetMessage()
-	u.Media = from.GetMedia()
-	u.Entities = from.GetEntities()
 }
 
 // TypeID returns type id in TL schema.
@@ -3661,19 +3349,11 @@ func (u *UpdateServiceNotification) GetEntities() (value []MessageEntityClass) {
 	return u.Entities
 }
 
-// MapEntities returns field Entities wrapped in MessageEntityClassArray helper.
-func (u *UpdateServiceNotification) MapEntities() (value MessageEntityClassArray) {
-	return MessageEntityClassArray(u.Entities)
-}
-
 // UpdatePrivacy represents TL type `updatePrivacy#ee3b272a`.
-// Privacy rules were changed
-//
-// See https://core.telegram.org/constructor/updatePrivacy for reference.
 type UpdatePrivacy struct {
-	// Peers to which the privacy rules apply
+	// Key field of UpdatePrivacy.
 	Key PrivacyKeyClass
-	// New privacy rules
+	// Rules field of UpdatePrivacy.
 	Rules []PrivacyRuleClass
 }
 
@@ -3714,15 +3394,6 @@ func (u *UpdatePrivacy) String() string {
 	}
 	type Alias UpdatePrivacy
 	return fmt.Sprintf("UpdatePrivacy%+v", Alias(*u))
-}
-
-// FillFrom fills UpdatePrivacy from given interface.
-func (u *UpdatePrivacy) FillFrom(from interface {
-	GetKey() (value PrivacyKeyClass)
-	GetRules() (value []PrivacyRuleClass)
-}) {
-	u.Key = from.GetKey()
-	u.Rules = from.GetRules()
 }
 
 // TypeID returns type id in TL schema.
@@ -3851,19 +3522,11 @@ func (u *UpdatePrivacy) GetRules() (value []PrivacyRuleClass) {
 	return u.Rules
 }
 
-// MapRules returns field Rules wrapped in PrivacyRuleClassArray helper.
-func (u *UpdatePrivacy) MapRules() (value PrivacyRuleClassArray) {
-	return PrivacyRuleClassArray(u.Rules)
-}
-
 // UpdateUserPhone represents TL type `updateUserPhone#5492a13`.
-// A user's phone number was changed
-//
-// See https://core.telegram.org/constructor/updateUserPhone for reference.
 type UpdateUserPhone struct {
-	// User ID
+	// UserID field of UpdateUserPhone.
 	UserID int64
-	// New phone number
+	// Phone field of UpdateUserPhone.
 	Phone string
 }
 
@@ -3904,15 +3567,6 @@ func (u *UpdateUserPhone) String() string {
 	}
 	type Alias UpdateUserPhone
 	return fmt.Sprintf("UpdateUserPhone%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateUserPhone from given interface.
-func (u *UpdateUserPhone) FillFrom(from interface {
-	GetUserID() (value int64)
-	GetPhone() (value string)
-}) {
-	u.UserID = from.GetUserID()
-	u.Phone = from.GetPhone()
 }
 
 // TypeID returns type id in TL schema.
@@ -4019,37 +3673,22 @@ func (u *UpdateUserPhone) GetPhone() (value string) {
 }
 
 // UpdateReadHistoryInbox represents TL type `updateReadHistoryInbox#9c974fdf`.
-// Incoming messages were read
-//
-// See https://core.telegram.org/constructor/updateReadHistoryInbox for reference.
 type UpdateReadHistoryInbox struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of UpdateReadHistoryInbox.
 	Flags bin.Fields
-	// Peer folder ID, for more info click here¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/folders#peer-folders
+	// FolderID field of UpdateReadHistoryInbox.
 	//
 	// Use SetFolderID and GetFolderID helpers.
 	FolderID int
-	// Peer
+	// Peer field of UpdateReadHistoryInbox.
 	Peer PeerClass
-	// Maximum ID of messages read
+	// MaxID field of UpdateReadHistoryInbox.
 	MaxID int
-	// Number of messages that are still unread
+	// StillUnreadCount field of UpdateReadHistoryInbox.
 	StillUnreadCount int
-	// Event count after generation¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/updates
+	// Pts field of UpdateReadHistoryInbox.
 	Pts int
-	// Number of events that were generated¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/updates
+	// PtsCount field of UpdateReadHistoryInbox.
 	PtsCount int
 }
 
@@ -4105,26 +3744,6 @@ func (u *UpdateReadHistoryInbox) String() string {
 	}
 	type Alias UpdateReadHistoryInbox
 	return fmt.Sprintf("UpdateReadHistoryInbox%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateReadHistoryInbox from given interface.
-func (u *UpdateReadHistoryInbox) FillFrom(from interface {
-	GetFolderID() (value int, ok bool)
-	GetPeer() (value PeerClass)
-	GetMaxID() (value int)
-	GetStillUnreadCount() (value int)
-	GetPts() (value int)
-	GetPtsCount() (value int)
-}) {
-	if val, ok := from.GetFolderID(); ok {
-		u.FolderID = val
-	}
-
-	u.Peer = from.GetPeer()
-	u.MaxID = from.GetMaxID()
-	u.StillUnreadCount = from.GetStillUnreadCount()
-	u.Pts = from.GetPts()
-	u.PtsCount = from.GetPtsCount()
 }
 
 // TypeID returns type id in TL schema.
@@ -4345,23 +3964,14 @@ func (u *UpdateReadHistoryInbox) GetPtsCount() (value int) {
 }
 
 // UpdateReadHistoryOutbox represents TL type `updateReadHistoryOutbox#2f2f21bf`.
-// Outgoing messages were read
-//
-// See https://core.telegram.org/constructor/updateReadHistoryOutbox for reference.
 type UpdateReadHistoryOutbox struct {
-	// Peer
+	// Peer field of UpdateReadHistoryOutbox.
 	Peer PeerClass
-	// Maximum ID of read outgoing messages
+	// MaxID field of UpdateReadHistoryOutbox.
 	MaxID int
-	// Event count after generation¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/updates
+	// Pts field of UpdateReadHistoryOutbox.
 	Pts int
-	// Number of events that were generated¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/updates
+	// PtsCount field of UpdateReadHistoryOutbox.
 	PtsCount int
 }
 
@@ -4408,19 +4018,6 @@ func (u *UpdateReadHistoryOutbox) String() string {
 	}
 	type Alias UpdateReadHistoryOutbox
 	return fmt.Sprintf("UpdateReadHistoryOutbox%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateReadHistoryOutbox from given interface.
-func (u *UpdateReadHistoryOutbox) FillFrom(from interface {
-	GetPeer() (value PeerClass)
-	GetMaxID() (value int)
-	GetPts() (value int)
-	GetPtsCount() (value int)
-}) {
-	u.Peer = from.GetPeer()
-	u.MaxID = from.GetMaxID()
-	u.Pts = from.GetPts()
-	u.PtsCount = from.GetPtsCount()
 }
 
 // TypeID returns type id in TL schema.
@@ -4572,24 +4169,12 @@ func (u *UpdateReadHistoryOutbox) GetPtsCount() (value int) {
 }
 
 // UpdateWebPage represents TL type `updateWebPage#7f891213`.
-// An instant view¹ webpage preview was generated
-//
-// Links:
-//  1. https://instantview.telegram.org
-//
-// See https://core.telegram.org/constructor/updateWebPage for reference.
 type UpdateWebPage struct {
-	// Webpage preview
+	// Webpage field of UpdateWebPage.
 	Webpage WebPageClass
-	// Event count after generation¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/updates
+	// Pts field of UpdateWebPage.
 	Pts int
-	// Number of events that were generated¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/updates
+	// PtsCount field of UpdateWebPage.
 	PtsCount int
 }
 
@@ -4633,17 +4218,6 @@ func (u *UpdateWebPage) String() string {
 	}
 	type Alias UpdateWebPage
 	return fmt.Sprintf("UpdateWebPage%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateWebPage from given interface.
-func (u *UpdateWebPage) FillFrom(from interface {
-	GetWebpage() (value WebPageClass)
-	GetPts() (value int)
-	GetPtsCount() (value int)
-}) {
-	u.Webpage = from.GetWebpage()
-	u.Pts = from.GetPts()
-	u.PtsCount = from.GetPtsCount()
 }
 
 // TypeID returns type id in TL schema.
@@ -4775,31 +4349,16 @@ func (u *UpdateWebPage) GetPtsCount() (value int) {
 }
 
 // UpdateReadMessagesContents represents TL type `updateReadMessagesContents#f8227181`.
-// Contents of messages in the common message box¹ were read
-//
-// Links:
-//  1. https://core.telegram.org/api/updates
-//
-// See https://core.telegram.org/constructor/updateReadMessagesContents for reference.
 type UpdateReadMessagesContents struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of UpdateReadMessagesContents.
 	Flags bin.Fields
-	// IDs of read messages
+	// Messages field of UpdateReadMessagesContents.
 	Messages []int
-	// Event count after generation¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/updates
+	// Pts field of UpdateReadMessagesContents.
 	Pts int
-	// Number of events that were generated¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/updates
+	// PtsCount field of UpdateReadMessagesContents.
 	PtsCount int
-	// When was the last message in messages marked as read.
+	// Date field of UpdateReadMessagesContents.
 	//
 	// Use SetDate and GetDate helpers.
 	Date int
@@ -4851,22 +4410,6 @@ func (u *UpdateReadMessagesContents) String() string {
 	}
 	type Alias UpdateReadMessagesContents
 	return fmt.Sprintf("UpdateReadMessagesContents%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateReadMessagesContents from given interface.
-func (u *UpdateReadMessagesContents) FillFrom(from interface {
-	GetMessages() (value []int)
-	GetPts() (value int)
-	GetPtsCount() (value int)
-	GetDate() (value int, ok bool)
-}) {
-	u.Messages = from.GetMessages()
-	u.Pts = from.GetPts()
-	u.PtsCount = from.GetPtsCount()
-	if val, ok := from.GetDate(); ok {
-		u.Date = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -5055,23 +4598,12 @@ func (u *UpdateReadMessagesContents) GetDate() (value int, ok bool) {
 }
 
 // UpdateChannelTooLong represents TL type `updateChannelTooLong#108d941f`.
-// There are new updates in the specified channel, the client must fetch them.
-// If the difference is too long or if the channel isn't currently in the states, start
-// fetching from the specified pts.
-//
-// See https://core.telegram.org/constructor/updateChannelTooLong for reference.
 type UpdateChannelTooLong struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of UpdateChannelTooLong.
 	Flags bin.Fields
-	// The channel
+	// ChannelID field of UpdateChannelTooLong.
 	ChannelID int64
-	// The PTS¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/updates
+	// Pts field of UpdateChannelTooLong.
 	//
 	// Use SetPts and GetPts helpers.
 	Pts int
@@ -5117,18 +4649,6 @@ func (u *UpdateChannelTooLong) String() string {
 	}
 	type Alias UpdateChannelTooLong
 	return fmt.Sprintf("UpdateChannelTooLong%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateChannelTooLong from given interface.
-func (u *UpdateChannelTooLong) FillFrom(from interface {
-	GetChannelID() (value int64)
-	GetPts() (value int, ok bool)
-}) {
-	u.ChannelID = from.GetChannelID()
-	if val, ok := from.GetPts(); ok {
-		u.Pts = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -5264,26 +4784,8 @@ func (u *UpdateChannelTooLong) GetPts() (value int, ok bool) {
 }
 
 // UpdateChannel represents TL type `updateChannel#635b4c09`.
-// Channel/supergroup (channel¹ and/or channelFull²) information was updated.
-// This update can only be received through getDifference or in
-// updates¹/updatesCombined² constructors, so it will always come bundled with the
-// updated channel³, that should be applied as usual »⁴, without re-fetching the info
-// manually.
-// However, full peer information will not come bundled in updates, so the full peer
-// cache (channelFull¹) must be invalidated for channel_id when receiving this update.
-//
-// Links:
-//  1. https://core.telegram.org/constructor/channel
-//  2. https://core.telegram.org/constructor/channelFull
-//  3. https://core.telegram.org/constructor/updates
-//  4. https://core.telegram.org/constructor/updatesCombined
-//  5. https://core.telegram.org/constructor/channel
-//  6. https://core.telegram.org/api/peers
-//  7. https://core.telegram.org/constructor/channelFull
-//
-// See https://core.telegram.org/constructor/updateChannel for reference.
 type UpdateChannel struct {
-	// Channel ID
+	// ChannelID field of UpdateChannel.
 	ChannelID int64
 }
 
@@ -5321,13 +4823,6 @@ func (u *UpdateChannel) String() string {
 	}
 	type Alias UpdateChannel
 	return fmt.Sprintf("UpdateChannel%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateChannel from given interface.
-func (u *UpdateChannel) FillFrom(from interface {
-	GetChannelID() (value int64)
-}) {
-	u.ChannelID = from.GetChannelID()
 }
 
 // TypeID returns type id in TL schema.
@@ -5414,24 +4909,12 @@ func (u *UpdateChannel) GetChannelID() (value int64) {
 }
 
 // UpdateNewChannelMessage represents TL type `updateNewChannelMessage#62ba04d9`.
-// A new message was sent in a channel/supergroup¹
-//
-// Links:
-//  1. https://core.telegram.org/api/channel
-//
-// See https://core.telegram.org/constructor/updateNewChannelMessage for reference.
 type UpdateNewChannelMessage struct {
-	// New message
+	// Message field of UpdateNewChannelMessage.
 	Message MessageClass
-	// Event count after generation¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/updates
+	// Pts field of UpdateNewChannelMessage.
 	Pts int
-	// Number of events that were generated¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/updates
+	// PtsCount field of UpdateNewChannelMessage.
 	PtsCount int
 }
 
@@ -5475,17 +4958,6 @@ func (u *UpdateNewChannelMessage) String() string {
 	}
 	type Alias UpdateNewChannelMessage
 	return fmt.Sprintf("UpdateNewChannelMessage%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateNewChannelMessage from given interface.
-func (u *UpdateNewChannelMessage) FillFrom(from interface {
-	GetMessage() (value MessageClass)
-	GetPts() (value int)
-	GetPtsCount() (value int)
-}) {
-	u.Message = from.GetMessage()
-	u.Pts = from.GetPts()
-	u.PtsCount = from.GetPtsCount()
 }
 
 // TypeID returns type id in TL schema.
@@ -5617,35 +5089,20 @@ func (u *UpdateNewChannelMessage) GetPtsCount() (value int) {
 }
 
 // UpdateReadChannelInbox represents TL type `updateReadChannelInbox#922e6e10`.
-// Incoming messages in a channel/supergroup¹ were read
-//
-// Links:
-//  1. https://core.telegram.org/api/channel
-//
-// See https://core.telegram.org/constructor/updateReadChannelInbox for reference.
 type UpdateReadChannelInbox struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of UpdateReadChannelInbox.
 	Flags bin.Fields
-	// Peer folder ID, for more info click here¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/folders#peer-folders
+	// FolderID field of UpdateReadChannelInbox.
 	//
 	// Use SetFolderID and GetFolderID helpers.
 	FolderID int
-	// Channel/supergroup ID
+	// ChannelID field of UpdateReadChannelInbox.
 	ChannelID int64
-	// Position up to which all incoming messages are read.
+	// MaxID field of UpdateReadChannelInbox.
 	MaxID int
-	// Count of messages weren't read yet
+	// StillUnreadCount field of UpdateReadChannelInbox.
 	StillUnreadCount int
-	// Event count after generation¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/updates
+	// Pts field of UpdateReadChannelInbox.
 	Pts int
 }
 
@@ -5698,24 +5155,6 @@ func (u *UpdateReadChannelInbox) String() string {
 	}
 	type Alias UpdateReadChannelInbox
 	return fmt.Sprintf("UpdateReadChannelInbox%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateReadChannelInbox from given interface.
-func (u *UpdateReadChannelInbox) FillFrom(from interface {
-	GetFolderID() (value int, ok bool)
-	GetChannelID() (value int64)
-	GetMaxID() (value int)
-	GetStillUnreadCount() (value int)
-	GetPts() (value int)
-}) {
-	if val, ok := from.GetFolderID(); ok {
-		u.FolderID = val
-	}
-
-	u.ChannelID = from.GetChannelID()
-	u.MaxID = from.GetMaxID()
-	u.StillUnreadCount = from.GetStillUnreadCount()
-	u.Pts = from.GetPts()
 }
 
 // TypeID returns type id in TL schema.
@@ -5911,26 +5350,14 @@ func (u *UpdateReadChannelInbox) GetPts() (value int) {
 }
 
 // UpdateDeleteChannelMessages represents TL type `updateDeleteChannelMessages#c32d5b12`.
-// Some messages in a supergroup/channel¹ were deleted
-//
-// Links:
-//  1. https://core.telegram.org/api/channel
-//
-// See https://core.telegram.org/constructor/updateDeleteChannelMessages for reference.
 type UpdateDeleteChannelMessages struct {
-	// Channel ID
+	// ChannelID field of UpdateDeleteChannelMessages.
 	ChannelID int64
-	// IDs of messages that were deleted
+	// Messages field of UpdateDeleteChannelMessages.
 	Messages []int
-	// Event count after generation¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/updates
+	// Pts field of UpdateDeleteChannelMessages.
 	Pts int
-	// Number of events that were generated¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/updates
+	// PtsCount field of UpdateDeleteChannelMessages.
 	PtsCount int
 }
 
@@ -5977,19 +5404,6 @@ func (u *UpdateDeleteChannelMessages) String() string {
 	}
 	type Alias UpdateDeleteChannelMessages
 	return fmt.Sprintf("UpdateDeleteChannelMessages%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateDeleteChannelMessages from given interface.
-func (u *UpdateDeleteChannelMessages) FillFrom(from interface {
-	GetChannelID() (value int64)
-	GetMessages() (value []int)
-	GetPts() (value int)
-	GetPtsCount() (value int)
-}) {
-	u.ChannelID = from.GetChannelID()
-	u.Messages = from.GetMessages()
-	u.Pts = from.GetPts()
-	u.PtsCount = from.GetPtsCount()
 }
 
 // TypeID returns type id in TL schema.
@@ -6149,15 +5563,12 @@ func (u *UpdateDeleteChannelMessages) GetPtsCount() (value int) {
 }
 
 // UpdateChannelMessageViews represents TL type `updateChannelMessageViews#f226ac08`.
-// The view counter of a message in a channel has changed
-//
-// See https://core.telegram.org/constructor/updateChannelMessageViews for reference.
 type UpdateChannelMessageViews struct {
-	// Channel ID
+	// ChannelID field of UpdateChannelMessageViews.
 	ChannelID int64
-	// ID of the message
+	// ID field of UpdateChannelMessageViews.
 	ID int
-	// New view counter
+	// Views field of UpdateChannelMessageViews.
 	Views int
 }
 
@@ -6201,17 +5612,6 @@ func (u *UpdateChannelMessageViews) String() string {
 	}
 	type Alias UpdateChannelMessageViews
 	return fmt.Sprintf("UpdateChannelMessageViews%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateChannelMessageViews from given interface.
-func (u *UpdateChannelMessageViews) FillFrom(from interface {
-	GetChannelID() (value int64)
-	GetID() (value int)
-	GetViews() (value int)
-}) {
-	u.ChannelID = from.GetChannelID()
-	u.ID = from.GetID()
-	u.Views = from.GetViews()
 }
 
 // TypeID returns type id in TL schema.
@@ -6338,20 +5738,14 @@ func (u *UpdateChannelMessageViews) GetViews() (value int) {
 }
 
 // UpdateChatParticipantAdmin represents TL type `updateChatParticipantAdmin#d7ca61a2`.
-// Admin permissions of a user in a basic group¹ were changed
-//
-// Links:
-//  1. https://core.telegram.org/api/channel#basic-groups
-//
-// See https://core.telegram.org/constructor/updateChatParticipantAdmin for reference.
 type UpdateChatParticipantAdmin struct {
-	// Chat ID
+	// ChatID field of UpdateChatParticipantAdmin.
 	ChatID int64
-	// ID of the (de)admined user
+	// UserID field of UpdateChatParticipantAdmin.
 	UserID int64
-	// Whether the user was rendered admin
+	// IsAdmin field of UpdateChatParticipantAdmin.
 	IsAdmin bool
-	// Used in basic groups to reorder updates and make sure that all of them was received.
+	// Version field of UpdateChatParticipantAdmin.
 	Version int
 }
 
@@ -6398,19 +5792,6 @@ func (u *UpdateChatParticipantAdmin) String() string {
 	}
 	type Alias UpdateChatParticipantAdmin
 	return fmt.Sprintf("UpdateChatParticipantAdmin%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateChatParticipantAdmin from given interface.
-func (u *UpdateChatParticipantAdmin) FillFrom(from interface {
-	GetChatID() (value int64)
-	GetUserID() (value int64)
-	GetIsAdmin() (value bool)
-	GetVersion() (value int)
-}) {
-	u.ChatID = from.GetChatID()
-	u.UserID = from.GetUserID()
-	u.IsAdmin = from.GetIsAdmin()
-	u.Version = from.GetVersion()
 }
 
 // TypeID returns type id in TL schema.
@@ -6557,11 +5938,8 @@ func (u *UpdateChatParticipantAdmin) GetVersion() (value int) {
 }
 
 // UpdateNewStickerSet represents TL type `updateNewStickerSet#688a30aa`.
-// A new stickerset was installed
-//
-// See https://core.telegram.org/constructor/updateNewStickerSet for reference.
 type UpdateNewStickerSet struct {
-	// The installed stickerset
+	// Stickerset field of UpdateNewStickerSet.
 	Stickerset MessagesStickerSetClass
 }
 
@@ -6599,13 +5977,6 @@ func (u *UpdateNewStickerSet) String() string {
 	}
 	type Alias UpdateNewStickerSet
 	return fmt.Sprintf("UpdateNewStickerSet%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateNewStickerSet from given interface.
-func (u *UpdateNewStickerSet) FillFrom(from interface {
-	GetStickerset() (value MessagesStickerSetClass)
-}) {
-	u.Stickerset = from.GetStickerset()
 }
 
 // TypeID returns type id in TL schema.
@@ -6697,20 +6068,14 @@ func (u *UpdateNewStickerSet) GetStickerset() (value MessagesStickerSetClass) {
 }
 
 // UpdateStickerSetsOrder represents TL type `updateStickerSetsOrder#bb2d201`.
-// The order of stickersets was changed
-//
-// See https://core.telegram.org/constructor/updateStickerSetsOrder for reference.
 type UpdateStickerSetsOrder struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of UpdateStickerSetsOrder.
 	Flags bin.Fields
-	// Whether the updated stickers are mask stickers
+	// Masks field of UpdateStickerSetsOrder.
 	Masks bool
-	// Whether the updated stickers are custom emoji stickers
+	// Emojis field of UpdateStickerSetsOrder.
 	Emojis bool
-	// New sticker order by sticker ID
+	// Order field of UpdateStickerSetsOrder.
 	Order []int64
 }
 
@@ -6757,17 +6122,6 @@ func (u *UpdateStickerSetsOrder) String() string {
 	}
 	type Alias UpdateStickerSetsOrder
 	return fmt.Sprintf("UpdateStickerSetsOrder%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateStickerSetsOrder from given interface.
-func (u *UpdateStickerSetsOrder) FillFrom(from interface {
-	GetMasks() (value bool)
-	GetEmojis() (value bool)
-	GetOrder() (value []int64)
-}) {
-	u.Masks = from.GetMasks()
-	u.Emojis = from.GetEmojis()
-	u.Order = from.GetOrder()
 }
 
 // TypeID returns type id in TL schema.
@@ -6936,25 +6290,12 @@ func (u *UpdateStickerSetsOrder) GetOrder() (value []int64) {
 }
 
 // UpdateStickerSets represents TL type `updateStickerSets#31c24808`.
-// Installed stickersets have changed, the client should refetch them as described in the
-// docs¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/stickers#installing-stickersets
-//
-// See https://core.telegram.org/constructor/updateStickerSets for reference.
 type UpdateStickerSets struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of UpdateStickerSets.
 	Flags bin.Fields
-	// Whether mask stickersets have changed
+	// Masks field of UpdateStickerSets.
 	Masks bool
-	// Whether the list of installed custom emoji stickersets¹ has changed
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/custom-emoji
+	// Emojis field of UpdateStickerSets.
 	Emojis bool
 }
 
@@ -6998,15 +6339,6 @@ func (u *UpdateStickerSets) String() string {
 	}
 	type Alias UpdateStickerSets
 	return fmt.Sprintf("UpdateStickerSets%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateStickerSets from given interface.
-func (u *UpdateStickerSets) FillFrom(from interface {
-	GetMasks() (value bool)
-	GetEmojis() (value bool)
-}) {
-	u.Masks = from.GetMasks()
-	u.Emojis = from.GetEmojis()
 }
 
 // TypeID returns type id in TL schema.
@@ -7142,13 +6474,6 @@ func (u *UpdateStickerSets) GetEmojis() (value bool) {
 }
 
 // UpdateSavedGifs represents TL type `updateSavedGifs#9375341e`.
-// The saved gif list has changed, the client should refetch it using messages
-// getSavedGifs¹
-//
-// Links:
-//  1. https://core.telegram.org/method/messages.getSavedGifs
-//
-// See https://core.telegram.org/constructor/updateSavedGifs for reference.
 type UpdateSavedGifs struct {
 }
 
@@ -7248,30 +6573,24 @@ func (u *UpdateSavedGifs) DecodeBare(b *bin.Buffer) error {
 }
 
 // UpdateBotInlineQuery represents TL type `updateBotInlineQuery#496f379c`.
-// An incoming inline query
-//
-// See https://core.telegram.org/constructor/updateBotInlineQuery for reference.
 type UpdateBotInlineQuery struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of UpdateBotInlineQuery.
 	Flags bin.Fields
-	// Query ID
+	// QueryID field of UpdateBotInlineQuery.
 	QueryID int64
-	// User that sent the query
+	// UserID field of UpdateBotInlineQuery.
 	UserID int64
-	// Text of query
+	// Query field of UpdateBotInlineQuery.
 	Query string
-	// Attached geolocation
+	// Geo field of UpdateBotInlineQuery.
 	//
 	// Use SetGeo and GetGeo helpers.
 	Geo GeoPointClass
-	// Type of the chat from which the inline query was sent.
+	// PeerType field of UpdateBotInlineQuery.
 	//
 	// Use SetPeerType and GetPeerType helpers.
 	PeerType InlineQueryPeerTypeClass
-	// Offset to navigate through results
+	// Offset field of UpdateBotInlineQuery.
 	Offset string
 }
 
@@ -7327,29 +6646,6 @@ func (u *UpdateBotInlineQuery) String() string {
 	}
 	type Alias UpdateBotInlineQuery
 	return fmt.Sprintf("UpdateBotInlineQuery%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateBotInlineQuery from given interface.
-func (u *UpdateBotInlineQuery) FillFrom(from interface {
-	GetQueryID() (value int64)
-	GetUserID() (value int64)
-	GetQuery() (value string)
-	GetGeo() (value GeoPointClass, ok bool)
-	GetPeerType() (value InlineQueryPeerTypeClass, ok bool)
-	GetOffset() (value string)
-}) {
-	u.QueryID = from.GetQueryID()
-	u.UserID = from.GetUserID()
-	u.Query = from.GetQuery()
-	if val, ok := from.GetGeo(); ok {
-		u.Geo = val
-	}
-
-	if val, ok := from.GetPeerType(); ok {
-		u.PeerType = val
-	}
-
-	u.Offset = from.GetOffset()
 }
 
 // TypeID returns type id in TL schema.
@@ -7591,33 +6887,20 @@ func (u *UpdateBotInlineQuery) GetOffset() (value string) {
 }
 
 // UpdateBotInlineSend represents TL type `updateBotInlineSend#12f12a07`.
-// The result of an inline query that was chosen by a user and sent to their chat partner
-// Please see our documentation on the feedback collecting¹ for details on how to
-// enable these updates for your bot.
-//
-// Links:
-//  1. https://core.telegram.org/bots/inline#collecting-feedback
-//
-// See https://core.telegram.org/constructor/updateBotInlineSend for reference.
 type UpdateBotInlineSend struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of UpdateBotInlineSend.
 	Flags bin.Fields
-	// The user that chose the result
+	// UserID field of UpdateBotInlineSend.
 	UserID int64
-	// The query that was used to obtain the result
+	// Query field of UpdateBotInlineSend.
 	Query string
-	// Optional. Sender location, only for bots that require user location
+	// Geo field of UpdateBotInlineSend.
 	//
 	// Use SetGeo and GetGeo helpers.
 	Geo GeoPointClass
-	// The unique identifier for the result that was chosen
+	// ID field of UpdateBotInlineSend.
 	ID string
-	// Identifier of the sent inline message. Available only if there is an inline keyboard
-	// attached to the message. Will be also received in callback queries and can be used to
-	// edit the message.
+	// MsgID field of UpdateBotInlineSend.
 	//
 	// Use SetMsgID and GetMsgID helpers.
 	MsgID InputBotInlineMessageIDClass
@@ -7672,27 +6955,6 @@ func (u *UpdateBotInlineSend) String() string {
 	}
 	type Alias UpdateBotInlineSend
 	return fmt.Sprintf("UpdateBotInlineSend%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateBotInlineSend from given interface.
-func (u *UpdateBotInlineSend) FillFrom(from interface {
-	GetUserID() (value int64)
-	GetQuery() (value string)
-	GetGeo() (value GeoPointClass, ok bool)
-	GetID() (value string)
-	GetMsgID() (value InputBotInlineMessageIDClass, ok bool)
-}) {
-	u.UserID = from.GetUserID()
-	u.Query = from.GetQuery()
-	if val, ok := from.GetGeo(); ok {
-		u.Geo = val
-	}
-
-	u.ID = from.GetID()
-	if val, ok := from.GetMsgID(); ok {
-		u.MsgID = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -7914,24 +7176,12 @@ func (u *UpdateBotInlineSend) GetMsgID() (value InputBotInlineMessageIDClass, ok
 }
 
 // UpdateEditChannelMessage represents TL type `updateEditChannelMessage#1b3f4df7`.
-// A message was edited in a channel/supergroup¹
-//
-// Links:
-//  1. https://core.telegram.org/api/channel
-//
-// See https://core.telegram.org/constructor/updateEditChannelMessage for reference.
 type UpdateEditChannelMessage struct {
-	// The new message
+	// Message field of UpdateEditChannelMessage.
 	Message MessageClass
-	// Event count after generation¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/updates
+	// Pts field of UpdateEditChannelMessage.
 	Pts int
-	// Number of events that were generated¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/updates
+	// PtsCount field of UpdateEditChannelMessage.
 	PtsCount int
 }
 
@@ -7975,17 +7225,6 @@ func (u *UpdateEditChannelMessage) String() string {
 	}
 	type Alias UpdateEditChannelMessage
 	return fmt.Sprintf("UpdateEditChannelMessage%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateEditChannelMessage from given interface.
-func (u *UpdateEditChannelMessage) FillFrom(from interface {
-	GetMessage() (value MessageClass)
-	GetPts() (value int)
-	GetPtsCount() (value int)
-}) {
-	u.Message = from.GetMessage()
-	u.Pts = from.GetPts()
-	u.PtsCount = from.GetPtsCount()
 }
 
 // TypeID returns type id in TL schema.
@@ -8117,32 +7356,24 @@ func (u *UpdateEditChannelMessage) GetPtsCount() (value int) {
 }
 
 // UpdateBotCallbackQuery represents TL type `updateBotCallbackQuery#b9cfc48d`.
-// A callback button was pressed, and the button data was sent to the bot that created
-// the button
-//
-// See https://core.telegram.org/constructor/updateBotCallbackQuery for reference.
 type UpdateBotCallbackQuery struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of UpdateBotCallbackQuery.
 	Flags bin.Fields
-	// Query ID
+	// QueryID field of UpdateBotCallbackQuery.
 	QueryID int64
-	// ID of the user that pressed the button
+	// UserID field of UpdateBotCallbackQuery.
 	UserID int64
-	// Chat where the inline keyboard was sent
+	// Peer field of UpdateBotCallbackQuery.
 	Peer PeerClass
-	// Message ID
+	// MsgID field of UpdateBotCallbackQuery.
 	MsgID int
-	// Global identifier, uniquely corresponding to the chat to which the message with the
-	// callback button was sent. Useful for high scores in games.
+	// ChatInstance field of UpdateBotCallbackQuery.
 	ChatInstance int64
-	// Callback data
+	// Data field of UpdateBotCallbackQuery.
 	//
 	// Use SetData and GetData helpers.
 	Data []byte
-	// Short name of a Game to be returned, serves as the unique identifier for the game
+	// GameShortName field of UpdateBotCallbackQuery.
 	//
 	// Use SetGameShortName and GetGameShortName helpers.
 	GameShortName string
@@ -8203,31 +7434,6 @@ func (u *UpdateBotCallbackQuery) String() string {
 	}
 	type Alias UpdateBotCallbackQuery
 	return fmt.Sprintf("UpdateBotCallbackQuery%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateBotCallbackQuery from given interface.
-func (u *UpdateBotCallbackQuery) FillFrom(from interface {
-	GetQueryID() (value int64)
-	GetUserID() (value int64)
-	GetPeer() (value PeerClass)
-	GetMsgID() (value int)
-	GetChatInstance() (value int64)
-	GetData() (value []byte, ok bool)
-	GetGameShortName() (value string, ok bool)
-}) {
-	u.QueryID = from.GetQueryID()
-	u.UserID = from.GetUserID()
-	u.Peer = from.GetPeer()
-	u.MsgID = from.GetMsgID()
-	u.ChatInstance = from.GetChatInstance()
-	if val, ok := from.GetData(); ok {
-		u.Data = val
-	}
-
-	if val, ok := from.GetGameShortName(); ok {
-		u.GameShortName = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -8484,21 +7690,12 @@ func (u *UpdateBotCallbackQuery) GetGameShortName() (value string, ok bool) {
 }
 
 // UpdateEditMessage represents TL type `updateEditMessage#e40370a3`.
-// A message was edited
-//
-// See https://core.telegram.org/constructor/updateEditMessage for reference.
 type UpdateEditMessage struct {
-	// The new edited message
+	// Message field of UpdateEditMessage.
 	Message MessageClass
-	// PTS¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/updates
+	// Pts field of UpdateEditMessage.
 	Pts int
-	// PTS count¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/updates
+	// PtsCount field of UpdateEditMessage.
 	PtsCount int
 }
 
@@ -8542,17 +7739,6 @@ func (u *UpdateEditMessage) String() string {
 	}
 	type Alias UpdateEditMessage
 	return fmt.Sprintf("UpdateEditMessage%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateEditMessage from given interface.
-func (u *UpdateEditMessage) FillFrom(from interface {
-	GetMessage() (value MessageClass)
-	GetPts() (value int)
-	GetPtsCount() (value int)
-}) {
-	u.Message = from.GetMessage()
-	u.Pts = from.GetPts()
-	u.PtsCount = from.GetPtsCount()
 }
 
 // TypeID returns type id in TL schema.
@@ -8684,30 +7870,22 @@ func (u *UpdateEditMessage) GetPtsCount() (value int) {
 }
 
 // UpdateInlineBotCallbackQuery represents TL type `updateInlineBotCallbackQuery#691e9052`.
-// This notification is received by bots when a button is pressed
-//
-// See https://core.telegram.org/constructor/updateInlineBotCallbackQuery for reference.
 type UpdateInlineBotCallbackQuery struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of UpdateInlineBotCallbackQuery.
 	Flags bin.Fields
-	// Query ID
+	// QueryID field of UpdateInlineBotCallbackQuery.
 	QueryID int64
-	// ID of the user that pressed the button
+	// UserID field of UpdateInlineBotCallbackQuery.
 	UserID int64
-	// ID of the inline message with the button
+	// MsgID field of UpdateInlineBotCallbackQuery.
 	MsgID InputBotInlineMessageIDClass
-	// Global identifier, uniquely corresponding to the chat to which the message with the
-	// callback button was sent. Useful for high scores in games.
+	// ChatInstance field of UpdateInlineBotCallbackQuery.
 	ChatInstance int64
-	// Data associated with the callback button. Be aware that a bad client can send
-	// arbitrary data in this field.
+	// Data field of UpdateInlineBotCallbackQuery.
 	//
 	// Use SetData and GetData helpers.
 	Data []byte
-	// Short name of a Game to be returned, serves as the unique identifier for the game
+	// GameShortName field of UpdateInlineBotCallbackQuery.
 	//
 	// Use SetGameShortName and GetGameShortName helpers.
 	GameShortName string
@@ -8765,29 +7943,6 @@ func (u *UpdateInlineBotCallbackQuery) String() string {
 	}
 	type Alias UpdateInlineBotCallbackQuery
 	return fmt.Sprintf("UpdateInlineBotCallbackQuery%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateInlineBotCallbackQuery from given interface.
-func (u *UpdateInlineBotCallbackQuery) FillFrom(from interface {
-	GetQueryID() (value int64)
-	GetUserID() (value int64)
-	GetMsgID() (value InputBotInlineMessageIDClass)
-	GetChatInstance() (value int64)
-	GetData() (value []byte, ok bool)
-	GetGameShortName() (value string, ok bool)
-}) {
-	u.QueryID = from.GetQueryID()
-	u.UserID = from.GetUserID()
-	u.MsgID = from.GetMsgID()
-	u.ChatInstance = from.GetChatInstance()
-	if val, ok := from.GetData(); ok {
-		u.Data = val
-	}
-
-	if val, ok := from.GetGameShortName(); ok {
-		u.GameShortName = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -9024,16 +8179,10 @@ func (u *UpdateInlineBotCallbackQuery) GetGameShortName() (value string, ok bool
 }
 
 // UpdateReadChannelOutbox represents TL type `updateReadChannelOutbox#b75f99a9`.
-// Outgoing messages in a channel/supergroup¹ were read
-//
-// Links:
-//  1. https://core.telegram.org/api/channel
-//
-// See https://core.telegram.org/constructor/updateReadChannelOutbox for reference.
 type UpdateReadChannelOutbox struct {
-	// Channel/supergroup ID
+	// ChannelID field of UpdateReadChannelOutbox.
 	ChannelID int64
-	// Position up to which all outgoing messages are read.
+	// MaxID field of UpdateReadChannelOutbox.
 	MaxID int
 }
 
@@ -9074,15 +8223,6 @@ func (u *UpdateReadChannelOutbox) String() string {
 	}
 	type Alias UpdateReadChannelOutbox
 	return fmt.Sprintf("UpdateReadChannelOutbox%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateReadChannelOutbox from given interface.
-func (u *UpdateReadChannelOutbox) FillFrom(from interface {
-	GetChannelID() (value int64)
-	GetMaxID() (value int)
-}) {
-	u.ChannelID = from.GetChannelID()
-	u.MaxID = from.GetMaxID()
 }
 
 // TypeID returns type id in TL schema.
@@ -9189,24 +8329,12 @@ func (u *UpdateReadChannelOutbox) GetMaxID() (value int) {
 }
 
 // UpdateDraftMessage represents TL type `updateDraftMessage#edfc111e`.
-// Notifies a change of a message draft¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/drafts
-//
-// See https://core.telegram.org/constructor/updateDraftMessage for reference.
 type UpdateDraftMessage struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of UpdateDraftMessage.
 	Flags bin.Fields
-	// The peer to which the draft is associated
+	// Peer field of UpdateDraftMessage.
 	Peer PeerClass
-	// ID of the forum topic¹ to which the draft is associated
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/forum#forum-topics
+	// TopMsgID field of UpdateDraftMessage.
 	//
 	// Use SetTopMsgID and GetTopMsgID helpers.
 	TopMsgID int
@@ -9214,7 +8342,7 @@ type UpdateDraftMessage struct {
 	//
 	// Use SetSavedPeerID and GetSavedPeerID helpers.
 	SavedPeerID PeerClass
-	// The draft
+	// Draft field of UpdateDraftMessage.
 	Draft DraftMessageClass
 }
 
@@ -9264,25 +8392,6 @@ func (u *UpdateDraftMessage) String() string {
 	}
 	type Alias UpdateDraftMessage
 	return fmt.Sprintf("UpdateDraftMessage%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateDraftMessage from given interface.
-func (u *UpdateDraftMessage) FillFrom(from interface {
-	GetPeer() (value PeerClass)
-	GetTopMsgID() (value int, ok bool)
-	GetSavedPeerID() (value PeerClass, ok bool)
-	GetDraft() (value DraftMessageClass)
-}) {
-	u.Peer = from.GetPeer()
-	if val, ok := from.GetTopMsgID(); ok {
-		u.TopMsgID = val
-	}
-
-	if val, ok := from.GetSavedPeerID(); ok {
-		u.SavedPeerID = val
-	}
-
-	u.Draft = from.GetDraft()
 }
 
 // TypeID returns type id in TL schema.
@@ -9489,9 +8598,6 @@ func (u *UpdateDraftMessage) GetDraft() (value DraftMessageClass) {
 }
 
 // UpdateReadFeaturedStickers represents TL type `updateReadFeaturedStickers#571d2742`.
-// Some featured stickers were marked as read
-//
-// See https://core.telegram.org/constructor/updateReadFeaturedStickers for reference.
 type UpdateReadFeaturedStickers struct {
 }
 
@@ -9591,9 +8697,6 @@ func (u *UpdateReadFeaturedStickers) DecodeBare(b *bin.Buffer) error {
 }
 
 // UpdateRecentStickers represents TL type `updateRecentStickers#9a422c20`.
-// The recent sticker list was updated
-//
-// See https://core.telegram.org/constructor/updateRecentStickers for reference.
 type UpdateRecentStickers struct {
 }
 
@@ -9693,14 +8796,6 @@ func (u *UpdateRecentStickers) DecodeBare(b *bin.Buffer) error {
 }
 
 // UpdateConfig represents TL type `updateConfig#a229dd06`.
-// The server-side configuration has changed; the client should re-fetch the config using
-// help.getConfig¹ and help.getAppConfig².
-//
-// Links:
-//  1. https://core.telegram.org/method/help.getConfig
-//  2. https://core.telegram.org/method/help.getAppConfig
-//
-// See https://core.telegram.org/constructor/updateConfig for reference.
 type UpdateConfig struct {
 }
 
@@ -9800,14 +8895,6 @@ func (u *UpdateConfig) DecodeBare(b *bin.Buffer) error {
 }
 
 // UpdatePtsChanged represents TL type `updatePtsChanged#3354678f`.
-// Common message box sequence PTS¹ has changed, state has to be refetched using updates
-// getState²
-//
-// Links:
-//  1. https://core.telegram.org/api/updates
-//  2. https://core.telegram.org/api/updates#fetching-state
-//
-// See https://core.telegram.org/constructor/updatePtsChanged for reference.
 type UpdatePtsChanged struct {
 }
 
@@ -9907,29 +8994,14 @@ func (u *UpdatePtsChanged) DecodeBare(b *bin.Buffer) error {
 }
 
 // UpdateChannelWebPage represents TL type `updateChannelWebPage#2f2ba99f`.
-// A webpage preview of a link in a channel/supergroup¹ message was generated
-//
-// Links:
-//  1. https://core.telegram.org/api/channel
-//
-// See https://core.telegram.org/constructor/updateChannelWebPage for reference.
 type UpdateChannelWebPage struct {
-	// Channel/supergroup¹ ID
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/channel
+	// ChannelID field of UpdateChannelWebPage.
 	ChannelID int64
-	// Generated webpage preview
+	// Webpage field of UpdateChannelWebPage.
 	Webpage WebPageClass
-	// Event count after generation¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/updates
+	// Pts field of UpdateChannelWebPage.
 	Pts int
-	// Number of events that were generated¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/updates
+	// PtsCount field of UpdateChannelWebPage.
 	PtsCount int
 }
 
@@ -9976,19 +9048,6 @@ func (u *UpdateChannelWebPage) String() string {
 	}
 	type Alias UpdateChannelWebPage
 	return fmt.Sprintf("UpdateChannelWebPage%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateChannelWebPage from given interface.
-func (u *UpdateChannelWebPage) FillFrom(from interface {
-	GetChannelID() (value int64)
-	GetWebpage() (value WebPageClass)
-	GetPts() (value int)
-	GetPtsCount() (value int)
-}) {
-	u.ChannelID = from.GetChannelID()
-	u.Webpage = from.GetWebpage()
-	u.Pts = from.GetPts()
-	u.PtsCount = from.GetPtsCount()
 }
 
 // TypeID returns type id in TL schema.
@@ -10140,25 +9199,16 @@ func (u *UpdateChannelWebPage) GetPtsCount() (value int) {
 }
 
 // UpdateDialogPinned represents TL type `updateDialogPinned#6e6fe51c`.
-// A dialog was pinned/unpinned
-//
-// See https://core.telegram.org/constructor/updateDialogPinned for reference.
 type UpdateDialogPinned struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of UpdateDialogPinned.
 	Flags bin.Fields
-	// Whether the dialog was pinned
+	// Pinned field of UpdateDialogPinned.
 	Pinned bool
-	// Peer folder ID, for more info click here¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/folders#peer-folders
+	// FolderID field of UpdateDialogPinned.
 	//
 	// Use SetFolderID and GetFolderID helpers.
 	FolderID int
-	// The dialog
+	// Peer field of UpdateDialogPinned.
 	Peer DialogPeerClass
 }
 
@@ -10205,20 +9255,6 @@ func (u *UpdateDialogPinned) String() string {
 	}
 	type Alias UpdateDialogPinned
 	return fmt.Sprintf("UpdateDialogPinned%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateDialogPinned from given interface.
-func (u *UpdateDialogPinned) FillFrom(from interface {
-	GetPinned() (value bool)
-	GetFolderID() (value int, ok bool)
-	GetPeer() (value DialogPeerClass)
-}) {
-	u.Pinned = from.GetPinned()
-	if val, ok := from.GetFolderID(); ok {
-		u.FolderID = val
-	}
-
-	u.Peer = from.GetPeer()
 }
 
 // TypeID returns type id in TL schema.
@@ -10387,23 +9423,14 @@ func (u *UpdateDialogPinned) GetPeer() (value DialogPeerClass) {
 }
 
 // UpdatePinnedDialogs represents TL type `updatePinnedDialogs#fa0f3ca2`.
-// Pinned dialogs were updated
-//
-// See https://core.telegram.org/constructor/updatePinnedDialogs for reference.
 type UpdatePinnedDialogs struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of UpdatePinnedDialogs.
 	Flags bin.Fields
-	// Peer folder ID, for more info click here¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/folders#peer-folders
+	// FolderID field of UpdatePinnedDialogs.
 	//
 	// Use SetFolderID and GetFolderID helpers.
 	FolderID int
-	// New order of pinned dialogs
+	// Order field of UpdatePinnedDialogs.
 	//
 	// Use SetOrder and GetOrder helpers.
 	Order []DialogPeerClass
@@ -10449,21 +9476,6 @@ func (u *UpdatePinnedDialogs) String() string {
 	}
 	type Alias UpdatePinnedDialogs
 	return fmt.Sprintf("UpdatePinnedDialogs%+v", Alias(*u))
-}
-
-// FillFrom fills UpdatePinnedDialogs from given interface.
-func (u *UpdatePinnedDialogs) FillFrom(from interface {
-	GetFolderID() (value int, ok bool)
-	GetOrder() (value []DialogPeerClass, ok bool)
-}) {
-	if val, ok := from.GetFolderID(); ok {
-		u.FolderID = val
-	}
-
-	if val, ok := from.GetOrder(); ok {
-		u.Order = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -10632,20 +9644,9 @@ func (u *UpdatePinnedDialogs) GetOrder() (value []DialogPeerClass, ok bool) {
 	return u.Order, true
 }
 
-// MapOrder returns field Order wrapped in DialogPeerClassArray helper.
-func (u *UpdatePinnedDialogs) MapOrder() (value DialogPeerClassArray, ok bool) {
-	if !u.Flags.Has(0) {
-		return value, false
-	}
-	return DialogPeerClassArray(u.Order), true
-}
-
 // UpdateBotWebhookJSON represents TL type `updateBotWebhookJSON#8317c0c3`.
-// A new incoming event; for bots only
-//
-// See https://core.telegram.org/constructor/updateBotWebhookJSON for reference.
 type UpdateBotWebhookJSON struct {
-	// The event
+	// Data field of UpdateBotWebhookJSON.
 	Data DataJSON
 }
 
@@ -10683,13 +9684,6 @@ func (u *UpdateBotWebhookJSON) String() string {
 	}
 	type Alias UpdateBotWebhookJSON
 	return fmt.Sprintf("UpdateBotWebhookJSON%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateBotWebhookJSON from given interface.
-func (u *UpdateBotWebhookJSON) FillFrom(from interface {
-	GetData() (value DataJSON)
-}) {
-	u.Data = from.GetData()
 }
 
 // TypeID returns type id in TL schema.
@@ -10776,15 +9770,12 @@ func (u *UpdateBotWebhookJSON) GetData() (value DataJSON) {
 }
 
 // UpdateBotWebhookJSONQuery represents TL type `updateBotWebhookJSONQuery#9b9240a6`.
-// A new incoming query; for bots only
-//
-// See https://core.telegram.org/constructor/updateBotWebhookJSONQuery for reference.
 type UpdateBotWebhookJSONQuery struct {
-	// Query identifier
+	// QueryID field of UpdateBotWebhookJSONQuery.
 	QueryID int64
-	// Query data
+	// Data field of UpdateBotWebhookJSONQuery.
 	Data DataJSON
-	// Query timeout
+	// Timeout field of UpdateBotWebhookJSONQuery.
 	Timeout int
 }
 
@@ -10828,17 +9819,6 @@ func (u *UpdateBotWebhookJSONQuery) String() string {
 	}
 	type Alias UpdateBotWebhookJSONQuery
 	return fmt.Sprintf("UpdateBotWebhookJSONQuery%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateBotWebhookJSONQuery from given interface.
-func (u *UpdateBotWebhookJSONQuery) FillFrom(from interface {
-	GetQueryID() (value int64)
-	GetData() (value DataJSON)
-	GetTimeout() (value int)
-}) {
-	u.QueryID = from.GetQueryID()
-	u.Data = from.GetData()
-	u.Timeout = from.GetTimeout()
 }
 
 // TypeID returns type id in TL schema.
@@ -10965,17 +9945,14 @@ func (u *UpdateBotWebhookJSONQuery) GetTimeout() (value int) {
 }
 
 // UpdateBotShippingQuery represents TL type `updateBotShippingQuery#b5aefd7d`.
-// This object contains information about an incoming shipping query.
-//
-// See https://core.telegram.org/constructor/updateBotShippingQuery for reference.
 type UpdateBotShippingQuery struct {
-	// Unique query identifier
+	// QueryID field of UpdateBotShippingQuery.
 	QueryID int64
-	// User who sent the query
+	// UserID field of UpdateBotShippingQuery.
 	UserID int64
-	// Bot specified invoice payload
+	// Payload field of UpdateBotShippingQuery.
 	Payload []byte
-	// User specified shipping address
+	// ShippingAddress field of UpdateBotShippingQuery.
 	ShippingAddress PostAddress
 }
 
@@ -11022,19 +9999,6 @@ func (u *UpdateBotShippingQuery) String() string {
 	}
 	type Alias UpdateBotShippingQuery
 	return fmt.Sprintf("UpdateBotShippingQuery%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateBotShippingQuery from given interface.
-func (u *UpdateBotShippingQuery) FillFrom(from interface {
-	GetQueryID() (value int64)
-	GetUserID() (value int64)
-	GetPayload() (value []byte)
-	GetShippingAddress() (value PostAddress)
-}) {
-	u.QueryID = from.GetQueryID()
-	u.UserID = from.GetUserID()
-	u.Payload = from.GetPayload()
-	u.ShippingAddress = from.GetShippingAddress()
 }
 
 // TypeID returns type id in TL schema.
@@ -11181,42 +10145,26 @@ func (u *UpdateBotShippingQuery) GetShippingAddress() (value PostAddress) {
 }
 
 // UpdateBotPrecheckoutQuery represents TL type `updateBotPrecheckoutQuery#8caa9a96`.
-// This object contains information about an incoming pre-checkout query.
-//
-// See https://core.telegram.org/constructor/updateBotPrecheckoutQuery for reference.
 type UpdateBotPrecheckoutQuery struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of UpdateBotPrecheckoutQuery.
 	Flags bin.Fields
-	// Unique query identifier
+	// QueryID field of UpdateBotPrecheckoutQuery.
 	QueryID int64
-	// User who sent the query
+	// UserID field of UpdateBotPrecheckoutQuery.
 	UserID int64
-	// Bot specified invoice payload
+	// Payload field of UpdateBotPrecheckoutQuery.
 	Payload []byte
-	// Order info provided by the user
+	// Info field of UpdateBotPrecheckoutQuery.
 	//
 	// Use SetInfo and GetInfo helpers.
 	Info PaymentRequestedInfo
-	// Identifier of the shipping option chosen by the user
+	// ShippingOptionID field of UpdateBotPrecheckoutQuery.
 	//
 	// Use SetShippingOptionID and GetShippingOptionID helpers.
 	ShippingOptionID string
-	// Three-letter ISO 4217 currency¹ code, or XTR for Telegram Stars².
-	//
-	// Links:
-	//  1) https://core.telegram.org/bots/payments#supported-currencies
-	//  2) https://core.telegram.org/api/stars
+	// Currency field of UpdateBotPrecheckoutQuery.
 	Currency string
-	// Total amount in the smallest units of the currency (integer, not float/double). For
-	// example, for a price of US$ 1.45 pass amount = 145. See the exp parameter in
-	// currencies.json¹, it shows the number of digits past the decimal point for each
-	// currency (2 for the majority of currencies).
-	//
-	// Links:
-	//  1) https://core.telegram.org/bots/payments/currencies.json
+	// TotalAmount field of UpdateBotPrecheckoutQuery.
 	TotalAmount int64
 }
 
@@ -11275,31 +10223,6 @@ func (u *UpdateBotPrecheckoutQuery) String() string {
 	}
 	type Alias UpdateBotPrecheckoutQuery
 	return fmt.Sprintf("UpdateBotPrecheckoutQuery%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateBotPrecheckoutQuery from given interface.
-func (u *UpdateBotPrecheckoutQuery) FillFrom(from interface {
-	GetQueryID() (value int64)
-	GetUserID() (value int64)
-	GetPayload() (value []byte)
-	GetInfo() (value PaymentRequestedInfo, ok bool)
-	GetShippingOptionID() (value string, ok bool)
-	GetCurrency() (value string)
-	GetTotalAmount() (value int64)
-}) {
-	u.QueryID = from.GetQueryID()
-	u.UserID = from.GetUserID()
-	u.Payload = from.GetPayload()
-	if val, ok := from.GetInfo(); ok {
-		u.Info = val
-	}
-
-	if val, ok := from.GetShippingOptionID(); ok {
-		u.ShippingOptionID = val
-	}
-
-	u.Currency = from.GetCurrency()
-	u.TotalAmount = from.GetTotalAmount()
 }
 
 // TypeID returns type id in TL schema.
@@ -11551,11 +10474,8 @@ func (u *UpdateBotPrecheckoutQuery) GetTotalAmount() (value int64) {
 }
 
 // UpdatePhoneCall represents TL type `updatePhoneCall#ab0f6b1e`.
-// An incoming phone call
-//
-// See https://core.telegram.org/constructor/updatePhoneCall for reference.
 type UpdatePhoneCall struct {
-	// Phone call
+	// PhoneCall field of UpdatePhoneCall.
 	PhoneCall PhoneCallClass
 }
 
@@ -11593,13 +10513,6 @@ func (u *UpdatePhoneCall) String() string {
 	}
 	type Alias UpdatePhoneCall
 	return fmt.Sprintf("UpdatePhoneCall%+v", Alias(*u))
-}
-
-// FillFrom fills UpdatePhoneCall from given interface.
-func (u *UpdatePhoneCall) FillFrom(from interface {
-	GetPhoneCall() (value PhoneCallClass)
-}) {
-	u.PhoneCall = from.GetPhoneCall()
 }
 
 // TypeID returns type id in TL schema.
@@ -11691,15 +10604,8 @@ func (u *UpdatePhoneCall) GetPhoneCall() (value PhoneCallClass) {
 }
 
 // UpdateLangPackTooLong represents TL type `updateLangPackTooLong#46560264`.
-// A language pack has changed, the client should manually fetch the changed strings
-// using langpack.getDifference¹
-//
-// Links:
-//  1. https://core.telegram.org/method/langpack.getDifference
-//
-// See https://core.telegram.org/constructor/updateLangPackTooLong for reference.
 type UpdateLangPackTooLong struct {
-	// Language code
+	// LangCode field of UpdateLangPackTooLong.
 	LangCode string
 }
 
@@ -11737,13 +10643,6 @@ func (u *UpdateLangPackTooLong) String() string {
 	}
 	type Alias UpdateLangPackTooLong
 	return fmt.Sprintf("UpdateLangPackTooLong%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateLangPackTooLong from given interface.
-func (u *UpdateLangPackTooLong) FillFrom(from interface {
-	GetLangCode() (value string)
-}) {
-	u.LangCode = from.GetLangCode()
 }
 
 // TypeID returns type id in TL schema.
@@ -11830,11 +10729,8 @@ func (u *UpdateLangPackTooLong) GetLangCode() (value string) {
 }
 
 // UpdateLangPack represents TL type `updateLangPack#56022f4d`.
-// Language pack updated
-//
-// See https://core.telegram.org/constructor/updateLangPack for reference.
 type UpdateLangPack struct {
-	// Changed strings
+	// Difference field of UpdateLangPack.
 	Difference LangPackDifference
 }
 
@@ -11872,13 +10768,6 @@ func (u *UpdateLangPack) String() string {
 	}
 	type Alias UpdateLangPack
 	return fmt.Sprintf("UpdateLangPack%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateLangPack from given interface.
-func (u *UpdateLangPack) FillFrom(from interface {
-	GetDifference() (value LangPackDifference)
-}) {
-	u.Difference = from.GetDifference()
 }
 
 // TypeID returns type id in TL schema.
@@ -11965,13 +10854,6 @@ func (u *UpdateLangPack) GetDifference() (value LangPackDifference) {
 }
 
 // UpdateFavedStickers represents TL type `updateFavedStickers#e511996d`.
-// The list of favorited stickers was changed, the client should call messages
-// getFavedStickers¹ to refetch the new list
-//
-// Links:
-//  1. https://core.telegram.org/method/messages.getFavedStickers
-//
-// See https://core.telegram.org/constructor/updateFavedStickers for reference.
 type UpdateFavedStickers struct {
 }
 
@@ -12071,27 +10953,12 @@ func (u *UpdateFavedStickers) DecodeBare(b *bin.Buffer) error {
 }
 
 // UpdateChannelReadMessagesContents represents TL type `updateChannelReadMessagesContents#25f324f7`.
-// The specified channel/supergroup¹ messages were read
-//
-// Links:
-//  1. https://core.telegram.org/api/channel
-//
-// See https://core.telegram.org/constructor/updateChannelReadMessagesContents for reference.
 type UpdateChannelReadMessagesContents struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of UpdateChannelReadMessagesContents.
 	Flags bin.Fields
-	// Channel/supergroup¹ ID
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/channel
+	// ChannelID field of UpdateChannelReadMessagesContents.
 	ChannelID int64
-	// Forum topic ID¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/forum#forum-topics
+	// TopMsgID field of UpdateChannelReadMessagesContents.
 	//
 	// Use SetTopMsgID and GetTopMsgID helpers.
 	TopMsgID int
@@ -12099,7 +10966,7 @@ type UpdateChannelReadMessagesContents struct {
 	//
 	// Use SetSavedPeerID and GetSavedPeerID helpers.
 	SavedPeerID PeerClass
-	// IDs of messages that were read
+	// Messages field of UpdateChannelReadMessagesContents.
 	Messages []int
 }
 
@@ -12149,25 +11016,6 @@ func (u *UpdateChannelReadMessagesContents) String() string {
 	}
 	type Alias UpdateChannelReadMessagesContents
 	return fmt.Sprintf("UpdateChannelReadMessagesContents%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateChannelReadMessagesContents from given interface.
-func (u *UpdateChannelReadMessagesContents) FillFrom(from interface {
-	GetChannelID() (value int64)
-	GetTopMsgID() (value int, ok bool)
-	GetSavedPeerID() (value PeerClass, ok bool)
-	GetMessages() (value []int)
-}) {
-	u.ChannelID = from.GetChannelID()
-	if val, ok := from.GetTopMsgID(); ok {
-		u.TopMsgID = val
-	}
-
-	if val, ok := from.GetSavedPeerID(); ok {
-		u.SavedPeerID = val
-	}
-
-	u.Messages = from.GetMessages()
 }
 
 // TypeID returns type id in TL schema.
@@ -12377,9 +11225,6 @@ func (u *UpdateChannelReadMessagesContents) GetMessages() (value []int) {
 }
 
 // UpdateContactsReset represents TL type `updateContactsReset#7084a7be`.
-// All contacts were deleted
-//
-// See https://core.telegram.org/constructor/updateContactsReset for reference.
 type UpdateContactsReset struct {
 }
 
@@ -12479,16 +11324,10 @@ func (u *UpdateContactsReset) DecodeBare(b *bin.Buffer) error {
 }
 
 // UpdateChannelAvailableMessages represents TL type `updateChannelAvailableMessages#b23fc698`.
-// The history of a channel/supergroup¹ was hidden.
-//
-// Links:
-//  1. https://core.telegram.org/api/channel
-//
-// See https://core.telegram.org/constructor/updateChannelAvailableMessages for reference.
 type UpdateChannelAvailableMessages struct {
-	// Channel/supergroup ID
+	// ChannelID field of UpdateChannelAvailableMessages.
 	ChannelID int64
-	// Identifier of a maximum unavailable message in a channel due to hidden history.
+	// AvailableMinID field of UpdateChannelAvailableMessages.
 	AvailableMinID int
 }
 
@@ -12529,15 +11368,6 @@ func (u *UpdateChannelAvailableMessages) String() string {
 	}
 	type Alias UpdateChannelAvailableMessages
 	return fmt.Sprintf("UpdateChannelAvailableMessages%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateChannelAvailableMessages from given interface.
-func (u *UpdateChannelAvailableMessages) FillFrom(from interface {
-	GetChannelID() (value int64)
-	GetAvailableMinID() (value int)
-}) {
-	u.ChannelID = from.GetChannelID()
-	u.AvailableMinID = from.GetAvailableMinID()
 }
 
 // TypeID returns type id in TL schema.
@@ -12644,18 +11474,12 @@ func (u *UpdateChannelAvailableMessages) GetAvailableMinID() (value int) {
 }
 
 // UpdateDialogUnreadMark represents TL type `updateDialogUnreadMark#b658f23e`.
-// The manual unread mark of a chat was changed
-//
-// See https://core.telegram.org/constructor/updateDialogUnreadMark for reference.
 type UpdateDialogUnreadMark struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of UpdateDialogUnreadMark.
 	Flags bin.Fields
-	// Was the chat marked or unmarked as read
+	// Unread field of UpdateDialogUnreadMark.
 	Unread bool
-	// The dialog
+	// Peer field of UpdateDialogUnreadMark.
 	Peer DialogPeerClass
 	// SavedPeerID field of UpdateDialogUnreadMark.
 	//
@@ -12706,20 +11530,6 @@ func (u *UpdateDialogUnreadMark) String() string {
 	}
 	type Alias UpdateDialogUnreadMark
 	return fmt.Sprintf("UpdateDialogUnreadMark%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateDialogUnreadMark from given interface.
-func (u *UpdateDialogUnreadMark) FillFrom(from interface {
-	GetUnread() (value bool)
-	GetPeer() (value DialogPeerClass)
-	GetSavedPeerID() (value PeerClass, ok bool)
-}) {
-	u.Unread = from.GetUnread()
-	u.Peer = from.GetPeer()
-	if val, ok := from.GetSavedPeerID(); ok {
-		u.SavedPeerID = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -12893,22 +11703,16 @@ func (u *UpdateDialogUnreadMark) GetSavedPeerID() (value PeerClass, ok bool) {
 }
 
 // UpdateMessagePoll represents TL type `updateMessagePoll#aca1657b`.
-// The results of a poll have changed
-//
-// See https://core.telegram.org/constructor/updateMessagePoll for reference.
 type UpdateMessagePoll struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of UpdateMessagePoll.
 	Flags bin.Fields
-	// Poll ID
+	// PollID field of UpdateMessagePoll.
 	PollID int64
-	// If the server knows the client hasn't cached this poll yet, the poll itself
+	// Poll field of UpdateMessagePoll.
 	//
 	// Use SetPoll and GetPoll helpers.
 	Poll Poll
-	// New poll results
+	// Results field of UpdateMessagePoll.
 	Results PollResults
 }
 
@@ -12955,20 +11759,6 @@ func (u *UpdateMessagePoll) String() string {
 	}
 	type Alias UpdateMessagePoll
 	return fmt.Sprintf("UpdateMessagePoll%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateMessagePoll from given interface.
-func (u *UpdateMessagePoll) FillFrom(from interface {
-	GetPollID() (value int64)
-	GetPoll() (value Poll, ok bool)
-	GetResults() (value PollResults)
-}) {
-	u.PollID = from.GetPollID()
-	if val, ok := from.GetPoll(); ok {
-		u.Poll = val
-	}
-
-	u.Results = from.GetResults()
 }
 
 // TypeID returns type id in TL schema.
@@ -13124,18 +11914,12 @@ func (u *UpdateMessagePoll) GetResults() (value PollResults) {
 }
 
 // UpdateChatDefaultBannedRights represents TL type `updateChatDefaultBannedRights#54c01850`.
-// Default banned rights in a normal chat¹ were updated
-//
-// Links:
-//  1. https://core.telegram.org/api/channel
-//
-// See https://core.telegram.org/constructor/updateChatDefaultBannedRights for reference.
 type UpdateChatDefaultBannedRights struct {
-	// The chat
+	// Peer field of UpdateChatDefaultBannedRights.
 	Peer PeerClass
-	// New default banned rights
+	// DefaultBannedRights field of UpdateChatDefaultBannedRights.
 	DefaultBannedRights ChatBannedRights
-	// Version
+	// Version field of UpdateChatDefaultBannedRights.
 	Version int
 }
 
@@ -13179,17 +11963,6 @@ func (u *UpdateChatDefaultBannedRights) String() string {
 	}
 	type Alias UpdateChatDefaultBannedRights
 	return fmt.Sprintf("UpdateChatDefaultBannedRights%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateChatDefaultBannedRights from given interface.
-func (u *UpdateChatDefaultBannedRights) FillFrom(from interface {
-	GetPeer() (value PeerClass)
-	GetDefaultBannedRights() (value ChatBannedRights)
-	GetVersion() (value int)
-}) {
-	u.Peer = from.GetPeer()
-	u.DefaultBannedRights = from.GetDefaultBannedRights()
-	u.Version = from.GetVersion()
 }
 
 // TypeID returns type id in TL schema.
@@ -13321,24 +12094,12 @@ func (u *UpdateChatDefaultBannedRights) GetVersion() (value int) {
 }
 
 // UpdateFolderPeers represents TL type `updateFolderPeers#19360dc0`.
-// The peer list of a peer folder¹ was updated
-//
-// Links:
-//  1. https://core.telegram.org/api/folders#peer-folders
-//
-// See https://core.telegram.org/constructor/updateFolderPeers for reference.
 type UpdateFolderPeers struct {
-	// New peer list
+	// FolderPeers field of UpdateFolderPeers.
 	FolderPeers []FolderPeer
-	// Event count after generation¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/updates
+	// Pts field of UpdateFolderPeers.
 	Pts int
-	// Number of events that were generated¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/updates
+	// PtsCount field of UpdateFolderPeers.
 	PtsCount int
 }
 
@@ -13382,17 +12143,6 @@ func (u *UpdateFolderPeers) String() string {
 	}
 	type Alias UpdateFolderPeers
 	return fmt.Sprintf("UpdateFolderPeers%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateFolderPeers from given interface.
-func (u *UpdateFolderPeers) FillFrom(from interface {
-	GetFolderPeers() (value []FolderPeer)
-	GetPts() (value int)
-	GetPtsCount() (value int)
-}) {
-	u.FolderPeers = from.GetFolderPeers()
-	u.Pts = from.GetPts()
-	u.PtsCount = from.GetPtsCount()
 }
 
 // TypeID returns type id in TL schema.
@@ -13534,13 +12284,10 @@ func (u *UpdateFolderPeers) GetPtsCount() (value int) {
 }
 
 // UpdatePeerSettings represents TL type `updatePeerSettings#6a7e7366`.
-// Settings of a certain peer have changed
-//
-// See https://core.telegram.org/constructor/updatePeerSettings for reference.
 type UpdatePeerSettings struct {
-	// The peer
+	// Peer field of UpdatePeerSettings.
 	Peer PeerClass
-	// Associated peer settings
+	// Settings field of UpdatePeerSettings.
 	Settings PeerSettings
 }
 
@@ -13581,15 +12328,6 @@ func (u *UpdatePeerSettings) String() string {
 	}
 	type Alias UpdatePeerSettings
 	return fmt.Sprintf("UpdatePeerSettings%+v", Alias(*u))
-}
-
-// FillFrom fills UpdatePeerSettings from given interface.
-func (u *UpdatePeerSettings) FillFrom(from interface {
-	GetPeer() (value PeerClass)
-	GetSettings() (value PeerSettings)
-}) {
-	u.Peer = from.GetPeer()
-	u.Settings = from.GetSettings()
 }
 
 // TypeID returns type id in TL schema.
@@ -13701,11 +12439,8 @@ func (u *UpdatePeerSettings) GetSettings() (value PeerSettings) {
 }
 
 // UpdatePeerLocated represents TL type `updatePeerLocated#b4afcfb0`.
-// List of peers near you was updated
-//
-// See https://core.telegram.org/constructor/updatePeerLocated for reference.
 type UpdatePeerLocated struct {
-	// Geolocated peer list update
+	// Peers field of UpdatePeerLocated.
 	Peers []PeerLocatedClass
 }
 
@@ -13743,13 +12478,6 @@ func (u *UpdatePeerLocated) String() string {
 	}
 	type Alias UpdatePeerLocated
 	return fmt.Sprintf("UpdatePeerLocated%+v", Alias(*u))
-}
-
-// FillFrom fills UpdatePeerLocated from given interface.
-func (u *UpdatePeerLocated) FillFrom(from interface {
-	GetPeers() (value []PeerLocatedClass)
-}) {
-	u.Peers = from.GetPeers()
 }
 
 // TypeID returns type id in TL schema.
@@ -13853,20 +12581,9 @@ func (u *UpdatePeerLocated) GetPeers() (value []PeerLocatedClass) {
 	return u.Peers
 }
 
-// MapPeers returns field Peers wrapped in PeerLocatedClassArray helper.
-func (u *UpdatePeerLocated) MapPeers() (value PeerLocatedClassArray) {
-	return PeerLocatedClassArray(u.Peers)
-}
-
 // UpdateNewScheduledMessage represents TL type `updateNewScheduledMessage#39a51dfb`.
-// A message was added to the schedule queue of a chat¹
-//
-// Links:
-//  1. https://core.telegram.org/api/scheduled-messages
-//
-// See https://core.telegram.org/constructor/updateNewScheduledMessage for reference.
 type UpdateNewScheduledMessage struct {
-	// Message
+	// Message field of UpdateNewScheduledMessage.
 	Message MessageClass
 }
 
@@ -13904,13 +12621,6 @@ func (u *UpdateNewScheduledMessage) String() string {
 	}
 	type Alias UpdateNewScheduledMessage
 	return fmt.Sprintf("UpdateNewScheduledMessage%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateNewScheduledMessage from given interface.
-func (u *UpdateNewScheduledMessage) FillFrom(from interface {
-	GetMessage() (value MessageClass)
-}) {
-	u.Message = from.GetMessage()
 }
 
 // TypeID returns type id in TL schema.
@@ -14002,30 +12712,14 @@ func (u *UpdateNewScheduledMessage) GetMessage() (value MessageClass) {
 }
 
 // UpdateDeleteScheduledMessages represents TL type `updateDeleteScheduledMessages#f2a71983`.
-// Some scheduled messages¹ were deleted (or sent) from the schedule queue of a chat
-//
-// Links:
-//  1. https://core.telegram.org/api/scheduled-messages
-//
-// See https://core.telegram.org/constructor/updateDeleteScheduledMessages for reference.
 type UpdateDeleteScheduledMessages struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of UpdateDeleteScheduledMessages.
 	Flags bin.Fields
-	// Peer
+	// Peer field of UpdateDeleteScheduledMessages.
 	Peer PeerClass
-	// Deleted scheduled messages
+	// Messages field of UpdateDeleteScheduledMessages.
 	Messages []int
-	// If set, this update indicates that some scheduled messages were sent (not simply
-	// deleted from the schedule queue).  In this case, the messages field will contain the
-	// scheduled message IDs for the sent messages (initially returned in
-	// updateNewScheduledMessage¹), and sent_messages will contain the real message IDs for
-	// the sent messages.
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/updateNewScheduledMessage
+	// SentMessages field of UpdateDeleteScheduledMessages.
 	//
 	// Use SetSentMessages and GetSentMessages helpers.
 	SentMessages []int
@@ -14074,20 +12768,6 @@ func (u *UpdateDeleteScheduledMessages) String() string {
 	}
 	type Alias UpdateDeleteScheduledMessages
 	return fmt.Sprintf("UpdateDeleteScheduledMessages%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateDeleteScheduledMessages from given interface.
-func (u *UpdateDeleteScheduledMessages) FillFrom(from interface {
-	GetPeer() (value PeerClass)
-	GetMessages() (value []int)
-	GetSentMessages() (value []int, ok bool)
-}) {
-	u.Peer = from.GetPeer()
-	u.Messages = from.GetMessages()
-	if val, ok := from.GetSentMessages(); ok {
-		u.SentMessages = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -14274,11 +12954,8 @@ func (u *UpdateDeleteScheduledMessages) GetSentMessages() (value []int, ok bool)
 }
 
 // UpdateTheme represents TL type `updateTheme#8216fba3`.
-// A cloud theme was updated
-//
-// See https://core.telegram.org/constructor/updateTheme for reference.
 type UpdateTheme struct {
-	// Theme
+	// Theme field of UpdateTheme.
 	Theme Theme
 }
 
@@ -14316,13 +12993,6 @@ func (u *UpdateTheme) String() string {
 	}
 	type Alias UpdateTheme
 	return fmt.Sprintf("UpdateTheme%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateTheme from given interface.
-func (u *UpdateTheme) FillFrom(from interface {
-	GetTheme() (value Theme)
-}) {
-	u.Theme = from.GetTheme()
 }
 
 // TypeID returns type id in TL schema.
@@ -14409,13 +13079,10 @@ func (u *UpdateTheme) GetTheme() (value Theme) {
 }
 
 // UpdateGeoLiveViewed represents TL type `updateGeoLiveViewed#871fb939`.
-// Live geoposition message was viewed
-//
-// See https://core.telegram.org/constructor/updateGeoLiveViewed for reference.
 type UpdateGeoLiveViewed struct {
-	// The user that viewed the live geoposition
+	// Peer field of UpdateGeoLiveViewed.
 	Peer PeerClass
-	// Message ID of geoposition message
+	// MsgID field of UpdateGeoLiveViewed.
 	MsgID int
 }
 
@@ -14456,15 +13123,6 @@ func (u *UpdateGeoLiveViewed) String() string {
 	}
 	type Alias UpdateGeoLiveViewed
 	return fmt.Sprintf("UpdateGeoLiveViewed%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateGeoLiveViewed from given interface.
-func (u *UpdateGeoLiveViewed) FillFrom(from interface {
-	GetPeer() (value PeerClass)
-	GetMsgID() (value int)
-}) {
-	u.Peer = from.GetPeer()
-	u.MsgID = from.GetMsgID()
 }
 
 // TypeID returns type id in TL schema.
@@ -14576,9 +13234,6 @@ func (u *UpdateGeoLiveViewed) GetMsgID() (value int) {
 }
 
 // UpdateLoginToken represents TL type `updateLoginToken#564fe691`.
-// A login token (for login via QR code) was accepted.
-//
-// See https://core.telegram.org/constructor/updateLoginToken for reference.
 type UpdateLoginToken struct {
 }
 
@@ -14678,20 +13333,14 @@ func (u *UpdateLoginToken) DecodeBare(b *bin.Buffer) error {
 }
 
 // UpdateMessagePollVote represents TL type `updateMessagePollVote#24f40e77`.
-// A specific peer has voted in a poll
-//
-// See https://core.telegram.org/constructor/updateMessagePollVote for reference.
 type UpdateMessagePollVote struct {
-	// Poll ID
+	// PollID field of UpdateMessagePollVote.
 	PollID int64
-	// The peer that voted in the poll
+	// Peer field of UpdateMessagePollVote.
 	Peer PeerClass
-	// Chosen option(s)
+	// Options field of UpdateMessagePollVote.
 	Options [][]byte
-	// New qts value, see updates »¹ for more info.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/updates
+	// Qts field of UpdateMessagePollVote.
 	Qts int
 }
 
@@ -14738,19 +13387,6 @@ func (u *UpdateMessagePollVote) String() string {
 	}
 	type Alias UpdateMessagePollVote
 	return fmt.Sprintf("UpdateMessagePollVote%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateMessagePollVote from given interface.
-func (u *UpdateMessagePollVote) FillFrom(from interface {
-	GetPollID() (value int64)
-	GetPeer() (value PeerClass)
-	GetOptions() (value [][]byte)
-	GetQts() (value int)
-}) {
-	u.PollID = from.GetPollID()
-	u.Peer = from.GetPeer()
-	u.Options = from.GetOptions()
-	u.Qts = from.GetQts()
 }
 
 // TypeID returns type id in TL schema.
@@ -14915,27 +13551,12 @@ func (u *UpdateMessagePollVote) GetQts() (value int) {
 }
 
 // UpdateDialogFilter represents TL type `updateDialogFilter#26ffde7d`.
-// A new folder¹ was added
-//
-// Links:
-//  1. https://core.telegram.org/api/folders
-//
-// See https://core.telegram.org/constructor/updateDialogFilter for reference.
 type UpdateDialogFilter struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of UpdateDialogFilter.
 	Flags bin.Fields
-	// Folder¹ ID
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/folders
+	// ID field of UpdateDialogFilter.
 	ID int
-	// Folder¹ info
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/folders
+	// Filter field of UpdateDialogFilter.
 	//
 	// Use SetFilter and GetFilter helpers.
 	Filter DialogFilterClass
@@ -14981,18 +13602,6 @@ func (u *UpdateDialogFilter) String() string {
 	}
 	type Alias UpdateDialogFilter
 	return fmt.Sprintf("UpdateDialogFilter%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateDialogFilter from given interface.
-func (u *UpdateDialogFilter) FillFrom(from interface {
-	GetID() (value int)
-	GetFilter() (value DialogFilterClass, ok bool)
-}) {
-	u.ID = from.GetID()
-	if val, ok := from.GetFilter(); ok {
-		u.Filter = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -15133,17 +13742,8 @@ func (u *UpdateDialogFilter) GetFilter() (value DialogFilterClass, ok bool) {
 }
 
 // UpdateDialogFilterOrder represents TL type `updateDialogFilterOrder#a5d72105`.
-// New folder¹ order
-//
-// Links:
-//  1. https://core.telegram.org/api/folders
-//
-// See https://core.telegram.org/constructor/updateDialogFilterOrder for reference.
 type UpdateDialogFilterOrder struct {
-	// Ordered folder IDs¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/folders
+	// Order field of UpdateDialogFilterOrder.
 	Order []int
 }
 
@@ -15181,13 +13781,6 @@ func (u *UpdateDialogFilterOrder) String() string {
 	}
 	type Alias UpdateDialogFilterOrder
 	return fmt.Sprintf("UpdateDialogFilterOrder%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateDialogFilterOrder from given interface.
-func (u *UpdateDialogFilterOrder) FillFrom(from interface {
-	GetOrder() (value []int)
-}) {
-	u.Order = from.GetOrder()
 }
 
 // TypeID returns type id in TL schema.
@@ -15287,12 +13880,6 @@ func (u *UpdateDialogFilterOrder) GetOrder() (value []int) {
 }
 
 // UpdateDialogFilters represents TL type `updateDialogFilters#3504914f`.
-// Clients should update folder¹ info
-//
-// Links:
-//  1. https://core.telegram.org/api/folders
-//
-// See https://core.telegram.org/constructor/updateDialogFilters for reference.
 type UpdateDialogFilters struct {
 }
 
@@ -15392,13 +13979,10 @@ func (u *UpdateDialogFilters) DecodeBare(b *bin.Buffer) error {
 }
 
 // UpdatePhoneCallSignalingData represents TL type `updatePhoneCallSignalingData#2661bf09`.
-// Incoming phone call signaling payload
-//
-// See https://core.telegram.org/constructor/updatePhoneCallSignalingData for reference.
 type UpdatePhoneCallSignalingData struct {
-	// Phone call ID
+	// PhoneCallID field of UpdatePhoneCallSignalingData.
 	PhoneCallID int64
-	// Signaling payload
+	// Data field of UpdatePhoneCallSignalingData.
 	Data []byte
 }
 
@@ -15439,15 +14023,6 @@ func (u *UpdatePhoneCallSignalingData) String() string {
 	}
 	type Alias UpdatePhoneCallSignalingData
 	return fmt.Sprintf("UpdatePhoneCallSignalingData%+v", Alias(*u))
-}
-
-// FillFrom fills UpdatePhoneCallSignalingData from given interface.
-func (u *UpdatePhoneCallSignalingData) FillFrom(from interface {
-	GetPhoneCallID() (value int64)
-	GetData() (value []byte)
-}) {
-	u.PhoneCallID = from.GetPhoneCallID()
-	u.Data = from.GetData()
 }
 
 // TypeID returns type id in TL schema.
@@ -15554,15 +14129,12 @@ func (u *UpdatePhoneCallSignalingData) GetData() (value []byte) {
 }
 
 // UpdateChannelMessageForwards represents TL type `updateChannelMessageForwards#d29a27f4`.
-// The forward counter of a message in a channel has changed
-//
-// See https://core.telegram.org/constructor/updateChannelMessageForwards for reference.
 type UpdateChannelMessageForwards struct {
-	// Channel ID
+	// ChannelID field of UpdateChannelMessageForwards.
 	ChannelID int64
-	// ID of the message
+	// ID field of UpdateChannelMessageForwards.
 	ID int
-	// New forward counter
+	// Forwards field of UpdateChannelMessageForwards.
 	Forwards int
 }
 
@@ -15606,17 +14178,6 @@ func (u *UpdateChannelMessageForwards) String() string {
 	}
 	type Alias UpdateChannelMessageForwards
 	return fmt.Sprintf("UpdateChannelMessageForwards%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateChannelMessageForwards from given interface.
-func (u *UpdateChannelMessageForwards) FillFrom(from interface {
-	GetChannelID() (value int64)
-	GetID() (value int)
-	GetForwards() (value int)
-}) {
-	u.ChannelID = from.GetChannelID()
-	u.ID = from.GetID()
-	u.Forwards = from.GetForwards()
 }
 
 // TypeID returns type id in TL schema.
@@ -15743,46 +14304,20 @@ func (u *UpdateChannelMessageForwards) GetForwards() (value int) {
 }
 
 // UpdateReadChannelDiscussionInbox represents TL type `updateReadChannelDiscussionInbox#d6b19546`.
-// Incoming comments in a discussion thread¹ were marked as read
-//
-// Links:
-//  1. https://core.telegram.org/api/threads
-//
-// See https://core.telegram.org/constructor/updateReadChannelDiscussionInbox for reference.
 type UpdateReadChannelDiscussionInbox struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of UpdateReadChannelDiscussionInbox.
 	Flags bin.Fields
-	// Discussion group ID¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/channel
+	// ChannelID field of UpdateReadChannelDiscussionInbox.
 	ChannelID int64
-	// ID of the group message that started the thread¹ (message in linked discussion group)
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/threads
+	// TopMsgID field of UpdateReadChannelDiscussionInbox.
 	TopMsgID int
-	// Message ID of latest read incoming message for this thread¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/threads
+	// ReadMaxID field of UpdateReadChannelDiscussionInbox.
 	ReadMaxID int
-	// If set, contains the ID of the channel¹ that contains the post that started the
-	// comment thread² in the discussion group (channel_id)
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/channel
-	//  2) https://core.telegram.org/api/threads
+	// BroadcastID field of UpdateReadChannelDiscussionInbox.
 	//
 	// Use SetBroadcastID and GetBroadcastID helpers.
 	BroadcastID int64
-	// If set, contains the ID of the channel post that started the comment thread¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/threads
+	// BroadcastPost field of UpdateReadChannelDiscussionInbox.
 	//
 	// Use SetBroadcastPost and GetBroadcastPost helpers.
 	BroadcastPost int
@@ -15837,27 +14372,6 @@ func (u *UpdateReadChannelDiscussionInbox) String() string {
 	}
 	type Alias UpdateReadChannelDiscussionInbox
 	return fmt.Sprintf("UpdateReadChannelDiscussionInbox%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateReadChannelDiscussionInbox from given interface.
-func (u *UpdateReadChannelDiscussionInbox) FillFrom(from interface {
-	GetChannelID() (value int64)
-	GetTopMsgID() (value int)
-	GetReadMaxID() (value int)
-	GetBroadcastID() (value int64, ok bool)
-	GetBroadcastPost() (value int, ok bool)
-}) {
-	u.ChannelID = from.GetChannelID()
-	u.TopMsgID = from.GetTopMsgID()
-	u.ReadMaxID = from.GetReadMaxID()
-	if val, ok := from.GetBroadcastID(); ok {
-		u.BroadcastID = val
-	}
-
-	if val, ok := from.GetBroadcastPost(); ok {
-		u.BroadcastPost = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -16069,27 +14583,12 @@ func (u *UpdateReadChannelDiscussionInbox) GetBroadcastPost() (value int, ok boo
 }
 
 // UpdateReadChannelDiscussionOutbox represents TL type `updateReadChannelDiscussionOutbox#695c9e7c`.
-// Outgoing comments in a discussion thread¹ were marked as read
-//
-// Links:
-//  1. https://core.telegram.org/api/threads
-//
-// See https://core.telegram.org/constructor/updateReadChannelDiscussionOutbox for reference.
 type UpdateReadChannelDiscussionOutbox struct {
-	// Supergroup ID¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/channel
+	// ChannelID field of UpdateReadChannelDiscussionOutbox.
 	ChannelID int64
-	// ID of the group message that started the thread¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/threads
+	// TopMsgID field of UpdateReadChannelDiscussionOutbox.
 	TopMsgID int
-	// Message ID of latest read outgoing message for this thread¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/threads
+	// ReadMaxID field of UpdateReadChannelDiscussionOutbox.
 	ReadMaxID int
 }
 
@@ -16133,17 +14632,6 @@ func (u *UpdateReadChannelDiscussionOutbox) String() string {
 	}
 	type Alias UpdateReadChannelDiscussionOutbox
 	return fmt.Sprintf("UpdateReadChannelDiscussionOutbox%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateReadChannelDiscussionOutbox from given interface.
-func (u *UpdateReadChannelDiscussionOutbox) FillFrom(from interface {
-	GetChannelID() (value int64)
-	GetTopMsgID() (value int)
-	GetReadMaxID() (value int)
-}) {
-	u.ChannelID = from.GetChannelID()
-	u.TopMsgID = from.GetTopMsgID()
-	u.ReadMaxID = from.GetReadMaxID()
 }
 
 // TypeID returns type id in TL schema.
@@ -16270,27 +14758,14 @@ func (u *UpdateReadChannelDiscussionOutbox) GetReadMaxID() (value int) {
 }
 
 // UpdatePeerBlocked represents TL type `updatePeerBlocked#ebe07752`.
-// We blocked a peer, see here »¹ for more info on blocklists.
-//
-// Links:
-//  1. https://core.telegram.org/api/block
-//
-// See https://core.telegram.org/constructor/updatePeerBlocked for reference.
 type UpdatePeerBlocked struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of UpdatePeerBlocked.
 	Flags bin.Fields
-	// Whether the peer was blocked or unblocked
+	// Blocked field of UpdatePeerBlocked.
 	Blocked bool
-	// Whether the peer was added/removed to/from the story blocklist; if not set, this
-	// update affects the main blocklist, see here »¹ for more info.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/block
+	// BlockedMyStoriesFrom field of UpdatePeerBlocked.
 	BlockedMyStoriesFrom bool
-	// The (un)blocked peer
+	// PeerID field of UpdatePeerBlocked.
 	PeerID PeerClass
 }
 
@@ -16337,17 +14812,6 @@ func (u *UpdatePeerBlocked) String() string {
 	}
 	type Alias UpdatePeerBlocked
 	return fmt.Sprintf("UpdatePeerBlocked%+v", Alias(*u))
-}
-
-// FillFrom fills UpdatePeerBlocked from given interface.
-func (u *UpdatePeerBlocked) FillFrom(from interface {
-	GetBlocked() (value bool)
-	GetBlockedMyStoriesFrom() (value bool)
-	GetPeerID() (value PeerClass)
-}) {
-	u.Blocked = from.GetBlocked()
-	u.BlockedMyStoriesFrom = from.GetBlockedMyStoriesFrom()
-	u.PeerID = from.GetPeerID()
 }
 
 // TypeID returns type id in TL schema.
@@ -16508,31 +14972,18 @@ func (u *UpdatePeerBlocked) GetPeerID() (value PeerClass) {
 }
 
 // UpdateChannelUserTyping represents TL type `updateChannelUserTyping#8c88c923`.
-// A user is typing in a supergroup, channel¹ or message thread²
-//
-// Links:
-//  1. https://core.telegram.org/api/channel
-//  2. https://core.telegram.org/api/threads
-//
-// See https://core.telegram.org/constructor/updateChannelUserTyping for reference.
 type UpdateChannelUserTyping struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of UpdateChannelUserTyping.
 	Flags bin.Fields
-	// Channel ID
+	// ChannelID field of UpdateChannelUserTyping.
 	ChannelID int64
-	// Thread ID¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/threads
+	// TopMsgID field of UpdateChannelUserTyping.
 	//
 	// Use SetTopMsgID and GetTopMsgID helpers.
 	TopMsgID int
-	// The peer that is typing
+	// FromID field of UpdateChannelUserTyping.
 	FromID PeerClass
-	// Whether the user is typing, sending a media or doing something else
+	// Action field of UpdateChannelUserTyping.
 	Action SendMessageActionClass
 }
 
@@ -16582,22 +15033,6 @@ func (u *UpdateChannelUserTyping) String() string {
 	}
 	type Alias UpdateChannelUserTyping
 	return fmt.Sprintf("UpdateChannelUserTyping%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateChannelUserTyping from given interface.
-func (u *UpdateChannelUserTyping) FillFrom(from interface {
-	GetChannelID() (value int64)
-	GetTopMsgID() (value int, ok bool)
-	GetFromID() (value PeerClass)
-	GetAction() (value SendMessageActionClass)
-}) {
-	u.ChannelID = from.GetChannelID()
-	if val, ok := from.GetTopMsgID(); ok {
-		u.TopMsgID = val
-	}
-
-	u.FromID = from.GetFromID()
-	u.Action = from.GetAction()
 }
 
 // TypeID returns type id in TL schema.
@@ -16783,30 +15218,18 @@ func (u *UpdateChannelUserTyping) GetAction() (value SendMessageActionClass) {
 }
 
 // UpdatePinnedMessages represents TL type `updatePinnedMessages#ed85eab5`.
-// Some messages were pinned in a chat
-//
-// See https://core.telegram.org/constructor/updatePinnedMessages for reference.
 type UpdatePinnedMessages struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of UpdatePinnedMessages.
 	Flags bin.Fields
-	// Whether the messages were pinned or unpinned
+	// Pinned field of UpdatePinnedMessages.
 	Pinned bool
-	// Peer
+	// Peer field of UpdatePinnedMessages.
 	Peer PeerClass
-	// Message IDs
+	// Messages field of UpdatePinnedMessages.
 	Messages []int
-	// Event count after generation¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/updates
+	// Pts field of UpdatePinnedMessages.
 	Pts int
-	// Number of events that were generated¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/updates
+	// PtsCount field of UpdatePinnedMessages.
 	PtsCount int
 }
 
@@ -16859,21 +15282,6 @@ func (u *UpdatePinnedMessages) String() string {
 	}
 	type Alias UpdatePinnedMessages
 	return fmt.Sprintf("UpdatePinnedMessages%+v", Alias(*u))
-}
-
-// FillFrom fills UpdatePinnedMessages from given interface.
-func (u *UpdatePinnedMessages) FillFrom(from interface {
-	GetPinned() (value bool)
-	GetPeer() (value PeerClass)
-	GetMessages() (value []int)
-	GetPts() (value int)
-	GetPtsCount() (value int)
-}) {
-	u.Pinned = from.GetPinned()
-	u.Peer = from.GetPeer()
-	u.Messages = from.GetMessages()
-	u.Pts = from.GetPts()
-	u.PtsCount = from.GetPtsCount()
 }
 
 // TypeID returns type id in TL schema.
@@ -17079,33 +15487,18 @@ func (u *UpdatePinnedMessages) GetPtsCount() (value int) {
 }
 
 // UpdatePinnedChannelMessages represents TL type `updatePinnedChannelMessages#5bb98608`.
-// Messages were pinned/unpinned in a channel/supergroup¹
-//
-// Links:
-//  1. https://core.telegram.org/api/channel
-//
-// See https://core.telegram.org/constructor/updatePinnedChannelMessages for reference.
 type UpdatePinnedChannelMessages struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of UpdatePinnedChannelMessages.
 	Flags bin.Fields
-	// Whether the messages were pinned or unpinned
+	// Pinned field of UpdatePinnedChannelMessages.
 	Pinned bool
-	// Channel ID
+	// ChannelID field of UpdatePinnedChannelMessages.
 	ChannelID int64
-	// Messages
+	// Messages field of UpdatePinnedChannelMessages.
 	Messages []int
-	// Event count after generation¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/updates
+	// Pts field of UpdatePinnedChannelMessages.
 	Pts int
-	// Number of events that were generated¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/updates
+	// PtsCount field of UpdatePinnedChannelMessages.
 	PtsCount int
 }
 
@@ -17158,21 +15551,6 @@ func (u *UpdatePinnedChannelMessages) String() string {
 	}
 	type Alias UpdatePinnedChannelMessages
 	return fmt.Sprintf("UpdatePinnedChannelMessages%+v", Alias(*u))
-}
-
-// FillFrom fills UpdatePinnedChannelMessages from given interface.
-func (u *UpdatePinnedChannelMessages) FillFrom(from interface {
-	GetPinned() (value bool)
-	GetChannelID() (value int64)
-	GetMessages() (value []int)
-	GetPts() (value int)
-	GetPtsCount() (value int)
-}) {
-	u.Pinned = from.GetPinned()
-	u.ChannelID = from.GetChannelID()
-	u.Messages = from.GetMessages()
-	u.Pts = from.GetPts()
-	u.PtsCount = from.GetPtsCount()
 }
 
 // TypeID returns type id in TL schema.
@@ -17373,26 +15751,8 @@ func (u *UpdatePinnedChannelMessages) GetPtsCount() (value int) {
 }
 
 // UpdateChat represents TL type `updateChat#f89a6a4e`.
-// Chat (chat¹ and/or chatFull²) information was updated.
-// This update can only be received through getDifference or in
-// updates¹/updatesCombined² constructors, so it will always come bundled with the
-// updated chat³, that should be applied as usual »⁴, without re-fetching the info
-// manually.
-// However, full peer information will not come bundled in updates, so the full peer
-// cache (chatFull¹) must be invalidated for chat_id when receiving this update.
-//
-// Links:
-//  1. https://core.telegram.org/constructor/chat
-//  2. https://core.telegram.org/constructor/chatFull
-//  3. https://core.telegram.org/constructor/updates
-//  4. https://core.telegram.org/constructor/updatesCombined
-//  5. https://core.telegram.org/constructor/chat
-//  6. https://core.telegram.org/api/peers
-//  7. https://core.telegram.org/constructor/chatFull
-//
-// See https://core.telegram.org/constructor/updateChat for reference.
 type UpdateChat struct {
-	// Chat ID
+	// ChatID field of UpdateChat.
 	ChatID int64
 }
 
@@ -17430,13 +15790,6 @@ func (u *UpdateChat) String() string {
 	}
 	type Alias UpdateChat
 	return fmt.Sprintf("UpdateChat%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateChat from given interface.
-func (u *UpdateChat) FillFrom(from interface {
-	GetChatID() (value int64)
-}) {
-	u.ChatID = from.GetChatID()
 }
 
 // TypeID returns type id in TL schema.
@@ -17523,15 +15876,12 @@ func (u *UpdateChat) GetChatID() (value int64) {
 }
 
 // UpdateGroupCallParticipants represents TL type `updateGroupCallParticipants#f2ebdb4e`.
-// The participant list of a certain group call has changed
-//
-// See https://core.telegram.org/constructor/updateGroupCallParticipants for reference.
 type UpdateGroupCallParticipants struct {
-	// Group call
+	// Call field of UpdateGroupCallParticipants.
 	Call InputGroupCallClass
-	// New participant list
+	// Participants field of UpdateGroupCallParticipants.
 	Participants []GroupCallParticipant
-	// Version
+	// Version field of UpdateGroupCallParticipants.
 	Version int
 }
 
@@ -17575,17 +15925,6 @@ func (u *UpdateGroupCallParticipants) String() string {
 	}
 	type Alias UpdateGroupCallParticipants
 	return fmt.Sprintf("UpdateGroupCallParticipants%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateGroupCallParticipants from given interface.
-func (u *UpdateGroupCallParticipants) FillFrom(from interface {
-	GetCall() (value InputGroupCallClass)
-	GetParticipants() (value []GroupCallParticipant)
-	GetVersion() (value int)
-}) {
-	u.Call = from.GetCall()
-	u.Participants = from.GetParticipants()
-	u.Version = from.GetVersion()
 }
 
 // TypeID returns type id in TL schema.
@@ -17732,20 +16071,14 @@ func (u *UpdateGroupCallParticipants) GetVersion() (value int) {
 }
 
 // UpdateGroupCall represents TL type `updateGroupCall#97d64341`.
-// A new groupcall was started
-//
-// See https://core.telegram.org/constructor/updateGroupCall for reference.
 type UpdateGroupCall struct {
 	// Flags field of UpdateGroupCall.
 	Flags bin.Fields
-	// The channel/supergroup¹ where this group call or livestream takes place
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/channel
+	// ChatID field of UpdateGroupCall.
 	//
 	// Use SetChatID and GetChatID helpers.
 	ChatID int64
-	// Info about the group call or livestream
+	// Call field of UpdateGroupCall.
 	Call GroupCallClass
 }
 
@@ -17789,18 +16122,6 @@ func (u *UpdateGroupCall) String() string {
 	}
 	type Alias UpdateGroupCall
 	return fmt.Sprintf("UpdateGroupCall%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateGroupCall from given interface.
-func (u *UpdateGroupCall) FillFrom(from interface {
-	GetChatID() (value int64, ok bool)
-	GetCall() (value GroupCallClass)
-}) {
-	if val, ok := from.GetChatID(); ok {
-		u.ChatID = val
-	}
-
-	u.Call = from.GetCall()
 }
 
 // TypeID returns type id in TL schema.
@@ -17941,18 +16262,12 @@ func (u *UpdateGroupCall) GetCall() (value GroupCallClass) {
 }
 
 // UpdatePeerHistoryTTL represents TL type `updatePeerHistoryTTL#bb9bb9a5`.
-// The Time-To-Live for messages sent by the current user in a specific chat has changed
-//
-// See https://core.telegram.org/constructor/updatePeerHistoryTTL for reference.
 type UpdatePeerHistoryTTL struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of UpdatePeerHistoryTTL.
 	Flags bin.Fields
-	// The chat
+	// Peer field of UpdatePeerHistoryTTL.
 	Peer PeerClass
-	// The new Time-To-Live
+	// TTLPeriod field of UpdatePeerHistoryTTL.
 	//
 	// Use SetTTLPeriod and GetTTLPeriod helpers.
 	TTLPeriod int
@@ -17998,18 +16313,6 @@ func (u *UpdatePeerHistoryTTL) String() string {
 	}
 	type Alias UpdatePeerHistoryTTL
 	return fmt.Sprintf("UpdatePeerHistoryTTL%+v", Alias(*u))
-}
-
-// FillFrom fills UpdatePeerHistoryTTL from given interface.
-func (u *UpdatePeerHistoryTTL) FillFrom(from interface {
-	GetPeer() (value PeerClass)
-	GetTTLPeriod() (value int, ok bool)
-}) {
-	u.Peer = from.GetPeer()
-	if val, ok := from.GetTTLPeriod(); ok {
-		u.TTLPeriod = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -18150,43 +16453,30 @@ func (u *UpdatePeerHistoryTTL) GetTTLPeriod() (value int, ok bool) {
 }
 
 // UpdateChatParticipant represents TL type `updateChatParticipant#d087663a`.
-// A user has joined or left a specific chat
-//
-// See https://core.telegram.org/constructor/updateChatParticipant for reference.
 type UpdateChatParticipant struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of UpdateChatParticipant.
 	Flags bin.Fields
-	// Chat¹ ID
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/channel
+	// ChatID field of UpdateChatParticipant.
 	ChatID int64
-	// When did this event occur
+	// Date field of UpdateChatParticipant.
 	Date int
-	// User that triggered the change (inviter, admin that kicked the user, or the even the
-	// user_id itself)
+	// ActorID field of UpdateChatParticipant.
 	ActorID int64
-	// User that was affected by the change
+	// UserID field of UpdateChatParticipant.
 	UserID int64
-	// Previous participant info (empty if this participant just joined)
+	// PrevParticipant field of UpdateChatParticipant.
 	//
 	// Use SetPrevParticipant and GetPrevParticipant helpers.
 	PrevParticipant ChatParticipantClass
-	// New participant info (empty if this participant just left)
+	// NewParticipant field of UpdateChatParticipant.
 	//
 	// Use SetNewParticipant and GetNewParticipant helpers.
 	NewParticipant ChatParticipantClass
-	// The invite that was used to join the group
+	// Invite field of UpdateChatParticipant.
 	//
 	// Use SetInvite and GetInvite helpers.
 	Invite ExportedChatInviteClass
-	// New qts value, see updates »¹ for more info.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/updates
+	// Qts field of UpdateChatParticipant.
 	Qts int
 }
 
@@ -18248,36 +16538,6 @@ func (u *UpdateChatParticipant) String() string {
 	}
 	type Alias UpdateChatParticipant
 	return fmt.Sprintf("UpdateChatParticipant%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateChatParticipant from given interface.
-func (u *UpdateChatParticipant) FillFrom(from interface {
-	GetChatID() (value int64)
-	GetDate() (value int)
-	GetActorID() (value int64)
-	GetUserID() (value int64)
-	GetPrevParticipant() (value ChatParticipantClass, ok bool)
-	GetNewParticipant() (value ChatParticipantClass, ok bool)
-	GetInvite() (value ExportedChatInviteClass, ok bool)
-	GetQts() (value int)
-}) {
-	u.ChatID = from.GetChatID()
-	u.Date = from.GetDate()
-	u.ActorID = from.GetActorID()
-	u.UserID = from.GetUserID()
-	if val, ok := from.GetPrevParticipant(); ok {
-		u.PrevParticipant = val
-	}
-
-	if val, ok := from.GetNewParticipant(); ok {
-		u.NewParticipant = val
-	}
-
-	if val, ok := from.GetInvite(); ok {
-		u.Invite = val
-	}
-
-	u.Qts = from.GetQts()
 }
 
 // TypeID returns type id in TL schema.
@@ -18580,51 +16840,32 @@ func (u *UpdateChatParticipant) GetQts() (value int) {
 }
 
 // UpdateChannelParticipant represents TL type `updateChannelParticipant#985d3abb`.
-// A participant has left, joined, was banned or admined in a channel or supergroup¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/channel
-//
-// See https://core.telegram.org/constructor/updateChannelParticipant for reference.
 type UpdateChannelParticipant struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of UpdateChannelParticipant.
 	Flags bin.Fields
-	// Whether the participant joined using a chat folder deep link »¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/links#chat-folder-links
+	// ViaChatlist field of UpdateChannelParticipant.
 	ViaChatlist bool
-	// Channel ID
+	// ChannelID field of UpdateChannelParticipant.
 	ChannelID int64
-	// Date of the event
+	// Date field of UpdateChannelParticipant.
 	Date int
-	// User that triggered the change (inviter, admin that kicked the user, or the even the
-	// user_id itself)
+	// ActorID field of UpdateChannelParticipant.
 	ActorID int64
-	// User that was affected by the change
+	// UserID field of UpdateChannelParticipant.
 	UserID int64
-	// Previous participant status
+	// PrevParticipant field of UpdateChannelParticipant.
 	//
 	// Use SetPrevParticipant and GetPrevParticipant helpers.
 	PrevParticipant ChannelParticipantClass
-	// New participant status
+	// NewParticipant field of UpdateChannelParticipant.
 	//
 	// Use SetNewParticipant and GetNewParticipant helpers.
 	NewParticipant ChannelParticipantClass
-	// Chat invite used to join the channel/supergroup¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/channel
+	// Invite field of UpdateChannelParticipant.
 	//
 	// Use SetInvite and GetInvite helpers.
 	Invite ExportedChatInviteClass
-	// New qts value, see updates »¹ for more info.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/updates
+	// Qts field of UpdateChannelParticipant.
 	Qts int
 }
 
@@ -18689,38 +16930,6 @@ func (u *UpdateChannelParticipant) String() string {
 	}
 	type Alias UpdateChannelParticipant
 	return fmt.Sprintf("UpdateChannelParticipant%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateChannelParticipant from given interface.
-func (u *UpdateChannelParticipant) FillFrom(from interface {
-	GetViaChatlist() (value bool)
-	GetChannelID() (value int64)
-	GetDate() (value int)
-	GetActorID() (value int64)
-	GetUserID() (value int64)
-	GetPrevParticipant() (value ChannelParticipantClass, ok bool)
-	GetNewParticipant() (value ChannelParticipantClass, ok bool)
-	GetInvite() (value ExportedChatInviteClass, ok bool)
-	GetQts() (value int)
-}) {
-	u.ViaChatlist = from.GetViaChatlist()
-	u.ChannelID = from.GetChannelID()
-	u.Date = from.GetDate()
-	u.ActorID = from.GetActorID()
-	u.UserID = from.GetUserID()
-	if val, ok := from.GetPrevParticipant(); ok {
-		u.PrevParticipant = val
-	}
-
-	if val, ok := from.GetNewParticipant(); ok {
-		u.NewParticipant = val
-	}
-
-	if val, ok := from.GetInvite(); ok {
-		u.Invite = val
-	}
-
-	u.Qts = from.GetQts()
 }
 
 // TypeID returns type id in TL schema.
@@ -19051,20 +17260,14 @@ func (u *UpdateChannelParticipant) GetQts() (value int) {
 }
 
 // UpdateBotStopped represents TL type `updateBotStopped#c4870a49`.
-// A bot was stopped or re-started.
-//
-// See https://core.telegram.org/constructor/updateBotStopped for reference.
 type UpdateBotStopped struct {
-	// The user ID
+	// UserID field of UpdateBotStopped.
 	UserID int64
-	// When did this action occur
+	// Date field of UpdateBotStopped.
 	Date int
-	// Whether the bot was stopped or started
+	// Stopped field of UpdateBotStopped.
 	Stopped bool
-	// New qts value, see updates »¹ for more info.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/updates
+	// Qts field of UpdateBotStopped.
 	Qts int
 }
 
@@ -19111,19 +17314,6 @@ func (u *UpdateBotStopped) String() string {
 	}
 	type Alias UpdateBotStopped
 	return fmt.Sprintf("UpdateBotStopped%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateBotStopped from given interface.
-func (u *UpdateBotStopped) FillFrom(from interface {
-	GetUserID() (value int64)
-	GetDate() (value int)
-	GetStopped() (value bool)
-	GetQts() (value int)
-}) {
-	u.UserID = from.GetUserID()
-	u.Date = from.GetDate()
-	u.Stopped = from.GetStopped()
-	u.Qts = from.GetQts()
 }
 
 // TypeID returns type id in TL schema.
@@ -19270,18 +17460,12 @@ func (u *UpdateBotStopped) GetQts() (value int) {
 }
 
 // UpdateGroupCallConnection represents TL type `updateGroupCallConnection#b783982`.
-// New WebRTC parameters
-//
-// See https://core.telegram.org/constructor/updateGroupCallConnection for reference.
 type UpdateGroupCallConnection struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of UpdateGroupCallConnection.
 	Flags bin.Fields
-	// Are these parameters related to the screen capture session currently in progress?
+	// Presentation field of UpdateGroupCallConnection.
 	Presentation bool
-	// WebRTC parameters
+	// Params field of UpdateGroupCallConnection.
 	Params DataJSON
 }
 
@@ -19325,15 +17509,6 @@ func (u *UpdateGroupCallConnection) String() string {
 	}
 	type Alias UpdateGroupCallConnection
 	return fmt.Sprintf("UpdateGroupCallConnection%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateGroupCallConnection from given interface.
-func (u *UpdateGroupCallConnection) FillFrom(from interface {
-	GetPresentation() (value bool)
-	GetParams() (value DataJSON)
-}) {
-	u.Presentation = from.GetPresentation()
-	u.Params = from.GetParams()
 }
 
 // TypeID returns type id in TL schema.
@@ -19461,18 +17636,12 @@ func (u *UpdateGroupCallConnection) GetParams() (value DataJSON) {
 }
 
 // UpdateBotCommands represents TL type `updateBotCommands#4d712f2e`.
-// The command set¹ of a certain bot in a certain chat has changed.
-//
-// Links:
-//  1. https://core.telegram.org/api/bots/commands
-//
-// See https://core.telegram.org/constructor/updateBotCommands for reference.
 type UpdateBotCommands struct {
-	// The affected chat
+	// Peer field of UpdateBotCommands.
 	Peer PeerClass
-	// ID of the bot that changed its command set
+	// BotID field of UpdateBotCommands.
 	BotID int64
-	// New bot commands
+	// Commands field of UpdateBotCommands.
 	Commands []BotCommand
 }
 
@@ -19516,17 +17685,6 @@ func (u *UpdateBotCommands) String() string {
 	}
 	type Alias UpdateBotCommands
 	return fmt.Sprintf("UpdateBotCommands%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateBotCommands from given interface.
-func (u *UpdateBotCommands) FillFrom(from interface {
-	GetPeer() (value PeerClass)
-	GetBotID() (value int64)
-	GetCommands() (value []BotCommand)
-}) {
-	u.Peer = from.GetPeer()
-	u.BotID = from.GetBotID()
-	u.Commands = from.GetCommands()
 }
 
 // TypeID returns type id in TL schema.
@@ -19673,18 +17831,12 @@ func (u *UpdateBotCommands) GetCommands() (value []BotCommand) {
 }
 
 // UpdatePendingJoinRequests represents TL type `updatePendingJoinRequests#7063c3db`.
-// Someone has requested to join a chat or channel
-//
-// See https://core.telegram.org/constructor/updatePendingJoinRequests for reference.
 type UpdatePendingJoinRequests struct {
-	// Chat or channel
+	// Peer field of UpdatePendingJoinRequests.
 	Peer PeerClass
-	// Number of pending join requests »¹ for the chat or channel
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/invites#join-requests
+	// RequestsPending field of UpdatePendingJoinRequests.
 	RequestsPending int
-	// IDs of users that have recently requested to join
+	// RecentRequesters field of UpdatePendingJoinRequests.
 	RecentRequesters []int64
 }
 
@@ -19728,17 +17880,6 @@ func (u *UpdatePendingJoinRequests) String() string {
 	}
 	type Alias UpdatePendingJoinRequests
 	return fmt.Sprintf("UpdatePendingJoinRequests%+v", Alias(*u))
-}
-
-// FillFrom fills UpdatePendingJoinRequests from given interface.
-func (u *UpdatePendingJoinRequests) FillFrom(from interface {
-	GetPeer() (value PeerClass)
-	GetRequestsPending() (value int)
-	GetRecentRequesters() (value []int64)
-}) {
-	u.Peer = from.GetPeer()
-	u.RequestsPending = from.GetRequestsPending()
-	u.RecentRequesters = from.GetRecentRequesters()
 }
 
 // TypeID returns type id in TL schema.
@@ -19883,34 +18024,18 @@ func (u *UpdatePendingJoinRequests) GetRecentRequesters() (value []int64) {
 }
 
 // UpdateBotChatInviteRequester represents TL type `updateBotChatInviteRequester#11dfa986`.
-// Someone has requested to join a chat or channel (bots only, users will receive an
-// updatePendingJoinRequests¹, instead)
-//
-// Links:
-//  1. https://core.telegram.org/constructor/updatePendingJoinRequests
-//
-// See https://core.telegram.org/constructor/updateBotChatInviteRequester for reference.
 type UpdateBotChatInviteRequester struct {
-	// The chat or channel in question
+	// Peer field of UpdateBotChatInviteRequester.
 	Peer PeerClass
-	// When was the join request »¹ made
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/invites#join-requests
+	// Date field of UpdateBotChatInviteRequester.
 	Date int
-	// The user ID that is asking to join the chat or channel
+	// UserID field of UpdateBotChatInviteRequester.
 	UserID int64
-	// Bio of the user
+	// About field of UpdateBotChatInviteRequester.
 	About string
-	// Chat invite link that was used by the user to send the join request »¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/invites#join-requests
+	// Invite field of UpdateBotChatInviteRequester.
 	Invite ExportedChatInviteClass
-	// QTS¹ event sequence identifier
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/updates
+	// Qts field of UpdateBotChatInviteRequester.
 	Qts int
 }
 
@@ -19963,23 +18088,6 @@ func (u *UpdateBotChatInviteRequester) String() string {
 	}
 	type Alias UpdateBotChatInviteRequester
 	return fmt.Sprintf("UpdateBotChatInviteRequester%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateBotChatInviteRequester from given interface.
-func (u *UpdateBotChatInviteRequester) FillFrom(from interface {
-	GetPeer() (value PeerClass)
-	GetDate() (value int)
-	GetUserID() (value int64)
-	GetAbout() (value string)
-	GetInvite() (value ExportedChatInviteClass)
-	GetQts() (value int)
-}) {
-	u.Peer = from.GetPeer()
-	u.Date = from.GetDate()
-	u.UserID = from.GetUserID()
-	u.About = from.GetAbout()
-	u.Invite = from.GetInvite()
-	u.Qts = from.GetQts()
 }
 
 // TypeID returns type id in TL schema.
@@ -20176,26 +18284,14 @@ func (u *UpdateBotChatInviteRequester) GetQts() (value int) {
 }
 
 // UpdateMessageReactions represents TL type `updateMessageReactions#1e297bfa`.
-// New message reactions »¹ are available
-//
-// Links:
-//  1. https://core.telegram.org/api/reactions
-//
-// See https://core.telegram.org/constructor/updateMessageReactions for reference.
 type UpdateMessageReactions struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of UpdateMessageReactions.
 	Flags bin.Fields
-	// Peer
+	// Peer field of UpdateMessageReactions.
 	Peer PeerClass
-	// Message ID
+	// MsgID field of UpdateMessageReactions.
 	MsgID int
-	// Forum topic ID¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/forum#forum-topics
+	// TopMsgID field of UpdateMessageReactions.
 	//
 	// Use SetTopMsgID and GetTopMsgID helpers.
 	TopMsgID int
@@ -20203,7 +18299,7 @@ type UpdateMessageReactions struct {
 	//
 	// Use SetSavedPeerID and GetSavedPeerID helpers.
 	SavedPeerID PeerClass
-	// Reactions
+	// Reactions field of UpdateMessageReactions.
 	Reactions MessageReactions
 }
 
@@ -20256,27 +18352,6 @@ func (u *UpdateMessageReactions) String() string {
 	}
 	type Alias UpdateMessageReactions
 	return fmt.Sprintf("UpdateMessageReactions%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateMessageReactions from given interface.
-func (u *UpdateMessageReactions) FillFrom(from interface {
-	GetPeer() (value PeerClass)
-	GetMsgID() (value int)
-	GetTopMsgID() (value int, ok bool)
-	GetSavedPeerID() (value PeerClass, ok bool)
-	GetReactions() (value MessageReactions)
-}) {
-	u.Peer = from.GetPeer()
-	u.MsgID = from.GetMsgID()
-	if val, ok := from.GetTopMsgID(); ok {
-		u.TopMsgID = val
-	}
-
-	if val, ok := from.GetSavedPeerID(); ok {
-		u.SavedPeerID = val
-	}
-
-	u.Reactions = from.GetReactions()
 }
 
 // TypeID returns type id in TL schema.
@@ -20498,14 +18573,6 @@ func (u *UpdateMessageReactions) GetReactions() (value MessageReactions) {
 }
 
 // UpdateAttachMenuBots represents TL type `updateAttachMenuBots#17b7a20b`.
-// The list of installed attachment menu entries »¹ has changed, use messages
-// getAttachMenuBots² to fetch the updated list.
-//
-// Links:
-//  1. https://core.telegram.org/api/bots/attach
-//  2. https://core.telegram.org/method/messages.getAttachMenuBots
-//
-// See https://core.telegram.org/constructor/updateAttachMenuBots for reference.
 type UpdateAttachMenuBots struct {
 }
 
@@ -20605,15 +18672,8 @@ func (u *UpdateAttachMenuBots) DecodeBare(b *bin.Buffer) error {
 }
 
 // UpdateWebViewResultSent represents TL type `updateWebViewResultSent#1592b79d`.
-// Indicates to a bot that a webview was closed and an inline message was sent on behalf
-// of the user using messages.sendWebViewResultMessage¹
-//
-// Links:
-//  1. https://core.telegram.org/method/messages.sendWebViewResultMessage
-//
-// See https://core.telegram.org/constructor/updateWebViewResultSent for reference.
 type UpdateWebViewResultSent struct {
-	// Web app interaction ID
+	// QueryID field of UpdateWebViewResultSent.
 	QueryID int64
 }
 
@@ -20651,13 +18711,6 @@ func (u *UpdateWebViewResultSent) String() string {
 	}
 	type Alias UpdateWebViewResultSent
 	return fmt.Sprintf("UpdateWebViewResultSent%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateWebViewResultSent from given interface.
-func (u *UpdateWebViewResultSent) FillFrom(from interface {
-	GetQueryID() (value int64)
-}) {
-	u.QueryID = from.GetQueryID()
 }
 
 // TypeID returns type id in TL schema.
@@ -20744,13 +18797,10 @@ func (u *UpdateWebViewResultSent) GetQueryID() (value int64) {
 }
 
 // UpdateBotMenuButton represents TL type `updateBotMenuButton#14b85813`.
-// The menu button behavior for the specified bot has changed
-//
-// See https://core.telegram.org/constructor/updateBotMenuButton for reference.
 type UpdateBotMenuButton struct {
-	// Bot ID
+	// BotID field of UpdateBotMenuButton.
 	BotID int64
-	// New menu button
+	// Button field of UpdateBotMenuButton.
 	Button BotMenuButtonClass
 }
 
@@ -20791,15 +18841,6 @@ func (u *UpdateBotMenuButton) String() string {
 	}
 	type Alias UpdateBotMenuButton
 	return fmt.Sprintf("UpdateBotMenuButton%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateBotMenuButton from given interface.
-func (u *UpdateBotMenuButton) FillFrom(from interface {
-	GetBotID() (value int64)
-	GetButton() (value BotMenuButtonClass)
-}) {
-	u.BotID = from.GetBotID()
-	u.Button = from.GetButton()
 }
 
 // TypeID returns type id in TL schema.
@@ -20911,13 +18952,6 @@ func (u *UpdateBotMenuButton) GetButton() (value BotMenuButtonClass) {
 }
 
 // UpdateSavedRingtones represents TL type `updateSavedRingtones#74d8be99`.
-// The list of saved notification sounds has changed, use account.getSavedRingtones¹ to
-// fetch the new list.
-//
-// Links:
-//  1. https://core.telegram.org/method/account.getSavedRingtones
-//
-// See https://core.telegram.org/constructor/updateSavedRingtones for reference.
 type UpdateSavedRingtones struct {
 }
 
@@ -21017,33 +19051,18 @@ func (u *UpdateSavedRingtones) DecodeBare(b *bin.Buffer) error {
 }
 
 // UpdateTranscribedAudio represents TL type `updateTranscribedAudio#84cd5a`.
-// A pending voice message transcription »¹ initiated with messages.transcribeAudio²
-// was updated.
-//
-// Links:
-//  1. https://core.telegram.org/api/transcribe
-//  2. https://core.telegram.org/method/messages.transcribeAudio
-//
-// See https://core.telegram.org/constructor/updateTranscribedAudio for reference.
 type UpdateTranscribedAudio struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of UpdateTranscribedAudio.
 	Flags bin.Fields
-	// Whether this transcription is still pending and further updateTranscribedAudio¹ about
-	// it will be sent in the future.
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/updateTranscribedAudio
+	// Pending field of UpdateTranscribedAudio.
 	Pending bool
-	// Peer of the transcribed message
+	// Peer field of UpdateTranscribedAudio.
 	Peer PeerClass
-	// Transcribed message ID
+	// MsgID field of UpdateTranscribedAudio.
 	MsgID int
-	// Transcription ID
+	// TranscriptionID field of UpdateTranscribedAudio.
 	TranscriptionID int64
-	// Transcribed text
+	// Text field of UpdateTranscribedAudio.
 	Text string
 }
 
@@ -21096,21 +19115,6 @@ func (u *UpdateTranscribedAudio) String() string {
 	}
 	type Alias UpdateTranscribedAudio
 	return fmt.Sprintf("UpdateTranscribedAudio%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateTranscribedAudio from given interface.
-func (u *UpdateTranscribedAudio) FillFrom(from interface {
-	GetPending() (value bool)
-	GetPeer() (value PeerClass)
-	GetMsgID() (value int)
-	GetTranscriptionID() (value int64)
-	GetText() (value string)
-}) {
-	u.Pending = from.GetPending()
-	u.Peer = from.GetPeer()
-	u.MsgID = from.GetMsgID()
-	u.TranscriptionID = from.GetTranscriptionID()
-	u.Text = from.GetText()
 }
 
 // TypeID returns type id in TL schema.
@@ -21303,12 +19307,6 @@ func (u *UpdateTranscribedAudio) GetText() (value string) {
 }
 
 // UpdateReadFeaturedEmojiStickers represents TL type `updateReadFeaturedEmojiStickers#fb4c496c`.
-// Some featured custom emoji stickers¹ were marked as read
-//
-// Links:
-//  1. https://core.telegram.org/api/custom-emoji
-//
-// See https://core.telegram.org/constructor/updateReadFeaturedEmojiStickers for reference.
 type UpdateReadFeaturedEmojiStickers struct {
 }
 
@@ -21408,19 +19406,10 @@ func (u *UpdateReadFeaturedEmojiStickers) DecodeBare(b *bin.Buffer) error {
 }
 
 // UpdateUserEmojiStatus represents TL type `updateUserEmojiStatus#28373599`.
-// The emoji status¹ of a certain user has changed
-//
-// Links:
-//  1. https://core.telegram.org/api/emoji-status
-//
-// See https://core.telegram.org/constructor/updateUserEmojiStatus for reference.
 type UpdateUserEmojiStatus struct {
-	// User ID
+	// UserID field of UpdateUserEmojiStatus.
 	UserID int64
-	// New emoji status¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/emoji-status
+	// EmojiStatus field of UpdateUserEmojiStatus.
 	EmojiStatus EmojiStatusClass
 }
 
@@ -21461,15 +19450,6 @@ func (u *UpdateUserEmojiStatus) String() string {
 	}
 	type Alias UpdateUserEmojiStatus
 	return fmt.Sprintf("UpdateUserEmojiStatus%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateUserEmojiStatus from given interface.
-func (u *UpdateUserEmojiStatus) FillFrom(from interface {
-	GetUserID() (value int64)
-	GetEmojiStatus() (value EmojiStatusClass)
-}) {
-	u.UserID = from.GetUserID()
-	u.EmojiStatus = from.GetEmojiStatus()
 }
 
 // TypeID returns type id in TL schema.
@@ -21581,12 +19561,6 @@ func (u *UpdateUserEmojiStatus) GetEmojiStatus() (value EmojiStatusClass) {
 }
 
 // UpdateRecentEmojiStatuses represents TL type `updateRecentEmojiStatuses#30f443db`.
-// The list of recent emoji statuses¹ has changed
-//
-// Links:
-//  1. https://core.telegram.org/api/emoji-status
-//
-// See https://core.telegram.org/constructor/updateRecentEmojiStatuses for reference.
 type UpdateRecentEmojiStatuses struct {
 }
 
@@ -21686,12 +19660,6 @@ func (u *UpdateRecentEmojiStatuses) DecodeBare(b *bin.Buffer) error {
 }
 
 // UpdateRecentReactions represents TL type `updateRecentReactions#6f7863f4`.
-// The list of recent message reactions¹ has changed
-//
-// Links:
-//  1. https://core.telegram.org/api/reactions
-//
-// See https://core.telegram.org/constructor/updateRecentReactions for reference.
 type UpdateRecentReactions struct {
 }
 
@@ -21791,32 +19759,14 @@ func (u *UpdateRecentReactions) DecodeBare(b *bin.Buffer) error {
 }
 
 // UpdateMoveStickerSetToTop represents TL type `updateMoveStickerSetToTop#86fccf85`.
-// A stickerset was just moved to top, see here for more info »¹
-//
-// Links:
-//  1. https://core.telegram.org/api/stickers#recent-stickersets
-//
-// See https://core.telegram.org/constructor/updateMoveStickerSetToTop for reference.
 type UpdateMoveStickerSetToTop struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of UpdateMoveStickerSetToTop.
 	Flags bin.Fields
-	// This update is referring to a mask stickerset¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/stickers#mask-stickers
+	// Masks field of UpdateMoveStickerSetToTop.
 	Masks bool
-	// This update is referring to a custom emoji stickerset¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/custom-emoji
+	// Emojis field of UpdateMoveStickerSetToTop.
 	Emojis bool
-	// Stickerset¹ ID
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/stickers
+	// Stickerset field of UpdateMoveStickerSetToTop.
 	Stickerset int64
 }
 
@@ -21863,17 +19813,6 @@ func (u *UpdateMoveStickerSetToTop) String() string {
 	}
 	type Alias UpdateMoveStickerSetToTop
 	return fmt.Sprintf("UpdateMoveStickerSetToTop%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateMoveStickerSetToTop from given interface.
-func (u *UpdateMoveStickerSetToTop) FillFrom(from interface {
-	GetMasks() (value bool)
-	GetEmojis() (value bool)
-	GetStickerset() (value int64)
-}) {
-	u.Masks = from.GetMasks()
-	u.Emojis = from.GetEmojis()
-	u.Stickerset = from.GetStickerset()
 }
 
 // TypeID returns type id in TL schema.
@@ -22029,21 +19968,12 @@ func (u *UpdateMoveStickerSetToTop) GetStickerset() (value int64) {
 }
 
 // UpdateMessageExtendedMedia represents TL type `updateMessageExtendedMedia#d5a41724`.
-// You bought a paid media »¹: this update contains the revealed media.
-//
-// Links:
-//  1. https://core.telegram.org/api/paid-media
-//
-// See https://core.telegram.org/constructor/updateMessageExtendedMedia for reference.
 type UpdateMessageExtendedMedia struct {
-	// Peer where the paid media was posted
+	// Peer field of UpdateMessageExtendedMedia.
 	Peer PeerClass
-	// ID of the message containing the paid media
+	// MsgID field of UpdateMessageExtendedMedia.
 	MsgID int
-	// Revealed media, contains only messageExtendedMedia¹ constructors.
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/messageExtendedMedia
+	// ExtendedMedia field of UpdateMessageExtendedMedia.
 	ExtendedMedia []MessageExtendedMediaClass
 }
 
@@ -22087,17 +20017,6 @@ func (u *UpdateMessageExtendedMedia) String() string {
 	}
 	type Alias UpdateMessageExtendedMedia
 	return fmt.Sprintf("UpdateMessageExtendedMedia%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateMessageExtendedMedia from given interface.
-func (u *UpdateMessageExtendedMedia) FillFrom(from interface {
-	GetPeer() (value PeerClass)
-	GetMsgID() (value int)
-	GetExtendedMedia() (value []MessageExtendedMediaClass)
-}) {
-	u.Peer = from.GetPeer()
-	u.MsgID = from.GetMsgID()
-	u.ExtendedMedia = from.GetExtendedMedia()
 }
 
 // TypeID returns type id in TL schema.
@@ -22246,29 +20165,15 @@ func (u *UpdateMessageExtendedMedia) GetExtendedMedia() (value []MessageExtended
 	return u.ExtendedMedia
 }
 
-// MapExtendedMedia returns field ExtendedMedia wrapped in MessageExtendedMediaClassArray helper.
-func (u *UpdateMessageExtendedMedia) MapExtendedMedia() (value MessageExtendedMediaClassArray) {
-	return MessageExtendedMediaClassArray(u.ExtendedMedia)
-}
-
 // UpdateChannelPinnedTopic represents TL type `updateChannelPinnedTopic#192efbe3`.
-// A forum topic »¹ was pinned or unpinned.
-//
-// Links:
-//  1. https://core.telegram.org/api/forum#forum-topics
-//
-// See https://core.telegram.org/constructor/updateChannelPinnedTopic for reference.
 type UpdateChannelPinnedTopic struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of UpdateChannelPinnedTopic.
 	Flags bin.Fields
-	// Whether the topic was pinned or unpinned
+	// Pinned field of UpdateChannelPinnedTopic.
 	Pinned bool
-	// The forum ID
+	// ChannelID field of UpdateChannelPinnedTopic.
 	ChannelID int64
-	// The topic ID
+	// TopicID field of UpdateChannelPinnedTopic.
 	TopicID int
 }
 
@@ -22315,17 +20220,6 @@ func (u *UpdateChannelPinnedTopic) String() string {
 	}
 	type Alias UpdateChannelPinnedTopic
 	return fmt.Sprintf("UpdateChannelPinnedTopic%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateChannelPinnedTopic from given interface.
-func (u *UpdateChannelPinnedTopic) FillFrom(from interface {
-	GetPinned() (value bool)
-	GetChannelID() (value int64)
-	GetTopicID() (value int)
-}) {
-	u.Pinned = from.GetPinned()
-	u.ChannelID = from.GetChannelID()
-	u.TopicID = from.GetTopicID()
 }
 
 // TypeID returns type id in TL schema.
@@ -22473,21 +20367,12 @@ func (u *UpdateChannelPinnedTopic) GetTopicID() (value int) {
 }
 
 // UpdateChannelPinnedTopics represents TL type `updateChannelPinnedTopics#fe198602`.
-// The pinned topics¹ of a forum have changed.
-//
-// Links:
-//  1. https://core.telegram.org/api/forum#forum-topics
-//
-// See https://core.telegram.org/constructor/updateChannelPinnedTopics for reference.
 type UpdateChannelPinnedTopics struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of UpdateChannelPinnedTopics.
 	Flags bin.Fields
-	// Forum ID.
+	// ChannelID field of UpdateChannelPinnedTopics.
 	ChannelID int64
-	// Ordered list containing the IDs of all pinned topics.
+	// Order field of UpdateChannelPinnedTopics.
 	//
 	// Use SetOrder and GetOrder helpers.
 	Order []int
@@ -22533,18 +20418,6 @@ func (u *UpdateChannelPinnedTopics) String() string {
 	}
 	type Alias UpdateChannelPinnedTopics
 	return fmt.Sprintf("UpdateChannelPinnedTopics%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateChannelPinnedTopics from given interface.
-func (u *UpdateChannelPinnedTopics) FillFrom(from interface {
-	GetChannelID() (value int64)
-	GetOrder() (value []int, ok bool)
-}) {
-	u.ChannelID = from.GetChannelID()
-	if val, ok := from.GetOrder(); ok {
-		u.Order = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -22693,26 +20566,8 @@ func (u *UpdateChannelPinnedTopics) GetOrder() (value []int, ok bool) {
 }
 
 // UpdateUser represents TL type `updateUser#20529438`.
-// User (user¹ and/or userFull²) information was updated.
-// This update can only be received through getDifference or in
-// updates¹/updatesCombined² constructors, so it will always come bundled with the
-// updated user³, that should be applied as usual »⁴, without re-fetching the info
-// manually.
-// However, full peer information will not come bundled in updates, so the full peer
-// cache (userFull¹) must be invalidated for user_id when receiving this update.
-//
-// Links:
-//  1. https://core.telegram.org/constructor/user
-//  2. https://core.telegram.org/constructor/userFull
-//  3. https://core.telegram.org/constructor/updates
-//  4. https://core.telegram.org/constructor/updatesCombined
-//  5. https://core.telegram.org/constructor/user
-//  6. https://core.telegram.org/api/peers
-//  7. https://core.telegram.org/constructor/userFull
-//
-// See https://core.telegram.org/constructor/updateUser for reference.
 type UpdateUser struct {
-	// User ID
+	// UserID field of UpdateUser.
 	UserID int64
 }
 
@@ -22750,13 +20605,6 @@ func (u *UpdateUser) String() string {
 	}
 	type Alias UpdateUser
 	return fmt.Sprintf("UpdateUser%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateUser from given interface.
-func (u *UpdateUser) FillFrom(from interface {
-	GetUserID() (value int64)
-}) {
-	u.UserID = from.GetUserID()
 }
 
 // TypeID returns type id in TL schema.
@@ -22843,13 +20691,6 @@ func (u *UpdateUser) GetUserID() (value int64) {
 }
 
 // UpdateAutoSaveSettings represents TL type `updateAutoSaveSettings#ec05b097`.
-// Media autosave settings have changed and must be refetched using account
-// getAutoSaveSettings¹.
-//
-// Links:
-//  1. https://core.telegram.org/method/account.getAutoSaveSettings
-//
-// See https://core.telegram.org/constructor/updateAutoSaveSettings for reference.
 type UpdateAutoSaveSettings struct {
 }
 
@@ -22949,13 +20790,10 @@ func (u *UpdateAutoSaveSettings) DecodeBare(b *bin.Buffer) error {
 }
 
 // UpdateStory represents TL type `updateStory#75b3b798`.
-// A new story was posted.
-//
-// See https://core.telegram.org/constructor/updateStory for reference.
 type UpdateStory struct {
-	// ID of the poster.
+	// Peer field of UpdateStory.
 	Peer PeerClass
-	// The story that was posted.
+	// Story field of UpdateStory.
 	Story StoryItemClass
 }
 
@@ -22996,15 +20834,6 @@ func (u *UpdateStory) String() string {
 	}
 	type Alias UpdateStory
 	return fmt.Sprintf("UpdateStory%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateStory from given interface.
-func (u *UpdateStory) FillFrom(from interface {
-	GetPeer() (value PeerClass)
-	GetStory() (value StoryItemClass)
-}) {
-	u.Peer = from.GetPeer()
-	u.Story = from.GetStory()
 }
 
 // TypeID returns type id in TL schema.
@@ -23121,13 +20950,10 @@ func (u *UpdateStory) GetStory() (value StoryItemClass) {
 }
 
 // UpdateReadStories represents TL type `updateReadStories#f74e932b`.
-// Stories of a specific peer were marked as read.
-//
-// See https://core.telegram.org/constructor/updateReadStories for reference.
 type UpdateReadStories struct {
-	// The peer
+	// Peer field of UpdateReadStories.
 	Peer PeerClass
-	// ID of the last story that was marked as read
+	// MaxID field of UpdateReadStories.
 	MaxID int
 }
 
@@ -23168,15 +20994,6 @@ func (u *UpdateReadStories) String() string {
 	}
 	type Alias UpdateReadStories
 	return fmt.Sprintf("UpdateReadStories%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateReadStories from given interface.
-func (u *UpdateReadStories) FillFrom(from interface {
-	GetPeer() (value PeerClass)
-	GetMaxID() (value int)
-}) {
-	u.Peer = from.GetPeer()
-	u.MaxID = from.GetMaxID()
 }
 
 // TypeID returns type id in TL schema.
@@ -23288,26 +21105,10 @@ func (u *UpdateReadStories) GetMaxID() (value int) {
 }
 
 // UpdateStoryID represents TL type `updateStoryID#1bf335b9`.
-// A story was successfully uploaded.
-// Once a story is successfully uploaded, an updateStoryID¹ will be returned, indicating
-// the story ID (id) that was attributed to the story (like for messages, random_id
-// indicates the random_id that was passed to stories.sendStory²: this way, you can tell
-// which story was assigned a specific id by checking which stories.sendStory³ call has
-// the returned random_id).
-//
-// Links:
-//  1. https://core.telegram.org/constructor/updateStoryID
-//  2. https://core.telegram.org/method/stories.sendStory
-//  3. https://core.telegram.org/method/stories.sendStory
-//
-// See https://core.telegram.org/constructor/updateStoryID for reference.
 type UpdateStoryID struct {
-	// The id that was attributed to the story.
+	// ID field of UpdateStoryID.
 	ID int
-	// The random_id that was passed to stories.sendStory¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/stories.sendStory
+	// RandomID field of UpdateStoryID.
 	RandomID int64
 }
 
@@ -23348,15 +21149,6 @@ func (u *UpdateStoryID) String() string {
 	}
 	type Alias UpdateStoryID
 	return fmt.Sprintf("UpdateStoryID%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateStoryID from given interface.
-func (u *UpdateStoryID) FillFrom(from interface {
-	GetID() (value int)
-	GetRandomID() (value int64)
-}) {
-	u.ID = from.GetID()
-	u.RandomID = from.GetRandomID()
 }
 
 // TypeID returns type id in TL schema.
@@ -23463,17 +21255,8 @@ func (u *UpdateStoryID) GetRandomID() (value int64) {
 }
 
 // UpdateStoriesStealthMode represents TL type `updateStoriesStealthMode#2c084dc1`.
-// Indicates that stories stealth mode¹ was activated.
-//
-// Links:
-//  1. https://core.telegram.org/api/stories#stealth-mode
-//
-// See https://core.telegram.org/constructor/updateStoriesStealthMode for reference.
 type UpdateStoriesStealthMode struct {
-	// Information about the current stealth mode¹ session.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/stories#stealth-mode
+	// StealthMode field of UpdateStoriesStealthMode.
 	StealthMode StoriesStealthMode
 }
 
@@ -23511,13 +21294,6 @@ func (u *UpdateStoriesStealthMode) String() string {
 	}
 	type Alias UpdateStoriesStealthMode
 	return fmt.Sprintf("UpdateStoriesStealthMode%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateStoriesStealthMode from given interface.
-func (u *UpdateStoriesStealthMode) FillFrom(from interface {
-	GetStealthMode() (value StoriesStealthMode)
-}) {
-	u.StealthMode = from.GetStealthMode()
 }
 
 // TypeID returns type id in TL schema.
@@ -23604,18 +21380,12 @@ func (u *UpdateStoriesStealthMode) GetStealthMode() (value StoriesStealthMode) {
 }
 
 // UpdateSentStoryReaction represents TL type `updateSentStoryReaction#7d627683`.
-// Indicates we reacted to a story »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/stories#reactions
-//
-// See https://core.telegram.org/constructor/updateSentStoryReaction for reference.
 type UpdateSentStoryReaction struct {
-	// The peer that sent the story
+	// Peer field of UpdateSentStoryReaction.
 	Peer PeerClass
-	// ID of the story we reacted to
+	// StoryID field of UpdateSentStoryReaction.
 	StoryID int
-	// The reaction that was sent
+	// Reaction field of UpdateSentStoryReaction.
 	Reaction ReactionClass
 }
 
@@ -23659,17 +21429,6 @@ func (u *UpdateSentStoryReaction) String() string {
 	}
 	type Alias UpdateSentStoryReaction
 	return fmt.Sprintf("UpdateSentStoryReaction%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateSentStoryReaction from given interface.
-func (u *UpdateSentStoryReaction) FillFrom(from interface {
-	GetPeer() (value PeerClass)
-	GetStoryID() (value int)
-	GetReaction() (value ReactionClass)
-}) {
-	u.Peer = from.GetPeer()
-	u.StoryID = from.GetStoryID()
-	u.Reaction = from.GetReaction()
 }
 
 // TypeID returns type id in TL schema.
@@ -23806,21 +21565,12 @@ func (u *UpdateSentStoryReaction) GetReaction() (value ReactionClass) {
 }
 
 // UpdateBotChatBoost represents TL type `updateBotChatBoost#904dd49c`.
-// A channel/supergroup boost¹ has changed (bots only)
-//
-// Links:
-//  1. https://core.telegram.org/api/boost
-//
-// See https://core.telegram.org/constructor/updateBotChatBoost for reference.
 type UpdateBotChatBoost struct {
-	// Channel
+	// Peer field of UpdateBotChatBoost.
 	Peer PeerClass
-	// New boost information
+	// Boost field of UpdateBotChatBoost.
 	Boost Boost
-	// QTS¹ event sequence identifier
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/updates
+	// Qts field of UpdateBotChatBoost.
 	Qts int
 }
 
@@ -23864,17 +21614,6 @@ func (u *UpdateBotChatBoost) String() string {
 	}
 	type Alias UpdateBotChatBoost
 	return fmt.Sprintf("UpdateBotChatBoost%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateBotChatBoost from given interface.
-func (u *UpdateBotChatBoost) FillFrom(from interface {
-	GetPeer() (value PeerClass)
-	GetBoost() (value Boost)
-	GetQts() (value int)
-}) {
-	u.Peer = from.GetPeer()
-	u.Boost = from.GetBoost()
-	u.Qts = from.GetQts()
 }
 
 // TypeID returns type id in TL schema.
@@ -24006,24 +21745,10 @@ func (u *UpdateBotChatBoost) GetQts() (value int) {
 }
 
 // UpdateChannelViewForumAsMessages represents TL type `updateChannelViewForumAsMessages#7b68920`.
-// Users may also choose to display messages from all topics as if they were sent to a
-// normal group, using a "View as messages" setting in the local client.
-// This setting only affects the current account, and is synced to other logged in
-// sessions using the channels.toggleViewForumAsMessages¹ method; invoking this method
-// will update the value of the view_forum_as_messages flag of channelFull² or dialog³
-// and emit an updateChannelViewForumAsMessages⁴.
-//
-// Links:
-//  1. https://core.telegram.org/method/channels.toggleViewForumAsMessages
-//  2. https://core.telegram.org/constructor/channelFull
-//  3. https://core.telegram.org/constructor/dialog
-//  4. https://core.telegram.org/constructor/updateChannelViewForumAsMessages
-//
-// See https://core.telegram.org/constructor/updateChannelViewForumAsMessages for reference.
 type UpdateChannelViewForumAsMessages struct {
-	// The forum ID
+	// ChannelID field of UpdateChannelViewForumAsMessages.
 	ChannelID int64
-	// The new value of the toggle.
+	// Enabled field of UpdateChannelViewForumAsMessages.
 	Enabled bool
 }
 
@@ -24064,15 +21789,6 @@ func (u *UpdateChannelViewForumAsMessages) String() string {
 	}
 	type Alias UpdateChannelViewForumAsMessages
 	return fmt.Sprintf("UpdateChannelViewForumAsMessages%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateChannelViewForumAsMessages from given interface.
-func (u *UpdateChannelViewForumAsMessages) FillFrom(from interface {
-	GetChannelID() (value int64)
-	GetEnabled() (value bool)
-}) {
-	u.ChannelID = from.GetChannelID()
-	u.Enabled = from.GetEnabled()
 }
 
 // TypeID returns type id in TL schema.
@@ -24179,29 +21895,14 @@ func (u *UpdateChannelViewForumAsMessages) GetEnabled() (value bool) {
 }
 
 // UpdatePeerWallpaper represents TL type `updatePeerWallpaper#ae3f101d`.
-// The wallpaper »¹ of a given peer has changed.
-//
-// Links:
-//  1. https://core.telegram.org/api/wallpapers
-//
-// See https://core.telegram.org/constructor/updatePeerWallpaper for reference.
 type UpdatePeerWallpaper struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of UpdatePeerWallpaper.
 	Flags bin.Fields
-	// Whether the other user has chosen a custom wallpaper for us using messages
-	// setChatWallPaper¹ and the for_both flag, see here »² for more info.
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/messages.setChatWallPaper
-	//  2) https://core.telegram.org/api/wallpapers#installing-wallpapers-in-a-specific-chat-or-channel
+	// WallpaperOverridden field of UpdatePeerWallpaper.
 	WallpaperOverridden bool
-	// The peer where the wallpaper has changed.
+	// Peer field of UpdatePeerWallpaper.
 	Peer PeerClass
-	// The new wallpaper, if none the wallpaper was removed and the default wallpaper should
-	// be used.
+	// Wallpaper field of UpdatePeerWallpaper.
 	//
 	// Use SetWallpaper and GetWallpaper helpers.
 	Wallpaper WallPaperClass
@@ -24250,20 +21951,6 @@ func (u *UpdatePeerWallpaper) String() string {
 	}
 	type Alias UpdatePeerWallpaper
 	return fmt.Sprintf("UpdatePeerWallpaper%+v", Alias(*u))
-}
-
-// FillFrom fills UpdatePeerWallpaper from given interface.
-func (u *UpdatePeerWallpaper) FillFrom(from interface {
-	GetWallpaperOverridden() (value bool)
-	GetPeer() (value PeerClass)
-	GetWallpaper() (value WallPaperClass, ok bool)
-}) {
-	u.WallpaperOverridden = from.GetWallpaperOverridden()
-	u.Peer = from.GetPeer()
-	if val, ok := from.GetWallpaper(); ok {
-		u.Wallpaper = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -24437,26 +22124,20 @@ func (u *UpdatePeerWallpaper) GetWallpaper() (value WallPaperClass, ok bool) {
 }
 
 // UpdateBotMessageReaction represents TL type `updateBotMessageReaction#ac21d3ce`.
-// Bots only: a user has changed their reactions on a message with public reactions.
-//
-// See https://core.telegram.org/constructor/updateBotMessageReaction for reference.
 type UpdateBotMessageReaction struct {
-	// Peer of the reacted-to message.
+	// Peer field of UpdateBotMessageReaction.
 	Peer PeerClass
-	// ID of the reacted-to message.
+	// MsgID field of UpdateBotMessageReaction.
 	MsgID int
-	// Date of the change.
+	// Date field of UpdateBotMessageReaction.
 	Date int
-	// The user that (un)reacted to the message.
+	// Actor field of UpdateBotMessageReaction.
 	Actor PeerClass
-	// Old reactions
+	// OldReactions field of UpdateBotMessageReaction.
 	OldReactions []ReactionClass
-	// New reactions
+	// NewReactions field of UpdateBotMessageReaction.
 	NewReactions []ReactionClass
-	// QTS¹ event sequence identifier
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/updates
+	// Qts field of UpdateBotMessageReaction.
 	Qts int
 }
 
@@ -24512,25 +22193,6 @@ func (u *UpdateBotMessageReaction) String() string {
 	}
 	type Alias UpdateBotMessageReaction
 	return fmt.Sprintf("UpdateBotMessageReaction%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateBotMessageReaction from given interface.
-func (u *UpdateBotMessageReaction) FillFrom(from interface {
-	GetPeer() (value PeerClass)
-	GetMsgID() (value int)
-	GetDate() (value int)
-	GetActor() (value PeerClass)
-	GetOldReactions() (value []ReactionClass)
-	GetNewReactions() (value []ReactionClass)
-	GetQts() (value int)
-}) {
-	u.Peer = from.GetPeer()
-	u.MsgID = from.GetMsgID()
-	u.Date = from.GetDate()
-	u.Actor = from.GetActor()
-	u.OldReactions = from.GetOldReactions()
-	u.NewReactions = from.GetNewReactions()
-	u.Qts = from.GetQts()
 }
 
 // TypeID returns type id in TL schema.
@@ -24782,33 +22444,17 @@ func (u *UpdateBotMessageReaction) GetQts() (value int) {
 	return u.Qts
 }
 
-// MapOldReactions returns field OldReactions wrapped in ReactionClassArray helper.
-func (u *UpdateBotMessageReaction) MapOldReactions() (value ReactionClassArray) {
-	return ReactionClassArray(u.OldReactions)
-}
-
-// MapNewReactions returns field NewReactions wrapped in ReactionClassArray helper.
-func (u *UpdateBotMessageReaction) MapNewReactions() (value ReactionClassArray) {
-	return ReactionClassArray(u.NewReactions)
-}
-
 // UpdateBotMessageReactions represents TL type `updateBotMessageReactions#9cb7759`.
-// Bots only: the number of reactions on a message with anonymous reactions has changed.
-//
-// See https://core.telegram.org/constructor/updateBotMessageReactions for reference.
 type UpdateBotMessageReactions struct {
-	// Peer of the reacted-to message.
+	// Peer field of UpdateBotMessageReactions.
 	Peer PeerClass
-	// ID of the reacted-to message.
+	// MsgID field of UpdateBotMessageReactions.
 	MsgID int
-	// Date of the change.
+	// Date field of UpdateBotMessageReactions.
 	Date int
-	// New reaction counters.
+	// Reactions field of UpdateBotMessageReactions.
 	Reactions []ReactionCount
-	// QTS¹ event sequence identifier
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/updates
+	// Qts field of UpdateBotMessageReactions.
 	Qts int
 }
 
@@ -24858,21 +22504,6 @@ func (u *UpdateBotMessageReactions) String() string {
 	}
 	type Alias UpdateBotMessageReactions
 	return fmt.Sprintf("UpdateBotMessageReactions%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateBotMessageReactions from given interface.
-func (u *UpdateBotMessageReactions) FillFrom(from interface {
-	GetPeer() (value PeerClass)
-	GetMsgID() (value int)
-	GetDate() (value int)
-	GetReactions() (value []ReactionCount)
-	GetQts() (value int)
-}) {
-	u.Peer = from.GetPeer()
-	u.MsgID = from.GetMsgID()
-	u.Date = from.GetDate()
-	u.Reactions = from.GetReactions()
-	u.Qts = from.GetQts()
 }
 
 // TypeID returns type id in TL schema.
@@ -25059,21 +22690,12 @@ func (u *UpdateBotMessageReactions) GetQts() (value int) {
 }
 
 // UpdateSavedDialogPinned represents TL type `updateSavedDialogPinned#aeaf9e74`.
-// A saved message dialog¹ was pinned/unpinned
-//
-// Links:
-//  1. https://core.telegram.org/api/saved-messages
-//
-// See https://core.telegram.org/constructor/updateSavedDialogPinned for reference.
 type UpdateSavedDialogPinned struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of UpdateSavedDialogPinned.
 	Flags bin.Fields
-	// Whether the dialog was pinned
+	// Pinned field of UpdateSavedDialogPinned.
 	Pinned bool
-	// The dialog
+	// Peer field of UpdateSavedDialogPinned.
 	Peer DialogPeerClass
 }
 
@@ -25117,15 +22739,6 @@ func (u *UpdateSavedDialogPinned) String() string {
 	}
 	type Alias UpdateSavedDialogPinned
 	return fmt.Sprintf("UpdateSavedDialogPinned%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateSavedDialogPinned from given interface.
-func (u *UpdateSavedDialogPinned) FillFrom(from interface {
-	GetPinned() (value bool)
-	GetPeer() (value DialogPeerClass)
-}) {
-	u.Pinned = from.GetPinned()
-	u.Peer = from.GetPeer()
 }
 
 // TypeID returns type id in TL schema.
@@ -25258,19 +22871,10 @@ func (u *UpdateSavedDialogPinned) GetPeer() (value DialogPeerClass) {
 }
 
 // UpdatePinnedSavedDialogs represents TL type `updatePinnedSavedDialogs#686c85a6`.
-// Pinned saved dialogs »¹ were updated
-//
-// Links:
-//  1. https://core.telegram.org/api/saved-messages
-//
-// See https://core.telegram.org/constructor/updatePinnedSavedDialogs for reference.
 type UpdatePinnedSavedDialogs struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of UpdatePinnedSavedDialogs.
 	Flags bin.Fields
-	// New order of pinned saved dialogs
+	// Order field of UpdatePinnedSavedDialogs.
 	//
 	// Use SetOrder and GetOrder helpers.
 	Order []DialogPeerClass
@@ -25313,16 +22917,6 @@ func (u *UpdatePinnedSavedDialogs) String() string {
 	}
 	type Alias UpdatePinnedSavedDialogs
 	return fmt.Sprintf("UpdatePinnedSavedDialogs%+v", Alias(*u))
-}
-
-// FillFrom fills UpdatePinnedSavedDialogs from given interface.
-func (u *UpdatePinnedSavedDialogs) FillFrom(from interface {
-	GetOrder() (value []DialogPeerClass, ok bool)
-}) {
-	if val, ok := from.GetOrder(); ok {
-		u.Order = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -25455,23 +23049,7 @@ func (u *UpdatePinnedSavedDialogs) GetOrder() (value []DialogPeerClass, ok bool)
 	return u.Order, true
 }
 
-// MapOrder returns field Order wrapped in DialogPeerClassArray helper.
-func (u *UpdatePinnedSavedDialogs) MapOrder() (value DialogPeerClassArray, ok bool) {
-	if !u.Flags.Has(0) {
-		return value, false
-	}
-	return DialogPeerClassArray(u.Order), true
-}
-
 // UpdateSavedReactionTags represents TL type `updateSavedReactionTags#39c67432`.
-// The list of reaction tag »¹ names assigned by the user has changed and should be
-// refetched using messages.getSavedReactionTags »².
-//
-// Links:
-//  1. https://core.telegram.org/api/saved-messages#tags
-//  2. https://core.telegram.org/method/messages.getSavedReactionTags
-//
-// See https://core.telegram.org/constructor/updateSavedReactionTags for reference.
 type UpdateSavedReactionTags struct {
 }
 
@@ -25571,11 +23149,8 @@ func (u *UpdateSavedReactionTags) DecodeBare(b *bin.Buffer) error {
 }
 
 // UpdateSMSJob represents TL type `updateSmsJob#f16269d4`.
-// A new SMS job was received
-//
-// See https://core.telegram.org/constructor/updateSmsJob for reference.
 type UpdateSMSJob struct {
-	// SMS job ID
+	// JobID field of UpdateSMSJob.
 	JobID string
 }
 
@@ -25613,13 +23188,6 @@ func (u *UpdateSMSJob) String() string {
 	}
 	type Alias UpdateSMSJob
 	return fmt.Sprintf("UpdateSMSJob%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateSMSJob from given interface.
-func (u *UpdateSMSJob) FillFrom(from interface {
-	GetJobID() (value string)
-}) {
-	u.JobID = from.GetJobID()
 }
 
 // TypeID returns type id in TL schema.
@@ -25706,14 +23274,8 @@ func (u *UpdateSMSJob) GetJobID() (value string) {
 }
 
 // UpdateQuickReplies represents TL type `updateQuickReplies#f9470ab2`.
-// Info about or the order of quick reply shortcuts »¹ was changed.
-//
-// Links:
-//  1. https://core.telegram.org/api/business#quick-reply-shortcuts
-//
-// See https://core.telegram.org/constructor/updateQuickReplies for reference.
 type UpdateQuickReplies struct {
-	// New quick reply shortcut order and information.
+	// QuickReplies field of UpdateQuickReplies.
 	QuickReplies []QuickReply
 }
 
@@ -25751,13 +23313,6 @@ func (u *UpdateQuickReplies) String() string {
 	}
 	type Alias UpdateQuickReplies
 	return fmt.Sprintf("UpdateQuickReplies%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateQuickReplies from given interface.
-func (u *UpdateQuickReplies) FillFrom(from interface {
-	GetQuickReplies() (value []QuickReply)
-}) {
-	u.QuickReplies = from.GetQuickReplies()
 }
 
 // TypeID returns type id in TL schema.
@@ -25859,14 +23414,8 @@ func (u *UpdateQuickReplies) GetQuickReplies() (value []QuickReply) {
 }
 
 // UpdateNewQuickReply represents TL type `updateNewQuickReply#f53da717`.
-// A new quick reply shortcut »¹ was created.
-//
-// Links:
-//  1. https://core.telegram.org/api/business#quick-reply-shortcuts
-//
-// See https://core.telegram.org/constructor/updateNewQuickReply for reference.
 type UpdateNewQuickReply struct {
-	// Quick reply shortcut.
+	// QuickReply field of UpdateNewQuickReply.
 	QuickReply QuickReply
 }
 
@@ -25904,13 +23453,6 @@ func (u *UpdateNewQuickReply) String() string {
 	}
 	type Alias UpdateNewQuickReply
 	return fmt.Sprintf("UpdateNewQuickReply%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateNewQuickReply from given interface.
-func (u *UpdateNewQuickReply) FillFrom(from interface {
-	GetQuickReply() (value QuickReply)
-}) {
-	u.QuickReply = from.GetQuickReply()
 }
 
 // TypeID returns type id in TL schema.
@@ -25997,17 +23539,8 @@ func (u *UpdateNewQuickReply) GetQuickReply() (value QuickReply) {
 }
 
 // UpdateDeleteQuickReply represents TL type `updateDeleteQuickReply#53e6f1ec`.
-// A quick reply shortcut »¹ was deleted. This will not emit
-// updateDeleteQuickReplyMessages² updates, even if all the messages in the shortcut are
-// also deleted by this update.
-//
-// Links:
-//  1. https://core.telegram.org/api/business#quick-reply-shortcuts
-//  2. https://core.telegram.org/constructor/updateDeleteQuickReplyMessages
-//
-// See https://core.telegram.org/constructor/updateDeleteQuickReply for reference.
 type UpdateDeleteQuickReply struct {
-	// ID of the quick reply shortcut that was deleted.
+	// ShortcutID field of UpdateDeleteQuickReply.
 	ShortcutID int
 }
 
@@ -26045,13 +23578,6 @@ func (u *UpdateDeleteQuickReply) String() string {
 	}
 	type Alias UpdateDeleteQuickReply
 	return fmt.Sprintf("UpdateDeleteQuickReply%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateDeleteQuickReply from given interface.
-func (u *UpdateDeleteQuickReply) FillFrom(from interface {
-	GetShortcutID() (value int)
-}) {
-	u.ShortcutID = from.GetShortcutID()
 }
 
 // TypeID returns type id in TL schema.
@@ -26138,18 +23664,8 @@ func (u *UpdateDeleteQuickReply) GetShortcutID() (value int) {
 }
 
 // UpdateQuickReplyMessage represents TL type `updateQuickReplyMessage#3e050d0f`.
-// A new message was added to a quick reply shortcut »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/business#quick-reply-shortcuts
-//
-// See https://core.telegram.org/constructor/updateQuickReplyMessage for reference.
 type UpdateQuickReplyMessage struct {
-	// The message that was added (the message¹.quick_reply_shortcut_id field will contain
-	// the shortcut ID).
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/message
+	// Message field of UpdateQuickReplyMessage.
 	Message MessageClass
 }
 
@@ -26187,13 +23703,6 @@ func (u *UpdateQuickReplyMessage) String() string {
 	}
 	type Alias UpdateQuickReplyMessage
 	return fmt.Sprintf("UpdateQuickReplyMessage%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateQuickReplyMessage from given interface.
-func (u *UpdateQuickReplyMessage) FillFrom(from interface {
-	GetMessage() (value MessageClass)
-}) {
-	u.Message = from.GetMessage()
 }
 
 // TypeID returns type id in TL schema.
@@ -26285,16 +23794,10 @@ func (u *UpdateQuickReplyMessage) GetMessage() (value MessageClass) {
 }
 
 // UpdateDeleteQuickReplyMessages represents TL type `updateDeleteQuickReplyMessages#566fe7cd`.
-// One or more messages in a quick reply shortcut »¹ were deleted.
-//
-// Links:
-//  1. https://core.telegram.org/api/business#quick-reply-shortcuts
-//
-// See https://core.telegram.org/constructor/updateDeleteQuickReplyMessages for reference.
 type UpdateDeleteQuickReplyMessages struct {
-	// Quick reply shortcut ID.
+	// ShortcutID field of UpdateDeleteQuickReplyMessages.
 	ShortcutID int
-	// IDs of the deleted messages.
+	// Messages field of UpdateDeleteQuickReplyMessages.
 	Messages []int
 }
 
@@ -26335,15 +23838,6 @@ func (u *UpdateDeleteQuickReplyMessages) String() string {
 	}
 	type Alias UpdateDeleteQuickReplyMessages
 	return fmt.Sprintf("UpdateDeleteQuickReplyMessages%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateDeleteQuickReplyMessages from given interface.
-func (u *UpdateDeleteQuickReplyMessages) FillFrom(from interface {
-	GetShortcutID() (value int)
-	GetMessages() (value []int)
-}) {
-	u.ShortcutID = from.GetShortcutID()
-	u.Messages = from.GetMessages()
 }
 
 // TypeID returns type id in TL schema.
@@ -26463,23 +23957,10 @@ func (u *UpdateDeleteQuickReplyMessages) GetMessages() (value []int) {
 }
 
 // UpdateBotBusinessConnect represents TL type `updateBotBusinessConnect#8ae5c97a`.
-// Connecting or disconnecting a business bot¹ or changing the connection settings will
-// emit an updateBotBusinessConnect² update to the bot, with the new settings and a
-// connection_id that will be used by the bot to handle updates from and send messages as
-// the user.
-//
-// Links:
-//  1. https://core.telegram.org/api/business#connected-bots
-//  2. https://core.telegram.org/constructor/updateBotBusinessConnect
-//
-// See https://core.telegram.org/constructor/updateBotBusinessConnect for reference.
 type UpdateBotBusinessConnect struct {
-	// Business connection settings
+	// Connection field of UpdateBotBusinessConnect.
 	Connection BotBusinessConnection
-	// New qts value, see updates »¹ for more info.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/updates
+	// Qts field of UpdateBotBusinessConnect.
 	Qts int
 }
 
@@ -26520,15 +24001,6 @@ func (u *UpdateBotBusinessConnect) String() string {
 	}
 	type Alias UpdateBotBusinessConnect
 	return fmt.Sprintf("UpdateBotBusinessConnect%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateBotBusinessConnect from given interface.
-func (u *UpdateBotBusinessConnect) FillFrom(from interface {
-	GetConnection() (value BotBusinessConnection)
-	GetQts() (value int)
-}) {
-	u.Connection = from.GetConnection()
-	u.Qts = from.GetQts()
 }
 
 // TypeID returns type id in TL schema.
@@ -26635,30 +24107,18 @@ func (u *UpdateBotBusinessConnect) GetQts() (value int) {
 }
 
 // UpdateBotNewBusinessMessage represents TL type `updateBotNewBusinessMessage#9ddb347c`.
-// A message was received via a connected business chat »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/business#connected-bots
-//
-// See https://core.telegram.org/constructor/updateBotNewBusinessMessage for reference.
 type UpdateBotNewBusinessMessage struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of UpdateBotNewBusinessMessage.
 	Flags bin.Fields
-	// Connection ID.
+	// ConnectionID field of UpdateBotNewBusinessMessage.
 	ConnectionID string
-	// New message.
+	// Message field of UpdateBotNewBusinessMessage.
 	Message MessageClass
-	// The message that message is replying to.
+	// ReplyToMessage field of UpdateBotNewBusinessMessage.
 	//
 	// Use SetReplyToMessage and GetReplyToMessage helpers.
 	ReplyToMessage MessageClass
-	// New qts value, see updates »¹ for more info.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/updates
+	// Qts field of UpdateBotNewBusinessMessage.
 	Qts int
 }
 
@@ -26708,22 +24168,6 @@ func (u *UpdateBotNewBusinessMessage) String() string {
 	}
 	type Alias UpdateBotNewBusinessMessage
 	return fmt.Sprintf("UpdateBotNewBusinessMessage%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateBotNewBusinessMessage from given interface.
-func (u *UpdateBotNewBusinessMessage) FillFrom(from interface {
-	GetConnectionID() (value string)
-	GetMessage() (value MessageClass)
-	GetReplyToMessage() (value MessageClass, ok bool)
-	GetQts() (value int)
-}) {
-	u.ConnectionID = from.GetConnectionID()
-	u.Message = from.GetMessage()
-	if val, ok := from.GetReplyToMessage(); ok {
-		u.ReplyToMessage = val
-	}
-
-	u.Qts = from.GetQts()
 }
 
 // TypeID returns type id in TL schema.
@@ -26909,30 +24353,18 @@ func (u *UpdateBotNewBusinessMessage) GetQts() (value int) {
 }
 
 // UpdateBotEditBusinessMessage represents TL type `updateBotEditBusinessMessage#7df587c`.
-// A message was edited in a connected business chat »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/business#connected-bots
-//
-// See https://core.telegram.org/constructor/updateBotEditBusinessMessage for reference.
 type UpdateBotEditBusinessMessage struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of UpdateBotEditBusinessMessage.
 	Flags bin.Fields
-	// Business connection ID
+	// ConnectionID field of UpdateBotEditBusinessMessage.
 	ConnectionID string
-	// New message.
+	// Message field of UpdateBotEditBusinessMessage.
 	Message MessageClass
-	// The message that message is replying to.
+	// ReplyToMessage field of UpdateBotEditBusinessMessage.
 	//
 	// Use SetReplyToMessage and GetReplyToMessage helpers.
 	ReplyToMessage MessageClass
-	// New qts value, see updates »¹ for more info.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/updates
+	// Qts field of UpdateBotEditBusinessMessage.
 	Qts int
 }
 
@@ -26982,22 +24414,6 @@ func (u *UpdateBotEditBusinessMessage) String() string {
 	}
 	type Alias UpdateBotEditBusinessMessage
 	return fmt.Sprintf("UpdateBotEditBusinessMessage%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateBotEditBusinessMessage from given interface.
-func (u *UpdateBotEditBusinessMessage) FillFrom(from interface {
-	GetConnectionID() (value string)
-	GetMessage() (value MessageClass)
-	GetReplyToMessage() (value MessageClass, ok bool)
-	GetQts() (value int)
-}) {
-	u.ConnectionID = from.GetConnectionID()
-	u.Message = from.GetMessage()
-	if val, ok := from.GetReplyToMessage(); ok {
-		u.ReplyToMessage = val
-	}
-
-	u.Qts = from.GetQts()
 }
 
 // TypeID returns type id in TL schema.
@@ -27183,26 +24599,14 @@ func (u *UpdateBotEditBusinessMessage) GetQts() (value int) {
 }
 
 // UpdateBotDeleteBusinessMessage represents TL type `updateBotDeleteBusinessMessage#a02a982e`.
-// A message was deleted in a connected business chat »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/business#connected-bots
-//
-// See https://core.telegram.org/constructor/updateBotDeleteBusinessMessage for reference.
 type UpdateBotDeleteBusinessMessage struct {
-	// Business connection ID.
+	// ConnectionID field of UpdateBotDeleteBusinessMessage.
 	ConnectionID string
-	// Peer¹ where the messages were deleted.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/peers
+	// Peer field of UpdateBotDeleteBusinessMessage.
 	Peer PeerClass
-	// IDs of the messages that were deleted.
+	// Messages field of UpdateBotDeleteBusinessMessage.
 	Messages []int
-	// New qts value, see updates »¹ for more info.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/updates
+	// Qts field of UpdateBotDeleteBusinessMessage.
 	Qts int
 }
 
@@ -27249,19 +24653,6 @@ func (u *UpdateBotDeleteBusinessMessage) String() string {
 	}
 	type Alias UpdateBotDeleteBusinessMessage
 	return fmt.Sprintf("UpdateBotDeleteBusinessMessage%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateBotDeleteBusinessMessage from given interface.
-func (u *UpdateBotDeleteBusinessMessage) FillFrom(from interface {
-	GetConnectionID() (value string)
-	GetPeer() (value PeerClass)
-	GetMessages() (value []int)
-	GetQts() (value int)
-}) {
-	u.ConnectionID = from.GetConnectionID()
-	u.Peer = from.GetPeer()
-	u.Messages = from.GetMessages()
-	u.Qts = from.GetQts()
 }
 
 // TypeID returns type id in TL schema.
@@ -27426,24 +24817,12 @@ func (u *UpdateBotDeleteBusinessMessage) GetQts() (value int) {
 }
 
 // UpdateNewStoryReaction represents TL type `updateNewStoryReaction#1824e40b`.
-// Represents a new reaction to a story¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/reactions#notifications-about-reactions
-//
-// See https://core.telegram.org/constructor/updateNewStoryReaction for reference.
 type UpdateNewStoryReaction struct {
-	// Story ID¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/stories
+	// StoryID field of UpdateNewStoryReaction.
 	StoryID int
-	// The peer where the story was posted.
+	// Peer field of UpdateNewStoryReaction.
 	Peer PeerClass
-	// The reaction¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/reactions
+	// Reaction field of UpdateNewStoryReaction.
 	Reaction ReactionClass
 }
 
@@ -27487,17 +24866,6 @@ func (u *UpdateNewStoryReaction) String() string {
 	}
 	type Alias UpdateNewStoryReaction
 	return fmt.Sprintf("UpdateNewStoryReaction%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateNewStoryReaction from given interface.
-func (u *UpdateNewStoryReaction) FillFrom(from interface {
-	GetStoryID() (value int)
-	GetPeer() (value PeerClass)
-	GetReaction() (value ReactionClass)
-}) {
-	u.StoryID = from.GetStoryID()
-	u.Peer = from.GetPeer()
-	u.Reaction = from.GetReaction()
 }
 
 // TypeID returns type id in TL schema.
@@ -27634,16 +25002,10 @@ func (u *UpdateNewStoryReaction) GetReaction() (value ReactionClass) {
 }
 
 // UpdateBroadcastRevenueTransactions represents TL type `updateBroadcastRevenueTransactions#dfd961f5`.
-// A new channel ad revenue transaction was made, see here »¹ for more info.
-//
-// Links:
-//  1. https://core.telegram.org/api/revenue#revenue-statistics
-//
-// See https://core.telegram.org/constructor/updateBroadcastRevenueTransactions for reference.
 type UpdateBroadcastRevenueTransactions struct {
-	// Channel
+	// Peer field of UpdateBroadcastRevenueTransactions.
 	Peer PeerClass
-	// New ad revenue balance.
+	// Balances field of UpdateBroadcastRevenueTransactions.
 	Balances BroadcastRevenueBalances
 }
 
@@ -27684,15 +25046,6 @@ func (u *UpdateBroadcastRevenueTransactions) String() string {
 	}
 	type Alias UpdateBroadcastRevenueTransactions
 	return fmt.Sprintf("UpdateBroadcastRevenueTransactions%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateBroadcastRevenueTransactions from given interface.
-func (u *UpdateBroadcastRevenueTransactions) FillFrom(from interface {
-	GetPeer() (value PeerClass)
-	GetBalances() (value BroadcastRevenueBalances)
-}) {
-	u.Peer = from.GetPeer()
-	u.Balances = from.GetBalances()
 }
 
 // TypeID returns type id in TL schema.
@@ -27804,14 +25157,8 @@ func (u *UpdateBroadcastRevenueTransactions) GetBalances() (value BroadcastReven
 }
 
 // UpdateStarsBalance represents TL type `updateStarsBalance#4e80a379`.
-// The current account's Telegram Stars balance »¹ has changed.
-//
-// Links:
-//  1. https://core.telegram.org/api/stars
-//
-// See https://core.telegram.org/constructor/updateStarsBalance for reference.
 type UpdateStarsBalance struct {
-	// New balance.
+	// Balance field of UpdateStarsBalance.
 	Balance StarsAmount
 }
 
@@ -27849,13 +25196,6 @@ func (u *UpdateStarsBalance) String() string {
 	}
 	type Alias UpdateStarsBalance
 	return fmt.Sprintf("UpdateStarsBalance%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateStarsBalance from given interface.
-func (u *UpdateStarsBalance) FillFrom(from interface {
-	GetBalance() (value StarsAmount)
-}) {
-	u.Balance = from.GetBalance()
 }
 
 // TypeID returns type id in TL schema.
@@ -27942,39 +25282,24 @@ func (u *UpdateStarsBalance) GetBalance() (value StarsAmount) {
 }
 
 // UpdateBusinessBotCallbackQuery represents TL type `updateBusinessBotCallbackQuery#1ea2fda7`.
-// A callback button sent via a business connection¹ was pressed, and the button data
-// was sent to the bot that created the button.
-//
-// Links:
-//  1. https://core.telegram.org/api/business#connected-bots
-//
-// See https://core.telegram.org/constructor/updateBusinessBotCallbackQuery for reference.
 type UpdateBusinessBotCallbackQuery struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of UpdateBusinessBotCallbackQuery.
 	Flags bin.Fields
-	// Query ID
+	// QueryID field of UpdateBusinessBotCallbackQuery.
 	QueryID int64
-	// ID of the user that pressed the button
+	// UserID field of UpdateBusinessBotCallbackQuery.
 	UserID int64
-	// Business connection ID¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/business#connected-bots
+	// ConnectionID field of UpdateBusinessBotCallbackQuery.
 	ConnectionID string
-	// Message that contains the keyboard (also contains info about the chat where the
-	// message was sent).
+	// Message field of UpdateBusinessBotCallbackQuery.
 	Message MessageClass
-	// The message that message is replying to.
+	// ReplyToMessage field of UpdateBusinessBotCallbackQuery.
 	//
 	// Use SetReplyToMessage and GetReplyToMessage helpers.
 	ReplyToMessage MessageClass
-	// Global identifier, uniquely corresponding to the chat to which the message with the
-	// callback button was sent. Useful for high scores in games.
+	// ChatInstance field of UpdateBusinessBotCallbackQuery.
 	ChatInstance int64
-	// Callback data
+	// Data field of UpdateBusinessBotCallbackQuery.
 	//
 	// Use SetData and GetData helpers.
 	Data []byte
@@ -28035,31 +25360,6 @@ func (u *UpdateBusinessBotCallbackQuery) String() string {
 	}
 	type Alias UpdateBusinessBotCallbackQuery
 	return fmt.Sprintf("UpdateBusinessBotCallbackQuery%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateBusinessBotCallbackQuery from given interface.
-func (u *UpdateBusinessBotCallbackQuery) FillFrom(from interface {
-	GetQueryID() (value int64)
-	GetUserID() (value int64)
-	GetConnectionID() (value string)
-	GetMessage() (value MessageClass)
-	GetReplyToMessage() (value MessageClass, ok bool)
-	GetChatInstance() (value int64)
-	GetData() (value []byte, ok bool)
-}) {
-	u.QueryID = from.GetQueryID()
-	u.UserID = from.GetUserID()
-	u.ConnectionID = from.GetConnectionID()
-	u.Message = from.GetMessage()
-	if val, ok := from.GetReplyToMessage(); ok {
-		u.ReplyToMessage = val
-	}
-
-	u.ChatInstance = from.GetChatInstance()
-	if val, ok := from.GetData(); ok {
-		u.Data = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -28321,16 +25621,10 @@ func (u *UpdateBusinessBotCallbackQuery) GetData() (value []byte, ok bool) {
 }
 
 // UpdateStarsRevenueStatus represents TL type `updateStarsRevenueStatus#a584b019`.
-// The Telegram Star balance of a channel/bot we own has changed »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/stars#revenue-statistics
-//
-// See https://core.telegram.org/constructor/updateStarsRevenueStatus for reference.
 type UpdateStarsRevenueStatus struct {
-	// Channel/bot
+	// Peer field of UpdateStarsRevenueStatus.
 	Peer PeerClass
-	// New Telegram Star balance.
+	// Status field of UpdateStarsRevenueStatus.
 	Status StarsRevenueStatus
 }
 
@@ -28371,15 +25665,6 @@ func (u *UpdateStarsRevenueStatus) String() string {
 	}
 	type Alias UpdateStarsRevenueStatus
 	return fmt.Sprintf("UpdateStarsRevenueStatus%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateStarsRevenueStatus from given interface.
-func (u *UpdateStarsRevenueStatus) FillFrom(from interface {
-	GetPeer() (value PeerClass)
-	GetStatus() (value StarsRevenueStatus)
-}) {
-	u.Peer = from.GetPeer()
-	u.Status = from.GetStatus()
 }
 
 // TypeID returns type id in TL schema.
@@ -28491,24 +25776,12 @@ func (u *UpdateStarsRevenueStatus) GetStatus() (value StarsRevenueStatus) {
 }
 
 // UpdateBotPurchasedPaidMedia represents TL type `updateBotPurchasedPaidMedia#283bd312`.
-// Bots only: a user has purchased a paid media¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/paid-media
-//
-// See https://core.telegram.org/constructor/updateBotPurchasedPaidMedia for reference.
 type UpdateBotPurchasedPaidMedia struct {
-	// The user that bought the media
+	// UserID field of UpdateBotPurchasedPaidMedia.
 	UserID int64
-	// Payload passed by the bot in inputMediaPaidMedia¹.payload
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/inputMediaPaidMedia
+	// Payload field of UpdateBotPurchasedPaidMedia.
 	Payload string
-	// New qts value, see updates »¹ for more info.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/updates
+	// Qts field of UpdateBotPurchasedPaidMedia.
 	Qts int
 }
 
@@ -28552,17 +25825,6 @@ func (u *UpdateBotPurchasedPaidMedia) String() string {
 	}
 	type Alias UpdateBotPurchasedPaidMedia
 	return fmt.Sprintf("UpdateBotPurchasedPaidMedia%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateBotPurchasedPaidMedia from given interface.
-func (u *UpdateBotPurchasedPaidMedia) FillFrom(from interface {
-	GetUserID() (value int64)
-	GetPayload() (value string)
-	GetQts() (value int)
-}) {
-	u.UserID = from.GetUserID()
-	u.Payload = from.GetPayload()
-	u.Qts = from.GetQts()
 }
 
 // TypeID returns type id in TL schema.
@@ -28689,18 +25951,8 @@ func (u *UpdateBotPurchasedPaidMedia) GetQts() (value int) {
 }
 
 // UpdatePaidReactionPrivacy represents TL type `updatePaidReactionPrivacy#8b725fce`.
-// Contains the current default paid reaction privacy, see here »¹ for more info.
-// Clients should invoke messages.getPaidReactionPrivacy¹ on startup to fetch the
-// current default reaction privacy because this update is only sent to currently online
-// sessions and cannot be fetched using getDifference on client startup.
-//
-// Links:
-//  1. https://core.telegram.org/api/reactions#paid-reactions
-//  2. https://core.telegram.org/method/messages.getPaidReactionPrivacy
-//
-// See https://core.telegram.org/constructor/updatePaidReactionPrivacy for reference.
 type UpdatePaidReactionPrivacy struct {
-	// Whether paid reaction privacy is enabled or disabled.
+	// Private field of UpdatePaidReactionPrivacy.
 	Private PaidReactionPrivacyClass
 }
 
@@ -28738,13 +25990,6 @@ func (u *UpdatePaidReactionPrivacy) String() string {
 	}
 	type Alias UpdatePaidReactionPrivacy
 	return fmt.Sprintf("UpdatePaidReactionPrivacy%+v", Alias(*u))
-}
-
-// FillFrom fills UpdatePaidReactionPrivacy from given interface.
-func (u *UpdatePaidReactionPrivacy) FillFrom(from interface {
-	GetPrivate() (value PaidReactionPrivacyClass)
-}) {
-	u.Private = from.GetPrivate()
 }
 
 // TypeID returns type id in TL schema.
@@ -28836,8 +26081,6 @@ func (u *UpdatePaidReactionPrivacy) GetPrivate() (value PaidReactionPrivacyClass
 }
 
 // UpdateSentPhoneCode represents TL type `updateSentPhoneCode#504aa18f`.
-//
-// See https://core.telegram.org/constructor/updateSentPhoneCode for reference.
 type UpdateSentPhoneCode struct {
 	// SentCode field of UpdateSentPhoneCode.
 	SentCode AuthSentCodeClass
@@ -28877,13 +26120,6 @@ func (u *UpdateSentPhoneCode) String() string {
 	}
 	type Alias UpdateSentPhoneCode
 	return fmt.Sprintf("UpdateSentPhoneCode%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateSentPhoneCode from given interface.
-func (u *UpdateSentPhoneCode) FillFrom(from interface {
-	GetSentCode() (value AuthSentCodeClass)
-}) {
-	u.SentCode = from.GetSentCode()
 }
 
 // TypeID returns type id in TL schema.
@@ -28975,8 +26211,6 @@ func (u *UpdateSentPhoneCode) GetSentCode() (value AuthSentCodeClass) {
 }
 
 // UpdateGroupCallChainBlocks represents TL type `updateGroupCallChainBlocks#a477288f`.
-//
-// See https://core.telegram.org/constructor/updateGroupCallChainBlocks for reference.
 type UpdateGroupCallChainBlocks struct {
 	// Call field of UpdateGroupCallChainBlocks.
 	Call InputGroupCallClass
@@ -29031,19 +26265,6 @@ func (u *UpdateGroupCallChainBlocks) String() string {
 	}
 	type Alias UpdateGroupCallChainBlocks
 	return fmt.Sprintf("UpdateGroupCallChainBlocks%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateGroupCallChainBlocks from given interface.
-func (u *UpdateGroupCallChainBlocks) FillFrom(from interface {
-	GetCall() (value InputGroupCallClass)
-	GetSubChainID() (value int)
-	GetBlocks() (value [][]byte)
-	GetNextOffset() (value int)
-}) {
-	u.Call = from.GetCall()
-	u.SubChainID = from.GetSubChainID()
-	u.Blocks = from.GetBlocks()
-	u.NextOffset = from.GetNextOffset()
 }
 
 // TypeID returns type id in TL schema.
@@ -29208,8 +26429,6 @@ func (u *UpdateGroupCallChainBlocks) GetNextOffset() (value int) {
 }
 
 // UpdateReadMonoForumInbox represents TL type `updateReadMonoForumInbox#77b0e372`.
-//
-// See https://core.telegram.org/constructor/updateReadMonoForumInbox for reference.
 type UpdateReadMonoForumInbox struct {
 	// ChannelID field of UpdateReadMonoForumInbox.
 	ChannelID int64
@@ -29259,17 +26478,6 @@ func (u *UpdateReadMonoForumInbox) String() string {
 	}
 	type Alias UpdateReadMonoForumInbox
 	return fmt.Sprintf("UpdateReadMonoForumInbox%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateReadMonoForumInbox from given interface.
-func (u *UpdateReadMonoForumInbox) FillFrom(from interface {
-	GetChannelID() (value int64)
-	GetSavedPeerID() (value PeerClass)
-	GetReadMaxID() (value int)
-}) {
-	u.ChannelID = from.GetChannelID()
-	u.SavedPeerID = from.GetSavedPeerID()
-	u.ReadMaxID = from.GetReadMaxID()
 }
 
 // TypeID returns type id in TL schema.
@@ -29401,8 +26609,6 @@ func (u *UpdateReadMonoForumInbox) GetReadMaxID() (value int) {
 }
 
 // UpdateReadMonoForumOutbox represents TL type `updateReadMonoForumOutbox#a4a79376`.
-//
-// See https://core.telegram.org/constructor/updateReadMonoForumOutbox for reference.
 type UpdateReadMonoForumOutbox struct {
 	// ChannelID field of UpdateReadMonoForumOutbox.
 	ChannelID int64
@@ -29452,17 +26658,6 @@ func (u *UpdateReadMonoForumOutbox) String() string {
 	}
 	type Alias UpdateReadMonoForumOutbox
 	return fmt.Sprintf("UpdateReadMonoForumOutbox%+v", Alias(*u))
-}
-
-// FillFrom fills UpdateReadMonoForumOutbox from given interface.
-func (u *UpdateReadMonoForumOutbox) FillFrom(from interface {
-	GetChannelID() (value int64)
-	GetSavedPeerID() (value PeerClass)
-	GetReadMaxID() (value int)
-}) {
-	u.ChannelID = from.GetChannelID()
-	u.SavedPeerID = from.GetSavedPeerID()
-	u.ReadMaxID = from.GetReadMaxID()
 }
 
 // TypeID returns type id in TL schema.
@@ -29597,8 +26792,6 @@ func (u *UpdateReadMonoForumOutbox) GetReadMaxID() (value int) {
 const UpdateClassName = "Update"
 
 // UpdateClass represents Update generic type.
-//
-// See https://core.telegram.org/type/Update for reference.
 //
 // Constructors:
 //   - [UpdateNewMessage]

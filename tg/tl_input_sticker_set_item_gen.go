@@ -32,24 +32,18 @@ var (
 )
 
 // InputStickerSetItem represents TL type `inputStickerSetItem#32da9e9c`.
-// Sticker in a stickerset
-//
-// See https://core.telegram.org/constructor/inputStickerSetItem for reference.
 type InputStickerSetItem struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of InputStickerSetItem.
 	Flags bin.Fields
-	// The sticker
+	// Document field of InputStickerSetItem.
 	Document InputDocumentClass
-	// Associated emoji
+	// Emoji field of InputStickerSetItem.
 	Emoji string
-	// Coordinates for mask sticker
+	// MaskCoords field of InputStickerSetItem.
 	//
 	// Use SetMaskCoords and GetMaskCoords helpers.
 	MaskCoords MaskCoords
-	// Set of keywords, separated by commas (can't be provided for mask stickers)
+	// Keywords field of InputStickerSetItem.
 	//
 	// Use SetKeywords and GetKeywords helpers.
 	Keywords string
@@ -96,25 +90,6 @@ func (i *InputStickerSetItem) String() string {
 	}
 	type Alias InputStickerSetItem
 	return fmt.Sprintf("InputStickerSetItem%+v", Alias(*i))
-}
-
-// FillFrom fills InputStickerSetItem from given interface.
-func (i *InputStickerSetItem) FillFrom(from interface {
-	GetDocument() (value InputDocumentClass)
-	GetEmoji() (value string)
-	GetMaskCoords() (value MaskCoords, ok bool)
-	GetKeywords() (value string, ok bool)
-}) {
-	i.Document = from.GetDocument()
-	i.Emoji = from.GetEmoji()
-	if val, ok := from.GetMaskCoords(); ok {
-		i.MaskCoords = val
-	}
-
-	if val, ok := from.GetKeywords(); ok {
-		i.Keywords = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -308,9 +283,4 @@ func (i *InputStickerSetItem) GetKeywords() (value string, ok bool) {
 		return value, false
 	}
 	return i.Keywords, true
-}
-
-// GetDocumentAsNotEmpty returns mapped value of Document field.
-func (i *InputStickerSetItem) GetDocumentAsNotEmpty() (*InputDocument, bool) {
-	return i.Document.AsNotEmpty()
 }

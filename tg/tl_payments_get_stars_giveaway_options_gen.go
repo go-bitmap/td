@@ -32,12 +32,6 @@ var (
 )
 
 // PaymentsGetStarsGiveawayOptionsRequest represents TL type `payments.getStarsGiveawayOptions#bd1efd3e`.
-// Fetch a list of star giveaway options »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/giveaways#star-giveaways
-//
-// See https://core.telegram.org/method/payments.getStarsGiveawayOptions for reference.
 type PaymentsGetStarsGiveawayOptionsRequest struct {
 }
 
@@ -132,12 +126,6 @@ func (g *PaymentsGetStarsGiveawayOptionsRequest) DecodeBare(b *bin.Buffer) error
 }
 
 // PaymentsGetStarsGiveawayOptions invokes method payments.getStarsGiveawayOptions#bd1efd3e returning error if any.
-// Fetch a list of star giveaway options »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/giveaways#star-giveaways
-//
-// See https://core.telegram.org/method/payments.getStarsGiveawayOptions for reference.
 func (c *Client) PaymentsGetStarsGiveawayOptions(ctx context.Context) ([]StarsGiveawayOption, error) {
 	var result StarsGiveawayOptionVector
 

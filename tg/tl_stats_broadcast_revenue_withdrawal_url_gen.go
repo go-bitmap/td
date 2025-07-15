@@ -32,15 +32,8 @@ var (
 )
 
 // StatsBroadcastRevenueWithdrawalURL represents TL type `stats.broadcastRevenueWithdrawalUrl#ec659737`.
-// Contains the URL to use to withdraw channel ad revenue¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/revenue#withdrawing-revenue
-//
-// See https://core.telegram.org/constructor/stats.broadcastRevenueWithdrawalUrl for reference.
 type StatsBroadcastRevenueWithdrawalURL struct {
-	// A unique URL to a Fragment page where the user will be able to specify and submit the
-	// address of the TON wallet where the funds will be sent.
+	// URL field of StatsBroadcastRevenueWithdrawalURL.
 	URL string
 }
 
@@ -73,13 +66,6 @@ func (b *StatsBroadcastRevenueWithdrawalURL) String() string {
 	}
 	type Alias StatsBroadcastRevenueWithdrawalURL
 	return fmt.Sprintf("StatsBroadcastRevenueWithdrawalURL%+v", Alias(*b))
-}
-
-// FillFrom fills StatsBroadcastRevenueWithdrawalURL from given interface.
-func (b *StatsBroadcastRevenueWithdrawalURL) FillFrom(from interface {
-	GetURL() (value string)
-}) {
-	b.URL = from.GetURL()
 }
 
 // TypeID returns type id in TL schema.

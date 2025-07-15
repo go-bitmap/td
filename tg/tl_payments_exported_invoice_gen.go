@@ -32,17 +32,8 @@ var (
 )
 
 // PaymentsExportedInvoice represents TL type `payments.exportedInvoice#aed0cbd9`.
-// Exported invoice deep link¹
-//
-// Links:
-//  1. https://core.telegram.org/api/links#invoice-links
-//
-// See https://core.telegram.org/constructor/payments.exportedInvoice for reference.
 type PaymentsExportedInvoice struct {
-	// Exported invoice deep link¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/links#invoice-links
+	// URL field of PaymentsExportedInvoice.
 	URL string
 }
 
@@ -75,13 +66,6 @@ func (e *PaymentsExportedInvoice) String() string {
 	}
 	type Alias PaymentsExportedInvoice
 	return fmt.Sprintf("PaymentsExportedInvoice%+v", Alias(*e))
-}
-
-// FillFrom fills PaymentsExportedInvoice from given interface.
-func (e *PaymentsExportedInvoice) FillFrom(from interface {
-	GetURL() (value string)
-}) {
-	e.URL = from.GetURL()
 }
 
 // TypeID returns type id in TL schema.

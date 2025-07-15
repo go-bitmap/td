@@ -32,27 +32,10 @@ var (
 )
 
 // AccountSaveRingtoneRequest represents TL type `account.saveRingtone#3dea5b03`.
-// Save or remove saved notification sound.
-// If the notification sound is already in MP3 format, account.savedRingtone¹ will be
-// returned.
-// Otherwise, it will be automatically converted and a account.savedRingtoneConverted²
-// will be returned, containing a new document³ object that should be used to refer to
-// the ringtone from now on (ie when deleting it using the unsave parameter, or when
-// downloading it).
-//
-// Links:
-//  1. https://core.telegram.org/constructor/account.savedRingtone
-//  2. https://core.telegram.org/constructor/account.savedRingtoneConverted
-//  3. https://core.telegram.org/constructor/document
-//
-// See https://core.telegram.org/method/account.saveRingtone for reference.
 type AccountSaveRingtoneRequest struct {
-	// Notification sound uploaded using account.uploadRingtone¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/account.uploadRingtone
+	// ID field of AccountSaveRingtoneRequest.
 	ID InputDocumentClass
-	// Whether to add or delete the notification sound
+	// Unsave field of AccountSaveRingtoneRequest.
 	Unsave bool
 }
 
@@ -88,15 +71,6 @@ func (s *AccountSaveRingtoneRequest) String() string {
 	}
 	type Alias AccountSaveRingtoneRequest
 	return fmt.Sprintf("AccountSaveRingtoneRequest%+v", Alias(*s))
-}
-
-// FillFrom fills AccountSaveRingtoneRequest from given interface.
-func (s *AccountSaveRingtoneRequest) FillFrom(from interface {
-	GetID() (value InputDocumentClass)
-	GetUnsave() (value bool)
-}) {
-	s.ID = from.GetID()
-	s.Unsave = from.GetUnsave()
 }
 
 // TypeID returns type id in TL schema.
@@ -207,30 +181,7 @@ func (s *AccountSaveRingtoneRequest) GetUnsave() (value bool) {
 	return s.Unsave
 }
 
-// GetIDAsNotEmpty returns mapped value of ID field.
-func (s *AccountSaveRingtoneRequest) GetIDAsNotEmpty() (*InputDocument, bool) {
-	return s.ID.AsNotEmpty()
-}
-
 // AccountSaveRingtone invokes method account.saveRingtone#3dea5b03 returning error if any.
-// Save or remove saved notification sound.
-// If the notification sound is already in MP3 format, account.savedRingtone¹ will be
-// returned.
-// Otherwise, it will be automatically converted and a account.savedRingtoneConverted²
-// will be returned, containing a new document³ object that should be used to refer to
-// the ringtone from now on (ie when deleting it using the unsave parameter, or when
-// downloading it).
-//
-// Links:
-//  1. https://core.telegram.org/constructor/account.savedRingtone
-//  2. https://core.telegram.org/constructor/account.savedRingtoneConverted
-//  3. https://core.telegram.org/constructor/document
-//
-// Possible errors:
-//
-//	400 RINGTONE_INVALID: The specified ringtone is invalid.
-//
-// See https://core.telegram.org/method/account.saveRingtone for reference.
 func (c *Client) AccountSaveRingtone(ctx context.Context, request *AccountSaveRingtoneRequest) (AccountSavedRingtoneClass, error) {
 	var result AccountSavedRingtoneBox
 

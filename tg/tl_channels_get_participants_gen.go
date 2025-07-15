@@ -32,31 +32,16 @@ var (
 )
 
 // ChannelsGetParticipantsRequest represents TL type `channels.getParticipants#77ced9d0`.
-// Get the participants of a supergroup/channel¹
-//
-// Links:
-//  1. https://core.telegram.org/api/channel
-//
-// See https://core.telegram.org/method/channels.getParticipants for reference.
 type ChannelsGetParticipantsRequest struct {
-	// Channel
+	// Channel field of ChannelsGetParticipantsRequest.
 	Channel InputChannelClass
-	// Which participant types to fetch
+	// Filter field of ChannelsGetParticipantsRequest.
 	Filter ChannelParticipantsFilterClass
-	// Offset¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets
+	// Offset field of ChannelsGetParticipantsRequest.
 	Offset int
-	// Limit¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets
+	// Limit field of ChannelsGetParticipantsRequest.
 	Limit int
-	// Hash¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets
+	// Hash field of ChannelsGetParticipantsRequest.
 	Hash int64
 }
 
@@ -101,21 +86,6 @@ func (g *ChannelsGetParticipantsRequest) String() string {
 	}
 	type Alias ChannelsGetParticipantsRequest
 	return fmt.Sprintf("ChannelsGetParticipantsRequest%+v", Alias(*g))
-}
-
-// FillFrom fills ChannelsGetParticipantsRequest from given interface.
-func (g *ChannelsGetParticipantsRequest) FillFrom(from interface {
-	GetChannel() (value InputChannelClass)
-	GetFilter() (value ChannelParticipantsFilterClass)
-	GetOffset() (value int)
-	GetLimit() (value int)
-	GetHash() (value int64)
-}) {
-	g.Channel = from.GetChannel()
-	g.Filter = from.GetFilter()
-	g.Offset = from.GetOffset()
-	g.Limit = from.GetLimit()
-	g.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -291,26 +261,7 @@ func (g *ChannelsGetParticipantsRequest) GetHash() (value int64) {
 	return g.Hash
 }
 
-// GetChannelAsNotEmpty returns mapped value of Channel field.
-func (g *ChannelsGetParticipantsRequest) GetChannelAsNotEmpty() (NotEmptyInputChannel, bool) {
-	return g.Channel.AsNotEmpty()
-}
-
 // ChannelsGetParticipants invokes method channels.getParticipants#77ced9d0 returning error if any.
-// Get the participants of a supergroup/channel¹
-//
-// Links:
-//  1. https://core.telegram.org/api/channel
-//
-// Possible errors:
-//
-//	400 CHANNEL_INVALID: The provided channel is invalid.
-//	406 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
-//	403 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
-//	400 MSG_ID_INVALID: Invalid message ID provided.
-//
-// See https://core.telegram.org/method/channels.getParticipants for reference.
-// Can be used by bots.
 func (c *Client) ChannelsGetParticipants(ctx context.Context, request *ChannelsGetParticipantsRequest) (ChannelsChannelParticipantsClass, error) {
 	var result ChannelsChannelParticipantsBox
 

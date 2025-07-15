@@ -32,24 +32,12 @@ var (
 )
 
 // StatsGetMegagroupStatsRequest represents TL type `stats.getMegagroupStats#dcdf8607`.
-// Get supergroup statistics¹
-//
-// Links:
-//  1. https://core.telegram.org/api/stats
-//
-// See https://core.telegram.org/method/stats.getMegagroupStats for reference.
 type StatsGetMegagroupStatsRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of StatsGetMegagroupStatsRequest.
 	Flags bin.Fields
-	// Whether to enable dark theme for graph colors
+	// Dark field of StatsGetMegagroupStatsRequest.
 	Dark bool
-	// Supergroup ID¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/channel
+	// Channel field of StatsGetMegagroupStatsRequest.
 	Channel InputChannelClass
 }
 
@@ -88,15 +76,6 @@ func (g *StatsGetMegagroupStatsRequest) String() string {
 	}
 	type Alias StatsGetMegagroupStatsRequest
 	return fmt.Sprintf("StatsGetMegagroupStatsRequest%+v", Alias(*g))
-}
-
-// FillFrom fills StatsGetMegagroupStatsRequest from given interface.
-func (g *StatsGetMegagroupStatsRequest) FillFrom(from interface {
-	GetDark() (value bool)
-	GetChannel() (value InputChannelClass)
-}) {
-	g.Dark = from.GetDark()
-	g.Channel = from.GetChannel()
 }
 
 // TypeID returns type id in TL schema.
@@ -228,24 +207,7 @@ func (g *StatsGetMegagroupStatsRequest) GetChannel() (value InputChannelClass) {
 	return g.Channel
 }
 
-// GetChannelAsNotEmpty returns mapped value of Channel field.
-func (g *StatsGetMegagroupStatsRequest) GetChannelAsNotEmpty() (NotEmptyInputChannel, bool) {
-	return g.Channel.AsNotEmpty()
-}
-
 // StatsGetMegagroupStats invokes method stats.getMegagroupStats#dcdf8607 returning error if any.
-// Get supergroup statistics¹
-//
-// Links:
-//  1. https://core.telegram.org/api/stats
-//
-// Possible errors:
-//
-//	400 CHANNEL_INVALID: The provided channel is invalid.
-//	403 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
-//	400 MEGAGROUP_REQUIRED: You can only use this method on a supergroup.
-//
-// See https://core.telegram.org/method/stats.getMegagroupStats for reference.
 func (c *Client) StatsGetMegagroupStats(ctx context.Context, request *StatsGetMegagroupStatsRequest) (*StatsMegagroupStats, error) {
 	var result StatsMegagroupStats
 

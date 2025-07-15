@@ -32,29 +32,14 @@ var (
 )
 
 // MessagesGetSavedReactionTagsRequest represents TL type `messages.getSavedReactionTags#3637e05b`.
-// Fetch the full list of saved message tags¹ created by the user.
-//
-// Links:
-//  1. https://core.telegram.org/api/saved-messages#tags
-//
-// See https://core.telegram.org/method/messages.getSavedReactionTags for reference.
 type MessagesGetSavedReactionTagsRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessagesGetSavedReactionTagsRequest.
 	Flags bin.Fields
-	// If set, returns tags only used in the specified saved message dialog¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/saved-messages#saved-message-dialogs
+	// Peer field of MessagesGetSavedReactionTagsRequest.
 	//
 	// Use SetPeer and GetPeer helpers.
 	Peer InputPeerClass
-	// Hash used for caching, for more info click here¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets#hash-generation
+	// Hash field of MessagesGetSavedReactionTagsRequest.
 	Hash int64
 }
 
@@ -93,18 +78,6 @@ func (g *MessagesGetSavedReactionTagsRequest) String() string {
 	}
 	type Alias MessagesGetSavedReactionTagsRequest
 	return fmt.Sprintf("MessagesGetSavedReactionTagsRequest%+v", Alias(*g))
-}
-
-// FillFrom fills MessagesGetSavedReactionTagsRequest from given interface.
-func (g *MessagesGetSavedReactionTagsRequest) FillFrom(from interface {
-	GetPeer() (value InputPeerClass, ok bool)
-	GetHash() (value int64)
-}) {
-	if val, ok := from.GetPeer(); ok {
-		g.Peer = val
-	}
-
-	g.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -245,12 +218,6 @@ func (g *MessagesGetSavedReactionTagsRequest) GetHash() (value int64) {
 }
 
 // MessagesGetSavedReactionTags invokes method messages.getSavedReactionTags#3637e05b returning error if any.
-// Fetch the full list of saved message tags¹ created by the user.
-//
-// Links:
-//  1. https://core.telegram.org/api/saved-messages#tags
-//
-// See https://core.telegram.org/method/messages.getSavedReactionTags for reference.
 func (c *Client) MessagesGetSavedReactionTags(ctx context.Context, request *MessagesGetSavedReactionTagsRequest) (MessagesSavedReactionTagsClass, error) {
 	var result MessagesSavedReactionTagsBox
 

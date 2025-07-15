@@ -32,18 +32,14 @@ var (
 )
 
 // InputAppEvent represents TL type `inputAppEvent#1d1b1245`.
-// Event that occurred in the application.
-//
-// See https://core.telegram.org/constructor/inputAppEvent for reference.
 type InputAppEvent struct {
-	// Client's exact timestamp for the event
+	// Time field of InputAppEvent.
 	Time float64
-	// Type of event
+	// Type field of InputAppEvent.
 	Type string
-	// Arbitrary numeric value for more convenient selection of certain event types, or
-	// events referring to a certain object
+	// Peer field of InputAppEvent.
 	Peer int64
-	// Details of the event
+	// Data field of InputAppEvent.
 	Data JSONValueClass
 }
 
@@ -85,19 +81,6 @@ func (i *InputAppEvent) String() string {
 	}
 	type Alias InputAppEvent
 	return fmt.Sprintf("InputAppEvent%+v", Alias(*i))
-}
-
-// FillFrom fills InputAppEvent from given interface.
-func (i *InputAppEvent) FillFrom(from interface {
-	GetTime() (value float64)
-	GetType() (value string)
-	GetPeer() (value int64)
-	GetData() (value JSONValueClass)
-}) {
-	i.Time = from.GetTime()
-	i.Type = from.GetType()
-	i.Peer = from.GetPeer()
-	i.Data = from.GetData()
 }
 
 // TypeID returns type id in TL schema.

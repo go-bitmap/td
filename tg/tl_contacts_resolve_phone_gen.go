@@ -32,15 +32,8 @@ var (
 )
 
 // ContactsResolvePhoneRequest represents TL type `contacts.resolvePhone#8af94344`.
-// Resolve a phone number to get user info, if their privacy settings allow it.
-//
-// See https://core.telegram.org/method/contacts.resolvePhone for reference.
 type ContactsResolvePhoneRequest struct {
-	// Phone number in international format, possibly obtained from a phone number deep
-	// link¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/links#phone-number-links
+	// Phone field of ContactsResolvePhoneRequest.
 	Phone string
 }
 
@@ -73,13 +66,6 @@ func (r *ContactsResolvePhoneRequest) String() string {
 	}
 	type Alias ContactsResolvePhoneRequest
 	return fmt.Sprintf("ContactsResolvePhoneRequest%+v", Alias(*r))
-}
-
-// FillFrom fills ContactsResolvePhoneRequest from given interface.
-func (r *ContactsResolvePhoneRequest) FillFrom(from interface {
-	GetPhone() (value string)
-}) {
-	r.Phone = from.GetPhone()
 }
 
 // TypeID returns type id in TL schema.
@@ -166,13 +152,6 @@ func (r *ContactsResolvePhoneRequest) GetPhone() (value string) {
 }
 
 // ContactsResolvePhone invokes method contacts.resolvePhone#8af94344 returning error if any.
-// Resolve a phone number to get user info, if their privacy settings allow it.
-//
-// Possible errors:
-//
-//	400 PHONE_NOT_OCCUPIED: No user is associated to the specified phone number.
-//
-// See https://core.telegram.org/method/contacts.resolvePhone for reference.
 func (c *Client) ContactsResolvePhone(ctx context.Context, phone string) (*ContactsResolvedPeer, error) {
 	var result ContactsResolvedPeer
 

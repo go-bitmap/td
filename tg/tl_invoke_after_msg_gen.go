@@ -32,13 +32,10 @@ var (
 )
 
 // InvokeAfterMsgRequest represents TL type `invokeAfterMsg#cb9f372d`.
-// Invokes a query after successful completion of one of the previous queries.
-//
-// See https://core.telegram.org/constructor/invokeAfterMsg for reference.
 type InvokeAfterMsgRequest struct {
-	// Message identifier on which a current query depends
+	// MsgID field of InvokeAfterMsgRequest.
 	MsgID int64
-	// The query itself
+	// Query field of InvokeAfterMsgRequest.
 	Query bin.Object
 }
 
@@ -74,15 +71,6 @@ func (i *InvokeAfterMsgRequest) String() string {
 	}
 	type Alias InvokeAfterMsgRequest
 	return fmt.Sprintf("InvokeAfterMsgRequest%+v", Alias(*i))
-}
-
-// FillFrom fills InvokeAfterMsgRequest from given interface.
-func (i *InvokeAfterMsgRequest) FillFrom(from interface {
-	GetMsgID() (value int64)
-	GetQuery() (value bin.Object)
-}) {
-	i.MsgID = from.GetMsgID()
-	i.Query = from.GetQuery()
 }
 
 // TypeID returns type id in TL schema.

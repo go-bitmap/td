@@ -32,19 +32,10 @@ var (
 )
 
 // ChatlistsDeleteExportedInviteRequest represents TL type `chatlists.deleteExportedInvite#719c5c5e`.
-// Delete a previously created chat folder deep link »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/links#chat-folder-links
-//
-// See https://core.telegram.org/method/chatlists.deleteExportedInvite for reference.
 type ChatlistsDeleteExportedInviteRequest struct {
-	// The related folder
+	// Chatlist field of ChatlistsDeleteExportedInviteRequest.
 	Chatlist InputChatlistDialogFilter
-	// slug obtained from the chat folder deep link »¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/links#chat-folder-links
+	// Slug field of ChatlistsDeleteExportedInviteRequest.
 	Slug string
 }
 
@@ -80,15 +71,6 @@ func (d *ChatlistsDeleteExportedInviteRequest) String() string {
 	}
 	type Alias ChatlistsDeleteExportedInviteRequest
 	return fmt.Sprintf("ChatlistsDeleteExportedInviteRequest%+v", Alias(*d))
-}
-
-// FillFrom fills ChatlistsDeleteExportedInviteRequest from given interface.
-func (d *ChatlistsDeleteExportedInviteRequest) FillFrom(from interface {
-	GetChatlist() (value InputChatlistDialogFilter)
-	GetSlug() (value string)
-}) {
-	d.Chatlist = from.GetChatlist()
-	d.Slug = from.GetSlug()
 }
 
 // TypeID returns type id in TL schema.
@@ -195,19 +177,6 @@ func (d *ChatlistsDeleteExportedInviteRequest) GetSlug() (value string) {
 }
 
 // ChatlistsDeleteExportedInvite invokes method chatlists.deleteExportedInvite#719c5c5e returning error if any.
-// Delete a previously created chat folder deep link »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/links#chat-folder-links
-//
-// Possible errors:
-//
-//	400 FILTER_ID_INVALID: The specified filter ID is invalid.
-//	400 FILTER_NOT_SUPPORTED: The specified filter cannot be used in this context.
-//	400 INVITE_SLUG_EXPIRED: The specified chat folder link has expired.
-//	400 INVITE_SLUG_INVALID: The specified invitation slug is invalid.
-//
-// See https://core.telegram.org/method/chatlists.deleteExportedInvite for reference.
 func (c *Client) ChatlistsDeleteExportedInvite(ctx context.Context, request *ChatlistsDeleteExportedInviteRequest) (bool, error) {
 	var result BoolBox
 

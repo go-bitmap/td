@@ -32,23 +32,10 @@ var (
 )
 
 // AccountSaveSecureValueRequest represents TL type `account.saveSecureValue#899fe31d`.
-// Securely save Telegram Passport¹ document, for more info see the passport docs »²
-//
-// Links:
-//  1. https://core.telegram.org/passport
-//  2. https://core.telegram.org/passport/encryption#encryption
-//
-// See https://core.telegram.org/method/account.saveSecureValue for reference.
 type AccountSaveSecureValueRequest struct {
-	// Secure value, for more info see the passport docs »¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/passport/encryption#encryption
+	// Value field of AccountSaveSecureValueRequest.
 	Value InputSecureValue
-	// Passport secret hash, for more info see the passport docs »¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/passport/encryption#encryption
+	// SecureSecretID field of AccountSaveSecureValueRequest.
 	SecureSecretID int64
 }
 
@@ -84,15 +71,6 @@ func (s *AccountSaveSecureValueRequest) String() string {
 	}
 	type Alias AccountSaveSecureValueRequest
 	return fmt.Sprintf("AccountSaveSecureValueRequest%+v", Alias(*s))
-}
-
-// FillFrom fills AccountSaveSecureValueRequest from given interface.
-func (s *AccountSaveSecureValueRequest) FillFrom(from interface {
-	GetValue() (value InputSecureValue)
-	GetSecureSecretID() (value int64)
-}) {
-	s.Value = from.GetValue()
-	s.SecureSecretID = from.GetSecureSecretID()
 }
 
 // TypeID returns type id in TL schema.
@@ -199,18 +177,6 @@ func (s *AccountSaveSecureValueRequest) GetSecureSecretID() (value int64) {
 }
 
 // AccountSaveSecureValue invokes method account.saveSecureValue#899fe31d returning error if any.
-// Securely save Telegram Passport¹ document, for more info see the passport docs »²
-//
-// Links:
-//  1. https://core.telegram.org/passport
-//  2. https://core.telegram.org/passport/encryption#encryption
-//
-// Possible errors:
-//
-//	400 PASSWORD_REQUIRED: A 2FA password must be configured to use Telegram Passport.
-//	400 SECURE_SECRET_REQUIRED: A secure secret is required.
-//
-// See https://core.telegram.org/method/account.saveSecureValue for reference.
 func (c *Client) AccountSaveSecureValue(ctx context.Context, request *AccountSaveSecureValueRequest) (*SecureValue, error) {
 	var result SecureValue
 

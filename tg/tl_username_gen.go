@@ -32,23 +32,14 @@ var (
 )
 
 // Username represents TL type `username#b4073647`.
-// Contains information about a username.
-//
-// See https://core.telegram.org/constructor/username for reference.
 type Username struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of Username.
 	Flags bin.Fields
-	// Whether the username is editable, meaning it wasn't bought on fragment¹.
-	//
-	// Links:
-	//  1) https://fragment.com
+	// Editable field of Username.
 	Editable bool
-	// Whether the username is active.
+	// Active field of Username.
 	Active bool
-	// The username.
+	// Username field of Username.
 	Username string
 }
 
@@ -90,17 +81,6 @@ func (u *Username) String() string {
 	}
 	type Alias Username
 	return fmt.Sprintf("Username%+v", Alias(*u))
-}
-
-// FillFrom fills Username from given interface.
-func (u *Username) FillFrom(from interface {
-	GetEditable() (value bool)
-	GetActive() (value bool)
-	GetUsername() (value string)
-}) {
-	u.Editable = from.GetEditable()
-	u.Active = from.GetActive()
-	u.Username = from.GetUsername()
 }
 
 // TypeID returns type id in TL schema.

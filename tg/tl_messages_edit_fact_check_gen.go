@@ -32,24 +32,12 @@ var (
 )
 
 // MessagesEditFactCheckRequest represents TL type `messages.editFactCheck#589ee75`.
-// Edit/create a fact-check¹ on a message.
-// Can only be used by independent fact-checkers as specified by the appConfig
-// can_edit_factcheck¹ configuration flag.
-//
-// Links:
-//  1. https://core.telegram.org/api/factcheck
-//  2. https://core.telegram.org/api/config#can-edit-factcheck
-//
-// See https://core.telegram.org/method/messages.editFactCheck for reference.
 type MessagesEditFactCheckRequest struct {
-	// Peer where the message was sent
+	// Peer field of MessagesEditFactCheckRequest.
 	Peer InputPeerClass
-	// Message ID
+	// MsgID field of MessagesEditFactCheckRequest.
 	MsgID int
-	// Fact-check (maximum UTF-8 length specified in appConfig.factcheck_length_limit¹).
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/config#factcheck-length-limit
+	// Text field of MessagesEditFactCheckRequest.
 	Text TextWithEntities
 }
 
@@ -88,17 +76,6 @@ func (e *MessagesEditFactCheckRequest) String() string {
 	}
 	type Alias MessagesEditFactCheckRequest
 	return fmt.Sprintf("MessagesEditFactCheckRequest%+v", Alias(*e))
-}
-
-// FillFrom fills MessagesEditFactCheckRequest from given interface.
-func (e *MessagesEditFactCheckRequest) FillFrom(from interface {
-	GetPeer() (value InputPeerClass)
-	GetMsgID() (value int)
-	GetText() (value TextWithEntities)
-}) {
-	e.Peer = from.GetPeer()
-	e.MsgID = from.GetMsgID()
-	e.Text = from.GetText()
 }
 
 // TypeID returns type id in TL schema.
@@ -230,20 +207,6 @@ func (e *MessagesEditFactCheckRequest) GetText() (value TextWithEntities) {
 }
 
 // MessagesEditFactCheck invokes method messages.editFactCheck#589ee75 returning error if any.
-// Edit/create a fact-check¹ on a message.
-// Can only be used by independent fact-checkers as specified by the appConfig
-// can_edit_factcheck¹ configuration flag.
-//
-// Links:
-//  1. https://core.telegram.org/api/factcheck
-//  2. https://core.telegram.org/api/config#can-edit-factcheck
-//
-// Possible errors:
-//
-//	403 CHAT_ACTION_FORBIDDEN: You cannot execute this action.
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//
-// See https://core.telegram.org/method/messages.editFactCheck for reference.
 func (c *Client) MessagesEditFactCheck(ctx context.Context, request *MessagesEditFactCheckRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

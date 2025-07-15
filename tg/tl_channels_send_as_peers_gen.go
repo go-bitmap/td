@@ -32,15 +32,12 @@ var (
 )
 
 // ChannelsSendAsPeers represents TL type `channels.sendAsPeers#f496b0c6`.
-// A list of peers that can be used to send messages in a specific group
-//
-// See https://core.telegram.org/constructor/channels.sendAsPeers for reference.
 type ChannelsSendAsPeers struct {
-	// Peers that can be used to send messages to the group
+	// Peers field of ChannelsSendAsPeers.
 	Peers []SendAsPeer
-	// Mentioned chats
+	// Chats field of ChannelsSendAsPeers.
 	Chats []ChatClass
-	// Mentioned users
+	// Users field of ChannelsSendAsPeers.
 	Users []UserClass
 }
 
@@ -79,17 +76,6 @@ func (s *ChannelsSendAsPeers) String() string {
 	}
 	type Alias ChannelsSendAsPeers
 	return fmt.Sprintf("ChannelsSendAsPeers%+v", Alias(*s))
-}
-
-// FillFrom fills ChannelsSendAsPeers from given interface.
-func (s *ChannelsSendAsPeers) FillFrom(from interface {
-	GetPeers() (value []SendAsPeer)
-	GetChats() (value []ChatClass)
-	GetUsers() (value []UserClass)
-}) {
-	s.Peers = from.GetPeers()
-	s.Chats = from.GetChats()
-	s.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -264,14 +250,4 @@ func (s *ChannelsSendAsPeers) GetUsers() (value []UserClass) {
 		return
 	}
 	return s.Users
-}
-
-// MapChats returns field Chats wrapped in ChatClassArray helper.
-func (s *ChannelsSendAsPeers) MapChats() (value ChatClassArray) {
-	return ChatClassArray(s.Chats)
-}
-
-// MapUsers returns field Users wrapped in UserClassArray helper.
-func (s *ChannelsSendAsPeers) MapUsers() (value UserClassArray) {
-	return UserClassArray(s.Users)
 }

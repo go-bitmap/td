@@ -32,54 +32,26 @@ var (
 )
 
 // MessagesRequestMainWebViewRequest represents TL type `messages.requestMainWebView#c9e01e7b`.
-// Open a Main Mini App¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/bots/webapps#main-mini-apps
-//
-// See https://core.telegram.org/method/messages.requestMainWebView for reference.
 type MessagesRequestMainWebViewRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessagesRequestMainWebViewRequest.
 	Flags bin.Fields
-	// If set, requests to open the mini app in compact mode (as opposed to normal or
-	// fullscreen mode). Must be set if the mode parameter of the Main Mini App link¹ is
-	// equal to compact.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/links#main-mini-app-links
+	// Compact field of MessagesRequestMainWebViewRequest.
 	Compact bool
-	// If set, requests to open the mini app in fullscreen mode (as opposed to compact or
-	// normal mode). Must be set if the mode parameter of the Main Mini App link¹ is equal
-	// to fullscreen.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/links#main-mini-app-links
+	// Fullscreen field of MessagesRequestMainWebViewRequest.
 	Fullscreen bool
-	// Currently open chat, may be inputPeerEmpty¹ if no chat is currently open.
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/inputPeerEmpty
+	// Peer field of MessagesRequestMainWebViewRequest.
 	Peer InputPeerClass
-	// Bot that owns the main mini app.
+	// Bot field of MessagesRequestMainWebViewRequest.
 	Bot InputUserClass
-	// Start parameter, if opening from a Main Mini App link »¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/links#main-mini-app-links
+	// StartParam field of MessagesRequestMainWebViewRequest.
 	//
 	// Use SetStartParam and GetStartParam helpers.
 	StartParam string
-	// Theme parameters »¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/bots/webapps#theme-parameters
+	// ThemeParams field of MessagesRequestMainWebViewRequest.
 	//
 	// Use SetThemeParams and GetThemeParams helpers.
 	ThemeParams DataJSON
-	// Short name of the application; 0-64 English letters, digits, and underscores
+	// Platform field of MessagesRequestMainWebViewRequest.
 	Platform string
 }
 
@@ -133,31 +105,6 @@ func (r *MessagesRequestMainWebViewRequest) String() string {
 	}
 	type Alias MessagesRequestMainWebViewRequest
 	return fmt.Sprintf("MessagesRequestMainWebViewRequest%+v", Alias(*r))
-}
-
-// FillFrom fills MessagesRequestMainWebViewRequest from given interface.
-func (r *MessagesRequestMainWebViewRequest) FillFrom(from interface {
-	GetCompact() (value bool)
-	GetFullscreen() (value bool)
-	GetPeer() (value InputPeerClass)
-	GetBot() (value InputUserClass)
-	GetStartParam() (value string, ok bool)
-	GetThemeParams() (value DataJSON, ok bool)
-	GetPlatform() (value string)
-}) {
-	r.Compact = from.GetCompact()
-	r.Fullscreen = from.GetFullscreen()
-	r.Peer = from.GetPeer()
-	r.Bot = from.GetBot()
-	if val, ok := from.GetStartParam(); ok {
-		r.StartParam = val
-	}
-
-	if val, ok := from.GetThemeParams(); ok {
-		r.ThemeParams = val
-	}
-
-	r.Platform = from.GetPlatform()
 }
 
 // TypeID returns type id in TL schema.
@@ -435,16 +382,6 @@ func (r *MessagesRequestMainWebViewRequest) GetPlatform() (value string) {
 }
 
 // MessagesRequestMainWebView invokes method messages.requestMainWebView#c9e01e7b returning error if any.
-// Open a Main Mini App¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/bots/webapps#main-mini-apps
-//
-// Possible errors:
-//
-//	400 BOT_INVALID: This is not a valid bot.
-//
-// See https://core.telegram.org/method/messages.requestMainWebView for reference.
 func (c *Client) MessagesRequestMainWebView(ctx context.Context, request *MessagesRequestMainWebViewRequest) (*WebViewResultURL, error) {
 	var result WebViewResultURL
 

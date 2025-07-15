@@ -32,18 +32,12 @@ var (
 )
 
 // PaymentsLaunchPrepaidGiveawayRequest represents TL type `payments.launchPrepaidGiveaway#5ff58f20`.
-// Launch a prepaid giveaway »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/giveaways
-//
-// See https://core.telegram.org/method/payments.launchPrepaidGiveaway for reference.
 type PaymentsLaunchPrepaidGiveawayRequest struct {
-	// The peer where to launch the giveaway.
+	// Peer field of PaymentsLaunchPrepaidGiveawayRequest.
 	Peer InputPeerClass
-	// The prepaid giveaway ID.
+	// GiveawayID field of PaymentsLaunchPrepaidGiveawayRequest.
 	GiveawayID int64
-	// Giveway parameters
+	// Purpose field of PaymentsLaunchPrepaidGiveawayRequest.
 	Purpose InputStorePaymentPurposeClass
 }
 
@@ -82,17 +76,6 @@ func (l *PaymentsLaunchPrepaidGiveawayRequest) String() string {
 	}
 	type Alias PaymentsLaunchPrepaidGiveawayRequest
 	return fmt.Sprintf("PaymentsLaunchPrepaidGiveawayRequest%+v", Alias(*l))
-}
-
-// FillFrom fills PaymentsLaunchPrepaidGiveawayRequest from given interface.
-func (l *PaymentsLaunchPrepaidGiveawayRequest) FillFrom(from interface {
-	GetPeer() (value InputPeerClass)
-	GetGiveawayID() (value int64)
-	GetPurpose() (value InputStorePaymentPurposeClass)
-}) {
-	l.Peer = from.GetPeer()
-	l.GiveawayID = from.GetGiveawayID()
-	l.Purpose = from.GetPurpose()
 }
 
 // TypeID returns type id in TL schema.
@@ -229,16 +212,6 @@ func (l *PaymentsLaunchPrepaidGiveawayRequest) GetPurpose() (value InputStorePay
 }
 
 // PaymentsLaunchPrepaidGiveaway invokes method payments.launchPrepaidGiveaway#5ff58f20 returning error if any.
-// Launch a prepaid giveaway »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/giveaways
-//
-// Possible errors:
-//
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//
-// See https://core.telegram.org/method/payments.launchPrepaidGiveaway for reference.
 func (c *Client) PaymentsLaunchPrepaidGiveaway(ctx context.Context, request *PaymentsLaunchPrepaidGiveawayRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

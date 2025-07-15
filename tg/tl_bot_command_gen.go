@@ -32,13 +32,10 @@ var (
 )
 
 // BotCommand represents TL type `botCommand#c27ac8c7`.
-// Describes a bot command that can be used in a chat
-//
-// See https://core.telegram.org/constructor/botCommand for reference.
 type BotCommand struct {
-	// /command name
+	// Command field of BotCommand.
 	Command string
-	// Description of the command
+	// Description field of BotCommand.
 	Description string
 }
 
@@ -74,15 +71,6 @@ func (b *BotCommand) String() string {
 	}
 	type Alias BotCommand
 	return fmt.Sprintf("BotCommand%+v", Alias(*b))
-}
-
-// FillFrom fills BotCommand from given interface.
-func (b *BotCommand) FillFrom(from interface {
-	GetCommand() (value string)
-	GetDescription() (value string)
-}) {
-	b.Command = from.GetCommand()
-	b.Description = from.GetDescription()
 }
 
 // TypeID returns type id in TL schema.

@@ -32,30 +32,14 @@ var (
 )
 
 // PaymentsGetStarsSubscriptionsRequest represents TL type `payments.getStarsSubscriptions#32512c5`.
-// Obtain a list of active, expired or cancelled Telegram Star subscriptions »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/invites#paid-invite-links
-//
-// See https://core.telegram.org/method/payments.getStarsSubscriptions for reference.
 type PaymentsGetStarsSubscriptionsRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of PaymentsGetStarsSubscriptionsRequest.
 	Flags bin.Fields
-	// Whether to return only subscriptions expired due to an excessively low Telegram Star
-	// balance.
+	// MissingBalance field of PaymentsGetStarsSubscriptionsRequest.
 	MissingBalance bool
-	// Always pass inputPeerSelf¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/inputPeerSelf
+	// Peer field of PaymentsGetStarsSubscriptionsRequest.
 	Peer InputPeerClass
-	// Offset for pagination, taken from payments.starsStatus¹.subscriptions_next_offset.
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/payments.starsStatus
+	// Offset field of PaymentsGetStarsSubscriptionsRequest.
 	Offset string
 }
 
@@ -97,17 +81,6 @@ func (g *PaymentsGetStarsSubscriptionsRequest) String() string {
 	}
 	type Alias PaymentsGetStarsSubscriptionsRequest
 	return fmt.Sprintf("PaymentsGetStarsSubscriptionsRequest%+v", Alias(*g))
-}
-
-// FillFrom fills PaymentsGetStarsSubscriptionsRequest from given interface.
-func (g *PaymentsGetStarsSubscriptionsRequest) FillFrom(from interface {
-	GetMissingBalance() (value bool)
-	GetPeer() (value InputPeerClass)
-	GetOffset() (value string)
-}) {
-	g.MissingBalance = from.GetMissingBalance()
-	g.Peer = from.GetPeer()
-	g.Offset = from.GetOffset()
 }
 
 // TypeID returns type id in TL schema.
@@ -260,16 +233,6 @@ func (g *PaymentsGetStarsSubscriptionsRequest) GetOffset() (value string) {
 }
 
 // PaymentsGetStarsSubscriptions invokes method payments.getStarsSubscriptions#32512c5 returning error if any.
-// Obtain a list of active, expired or cancelled Telegram Star subscriptions »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/invites#paid-invite-links
-//
-// Possible errors:
-//
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//
-// See https://core.telegram.org/method/payments.getStarsSubscriptions for reference.
 func (c *Client) PaymentsGetStarsSubscriptions(ctx context.Context, request *PaymentsGetStarsSubscriptionsRequest) (*PaymentsStarsStatus, error) {
 	var result PaymentsStarsStatus
 

@@ -32,29 +32,20 @@ var (
 )
 
 // MessagesSetGameScoreRequest represents TL type `messages.setGameScore#8ef8ecc0`.
-// Use this method to set the score of the specified user in a game sent as a normal
-// message (bots only).
-//
-// See https://core.telegram.org/method/messages.setGameScore for reference.
 type MessagesSetGameScoreRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessagesSetGameScoreRequest.
 	Flags bin.Fields
-	// Set this flag if the game message should be automatically edited to include the
-	// current scoreboard
+	// EditMessage field of MessagesSetGameScoreRequest.
 	EditMessage bool
-	// Set this flag if the high score is allowed to decrease. This can be useful when fixing
-	// mistakes or banning cheaters
+	// Force field of MessagesSetGameScoreRequest.
 	Force bool
-	// Unique identifier of target chat
+	// Peer field of MessagesSetGameScoreRequest.
 	Peer InputPeerClass
-	// Identifier of the sent message
+	// ID field of MessagesSetGameScoreRequest.
 	ID int
-	// User identifier
+	// UserID field of MessagesSetGameScoreRequest.
 	UserID InputUserClass
-	// New score
+	// Score field of MessagesSetGameScoreRequest.
 	Score int
 }
 
@@ -105,23 +96,6 @@ func (s *MessagesSetGameScoreRequest) String() string {
 	}
 	type Alias MessagesSetGameScoreRequest
 	return fmt.Sprintf("MessagesSetGameScoreRequest%+v", Alias(*s))
-}
-
-// FillFrom fills MessagesSetGameScoreRequest from given interface.
-func (s *MessagesSetGameScoreRequest) FillFrom(from interface {
-	GetEditMessage() (value bool)
-	GetForce() (value bool)
-	GetPeer() (value InputPeerClass)
-	GetID() (value int)
-	GetUserID() (value InputUserClass)
-	GetScore() (value int)
-}) {
-	s.EditMessage = from.GetEditMessage()
-	s.Force = from.GetForce()
-	s.Peer = from.GetPeer()
-	s.ID = from.GetID()
-	s.UserID = from.GetUserID()
-	s.Score = from.GetScore()
 }
 
 // TypeID returns type id in TL schema.
@@ -347,19 +321,6 @@ func (s *MessagesSetGameScoreRequest) GetScore() (value int) {
 }
 
 // MessagesSetGameScore invokes method messages.setGameScore#8ef8ecc0 returning error if any.
-// Use this method to set the score of the specified user in a game sent as a normal
-// message (bots only).
-//
-// Possible errors:
-//
-//	400 BOT_SCORE_NOT_MODIFIED: The score wasn't modified.
-//	400 MESSAGE_ID_INVALID: The provided message id is invalid.
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//	400 SCORE_INVALID: The specified game score is invalid.
-//	400 USER_BOT_REQUIRED: This method can only be called by a bot.
-//
-// See https://core.telegram.org/method/messages.setGameScore for reference.
-// Can be used by bots.
 func (c *Client) MessagesSetGameScore(ctx context.Context, request *MessagesSetGameScoreRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

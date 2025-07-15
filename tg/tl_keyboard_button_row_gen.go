@@ -32,11 +32,8 @@ var (
 )
 
 // KeyboardButtonRow represents TL type `keyboardButtonRow#77608b83`.
-// Inline keyboard row
-//
-// See https://core.telegram.org/constructor/keyboardButtonRow for reference.
 type KeyboardButtonRow struct {
-	// Bot or inline keyboard buttons
+	// Buttons field of KeyboardButtonRow.
 	Buttons []KeyboardButtonClass
 }
 
@@ -69,13 +66,6 @@ func (k *KeyboardButtonRow) String() string {
 	}
 	type Alias KeyboardButtonRow
 	return fmt.Sprintf("KeyboardButtonRow%+v", Alias(*k))
-}
-
-// FillFrom fills KeyboardButtonRow from given interface.
-func (k *KeyboardButtonRow) FillFrom(from interface {
-	GetButtons() (value []KeyboardButtonClass)
-}) {
-	k.Buttons = from.GetButtons()
 }
 
 // TypeID returns type id in TL schema.
@@ -177,9 +167,4 @@ func (k *KeyboardButtonRow) GetButtons() (value []KeyboardButtonClass) {
 		return
 	}
 	return k.Buttons
-}
-
-// MapButtons returns field Buttons wrapped in KeyboardButtonClassArray helper.
-func (k *KeyboardButtonRow) MapButtons() (value KeyboardButtonClassArray) {
-	return KeyboardButtonClassArray(k.Buttons)
 }

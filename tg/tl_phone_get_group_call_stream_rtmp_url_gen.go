@@ -32,17 +32,10 @@ var (
 )
 
 // PhoneGetGroupCallStreamRtmpURLRequest represents TL type `phone.getGroupCallStreamRtmpUrl#deb3abbf`.
-// Get RTMP URL and stream key for RTMP livestreams. Can be used even before creating the
-// actual RTMP livestream with phone.createGroupCall¹ (the rtmp_stream flag must be set).
-//
-// Links:
-//  1. https://core.telegram.org/method/phone.createGroupCall
-//
-// See https://core.telegram.org/method/phone.getGroupCallStreamRtmpUrl for reference.
 type PhoneGetGroupCallStreamRtmpURLRequest struct {
-	// Peer to livestream into
+	// Peer field of PhoneGetGroupCallStreamRtmpURLRequest.
 	Peer InputPeerClass
-	// Whether to revoke the previous stream key or simply return the existing one
+	// Revoke field of PhoneGetGroupCallStreamRtmpURLRequest.
 	Revoke bool
 }
 
@@ -78,15 +71,6 @@ func (g *PhoneGetGroupCallStreamRtmpURLRequest) String() string {
 	}
 	type Alias PhoneGetGroupCallStreamRtmpURLRequest
 	return fmt.Sprintf("PhoneGetGroupCallStreamRtmpURLRequest%+v", Alias(*g))
-}
-
-// FillFrom fills PhoneGetGroupCallStreamRtmpURLRequest from given interface.
-func (g *PhoneGetGroupCallStreamRtmpURLRequest) FillFrom(from interface {
-	GetPeer() (value InputPeerClass)
-	GetRevoke() (value bool)
-}) {
-	g.Peer = from.GetPeer()
-	g.Revoke = from.GetRevoke()
 }
 
 // TypeID returns type id in TL schema.
@@ -198,18 +182,6 @@ func (g *PhoneGetGroupCallStreamRtmpURLRequest) GetRevoke() (value bool) {
 }
 
 // PhoneGetGroupCallStreamRtmpURL invokes method phone.getGroupCallStreamRtmpUrl#deb3abbf returning error if any.
-// Get RTMP URL and stream key for RTMP livestreams. Can be used even before creating the
-// actual RTMP livestream with phone.createGroupCall¹ (the rtmp_stream flag must be set).
-//
-// Links:
-//  1. https://core.telegram.org/method/phone.createGroupCall
-//
-// Possible errors:
-//
-//	400 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//
-// See https://core.telegram.org/method/phone.getGroupCallStreamRtmpUrl for reference.
 func (c *Client) PhoneGetGroupCallStreamRtmpURL(ctx context.Context, request *PhoneGetGroupCallStreamRtmpURLRequest) (*PhoneGroupCallStreamRtmpURL, error) {
 	var result PhoneGroupCallStreamRtmpURL
 

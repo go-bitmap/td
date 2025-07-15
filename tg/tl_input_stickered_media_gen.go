@@ -32,11 +32,8 @@ var (
 )
 
 // InputStickeredMediaPhoto represents TL type `inputStickeredMediaPhoto#4a992157`.
-// A photo with stickers attached
-//
-// See https://core.telegram.org/constructor/inputStickeredMediaPhoto for reference.
 type InputStickeredMediaPhoto struct {
-	// The photo
+	// ID field of InputStickeredMediaPhoto.
 	ID InputPhotoClass
 }
 
@@ -74,13 +71,6 @@ func (i *InputStickeredMediaPhoto) String() string {
 	}
 	type Alias InputStickeredMediaPhoto
 	return fmt.Sprintf("InputStickeredMediaPhoto%+v", Alias(*i))
-}
-
-// FillFrom fills InputStickeredMediaPhoto from given interface.
-func (i *InputStickeredMediaPhoto) FillFrom(from interface {
-	GetID() (value InputPhotoClass)
-}) {
-	i.ID = from.GetID()
 }
 
 // TypeID returns type id in TL schema.
@@ -172,11 +162,8 @@ func (i *InputStickeredMediaPhoto) GetID() (value InputPhotoClass) {
 }
 
 // InputStickeredMediaDocument represents TL type `inputStickeredMediaDocument#438865b`.
-// A document with stickers attached
-//
-// See https://core.telegram.org/constructor/inputStickeredMediaDocument for reference.
 type InputStickeredMediaDocument struct {
-	// The document
+	// ID field of InputStickeredMediaDocument.
 	ID InputDocumentClass
 }
 
@@ -214,13 +201,6 @@ func (i *InputStickeredMediaDocument) String() string {
 	}
 	type Alias InputStickeredMediaDocument
 	return fmt.Sprintf("InputStickeredMediaDocument%+v", Alias(*i))
-}
-
-// FillFrom fills InputStickeredMediaDocument from given interface.
-func (i *InputStickeredMediaDocument) FillFrom(from interface {
-	GetID() (value InputDocumentClass)
-}) {
-	i.ID = from.GetID()
 }
 
 // TypeID returns type id in TL schema.
@@ -315,8 +295,6 @@ func (i *InputStickeredMediaDocument) GetID() (value InputDocumentClass) {
 const InputStickeredMediaClassName = "InputStickeredMedia"
 
 // InputStickeredMediaClass represents InputStickeredMedia generic type.
-//
-// See https://core.telegram.org/type/InputStickeredMedia for reference.
 //
 // Constructors:
 //   - [InputStickeredMediaPhoto]

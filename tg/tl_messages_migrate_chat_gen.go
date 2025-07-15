@@ -32,17 +32,8 @@ var (
 )
 
 // MessagesMigrateChatRequest represents TL type `messages.migrateChat#a2875319`.
-// Turn a basic group into a supergroup¹
-//
-// Links:
-//  1. https://core.telegram.org/api/channel#migration
-//
-// See https://core.telegram.org/method/messages.migrateChat for reference.
 type MessagesMigrateChatRequest struct {
-	// Basic group¹ to migrate
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/channel#basic-groups
+	// ChatID field of MessagesMigrateChatRequest.
 	ChatID int64
 }
 
@@ -75,13 +66,6 @@ func (m *MessagesMigrateChatRequest) String() string {
 	}
 	type Alias MessagesMigrateChatRequest
 	return fmt.Sprintf("MessagesMigrateChatRequest%+v", Alias(*m))
-}
-
-// FillFrom fills MessagesMigrateChatRequest from given interface.
-func (m *MessagesMigrateChatRequest) FillFrom(from interface {
-	GetChatID() (value int64)
-}) {
-	m.ChatID = from.GetChatID()
 }
 
 // TypeID returns type id in TL schema.
@@ -168,20 +152,6 @@ func (m *MessagesMigrateChatRequest) GetChatID() (value int64) {
 }
 
 // MessagesMigrateChat invokes method messages.migrateChat#a2875319 returning error if any.
-// Turn a basic group into a supergroup¹
-//
-// Links:
-//  1. https://core.telegram.org/api/channel#migration
-//
-// Possible errors:
-//
-//	400 CHANNELS_TOO_MUCH: You have joined too many channels/supergroups.
-//	403 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
-//	400 CHAT_ID_INVALID: The provided chat id is invalid.
-//	500 CHAT_INVALID: Invalid chat.
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//
-// See https://core.telegram.org/method/messages.migrateChat for reference.
 func (c *Client) MessagesMigrateChat(ctx context.Context, chatid int64) (UpdatesClass, error) {
 	var result UpdatesBox
 

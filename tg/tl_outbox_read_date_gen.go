@@ -32,11 +32,8 @@ var (
 )
 
 // OutboxReadDate represents TL type `outboxReadDate#3bb842ac`.
-// Exact read date of a private message we sent to another user.
-//
-// See https://core.telegram.org/constructor/outboxReadDate for reference.
 type OutboxReadDate struct {
-	// UNIX timestamp with the read date.
+	// Date field of OutboxReadDate.
 	Date int
 }
 
@@ -69,13 +66,6 @@ func (o *OutboxReadDate) String() string {
 	}
 	type Alias OutboxReadDate
 	return fmt.Sprintf("OutboxReadDate%+v", Alias(*o))
-}
-
-// FillFrom fills OutboxReadDate from given interface.
-func (o *OutboxReadDate) FillFrom(from interface {
-	GetDate() (value int)
-}) {
-	o.Date = from.GetDate()
 }
 
 // TypeID returns type id in TL schema.

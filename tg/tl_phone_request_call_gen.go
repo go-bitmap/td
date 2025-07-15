@@ -32,27 +32,18 @@ var (
 )
 
 // PhoneRequestCallRequest represents TL type `phone.requestCall#42ff96ed`.
-// Start a telegram phone call
-//
-// See https://core.telegram.org/method/phone.requestCall for reference.
 type PhoneRequestCallRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of PhoneRequestCallRequest.
 	Flags bin.Fields
-	// Whether to start a video call
+	// Video field of PhoneRequestCallRequest.
 	Video bool
-	// Destination of the phone call
+	// UserID field of PhoneRequestCallRequest.
 	UserID InputUserClass
-	// Random ID to avoid resending the same object
+	// RandomID field of PhoneRequestCallRequest.
 	RandomID int
-	// Parameter for E2E encryption key exchange »¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/end-to-end/voice-calls
+	// GAHash field of PhoneRequestCallRequest.
 	GAHash []byte
-	// Phone call settings
+	// Protocol field of PhoneRequestCallRequest.
 	Protocol PhoneCallProtocol
 }
 
@@ -100,21 +91,6 @@ func (r *PhoneRequestCallRequest) String() string {
 	}
 	type Alias PhoneRequestCallRequest
 	return fmt.Sprintf("PhoneRequestCallRequest%+v", Alias(*r))
-}
-
-// FillFrom fills PhoneRequestCallRequest from given interface.
-func (r *PhoneRequestCallRequest) FillFrom(from interface {
-	GetVideo() (value bool)
-	GetUserID() (value InputUserClass)
-	GetRandomID() (value int)
-	GetGAHash() (value []byte)
-	GetProtocol() (value PhoneCallProtocol)
-}) {
-	r.Video = from.GetVideo()
-	r.UserID = from.GetUserID()
-	r.RandomID = from.GetRandomID()
-	r.GAHash = from.GetGAHash()
-	r.Protocol = from.GetProtocol()
 }
 
 // TypeID returns type id in TL schema.
@@ -307,18 +283,6 @@ func (r *PhoneRequestCallRequest) GetProtocol() (value PhoneCallProtocol) {
 }
 
 // PhoneRequestCall invokes method phone.requestCall#42ff96ed returning error if any.
-// Start a telegram phone call
-//
-// Possible errors:
-//
-//	400 CALL_PROTOCOL_FLAGS_INVALID: Call protocol flags invalid.
-//	400 INPUT_USER_DEACTIVATED: The specified user was deleted.
-//	400 PARTICIPANT_VERSION_OUTDATED: The other participant does not use an up to date telegram client with support for calls.
-//	400 USER_ID_INVALID: The provided user ID is invalid.
-//	403 USER_IS_BLOCKED: You were blocked by this user.
-//	403 USER_PRIVACY_RESTRICTED: The user's privacy settings do not allow you to do this.
-//
-// See https://core.telegram.org/method/phone.requestCall for reference.
 func (c *Client) PhoneRequestCall(ctx context.Context, request *PhoneRequestCallRequest) (*PhonePhoneCall, error) {
 	var result PhonePhoneCall
 

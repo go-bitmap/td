@@ -32,34 +32,14 @@ var (
 )
 
 // PaymentsBotCancelStarsSubscriptionRequest represents TL type `payments.botCancelStarsSubscription#6dfa0622`.
-// Cancel a bot subscription¹
-//
-// Links:
-//  1. https://core.telegram.org/api/subscriptions#bot-subscriptions
-//
-// See https://core.telegram.org/method/payments.botCancelStarsSubscription for reference.
 type PaymentsBotCancelStarsSubscriptionRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of PaymentsBotCancelStarsSubscriptionRequest.
 	Flags bin.Fields
-	// If not set, disables autorenewal of the subscriptions, and prevents the user from
-	// reactivating the subscription once the current period expires: a subscription
-	// cancelled by the bot will have the starsSubscription¹.bot_canceled flag set.  The bot
-	// can can partially undo this operation by setting this flag: this will allow the user
-	// to reactivate the subscription.
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/starsSubscription
+	// Restore field of PaymentsBotCancelStarsSubscriptionRequest.
 	Restore bool
-	// The ID of the user whose subscription should be (un)cancelled
+	// UserID field of PaymentsBotCancelStarsSubscriptionRequest.
 	UserID InputUserClass
-	// The provider_charge_id from the messageActionPaymentSentMe¹ service message sent to
-	// the bot for the first subscription payment.
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/messageActionPaymentSentMe
+	// ChargeID field of PaymentsBotCancelStarsSubscriptionRequest.
 	ChargeID string
 }
 
@@ -101,17 +81,6 @@ func (b *PaymentsBotCancelStarsSubscriptionRequest) String() string {
 	}
 	type Alias PaymentsBotCancelStarsSubscriptionRequest
 	return fmt.Sprintf("PaymentsBotCancelStarsSubscriptionRequest%+v", Alias(*b))
-}
-
-// FillFrom fills PaymentsBotCancelStarsSubscriptionRequest from given interface.
-func (b *PaymentsBotCancelStarsSubscriptionRequest) FillFrom(from interface {
-	GetRestore() (value bool)
-	GetUserID() (value InputUserClass)
-	GetChargeID() (value string)
-}) {
-	b.Restore = from.GetRestore()
-	b.UserID = from.GetUserID()
-	b.ChargeID = from.GetChargeID()
 }
 
 // TypeID returns type id in TL schema.
@@ -264,16 +233,6 @@ func (b *PaymentsBotCancelStarsSubscriptionRequest) GetChargeID() (value string)
 }
 
 // PaymentsBotCancelStarsSubscription invokes method payments.botCancelStarsSubscription#6dfa0622 returning error if any.
-// Cancel a bot subscription¹
-//
-// Links:
-//  1. https://core.telegram.org/api/subscriptions#bot-subscriptions
-//
-// Possible errors:
-//
-//	400 USER_ID_INVALID: The provided user ID is invalid.
-//
-// See https://core.telegram.org/method/payments.botCancelStarsSubscription for reference.
 func (c *Client) PaymentsBotCancelStarsSubscription(ctx context.Context, request *PaymentsBotCancelStarsSubscriptionRequest) (bool, error) {
 	var result BoolBox
 

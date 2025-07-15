@@ -32,177 +32,122 @@ var (
 )
 
 // Config represents TL type `config#cc1a241e`.
-// Current configuration
-//
-// See https://core.telegram.org/constructor/config for reference.
 type Config struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of Config.
 	Flags bin.Fields
-	// Whether the client should use P2P by default for phone calls with contacts
+	// DefaultP2PContacts field of Config.
 	DefaultP2PContacts bool
-	// Whether the client should preload featured stickers
+	// PreloadFeaturedStickers field of Config.
 	PreloadFeaturedStickers bool
-	// Whether incoming private messages can be deleted for both participants
+	// RevokePmInbox field of Config.
 	RevokePmInbox bool
-	// Indicates that telegram is probably censored by governments/ISPs in the current region
+	// BlockedMode field of Config.
 	BlockedMode bool
-	// Whether to forcefully connect using IPv6 dcOptions¹, even if the client knows that
-	// IPv4 is available.
-	//
-	// Links:
-	//  1) https://core.telegram.org/type/DcOption
+	// ForceTryIpv6 field of Config.
 	ForceTryIpv6 bool
-	// Current date at the server
+	// Date field of Config.
 	Date int
-	// Expiration date of this config: when it expires it'll have to be refetched using help
-	// getConfig¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/help.getConfig
+	// Expires field of Config.
 	Expires int
-	// Whether we're connected to the test DCs
+	// TestMode field of Config.
 	TestMode bool
-	// ID of the DC that returned the reply
+	// ThisDC field of Config.
 	ThisDC int
-	// DC IP list
+	// DCOptions field of Config.
 	DCOptions []DCOption
-	// Domain name for fetching encrypted DC list from DNS TXT record
+	// DCTxtDomainName field of Config.
 	DCTxtDomainName string
-	// Maximum member count for normal groups¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/channel
+	// ChatSizeMax field of Config.
 	ChatSizeMax int
-	// Maximum member count for supergroups¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/channel
+	// MegagroupSizeMax field of Config.
 	MegagroupSizeMax int
-	// Maximum number of messages that can be forwarded at once using messages
-	// forwardMessages¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/messages.forwardMessages
+	// ForwardedCountMax field of Config.
 	ForwardedCountMax int
-	// The client should update its online status¹ every N milliseconds
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/account.updateStatus
+	// OnlineUpdatePeriodMs field of Config.
 	OnlineUpdatePeriodMs int
-	// Delay before offline status needs to be sent to the server
+	// OfflineBlurTimeoutMs field of Config.
 	OfflineBlurTimeoutMs int
-	// Time without any user activity after which it should be treated offline
+	// OfflineIdleTimeoutMs field of Config.
 	OfflineIdleTimeoutMs int
-	// If we are offline, but were online from some other client in last
-	// online_cloud_timeout_ms milliseconds after we had gone offline, then delay offline
-	// notification for notify_cloud_delay_ms milliseconds.
+	// OnlineCloudTimeoutMs field of Config.
 	OnlineCloudTimeoutMs int
-	// If we are offline, but online from some other client then delay sending the offline
-	// notification for notify_cloud_delay_ms milliseconds.
+	// NotifyCloudDelayMs field of Config.
 	NotifyCloudDelayMs int
-	// If some other client is online, then delay notification for
-	// notification_default_delay_ms milliseconds
+	// NotifyDefaultDelayMs field of Config.
 	NotifyDefaultDelayMs int
-	// Not for client use
+	// PushChatPeriodMs field of Config.
 	PushChatPeriodMs int
-	// Not for client use
+	// PushChatLimit field of Config.
 	PushChatLimit int
-	// Only messages with age smaller than the one specified can be edited
+	// EditTimeLimit field of Config.
 	EditTimeLimit int
-	// Only channel/supergroup messages with age smaller than the specified can be deleted
+	// RevokeTimeLimit field of Config.
 	RevokeTimeLimit int
-	// Only private messages with age smaller than the specified can be deleted
+	// RevokePmTimeLimit field of Config.
 	RevokePmTimeLimit int
-	// Exponential decay rate for computing top peer rating¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/top-rating
+	// RatingEDecay field of Config.
 	RatingEDecay int
-	// Maximum number of recent stickers
+	// StickersRecentLimit field of Config.
 	StickersRecentLimit int
-	// Indicates that round videos (video notes) and voice messages sent in channels and
-	// older than the specified period must be marked as read
+	// ChannelsReadMediaPeriod field of Config.
 	ChannelsReadMediaPeriod int
-	// Temporary passport¹ sessions
-	//
-	// Links:
-	//  1) https://core.telegram.org/passport
+	// TmpSessions field of Config.
 	//
 	// Use SetTmpSessions and GetTmpSessions helpers.
 	TmpSessions int
-	// Maximum allowed outgoing ring time in VoIP calls: if the user we're calling doesn't
-	// reply within the specified time (in milliseconds), we should hang up the call
+	// CallReceiveTimeoutMs field of Config.
 	CallReceiveTimeoutMs int
-	// Maximum allowed incoming ring time in VoIP calls: if the current user doesn't reply
-	// within the specified time (in milliseconds), the call will be automatically refused
+	// CallRingTimeoutMs field of Config.
 	CallRingTimeoutMs int
-	// VoIP connection timeout: if the instance of libtgvoip on the other side of the call
-	// doesn't connect to our instance of libtgvoip within the specified time (in
-	// milliseconds), the call must be aborted
+	// CallConnectTimeoutMs field of Config.
 	CallConnectTimeoutMs int
-	// If during a VoIP call a packet isn't received for the specified period of time, the
-	// call must be aborted
+	// CallPacketTimeoutMs field of Config.
 	CallPacketTimeoutMs int
-	// The domain to use to parse deep links »¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/links
+	// MeURLPrefix field of Config.
 	MeURLPrefix string
-	// URL to use to auto-update the current app
+	// AutoupdateURLPrefix field of Config.
 	//
 	// Use SetAutoupdateURLPrefix and GetAutoupdateURLPrefix helpers.
 	AutoupdateURLPrefix string
-	// Username of the bot to use to search for GIFs
+	// GifSearchUsername field of Config.
 	//
 	// Use SetGifSearchUsername and GetGifSearchUsername helpers.
 	GifSearchUsername string
-	// Username of the bot to use to search for venues
+	// VenueSearchUsername field of Config.
 	//
 	// Use SetVenueSearchUsername and GetVenueSearchUsername helpers.
 	VenueSearchUsername string
-	// Username of the bot to use for image search
+	// ImgSearchUsername field of Config.
 	//
 	// Use SetImgSearchUsername and GetImgSearchUsername helpers.
 	ImgSearchUsername string
-	// ID of the map provider to use for venues
+	// StaticMapsProvider field of Config.
 	//
 	// Use SetStaticMapsProvider and GetStaticMapsProvider helpers.
 	StaticMapsProvider string
-	// Maximum length of caption (length in utf8 codepoints)
+	// CaptionLengthMax field of Config.
 	CaptionLengthMax int
-	// Maximum length of messages (length in utf8 codepoints)
+	// MessageLengthMax field of Config.
 	MessageLengthMax int
-	// DC ID to use to download webfiles¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/files#downloading-webfiles
+	// WebfileDCID field of Config.
 	WebfileDCID int
-	// Suggested language code
+	// SuggestedLangCode field of Config.
 	//
 	// Use SetSuggestedLangCode and GetSuggestedLangCode helpers.
 	SuggestedLangCode string
-	// Language pack version
+	// LangPackVersion field of Config.
 	//
 	// Use SetLangPackVersion and GetLangPackVersion helpers.
 	LangPackVersion int
-	// Basic language pack version
+	// BaseLangPackVersion field of Config.
 	//
 	// Use SetBaseLangPackVersion and GetBaseLangPackVersion helpers.
 	BaseLangPackVersion int
-	// Default message reaction¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/reactions
+	// ReactionsDefault field of Config.
 	//
 	// Use SetReactionsDefault and GetReactionsDefault helpers.
 	ReactionsDefault ReactionClass
-	// Autologin token, click here for more info on URL authorization »¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/url-authorization#link-url-authorization
+	// AutologinToken field of Config.
 	//
 	// Use SetAutologinToken and GetAutologinToken helpers.
 	AutologinToken string
@@ -378,138 +323,6 @@ func (c *Config) String() string {
 	}
 	type Alias Config
 	return fmt.Sprintf("Config%+v", Alias(*c))
-}
-
-// FillFrom fills Config from given interface.
-func (c *Config) FillFrom(from interface {
-	GetDefaultP2PContacts() (value bool)
-	GetPreloadFeaturedStickers() (value bool)
-	GetRevokePmInbox() (value bool)
-	GetBlockedMode() (value bool)
-	GetForceTryIpv6() (value bool)
-	GetDate() (value int)
-	GetExpires() (value int)
-	GetTestMode() (value bool)
-	GetThisDC() (value int)
-	GetDCOptions() (value []DCOption)
-	GetDCTxtDomainName() (value string)
-	GetChatSizeMax() (value int)
-	GetMegagroupSizeMax() (value int)
-	GetForwardedCountMax() (value int)
-	GetOnlineUpdatePeriodMs() (value int)
-	GetOfflineBlurTimeoutMs() (value int)
-	GetOfflineIdleTimeoutMs() (value int)
-	GetOnlineCloudTimeoutMs() (value int)
-	GetNotifyCloudDelayMs() (value int)
-	GetNotifyDefaultDelayMs() (value int)
-	GetPushChatPeriodMs() (value int)
-	GetPushChatLimit() (value int)
-	GetEditTimeLimit() (value int)
-	GetRevokeTimeLimit() (value int)
-	GetRevokePmTimeLimit() (value int)
-	GetRatingEDecay() (value int)
-	GetStickersRecentLimit() (value int)
-	GetChannelsReadMediaPeriod() (value int)
-	GetTmpSessions() (value int, ok bool)
-	GetCallReceiveTimeoutMs() (value int)
-	GetCallRingTimeoutMs() (value int)
-	GetCallConnectTimeoutMs() (value int)
-	GetCallPacketTimeoutMs() (value int)
-	GetMeURLPrefix() (value string)
-	GetAutoupdateURLPrefix() (value string, ok bool)
-	GetGifSearchUsername() (value string, ok bool)
-	GetVenueSearchUsername() (value string, ok bool)
-	GetImgSearchUsername() (value string, ok bool)
-	GetStaticMapsProvider() (value string, ok bool)
-	GetCaptionLengthMax() (value int)
-	GetMessageLengthMax() (value int)
-	GetWebfileDCID() (value int)
-	GetSuggestedLangCode() (value string, ok bool)
-	GetLangPackVersion() (value int, ok bool)
-	GetBaseLangPackVersion() (value int, ok bool)
-	GetReactionsDefault() (value ReactionClass, ok bool)
-	GetAutologinToken() (value string, ok bool)
-}) {
-	c.DefaultP2PContacts = from.GetDefaultP2PContacts()
-	c.PreloadFeaturedStickers = from.GetPreloadFeaturedStickers()
-	c.RevokePmInbox = from.GetRevokePmInbox()
-	c.BlockedMode = from.GetBlockedMode()
-	c.ForceTryIpv6 = from.GetForceTryIpv6()
-	c.Date = from.GetDate()
-	c.Expires = from.GetExpires()
-	c.TestMode = from.GetTestMode()
-	c.ThisDC = from.GetThisDC()
-	c.DCOptions = from.GetDCOptions()
-	c.DCTxtDomainName = from.GetDCTxtDomainName()
-	c.ChatSizeMax = from.GetChatSizeMax()
-	c.MegagroupSizeMax = from.GetMegagroupSizeMax()
-	c.ForwardedCountMax = from.GetForwardedCountMax()
-	c.OnlineUpdatePeriodMs = from.GetOnlineUpdatePeriodMs()
-	c.OfflineBlurTimeoutMs = from.GetOfflineBlurTimeoutMs()
-	c.OfflineIdleTimeoutMs = from.GetOfflineIdleTimeoutMs()
-	c.OnlineCloudTimeoutMs = from.GetOnlineCloudTimeoutMs()
-	c.NotifyCloudDelayMs = from.GetNotifyCloudDelayMs()
-	c.NotifyDefaultDelayMs = from.GetNotifyDefaultDelayMs()
-	c.PushChatPeriodMs = from.GetPushChatPeriodMs()
-	c.PushChatLimit = from.GetPushChatLimit()
-	c.EditTimeLimit = from.GetEditTimeLimit()
-	c.RevokeTimeLimit = from.GetRevokeTimeLimit()
-	c.RevokePmTimeLimit = from.GetRevokePmTimeLimit()
-	c.RatingEDecay = from.GetRatingEDecay()
-	c.StickersRecentLimit = from.GetStickersRecentLimit()
-	c.ChannelsReadMediaPeriod = from.GetChannelsReadMediaPeriod()
-	if val, ok := from.GetTmpSessions(); ok {
-		c.TmpSessions = val
-	}
-
-	c.CallReceiveTimeoutMs = from.GetCallReceiveTimeoutMs()
-	c.CallRingTimeoutMs = from.GetCallRingTimeoutMs()
-	c.CallConnectTimeoutMs = from.GetCallConnectTimeoutMs()
-	c.CallPacketTimeoutMs = from.GetCallPacketTimeoutMs()
-	c.MeURLPrefix = from.GetMeURLPrefix()
-	if val, ok := from.GetAutoupdateURLPrefix(); ok {
-		c.AutoupdateURLPrefix = val
-	}
-
-	if val, ok := from.GetGifSearchUsername(); ok {
-		c.GifSearchUsername = val
-	}
-
-	if val, ok := from.GetVenueSearchUsername(); ok {
-		c.VenueSearchUsername = val
-	}
-
-	if val, ok := from.GetImgSearchUsername(); ok {
-		c.ImgSearchUsername = val
-	}
-
-	if val, ok := from.GetStaticMapsProvider(); ok {
-		c.StaticMapsProvider = val
-	}
-
-	c.CaptionLengthMax = from.GetCaptionLengthMax()
-	c.MessageLengthMax = from.GetMessageLengthMax()
-	c.WebfileDCID = from.GetWebfileDCID()
-	if val, ok := from.GetSuggestedLangCode(); ok {
-		c.SuggestedLangCode = val
-	}
-
-	if val, ok := from.GetLangPackVersion(); ok {
-		c.LangPackVersion = val
-	}
-
-	if val, ok := from.GetBaseLangPackVersion(); ok {
-		c.BaseLangPackVersion = val
-	}
-
-	if val, ok := from.GetReactionsDefault(); ok {
-		c.ReactionsDefault = val
-	}
-
-	if val, ok := from.GetAutologinToken(); ok {
-		c.AutologinToken = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.

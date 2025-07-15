@@ -32,19 +32,10 @@ var (
 )
 
 // InputEncryptedChat represents TL type `inputEncryptedChat#f141b5e1`.
-// Creates an encrypted chat.
-//
-// See https://core.telegram.org/constructor/inputEncryptedChat for reference.
 type InputEncryptedChat struct {
-	// Chat ID
+	// ChatID field of InputEncryptedChat.
 	ChatID int
-	// Checking sum from constructor encryptedChat¹, encryptedChatWaiting² or
-	// encryptedChatRequested³
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/encryptedChat
-	//  2) https://core.telegram.org/constructor/encryptedChatWaiting
-	//  3) https://core.telegram.org/constructor/encryptedChatRequested
+	// AccessHash field of InputEncryptedChat.
 	AccessHash int64
 }
 
@@ -80,15 +71,6 @@ func (i *InputEncryptedChat) String() string {
 	}
 	type Alias InputEncryptedChat
 	return fmt.Sprintf("InputEncryptedChat%+v", Alias(*i))
-}
-
-// FillFrom fills InputEncryptedChat from given interface.
-func (i *InputEncryptedChat) FillFrom(from interface {
-	GetChatID() (value int)
-	GetAccessHash() (value int64)
-}) {
-	i.ChatID = from.GetChatID()
-	i.AccessHash = from.GetAccessHash()
 }
 
 // TypeID returns type id in TL schema.

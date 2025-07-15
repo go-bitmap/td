@@ -32,34 +32,18 @@ var (
 )
 
 // StoryView represents TL type `storyView#b0bdeac5`.
-// Story¹ view date and reaction information
-//
-// Links:
-//  1. https://core.telegram.org/api/stories
-//
-// See https://core.telegram.org/constructor/storyView for reference.
 type StoryView struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of StoryView.
 	Flags bin.Fields
-	// Whether we have completely blocked¹ this user, including from viewing more of our
-	// stories.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/block
+	// Blocked field of StoryView.
 	Blocked bool
-	// Whether we have blocked¹ this user from viewing more of our stories.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/block
+	// BlockedMyStoriesFrom field of StoryView.
 	BlockedMyStoriesFrom bool
-	// The user that viewed the story
+	// UserID field of StoryView.
 	UserID int64
-	// When did the user view the story
+	// Date field of StoryView.
 	Date int
-	// If present, contains the reaction that the user left on the story
+	// Reaction field of StoryView.
 	//
 	// Use SetReaction and GetReaction helpers.
 	Reaction ReactionClass
@@ -114,24 +98,6 @@ func (s *StoryView) String() string {
 	}
 	type Alias StoryView
 	return fmt.Sprintf("StoryView%+v", Alias(*s))
-}
-
-// FillFrom fills StoryView from given interface.
-func (s *StoryView) FillFrom(from interface {
-	GetBlocked() (value bool)
-	GetBlockedMyStoriesFrom() (value bool)
-	GetUserID() (value int64)
-	GetDate() (value int)
-	GetReaction() (value ReactionClass, ok bool)
-}) {
-	s.Blocked = from.GetBlocked()
-	s.BlockedMyStoriesFrom = from.GetBlockedMyStoriesFrom()
-	s.UserID = from.GetUserID()
-	s.Date = from.GetDate()
-	if val, ok := from.GetReaction(); ok {
-		s.Reaction = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -348,27 +314,14 @@ func (s *StoryView) GetReaction() (value ReactionClass, ok bool) {
 }
 
 // StoryViewPublicForward represents TL type `storyViewPublicForward#9083670b`.
-// A certain peer has forwarded the story as a message to a public chat or channel.
-//
-// See https://core.telegram.org/constructor/storyViewPublicForward for reference.
 type StoryViewPublicForward struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of StoryViewPublicForward.
 	Flags bin.Fields
-	// Whether we have completely blocked¹ this user, including from viewing more of our
-	// stories.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/block
+	// Blocked field of StoryViewPublicForward.
 	Blocked bool
-	// Whether we have blocked¹ this user from viewing more of our stories.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/block
+	// BlockedMyStoriesFrom field of StoryViewPublicForward.
 	BlockedMyStoriesFrom bool
-	// The message with the forwarded story.
+	// Message field of StoryViewPublicForward.
 	Message MessageClass
 }
 
@@ -415,17 +368,6 @@ func (s *StoryViewPublicForward) String() string {
 	}
 	type Alias StoryViewPublicForward
 	return fmt.Sprintf("StoryViewPublicForward%+v", Alias(*s))
-}
-
-// FillFrom fills StoryViewPublicForward from given interface.
-func (s *StoryViewPublicForward) FillFrom(from interface {
-	GetBlocked() (value bool)
-	GetBlockedMyStoriesFrom() (value bool)
-	GetMessage() (value MessageClass)
-}) {
-	s.Blocked = from.GetBlocked()
-	s.BlockedMyStoriesFrom = from.GetBlockedMyStoriesFrom()
-	s.Message = from.GetMessage()
 }
 
 // TypeID returns type id in TL schema.
@@ -586,29 +528,16 @@ func (s *StoryViewPublicForward) GetMessage() (value MessageClass) {
 }
 
 // StoryViewPublicRepost represents TL type `storyViewPublicRepost#bd74cf49`.
-// A certain peer has reposted the story.
-//
-// See https://core.telegram.org/constructor/storyViewPublicRepost for reference.
 type StoryViewPublicRepost struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of StoryViewPublicRepost.
 	Flags bin.Fields
-	// Whether we have completely blocked¹ this user, including from viewing more of our
-	// stories.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/block
+	// Blocked field of StoryViewPublicRepost.
 	Blocked bool
-	// Whether we have blocked¹ this user from viewing more of our stories.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/block
+	// BlockedMyStoriesFrom field of StoryViewPublicRepost.
 	BlockedMyStoriesFrom bool
-	// The peer that reposted the story.
+	// PeerID field of StoryViewPublicRepost.
 	PeerID PeerClass
-	// The reposted story.
+	// Story field of StoryViewPublicRepost.
 	Story StoryItemClass
 }
 
@@ -658,19 +587,6 @@ func (s *StoryViewPublicRepost) String() string {
 	}
 	type Alias StoryViewPublicRepost
 	return fmt.Sprintf("StoryViewPublicRepost%+v", Alias(*s))
-}
-
-// FillFrom fills StoryViewPublicRepost from given interface.
-func (s *StoryViewPublicRepost) FillFrom(from interface {
-	GetBlocked() (value bool)
-	GetBlockedMyStoriesFrom() (value bool)
-	GetPeerID() (value PeerClass)
-	GetStory() (value StoryItemClass)
-}) {
-	s.Blocked = from.GetBlocked()
-	s.BlockedMyStoriesFrom = from.GetBlockedMyStoriesFrom()
-	s.PeerID = from.GetPeerID()
-	s.Story = from.GetStory()
 }
 
 // TypeID returns type id in TL schema.
@@ -860,8 +776,6 @@ const StoryViewClassName = "StoryView"
 
 // StoryViewClass represents StoryView generic type.
 //
-// See https://core.telegram.org/type/StoryView for reference.
-//
 // Constructors:
 //   - [StoryView]
 //   - [StoryViewPublicForward]
@@ -897,17 +811,9 @@ type StoryViewClass interface {
 	// Zero returns true if current object has a zero value.
 	Zero() bool
 
-	// Whether we have completely blocked¹ this user, including from viewing more of our
-	// stories.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/block
+	// Blocked field of StoryView.
 	GetBlocked() (value bool)
-
-	// Whether we have blocked¹ this user from viewing more of our stories.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/block
+	// BlockedMyStoriesFrom field of StoryView.
 	GetBlockedMyStoriesFrom() (value bool)
 }
 

@@ -32,9 +32,6 @@ var (
 )
 
 // UserProfilePhotoEmpty represents TL type `userProfilePhotoEmpty#4f11bae1`.
-// Profile photo has not been set, or was hidden.
-//
-// See https://core.telegram.org/constructor/userProfilePhotoEmpty for reference.
 type UserProfilePhotoEmpty struct {
 }
 
@@ -134,36 +131,20 @@ func (u *UserProfilePhotoEmpty) DecodeBare(b *bin.Buffer) error {
 }
 
 // UserProfilePhoto represents TL type `userProfilePhoto#82d1f706`.
-// User profile photo.
-//
-// See https://core.telegram.org/constructor/userProfilePhoto for reference.
 type UserProfilePhoto struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of UserProfilePhoto.
 	Flags bin.Fields
-	// Whether an animated profile picture¹ is available for this user
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/files#animated-profile-pictures
+	// HasVideo field of UserProfilePhoto.
 	HasVideo bool
-	// Whether this profile photo is only visible to us (i.e. it was set using photos
-	// uploadContactProfilePhoto¹).
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/photos.uploadContactProfilePhoto
+	// Personal field of UserProfilePhoto.
 	Personal bool
-	// Identifier of the respective photo
+	// PhotoID field of UserProfilePhoto.
 	PhotoID int64
-	// Stripped thumbnail¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/files#stripped-thumbnails
+	// StrippedThumb field of UserProfilePhoto.
 	//
 	// Use SetStrippedThumb and GetStrippedThumb helpers.
 	StrippedThumb []byte
-	// DC ID where the photo is stored
+	// DCID field of UserProfilePhoto.
 	DCID int
 }
 
@@ -216,24 +197,6 @@ func (u *UserProfilePhoto) String() string {
 	}
 	type Alias UserProfilePhoto
 	return fmt.Sprintf("UserProfilePhoto%+v", Alias(*u))
-}
-
-// FillFrom fills UserProfilePhoto from given interface.
-func (u *UserProfilePhoto) FillFrom(from interface {
-	GetHasVideo() (value bool)
-	GetPersonal() (value bool)
-	GetPhotoID() (value int64)
-	GetStrippedThumb() (value []byte, ok bool)
-	GetDCID() (value int)
-}) {
-	u.HasVideo = from.GetHasVideo()
-	u.Personal = from.GetPersonal()
-	u.PhotoID = from.GetPhotoID()
-	if val, ok := from.GetStrippedThumb(); ok {
-		u.StrippedThumb = val
-	}
-
-	u.DCID = from.GetDCID()
 }
 
 // TypeID returns type id in TL schema.
@@ -449,8 +412,6 @@ const UserProfilePhotoClassName = "UserProfilePhoto"
 
 // UserProfilePhotoClass represents UserProfilePhoto generic type.
 //
-// See https://core.telegram.org/type/UserProfilePhoto for reference.
-//
 // Constructors:
 //   - [UserProfilePhotoEmpty]
 //   - [UserProfilePhoto]
@@ -483,19 +444,6 @@ type UserProfilePhotoClass interface {
 	String() string
 	// Zero returns true if current object has a zero value.
 	Zero() bool
-
-	// AsNotEmpty tries to map UserProfilePhotoClass to UserProfilePhoto.
-	AsNotEmpty() (*UserProfilePhoto, bool)
-}
-
-// AsNotEmpty tries to map UserProfilePhotoEmpty to UserProfilePhoto.
-func (u *UserProfilePhotoEmpty) AsNotEmpty() (*UserProfilePhoto, bool) {
-	return nil, false
-}
-
-// AsNotEmpty tries to map UserProfilePhoto to UserProfilePhoto.
-func (u *UserProfilePhoto) AsNotEmpty() (*UserProfilePhoto, bool) {
-	return u, true
 }
 
 // DecodeUserProfilePhoto implements binary de-serialization for UserProfilePhotoClass.

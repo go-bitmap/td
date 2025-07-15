@@ -32,19 +32,10 @@ var (
 )
 
 // AccountUpdateBusinessAwayMessageRequest represents TL type `account.updateBusinessAwayMessage#a26a7fa5`.
-// Set a list of Telegram Business away messages¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/business#away-messages
-//
-// See https://core.telegram.org/method/account.updateBusinessAwayMessage for reference.
 type AccountUpdateBusinessAwayMessageRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of AccountUpdateBusinessAwayMessageRequest.
 	Flags bin.Fields
-	// Away message configuration and contents.
+	// Message field of AccountUpdateBusinessAwayMessageRequest.
 	//
 	// Use SetMessage and GetMessage helpers.
 	Message InputBusinessAwayMessage
@@ -82,16 +73,6 @@ func (u *AccountUpdateBusinessAwayMessageRequest) String() string {
 	}
 	type Alias AccountUpdateBusinessAwayMessageRequest
 	return fmt.Sprintf("AccountUpdateBusinessAwayMessageRequest%+v", Alias(*u))
-}
-
-// FillFrom fills AccountUpdateBusinessAwayMessageRequest from given interface.
-func (u *AccountUpdateBusinessAwayMessageRequest) FillFrom(from interface {
-	GetMessage() (value InputBusinessAwayMessage, ok bool)
-}) {
-	if val, ok := from.GetMessage(); ok {
-		u.Message = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -207,12 +188,6 @@ func (u *AccountUpdateBusinessAwayMessageRequest) GetMessage() (value InputBusin
 }
 
 // AccountUpdateBusinessAwayMessage invokes method account.updateBusinessAwayMessage#a26a7fa5 returning error if any.
-// Set a list of Telegram Business away messages¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/business#away-messages
-//
-// See https://core.telegram.org/method/account.updateBusinessAwayMessage for reference.
 func (c *Client) AccountUpdateBusinessAwayMessage(ctx context.Context, request *AccountUpdateBusinessAwayMessageRequest) (bool, error) {
 	var result BoolBox
 

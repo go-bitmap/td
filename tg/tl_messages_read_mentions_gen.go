@@ -32,21 +32,12 @@ var (
 )
 
 // MessagesReadMentionsRequest represents TL type `messages.readMentions#36e5bf4d`.
-// Mark mentions as read
-//
-// See https://core.telegram.org/method/messages.readMentions for reference.
 type MessagesReadMentionsRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessagesReadMentionsRequest.
 	Flags bin.Fields
-	// Dialog
+	// Peer field of MessagesReadMentionsRequest.
 	Peer InputPeerClass
-	// Mark as read only mentions within the specified forum topic¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/forum#forum-topics
+	// TopMsgID field of MessagesReadMentionsRequest.
 	//
 	// Use SetTopMsgID and GetTopMsgID helpers.
 	TopMsgID int
@@ -87,18 +78,6 @@ func (r *MessagesReadMentionsRequest) String() string {
 	}
 	type Alias MessagesReadMentionsRequest
 	return fmt.Sprintf("MessagesReadMentionsRequest%+v", Alias(*r))
-}
-
-// FillFrom fills MessagesReadMentionsRequest from given interface.
-func (r *MessagesReadMentionsRequest) FillFrom(from interface {
-	GetPeer() (value InputPeerClass)
-	GetTopMsgID() (value int, ok bool)
-}) {
-	r.Peer = from.GetPeer()
-	if val, ok := from.GetTopMsgID(); ok {
-		r.TopMsgID = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -239,16 +218,6 @@ func (r *MessagesReadMentionsRequest) GetTopMsgID() (value int, ok bool) {
 }
 
 // MessagesReadMentions invokes method messages.readMentions#36e5bf4d returning error if any.
-// Mark mentions as read
-//
-// Possible errors:
-//
-//	400 CHANNEL_INVALID: The provided channel is invalid.
-//	400 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
-//	400 MSG_ID_INVALID: Invalid message ID provided.
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//
-// See https://core.telegram.org/method/messages.readMentions for reference.
 func (c *Client) MessagesReadMentions(ctx context.Context, request *MessagesReadMentionsRequest) (*MessagesAffectedHistory, error) {
 	var result MessagesAffectedHistory
 

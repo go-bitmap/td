@@ -32,21 +32,10 @@ var (
 )
 
 // ChannelsReportAntiSpamFalsePositiveRequest represents TL type `channels.reportAntiSpamFalsePositive#a850a693`.
-// Report a native antispam¹ false positive
-//
-// Links:
-//  1. https://core.telegram.org/api/antispam
-//
-// See https://core.telegram.org/method/channels.reportAntiSpamFalsePositive for reference.
 type ChannelsReportAntiSpamFalsePositiveRequest struct {
-	// Supergroup ID
+	// Channel field of ChannelsReportAntiSpamFalsePositiveRequest.
 	Channel InputChannelClass
-	// Message ID that was mistakenly deleted by the native antispam¹ system, taken from the
-	// admin log²
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/antispam
-	//  2) https://core.telegram.org/api/recent-actions
+	// MsgID field of ChannelsReportAntiSpamFalsePositiveRequest.
 	MsgID int
 }
 
@@ -82,15 +71,6 @@ func (r *ChannelsReportAntiSpamFalsePositiveRequest) String() string {
 	}
 	type Alias ChannelsReportAntiSpamFalsePositiveRequest
 	return fmt.Sprintf("ChannelsReportAntiSpamFalsePositiveRequest%+v", Alias(*r))
-}
-
-// FillFrom fills ChannelsReportAntiSpamFalsePositiveRequest from given interface.
-func (r *ChannelsReportAntiSpamFalsePositiveRequest) FillFrom(from interface {
-	GetChannel() (value InputChannelClass)
-	GetMsgID() (value int)
-}) {
-	r.Channel = from.GetChannel()
-	r.MsgID = from.GetMsgID()
 }
 
 // TypeID returns type id in TL schema.
@@ -201,22 +181,7 @@ func (r *ChannelsReportAntiSpamFalsePositiveRequest) GetMsgID() (value int) {
 	return r.MsgID
 }
 
-// GetChannelAsNotEmpty returns mapped value of Channel field.
-func (r *ChannelsReportAntiSpamFalsePositiveRequest) GetChannelAsNotEmpty() (NotEmptyInputChannel, bool) {
-	return r.Channel.AsNotEmpty()
-}
-
 // ChannelsReportAntiSpamFalsePositive invokes method channels.reportAntiSpamFalsePositive#a850a693 returning error if any.
-// Report a native antispam¹ false positive
-//
-// Links:
-//  1. https://core.telegram.org/api/antispam
-//
-// Possible errors:
-//
-//	400 CHANNEL_INVALID: The provided channel is invalid.
-//
-// See https://core.telegram.org/method/channels.reportAntiSpamFalsePositive for reference.
 func (c *Client) ChannelsReportAntiSpamFalsePositive(ctx context.Context, request *ChannelsReportAntiSpamFalsePositiveRequest) (bool, error) {
 	var result BoolBox
 

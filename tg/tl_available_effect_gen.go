@@ -32,54 +32,22 @@ var (
 )
 
 // AvailableEffect represents TL type `availableEffect#93c3e27e`.
-// Represents a message effect »¹.
-// All long IDs except for id are document¹.ids from the containing messages
-// availableEffects² constructor.
-// See here »¹ for more info on how to use following fields.
-//
-// Links:
-//  1. https://core.telegram.org/api/effects
-//  2. https://core.telegram.org/constructor/document
-//  3. https://core.telegram.org/constructor/messages.availableEffects
-//  4. https://core.telegram.org/api/effects
-//
-// See https://core.telegram.org/constructor/availableEffect for reference.
 type AvailableEffect struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of AvailableEffect.
 	Flags bin.Fields
-	// Whether a Premium¹ subscription is required to use this effect.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/premium
+	// PremiumRequired field of AvailableEffect.
 	PremiumRequired bool
-	// Unique effect ID.
+	// ID field of AvailableEffect.
 	ID int64
-	// Emoji corresponding to the effect, to be used as icon for the effect if static_icon_id
-	// is not set.
+	// Emoticon field of AvailableEffect.
 	Emoticon string
-	// ID of the document containing the static icon (WEBP) of the effect.
+	// StaticIconID field of AvailableEffect.
 	//
 	// Use SetStaticIconID and GetStaticIconID helpers.
 	StaticIconID int64
-	// Contains the preview animation (TGS format »)¹, used for the effect selection menu.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/stickers#animated-stickers
+	// EffectStickerID field of AvailableEffect.
 	EffectStickerID int64
-	// If set, contains the actual animated effect (TGS format »)¹. If not set, the
-	// animated effect must be set equal to the premium animated sticker effect² associated
-	// to the animated sticker specified in effect_sticker_id (always different from the
-	// preview animation, fetched thanks to the videoSize³ of type f as specified here
-	// »⁴).
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/stickers#animated-stickers
-	//  2) https://core.telegram.org/api/stickers#premium-animated-sticker-effects
-	//  3) https://core.telegram.org/constructor/videoSize
-	//  4) https://core.telegram.org/api/stickers#premium-animated-sticker-effects
+	// EffectAnimationID field of AvailableEffect.
 	//
 	// Use SetEffectAnimationID and GetEffectAnimationID helpers.
 	EffectAnimationID int64
@@ -132,29 +100,6 @@ func (a *AvailableEffect) String() string {
 	}
 	type Alias AvailableEffect
 	return fmt.Sprintf("AvailableEffect%+v", Alias(*a))
-}
-
-// FillFrom fills AvailableEffect from given interface.
-func (a *AvailableEffect) FillFrom(from interface {
-	GetPremiumRequired() (value bool)
-	GetID() (value int64)
-	GetEmoticon() (value string)
-	GetStaticIconID() (value int64, ok bool)
-	GetEffectStickerID() (value int64)
-	GetEffectAnimationID() (value int64, ok bool)
-}) {
-	a.PremiumRequired = from.GetPremiumRequired()
-	a.ID = from.GetID()
-	a.Emoticon = from.GetEmoticon()
-	if val, ok := from.GetStaticIconID(); ok {
-		a.StaticIconID = val
-	}
-
-	a.EffectStickerID = from.GetEffectStickerID()
-	if val, ok := from.GetEffectAnimationID(); ok {
-		a.EffectAnimationID = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.

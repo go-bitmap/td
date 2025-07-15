@@ -32,15 +32,12 @@ var (
 )
 
 // BotsBotInfo represents TL type `bots.botInfo#e8a775b0`.
-// Localized information about a bot.
-//
-// See https://core.telegram.org/constructor/bots.botInfo for reference.
 type BotsBotInfo struct {
-	// Bot name
+	// Name field of BotsBotInfo.
 	Name string
-	// Bot about text
+	// About field of BotsBotInfo.
 	About string
-	// Bot description
+	// Description field of BotsBotInfo.
 	Description string
 }
 
@@ -79,17 +76,6 @@ func (b *BotsBotInfo) String() string {
 	}
 	type Alias BotsBotInfo
 	return fmt.Sprintf("BotsBotInfo%+v", Alias(*b))
-}
-
-// FillFrom fills BotsBotInfo from given interface.
-func (b *BotsBotInfo) FillFrom(from interface {
-	GetName() (value string)
-	GetAbout() (value string)
-	GetDescription() (value string)
-}) {
-	b.Name = from.GetName()
-	b.About = from.GetAbout()
-	b.Description = from.GetDescription()
 }
 
 // TypeID returns type id in TL schema.

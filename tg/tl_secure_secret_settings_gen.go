@@ -32,15 +32,12 @@ var (
 )
 
 // SecureSecretSettings represents TL type `secureSecretSettings#1527bcac`.
-// Secure settings
-//
-// See https://core.telegram.org/constructor/secureSecretSettings for reference.
 type SecureSecretSettings struct {
-	// Secure KDF algo
+	// SecureAlgo field of SecureSecretSettings.
 	SecureAlgo SecurePasswordKdfAlgoClass
-	// Secure secret
+	// SecureSecret field of SecureSecretSettings.
 	SecureSecret []byte
-	// Secret ID
+	// SecureSecretID field of SecureSecretSettings.
 	SecureSecretID int64
 }
 
@@ -79,17 +76,6 @@ func (s *SecureSecretSettings) String() string {
 	}
 	type Alias SecureSecretSettings
 	return fmt.Sprintf("SecureSecretSettings%+v", Alias(*s))
-}
-
-// FillFrom fills SecureSecretSettings from given interface.
-func (s *SecureSecretSettings) FillFrom(from interface {
-	GetSecureAlgo() (value SecurePasswordKdfAlgoClass)
-	GetSecureSecret() (value []byte)
-	GetSecureSecretID() (value int64)
-}) {
-	s.SecureAlgo = from.GetSecureAlgo()
-	s.SecureSecret = from.GetSecureSecret()
-	s.SecureSecretID = from.GetSecureSecretID()
 }
 
 // TypeID returns type id in TL schema.

@@ -32,58 +32,50 @@ var (
 )
 
 // PeerNotifySettings represents TL type `peerNotifySettings#99622c0c`.
-// Notification settings.
-//
-// See https://core.telegram.org/constructor/peerNotifySettings for reference.
 type PeerNotifySettings struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of PeerNotifySettings.
 	Flags bin.Fields
-	// (Ternary value) If set, indicates whether or not to display previews of messages in
-	// notifications; otherwise the default behavior should be used.
+	// ShowPreviews field of PeerNotifySettings.
 	//
 	// Use SetShowPreviews and GetShowPreviews helpers.
 	ShowPreviews bool
-	// (Ternary value) If set, indicates whether to mute or unmute the peer; otherwise the
-	// default behavior should be used.
+	// Silent field of PeerNotifySettings.
 	//
 	// Use SetSilent and GetSilent helpers.
 	Silent bool
-	// Mute all notifications until this date
+	// MuteUntil field of PeerNotifySettings.
 	//
 	// Use SetMuteUntil and GetMuteUntil helpers.
 	MuteUntil int
-	// Notification sound for the official iOS application
+	// IosSound field of PeerNotifySettings.
 	//
 	// Use SetIosSound and GetIosSound helpers.
 	IosSound NotificationSoundClass
-	// Notification sound for the official android application
+	// AndroidSound field of PeerNotifySettings.
 	//
 	// Use SetAndroidSound and GetAndroidSound helpers.
 	AndroidSound NotificationSoundClass
-	// Notification sound for other applications
+	// OtherSound field of PeerNotifySettings.
 	//
 	// Use SetOtherSound and GetOtherSound helpers.
 	OtherSound NotificationSoundClass
-	// Whether story notifications should be disabled.
+	// StoriesMuted field of PeerNotifySettings.
 	//
 	// Use SetStoriesMuted and GetStoriesMuted helpers.
 	StoriesMuted bool
-	// Whether the sender name should be displayed in story notifications.
+	// StoriesHideSender field of PeerNotifySettings.
 	//
 	// Use SetStoriesHideSender and GetStoriesHideSender helpers.
 	StoriesHideSender bool
-	// Sound for story notifications on the official iOS application
+	// StoriesIosSound field of PeerNotifySettings.
 	//
 	// Use SetStoriesIosSound and GetStoriesIosSound helpers.
 	StoriesIosSound NotificationSoundClass
-	// Sound for story notifications on the official Android application
+	// StoriesAndroidSound field of PeerNotifySettings.
 	//
 	// Use SetStoriesAndroidSound and GetStoriesAndroidSound helpers.
 	StoriesAndroidSound NotificationSoundClass
-	// Sound for story notifications on other applications
+	// StoriesOtherSound field of PeerNotifySettings.
 	//
 	// Use SetStoriesOtherSound and GetStoriesOtherSound helpers.
 	StoriesOtherSound NotificationSoundClass
@@ -151,66 +143,6 @@ func (p *PeerNotifySettings) String() string {
 	}
 	type Alias PeerNotifySettings
 	return fmt.Sprintf("PeerNotifySettings%+v", Alias(*p))
-}
-
-// FillFrom fills PeerNotifySettings from given interface.
-func (p *PeerNotifySettings) FillFrom(from interface {
-	GetShowPreviews() (value bool, ok bool)
-	GetSilent() (value bool, ok bool)
-	GetMuteUntil() (value int, ok bool)
-	GetIosSound() (value NotificationSoundClass, ok bool)
-	GetAndroidSound() (value NotificationSoundClass, ok bool)
-	GetOtherSound() (value NotificationSoundClass, ok bool)
-	GetStoriesMuted() (value bool, ok bool)
-	GetStoriesHideSender() (value bool, ok bool)
-	GetStoriesIosSound() (value NotificationSoundClass, ok bool)
-	GetStoriesAndroidSound() (value NotificationSoundClass, ok bool)
-	GetStoriesOtherSound() (value NotificationSoundClass, ok bool)
-}) {
-	if val, ok := from.GetShowPreviews(); ok {
-		p.ShowPreviews = val
-	}
-
-	if val, ok := from.GetSilent(); ok {
-		p.Silent = val
-	}
-
-	if val, ok := from.GetMuteUntil(); ok {
-		p.MuteUntil = val
-	}
-
-	if val, ok := from.GetIosSound(); ok {
-		p.IosSound = val
-	}
-
-	if val, ok := from.GetAndroidSound(); ok {
-		p.AndroidSound = val
-	}
-
-	if val, ok := from.GetOtherSound(); ok {
-		p.OtherSound = val
-	}
-
-	if val, ok := from.GetStoriesMuted(); ok {
-		p.StoriesMuted = val
-	}
-
-	if val, ok := from.GetStoriesHideSender(); ok {
-		p.StoriesHideSender = val
-	}
-
-	if val, ok := from.GetStoriesIosSound(); ok {
-		p.StoriesIosSound = val
-	}
-
-	if val, ok := from.GetStoriesAndroidSound(); ok {
-		p.StoriesAndroidSound = val
-	}
-
-	if val, ok := from.GetStoriesOtherSound(); ok {
-		p.StoriesOtherSound = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.

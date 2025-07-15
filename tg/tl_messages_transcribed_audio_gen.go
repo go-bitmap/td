@@ -32,44 +32,20 @@ var (
 )
 
 // MessagesTranscribedAudio represents TL type `messages.transcribedAudio#cfb9d957`.
-// Transcribed text from a voice message »¹
-//
-// Links:
-//  1. https://core.telegram.org/api/transcribe
-//
-// See https://core.telegram.org/constructor/messages.transcribedAudio for reference.
 type MessagesTranscribedAudio struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessagesTranscribedAudio.
 	Flags bin.Fields
-	// Whether the transcription is partial because audio transcription is still in progress,
-	// if set the user may receive further updateTranscribedAudio¹ updates with the updated
-	// transcription.
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/updateTranscribedAudio
+	// Pending field of MessagesTranscribedAudio.
 	Pending bool
-	// Transcription ID
+	// TranscriptionID field of MessagesTranscribedAudio.
 	TranscriptionID int64
-	// Transcripted text
+	// Text field of MessagesTranscribedAudio.
 	Text string
-	// For non-Premium¹ users, this flag will be set, indicating the remaining
-	// transcriptions in the free trial period.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/premium
+	// TrialRemainsNum field of MessagesTranscribedAudio.
 	//
 	// Use SetTrialRemainsNum and GetTrialRemainsNum helpers.
 	TrialRemainsNum int
-	// For non-Premium¹ users, this flag will be set, indicating the date when the
-	// trial_remains_num counter will be reset to the maximum value of
-	// transcribe_audio_trial_weekly_number².
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/premium
-	//  2) https://core.telegram.org/api/config#transcribe-audio-trial-weekly-number
+	// TrialRemainsUntilDate field of MessagesTranscribedAudio.
 	//
 	// Use SetTrialRemainsUntilDate and GetTrialRemainsUntilDate helpers.
 	TrialRemainsUntilDate int
@@ -119,27 +95,6 @@ func (t *MessagesTranscribedAudio) String() string {
 	}
 	type Alias MessagesTranscribedAudio
 	return fmt.Sprintf("MessagesTranscribedAudio%+v", Alias(*t))
-}
-
-// FillFrom fills MessagesTranscribedAudio from given interface.
-func (t *MessagesTranscribedAudio) FillFrom(from interface {
-	GetPending() (value bool)
-	GetTranscriptionID() (value int64)
-	GetText() (value string)
-	GetTrialRemainsNum() (value int, ok bool)
-	GetTrialRemainsUntilDate() (value int, ok bool)
-}) {
-	t.Pending = from.GetPending()
-	t.TranscriptionID = from.GetTranscriptionID()
-	t.Text = from.GetText()
-	if val, ok := from.GetTrialRemainsNum(); ok {
-		t.TrialRemainsNum = val
-	}
-
-	if val, ok := from.GetTrialRemainsUntilDate(); ok {
-		t.TrialRemainsUntilDate = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.

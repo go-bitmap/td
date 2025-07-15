@@ -32,12 +32,6 @@ var (
 )
 
 // PaymentsStarGiftsNotModified represents TL type `payments.starGiftsNotModified#a388a368`.
-// The list of available gifts »¹ hasn't changed.
-//
-// Links:
-//  1. https://core.telegram.org/api/gifts
-//
-// See https://core.telegram.org/constructor/payments.starGiftsNotModified for reference.
 type PaymentsStarGiftsNotModified struct {
 }
 
@@ -137,19 +131,10 @@ func (s *PaymentsStarGiftsNotModified) DecodeBare(b *bin.Buffer) error {
 }
 
 // PaymentsStarGifts represents TL type `payments.starGifts#901689ea`.
-// Available gifts »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/gifts
-//
-// See https://core.telegram.org/constructor/payments.starGifts for reference.
 type PaymentsStarGifts struct {
-	// Hash used for caching, for more info click here¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets#hash-generation
+	// Hash field of PaymentsStarGifts.
 	Hash int
-	// List of available gifts.
+	// Gifts field of PaymentsStarGifts.
 	Gifts []StarGiftClass
 }
 
@@ -190,15 +175,6 @@ func (s *PaymentsStarGifts) String() string {
 	}
 	type Alias PaymentsStarGifts
 	return fmt.Sprintf("PaymentsStarGifts%+v", Alias(*s))
-}
-
-// FillFrom fills PaymentsStarGifts from given interface.
-func (s *PaymentsStarGifts) FillFrom(from interface {
-	GetHash() (value int)
-	GetGifts() (value []StarGiftClass)
-}) {
-	s.Hash = from.GetHash()
-	s.Gifts = from.GetGifts()
 }
 
 // TypeID returns type id in TL schema.
@@ -322,17 +298,10 @@ func (s *PaymentsStarGifts) GetGifts() (value []StarGiftClass) {
 	return s.Gifts
 }
 
-// MapGifts returns field Gifts wrapped in StarGiftClassArray helper.
-func (s *PaymentsStarGifts) MapGifts() (value StarGiftClassArray) {
-	return StarGiftClassArray(s.Gifts)
-}
-
 // PaymentsStarGiftsClassName is schema name of PaymentsStarGiftsClass.
 const PaymentsStarGiftsClassName = "payments.StarGifts"
 
 // PaymentsStarGiftsClass represents payments.StarGifts generic type.
-//
-// See https://core.telegram.org/type/payments.StarGifts for reference.
 //
 // Constructors:
 //   - [PaymentsStarGiftsNotModified]
@@ -366,19 +335,6 @@ type PaymentsStarGiftsClass interface {
 	String() string
 	// Zero returns true if current object has a zero value.
 	Zero() bool
-
-	// AsModified tries to map PaymentsStarGiftsClass to PaymentsStarGifts.
-	AsModified() (*PaymentsStarGifts, bool)
-}
-
-// AsModified tries to map PaymentsStarGiftsNotModified to PaymentsStarGifts.
-func (s *PaymentsStarGiftsNotModified) AsModified() (*PaymentsStarGifts, bool) {
-	return nil, false
-}
-
-// AsModified tries to map PaymentsStarGifts to PaymentsStarGifts.
-func (s *PaymentsStarGifts) AsModified() (*PaymentsStarGifts, bool) {
-	return s, true
 }
 
 // DecodePaymentsStarGifts implements binary de-serialization for PaymentsStarGiftsClass.

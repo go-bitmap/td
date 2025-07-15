@@ -32,25 +32,12 @@ var (
 )
 
 // ConnectedBot represents TL type `connectedBot#cd64636c`.
-// Contains info about a connected business bot »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/business#connected-bots
-//
-// See https://core.telegram.org/constructor/connectedBot for reference.
 type ConnectedBot struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of ConnectedBot.
 	Flags bin.Fields
-	// ID of the connected bot
+	// BotID field of ConnectedBot.
 	BotID int64
-	// Specifies the private chats that a connected business bot »¹ may receive messages
-	// and interact with.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/business#connected-bots
+	// Recipients field of ConnectedBot.
 	Recipients BusinessBotRecipients
 	// Rights field of ConnectedBot.
 	Rights BusinessBotRights
@@ -94,17 +81,6 @@ func (c *ConnectedBot) String() string {
 	}
 	type Alias ConnectedBot
 	return fmt.Sprintf("ConnectedBot%+v", Alias(*c))
-}
-
-// FillFrom fills ConnectedBot from given interface.
-func (c *ConnectedBot) FillFrom(from interface {
-	GetBotID() (value int64)
-	GetRecipients() (value BusinessBotRecipients)
-	GetRights() (value BusinessBotRights)
-}) {
-	c.BotID = from.GetBotID()
-	c.Recipients = from.GetRecipients()
-	c.Rights = from.GetRights()
 }
 
 // TypeID returns type id in TL schema.

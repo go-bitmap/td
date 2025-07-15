@@ -32,41 +32,22 @@ var (
 )
 
 // StarRefProgram represents TL type `starRefProgram#dd0c66f2`.
-// Indo about an affiliate program offered by a bot¹
-//
-// Links:
-//  1. https://core.telegram.org/api/bots/referrals
-//
-// See https://core.telegram.org/constructor/starRefProgram for reference.
 type StarRefProgram struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of StarRefProgram.
 	Flags bin.Fields
-	// ID of the bot that offers the program
+	// BotID field of StarRefProgram.
 	BotID int64
-	// An affiliate gets a commission of starRefProgram¹.commission_permille‰ Telegram
-	// Stars² for every mini app transaction made by users they refer
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/starRefProgram
-	//  2) https://core.telegram.org/api/stars
+	// CommissionPermille field of StarRefProgram.
 	CommissionPermille int
-	// An affiliate gets a commission for every mini app transaction made by users they refer
-	// for duration_months months after a referral link is imported, starting the bot for
-	// the first time
+	// DurationMonths field of StarRefProgram.
 	//
 	// Use SetDurationMonths and GetDurationMonths helpers.
 	DurationMonths int
-	// Point in time (Unix timestamp) when the affiliate program will be closed (optional, if
-	// not set the affiliate program isn't scheduled to be closed)
+	// EndDate field of StarRefProgram.
 	//
 	// Use SetEndDate and GetEndDate helpers.
 	EndDate int
-	// The amount of daily revenue per user in Telegram Stars of the bot that created the
-	// affiliate program. To obtain the approximated revenue per referred user, multiply this
-	// value by commission_permille and divide by 1000.
+	// DailyRevenuePerUser field of StarRefProgram.
 	//
 	// Use SetDailyRevenuePerUser and GetDailyRevenuePerUser helpers.
 	DailyRevenuePerUser StarsAmount
@@ -116,30 +97,6 @@ func (s *StarRefProgram) String() string {
 	}
 	type Alias StarRefProgram
 	return fmt.Sprintf("StarRefProgram%+v", Alias(*s))
-}
-
-// FillFrom fills StarRefProgram from given interface.
-func (s *StarRefProgram) FillFrom(from interface {
-	GetBotID() (value int64)
-	GetCommissionPermille() (value int)
-	GetDurationMonths() (value int, ok bool)
-	GetEndDate() (value int, ok bool)
-	GetDailyRevenuePerUser() (value StarsAmount, ok bool)
-}) {
-	s.BotID = from.GetBotID()
-	s.CommissionPermille = from.GetCommissionPermille()
-	if val, ok := from.GetDurationMonths(); ok {
-		s.DurationMonths = val
-	}
-
-	if val, ok := from.GetEndDate(); ok {
-		s.EndDate = val
-	}
-
-	if val, ok := from.GetDailyRevenuePerUser(); ok {
-		s.DailyRevenuePerUser = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.

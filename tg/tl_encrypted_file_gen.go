@@ -32,9 +32,6 @@ var (
 )
 
 // EncryptedFileEmpty represents TL type `encryptedFileEmpty#c21f497e`.
-// Empty constructor, non-existing file.
-//
-// See https://core.telegram.org/constructor/encryptedFileEmpty for reference.
 type EncryptedFileEmpty struct {
 }
 
@@ -134,19 +131,16 @@ func (e *EncryptedFileEmpty) DecodeBare(b *bin.Buffer) error {
 }
 
 // EncryptedFile represents TL type `encryptedFile#a8008cd8`.
-// Encrypted file.
-//
-// See https://core.telegram.org/constructor/encryptedFile for reference.
 type EncryptedFile struct {
-	// File ID
+	// ID field of EncryptedFile.
 	ID int64
-	// Checking sum depending on user ID
+	// AccessHash field of EncryptedFile.
 	AccessHash int64
-	// File size in bytes
+	// Size field of EncryptedFile.
 	Size int64
-	// Number of data center
+	// DCID field of EncryptedFile.
 	DCID int
-	// 32-bit fingerprint of key used for file encryption
+	// KeyFingerprint field of EncryptedFile.
 	KeyFingerprint int
 }
 
@@ -196,21 +190,6 @@ func (e *EncryptedFile) String() string {
 	}
 	type Alias EncryptedFile
 	return fmt.Sprintf("EncryptedFile%+v", Alias(*e))
-}
-
-// FillFrom fills EncryptedFile from given interface.
-func (e *EncryptedFile) FillFrom(from interface {
-	GetID() (value int64)
-	GetAccessHash() (value int64)
-	GetSize() (value int64)
-	GetDCID() (value int)
-	GetKeyFingerprint() (value int)
-}) {
-	e.ID = from.GetID()
-	e.AccessHash = from.GetAccessHash()
-	e.Size = from.GetSize()
-	e.DCID = from.GetDCID()
-	e.KeyFingerprint = from.GetKeyFingerprint()
 }
 
 // TypeID returns type id in TL schema.
@@ -381,8 +360,6 @@ const EncryptedFileClassName = "EncryptedFile"
 
 // EncryptedFileClass represents EncryptedFile generic type.
 //
-// See https://core.telegram.org/type/EncryptedFile for reference.
-//
 // Constructors:
 //   - [EncryptedFileEmpty]
 //   - [EncryptedFile]
@@ -415,37 +392,6 @@ type EncryptedFileClass interface {
 	String() string
 	// Zero returns true if current object has a zero value.
 	Zero() bool
-
-	// AsNotEmpty tries to map EncryptedFileClass to EncryptedFile.
-	AsNotEmpty() (*EncryptedFile, bool)
-}
-
-// AsInputEncryptedFileLocation tries to map EncryptedFile to InputEncryptedFileLocation.
-func (e *EncryptedFile) AsInputEncryptedFileLocation() *InputEncryptedFileLocation {
-	value := new(InputEncryptedFileLocation)
-	value.ID = e.GetID()
-	value.AccessHash = e.GetAccessHash()
-
-	return value
-}
-
-// AsInput tries to map EncryptedFile to InputEncryptedFile.
-func (e *EncryptedFile) AsInput() *InputEncryptedFile {
-	value := new(InputEncryptedFile)
-	value.ID = e.GetID()
-	value.AccessHash = e.GetAccessHash()
-
-	return value
-}
-
-// AsNotEmpty tries to map EncryptedFileEmpty to EncryptedFile.
-func (e *EncryptedFileEmpty) AsNotEmpty() (*EncryptedFile, bool) {
-	return nil, false
-}
-
-// AsNotEmpty tries to map EncryptedFile to EncryptedFile.
-func (e *EncryptedFile) AsNotEmpty() (*EncryptedFile, bool) {
-	return e, true
 }
 
 // DecodeEncryptedFile implements binary de-serialization for EncryptedFileClass.

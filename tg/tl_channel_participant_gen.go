@@ -32,24 +32,14 @@ var (
 )
 
 // ChannelParticipant represents TL type `channelParticipant#cb397619`.
-// Channel/supergroup participant
-//
-// See https://core.telegram.org/constructor/channelParticipant for reference.
 type ChannelParticipant struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of ChannelParticipant.
 	Flags bin.Fields
-	// Participant user ID
+	// UserID field of ChannelParticipant.
 	UserID int64
-	// Date joined
+	// Date field of ChannelParticipant.
 	Date int
-	// If set, contains the expiration date of the current Telegram Star subscription period
-	// »¹ for the specified participant.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/stars#star-subscriptions
+	// SubscriptionUntilDate field of ChannelParticipant.
 	//
 	// Use SetSubscriptionUntilDate and GetSubscriptionUntilDate helpers.
 	SubscriptionUntilDate int
@@ -98,20 +88,6 @@ func (c *ChannelParticipant) String() string {
 	}
 	type Alias ChannelParticipant
 	return fmt.Sprintf("ChannelParticipant%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelParticipant from given interface.
-func (c *ChannelParticipant) FillFrom(from interface {
-	GetUserID() (value int64)
-	GetDate() (value int)
-	GetSubscriptionUntilDate() (value int, ok bool)
-}) {
-	c.UserID = from.GetUserID()
-	c.Date = from.GetDate()
-	if val, ok := from.GetSubscriptionUntilDate(); ok {
-		c.SubscriptionUntilDate = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -267,28 +243,18 @@ func (c *ChannelParticipant) GetSubscriptionUntilDate() (value int, ok bool) {
 }
 
 // ChannelParticipantSelf represents TL type `channelParticipantSelf#4f607bef`.
-// Myself
-//
-// See https://core.telegram.org/constructor/channelParticipantSelf for reference.
 type ChannelParticipantSelf struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of ChannelParticipantSelf.
 	Flags bin.Fields
-	// Whether I joined upon specific approval of an admin
+	// ViaRequest field of ChannelParticipantSelf.
 	ViaRequest bool
-	// User ID
+	// UserID field of ChannelParticipantSelf.
 	UserID int64
-	// User that invited me to the channel/supergroup
+	// InviterID field of ChannelParticipantSelf.
 	InviterID int64
-	// When did I join the channel/supergroup
+	// Date field of ChannelParticipantSelf.
 	Date int
-	// If set, contains the expiration date of the current Telegram Star subscription period
-	// »¹ for the specified participant.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/stars#star-subscriptions
+	// SubscriptionUntilDate field of ChannelParticipantSelf.
 	//
 	// Use SetSubscriptionUntilDate and GetSubscriptionUntilDate helpers.
 	SubscriptionUntilDate int
@@ -343,24 +309,6 @@ func (c *ChannelParticipantSelf) String() string {
 	}
 	type Alias ChannelParticipantSelf
 	return fmt.Sprintf("ChannelParticipantSelf%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelParticipantSelf from given interface.
-func (c *ChannelParticipantSelf) FillFrom(from interface {
-	GetViaRequest() (value bool)
-	GetUserID() (value int64)
-	GetInviterID() (value int64)
-	GetDate() (value int)
-	GetSubscriptionUntilDate() (value int, ok bool)
-}) {
-	c.ViaRequest = from.GetViaRequest()
-	c.UserID = from.GetUserID()
-	c.InviterID = from.GetInviterID()
-	c.Date = from.GetDate()
-	if val, ok := from.GetSubscriptionUntilDate(); ok {
-		c.SubscriptionUntilDate = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -564,21 +512,14 @@ func (c *ChannelParticipantSelf) GetSubscriptionUntilDate() (value int, ok bool)
 }
 
 // ChannelParticipantCreator represents TL type `channelParticipantCreator#2fe601d3`.
-// Channel/supergroup creator
-//
-// See https://core.telegram.org/constructor/channelParticipantCreator for reference.
 type ChannelParticipantCreator struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of ChannelParticipantCreator.
 	Flags bin.Fields
-	// User ID
+	// UserID field of ChannelParticipantCreator.
 	UserID int64
-	// Creator admin rights
+	// AdminRights field of ChannelParticipantCreator.
 	AdminRights ChatAdminRights
-	// The role (rank) of the group creator in the group: just an arbitrary string, admin by
-	// default
+	// Rank field of ChannelParticipantCreator.
 	//
 	// Use SetRank and GetRank helpers.
 	Rank string
@@ -627,20 +568,6 @@ func (c *ChannelParticipantCreator) String() string {
 	}
 	type Alias ChannelParticipantCreator
 	return fmt.Sprintf("ChannelParticipantCreator%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelParticipantCreator from given interface.
-func (c *ChannelParticipantCreator) FillFrom(from interface {
-	GetUserID() (value int64)
-	GetAdminRights() (value ChatAdminRights)
-	GetRank() (value string, ok bool)
-}) {
-	c.UserID = from.GetUserID()
-	c.AdminRights = from.GetAdminRights()
-	if val, ok := from.GetRank(); ok {
-		c.Rank = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -796,35 +723,26 @@ func (c *ChannelParticipantCreator) GetRank() (value string, ok bool) {
 }
 
 // ChannelParticipantAdmin represents TL type `channelParticipantAdmin#34c3bb53`.
-// Admin
-//
-// See https://core.telegram.org/constructor/channelParticipantAdmin for reference.
 type ChannelParticipantAdmin struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of ChannelParticipantAdmin.
 	Flags bin.Fields
-	// Can this admin promote other admins with the same permissions?
+	// CanEdit field of ChannelParticipantAdmin.
 	CanEdit bool
-	// Is this the current user
+	// Self field of ChannelParticipantAdmin.
 	Self bool
-	// Admin user ID
+	// UserID field of ChannelParticipantAdmin.
 	UserID int64
-	// User that invited the admin to the channel/group
+	// InviterID field of ChannelParticipantAdmin.
 	//
 	// Use SetInviterID and GetInviterID helpers.
 	InviterID int64
-	// User that promoted the user to admin
+	// PromotedBy field of ChannelParticipantAdmin.
 	PromotedBy int64
-	// When did the user join
+	// Date field of ChannelParticipantAdmin.
 	Date int
-	// Admin rights¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/rights
+	// AdminRights field of ChannelParticipantAdmin.
 	AdminRights ChatAdminRights
-	// The role (rank) of the admin in the group: just an arbitrary string, admin by default
+	// Rank field of ChannelParticipantAdmin.
 	//
 	// Use SetRank and GetRank helpers.
 	Rank string
@@ -888,33 +806,6 @@ func (c *ChannelParticipantAdmin) String() string {
 	}
 	type Alias ChannelParticipantAdmin
 	return fmt.Sprintf("ChannelParticipantAdmin%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelParticipantAdmin from given interface.
-func (c *ChannelParticipantAdmin) FillFrom(from interface {
-	GetCanEdit() (value bool)
-	GetSelf() (value bool)
-	GetUserID() (value int64)
-	GetInviterID() (value int64, ok bool)
-	GetPromotedBy() (value int64)
-	GetDate() (value int)
-	GetAdminRights() (value ChatAdminRights)
-	GetRank() (value string, ok bool)
-}) {
-	c.CanEdit = from.GetCanEdit()
-	c.Self = from.GetSelf()
-	c.UserID = from.GetUserID()
-	if val, ok := from.GetInviterID(); ok {
-		c.InviterID = val
-	}
-
-	c.PromotedBy = from.GetPromotedBy()
-	c.Date = from.GetDate()
-	c.AdminRights = from.GetAdminRights()
-	if val, ok := from.GetRank(); ok {
-		c.Rank = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -1202,27 +1093,18 @@ func (c *ChannelParticipantAdmin) GetRank() (value string, ok bool) {
 }
 
 // ChannelParticipantBanned represents TL type `channelParticipantBanned#6df8014e`.
-// Banned/kicked user
-//
-// See https://core.telegram.org/constructor/channelParticipantBanned for reference.
 type ChannelParticipantBanned struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of ChannelParticipantBanned.
 	Flags bin.Fields
-	// Whether the user has left the group
+	// Left field of ChannelParticipantBanned.
 	Left bool
-	// The banned peer
+	// Peer field of ChannelParticipantBanned.
 	Peer PeerClass
-	// User was kicked by the specified admin
+	// KickedBy field of ChannelParticipantBanned.
 	KickedBy int64
-	// When did the user join the group
+	// Date field of ChannelParticipantBanned.
 	Date int
-	// Banned rights¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/rights
+	// BannedRights field of ChannelParticipantBanned.
 	BannedRights ChatBannedRights
 }
 
@@ -1275,21 +1157,6 @@ func (c *ChannelParticipantBanned) String() string {
 	}
 	type Alias ChannelParticipantBanned
 	return fmt.Sprintf("ChannelParticipantBanned%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelParticipantBanned from given interface.
-func (c *ChannelParticipantBanned) FillFrom(from interface {
-	GetLeft() (value bool)
-	GetPeer() (value PeerClass)
-	GetKickedBy() (value int64)
-	GetDate() (value int)
-	GetBannedRights() (value ChatBannedRights)
-}) {
-	c.Left = from.GetLeft()
-	c.Peer = from.GetPeer()
-	c.KickedBy = from.GetKickedBy()
-	c.Date = from.GetDate()
-	c.BannedRights = from.GetBannedRights()
 }
 
 // TypeID returns type id in TL schema.
@@ -1482,11 +1349,8 @@ func (c *ChannelParticipantBanned) GetBannedRights() (value ChatBannedRights) {
 }
 
 // ChannelParticipantLeft represents TL type `channelParticipantLeft#1b03f006`.
-// A participant that left the channel/supergroup
-//
-// See https://core.telegram.org/constructor/channelParticipantLeft for reference.
 type ChannelParticipantLeft struct {
-	// The peer that left
+	// Peer field of ChannelParticipantLeft.
 	Peer PeerClass
 }
 
@@ -1524,13 +1388,6 @@ func (c *ChannelParticipantLeft) String() string {
 	}
 	type Alias ChannelParticipantLeft
 	return fmt.Sprintf("ChannelParticipantLeft%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelParticipantLeft from given interface.
-func (c *ChannelParticipantLeft) FillFrom(from interface {
-	GetPeer() (value PeerClass)
-}) {
-	c.Peer = from.GetPeer()
 }
 
 // TypeID returns type id in TL schema.
@@ -1625,8 +1482,6 @@ func (c *ChannelParticipantLeft) GetPeer() (value PeerClass) {
 const ChannelParticipantClassName = "ChannelParticipant"
 
 // ChannelParticipantClass represents ChannelParticipant generic type.
-//
-// See https://core.telegram.org/type/ChannelParticipant for reference.
 //
 // Constructors:
 //   - [ChannelParticipant]

@@ -32,13 +32,10 @@ var (
 )
 
 // ContactBirthday represents TL type `contactBirthday#1d998733`.
-// Birthday information of a contact.
-//
-// See https://core.telegram.org/constructor/contactBirthday for reference.
 type ContactBirthday struct {
-	// User ID.
+	// ContactID field of ContactBirthday.
 	ContactID int64
-	// Birthday information.
+	// Birthday field of ContactBirthday.
 	Birthday Birthday
 }
 
@@ -74,15 +71,6 @@ func (c *ContactBirthday) String() string {
 	}
 	type Alias ContactBirthday
 	return fmt.Sprintf("ContactBirthday%+v", Alias(*c))
-}
-
-// FillFrom fills ContactBirthday from given interface.
-func (c *ContactBirthday) FillFrom(from interface {
-	GetContactID() (value int64)
-	GetBirthday() (value Birthday)
-}) {
-	c.ContactID = from.GetContactID()
-	c.Birthday = from.GetBirthday()
 }
 
 // TypeID returns type id in TL schema.

@@ -32,21 +32,12 @@ var (
 )
 
 // PaymentsGetStarsRevenueWithdrawalURLRequest represents TL type `payments.getStarsRevenueWithdrawalUrl#13bbe8b3`.
-// Withdraw funds from a channel or bot's star balance »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/stars#withdrawing-stars
-//
-// See https://core.telegram.org/method/payments.getStarsRevenueWithdrawalUrl for reference.
 type PaymentsGetStarsRevenueWithdrawalURLRequest struct {
-	// Channel or bot from which to withdraw funds.
+	// Peer field of PaymentsGetStarsRevenueWithdrawalURLRequest.
 	Peer InputPeerClass
-	// Amount of stars to withdraw.
+	// Stars field of PaymentsGetStarsRevenueWithdrawalURLRequest.
 	Stars int64
-	// 2FA password, see here »¹ for more info.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/srp#using-the-2fa-password
+	// Password field of PaymentsGetStarsRevenueWithdrawalURLRequest.
 	Password InputCheckPasswordSRPClass
 }
 
@@ -85,17 +76,6 @@ func (g *PaymentsGetStarsRevenueWithdrawalURLRequest) String() string {
 	}
 	type Alias PaymentsGetStarsRevenueWithdrawalURLRequest
 	return fmt.Sprintf("PaymentsGetStarsRevenueWithdrawalURLRequest%+v", Alias(*g))
-}
-
-// FillFrom fills PaymentsGetStarsRevenueWithdrawalURLRequest from given interface.
-func (g *PaymentsGetStarsRevenueWithdrawalURLRequest) FillFrom(from interface {
-	GetPeer() (value InputPeerClass)
-	GetStars() (value int64)
-	GetPassword() (value InputCheckPasswordSRPClass)
-}) {
-	g.Peer = from.GetPeer()
-	g.Stars = from.GetStars()
-	g.Password = from.GetPassword()
 }
 
 // TypeID returns type id in TL schema.
@@ -231,25 +211,7 @@ func (g *PaymentsGetStarsRevenueWithdrawalURLRequest) GetPassword() (value Input
 	return g.Password
 }
 
-// GetPasswordAsNotEmpty returns mapped value of Password field.
-func (g *PaymentsGetStarsRevenueWithdrawalURLRequest) GetPasswordAsNotEmpty() (*InputCheckPasswordSRP, bool) {
-	return g.Password.AsNotEmpty()
-}
-
 // PaymentsGetStarsRevenueWithdrawalURL invokes method payments.getStarsRevenueWithdrawalUrl#13bbe8b3 returning error if any.
-// Withdraw funds from a channel or bot's star balance »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/stars#withdrawing-stars
-//
-// Possible errors:
-//
-//	400 PASSWORD_HASH_INVALID: The provided password hash is invalid.
-//	400 PASSWORD_MISSING: You must enable 2FA before executing this operation.
-//	400 PASSWORD_TOO_FRESH_%d: The password was modified less than 24 hours ago, try again in %d seconds.
-//	400 SESSION_TOO_FRESH_%d: This session was created less than 24 hours ago, try again in %d seconds.
-//
-// See https://core.telegram.org/method/payments.getStarsRevenueWithdrawalUrl for reference.
 func (c *Client) PaymentsGetStarsRevenueWithdrawalURL(ctx context.Context, request *PaymentsGetStarsRevenueWithdrawalURLRequest) (*PaymentsStarsRevenueWithdrawalURL, error) {
 	var result PaymentsStarsRevenueWithdrawalURL
 

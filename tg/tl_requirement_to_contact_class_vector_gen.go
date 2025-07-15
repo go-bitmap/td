@@ -68,13 +68,6 @@ func (vec *RequirementToContactClassVector) String() string {
 	return fmt.Sprintf("RequirementToContactClassVector%+v", Alias(*vec))
 }
 
-// FillFrom fills RequirementToContactClassVector from given interface.
-func (vec *RequirementToContactClassVector) FillFrom(from interface {
-	GetElems() (value []RequirementToContactClass)
-}) {
-	vec.Elems = from.GetElems()
-}
-
 // TypeID returns type id in TL schema.
 //
 // See https://core.telegram.org/mtproto/TL-tl#remarks.
@@ -172,9 +165,4 @@ func (vec *RequirementToContactClassVector) GetElems() (value []RequirementToCon
 		return
 	}
 	return vec.Elems
-}
-
-// MapElems returns field Elems wrapped in RequirementToContactClassArray helper.
-func (vec *RequirementToContactClassVector) MapElems() (value RequirementToContactClassArray) {
-	return RequirementToContactClassArray(vec.Elems)
 }

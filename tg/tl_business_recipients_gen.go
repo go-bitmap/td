@@ -32,35 +32,20 @@ var (
 )
 
 // BusinessRecipients represents TL type `businessRecipients#21108ff7`.
-// Specifies the chats that can receive Telegram Business away »¹ and greeting »²
-// messages.
-// If exclude_selected is set, specifies all chats that cannot receive Telegram Business
-// away »¹ and greeting »² messages.
-//
-// Links:
-//  1. https://core.telegram.org/api/business#away-messages
-//  2. https://core.telegram.org/api/business#greeting-messages
-//  3. https://core.telegram.org/api/business#away-messages
-//  4. https://core.telegram.org/api/business#greeting-messages
-//
-// See https://core.telegram.org/constructor/businessRecipients for reference.
 type BusinessRecipients struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of BusinessRecipients.
 	Flags bin.Fields
-	// All existing private chats.
+	// ExistingChats field of BusinessRecipients.
 	ExistingChats bool
-	// All new private chats.
+	// NewChats field of BusinessRecipients.
 	NewChats bool
-	// All private chats with contacts.
+	// Contacts field of BusinessRecipients.
 	Contacts bool
-	// All private chats with non-contacts.
+	// NonContacts field of BusinessRecipients.
 	NonContacts bool
-	// If set, inverts the selection.
+	// ExcludeSelected field of BusinessRecipients.
 	ExcludeSelected bool
-	// Only private chats with the specified users.
+	// Users field of BusinessRecipients.
 	//
 	// Use SetUsers and GetUsers helpers.
 	Users []int64
@@ -113,26 +98,6 @@ func (b *BusinessRecipients) String() string {
 	}
 	type Alias BusinessRecipients
 	return fmt.Sprintf("BusinessRecipients%+v", Alias(*b))
-}
-
-// FillFrom fills BusinessRecipients from given interface.
-func (b *BusinessRecipients) FillFrom(from interface {
-	GetExistingChats() (value bool)
-	GetNewChats() (value bool)
-	GetContacts() (value bool)
-	GetNonContacts() (value bool)
-	GetExcludeSelected() (value bool)
-	GetUsers() (value []int64, ok bool)
-}) {
-	b.ExistingChats = from.GetExistingChats()
-	b.NewChats = from.GetNewChats()
-	b.Contacts = from.GetContacts()
-	b.NonContacts = from.GetNonContacts()
-	b.ExcludeSelected = from.GetExcludeSelected()
-	if val, ok := from.GetUsers(); ok {
-		b.Users = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.

@@ -32,14 +32,10 @@ var (
 )
 
 // StickersAddStickerToSetRequest represents TL type `stickers.addStickerToSet#8653febe`.
-// Add a sticker to a stickerset. The sticker set must have been created by the current
-// user/bot.
-//
-// See https://core.telegram.org/method/stickers.addStickerToSet for reference.
 type StickersAddStickerToSetRequest struct {
-	// The stickerset
+	// Stickerset field of StickersAddStickerToSetRequest.
 	Stickerset InputStickerSetClass
-	// The sticker
+	// Sticker field of StickersAddStickerToSetRequest.
 	Sticker InputStickerSetItem
 }
 
@@ -75,15 +71,6 @@ func (a *StickersAddStickerToSetRequest) String() string {
 	}
 	type Alias StickersAddStickerToSetRequest
 	return fmt.Sprintf("StickersAddStickerToSetRequest%+v", Alias(*a))
-}
-
-// FillFrom fills StickersAddStickerToSetRequest from given interface.
-func (a *StickersAddStickerToSetRequest) FillFrom(from interface {
-	GetStickerset() (value InputStickerSetClass)
-	GetSticker() (value InputStickerSetItem)
-}) {
-	a.Stickerset = from.GetStickerset()
-	a.Sticker = from.GetSticker()
 }
 
 // TypeID returns type id in TL schema.
@@ -195,19 +182,6 @@ func (a *StickersAddStickerToSetRequest) GetSticker() (value InputStickerSetItem
 }
 
 // StickersAddStickerToSet invokes method stickers.addStickerToSet#8653febe returning error if any.
-// Add a sticker to a stickerset. The sticker set must have been created by the current
-// user/bot.
-//
-// Possible errors:
-//
-//	400 STICKERPACK_STICKERS_TOO_MUCH: There are too many stickers in this stickerpack, you can't add any more.
-//	406 STICKERSET_INVALID: The provided sticker set is invalid.
-//	400 STICKERS_TOO_MUCH: There are too many stickers in this stickerpack, you can't add any more.
-//	400 STICKER_PNG_NOPNG: One of the specified stickers is not a valid PNG file.
-//	400 STICKER_TGS_NOTGS: Invalid TGS sticker provided.
-//
-// See https://core.telegram.org/method/stickers.addStickerToSet for reference.
-// Can be used by bots.
 func (c *Client) StickersAddStickerToSet(ctx context.Context, request *StickersAddStickerToSetRequest) (MessagesStickerSetClass, error) {
 	var result MessagesStickerSetBox
 

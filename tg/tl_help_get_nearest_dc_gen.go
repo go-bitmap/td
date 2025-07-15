@@ -32,9 +32,6 @@ var (
 )
 
 // HelpGetNearestDCRequest represents TL type `help.getNearestDc#1fb33026`.
-// Returns info on data center nearest to the user.
-//
-// See https://core.telegram.org/method/help.getNearestDc for reference.
 type HelpGetNearestDCRequest struct {
 }
 
@@ -129,9 +126,6 @@ func (g *HelpGetNearestDCRequest) DecodeBare(b *bin.Buffer) error {
 }
 
 // HelpGetNearestDC invokes method help.getNearestDc#1fb33026 returning error if any.
-// Returns info on data center nearest to the user.
-//
-// See https://core.telegram.org/method/help.getNearestDc for reference.
 func (c *Client) HelpGetNearestDC(ctx context.Context) (*NearestDC, error) {
 	var result NearestDC
 

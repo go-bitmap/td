@@ -32,15 +32,12 @@ var (
 )
 
 // HighScore represents TL type `highScore#73a379eb`.
-// Game highscore
-//
-// See https://core.telegram.org/constructor/highScore for reference.
 type HighScore struct {
-	// Position in highscore list
+	// Pos field of HighScore.
 	Pos int
-	// User ID
+	// UserID field of HighScore.
 	UserID int64
-	// Score
+	// Score field of HighScore.
 	Score int
 }
 
@@ -79,17 +76,6 @@ func (h *HighScore) String() string {
 	}
 	type Alias HighScore
 	return fmt.Sprintf("HighScore%+v", Alias(*h))
-}
-
-// FillFrom fills HighScore from given interface.
-func (h *HighScore) FillFrom(from interface {
-	GetPos() (value int)
-	GetUserID() (value int64)
-	GetScore() (value int)
-}) {
-	h.Pos = from.GetPos()
-	h.UserID = from.GetUserID()
-	h.Score = from.GetScore()
 }
 
 // TypeID returns type id in TL schema.

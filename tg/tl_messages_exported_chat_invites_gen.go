@@ -32,15 +32,12 @@ var (
 )
 
 // MessagesExportedChatInvites represents TL type `messages.exportedChatInvites#bdc62dcc`.
-// Info about chat invites exported by a certain admin.
-//
-// See https://core.telegram.org/constructor/messages.exportedChatInvites for reference.
 type MessagesExportedChatInvites struct {
-	// Number of invites exported by the admin
+	// Count field of MessagesExportedChatInvites.
 	Count int
-	// Exported invites
+	// Invites field of MessagesExportedChatInvites.
 	Invites []ExportedChatInviteClass
-	// Info about the admin
+	// Users field of MessagesExportedChatInvites.
 	Users []UserClass
 }
 
@@ -79,17 +76,6 @@ func (e *MessagesExportedChatInvites) String() string {
 	}
 	type Alias MessagesExportedChatInvites
 	return fmt.Sprintf("MessagesExportedChatInvites%+v", Alias(*e))
-}
-
-// FillFrom fills MessagesExportedChatInvites from given interface.
-func (e *MessagesExportedChatInvites) FillFrom(from interface {
-	GetCount() (value int)
-	GetInvites() (value []ExportedChatInviteClass)
-	GetUsers() (value []UserClass)
-}) {
-	e.Count = from.GetCount()
-	e.Invites = from.GetInvites()
-	e.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -249,14 +235,4 @@ func (e *MessagesExportedChatInvites) GetUsers() (value []UserClass) {
 		return
 	}
 	return e.Users
-}
-
-// MapInvites returns field Invites wrapped in ExportedChatInviteClassArray helper.
-func (e *MessagesExportedChatInvites) MapInvites() (value ExportedChatInviteClassArray) {
-	return ExportedChatInviteClassArray(e.Invites)
-}
-
-// MapUsers returns field Users wrapped in UserClassArray helper.
-func (e *MessagesExportedChatInvites) MapUsers() (value UserClassArray) {
-	return UserClassArray(e.Users)
 }

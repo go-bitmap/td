@@ -32,11 +32,8 @@ var (
 )
 
 // KeyboardButton represents TL type `keyboardButton#a2fa4880`.
-// Bot keyboard button
-//
-// See https://core.telegram.org/constructor/keyboardButton for reference.
 type KeyboardButton struct {
-	// Button text
+	// Text field of KeyboardButton.
 	Text string
 }
 
@@ -74,13 +71,6 @@ func (k *KeyboardButton) String() string {
 	}
 	type Alias KeyboardButton
 	return fmt.Sprintf("KeyboardButton%+v", Alias(*k))
-}
-
-// FillFrom fills KeyboardButton from given interface.
-func (k *KeyboardButton) FillFrom(from interface {
-	GetText() (value string)
-}) {
-	k.Text = from.GetText()
 }
 
 // TypeID returns type id in TL schema.
@@ -167,13 +157,10 @@ func (k *KeyboardButton) GetText() (value string) {
 }
 
 // KeyboardButtonURL represents TL type `keyboardButtonUrl#258aff05`.
-// URL button
-//
-// See https://core.telegram.org/constructor/keyboardButtonUrl for reference.
 type KeyboardButtonURL struct {
-	// Button label
+	// Text field of KeyboardButtonURL.
 	Text string
-	// URL
+	// URL field of KeyboardButtonURL.
 	URL string
 }
 
@@ -214,15 +201,6 @@ func (k *KeyboardButtonURL) String() string {
 	}
 	type Alias KeyboardButtonURL
 	return fmt.Sprintf("KeyboardButtonURL%+v", Alias(*k))
-}
-
-// FillFrom fills KeyboardButtonURL from given interface.
-func (k *KeyboardButtonURL) FillFrom(from interface {
-	GetText() (value string)
-	GetURL() (value string)
-}) {
-	k.Text = from.GetText()
-	k.URL = from.GetURL()
 }
 
 // TypeID returns type id in TL schema.
@@ -329,30 +307,14 @@ func (k *KeyboardButtonURL) GetURL() (value string) {
 }
 
 // KeyboardButtonCallback represents TL type `keyboardButtonCallback#35bbdb6b`.
-// Callback button
-//
-// See https://core.telegram.org/constructor/keyboardButtonCallback for reference.
 type KeyboardButtonCallback struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of KeyboardButtonCallback.
 	Flags bin.Fields
-	// Whether the user should verify his identity by entering his 2FA SRP parameters¹ to
-	// the messages.getBotCallbackAnswer² method. NOTE: telegram and the bot WILL NOT have
-	// access to the plaintext password, thanks to SRP³. This button is mainly used by the
-	// official @botfather⁴ bot, for verifying the user's identity before transferring
-	// ownership of a bot to another user.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/srp
-	//  2) https://core.telegram.org/method/messages.getBotCallbackAnswer
-	//  3) https://core.telegram.org/api/srp
-	//  4) https://t.me/botfather
+	// RequiresPassword field of KeyboardButtonCallback.
 	RequiresPassword bool
-	// Button text
+	// Text field of KeyboardButtonCallback.
 	Text string
-	// Callback data
+	// Data field of KeyboardButtonCallback.
 	Data []byte
 }
 
@@ -399,17 +361,6 @@ func (k *KeyboardButtonCallback) String() string {
 	}
 	type Alias KeyboardButtonCallback
 	return fmt.Sprintf("KeyboardButtonCallback%+v", Alias(*k))
-}
-
-// FillFrom fills KeyboardButtonCallback from given interface.
-func (k *KeyboardButtonCallback) FillFrom(from interface {
-	GetRequiresPassword() (value bool)
-	GetText() (value string)
-	GetData() (value []byte)
-}) {
-	k.RequiresPassword = from.GetRequiresPassword()
-	k.Text = from.GetText()
-	k.Data = from.GetData()
 }
 
 // TypeID returns type id in TL schema.
@@ -557,11 +508,8 @@ func (k *KeyboardButtonCallback) GetData() (value []byte) {
 }
 
 // KeyboardButtonRequestPhone represents TL type `keyboardButtonRequestPhone#b16a6c29`.
-// Button to request a user's phone number
-//
-// See https://core.telegram.org/constructor/keyboardButtonRequestPhone for reference.
 type KeyboardButtonRequestPhone struct {
-	// Button text
+	// Text field of KeyboardButtonRequestPhone.
 	Text string
 }
 
@@ -599,13 +547,6 @@ func (k *KeyboardButtonRequestPhone) String() string {
 	}
 	type Alias KeyboardButtonRequestPhone
 	return fmt.Sprintf("KeyboardButtonRequestPhone%+v", Alias(*k))
-}
-
-// FillFrom fills KeyboardButtonRequestPhone from given interface.
-func (k *KeyboardButtonRequestPhone) FillFrom(from interface {
-	GetText() (value string)
-}) {
-	k.Text = from.GetText()
 }
 
 // TypeID returns type id in TL schema.
@@ -692,11 +633,8 @@ func (k *KeyboardButtonRequestPhone) GetText() (value string) {
 }
 
 // KeyboardButtonRequestGeoLocation represents TL type `keyboardButtonRequestGeoLocation#fc796b3f`.
-// Button to request a user's geolocation
-//
-// See https://core.telegram.org/constructor/keyboardButtonRequestGeoLocation for reference.
 type KeyboardButtonRequestGeoLocation struct {
-	// Button text
+	// Text field of KeyboardButtonRequestGeoLocation.
 	Text string
 }
 
@@ -734,13 +672,6 @@ func (k *KeyboardButtonRequestGeoLocation) String() string {
 	}
 	type Alias KeyboardButtonRequestGeoLocation
 	return fmt.Sprintf("KeyboardButtonRequestGeoLocation%+v", Alias(*k))
-}
-
-// FillFrom fills KeyboardButtonRequestGeoLocation from given interface.
-func (k *KeyboardButtonRequestGeoLocation) FillFrom(from interface {
-	GetText() (value string)
-}) {
-	k.Text = from.GetText()
 }
 
 // TypeID returns type id in TL schema.
@@ -827,25 +758,16 @@ func (k *KeyboardButtonRequestGeoLocation) GetText() (value string) {
 }
 
 // KeyboardButtonSwitchInline represents TL type `keyboardButtonSwitchInline#93b9fbb5`.
-// Button to force a user to switch to inline mode: pressing the button will prompt the
-// user to select one of their chats, open that chat and insert the bot's username and
-// the specified inline query in the input field.
-//
-// See https://core.telegram.org/constructor/keyboardButtonSwitchInline for reference.
 type KeyboardButtonSwitchInline struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of KeyboardButtonSwitchInline.
 	Flags bin.Fields
-	// If set, pressing the button will insert the bot's username and the specified inline
-	// query in the current chat's input field.
+	// SamePeer field of KeyboardButtonSwitchInline.
 	SamePeer bool
-	// Button label
+	// Text field of KeyboardButtonSwitchInline.
 	Text string
-	// The inline query to use
+	// Query field of KeyboardButtonSwitchInline.
 	Query string
-	// Filter to use when selecting chats.
+	// PeerTypes field of KeyboardButtonSwitchInline.
 	//
 	// Use SetPeerTypes and GetPeerTypes helpers.
 	PeerTypes []InlineQueryPeerTypeClass
@@ -897,22 +819,6 @@ func (k *KeyboardButtonSwitchInline) String() string {
 	}
 	type Alias KeyboardButtonSwitchInline
 	return fmt.Sprintf("KeyboardButtonSwitchInline%+v", Alias(*k))
-}
-
-// FillFrom fills KeyboardButtonSwitchInline from given interface.
-func (k *KeyboardButtonSwitchInline) FillFrom(from interface {
-	GetSamePeer() (value bool)
-	GetText() (value string)
-	GetQuery() (value string)
-	GetPeerTypes() (value []InlineQueryPeerTypeClass, ok bool)
-}) {
-	k.SamePeer = from.GetSamePeer()
-	k.Text = from.GetText()
-	k.Query = from.GetQuery()
-	if val, ok := from.GetPeerTypes(); ok {
-		k.PeerTypes = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -1113,20 +1019,9 @@ func (k *KeyboardButtonSwitchInline) GetPeerTypes() (value []InlineQueryPeerType
 	return k.PeerTypes, true
 }
 
-// MapPeerTypes returns field PeerTypes wrapped in InlineQueryPeerTypeClassArray helper.
-func (k *KeyboardButtonSwitchInline) MapPeerTypes() (value InlineQueryPeerTypeClassArray, ok bool) {
-	if !k.Flags.Has(1) {
-		return value, false
-	}
-	return InlineQueryPeerTypeClassArray(k.PeerTypes), true
-}
-
 // KeyboardButtonGame represents TL type `keyboardButtonGame#50f41ccf`.
-// Button to start a game
-//
-// See https://core.telegram.org/constructor/keyboardButtonGame for reference.
 type KeyboardButtonGame struct {
-	// Button text
+	// Text field of KeyboardButtonGame.
 	Text string
 }
 
@@ -1164,13 +1059,6 @@ func (k *KeyboardButtonGame) String() string {
 	}
 	type Alias KeyboardButtonGame
 	return fmt.Sprintf("KeyboardButtonGame%+v", Alias(*k))
-}
-
-// FillFrom fills KeyboardButtonGame from given interface.
-func (k *KeyboardButtonGame) FillFrom(from interface {
-	GetText() (value string)
-}) {
-	k.Text = from.GetText()
 }
 
 // TypeID returns type id in TL schema.
@@ -1257,11 +1145,8 @@ func (k *KeyboardButtonGame) GetText() (value string) {
 }
 
 // KeyboardButtonBuy represents TL type `keyboardButtonBuy#afd93fbb`.
-// Button to buy a product
-//
-// See https://core.telegram.org/constructor/keyboardButtonBuy for reference.
 type KeyboardButtonBuy struct {
-	// Button text
+	// Text field of KeyboardButtonBuy.
 	Text string
 }
 
@@ -1299,13 +1184,6 @@ func (k *KeyboardButtonBuy) String() string {
 	}
 	type Alias KeyboardButtonBuy
 	return fmt.Sprintf("KeyboardButtonBuy%+v", Alias(*k))
-}
-
-// FillFrom fills KeyboardButtonBuy from given interface.
-func (k *KeyboardButtonBuy) FillFrom(from interface {
-	GetText() (value string)
-}) {
-	k.Text = from.GetText()
 }
 
 // TypeID returns type id in TL schema.
@@ -1392,54 +1270,18 @@ func (k *KeyboardButtonBuy) GetText() (value string) {
 }
 
 // KeyboardButtonURLAuth represents TL type `keyboardButtonUrlAuth#10b78d29`.
-// Button to request a user to authorize via URL using Seamless Telegram Login¹. When
-// the user clicks on such a button, messages.requestUrlAuth² should be called,
-// providing the button_id and the ID of the container message. The returned
-// urlAuthResultRequest³ object will contain more details about the authorization
-// request (request_write_access if the bot would like to send messages to the user along
-// with the username of the bot which will be used for user authorization). Finally, the
-// user can choose to call messages.acceptUrlAuth⁴ to get a urlAuthResultAccepted⁵
-// with the URL to open instead of the url of this constructor, or a
-// urlAuthResultDefault⁶, in which case the url of this constructor must be opened,
-// instead. If the user refuses the authorization request but still wants to open the
-// link, the url of this constructor must be used.
-//
-// Links:
-//  1. https://telegram.org/blog/privacy-discussions-web-bots#meet-seamless-web-bots
-//  2. https://core.telegram.org/method/messages.requestUrlAuth
-//  3. https://core.telegram.org/constructor/urlAuthResultRequest
-//  4. https://core.telegram.org/method/messages.acceptUrlAuth
-//  5. https://core.telegram.org/constructor/urlAuthResultAccepted
-//  6. https://core.telegram.org/constructor/urlAuthResultDefault
-//
-// See https://core.telegram.org/constructor/keyboardButtonUrlAuth for reference.
 type KeyboardButtonURLAuth struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of KeyboardButtonURLAuth.
 	Flags bin.Fields
-	// Button label
+	// Text field of KeyboardButtonURLAuth.
 	Text string
-	// New text of the button in forwarded messages.
+	// FwdText field of KeyboardButtonURLAuth.
 	//
 	// Use SetFwdText and GetFwdText helpers.
 	FwdText string
-	// An HTTP URL to be opened with user authorization data added to the query string when
-	// the button is pressed. If the user refuses to provide authorization data, the original
-	// URL without information about the user will be opened. The data added is the same as
-	// described in Receiving authorization data¹.NOTE: Services must always check the hash
-	// of the received data to verify the authentication and the integrity of the data as
-	// described in Checking authorization².
-	//
-	// Links:
-	//  1) https://core.telegram.org/widgets/login#receiving-authorization-data
-	//  2) https://core.telegram.org/widgets/login#checking-authorization
+	// URL field of KeyboardButtonURLAuth.
 	URL string
-	// ID of the button to pass to messages.requestUrlAuth¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/messages.requestUrlAuth
+	// ButtonID field of KeyboardButtonURLAuth.
 	ButtonID int
 }
 
@@ -1489,22 +1331,6 @@ func (k *KeyboardButtonURLAuth) String() string {
 	}
 	type Alias KeyboardButtonURLAuth
 	return fmt.Sprintf("KeyboardButtonURLAuth%+v", Alias(*k))
-}
-
-// FillFrom fills KeyboardButtonURLAuth from given interface.
-func (k *KeyboardButtonURLAuth) FillFrom(from interface {
-	GetText() (value string)
-	GetFwdText() (value string, ok bool)
-	GetURL() (value string)
-	GetButtonID() (value int)
-}) {
-	k.Text = from.GetText()
-	if val, ok := from.GetFwdText(); ok {
-		k.FwdText = val
-	}
-
-	k.URL = from.GetURL()
-	k.ButtonID = from.GetButtonID()
 }
 
 // TypeID returns type id in TL schema.
@@ -1680,46 +1506,20 @@ func (k *KeyboardButtonURLAuth) GetButtonID() (value int) {
 }
 
 // InputKeyboardButtonURLAuth represents TL type `inputKeyboardButtonUrlAuth#d02e7fd4`.
-// Button to request a user to authorize¹ via URL using Seamless Telegram Login².
-//
-// Links:
-//  1. https://core.telegram.org/method/messages.acceptUrlAuth
-//  2. https://telegram.org/blog/privacy-discussions-web-bots#meet-seamless-web-bots
-//
-// See https://core.telegram.org/constructor/inputKeyboardButtonUrlAuth for reference.
 type InputKeyboardButtonURLAuth struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of InputKeyboardButtonURLAuth.
 	Flags bin.Fields
-	// Set this flag to request the permission for your bot to send messages to the user.
+	// RequestWriteAccess field of InputKeyboardButtonURLAuth.
 	RequestWriteAccess bool
-	// Button text
+	// Text field of InputKeyboardButtonURLAuth.
 	Text string
-	// New text of the button in forwarded messages.
+	// FwdText field of InputKeyboardButtonURLAuth.
 	//
 	// Use SetFwdText and GetFwdText helpers.
 	FwdText string
-	// An HTTP URL to be opened with user authorization data added to the query string when
-	// the button is pressed. If the user refuses to provide authorization data, the original
-	// URL without information about the user will be opened. The data added is the same as
-	// described in Receiving authorization data¹.NOTE: You must always check the hash of
-	// the received data to verify the authentication and the integrity of the data as
-	// described in Checking authorization².
-	//
-	// Links:
-	//  1) https://core.telegram.org/widgets/login#receiving-authorization-data
-	//  2) https://core.telegram.org/widgets/login#checking-authorization
+	// URL field of InputKeyboardButtonURLAuth.
 	URL string
-	// Username of a bot, which will be used for user authorization. See Setting up a bot¹
-	// for more details. If not specified, the current bot's username will be assumed. The
-	// url's domain must be the same as the domain linked with the bot. See Linking your
-	// domain to the bot² for more details.
-	//
-	// Links:
-	//  1) https://core.telegram.org/widgets/login#setting-up-a-bot
-	//  2) https://core.telegram.org/widgets/login#linking-your-domain-to-the-bot
+	// Bot field of InputKeyboardButtonURLAuth.
 	Bot InputUserClass
 }
 
@@ -1772,24 +1572,6 @@ func (i *InputKeyboardButtonURLAuth) String() string {
 	}
 	type Alias InputKeyboardButtonURLAuth
 	return fmt.Sprintf("InputKeyboardButtonURLAuth%+v", Alias(*i))
-}
-
-// FillFrom fills InputKeyboardButtonURLAuth from given interface.
-func (i *InputKeyboardButtonURLAuth) FillFrom(from interface {
-	GetRequestWriteAccess() (value bool)
-	GetText() (value string)
-	GetFwdText() (value string, ok bool)
-	GetURL() (value string)
-	GetBot() (value InputUserClass)
-}) {
-	i.RequestWriteAccess = from.GetRequestWriteAccess()
-	i.Text = from.GetText()
-	if val, ok := from.GetFwdText(); ok {
-		i.FwdText = val
-	}
-
-	i.URL = from.GetURL()
-	i.Bot = from.GetBot()
 }
 
 // TypeID returns type id in TL schema.
@@ -1998,21 +1780,14 @@ func (i *InputKeyboardButtonURLAuth) GetBot() (value InputUserClass) {
 }
 
 // KeyboardButtonRequestPoll represents TL type `keyboardButtonRequestPoll#bbc7515d`.
-// A button that allows the user to create and send a poll when pressed; available only
-// in private
-//
-// See https://core.telegram.org/constructor/keyboardButtonRequestPoll for reference.
 type KeyboardButtonRequestPoll struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of KeyboardButtonRequestPoll.
 	Flags bin.Fields
-	// If set, only quiz polls can be sent
+	// Quiz field of KeyboardButtonRequestPoll.
 	//
 	// Use SetQuiz and GetQuiz helpers.
 	Quiz bool
-	// Button text
+	// Text field of KeyboardButtonRequestPoll.
 	Text string
 }
 
@@ -2056,18 +1831,6 @@ func (k *KeyboardButtonRequestPoll) String() string {
 	}
 	type Alias KeyboardButtonRequestPoll
 	return fmt.Sprintf("KeyboardButtonRequestPoll%+v", Alias(*k))
-}
-
-// FillFrom fills KeyboardButtonRequestPoll from given interface.
-func (k *KeyboardButtonRequestPoll) FillFrom(from interface {
-	GetQuiz() (value bool, ok bool)
-	GetText() (value string)
-}) {
-	if val, ok := from.GetQuiz(); ok {
-		k.Quiz = val
-	}
-
-	k.Text = from.GetText()
 }
 
 // TypeID returns type id in TL schema.
@@ -2203,13 +1966,10 @@ func (k *KeyboardButtonRequestPoll) GetText() (value string) {
 }
 
 // InputKeyboardButtonUserProfile represents TL type `inputKeyboardButtonUserProfile#e988037b`.
-// Button that links directly to a user profile
-//
-// See https://core.telegram.org/constructor/inputKeyboardButtonUserProfile for reference.
 type InputKeyboardButtonUserProfile struct {
-	// Button text
+	// Text field of InputKeyboardButtonUserProfile.
 	Text string
-	// User ID
+	// UserID field of InputKeyboardButtonUserProfile.
 	UserID InputUserClass
 }
 
@@ -2250,15 +2010,6 @@ func (i *InputKeyboardButtonUserProfile) String() string {
 	}
 	type Alias InputKeyboardButtonUserProfile
 	return fmt.Sprintf("InputKeyboardButtonUserProfile%+v", Alias(*i))
-}
-
-// FillFrom fills InputKeyboardButtonUserProfile from given interface.
-func (i *InputKeyboardButtonUserProfile) FillFrom(from interface {
-	GetText() (value string)
-	GetUserID() (value InputUserClass)
-}) {
-	i.Text = from.GetText()
-	i.UserID = from.GetUserID()
 }
 
 // TypeID returns type id in TL schema.
@@ -2370,13 +2121,10 @@ func (i *InputKeyboardButtonUserProfile) GetUserID() (value InputUserClass) {
 }
 
 // KeyboardButtonUserProfile represents TL type `keyboardButtonUserProfile#308660c1`.
-// Button that links directly to a user profile
-//
-// See https://core.telegram.org/constructor/keyboardButtonUserProfile for reference.
 type KeyboardButtonUserProfile struct {
-	// Button text
+	// Text field of KeyboardButtonUserProfile.
 	Text string
-	// User ID
+	// UserID field of KeyboardButtonUserProfile.
 	UserID int64
 }
 
@@ -2417,15 +2165,6 @@ func (k *KeyboardButtonUserProfile) String() string {
 	}
 	type Alias KeyboardButtonUserProfile
 	return fmt.Sprintf("KeyboardButtonUserProfile%+v", Alias(*k))
-}
-
-// FillFrom fills KeyboardButtonUserProfile from given interface.
-func (k *KeyboardButtonUserProfile) FillFrom(from interface {
-	GetText() (value string)
-	GetUserID() (value int64)
-}) {
-	k.Text = from.GetText()
-	k.UserID = from.GetUserID()
 }
 
 // TypeID returns type id in TL schema.
@@ -2532,24 +2271,10 @@ func (k *KeyboardButtonUserProfile) GetUserID() (value int64) {
 }
 
 // KeyboardButtonWebView represents TL type `keyboardButtonWebView#13767230`.
-// Button to open a bot mini app¹ using messages.requestWebView², sending over user
-// information after user confirmation.
-// Can only be sent or received as part of an inline keyboard, use
-// keyboardButtonSimpleWebView¹ for reply keyboards.
-//
-// Links:
-//  1. https://core.telegram.org/api/bots/webapps
-//  2. https://core.telegram.org/method/messages.requestWebView
-//  3. https://core.telegram.org/constructor/keyboardButtonSimpleWebView
-//
-// See https://core.telegram.org/constructor/keyboardButtonWebView for reference.
 type KeyboardButtonWebView struct {
-	// Button text
+	// Text field of KeyboardButtonWebView.
 	Text string
-	// Web app url¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/bots/webapps
+	// URL field of KeyboardButtonWebView.
 	URL string
 }
 
@@ -2590,15 +2315,6 @@ func (k *KeyboardButtonWebView) String() string {
 	}
 	type Alias KeyboardButtonWebView
 	return fmt.Sprintf("KeyboardButtonWebView%+v", Alias(*k))
-}
-
-// FillFrom fills KeyboardButtonWebView from given interface.
-func (k *KeyboardButtonWebView) FillFrom(from interface {
-	GetText() (value string)
-	GetURL() (value string)
-}) {
-	k.Text = from.GetText()
-	k.URL = from.GetURL()
 }
 
 // TypeID returns type id in TL schema.
@@ -2705,24 +2421,10 @@ func (k *KeyboardButtonWebView) GetURL() (value string) {
 }
 
 // KeyboardButtonSimpleWebView represents TL type `keyboardButtonSimpleWebView#a0c0505c`.
-// Button to open a bot mini app¹ using messages.requestSimpleWebView², without sending
-// user information to the web app.
-// Can only be sent or received as part of a reply keyboard, use keyboardButtonWebView¹
-// for inline keyboards.
-//
-// Links:
-//  1. https://core.telegram.org/api/bots/webapps
-//  2. https://core.telegram.org/method/messages.requestSimpleWebView
-//  3. https://core.telegram.org/constructor/keyboardButtonWebView
-//
-// See https://core.telegram.org/constructor/keyboardButtonSimpleWebView for reference.
 type KeyboardButtonSimpleWebView struct {
-	// Button text
+	// Text field of KeyboardButtonSimpleWebView.
 	Text string
-	// Web app URL¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/bots/webapps
+	// URL field of KeyboardButtonSimpleWebView.
 	URL string
 }
 
@@ -2763,15 +2465,6 @@ func (k *KeyboardButtonSimpleWebView) String() string {
 	}
 	type Alias KeyboardButtonSimpleWebView
 	return fmt.Sprintf("KeyboardButtonSimpleWebView%+v", Alias(*k))
-}
-
-// FillFrom fills KeyboardButtonSimpleWebView from given interface.
-func (k *KeyboardButtonSimpleWebView) FillFrom(from interface {
-	GetText() (value string)
-	GetURL() (value string)
-}) {
-	k.Text = from.GetText()
-	k.URL = from.GetURL()
 }
 
 // TypeID returns type id in TL schema.
@@ -2878,27 +2571,14 @@ func (k *KeyboardButtonSimpleWebView) GetURL() (value string) {
 }
 
 // KeyboardButtonRequestPeer represents TL type `keyboardButtonRequestPeer#53d7bfd8`.
-// Prompts the user to select and share one or more peers with the bot using messages
-// sendBotRequestedPeer¹
-//
-// Links:
-//  1. https://core.telegram.org/method/messages.sendBotRequestedPeer
-//
-// See https://core.telegram.org/constructor/keyboardButtonRequestPeer for reference.
 type KeyboardButtonRequestPeer struct {
-	// Button text
+	// Text field of KeyboardButtonRequestPeer.
 	Text string
-	// Button ID, to be passed to messages.sendBotRequestedPeer¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/messages.sendBotRequestedPeer
+	// ButtonID field of KeyboardButtonRequestPeer.
 	ButtonID int
-	// Filtering criteria to use for the peer selection list shown to the user. The list
-	// should display all existing peers of the specified type, and should also offer an
-	// option for the user to create and immediately use one or more (up to max_quantity)
-	// peers of the specified type, if needed.
+	// PeerType field of KeyboardButtonRequestPeer.
 	PeerType RequestPeerTypeClass
-	// Maximum number of peers that can be chosen.
+	// MaxQuantity field of KeyboardButtonRequestPeer.
 	MaxQuantity int
 }
 
@@ -2945,19 +2625,6 @@ func (k *KeyboardButtonRequestPeer) String() string {
 	}
 	type Alias KeyboardButtonRequestPeer
 	return fmt.Sprintf("KeyboardButtonRequestPeer%+v", Alias(*k))
-}
-
-// FillFrom fills KeyboardButtonRequestPeer from given interface.
-func (k *KeyboardButtonRequestPeer) FillFrom(from interface {
-	GetText() (value string)
-	GetButtonID() (value int)
-	GetPeerType() (value RequestPeerTypeClass)
-	GetMaxQuantity() (value int)
-}) {
-	k.Text = from.GetText()
-	k.ButtonID = from.GetButtonID()
-	k.PeerType = from.GetPeerType()
-	k.MaxQuantity = from.GetMaxQuantity()
 }
 
 // TypeID returns type id in TL schema.
@@ -3109,38 +2776,22 @@ func (k *KeyboardButtonRequestPeer) GetMaxQuantity() (value int) {
 }
 
 // InputKeyboardButtonRequestPeer represents TL type `inputKeyboardButtonRequestPeer#c9662d05`.
-// Prompts the user to select and share one or more peers with the bot using messages
-// sendBotRequestedPeer¹.
-//
-// Links:
-//  1. https://core.telegram.org/method/messages.sendBotRequestedPeer
-//
-// See https://core.telegram.org/constructor/inputKeyboardButtonRequestPeer for reference.
 type InputKeyboardButtonRequestPeer struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of InputKeyboardButtonRequestPeer.
 	Flags bin.Fields
-	// Set this flag to request the peer's name.
+	// NameRequested field of InputKeyboardButtonRequestPeer.
 	NameRequested bool
-	// Set this flag to request the peer's @username (if any).
+	// UsernameRequested field of InputKeyboardButtonRequestPeer.
 	UsernameRequested bool
-	// Set this flag to request the peer's photo (if any).
+	// PhotoRequested field of InputKeyboardButtonRequestPeer.
 	PhotoRequested bool
-	// Button text
+	// Text field of InputKeyboardButtonRequestPeer.
 	Text string
-	// Button ID, to be passed to messages.sendBotRequestedPeer¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/messages.sendBotRequestedPeer
+	// ButtonID field of InputKeyboardButtonRequestPeer.
 	ButtonID int
-	// Filtering criteria to use for the peer selection list shown to the user. The list
-	// should display all existing peers of the specified type, and should also offer an
-	// option for the user to create and immediately use one or more (up to max_quantity)
-	// peers of the specified type, if needed.
+	// PeerType field of InputKeyboardButtonRequestPeer.
 	PeerType RequestPeerTypeClass
-	// Maximum number of peers that can be chosen.
+	// MaxQuantity field of InputKeyboardButtonRequestPeer.
 	MaxQuantity int
 }
 
@@ -3199,25 +2850,6 @@ func (i *InputKeyboardButtonRequestPeer) String() string {
 	}
 	type Alias InputKeyboardButtonRequestPeer
 	return fmt.Sprintf("InputKeyboardButtonRequestPeer%+v", Alias(*i))
-}
-
-// FillFrom fills InputKeyboardButtonRequestPeer from given interface.
-func (i *InputKeyboardButtonRequestPeer) FillFrom(from interface {
-	GetNameRequested() (value bool)
-	GetUsernameRequested() (value bool)
-	GetPhotoRequested() (value bool)
-	GetText() (value string)
-	GetButtonID() (value int)
-	GetPeerType() (value RequestPeerTypeClass)
-	GetMaxQuantity() (value int)
-}) {
-	i.NameRequested = from.GetNameRequested()
-	i.UsernameRequested = from.GetUsernameRequested()
-	i.PhotoRequested = from.GetPhotoRequested()
-	i.Text = from.GetText()
-	i.ButtonID = from.GetButtonID()
-	i.PeerType = from.GetPeerType()
-	i.MaxQuantity = from.GetMaxQuantity()
 }
 
 // TypeID returns type id in TL schema.
@@ -3466,13 +3098,10 @@ func (i *InputKeyboardButtonRequestPeer) GetMaxQuantity() (value int) {
 }
 
 // KeyboardButtonCopy represents TL type `keyboardButtonCopy#75d2698e`.
-// Clipboard button: when clicked, the attached text must be copied to the clipboard.
-//
-// See https://core.telegram.org/constructor/keyboardButtonCopy for reference.
 type KeyboardButtonCopy struct {
-	// Title of the button
+	// Text field of KeyboardButtonCopy.
 	Text string
-	// The text that will be copied to the clipboard
+	// CopyText field of KeyboardButtonCopy.
 	CopyText string
 }
 
@@ -3513,15 +3142,6 @@ func (k *KeyboardButtonCopy) String() string {
 	}
 	type Alias KeyboardButtonCopy
 	return fmt.Sprintf("KeyboardButtonCopy%+v", Alias(*k))
-}
-
-// FillFrom fills KeyboardButtonCopy from given interface.
-func (k *KeyboardButtonCopy) FillFrom(from interface {
-	GetText() (value string)
-	GetCopyText() (value string)
-}) {
-	k.Text = from.GetText()
-	k.CopyText = from.GetCopyText()
 }
 
 // TypeID returns type id in TL schema.
@@ -3632,8 +3252,6 @@ const KeyboardButtonClassName = "KeyboardButton"
 
 // KeyboardButtonClass represents KeyboardButton generic type.
 //
-// See https://core.telegram.org/type/KeyboardButton for reference.
-//
 // Constructors:
 //   - [KeyboardButton]
 //   - [KeyboardButtonURL]
@@ -3699,7 +3317,7 @@ type KeyboardButtonClass interface {
 	// Zero returns true if current object has a zero value.
 	Zero() bool
 
-	// Button text
+	// Text field of KeyboardButton.
 	GetText() (value string)
 }
 

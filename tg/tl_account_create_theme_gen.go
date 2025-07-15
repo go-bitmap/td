@@ -32,29 +32,18 @@ var (
 )
 
 // AccountCreateThemeRequest represents TL type `account.createTheme#652e4400`.
-// Create a theme
-//
-// See https://core.telegram.org/method/account.createTheme for reference.
 type AccountCreateThemeRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of AccountCreateThemeRequest.
 	Flags bin.Fields
-	// Unique theme ID used to generate theme deep links¹, can be empty to autogenerate a
-	// random ID.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/links#theme-links
+	// Slug field of AccountCreateThemeRequest.
 	Slug string
-	// Theme name
+	// Title field of AccountCreateThemeRequest.
 	Title string
-	// Theme file
+	// Document field of AccountCreateThemeRequest.
 	//
 	// Use SetDocument and GetDocument helpers.
 	Document InputDocumentClass
-	// Theme settings, multiple values can be provided for the different base themes
-	// (day/night mode, etc).
+	// Settings field of AccountCreateThemeRequest.
 	//
 	// Use SetSettings and GetSettings helpers.
 	Settings []InputThemeSettings
@@ -101,25 +90,6 @@ func (c *AccountCreateThemeRequest) String() string {
 	}
 	type Alias AccountCreateThemeRequest
 	return fmt.Sprintf("AccountCreateThemeRequest%+v", Alias(*c))
-}
-
-// FillFrom fills AccountCreateThemeRequest from given interface.
-func (c *AccountCreateThemeRequest) FillFrom(from interface {
-	GetSlug() (value string)
-	GetTitle() (value string)
-	GetDocument() (value InputDocumentClass, ok bool)
-	GetSettings() (value []InputThemeSettings, ok bool)
-}) {
-	c.Slug = from.GetSlug()
-	c.Title = from.GetTitle()
-	if val, ok := from.GetDocument(); ok {
-		c.Document = val
-	}
-
-	if val, ok := from.GetSettings(); ok {
-		c.Settings = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -330,24 +300,7 @@ func (c *AccountCreateThemeRequest) GetSettings() (value []InputThemeSettings, o
 	return c.Settings, true
 }
 
-// GetDocumentAsNotEmpty returns mapped value of Document conditional field and
-// boolean which is true if field was set.
-func (c *AccountCreateThemeRequest) GetDocumentAsNotEmpty() (*InputDocument, bool) {
-	if value, ok := c.GetDocument(); ok {
-		return value.AsNotEmpty()
-	}
-	return nil, false
-}
-
 // AccountCreateTheme invokes method account.createTheme#652e4400 returning error if any.
-// Create a theme
-//
-// Possible errors:
-//
-//	400 THEME_MIME_INVALID: The theme's MIME type is invalid.
-//	400 THEME_TITLE_INVALID: The specified theme title is invalid.
-//
-// See https://core.telegram.org/method/account.createTheme for reference.
 func (c *Client) AccountCreateTheme(ctx context.Context, request *AccountCreateThemeRequest) (*Theme, error) {
 	var result Theme
 

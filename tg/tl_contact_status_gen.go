@@ -32,13 +32,10 @@ var (
 )
 
 // ContactStatus represents TL type `contactStatus#16d9703b`.
-// Contact status: online / offline.
-//
-// See https://core.telegram.org/constructor/contactStatus for reference.
 type ContactStatus struct {
-	// User identifier
+	// UserID field of ContactStatus.
 	UserID int64
-	// Online status
+	// Status field of ContactStatus.
 	Status UserStatusClass
 }
 
@@ -74,15 +71,6 @@ func (c *ContactStatus) String() string {
 	}
 	type Alias ContactStatus
 	return fmt.Sprintf("ContactStatus%+v", Alias(*c))
-}
-
-// FillFrom fills ContactStatus from given interface.
-func (c *ContactStatus) FillFrom(from interface {
-	GetUserID() (value int64)
-	GetStatus() (value UserStatusClass)
-}) {
-	c.UserID = from.GetUserID()
-	c.Status = from.GetStatus()
 }
 
 // TypeID returns type id in TL schema.

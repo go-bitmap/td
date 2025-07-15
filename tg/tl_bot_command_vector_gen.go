@@ -68,13 +68,6 @@ func (vec *BotCommandVector) String() string {
 	return fmt.Sprintf("BotCommandVector%+v", Alias(*vec))
 }
 
-// FillFrom fills BotCommandVector from given interface.
-func (vec *BotCommandVector) FillFrom(from interface {
-	GetElems() (value []BotCommand)
-}) {
-	vec.Elems = from.GetElems()
-}
-
 // TypeID returns type id in TL schema.
 //
 // See https://core.telegram.org/mtproto/TL-tl#remarks.

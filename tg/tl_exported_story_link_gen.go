@@ -32,17 +32,8 @@ var (
 )
 
 // ExportedStoryLink represents TL type `exportedStoryLink#3fc9053b`.
-// Represents a story deep link¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/stories#story-links
-//
-// See https://core.telegram.org/constructor/exportedStoryLink for reference.
 type ExportedStoryLink struct {
-	// The story deep link¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/stories#story-links
+	// Link field of ExportedStoryLink.
 	Link string
 }
 
@@ -75,13 +66,6 @@ func (e *ExportedStoryLink) String() string {
 	}
 	type Alias ExportedStoryLink
 	return fmt.Sprintf("ExportedStoryLink%+v", Alias(*e))
-}
-
-// FillFrom fills ExportedStoryLink from given interface.
-func (e *ExportedStoryLink) FillFrom(from interface {
-	GetLink() (value string)
-}) {
-	e.Link = from.GetLink()
 }
 
 // TypeID returns type id in TL schema.

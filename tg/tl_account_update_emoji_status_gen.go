@@ -32,17 +32,8 @@ var (
 )
 
 // AccountUpdateEmojiStatusRequest represents TL type `account.updateEmojiStatus#fbd3de6b`.
-// Set an emoji status¹
-//
-// Links:
-//  1. https://core.telegram.org/api/emoji-status
-//
-// See https://core.telegram.org/method/account.updateEmojiStatus for reference.
 type AccountUpdateEmojiStatusRequest struct {
-	// Emoji status¹ to set
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/emoji-status
+	// EmojiStatus field of AccountUpdateEmojiStatusRequest.
 	EmojiStatus EmojiStatusClass
 }
 
@@ -75,13 +66,6 @@ func (u *AccountUpdateEmojiStatusRequest) String() string {
 	}
 	type Alias AccountUpdateEmojiStatusRequest
 	return fmt.Sprintf("AccountUpdateEmojiStatusRequest%+v", Alias(*u))
-}
-
-// FillFrom fills AccountUpdateEmojiStatusRequest from given interface.
-func (u *AccountUpdateEmojiStatusRequest) FillFrom(from interface {
-	GetEmojiStatus() (value EmojiStatusClass)
-}) {
-	u.EmojiStatus = from.GetEmojiStatus()
 }
 
 // TypeID returns type id in TL schema.
@@ -172,22 +156,7 @@ func (u *AccountUpdateEmojiStatusRequest) GetEmojiStatus() (value EmojiStatusCla
 	return u.EmojiStatus
 }
 
-// GetEmojiStatusAsNotEmpty returns mapped value of EmojiStatus field.
-func (u *AccountUpdateEmojiStatusRequest) GetEmojiStatusAsNotEmpty() (NotEmptyEmojiStatus, bool) {
-	return u.EmojiStatus.AsNotEmpty()
-}
-
 // AccountUpdateEmojiStatus invokes method account.updateEmojiStatus#fbd3de6b returning error if any.
-// Set an emoji status¹
-//
-// Links:
-//  1. https://core.telegram.org/api/emoji-status
-//
-// Possible errors:
-//
-//	400 DOCUMENT_INVALID: The specified document is invalid.
-//
-// See https://core.telegram.org/method/account.updateEmojiStatus for reference.
 func (c *Client) AccountUpdateEmojiStatus(ctx context.Context, emojistatus EmojiStatusClass) (bool, error) {
 	var result BoolBox
 

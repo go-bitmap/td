@@ -32,34 +32,20 @@ var (
 )
 
 // PhoneCreateGroupCallRequest represents TL type `phone.createGroupCall#48cdc6d8`.
-// Create a group call or livestream
-//
-// See https://core.telegram.org/method/phone.createGroupCall for reference.
 type PhoneCreateGroupCallRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of PhoneCreateGroupCallRequest.
 	Flags bin.Fields
-	// Whether RTMP stream support should be enabled: only the group/supergroup/channel¹
-	// owner can use this flag.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/channel
+	// RtmpStream field of PhoneCreateGroupCallRequest.
 	RtmpStream bool
-	// Associate the group call or livestream to the provided group/supergroup/channel¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/channel
+	// Peer field of PhoneCreateGroupCallRequest.
 	Peer InputPeerClass
-	// Unique client message ID required to prevent creation of duplicate group calls
+	// RandomID field of PhoneCreateGroupCallRequest.
 	RandomID int
-	// Call title
+	// Title field of PhoneCreateGroupCallRequest.
 	//
 	// Use SetTitle and GetTitle helpers.
 	Title string
-	// For scheduled group call or livestreams, the absolute date when the group call will
-	// start
+	// ScheduleDate field of PhoneCreateGroupCallRequest.
 	//
 	// Use SetScheduleDate and GetScheduleDate helpers.
 	ScheduleDate int
@@ -109,27 +95,6 @@ func (c *PhoneCreateGroupCallRequest) String() string {
 	}
 	type Alias PhoneCreateGroupCallRequest
 	return fmt.Sprintf("PhoneCreateGroupCallRequest%+v", Alias(*c))
-}
-
-// FillFrom fills PhoneCreateGroupCallRequest from given interface.
-func (c *PhoneCreateGroupCallRequest) FillFrom(from interface {
-	GetRtmpStream() (value bool)
-	GetPeer() (value InputPeerClass)
-	GetRandomID() (value int)
-	GetTitle() (value string, ok bool)
-	GetScheduleDate() (value int, ok bool)
-}) {
-	c.RtmpStream = from.GetRtmpStream()
-	c.Peer = from.GetPeer()
-	c.RandomID = from.GetRandomID()
-	if val, ok := from.GetTitle(); ok {
-		c.Title = val
-	}
-
-	if val, ok := from.GetScheduleDate(); ok {
-		c.ScheduleDate = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -354,18 +319,6 @@ func (c *PhoneCreateGroupCallRequest) GetScheduleDate() (value int, ok bool) {
 }
 
 // PhoneCreateGroupCall invokes method phone.createGroupCall#48cdc6d8 returning error if any.
-// Create a group call or livestream
-//
-// Possible errors:
-//
-//	400 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
-//	400 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
-//	400 CREATE_CALL_FAILED: An error occurred while creating the call.
-//	400 GROUPCALL_ALREADY_DISCARDED: The group call was already discarded.
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//	400 SCHEDULE_DATE_INVALID: Invalid schedule date provided.
-//
-// See https://core.telegram.org/method/phone.createGroupCall for reference.
 func (c *Client) PhoneCreateGroupCall(ctx context.Context, request *PhoneCreateGroupCallRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

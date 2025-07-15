@@ -32,25 +32,18 @@ var (
 )
 
 // PhoneGroupParticipants represents TL type `phone.groupParticipants#f47751b6`.
-// Info about the participants of a group call or livestream
-//
-// See https://core.telegram.org/constructor/phone.groupParticipants for reference.
 type PhoneGroupParticipants struct {
-	// Number of participants
+	// Count field of PhoneGroupParticipants.
 	Count int
-	// List of participants
+	// Participants field of PhoneGroupParticipants.
 	Participants []GroupCallParticipant
-	// If not empty, the specified list of participants is partial, and more participants can
-	// be fetched specifying this parameter as offset in phone.getGroupParticipants¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/phone.getGroupParticipants
+	// NextOffset field of PhoneGroupParticipants.
 	NextOffset string
-	// Mentioned chats
+	// Chats field of PhoneGroupParticipants.
 	Chats []ChatClass
-	// Mentioned users
+	// Users field of PhoneGroupParticipants.
 	Users []UserClass
-	// Version info
+	// Version field of PhoneGroupParticipants.
 	Version int
 }
 
@@ -98,23 +91,6 @@ func (g *PhoneGroupParticipants) String() string {
 	}
 	type Alias PhoneGroupParticipants
 	return fmt.Sprintf("PhoneGroupParticipants%+v", Alias(*g))
-}
-
-// FillFrom fills PhoneGroupParticipants from given interface.
-func (g *PhoneGroupParticipants) FillFrom(from interface {
-	GetCount() (value int)
-	GetParticipants() (value []GroupCallParticipant)
-	GetNextOffset() (value string)
-	GetChats() (value []ChatClass)
-	GetUsers() (value []UserClass)
-	GetVersion() (value int)
-}) {
-	g.Count = from.GetCount()
-	g.Participants = from.GetParticipants()
-	g.NextOffset = from.GetNextOffset()
-	g.Chats = from.GetChats()
-	g.Users = from.GetUsers()
-	g.Version = from.GetVersion()
 }
 
 // TypeID returns type id in TL schema.
@@ -349,14 +325,4 @@ func (g *PhoneGroupParticipants) GetVersion() (value int) {
 		return
 	}
 	return g.Version
-}
-
-// MapChats returns field Chats wrapped in ChatClassArray helper.
-func (g *PhoneGroupParticipants) MapChats() (value ChatClassArray) {
-	return ChatClassArray(g.Chats)
-}
-
-// MapUsers returns field Users wrapped in UserClassArray helper.
-func (g *PhoneGroupParticipants) MapUsers() (value UserClassArray) {
-	return UserClassArray(g.Users)
 }

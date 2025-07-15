@@ -32,26 +32,14 @@ var (
 )
 
 // MessagesSearchEmojiStickerSetsRequest represents TL type `messages.searchEmojiStickerSets#92b4494c`.
-// Search for custom emoji stickersets »¹
-//
-// Links:
-//  1. https://core.telegram.org/api/custom-emoji
-//
-// See https://core.telegram.org/method/messages.searchEmojiStickerSets for reference.
 type MessagesSearchEmojiStickerSetsRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessagesSearchEmojiStickerSetsRequest.
 	Flags bin.Fields
-	// Exclude featured stickersets from results
+	// ExcludeFeatured field of MessagesSearchEmojiStickerSetsRequest.
 	ExcludeFeatured bool
-	// Query string
+	// Q field of MessagesSearchEmojiStickerSetsRequest.
 	Q string
-	// Hash used for caching, for more info click here¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets#hash-generation
+	// Hash field of MessagesSearchEmojiStickerSetsRequest.
 	Hash int64
 }
 
@@ -93,17 +81,6 @@ func (s *MessagesSearchEmojiStickerSetsRequest) String() string {
 	}
 	type Alias MessagesSearchEmojiStickerSetsRequest
 	return fmt.Sprintf("MessagesSearchEmojiStickerSetsRequest%+v", Alias(*s))
-}
-
-// FillFrom fills MessagesSearchEmojiStickerSetsRequest from given interface.
-func (s *MessagesSearchEmojiStickerSetsRequest) FillFrom(from interface {
-	GetExcludeFeatured() (value bool)
-	GetQ() (value string)
-	GetHash() (value int64)
-}) {
-	s.ExcludeFeatured = from.GetExcludeFeatured()
-	s.Q = from.GetQ()
-	s.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -251,12 +228,6 @@ func (s *MessagesSearchEmojiStickerSetsRequest) GetHash() (value int64) {
 }
 
 // MessagesSearchEmojiStickerSets invokes method messages.searchEmojiStickerSets#92b4494c returning error if any.
-// Search for custom emoji stickersets »¹
-//
-// Links:
-//  1. https://core.telegram.org/api/custom-emoji
-//
-// See https://core.telegram.org/method/messages.searchEmojiStickerSets for reference.
 func (c *Client) MessagesSearchEmojiStickerSets(ctx context.Context, request *MessagesSearchEmojiStickerSetsRequest) (MessagesFoundStickerSetsClass, error) {
 	var result MessagesFoundStickerSetsBox
 

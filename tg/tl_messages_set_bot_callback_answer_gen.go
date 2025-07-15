@@ -32,28 +32,22 @@ var (
 )
 
 // MessagesSetBotCallbackAnswerRequest represents TL type `messages.setBotCallbackAnswer#d58f130a`.
-// Set the callback answer to a user button press (bots only)
-//
-// See https://core.telegram.org/method/messages.setBotCallbackAnswer for reference.
 type MessagesSetBotCallbackAnswerRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessagesSetBotCallbackAnswerRequest.
 	Flags bin.Fields
-	// Whether to show the message as a popup instead of a toast notification
+	// Alert field of MessagesSetBotCallbackAnswerRequest.
 	Alert bool
-	// Query ID
+	// QueryID field of MessagesSetBotCallbackAnswerRequest.
 	QueryID int64
-	// Popup to show
+	// Message field of MessagesSetBotCallbackAnswerRequest.
 	//
 	// Use SetMessage and GetMessage helpers.
 	Message string
-	// URL to open
+	// URL field of MessagesSetBotCallbackAnswerRequest.
 	//
 	// Use SetURL and GetURL helpers.
 	URL string
-	// Cache validity
+	// CacheTime field of MessagesSetBotCallbackAnswerRequest.
 	CacheTime int
 }
 
@@ -101,27 +95,6 @@ func (s *MessagesSetBotCallbackAnswerRequest) String() string {
 	}
 	type Alias MessagesSetBotCallbackAnswerRequest
 	return fmt.Sprintf("MessagesSetBotCallbackAnswerRequest%+v", Alias(*s))
-}
-
-// FillFrom fills MessagesSetBotCallbackAnswerRequest from given interface.
-func (s *MessagesSetBotCallbackAnswerRequest) FillFrom(from interface {
-	GetAlert() (value bool)
-	GetQueryID() (value int64)
-	GetMessage() (value string, ok bool)
-	GetURL() (value string, ok bool)
-	GetCacheTime() (value int)
-}) {
-	s.Alert = from.GetAlert()
-	s.QueryID = from.GetQueryID()
-	if val, ok := from.GetMessage(); ok {
-		s.Message = val
-	}
-
-	if val, ok := from.GetURL(); ok {
-		s.URL = val
-	}
-
-	s.CacheTime = from.GetCacheTime()
 }
 
 // TypeID returns type id in TL schema.
@@ -341,17 +314,6 @@ func (s *MessagesSetBotCallbackAnswerRequest) GetCacheTime() (value int) {
 }
 
 // MessagesSetBotCallbackAnswer invokes method messages.setBotCallbackAnswer#d58f130a returning error if any.
-// Set the callback answer to a user button press (bots only)
-//
-// Possible errors:
-//
-//	400 MESSAGE_TOO_LONG: The provided message is too long.
-//	400 QUERY_ID_INVALID: The query ID is invalid.
-//	400 URL_INVALID: Invalid URL provided.
-//	400 USER_BOT_REQUIRED: This method can only be called by a bot.
-//
-// See https://core.telegram.org/method/messages.setBotCallbackAnswer for reference.
-// Can be used by bots.
 func (c *Client) MessagesSetBotCallbackAnswer(ctx context.Context, request *MessagesSetBotCallbackAnswerRequest) (bool, error) {
 	var result BoolBox
 

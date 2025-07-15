@@ -32,55 +32,24 @@ var (
 )
 
 // MessagesSetChatWallPaperRequest represents TL type `messages.setChatWallPaper#8ffacae1`.
-// Set a custom wallpaper »¹ in a specific private chat with another user.
-//
-// Links:
-//  1. https://core.telegram.org/api/wallpapers
-//
-// See https://core.telegram.org/method/messages.setChatWallPaper for reference.
 type MessagesSetChatWallPaperRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessagesSetChatWallPaperRequest.
 	Flags bin.Fields
-	// Only for Premium¹ users, sets the specified wallpaper for both users of the chat,
-	// without requiring confirmation from the other user.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/premium
+	// ForBoth field of MessagesSetChatWallPaperRequest.
 	ForBoth bool
-	// If we don't like the new wallpaper the other user of the chat has chosen for us using
-	// the for_both flag, we can re-set our previous wallpaper just on our side using this
-	// flag.
+	// Revert field of MessagesSetChatWallPaperRequest.
 	Revert bool
-	// The private chat where the wallpaper will be set
+	// Peer field of MessagesSetChatWallPaperRequest.
 	Peer InputPeerClass
-	// The wallpaper »¹, obtained as described in the wallpaper documentation »²; must
-	// not be provided when installing a wallpaper obtained from a
-	// messageActionSetChatWallPaper³ service message (id must be provided, instead).
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/wallpapers
-	//  2) https://core.telegram.org/api/wallpapers#uploading-wallpapers
-	//  3) https://core.telegram.org/constructor/messageActionSetChatWallPaper
+	// Wallpaper field of MessagesSetChatWallPaperRequest.
 	//
 	// Use SetWallpaper and GetWallpaper helpers.
 	Wallpaper InputWallPaperClass
-	// Wallpaper settings, obtained as described in the wallpaper documentation »¹ or from
-	// messageActionSetChatWallPaper².wallpaper.settings.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/wallpapers#uploading-wallpapers
-	//  2) https://core.telegram.org/constructor/messageActionSetChatWallPaper
+	// Settings field of MessagesSetChatWallPaperRequest.
 	//
 	// Use SetSettings and GetSettings helpers.
 	Settings WallPaperSettings
-	// If the wallpaper was obtained from a messageActionSetChatWallPaper¹ service message,
-	// must contain the ID of that message.
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/messageActionSetChatWallPaper
+	// ID field of MessagesSetChatWallPaperRequest.
 	//
 	// Use SetID and GetID helpers.
 	ID int
@@ -133,32 +102,6 @@ func (s *MessagesSetChatWallPaperRequest) String() string {
 	}
 	type Alias MessagesSetChatWallPaperRequest
 	return fmt.Sprintf("MessagesSetChatWallPaperRequest%+v", Alias(*s))
-}
-
-// FillFrom fills MessagesSetChatWallPaperRequest from given interface.
-func (s *MessagesSetChatWallPaperRequest) FillFrom(from interface {
-	GetForBoth() (value bool)
-	GetRevert() (value bool)
-	GetPeer() (value InputPeerClass)
-	GetWallpaper() (value InputWallPaperClass, ok bool)
-	GetSettings() (value WallPaperSettings, ok bool)
-	GetID() (value int, ok bool)
-}) {
-	s.ForBoth = from.GetForBoth()
-	s.Revert = from.GetRevert()
-	s.Peer = from.GetPeer()
-	if val, ok := from.GetWallpaper(); ok {
-		s.Wallpaper = val
-	}
-
-	if val, ok := from.GetSettings(); ok {
-		s.Settings = val
-	}
-
-	if val, ok := from.GetID(); ok {
-		s.ID = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -432,18 +375,6 @@ func (s *MessagesSetChatWallPaperRequest) GetID() (value int, ok bool) {
 }
 
 // MessagesSetChatWallPaper invokes method messages.setChatWallPaper#8ffacae1 returning error if any.
-// Set a custom wallpaper »¹ in a specific private chat with another user.
-//
-// Links:
-//  1. https://core.telegram.org/api/wallpapers
-//
-// Possible errors:
-//
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//	400 WALLPAPER_INVALID: The specified wallpaper is invalid.
-//	400 WALLPAPER_NOT_FOUND: The specified wallpaper could not be found.
-//
-// See https://core.telegram.org/method/messages.setChatWallPaper for reference.
 func (c *Client) MessagesSetChatWallPaper(ctx context.Context, request *MessagesSetChatWallPaperRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

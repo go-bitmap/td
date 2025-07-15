@@ -32,15 +32,8 @@ var (
 )
 
 // AccountDeleteSecureValueRequest represents TL type `account.deleteSecureValue#b880bc4b`.
-// Delete stored Telegram Passport¹ documents, for more info see the passport docs »²
-//
-// Links:
-//  1. https://core.telegram.org/passport
-//  2. https://core.telegram.org/passport/encryption#encryption
-//
-// See https://core.telegram.org/method/account.deleteSecureValue for reference.
 type AccountDeleteSecureValueRequest struct {
-	// Document types to delete
+	// Types field of AccountDeleteSecureValueRequest.
 	Types []SecureValueTypeClass
 }
 
@@ -73,13 +66,6 @@ func (d *AccountDeleteSecureValueRequest) String() string {
 	}
 	type Alias AccountDeleteSecureValueRequest
 	return fmt.Sprintf("AccountDeleteSecureValueRequest%+v", Alias(*d))
-}
-
-// FillFrom fills AccountDeleteSecureValueRequest from given interface.
-func (d *AccountDeleteSecureValueRequest) FillFrom(from interface {
-	GetTypes() (value []SecureValueTypeClass)
-}) {
-	d.Types = from.GetTypes()
 }
 
 // TypeID returns type id in TL schema.
@@ -183,19 +169,7 @@ func (d *AccountDeleteSecureValueRequest) GetTypes() (value []SecureValueTypeCla
 	return d.Types
 }
 
-// MapTypes returns field Types wrapped in SecureValueTypeClassArray helper.
-func (d *AccountDeleteSecureValueRequest) MapTypes() (value SecureValueTypeClassArray) {
-	return SecureValueTypeClassArray(d.Types)
-}
-
 // AccountDeleteSecureValue invokes method account.deleteSecureValue#b880bc4b returning error if any.
-// Delete stored Telegram Passport¹ documents, for more info see the passport docs »²
-//
-// Links:
-//  1. https://core.telegram.org/passport
-//  2. https://core.telegram.org/passport/encryption#encryption
-//
-// See https://core.telegram.org/method/account.deleteSecureValue for reference.
 func (c *Client) AccountDeleteSecureValue(ctx context.Context, types []SecureValueTypeClass) (bool, error) {
 	var result BoolBox
 

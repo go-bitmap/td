@@ -32,12 +32,6 @@ var (
 )
 
 // MessagesClearAllDraftsRequest represents TL type `messages.clearAllDrafts#7e58ee9c`.
-// Clear all drafts¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/drafts
-//
-// See https://core.telegram.org/method/messages.clearAllDrafts for reference.
 type MessagesClearAllDraftsRequest struct {
 }
 
@@ -132,12 +126,6 @@ func (c *MessagesClearAllDraftsRequest) DecodeBare(b *bin.Buffer) error {
 }
 
 // MessagesClearAllDrafts invokes method messages.clearAllDrafts#7e58ee9c returning error if any.
-// Clear all drafts¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/drafts
-//
-// See https://core.telegram.org/method/messages.clearAllDrafts for reference.
 func (c *Client) MessagesClearAllDrafts(ctx context.Context) (bool, error) {
 	var result BoolBox
 

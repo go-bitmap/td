@@ -32,31 +32,24 @@ var (
 )
 
 // BotsSetBotInfoRequest represents TL type `bots.setBotInfo#10cf3123`.
-// Set localized name, about text and description of a bot (or of the current account, if
-// called by a bot).
-//
-// See https://core.telegram.org/method/bots.setBotInfo for reference.
 type BotsSetBotInfoRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of BotsSetBotInfoRequest.
 	Flags bin.Fields
-	// If called by a user, must contain the peer of a bot we own.
+	// Bot field of BotsSetBotInfoRequest.
 	//
 	// Use SetBot and GetBot helpers.
 	Bot InputUserClass
-	// Language code, if left empty update the fallback about text and description
+	// LangCode field of BotsSetBotInfoRequest.
 	LangCode string
-	// New bot name
+	// Name field of BotsSetBotInfoRequest.
 	//
 	// Use SetName and GetName helpers.
 	Name string
-	// New about text
+	// About field of BotsSetBotInfoRequest.
 	//
 	// Use SetAbout and GetAbout helpers.
 	About string
-	// New description
+	// Description field of BotsSetBotInfoRequest.
 	//
 	// Use SetDescription and GetDescription helpers.
 	Description string
@@ -106,33 +99,6 @@ func (s *BotsSetBotInfoRequest) String() string {
 	}
 	type Alias BotsSetBotInfoRequest
 	return fmt.Sprintf("BotsSetBotInfoRequest%+v", Alias(*s))
-}
-
-// FillFrom fills BotsSetBotInfoRequest from given interface.
-func (s *BotsSetBotInfoRequest) FillFrom(from interface {
-	GetBot() (value InputUserClass, ok bool)
-	GetLangCode() (value string)
-	GetName() (value string, ok bool)
-	GetAbout() (value string, ok bool)
-	GetDescription() (value string, ok bool)
-}) {
-	if val, ok := from.GetBot(); ok {
-		s.Bot = val
-	}
-
-	s.LangCode = from.GetLangCode()
-	if val, ok := from.GetName(); ok {
-		s.Name = val
-	}
-
-	if val, ok := from.GetAbout(); ok {
-		s.About = val
-	}
-
-	if val, ok := from.GetDescription(); ok {
-		s.Description = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -381,16 +347,6 @@ func (s *BotsSetBotInfoRequest) GetDescription() (value string, ok bool) {
 }
 
 // BotsSetBotInfo invokes method bots.setBotInfo#10cf3123 returning error if any.
-// Set localized name, about text and description of a bot (or of the current account, if
-// called by a bot).
-//
-// Possible errors:
-//
-//	400 BOT_INVALID: This is not a valid bot.
-//	400 USER_BOT_INVALID: User accounts must provide the bot method parameter when calling this method. If there is no such method parameter, this method can only be invoked by bot accounts.
-//
-// See https://core.telegram.org/method/bots.setBotInfo for reference.
-// Can be used by bots.
 func (c *Client) BotsSetBotInfo(ctx context.Context, request *BotsSetBotInfoRequest) (bool, error) {
 	var result BoolBox
 

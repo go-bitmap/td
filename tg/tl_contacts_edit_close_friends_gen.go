@@ -32,17 +32,8 @@ var (
 )
 
 // ContactsEditCloseFriendsRequest represents TL type `contacts.editCloseFriends#ba6705f0`.
-// Edit the close friends list, see here »¹ for more info.
-//
-// Links:
-//  1. https://core.telegram.org/api/privacy
-//
-// See https://core.telegram.org/method/contacts.editCloseFriends for reference.
 type ContactsEditCloseFriendsRequest struct {
-	// Full list of user IDs of close friends, see here¹ for more info.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/privacy
+	// ID field of ContactsEditCloseFriendsRequest.
 	ID []int64
 }
 
@@ -75,13 +66,6 @@ func (e *ContactsEditCloseFriendsRequest) String() string {
 	}
 	type Alias ContactsEditCloseFriendsRequest
 	return fmt.Sprintf("ContactsEditCloseFriendsRequest%+v", Alias(*e))
-}
-
-// FillFrom fills ContactsEditCloseFriendsRequest from given interface.
-func (e *ContactsEditCloseFriendsRequest) FillFrom(from interface {
-	GetID() (value []int64)
-}) {
-	e.ID = from.GetID()
 }
 
 // TypeID returns type id in TL schema.
@@ -181,12 +165,6 @@ func (e *ContactsEditCloseFriendsRequest) GetID() (value []int64) {
 }
 
 // ContactsEditCloseFriends invokes method contacts.editCloseFriends#ba6705f0 returning error if any.
-// Edit the close friends list, see here »¹ for more info.
-//
-// Links:
-//  1. https://core.telegram.org/api/privacy
-//
-// See https://core.telegram.org/method/contacts.editCloseFriends for reference.
 func (c *Client) ContactsEditCloseFriends(ctx context.Context, id []int64) (bool, error) {
 	var result BoolBox
 

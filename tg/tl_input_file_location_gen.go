@@ -32,20 +32,14 @@ var (
 )
 
 // InputFileLocation represents TL type `inputFileLocation#dfdaabe1`.
-// DEPRECATED location of a photo
-//
-// See https://core.telegram.org/constructor/inputFileLocation for reference.
 type InputFileLocation struct {
-	// Server volume
+	// VolumeID field of InputFileLocation.
 	VolumeID int64
-	// File identifier
+	// LocalID field of InputFileLocation.
 	LocalID int
-	// Check sum to access the file
+	// Secret field of InputFileLocation.
 	Secret int64
-	// File reference¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/file_reference
+	// FileReference field of InputFileLocation.
 	FileReference []byte
 }
 
@@ -92,19 +86,6 @@ func (i *InputFileLocation) String() string {
 	}
 	type Alias InputFileLocation
 	return fmt.Sprintf("InputFileLocation%+v", Alias(*i))
-}
-
-// FillFrom fills InputFileLocation from given interface.
-func (i *InputFileLocation) FillFrom(from interface {
-	GetVolumeID() (value int64)
-	GetLocalID() (value int)
-	GetSecret() (value int64)
-	GetFileReference() (value []byte)
-}) {
-	i.VolumeID = from.GetVolumeID()
-	i.LocalID = from.GetLocalID()
-	i.Secret = from.GetSecret()
-	i.FileReference = from.GetFileReference()
 }
 
 // TypeID returns type id in TL schema.
@@ -251,19 +232,10 @@ func (i *InputFileLocation) GetFileReference() (value []byte) {
 }
 
 // InputEncryptedFileLocation represents TL type `inputEncryptedFileLocation#f5235d55`.
-// Location of encrypted secret chat file.
-//
-// See https://core.telegram.org/constructor/inputEncryptedFileLocation for reference.
 type InputEncryptedFileLocation struct {
-	// File ID, id parameter value from encryptedFile¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/encryptedFile
+	// ID field of InputEncryptedFileLocation.
 	ID int64
-	// Checksum, access_hash parameter value from encryptedFile¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/encryptedFile
+	// AccessHash field of InputEncryptedFileLocation.
 	AccessHash int64
 }
 
@@ -304,15 +276,6 @@ func (i *InputEncryptedFileLocation) String() string {
 	}
 	type Alias InputEncryptedFileLocation
 	return fmt.Sprintf("InputEncryptedFileLocation%+v", Alias(*i))
-}
-
-// FillFrom fills InputEncryptedFileLocation from given interface.
-func (i *InputEncryptedFileLocation) FillFrom(from interface {
-	GetID() (value int64)
-	GetAccessHash() (value int64)
-}) {
-	i.ID = from.GetID()
-	i.AccessHash = from.GetAccessHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -419,23 +382,14 @@ func (i *InputEncryptedFileLocation) GetAccessHash() (value int64) {
 }
 
 // InputDocumentFileLocation represents TL type `inputDocumentFileLocation#bad07584`.
-// Document location (video, voice, audio, basically every type except photo)
-//
-// See https://core.telegram.org/constructor/inputDocumentFileLocation for reference.
 type InputDocumentFileLocation struct {
-	// Document ID
+	// ID field of InputDocumentFileLocation.
 	ID int64
-	// access_hash parameter from the document¹ constructor
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/document
+	// AccessHash field of InputDocumentFileLocation.
 	AccessHash int64
-	// File reference¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/file_reference
+	// FileReference field of InputDocumentFileLocation.
 	FileReference []byte
-	// Thumbnail size to download the thumbnail
+	// ThumbSize field of InputDocumentFileLocation.
 	ThumbSize string
 }
 
@@ -482,19 +436,6 @@ func (i *InputDocumentFileLocation) String() string {
 	}
 	type Alias InputDocumentFileLocation
 	return fmt.Sprintf("InputDocumentFileLocation%+v", Alias(*i))
-}
-
-// FillFrom fills InputDocumentFileLocation from given interface.
-func (i *InputDocumentFileLocation) FillFrom(from interface {
-	GetID() (value int64)
-	GetAccessHash() (value int64)
-	GetFileReference() (value []byte)
-	GetThumbSize() (value string)
-}) {
-	i.ID = from.GetID()
-	i.AccessHash = from.GetAccessHash()
-	i.FileReference = from.GetFileReference()
-	i.ThumbSize = from.GetThumbSize()
 }
 
 // TypeID returns type id in TL schema.
@@ -641,22 +582,10 @@ func (i *InputDocumentFileLocation) GetThumbSize() (value string) {
 }
 
 // InputSecureFileLocation represents TL type `inputSecureFileLocation#cbc7ee28`.
-// Location of encrypted telegram passport¹ file.
-//
-// Links:
-//  1. https://core.telegram.org/passport
-//
-// See https://core.telegram.org/constructor/inputSecureFileLocation for reference.
 type InputSecureFileLocation struct {
-	// File ID, id parameter value from secureFile¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/secureFile
+	// ID field of InputSecureFileLocation.
 	ID int64
-	// Checksum, access_hash parameter value from secureFile¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/secureFile
+	// AccessHash field of InputSecureFileLocation.
 	AccessHash int64
 }
 
@@ -697,15 +626,6 @@ func (i *InputSecureFileLocation) String() string {
 	}
 	type Alias InputSecureFileLocation
 	return fmt.Sprintf("InputSecureFileLocation%+v", Alias(*i))
-}
-
-// FillFrom fills InputSecureFileLocation from given interface.
-func (i *InputSecureFileLocation) FillFrom(from interface {
-	GetID() (value int64)
-	GetAccessHash() (value int64)
-}) {
-	i.ID = from.GetID()
-	i.AccessHash = from.GetAccessHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -812,15 +732,6 @@ func (i *InputSecureFileLocation) GetAccessHash() (value int64) {
 }
 
 // InputTakeoutFileLocation represents TL type `inputTakeoutFileLocation#29be5899`.
-// Used to download a JSON file that will contain all personal data related to features
-// that do not have a specialized takeout method¹ yet, see here »² for more info on
-// the takeout API.
-//
-// Links:
-//  1. https://core.telegram.org/api/takeout
-//  2. https://core.telegram.org/api/takeout
-//
-// See https://core.telegram.org/constructor/inputTakeoutFileLocation for reference.
 type InputTakeoutFileLocation struct {
 }
 
@@ -920,34 +831,14 @@ func (i *InputTakeoutFileLocation) DecodeBare(b *bin.Buffer) error {
 }
 
 // InputPhotoFileLocation represents TL type `inputPhotoFileLocation#40181ffe`.
-// Use this object to download a photo with upload.getFile¹ method
-//
-// Links:
-//  1. https://core.telegram.org/method/upload.getFile
-//
-// See https://core.telegram.org/constructor/inputPhotoFileLocation for reference.
 type InputPhotoFileLocation struct {
-	// Photo ID, obtained from the photo¹ object
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/photo
+	// ID field of InputPhotoFileLocation.
 	ID int64
-	// Photo's access hash, obtained from the photo¹ object
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/photo
+	// AccessHash field of InputPhotoFileLocation.
 	AccessHash int64
-	// File reference¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/file_reference
+	// FileReference field of InputPhotoFileLocation.
 	FileReference []byte
-	// The PhotoSize¹ to download: must be set to the type field of the desired PhotoSize
-	// object of the photo²
-	//
-	// Links:
-	//  1) https://core.telegram.org/type/PhotoSize
-	//  2) https://core.telegram.org/constructor/photo
+	// ThumbSize field of InputPhotoFileLocation.
 	ThumbSize string
 }
 
@@ -994,19 +885,6 @@ func (i *InputPhotoFileLocation) String() string {
 	}
 	type Alias InputPhotoFileLocation
 	return fmt.Sprintf("InputPhotoFileLocation%+v", Alias(*i))
-}
-
-// FillFrom fills InputPhotoFileLocation from given interface.
-func (i *InputPhotoFileLocation) FillFrom(from interface {
-	GetID() (value int64)
-	GetAccessHash() (value int64)
-	GetFileReference() (value []byte)
-	GetThumbSize() (value string)
-}) {
-	i.ID = from.GetID()
-	i.AccessHash = from.GetAccessHash()
-	i.FileReference = from.GetFileReference()
-	i.ThumbSize = from.GetThumbSize()
 }
 
 // TypeID returns type id in TL schema.
@@ -1153,21 +1031,18 @@ func (i *InputPhotoFileLocation) GetThumbSize() (value string) {
 }
 
 // InputPhotoLegacyFileLocation represents TL type `inputPhotoLegacyFileLocation#d83466f3`.
-// DEPRECATED legacy photo file location
-//
-// See https://core.telegram.org/constructor/inputPhotoLegacyFileLocation for reference.
 type InputPhotoLegacyFileLocation struct {
-	// Photo ID
+	// ID field of InputPhotoLegacyFileLocation.
 	ID int64
-	// Access hash
+	// AccessHash field of InputPhotoLegacyFileLocation.
 	AccessHash int64
-	// File reference
+	// FileReference field of InputPhotoLegacyFileLocation.
 	FileReference []byte
-	// Volume ID
+	// VolumeID field of InputPhotoLegacyFileLocation.
 	VolumeID int64
-	// Local ID
+	// LocalID field of InputPhotoLegacyFileLocation.
 	LocalID int
-	// Secret
+	// Secret field of InputPhotoLegacyFileLocation.
 	Secret int64
 }
 
@@ -1220,23 +1095,6 @@ func (i *InputPhotoLegacyFileLocation) String() string {
 	}
 	type Alias InputPhotoLegacyFileLocation
 	return fmt.Sprintf("InputPhotoLegacyFileLocation%+v", Alias(*i))
-}
-
-// FillFrom fills InputPhotoLegacyFileLocation from given interface.
-func (i *InputPhotoLegacyFileLocation) FillFrom(from interface {
-	GetID() (value int64)
-	GetAccessHash() (value int64)
-	GetFileReference() (value []byte)
-	GetVolumeID() (value int64)
-	GetLocalID() (value int)
-	GetSecret() (value int64)
-}) {
-	i.ID = from.GetID()
-	i.AccessHash = from.GetAccessHash()
-	i.FileReference = from.GetFileReference()
-	i.VolumeID = from.GetVolumeID()
-	i.LocalID = from.GetLocalID()
-	i.Secret = from.GetSecret()
 }
 
 // TypeID returns type id in TL schema.
@@ -1423,20 +1281,14 @@ func (i *InputPhotoLegacyFileLocation) GetSecret() (value int64) {
 }
 
 // InputPeerPhotoFileLocation represents TL type `inputPeerPhotoFileLocation#37257e99`.
-// Location of profile photo of channel/group/supergroup/user
-//
-// See https://core.telegram.org/constructor/inputPeerPhotoFileLocation for reference.
 type InputPeerPhotoFileLocation struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of InputPeerPhotoFileLocation.
 	Flags bin.Fields
-	// Whether to download the high-quality version of the picture
+	// Big field of InputPeerPhotoFileLocation.
 	Big bool
-	// The peer whose profile picture should be downloaded
+	// Peer field of InputPeerPhotoFileLocation.
 	Peer InputPeerClass
-	// Photo ID
+	// PhotoID field of InputPeerPhotoFileLocation.
 	PhotoID int64
 }
 
@@ -1483,17 +1335,6 @@ func (i *InputPeerPhotoFileLocation) String() string {
 	}
 	type Alias InputPeerPhotoFileLocation
 	return fmt.Sprintf("InputPeerPhotoFileLocation%+v", Alias(*i))
-}
-
-// FillFrom fills InputPeerPhotoFileLocation from given interface.
-func (i *InputPeerPhotoFileLocation) FillFrom(from interface {
-	GetBig() (value bool)
-	GetPeer() (value InputPeerClass)
-	GetPhotoID() (value int64)
-}) {
-	i.Big = from.GetBig()
-	i.Peer = from.GetPeer()
-	i.PhotoID = from.GetPhotoID()
 }
 
 // TypeID returns type id in TL schema.
@@ -1646,16 +1487,10 @@ func (i *InputPeerPhotoFileLocation) GetPhotoID() (value int64) {
 }
 
 // InputStickerSetThumb represents TL type `inputStickerSetThumb#9d84f3db`.
-// Location of stickerset thumbnail (see files¹)
-//
-// Links:
-//  1. https://core.telegram.org/api/files
-//
-// See https://core.telegram.org/constructor/inputStickerSetThumb for reference.
 type InputStickerSetThumb struct {
-	// Sticker set
+	// Stickerset field of InputStickerSetThumb.
 	Stickerset InputStickerSetClass
-	// Thumbnail version
+	// ThumbVersion field of InputStickerSetThumb.
 	ThumbVersion int
 }
 
@@ -1696,15 +1531,6 @@ func (i *InputStickerSetThumb) String() string {
 	}
 	type Alias InputStickerSetThumb
 	return fmt.Sprintf("InputStickerSetThumb%+v", Alias(*i))
-}
-
-// FillFrom fills InputStickerSetThumb from given interface.
-func (i *InputStickerSetThumb) FillFrom(from interface {
-	GetStickerset() (value InputStickerSetClass)
-	GetThumbVersion() (value int)
-}) {
-	i.Stickerset = from.GetStickerset()
-	i.ThumbVersion = from.GetThumbVersion()
 }
 
 // TypeID returns type id in TL schema.
@@ -1816,27 +1642,20 @@ func (i *InputStickerSetThumb) GetThumbVersion() (value int) {
 }
 
 // InputGroupCallStream represents TL type `inputGroupCallStream#598a92a`.
-// Chunk of a livestream
-//
-// See https://core.telegram.org/constructor/inputGroupCallStream for reference.
 type InputGroupCallStream struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of InputGroupCallStream.
 	Flags bin.Fields
-	// Livestream info
+	// Call field of InputGroupCallStream.
 	Call InputGroupCallClass
-	// Timestamp in milliseconds
+	// TimeMs field of InputGroupCallStream.
 	TimeMs int64
-	// Specifies the duration of the video segment to fetch in milliseconds, by bitshifting
-	// 1000 to the right scale times: duration_ms := 1000 >> scale
+	// Scale field of InputGroupCallStream.
 	Scale int
-	// Selected video channel
+	// VideoChannel field of InputGroupCallStream.
 	//
 	// Use SetVideoChannel and GetVideoChannel helpers.
 	VideoChannel int
-	// Selected video quality (0 = lowest, 1 = medium, 2 = best)
+	// VideoQuality field of InputGroupCallStream.
 	//
 	// Use SetVideoQuality and GetVideoQuality helpers.
 	VideoQuality int
@@ -1891,27 +1710,6 @@ func (i *InputGroupCallStream) String() string {
 	}
 	type Alias InputGroupCallStream
 	return fmt.Sprintf("InputGroupCallStream%+v", Alias(*i))
-}
-
-// FillFrom fills InputGroupCallStream from given interface.
-func (i *InputGroupCallStream) FillFrom(from interface {
-	GetCall() (value InputGroupCallClass)
-	GetTimeMs() (value int64)
-	GetScale() (value int)
-	GetVideoChannel() (value int, ok bool)
-	GetVideoQuality() (value int, ok bool)
-}) {
-	i.Call = from.GetCall()
-	i.TimeMs = from.GetTimeMs()
-	i.Scale = from.GetScale()
-	if val, ok := from.GetVideoChannel(); ok {
-		i.VideoChannel = val
-	}
-
-	if val, ok := from.GetVideoQuality(); ok {
-		i.VideoQuality = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -2127,451 +1925,10 @@ func (i *InputGroupCallStream) GetVideoQuality() (value int, ok bool) {
 	return i.VideoQuality, true
 }
 
-// InputPeerPhotoFileLocationLegacy represents TL type `inputPeerPhotoFileLocationLegacy#27d69997`.
-//
-// See https://core.telegram.org/constructor/inputPeerPhotoFileLocationLegacy for reference.
-type InputPeerPhotoFileLocationLegacy struct {
-	// Flags field of InputPeerPhotoFileLocationLegacy.
-	Flags bin.Fields
-	// Big field of InputPeerPhotoFileLocationLegacy.
-	Big bool
-	// Peer field of InputPeerPhotoFileLocationLegacy.
-	Peer InputPeerClass
-	// VolumeID field of InputPeerPhotoFileLocationLegacy.
-	VolumeID int64
-	// LocalID field of InputPeerPhotoFileLocationLegacy.
-	LocalID int
-}
-
-// InputPeerPhotoFileLocationLegacyTypeID is TL type id of InputPeerPhotoFileLocationLegacy.
-const InputPeerPhotoFileLocationLegacyTypeID = 0x27d69997
-
-// construct implements constructor of InputFileLocationClass.
-func (i InputPeerPhotoFileLocationLegacy) construct() InputFileLocationClass { return &i }
-
-// Ensuring interfaces in compile-time for InputPeerPhotoFileLocationLegacy.
-var (
-	_ bin.Encoder     = &InputPeerPhotoFileLocationLegacy{}
-	_ bin.Decoder     = &InputPeerPhotoFileLocationLegacy{}
-	_ bin.BareEncoder = &InputPeerPhotoFileLocationLegacy{}
-	_ bin.BareDecoder = &InputPeerPhotoFileLocationLegacy{}
-
-	_ InputFileLocationClass = &InputPeerPhotoFileLocationLegacy{}
-)
-
-func (i *InputPeerPhotoFileLocationLegacy) Zero() bool {
-	if i == nil {
-		return true
-	}
-	if !(i.Flags.Zero()) {
-		return false
-	}
-	if !(i.Big == false) {
-		return false
-	}
-	if !(i.Peer == nil) {
-		return false
-	}
-	if !(i.VolumeID == 0) {
-		return false
-	}
-	if !(i.LocalID == 0) {
-		return false
-	}
-
-	return true
-}
-
-// String implements fmt.Stringer.
-func (i *InputPeerPhotoFileLocationLegacy) String() string {
-	if i == nil {
-		return "InputPeerPhotoFileLocationLegacy(nil)"
-	}
-	type Alias InputPeerPhotoFileLocationLegacy
-	return fmt.Sprintf("InputPeerPhotoFileLocationLegacy%+v", Alias(*i))
-}
-
-// FillFrom fills InputPeerPhotoFileLocationLegacy from given interface.
-func (i *InputPeerPhotoFileLocationLegacy) FillFrom(from interface {
-	GetBig() (value bool)
-	GetPeer() (value InputPeerClass)
-	GetVolumeID() (value int64)
-	GetLocalID() (value int)
-}) {
-	i.Big = from.GetBig()
-	i.Peer = from.GetPeer()
-	i.VolumeID = from.GetVolumeID()
-	i.LocalID = from.GetLocalID()
-}
-
-// TypeID returns type id in TL schema.
-//
-// See https://core.telegram.org/mtproto/TL-tl#remarks.
-func (*InputPeerPhotoFileLocationLegacy) TypeID() uint32 {
-	return InputPeerPhotoFileLocationLegacyTypeID
-}
-
-// TypeName returns name of type in TL schema.
-func (*InputPeerPhotoFileLocationLegacy) TypeName() string {
-	return "inputPeerPhotoFileLocationLegacy"
-}
-
-// TypeInfo returns info about TL type.
-func (i *InputPeerPhotoFileLocationLegacy) TypeInfo() tdp.Type {
-	typ := tdp.Type{
-		Name: "inputPeerPhotoFileLocationLegacy",
-		ID:   InputPeerPhotoFileLocationLegacyTypeID,
-	}
-	if i == nil {
-		typ.Null = true
-		return typ
-	}
-	typ.Fields = []tdp.Field{
-		{
-			Name:       "Big",
-			SchemaName: "big",
-			Null:       !i.Flags.Has(0),
-		},
-		{
-			Name:       "Peer",
-			SchemaName: "peer",
-		},
-		{
-			Name:       "VolumeID",
-			SchemaName: "volume_id",
-		},
-		{
-			Name:       "LocalID",
-			SchemaName: "local_id",
-		},
-	}
-	return typ
-}
-
-// SetFlags sets flags for non-zero fields.
-func (i *InputPeerPhotoFileLocationLegacy) SetFlags() {
-	if !(i.Big == false) {
-		i.Flags.Set(0)
-	}
-}
-
-// Encode implements bin.Encoder.
-func (i *InputPeerPhotoFileLocationLegacy) Encode(b *bin.Buffer) error {
-	if i == nil {
-		return fmt.Errorf("can't encode inputPeerPhotoFileLocationLegacy#27d69997 as nil")
-	}
-	b.PutID(InputPeerPhotoFileLocationLegacyTypeID)
-	return i.EncodeBare(b)
-}
-
-// EncodeBare implements bin.BareEncoder.
-func (i *InputPeerPhotoFileLocationLegacy) EncodeBare(b *bin.Buffer) error {
-	if i == nil {
-		return fmt.Errorf("can't encode inputPeerPhotoFileLocationLegacy#27d69997 as nil")
-	}
-	i.SetFlags()
-	if err := i.Flags.Encode(b); err != nil {
-		return fmt.Errorf("unable to encode inputPeerPhotoFileLocationLegacy#27d69997: field flags: %w", err)
-	}
-	if i.Peer == nil {
-		return fmt.Errorf("unable to encode inputPeerPhotoFileLocationLegacy#27d69997: field peer is nil")
-	}
-	if err := i.Peer.Encode(b); err != nil {
-		return fmt.Errorf("unable to encode inputPeerPhotoFileLocationLegacy#27d69997: field peer: %w", err)
-	}
-	b.PutLong(i.VolumeID)
-	b.PutInt(i.LocalID)
-	return nil
-}
-
-// Decode implements bin.Decoder.
-func (i *InputPeerPhotoFileLocationLegacy) Decode(b *bin.Buffer) error {
-	if i == nil {
-		return fmt.Errorf("can't decode inputPeerPhotoFileLocationLegacy#27d69997 to nil")
-	}
-	if err := b.ConsumeID(InputPeerPhotoFileLocationLegacyTypeID); err != nil {
-		return fmt.Errorf("unable to decode inputPeerPhotoFileLocationLegacy#27d69997: %w", err)
-	}
-	return i.DecodeBare(b)
-}
-
-// DecodeBare implements bin.BareDecoder.
-func (i *InputPeerPhotoFileLocationLegacy) DecodeBare(b *bin.Buffer) error {
-	if i == nil {
-		return fmt.Errorf("can't decode inputPeerPhotoFileLocationLegacy#27d69997 to nil")
-	}
-	{
-		if err := i.Flags.Decode(b); err != nil {
-			return fmt.Errorf("unable to decode inputPeerPhotoFileLocationLegacy#27d69997: field flags: %w", err)
-		}
-	}
-	i.Big = i.Flags.Has(0)
-	{
-		value, err := DecodeInputPeer(b)
-		if err != nil {
-			return fmt.Errorf("unable to decode inputPeerPhotoFileLocationLegacy#27d69997: field peer: %w", err)
-		}
-		i.Peer = value
-	}
-	{
-		value, err := b.Long()
-		if err != nil {
-			return fmt.Errorf("unable to decode inputPeerPhotoFileLocationLegacy#27d69997: field volume_id: %w", err)
-		}
-		i.VolumeID = value
-	}
-	{
-		value, err := b.Int()
-		if err != nil {
-			return fmt.Errorf("unable to decode inputPeerPhotoFileLocationLegacy#27d69997: field local_id: %w", err)
-		}
-		i.LocalID = value
-	}
-	return nil
-}
-
-// SetBig sets value of Big conditional field.
-func (i *InputPeerPhotoFileLocationLegacy) SetBig(value bool) {
-	if value {
-		i.Flags.Set(0)
-		i.Big = true
-	} else {
-		i.Flags.Unset(0)
-		i.Big = false
-	}
-}
-
-// GetBig returns value of Big conditional field.
-func (i *InputPeerPhotoFileLocationLegacy) GetBig() (value bool) {
-	if i == nil {
-		return
-	}
-	return i.Flags.Has(0)
-}
-
-// GetPeer returns value of Peer field.
-func (i *InputPeerPhotoFileLocationLegacy) GetPeer() (value InputPeerClass) {
-	if i == nil {
-		return
-	}
-	return i.Peer
-}
-
-// GetVolumeID returns value of VolumeID field.
-func (i *InputPeerPhotoFileLocationLegacy) GetVolumeID() (value int64) {
-	if i == nil {
-		return
-	}
-	return i.VolumeID
-}
-
-// GetLocalID returns value of LocalID field.
-func (i *InputPeerPhotoFileLocationLegacy) GetLocalID() (value int) {
-	if i == nil {
-		return
-	}
-	return i.LocalID
-}
-
-// InputStickerSetThumbLegacy represents TL type `inputStickerSetThumbLegacy#dbaeae9`.
-//
-// See https://core.telegram.org/constructor/inputStickerSetThumbLegacy for reference.
-type InputStickerSetThumbLegacy struct {
-	// Stickerset field of InputStickerSetThumbLegacy.
-	Stickerset InputStickerSetClass
-	// VolumeID field of InputStickerSetThumbLegacy.
-	VolumeID int64
-	// LocalID field of InputStickerSetThumbLegacy.
-	LocalID int
-}
-
-// InputStickerSetThumbLegacyTypeID is TL type id of InputStickerSetThumbLegacy.
-const InputStickerSetThumbLegacyTypeID = 0xdbaeae9
-
-// construct implements constructor of InputFileLocationClass.
-func (i InputStickerSetThumbLegacy) construct() InputFileLocationClass { return &i }
-
-// Ensuring interfaces in compile-time for InputStickerSetThumbLegacy.
-var (
-	_ bin.Encoder     = &InputStickerSetThumbLegacy{}
-	_ bin.Decoder     = &InputStickerSetThumbLegacy{}
-	_ bin.BareEncoder = &InputStickerSetThumbLegacy{}
-	_ bin.BareDecoder = &InputStickerSetThumbLegacy{}
-
-	_ InputFileLocationClass = &InputStickerSetThumbLegacy{}
-)
-
-func (i *InputStickerSetThumbLegacy) Zero() bool {
-	if i == nil {
-		return true
-	}
-	if !(i.Stickerset == nil) {
-		return false
-	}
-	if !(i.VolumeID == 0) {
-		return false
-	}
-	if !(i.LocalID == 0) {
-		return false
-	}
-
-	return true
-}
-
-// String implements fmt.Stringer.
-func (i *InputStickerSetThumbLegacy) String() string {
-	if i == nil {
-		return "InputStickerSetThumbLegacy(nil)"
-	}
-	type Alias InputStickerSetThumbLegacy
-	return fmt.Sprintf("InputStickerSetThumbLegacy%+v", Alias(*i))
-}
-
-// FillFrom fills InputStickerSetThumbLegacy from given interface.
-func (i *InputStickerSetThumbLegacy) FillFrom(from interface {
-	GetStickerset() (value InputStickerSetClass)
-	GetVolumeID() (value int64)
-	GetLocalID() (value int)
-}) {
-	i.Stickerset = from.GetStickerset()
-	i.VolumeID = from.GetVolumeID()
-	i.LocalID = from.GetLocalID()
-}
-
-// TypeID returns type id in TL schema.
-//
-// See https://core.telegram.org/mtproto/TL-tl#remarks.
-func (*InputStickerSetThumbLegacy) TypeID() uint32 {
-	return InputStickerSetThumbLegacyTypeID
-}
-
-// TypeName returns name of type in TL schema.
-func (*InputStickerSetThumbLegacy) TypeName() string {
-	return "inputStickerSetThumbLegacy"
-}
-
-// TypeInfo returns info about TL type.
-func (i *InputStickerSetThumbLegacy) TypeInfo() tdp.Type {
-	typ := tdp.Type{
-		Name: "inputStickerSetThumbLegacy",
-		ID:   InputStickerSetThumbLegacyTypeID,
-	}
-	if i == nil {
-		typ.Null = true
-		return typ
-	}
-	typ.Fields = []tdp.Field{
-		{
-			Name:       "Stickerset",
-			SchemaName: "stickerset",
-		},
-		{
-			Name:       "VolumeID",
-			SchemaName: "volume_id",
-		},
-		{
-			Name:       "LocalID",
-			SchemaName: "local_id",
-		},
-	}
-	return typ
-}
-
-// Encode implements bin.Encoder.
-func (i *InputStickerSetThumbLegacy) Encode(b *bin.Buffer) error {
-	if i == nil {
-		return fmt.Errorf("can't encode inputStickerSetThumbLegacy#dbaeae9 as nil")
-	}
-	b.PutID(InputStickerSetThumbLegacyTypeID)
-	return i.EncodeBare(b)
-}
-
-// EncodeBare implements bin.BareEncoder.
-func (i *InputStickerSetThumbLegacy) EncodeBare(b *bin.Buffer) error {
-	if i == nil {
-		return fmt.Errorf("can't encode inputStickerSetThumbLegacy#dbaeae9 as nil")
-	}
-	if i.Stickerset == nil {
-		return fmt.Errorf("unable to encode inputStickerSetThumbLegacy#dbaeae9: field stickerset is nil")
-	}
-	if err := i.Stickerset.Encode(b); err != nil {
-		return fmt.Errorf("unable to encode inputStickerSetThumbLegacy#dbaeae9: field stickerset: %w", err)
-	}
-	b.PutLong(i.VolumeID)
-	b.PutInt(i.LocalID)
-	return nil
-}
-
-// Decode implements bin.Decoder.
-func (i *InputStickerSetThumbLegacy) Decode(b *bin.Buffer) error {
-	if i == nil {
-		return fmt.Errorf("can't decode inputStickerSetThumbLegacy#dbaeae9 to nil")
-	}
-	if err := b.ConsumeID(InputStickerSetThumbLegacyTypeID); err != nil {
-		return fmt.Errorf("unable to decode inputStickerSetThumbLegacy#dbaeae9: %w", err)
-	}
-	return i.DecodeBare(b)
-}
-
-// DecodeBare implements bin.BareDecoder.
-func (i *InputStickerSetThumbLegacy) DecodeBare(b *bin.Buffer) error {
-	if i == nil {
-		return fmt.Errorf("can't decode inputStickerSetThumbLegacy#dbaeae9 to nil")
-	}
-	{
-		value, err := DecodeInputStickerSet(b)
-		if err != nil {
-			return fmt.Errorf("unable to decode inputStickerSetThumbLegacy#dbaeae9: field stickerset: %w", err)
-		}
-		i.Stickerset = value
-	}
-	{
-		value, err := b.Long()
-		if err != nil {
-			return fmt.Errorf("unable to decode inputStickerSetThumbLegacy#dbaeae9: field volume_id: %w", err)
-		}
-		i.VolumeID = value
-	}
-	{
-		value, err := b.Int()
-		if err != nil {
-			return fmt.Errorf("unable to decode inputStickerSetThumbLegacy#dbaeae9: field local_id: %w", err)
-		}
-		i.LocalID = value
-	}
-	return nil
-}
-
-// GetStickerset returns value of Stickerset field.
-func (i *InputStickerSetThumbLegacy) GetStickerset() (value InputStickerSetClass) {
-	if i == nil {
-		return
-	}
-	return i.Stickerset
-}
-
-// GetVolumeID returns value of VolumeID field.
-func (i *InputStickerSetThumbLegacy) GetVolumeID() (value int64) {
-	if i == nil {
-		return
-	}
-	return i.VolumeID
-}
-
-// GetLocalID returns value of LocalID field.
-func (i *InputStickerSetThumbLegacy) GetLocalID() (value int) {
-	if i == nil {
-		return
-	}
-	return i.LocalID
-}
-
 // InputFileLocationClassName is schema name of InputFileLocationClass.
 const InputFileLocationClassName = "InputFileLocation"
 
 // InputFileLocationClass represents InputFileLocation generic type.
-//
-// See https://core.telegram.org/type/InputFileLocation for reference.
 //
 // Constructors:
 //   - [InputFileLocation]
@@ -2584,8 +1941,6 @@ const InputFileLocationClassName = "InputFileLocation"
 //   - [InputPeerPhotoFileLocation]
 //   - [InputStickerSetThumb]
 //   - [InputGroupCallStream]
-//   - [InputPeerPhotoFileLocationLegacy]
-//   - [InputStickerSetThumbLegacy]
 //
 // Example:
 //
@@ -2604,8 +1959,6 @@ const InputFileLocationClassName = "InputFileLocation"
 //	case *tg.InputPeerPhotoFileLocation: // inputPeerPhotoFileLocation#37257e99
 //	case *tg.InputStickerSetThumb: // inputStickerSetThumb#9d84f3db
 //	case *tg.InputGroupCallStream: // inputGroupCallStream#598a92a
-//	case *tg.InputPeerPhotoFileLocationLegacy: // inputPeerPhotoFileLocationLegacy#27d69997
-//	case *tg.InputStickerSetThumbLegacy: // inputStickerSetThumbLegacy#dbaeae9
 //	default: panic(v)
 //	}
 type InputFileLocationClass interface {
@@ -2700,20 +2053,6 @@ func DecodeInputFileLocation(buf *bin.Buffer) (InputFileLocationClass, error) {
 	case InputGroupCallStreamTypeID:
 		// Decoding inputGroupCallStream#598a92a.
 		v := InputGroupCallStream{}
-		if err := v.Decode(buf); err != nil {
-			return nil, fmt.Errorf("unable to decode InputFileLocationClass: %w", err)
-		}
-		return &v, nil
-	case InputPeerPhotoFileLocationLegacyTypeID:
-		// Decoding inputPeerPhotoFileLocationLegacy#27d69997.
-		v := InputPeerPhotoFileLocationLegacy{}
-		if err := v.Decode(buf); err != nil {
-			return nil, fmt.Errorf("unable to decode InputFileLocationClass: %w", err)
-		}
-		return &v, nil
-	case InputStickerSetThumbLegacyTypeID:
-		// Decoding inputStickerSetThumbLegacy#dbaeae9.
-		v := InputStickerSetThumbLegacy{}
 		if err := v.Decode(buf); err != nil {
 			return nil, fmt.Errorf("unable to decode InputFileLocationClass: %w", err)
 		}

@@ -32,21 +32,12 @@ var (
 )
 
 // MessagesReorderPinnedSavedDialogsRequest represents TL type `messages.reorderPinnedSavedDialogs#8b716587`.
-// Reorder pinned saved message dialogs »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/saved-messages
-//
-// See https://core.telegram.org/method/messages.reorderPinnedSavedDialogs for reference.
 type MessagesReorderPinnedSavedDialogsRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessagesReorderPinnedSavedDialogsRequest.
 	Flags bin.Fields
-	// If set, dialogs pinned server-side but not present in the order field will be unpinned.
+	// Force field of MessagesReorderPinnedSavedDialogsRequest.
 	Force bool
-	// New dialog order
+	// Order field of MessagesReorderPinnedSavedDialogsRequest.
 	Order []InputDialogPeerClass
 }
 
@@ -85,15 +76,6 @@ func (r *MessagesReorderPinnedSavedDialogsRequest) String() string {
 	}
 	type Alias MessagesReorderPinnedSavedDialogsRequest
 	return fmt.Sprintf("MessagesReorderPinnedSavedDialogsRequest%+v", Alias(*r))
-}
-
-// FillFrom fills MessagesReorderPinnedSavedDialogsRequest from given interface.
-func (r *MessagesReorderPinnedSavedDialogsRequest) FillFrom(from interface {
-	GetForce() (value bool)
-	GetOrder() (value []InputDialogPeerClass)
-}) {
-	r.Force = from.GetForce()
-	r.Order = from.GetOrder()
 }
 
 // TypeID returns type id in TL schema.
@@ -238,18 +220,7 @@ func (r *MessagesReorderPinnedSavedDialogsRequest) GetOrder() (value []InputDial
 	return r.Order
 }
 
-// MapOrder returns field Order wrapped in InputDialogPeerClassArray helper.
-func (r *MessagesReorderPinnedSavedDialogsRequest) MapOrder() (value InputDialogPeerClassArray) {
-	return InputDialogPeerClassArray(r.Order)
-}
-
 // MessagesReorderPinnedSavedDialogs invokes method messages.reorderPinnedSavedDialogs#8b716587 returning error if any.
-// Reorder pinned saved message dialogs »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/saved-messages
-//
-// See https://core.telegram.org/method/messages.reorderPinnedSavedDialogs for reference.
 func (c *Client) MessagesReorderPinnedSavedDialogs(ctx context.Context, request *MessagesReorderPinnedSavedDialogsRequest) (bool, error) {
 	var result BoolBox
 

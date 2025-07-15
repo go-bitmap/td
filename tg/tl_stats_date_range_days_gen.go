@@ -32,16 +32,10 @@ var (
 )
 
 // StatsDateRangeDays represents TL type `statsDateRangeDays#b637edaf`.
-// Channel statistics¹ date range
-//
-// Links:
-//  1. https://core.telegram.org/api/stats
-//
-// See https://core.telegram.org/constructor/statsDateRangeDays for reference.
 type StatsDateRangeDays struct {
-	// Initial date
+	// MinDate field of StatsDateRangeDays.
 	MinDate int
-	// Final date
+	// MaxDate field of StatsDateRangeDays.
 	MaxDate int
 }
 
@@ -77,15 +71,6 @@ func (s *StatsDateRangeDays) String() string {
 	}
 	type Alias StatsDateRangeDays
 	return fmt.Sprintf("StatsDateRangeDays%+v", Alias(*s))
-}
-
-// FillFrom fills StatsDateRangeDays from given interface.
-func (s *StatsDateRangeDays) FillFrom(from interface {
-	GetMinDate() (value int)
-	GetMaxDate() (value int)
-}) {
-	s.MinDate = from.GetMinDate()
-	s.MaxDate = from.GetMaxDate()
 }
 
 // TypeID returns type id in TL schema.

@@ -32,32 +32,20 @@ var (
 )
 
 // AccountResolvedBusinessChatLinks represents TL type `account.resolvedBusinessChatLinks#9a23af21`.
-// Contains info about a single resolved business chat deep link »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/business#business-chat-links
-//
-// See https://core.telegram.org/constructor/account.resolvedBusinessChatLinks for reference.
 type AccountResolvedBusinessChatLinks struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of AccountResolvedBusinessChatLinks.
 	Flags bin.Fields
-	// Destination peer
+	// Peer field of AccountResolvedBusinessChatLinks.
 	Peer PeerClass
-	// Message to pre-fill in the message input field.
+	// Message field of AccountResolvedBusinessChatLinks.
 	Message string
-	// Message entities for styled text¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/entities
+	// Entities field of AccountResolvedBusinessChatLinks.
 	//
 	// Use SetEntities and GetEntities helpers.
 	Entities []MessageEntityClass
-	// Mentioned chats
+	// Chats field of AccountResolvedBusinessChatLinks.
 	Chats []ChatClass
-	// Mentioned users
+	// Users field of AccountResolvedBusinessChatLinks.
 	Users []UserClass
 }
 
@@ -105,24 +93,6 @@ func (r *AccountResolvedBusinessChatLinks) String() string {
 	}
 	type Alias AccountResolvedBusinessChatLinks
 	return fmt.Sprintf("AccountResolvedBusinessChatLinks%+v", Alias(*r))
-}
-
-// FillFrom fills AccountResolvedBusinessChatLinks from given interface.
-func (r *AccountResolvedBusinessChatLinks) FillFrom(from interface {
-	GetPeer() (value PeerClass)
-	GetMessage() (value string)
-	GetEntities() (value []MessageEntityClass, ok bool)
-	GetChats() (value []ChatClass)
-	GetUsers() (value []UserClass)
-}) {
-	r.Peer = from.GetPeer()
-	r.Message = from.GetMessage()
-	if val, ok := from.GetEntities(); ok {
-		r.Entities = val
-	}
-
-	r.Chats = from.GetChats()
-	r.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -374,22 +344,4 @@ func (r *AccountResolvedBusinessChatLinks) GetUsers() (value []UserClass) {
 		return
 	}
 	return r.Users
-}
-
-// MapEntities returns field Entities wrapped in MessageEntityClassArray helper.
-func (r *AccountResolvedBusinessChatLinks) MapEntities() (value MessageEntityClassArray, ok bool) {
-	if !r.Flags.Has(0) {
-		return value, false
-	}
-	return MessageEntityClassArray(r.Entities), true
-}
-
-// MapChats returns field Chats wrapped in ChatClassArray helper.
-func (r *AccountResolvedBusinessChatLinks) MapChats() (value ChatClassArray) {
-	return ChatClassArray(r.Chats)
-}
-
-// MapUsers returns field Users wrapped in UserClassArray helper.
-func (r *AccountResolvedBusinessChatLinks) MapUsers() (value UserClassArray) {
-	return UserClassArray(r.Users)
 }

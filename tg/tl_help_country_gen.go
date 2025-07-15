@@ -32,26 +32,20 @@ var (
 )
 
 // HelpCountry represents TL type `help.country#c3878e23`.
-// Name, ISO code, localized name and phone codes/patterns of a specific country
-//
-// See https://core.telegram.org/constructor/help.country for reference.
 type HelpCountry struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of HelpCountry.
 	Flags bin.Fields
-	// Whether this country should not be shown in the list
+	// Hidden field of HelpCountry.
 	Hidden bool
-	// ISO code of country
+	// ISO2 field of HelpCountry.
 	ISO2 string
-	// Name of the country in the country's language
+	// DefaultName field of HelpCountry.
 	DefaultName string
-	// Name of the country in the user's language, if different from the original name
+	// Name field of HelpCountry.
 	//
 	// Use SetName and GetName helpers.
 	Name string
-	// Phone codes/patterns
+	// CountryCodes field of HelpCountry.
 	CountryCodes []HelpCountryCode
 }
 
@@ -99,24 +93,6 @@ func (c *HelpCountry) String() string {
 	}
 	type Alias HelpCountry
 	return fmt.Sprintf("HelpCountry%+v", Alias(*c))
-}
-
-// FillFrom fills HelpCountry from given interface.
-func (c *HelpCountry) FillFrom(from interface {
-	GetHidden() (value bool)
-	GetISO2() (value string)
-	GetDefaultName() (value string)
-	GetName() (value string, ok bool)
-	GetCountryCodes() (value []HelpCountryCode)
-}) {
-	c.Hidden = from.GetHidden()
-	c.ISO2 = from.GetISO2()
-	c.DefaultName = from.GetDefaultName()
-	if val, ok := from.GetName(); ok {
-		c.Name = val
-	}
-
-	c.CountryCodes = from.GetCountryCodes()
 }
 
 // TypeID returns type id in TL schema.

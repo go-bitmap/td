@@ -32,42 +32,26 @@ var (
 )
 
 // StarGift represents TL type `starGift#c62aca28`.
-// Represents a star gift, see here »¹ for more info.
-//
-// Links:
-//  1. https://core.telegram.org/api/gifts
-//
-// See https://core.telegram.org/constructor/starGift for reference.
 type StarGift struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of StarGift.
 	Flags bin.Fields
-	// Whether this is a limited-supply gift.
+	// Limited field of StarGift.
 	Limited bool
-	// Whether this gift sold out and cannot be bought anymore.
+	// SoldOut field of StarGift.
 	SoldOut bool
-	// Whether this is a birthday-themed gift
+	// Birthday field of StarGift.
 	Birthday bool
-	// Identifier of the gift
+	// ID field of StarGift.
 	ID int64
-	// Sticker¹ that represents the gift.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/stickers
+	// Sticker field of StarGift.
 	Sticker DocumentClass
-	// Price of the gift in Telegram Stars¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/stars
+	// Stars field of StarGift.
 	Stars int64
-	// For limited-supply gifts: the remaining number of gifts that may be bought.
+	// AvailabilityRemains field of StarGift.
 	//
 	// Use SetAvailabilityRemains and GetAvailabilityRemains helpers.
 	AvailabilityRemains int
-	// For limited-supply gifts: the total number of gifts that was available in the initial
-	// supply.
+	// AvailabilityTotal field of StarGift.
 	//
 	// Use SetAvailabilityTotal and GetAvailabilityTotal helpers.
 	AvailabilityTotal int
@@ -75,16 +59,13 @@ type StarGift struct {
 	//
 	// Use SetAvailabilityResale and GetAvailabilityResale helpers.
 	AvailabilityResale int64
-	// The receiver of this gift may convert it to this many Telegram Stars, instead of
-	// displaying it on their profile page.convert_stars will be equal to stars only if the
-	// gift was bought using recently bought Telegram Stars, otherwise it will be less than
-	// stars.
+	// ConvertStars field of StarGift.
 	ConvertStars int64
-	// For sold out gifts only: when was the gift first bought.
+	// FirstSaleDate field of StarGift.
 	//
 	// Use SetFirstSaleDate and GetFirstSaleDate helpers.
 	FirstSaleDate int
-	// For sold out gifts only: when was the gift last bought.
+	// LastSaleDate field of StarGift.
 	//
 	// Use SetLastSaleDate and GetLastSaleDate helpers.
 	LastSaleDate int
@@ -181,65 +162,6 @@ func (s *StarGift) String() string {
 	}
 	type Alias StarGift
 	return fmt.Sprintf("StarGift%+v", Alias(*s))
-}
-
-// FillFrom fills StarGift from given interface.
-func (s *StarGift) FillFrom(from interface {
-	GetLimited() (value bool)
-	GetSoldOut() (value bool)
-	GetBirthday() (value bool)
-	GetID() (value int64)
-	GetSticker() (value DocumentClass)
-	GetStars() (value int64)
-	GetAvailabilityRemains() (value int, ok bool)
-	GetAvailabilityTotal() (value int, ok bool)
-	GetAvailabilityResale() (value int64, ok bool)
-	GetConvertStars() (value int64)
-	GetFirstSaleDate() (value int, ok bool)
-	GetLastSaleDate() (value int, ok bool)
-	GetUpgradeStars() (value int64, ok bool)
-	GetResellMinStars() (value int64, ok bool)
-	GetTitle() (value string, ok bool)
-}) {
-	s.Limited = from.GetLimited()
-	s.SoldOut = from.GetSoldOut()
-	s.Birthday = from.GetBirthday()
-	s.ID = from.GetID()
-	s.Sticker = from.GetSticker()
-	s.Stars = from.GetStars()
-	if val, ok := from.GetAvailabilityRemains(); ok {
-		s.AvailabilityRemains = val
-	}
-
-	if val, ok := from.GetAvailabilityTotal(); ok {
-		s.AvailabilityTotal = val
-	}
-
-	if val, ok := from.GetAvailabilityResale(); ok {
-		s.AvailabilityResale = val
-	}
-
-	s.ConvertStars = from.GetConvertStars()
-	if val, ok := from.GetFirstSaleDate(); ok {
-		s.FirstSaleDate = val
-	}
-
-	if val, ok := from.GetLastSaleDate(); ok {
-		s.LastSaleDate = val
-	}
-
-	if val, ok := from.GetUpgradeStars(); ok {
-		s.UpgradeStars = val
-	}
-
-	if val, ok := from.GetResellMinStars(); ok {
-		s.ResellMinStars = val
-	}
-
-	if val, ok := from.GetTitle(); ok {
-		s.Title = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -776,8 +698,6 @@ func (s *StarGift) GetTitle() (value string, ok bool) {
 }
 
 // StarGiftUnique represents TL type `starGiftUnique#6411db89`.
-//
-// See https://core.telegram.org/constructor/starGiftUnique for reference.
 type StarGiftUnique struct {
 	// Flags field of StarGiftUnique.
 	Flags bin.Fields
@@ -887,50 +807,6 @@ func (s *StarGiftUnique) String() string {
 	}
 	type Alias StarGiftUnique
 	return fmt.Sprintf("StarGiftUnique%+v", Alias(*s))
-}
-
-// FillFrom fills StarGiftUnique from given interface.
-func (s *StarGiftUnique) FillFrom(from interface {
-	GetID() (value int64)
-	GetTitle() (value string)
-	GetSlug() (value string)
-	GetNum() (value int)
-	GetOwnerID() (value PeerClass, ok bool)
-	GetOwnerName() (value string, ok bool)
-	GetOwnerAddress() (value string, ok bool)
-	GetAttributes() (value []StarGiftAttributeClass)
-	GetAvailabilityIssued() (value int)
-	GetAvailabilityTotal() (value int)
-	GetGiftAddress() (value string, ok bool)
-	GetResellStars() (value int64, ok bool)
-}) {
-	s.ID = from.GetID()
-	s.Title = from.GetTitle()
-	s.Slug = from.GetSlug()
-	s.Num = from.GetNum()
-	if val, ok := from.GetOwnerID(); ok {
-		s.OwnerID = val
-	}
-
-	if val, ok := from.GetOwnerName(); ok {
-		s.OwnerName = val
-	}
-
-	if val, ok := from.GetOwnerAddress(); ok {
-		s.OwnerAddress = val
-	}
-
-	s.Attributes = from.GetAttributes()
-	s.AvailabilityIssued = from.GetAvailabilityIssued()
-	s.AvailabilityTotal = from.GetAvailabilityTotal()
-	if val, ok := from.GetGiftAddress(); ok {
-		s.GiftAddress = val
-	}
-
-	if val, ok := from.GetResellStars(); ok {
-		s.ResellStars = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -1352,17 +1228,10 @@ func (s *StarGiftUnique) GetResellStars() (value int64, ok bool) {
 	return s.ResellStars, true
 }
 
-// MapAttributes returns field Attributes wrapped in StarGiftAttributeClassArray helper.
-func (s *StarGiftUnique) MapAttributes() (value StarGiftAttributeClassArray) {
-	return StarGiftAttributeClassArray(s.Attributes)
-}
-
 // StarGiftClassName is schema name of StarGiftClass.
 const StarGiftClassName = "StarGift"
 
 // StarGiftClass represents StarGift generic type.
-//
-// See https://core.telegram.org/type/StarGift for reference.
 //
 // Constructors:
 //   - [StarGift]
@@ -1397,7 +1266,7 @@ type StarGiftClass interface {
 	// Zero returns true if current object has a zero value.
 	Zero() bool
 
-	// Identifier of the gift
+	// ID field of StarGift.
 	GetID() (value int64)
 }
 

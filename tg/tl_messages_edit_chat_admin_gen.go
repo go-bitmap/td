@@ -32,18 +32,12 @@ var (
 )
 
 // MessagesEditChatAdminRequest represents TL type `messages.editChatAdmin#a85bd1c2`.
-// Make a user admin in a basic group¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/channel#basic-groups
-//
-// See https://core.telegram.org/method/messages.editChatAdmin for reference.
 type MessagesEditChatAdminRequest struct {
-	// The ID of the group
+	// ChatID field of MessagesEditChatAdminRequest.
 	ChatID int64
-	// The user to make admin
+	// UserID field of MessagesEditChatAdminRequest.
 	UserID InputUserClass
-	// Whether to make them admin
+	// IsAdmin field of MessagesEditChatAdminRequest.
 	IsAdmin bool
 }
 
@@ -82,17 +76,6 @@ func (e *MessagesEditChatAdminRequest) String() string {
 	}
 	type Alias MessagesEditChatAdminRequest
 	return fmt.Sprintf("MessagesEditChatAdminRequest%+v", Alias(*e))
-}
-
-// FillFrom fills MessagesEditChatAdminRequest from given interface.
-func (e *MessagesEditChatAdminRequest) FillFrom(from interface {
-	GetChatID() (value int64)
-	GetUserID() (value InputUserClass)
-	GetIsAdmin() (value bool)
-}) {
-	e.ChatID = from.GetChatID()
-	e.UserID = from.GetUserID()
-	e.IsAdmin = from.GetIsAdmin()
 }
 
 // TypeID returns type id in TL schema.
@@ -224,19 +207,6 @@ func (e *MessagesEditChatAdminRequest) GetIsAdmin() (value bool) {
 }
 
 // MessagesEditChatAdmin invokes method messages.editChatAdmin#a85bd1c2 returning error if any.
-// Make a user admin in a basic group¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/channel#basic-groups
-//
-// Possible errors:
-//
-//	400 CHAT_ID_INVALID: The provided chat id is invalid.
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//	400 USER_ID_INVALID: The provided user ID is invalid.
-//	400 USER_NOT_PARTICIPANT: You're not a member of this supergroup/channel.
-//
-// See https://core.telegram.org/method/messages.editChatAdmin for reference.
 func (c *Client) MessagesEditChatAdmin(ctx context.Context, request *MessagesEditChatAdminRequest) (bool, error) {
 	var result BoolBox
 

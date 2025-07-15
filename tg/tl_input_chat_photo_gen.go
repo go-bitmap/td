@@ -32,9 +32,6 @@ var (
 )
 
 // InputChatPhotoEmpty represents TL type `inputChatPhotoEmpty#1ca48f57`.
-// Empty constructor, remove group photo.
-//
-// See https://core.telegram.org/constructor/inputChatPhotoEmpty for reference.
 type InputChatPhotoEmpty struct {
 }
 
@@ -134,39 +131,22 @@ func (i *InputChatPhotoEmpty) DecodeBare(b *bin.Buffer) error {
 }
 
 // InputChatUploadedPhoto represents TL type `inputChatUploadedPhoto#bdcdaec0`.
-// New photo to be set as group profile photo.
-// The file, video and video_emoji_markup flags are mutually exclusive.
-//
-// See https://core.telegram.org/constructor/inputChatUploadedPhoto for reference.
 type InputChatUploadedPhoto struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of InputChatUploadedPhoto.
 	Flags bin.Fields
-	// File saved in parts using the method upload.saveFilePart¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/upload.saveFilePart
+	// File field of InputChatUploadedPhoto.
 	//
 	// Use SetFile and GetFile helpers.
 	File InputFileClass
-	// Square video for animated profile picture
+	// Video field of InputChatUploadedPhoto.
 	//
 	// Use SetVideo and GetVideo helpers.
 	Video InputFileClass
-	// Floating point UNIX timestamp in seconds, indicating the frame of the video/sticker
-	// that should be used as static preview; can only be used if video or video_emoji_markup
-	// is set.
+	// VideoStartTs field of InputChatUploadedPhoto.
 	//
 	// Use SetVideoStartTs and GetVideoStartTs helpers.
 	VideoStartTs float64
-	// Animated sticker profile picture, must contain either a videoSizeEmojiMarkup¹ or a
-	// videoSizeStickerMarkup² constructor.
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/videoSizeEmojiMarkup
-	//  2) https://core.telegram.org/constructor/videoSizeStickerMarkup
+	// VideoEmojiMarkup field of InputChatUploadedPhoto.
 	//
 	// Use SetVideoEmojiMarkup and GetVideoEmojiMarkup helpers.
 	VideoEmojiMarkup VideoSizeClass
@@ -218,31 +198,6 @@ func (i *InputChatUploadedPhoto) String() string {
 	}
 	type Alias InputChatUploadedPhoto
 	return fmt.Sprintf("InputChatUploadedPhoto%+v", Alias(*i))
-}
-
-// FillFrom fills InputChatUploadedPhoto from given interface.
-func (i *InputChatUploadedPhoto) FillFrom(from interface {
-	GetFile() (value InputFileClass, ok bool)
-	GetVideo() (value InputFileClass, ok bool)
-	GetVideoStartTs() (value float64, ok bool)
-	GetVideoEmojiMarkup() (value VideoSizeClass, ok bool)
-}) {
-	if val, ok := from.GetFile(); ok {
-		i.File = val
-	}
-
-	if val, ok := from.GetVideo(); ok {
-		i.Video = val
-	}
-
-	if val, ok := from.GetVideoStartTs(); ok {
-		i.VideoStartTs = val
-	}
-
-	if val, ok := from.GetVideoEmojiMarkup(); ok {
-		i.VideoEmojiMarkup = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -481,11 +436,8 @@ func (i *InputChatUploadedPhoto) GetVideoEmojiMarkup() (value VideoSizeClass, ok
 }
 
 // InputChatPhoto represents TL type `inputChatPhoto#8953ad37`.
-// Existing photo to be set as a chat profile photo.
-//
-// See https://core.telegram.org/constructor/inputChatPhoto for reference.
 type InputChatPhoto struct {
-	// Existing photo
+	// ID field of InputChatPhoto.
 	ID InputPhotoClass
 }
 
@@ -523,13 +475,6 @@ func (i *InputChatPhoto) String() string {
 	}
 	type Alias InputChatPhoto
 	return fmt.Sprintf("InputChatPhoto%+v", Alias(*i))
-}
-
-// FillFrom fills InputChatPhoto from given interface.
-func (i *InputChatPhoto) FillFrom(from interface {
-	GetID() (value InputPhotoClass)
-}) {
-	i.ID = from.GetID()
 }
 
 // TypeID returns type id in TL schema.
@@ -624,8 +569,6 @@ func (i *InputChatPhoto) GetID() (value InputPhotoClass) {
 const InputChatPhotoClassName = "InputChatPhoto"
 
 // InputChatPhotoClass represents InputChatPhoto generic type.
-//
-// See https://core.telegram.org/type/InputChatPhoto for reference.
 //
 // Constructors:
 //   - [InputChatPhotoEmpty]

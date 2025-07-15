@@ -32,9 +32,6 @@ var (
 )
 
 // ChatReactionsNone represents TL type `chatReactionsNone#eafc32bc`.
-// No reactions are allowed
-//
-// See https://core.telegram.org/constructor/chatReactionsNone for reference.
 type ChatReactionsNone struct {
 }
 
@@ -134,16 +131,10 @@ func (c *ChatReactionsNone) DecodeBare(b *bin.Buffer) error {
 }
 
 // ChatReactionsAll represents TL type `chatReactionsAll#52928bca`.
-// All reactions or all non-custom reactions are allowed
-//
-// See https://core.telegram.org/constructor/chatReactionsAll for reference.
 type ChatReactionsAll struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of ChatReactionsAll.
 	Flags bin.Fields
-	// Whether to allow custom reactions
+	// AllowCustom field of ChatReactionsAll.
 	AllowCustom bool
 }
 
@@ -184,13 +175,6 @@ func (c *ChatReactionsAll) String() string {
 	}
 	type Alias ChatReactionsAll
 	return fmt.Sprintf("ChatReactionsAll%+v", Alias(*c))
-}
-
-// FillFrom fills ChatReactionsAll from given interface.
-func (c *ChatReactionsAll) FillFrom(from interface {
-	GetAllowCustom() (value bool)
-}) {
-	c.AllowCustom = from.GetAllowCustom()
 }
 
 // TypeID returns type id in TL schema.
@@ -298,15 +282,8 @@ func (c *ChatReactionsAll) GetAllowCustom() (value bool) {
 }
 
 // ChatReactionsSome represents TL type `chatReactionsSome#661d4037`.
-// Some reactions are allowed
-//
-// See https://core.telegram.org/constructor/chatReactionsSome for reference.
 type ChatReactionsSome struct {
-	// Allowed set of reactions: the reactions_in_chat_max¹ configuration field indicates
-	// the maximum number of reactions that can be specified in this field.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/config#reactions-in-chat-max
+	// Reactions field of ChatReactionsSome.
 	Reactions []ReactionClass
 }
 
@@ -344,13 +321,6 @@ func (c *ChatReactionsSome) String() string {
 	}
 	type Alias ChatReactionsSome
 	return fmt.Sprintf("ChatReactionsSome%+v", Alias(*c))
-}
-
-// FillFrom fills ChatReactionsSome from given interface.
-func (c *ChatReactionsSome) FillFrom(from interface {
-	GetReactions() (value []ReactionClass)
-}) {
-	c.Reactions = from.GetReactions()
 }
 
 // TypeID returns type id in TL schema.
@@ -454,17 +424,10 @@ func (c *ChatReactionsSome) GetReactions() (value []ReactionClass) {
 	return c.Reactions
 }
 
-// MapReactions returns field Reactions wrapped in ReactionClassArray helper.
-func (c *ChatReactionsSome) MapReactions() (value ReactionClassArray) {
-	return ReactionClassArray(c.Reactions)
-}
-
 // ChatReactionsClassName is schema name of ChatReactionsClass.
 const ChatReactionsClassName = "ChatReactions"
 
 // ChatReactionsClass represents ChatReactions generic type.
-//
-// See https://core.telegram.org/type/ChatReactions for reference.
 //
 // Constructors:
 //   - [ChatReactionsNone]

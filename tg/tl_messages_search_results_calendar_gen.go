@@ -32,43 +32,28 @@ var (
 )
 
 // MessagesSearchResultsCalendar represents TL type `messages.searchResultsCalendar#147ee23c`.
-// Information about found messages sent on a specific day
-//
-// See https://core.telegram.org/constructor/messages.searchResultsCalendar for reference.
 type MessagesSearchResultsCalendar struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessagesSearchResultsCalendar.
 	Flags bin.Fields
-	// If set, indicates that the results may be inexact
+	// Inexact field of MessagesSearchResultsCalendar.
 	Inexact bool
-	// Total number of results matching query
+	// Count field of MessagesSearchResultsCalendar.
 	Count int
-	// Starting timestamp of attached messages
+	// MinDate field of MessagesSearchResultsCalendar.
 	MinDate int
-	// Ending timestamp of attached messages
+	// MinMsgID field of MessagesSearchResultsCalendar.
 	MinMsgID int
-	// Indicates the absolute position of messages[0] within the total result set with count
-	// count. This is useful, for example, if we need to display a progress/total counter
-	// (like photo 134 of 200, for all media in a chat, we could simply use photo
-	// ${offset_id_offset} of ${count}.
+	// OffsetIDOffset field of MessagesSearchResultsCalendar.
 	//
 	// Use SetOffsetIDOffset and GetOffsetIDOffset helpers.
 	OffsetIDOffset int
-	// Used to split the messages by days: multiple SearchResultsCalendarPeriod¹
-	// constructors are returned, each containing information about the first, last and total
-	// number of messages matching the filter that were sent on a specific day.  This
-	// information can be easily used to split the returned messages by day.
-	//
-	// Links:
-	//  1) https://core.telegram.org/type/SearchResultsCalendarPeriod
+	// Periods field of MessagesSearchResultsCalendar.
 	Periods []SearchResultsCalendarPeriod
-	// Messages
+	// Messages field of MessagesSearchResultsCalendar.
 	Messages []MessageClass
-	// Mentioned chats
+	// Chats field of MessagesSearchResultsCalendar.
 	Chats []ChatClass
-	// Mentioned users
+	// Users field of MessagesSearchResultsCalendar.
 	Users []UserClass
 }
 
@@ -128,32 +113,6 @@ func (s *MessagesSearchResultsCalendar) String() string {
 	}
 	type Alias MessagesSearchResultsCalendar
 	return fmt.Sprintf("MessagesSearchResultsCalendar%+v", Alias(*s))
-}
-
-// FillFrom fills MessagesSearchResultsCalendar from given interface.
-func (s *MessagesSearchResultsCalendar) FillFrom(from interface {
-	GetInexact() (value bool)
-	GetCount() (value int)
-	GetMinDate() (value int)
-	GetMinMsgID() (value int)
-	GetOffsetIDOffset() (value int, ok bool)
-	GetPeriods() (value []SearchResultsCalendarPeriod)
-	GetMessages() (value []MessageClass)
-	GetChats() (value []ChatClass)
-	GetUsers() (value []UserClass)
-}) {
-	s.Inexact = from.GetInexact()
-	s.Count = from.GetCount()
-	s.MinDate = from.GetMinDate()
-	s.MinMsgID = from.GetMinMsgID()
-	if val, ok := from.GetOffsetIDOffset(); ok {
-		s.OffsetIDOffset = val
-	}
-
-	s.Periods = from.GetPeriods()
-	s.Messages = from.GetMessages()
-	s.Chats = from.GetChats()
-	s.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -503,19 +462,4 @@ func (s *MessagesSearchResultsCalendar) GetUsers() (value []UserClass) {
 		return
 	}
 	return s.Users
-}
-
-// MapMessages returns field Messages wrapped in MessageClassArray helper.
-func (s *MessagesSearchResultsCalendar) MapMessages() (value MessageClassArray) {
-	return MessageClassArray(s.Messages)
-}
-
-// MapChats returns field Chats wrapped in ChatClassArray helper.
-func (s *MessagesSearchResultsCalendar) MapChats() (value ChatClassArray) {
-	return ChatClassArray(s.Chats)
-}
-
-// MapUsers returns field Users wrapped in UserClassArray helper.
-func (s *MessagesSearchResultsCalendar) MapUsers() (value UserClassArray) {
-	return UserClassArray(s.Users)
 }

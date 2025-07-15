@@ -32,13 +32,10 @@ var (
 )
 
 // StickersRenameStickerSetRequest represents TL type `stickers.renameStickerSet#124b1c00`.
-// Renames a stickerset.
-//
-// See https://core.telegram.org/method/stickers.renameStickerSet for reference.
 type StickersRenameStickerSetRequest struct {
-	// Stickerset to rename
+	// Stickerset field of StickersRenameStickerSetRequest.
 	Stickerset InputStickerSetClass
-	// New stickerset title
+	// Title field of StickersRenameStickerSetRequest.
 	Title string
 }
 
@@ -74,15 +71,6 @@ func (r *StickersRenameStickerSetRequest) String() string {
 	}
 	type Alias StickersRenameStickerSetRequest
 	return fmt.Sprintf("StickersRenameStickerSetRequest%+v", Alias(*r))
-}
-
-// FillFrom fills StickersRenameStickerSetRequest from given interface.
-func (r *StickersRenameStickerSetRequest) FillFrom(from interface {
-	GetStickerset() (value InputStickerSetClass)
-	GetTitle() (value string)
-}) {
-	r.Stickerset = from.GetStickerset()
-	r.Title = from.GetTitle()
 }
 
 // TypeID returns type id in TL schema.
@@ -194,14 +182,6 @@ func (r *StickersRenameStickerSetRequest) GetTitle() (value string) {
 }
 
 // StickersRenameStickerSet invokes method stickers.renameStickerSet#124b1c00 returning error if any.
-// Renames a stickerset.
-//
-// Possible errors:
-//
-//	400 STICKERSET_INVALID: The provided sticker set is invalid.
-//
-// See https://core.telegram.org/method/stickers.renameStickerSet for reference.
-// Can be used by bots.
 func (c *Client) StickersRenameStickerSet(ctx context.Context, request *StickersRenameStickerSetRequest) (MessagesStickerSetClass, error) {
 	var result MessagesStickerSetBox
 

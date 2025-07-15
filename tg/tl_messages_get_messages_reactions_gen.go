@@ -32,16 +32,10 @@ var (
 )
 
 // MessagesGetMessagesReactionsRequest represents TL type `messages.getMessagesReactions#8bba90e6`.
-// Get message reactions »¹
-//
-// Links:
-//  1. https://core.telegram.org/api/reactions
-//
-// See https://core.telegram.org/method/messages.getMessagesReactions for reference.
 type MessagesGetMessagesReactionsRequest struct {
-	// Peer
+	// Peer field of MessagesGetMessagesReactionsRequest.
 	Peer InputPeerClass
-	// Message IDs
+	// ID field of MessagesGetMessagesReactionsRequest.
 	ID []int
 }
 
@@ -77,15 +71,6 @@ func (g *MessagesGetMessagesReactionsRequest) String() string {
 	}
 	type Alias MessagesGetMessagesReactionsRequest
 	return fmt.Sprintf("MessagesGetMessagesReactionsRequest%+v", Alias(*g))
-}
-
-// FillFrom fills MessagesGetMessagesReactionsRequest from given interface.
-func (g *MessagesGetMessagesReactionsRequest) FillFrom(from interface {
-	GetPeer() (value InputPeerClass)
-	GetID() (value []int)
-}) {
-	g.Peer = from.GetPeer()
-	g.ID = from.GetID()
 }
 
 // TypeID returns type id in TL schema.
@@ -210,17 +195,6 @@ func (g *MessagesGetMessagesReactionsRequest) GetID() (value []int) {
 }
 
 // MessagesGetMessagesReactions invokes method messages.getMessagesReactions#8bba90e6 returning error if any.
-// Get message reactions »¹
-//
-// Links:
-//  1. https://core.telegram.org/api/reactions
-//
-// Possible errors:
-//
-//	400 CHANNEL_INVALID: The provided channel is invalid.
-//	400 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
-//
-// See https://core.telegram.org/method/messages.getMessagesReactions for reference.
 func (c *Client) MessagesGetMessagesReactions(ctx context.Context, request *MessagesGetMessagesReactionsRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

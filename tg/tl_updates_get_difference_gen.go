@@ -32,48 +32,24 @@ var (
 )
 
 // UpdatesGetDifferenceRequest represents TL type `updates.getDifference#19c2f763`.
-// Get new updates¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/updates
-//
-// See https://core.telegram.org/method/updates.getDifference for reference.
 type UpdatesGetDifferenceRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of UpdatesGetDifferenceRequest.
 	Flags bin.Fields
-	// PTS, see updates¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/updates
+	// Pts field of UpdatesGetDifferenceRequest.
 	Pts int
-	// PTS limit
+	// PtsLimit field of UpdatesGetDifferenceRequest.
 	//
 	// Use SetPtsLimit and GetPtsLimit helpers.
 	PtsLimit int
-	// For fast updating: if provided and pts + pts_total_limit < remote pts, updates
-	// differenceTooLong¹ will be returned.Simply tells the server to not return the
-	// difference if it is bigger than pts_total_limitIf the remote pts is too big (>
-	// ~4000000), this field will default to 1000000
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/updates.differenceTooLong
+	// PtsTotalLimit field of UpdatesGetDifferenceRequest.
 	//
 	// Use SetPtsTotalLimit and GetPtsTotalLimit helpers.
 	PtsTotalLimit int
-	// date, see updates¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/updates
+	// Date field of UpdatesGetDifferenceRequest.
 	Date int
-	// QTS, see updates¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/updates
+	// Qts field of UpdatesGetDifferenceRequest.
 	Qts int
-	// QTS limit
+	// QtsLimit field of UpdatesGetDifferenceRequest.
 	//
 	// Use SetQtsLimit and GetQtsLimit helpers.
 	QtsLimit int
@@ -126,32 +102,6 @@ func (g *UpdatesGetDifferenceRequest) String() string {
 	}
 	type Alias UpdatesGetDifferenceRequest
 	return fmt.Sprintf("UpdatesGetDifferenceRequest%+v", Alias(*g))
-}
-
-// FillFrom fills UpdatesGetDifferenceRequest from given interface.
-func (g *UpdatesGetDifferenceRequest) FillFrom(from interface {
-	GetPts() (value int)
-	GetPtsLimit() (value int, ok bool)
-	GetPtsTotalLimit() (value int, ok bool)
-	GetDate() (value int)
-	GetQts() (value int)
-	GetQtsLimit() (value int, ok bool)
-}) {
-	g.Pts = from.GetPts()
-	if val, ok := from.GetPtsLimit(); ok {
-		g.PtsLimit = val
-	}
-
-	if val, ok := from.GetPtsTotalLimit(); ok {
-		g.PtsTotalLimit = val
-	}
-
-	g.Date = from.GetDate()
-	g.Qts = from.GetQts()
-	if val, ok := from.GetQtsLimit(); ok {
-		g.QtsLimit = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -399,27 +349,6 @@ func (g *UpdatesGetDifferenceRequest) GetQtsLimit() (value int, ok bool) {
 }
 
 // UpdatesGetDifference invokes method updates.getDifference#19c2f763 returning error if any.
-// Get new updates¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/updates
-//
-// Possible errors:
-//
-//	400 CDN_METHOD_INVALID: You can't call this method in a CDN DC.
-//	400 CHANNEL_INVALID: The provided channel is invalid.
-//	400 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
-//	403 CHAT_WRITE_FORBIDDEN: You can't write in this chat.
-//	400 DATE_EMPTY: Date empty.
-//	400 MSG_ID_INVALID: Invalid message ID provided.
-//	400 PERSISTENT_TIMESTAMP_EMPTY: Persistent timestamp empty.
-//	400 PERSISTENT_TIMESTAMP_INVALID: Persistent timestamp invalid.
-//	500 RANDOM_ID_DUPLICATE: You provided a random ID that was already used.
-//	400 USERNAME_INVALID: The provided username is not valid.
-//	400 USER_NOT_PARTICIPANT: You're not a member of this supergroup/channel.
-//
-// See https://core.telegram.org/method/updates.getDifference for reference.
-// Can be used by bots.
 func (c *Client) UpdatesGetDifference(ctx context.Context, request *UpdatesGetDifferenceRequest) (UpdatesDifferenceClass, error) {
 	var result UpdatesDifferenceBox
 

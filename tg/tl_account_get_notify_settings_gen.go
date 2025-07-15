@@ -32,11 +32,8 @@ var (
 )
 
 // AccountGetNotifySettingsRequest represents TL type `account.getNotifySettings#12b3ad31`.
-// Gets current notification settings for a given user/group, from all users/all groups.
-//
-// See https://core.telegram.org/method/account.getNotifySettings for reference.
 type AccountGetNotifySettingsRequest struct {
-	// Notification source
+	// Peer field of AccountGetNotifySettingsRequest.
 	Peer InputNotifyPeerClass
 }
 
@@ -69,13 +66,6 @@ func (g *AccountGetNotifySettingsRequest) String() string {
 	}
 	type Alias AccountGetNotifySettingsRequest
 	return fmt.Sprintf("AccountGetNotifySettingsRequest%+v", Alias(*g))
-}
-
-// FillFrom fills AccountGetNotifySettingsRequest from given interface.
-func (g *AccountGetNotifySettingsRequest) FillFrom(from interface {
-	GetPeer() (value InputNotifyPeerClass)
-}) {
-	g.Peer = from.GetPeer()
 }
 
 // TypeID returns type id in TL schema.
@@ -167,15 +157,6 @@ func (g *AccountGetNotifySettingsRequest) GetPeer() (value InputNotifyPeerClass)
 }
 
 // AccountGetNotifySettings invokes method account.getNotifySettings#12b3ad31 returning error if any.
-// Gets current notification settings for a given user/group, from all users/all groups.
-//
-// Possible errors:
-//
-//	400 CHANNEL_INVALID: The provided channel is invalid.
-//	400 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//
-// See https://core.telegram.org/method/account.getNotifySettings for reference.
 func (c *Client) AccountGetNotifySettings(ctx context.Context, peer InputNotifyPeerClass) (*PeerNotifySettings, error) {
 	var result PeerNotifySettings
 

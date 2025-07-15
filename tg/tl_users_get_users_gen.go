@@ -32,11 +32,8 @@ var (
 )
 
 // UsersGetUsersRequest represents TL type `users.getUsers#d91a548`.
-// Returns basic user info according to their identifiers.
-//
-// See https://core.telegram.org/method/users.getUsers for reference.
 type UsersGetUsersRequest struct {
-	// List of user identifiers
+	// ID field of UsersGetUsersRequest.
 	ID []InputUserClass
 }
 
@@ -69,13 +66,6 @@ func (g *UsersGetUsersRequest) String() string {
 	}
 	type Alias UsersGetUsersRequest
 	return fmt.Sprintf("UsersGetUsersRequest%+v", Alias(*g))
-}
-
-// FillFrom fills UsersGetUsersRequest from given interface.
-func (g *UsersGetUsersRequest) FillFrom(from interface {
-	GetID() (value []InputUserClass)
-}) {
-	g.ID = from.GetID()
 }
 
 // TypeID returns type id in TL schema.
@@ -179,25 +169,7 @@ func (g *UsersGetUsersRequest) GetID() (value []InputUserClass) {
 	return g.ID
 }
 
-// MapID returns field ID wrapped in InputUserClassArray helper.
-func (g *UsersGetUsersRequest) MapID() (value InputUserClassArray) {
-	return InputUserClassArray(g.ID)
-}
-
 // UsersGetUsers invokes method users.getUsers#d91a548 returning error if any.
-// Returns basic user info according to their identifiers.
-//
-// Possible errors:
-//
-//	400 CHANNEL_INVALID: The provided channel is invalid.
-//	400 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
-//	400 FROM_MESSAGE_BOT_DISABLED: Bots can't use fromMessage min constructors.
-//	400 MSG_ID_INVALID: Invalid message ID provided.
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//	400 USER_BANNED_IN_CHANNEL: You're banned from sending messages in supergroups/channels.
-//
-// See https://core.telegram.org/method/users.getUsers for reference.
-// Can be used by bots.
 func (c *Client) UsersGetUsers(ctx context.Context, id []InputUserClass) ([]UserClass, error) {
 	var result UserClassVector
 

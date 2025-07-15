@@ -32,9 +32,6 @@ var (
 )
 
 // AccountSavedRingtonesNotModified represents TL type `account.savedRingtonesNotModified#fbf6e8b1`.
-// The notification sound list hasn't changed.
-//
-// See https://core.telegram.org/constructor/account.savedRingtonesNotModified for reference.
 type AccountSavedRingtonesNotModified struct {
 }
 
@@ -134,16 +131,10 @@ func (s *AccountSavedRingtonesNotModified) DecodeBare(b *bin.Buffer) error {
 }
 
 // AccountSavedRingtones represents TL type `account.savedRingtones#c1e92cc5`.
-// A list of saved notification sounds
-//
-// See https://core.telegram.org/constructor/account.savedRingtones for reference.
 type AccountSavedRingtones struct {
-	// Hash used for caching, for more info click here¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets#hash-generation
+	// Hash field of AccountSavedRingtones.
 	Hash int64
-	// Saved notification sounds
+	// Ringtones field of AccountSavedRingtones.
 	Ringtones []DocumentClass
 }
 
@@ -184,15 +175,6 @@ func (s *AccountSavedRingtones) String() string {
 	}
 	type Alias AccountSavedRingtones
 	return fmt.Sprintf("AccountSavedRingtones%+v", Alias(*s))
-}
-
-// FillFrom fills AccountSavedRingtones from given interface.
-func (s *AccountSavedRingtones) FillFrom(from interface {
-	GetHash() (value int64)
-	GetRingtones() (value []DocumentClass)
-}) {
-	s.Hash = from.GetHash()
-	s.Ringtones = from.GetRingtones()
 }
 
 // TypeID returns type id in TL schema.
@@ -316,17 +298,10 @@ func (s *AccountSavedRingtones) GetRingtones() (value []DocumentClass) {
 	return s.Ringtones
 }
 
-// MapRingtones returns field Ringtones wrapped in DocumentClassArray helper.
-func (s *AccountSavedRingtones) MapRingtones() (value DocumentClassArray) {
-	return DocumentClassArray(s.Ringtones)
-}
-
 // AccountSavedRingtonesClassName is schema name of AccountSavedRingtonesClass.
 const AccountSavedRingtonesClassName = "account.SavedRingtones"
 
 // AccountSavedRingtonesClass represents account.SavedRingtones generic type.
-//
-// See https://core.telegram.org/type/account.SavedRingtones for reference.
 //
 // Constructors:
 //   - [AccountSavedRingtonesNotModified]
@@ -360,19 +335,6 @@ type AccountSavedRingtonesClass interface {
 	String() string
 	// Zero returns true if current object has a zero value.
 	Zero() bool
-
-	// AsModified tries to map AccountSavedRingtonesClass to AccountSavedRingtones.
-	AsModified() (*AccountSavedRingtones, bool)
-}
-
-// AsModified tries to map AccountSavedRingtonesNotModified to AccountSavedRingtones.
-func (s *AccountSavedRingtonesNotModified) AsModified() (*AccountSavedRingtones, bool) {
-	return nil, false
-}
-
-// AsModified tries to map AccountSavedRingtones to AccountSavedRingtones.
-func (s *AccountSavedRingtones) AsModified() (*AccountSavedRingtones, bool) {
-	return s, true
 }
 
 // DecodeAccountSavedRingtones implements binary de-serialization for AccountSavedRingtonesClass.

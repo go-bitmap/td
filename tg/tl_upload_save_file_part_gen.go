@@ -32,15 +32,12 @@ var (
 )
 
 // UploadSaveFilePartRequest represents TL type `upload.saveFilePart#b304a621`.
-// Saves a part of file for further sending to one of the methods.
-//
-// See https://core.telegram.org/method/upload.saveFilePart for reference.
 type UploadSaveFilePartRequest struct {
-	// Random file identifier created by the client
+	// FileID field of UploadSaveFilePartRequest.
 	FileID int64
-	// Numerical order of a part
+	// FilePart field of UploadSaveFilePartRequest.
 	FilePart int
-	// Binary data, content of a part
+	// Bytes field of UploadSaveFilePartRequest.
 	Bytes []byte
 }
 
@@ -79,17 +76,6 @@ func (s *UploadSaveFilePartRequest) String() string {
 	}
 	type Alias UploadSaveFilePartRequest
 	return fmt.Sprintf("UploadSaveFilePartRequest%+v", Alias(*s))
-}
-
-// FillFrom fills UploadSaveFilePartRequest from given interface.
-func (s *UploadSaveFilePartRequest) FillFrom(from interface {
-	GetFileID() (value int64)
-	GetFilePart() (value int)
-	GetBytes() (value []byte)
-}) {
-	s.FileID = from.GetFileID()
-	s.FilePart = from.GetFilePart()
-	s.Bytes = from.GetBytes()
 }
 
 // TypeID returns type id in TL schema.
@@ -216,16 +202,6 @@ func (s *UploadSaveFilePartRequest) GetBytes() (value []byte) {
 }
 
 // UploadSaveFilePart invokes method upload.saveFilePart#b304a621 returning error if any.
-// Saves a part of file for further sending to one of the methods.
-//
-// Possible errors:
-//
-//	400 FILE_PART_EMPTY: The provided file part is empty.
-//	400 FILE_PART_INVALID: The file part number is invalid.
-//	400 MSG_ID_INVALID: Invalid message ID provided.
-//
-// See https://core.telegram.org/method/upload.saveFilePart for reference.
-// Can be used by bots.
 func (c *Client) UploadSaveFilePart(ctx context.Context, request *UploadSaveFilePartRequest) (bool, error) {
 	var result BoolBox
 

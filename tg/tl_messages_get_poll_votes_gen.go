@@ -32,35 +32,22 @@ var (
 )
 
 // MessagesGetPollVotesRequest represents TL type `messages.getPollVotes#b86e380e`.
-// Get poll results for non-anonymous polls
-//
-// See https://core.telegram.org/method/messages.getPollVotes for reference.
 type MessagesGetPollVotesRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessagesGetPollVotesRequest.
 	Flags bin.Fields
-	// Chat where the poll was sent
+	// Peer field of MessagesGetPollVotesRequest.
 	Peer InputPeerClass
-	// Message ID
+	// ID field of MessagesGetPollVotesRequest.
 	ID int
-	// Get only results for the specified poll option
+	// Option field of MessagesGetPollVotesRequest.
 	//
 	// Use SetOption and GetOption helpers.
 	Option []byte
-	// Offset for results, taken from the next_offset field of messages.votesList¹,
-	// initially an empty string. Note: if no more results are available, the method call
-	// will return an empty next_offset; thus, avoid providing the next_offset returned in
-	// messages.votesList² if it is empty, to avoid an infinite loop.
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/messages.votesList
-	//  2) https://core.telegram.org/constructor/messages.votesList
+	// Offset field of MessagesGetPollVotesRequest.
 	//
 	// Use SetOffset and GetOffset helpers.
 	Offset string
-	// Number of results to return
+	// Limit field of MessagesGetPollVotesRequest.
 	Limit int
 }
 
@@ -108,27 +95,6 @@ func (g *MessagesGetPollVotesRequest) String() string {
 	}
 	type Alias MessagesGetPollVotesRequest
 	return fmt.Sprintf("MessagesGetPollVotesRequest%+v", Alias(*g))
-}
-
-// FillFrom fills MessagesGetPollVotesRequest from given interface.
-func (g *MessagesGetPollVotesRequest) FillFrom(from interface {
-	GetPeer() (value InputPeerClass)
-	GetID() (value int)
-	GetOption() (value []byte, ok bool)
-	GetOffset() (value string, ok bool)
-	GetLimit() (value int)
-}) {
-	g.Peer = from.GetPeer()
-	g.ID = from.GetID()
-	if val, ok := from.GetOption(); ok {
-		g.Option = val
-	}
-
-	if val, ok := from.GetOffset(); ok {
-		g.Offset = val
-	}
-
-	g.Limit = from.GetLimit()
 }
 
 // TypeID returns type id in TL schema.
@@ -345,15 +311,6 @@ func (g *MessagesGetPollVotesRequest) GetLimit() (value int) {
 }
 
 // MessagesGetPollVotes invokes method messages.getPollVotes#b86e380e returning error if any.
-// Get poll results for non-anonymous polls
-//
-// Possible errors:
-//
-//	403 BROADCAST_FORBIDDEN: Channel poll voters and reactions cannot be fetched to prevent deanonymization.
-//	400 MSG_ID_INVALID: Invalid message ID provided.
-//	403 POLL_VOTE_REQUIRED: Cast a vote in the poll before calling this method.
-//
-// See https://core.telegram.org/method/messages.getPollVotes for reference.
 func (c *Client) MessagesGetPollVotes(ctx context.Context, request *MessagesGetPollVotesRequest) (*MessagesVotesList, error) {
 	var result MessagesVotesList
 

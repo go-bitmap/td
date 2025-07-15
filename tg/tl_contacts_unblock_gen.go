@@ -32,25 +32,12 @@ var (
 )
 
 // ContactsUnblockRequest represents TL type `contacts.unblock#b550d328`.
-// Deletes a peer from a blocklist, see here »¹ for more info.
-//
-// Links:
-//  1. https://core.telegram.org/api/block
-//
-// See https://core.telegram.org/method/contacts.unblock for reference.
 type ContactsUnblockRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of ContactsUnblockRequest.
 	Flags bin.Fields
-	// Whether the peer should be removed from the story blocklist; if not set, the peer will
-	// be removed from the main blocklist, see here »¹ for more info.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/block
+	// MyStoriesFrom field of ContactsUnblockRequest.
 	MyStoriesFrom bool
-	// Peer
+	// ID field of ContactsUnblockRequest.
 	ID InputPeerClass
 }
 
@@ -89,15 +76,6 @@ func (u *ContactsUnblockRequest) String() string {
 	}
 	type Alias ContactsUnblockRequest
 	return fmt.Sprintf("ContactsUnblockRequest%+v", Alias(*u))
-}
-
-// FillFrom fills ContactsUnblockRequest from given interface.
-func (u *ContactsUnblockRequest) FillFrom(from interface {
-	GetMyStoriesFrom() (value bool)
-	GetID() (value InputPeerClass)
-}) {
-	u.MyStoriesFrom = from.GetMyStoriesFrom()
-	u.ID = from.GetID()
 }
 
 // TypeID returns type id in TL schema.
@@ -230,19 +208,6 @@ func (u *ContactsUnblockRequest) GetID() (value InputPeerClass) {
 }
 
 // ContactsUnblock invokes method contacts.unblock#b550d328 returning error if any.
-// Deletes a peer from a blocklist, see here »¹ for more info.
-//
-// Links:
-//  1. https://core.telegram.org/api/block
-//
-// Possible errors:
-//
-//	400 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
-//	400 CONTACT_ID_INVALID: The provided contact ID is invalid.
-//	400 MSG_ID_INVALID: Invalid message ID provided.
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//
-// See https://core.telegram.org/method/contacts.unblock for reference.
 func (c *Client) ContactsUnblock(ctx context.Context, request *ContactsUnblockRequest) (bool, error) {
 	var result BoolBox
 

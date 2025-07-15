@@ -32,16 +32,10 @@ var (
 )
 
 // AccountSentEmailCode represents TL type `account.sentEmailCode#811f854f`.
-// The sent email code
-//
-// See https://core.telegram.org/constructor/account.sentEmailCode for reference.
 type AccountSentEmailCode struct {
-	// The email (to which the code was sent) must match this pattern¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/pattern
+	// EmailPattern field of AccountSentEmailCode.
 	EmailPattern string
-	// The length of the verification code
+	// Length field of AccountSentEmailCode.
 	Length int
 }
 
@@ -77,15 +71,6 @@ func (s *AccountSentEmailCode) String() string {
 	}
 	type Alias AccountSentEmailCode
 	return fmt.Sprintf("AccountSentEmailCode%+v", Alias(*s))
-}
-
-// FillFrom fills AccountSentEmailCode from given interface.
-func (s *AccountSentEmailCode) FillFrom(from interface {
-	GetEmailPattern() (value string)
-	GetLength() (value int)
-}) {
-	s.EmailPattern = from.GetEmailPattern()
-	s.Length = from.GetLength()
 }
 
 // TypeID returns type id in TL schema.

@@ -32,23 +32,14 @@ var (
 )
 
 // StarsGiveawayWinnersOption represents TL type `starsGiveawayWinnersOption#54236209`.
-// Allowed options for the number of giveaway winners.
-//
-// See https://core.telegram.org/constructor/starsGiveawayWinnersOption for reference.
 type StarsGiveawayWinnersOption struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of StarsGiveawayWinnersOption.
 	Flags bin.Fields
-	// If set, this option must be pre-selected by default in the option list.
+	// Default field of StarsGiveawayWinnersOption.
 	Default bool
-	// The number of users that will be randomly chosen as winners.
+	// Users field of StarsGiveawayWinnersOption.
 	Users int
-	// The number of Telegram Stars¹ each winner will receive.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/stars
+	// PerUserStars field of StarsGiveawayWinnersOption.
 	PerUserStars int64
 }
 
@@ -90,17 +81,6 @@ func (s *StarsGiveawayWinnersOption) String() string {
 	}
 	type Alias StarsGiveawayWinnersOption
 	return fmt.Sprintf("StarsGiveawayWinnersOption%+v", Alias(*s))
-}
-
-// FillFrom fills StarsGiveawayWinnersOption from given interface.
-func (s *StarsGiveawayWinnersOption) FillFrom(from interface {
-	GetDefault() (value bool)
-	GetUsers() (value int)
-	GetPerUserStars() (value int64)
-}) {
-	s.Default = from.GetDefault()
-	s.Users = from.GetUsers()
-	s.PerUserStars = from.GetPerUserStars()
 }
 
 // TypeID returns type id in TL schema.

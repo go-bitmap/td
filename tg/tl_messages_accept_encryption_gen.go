@@ -32,18 +32,12 @@ var (
 )
 
 // MessagesAcceptEncryptionRequest represents TL type `messages.acceptEncryption#3dbc0415`.
-// Confirms creation of a secret chat
-//
-// See https://core.telegram.org/method/messages.acceptEncryption for reference.
 type MessagesAcceptEncryptionRequest struct {
-	// Secret chat ID
+	// Peer field of MessagesAcceptEncryptionRequest.
 	Peer InputEncryptedChat
-	// B = g ^ b mod p, see Wikipedia¹
-	//
-	// Links:
-	//  1) https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange
+	// GB field of MessagesAcceptEncryptionRequest.
 	GB []byte
-	// 64-bit fingerprint of the received key
+	// KeyFingerprint field of MessagesAcceptEncryptionRequest.
 	KeyFingerprint int64
 }
 
@@ -82,17 +76,6 @@ func (a *MessagesAcceptEncryptionRequest) String() string {
 	}
 	type Alias MessagesAcceptEncryptionRequest
 	return fmt.Sprintf("MessagesAcceptEncryptionRequest%+v", Alias(*a))
-}
-
-// FillFrom fills MessagesAcceptEncryptionRequest from given interface.
-func (a *MessagesAcceptEncryptionRequest) FillFrom(from interface {
-	GetPeer() (value InputEncryptedChat)
-	GetGB() (value []byte)
-	GetKeyFingerprint() (value int64)
-}) {
-	a.Peer = from.GetPeer()
-	a.GB = from.GetGB()
-	a.KeyFingerprint = from.GetKeyFingerprint()
 }
 
 // TypeID returns type id in TL schema.
@@ -219,15 +202,6 @@ func (a *MessagesAcceptEncryptionRequest) GetKeyFingerprint() (value int64) {
 }
 
 // MessagesAcceptEncryption invokes method messages.acceptEncryption#3dbc0415 returning error if any.
-// Confirms creation of a secret chat
-//
-// Possible errors:
-//
-//	400 CHAT_ID_INVALID: The provided chat id is invalid.
-//	400 ENCRYPTION_ALREADY_ACCEPTED: Secret chat already accepted.
-//	400 ENCRYPTION_ALREADY_DECLINED: The secret chat was already declined.
-//
-// See https://core.telegram.org/method/messages.acceptEncryption for reference.
 func (c *Client) MessagesAcceptEncryption(ctx context.Context, request *MessagesAcceptEncryptionRequest) (EncryptedChatClass, error) {
 	var result EncryptedChatBox
 

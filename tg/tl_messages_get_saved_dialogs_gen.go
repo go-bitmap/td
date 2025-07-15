@@ -32,46 +32,24 @@ var (
 )
 
 // MessagesGetSavedDialogsRequest represents TL type `messages.getSavedDialogs#1e91fc99`.
-// Returns the current saved dialog list, see here »¹ for more info.
-//
-// Links:
-//  1. https://core.telegram.org/api/saved-messages
-//
-// See https://core.telegram.org/method/messages.getSavedDialogs for reference.
 type MessagesGetSavedDialogsRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessagesGetSavedDialogsRequest.
 	Flags bin.Fields
-	// Exclude pinned dialogs
+	// ExcludePinned field of MessagesGetSavedDialogsRequest.
 	ExcludePinned bool
 	// ParentPeer field of MessagesGetSavedDialogsRequest.
 	//
 	// Use SetParentPeer and GetParentPeer helpers.
 	ParentPeer InputPeerClass
-	// Offsets for pagination, for more info click here¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets
+	// OffsetDate field of MessagesGetSavedDialogsRequest.
 	OffsetDate int
-	// Offsets for pagination, for more info click here¹ (top_message ID used for
-	// pagination)
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets
+	// OffsetID field of MessagesGetSavedDialogsRequest.
 	OffsetID int
-	// Offset peer for pagination¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets
+	// OffsetPeer field of MessagesGetSavedDialogsRequest.
 	OffsetPeer InputPeerClass
-	// Number of list elements to be returned
+	// Limit field of MessagesGetSavedDialogsRequest.
 	Limit int
-	// Hash used for caching, for more info click here¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets#hash-generation
+	// Hash field of MessagesGetSavedDialogsRequest.
 	Hash int64
 }
 
@@ -125,28 +103,6 @@ func (g *MessagesGetSavedDialogsRequest) String() string {
 	}
 	type Alias MessagesGetSavedDialogsRequest
 	return fmt.Sprintf("MessagesGetSavedDialogsRequest%+v", Alias(*g))
-}
-
-// FillFrom fills MessagesGetSavedDialogsRequest from given interface.
-func (g *MessagesGetSavedDialogsRequest) FillFrom(from interface {
-	GetExcludePinned() (value bool)
-	GetParentPeer() (value InputPeerClass, ok bool)
-	GetOffsetDate() (value int)
-	GetOffsetID() (value int)
-	GetOffsetPeer() (value InputPeerClass)
-	GetLimit() (value int)
-	GetHash() (value int64)
-}) {
-	g.ExcludePinned = from.GetExcludePinned()
-	if val, ok := from.GetParentPeer(); ok {
-		g.ParentPeer = val
-	}
-
-	g.OffsetDate = from.GetOffsetDate()
-	g.OffsetID = from.GetOffsetID()
-	g.OffsetPeer = from.GetOffsetPeer()
-	g.Limit = from.GetLimit()
-	g.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -400,12 +356,6 @@ func (g *MessagesGetSavedDialogsRequest) GetHash() (value int64) {
 }
 
 // MessagesGetSavedDialogs invokes method messages.getSavedDialogs#1e91fc99 returning error if any.
-// Returns the current saved dialog list, see here »¹ for more info.
-//
-// Links:
-//  1. https://core.telegram.org/api/saved-messages
-//
-// See https://core.telegram.org/method/messages.getSavedDialogs for reference.
 func (c *Client) MessagesGetSavedDialogs(ctx context.Context, request *MessagesGetSavedDialogsRequest) (MessagesSavedDialogsClass, error) {
 	var result MessagesSavedDialogsBox
 

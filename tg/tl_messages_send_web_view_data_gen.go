@@ -32,27 +32,14 @@ var (
 )
 
 // MessagesSendWebViewDataRequest represents TL type `messages.sendWebViewData#dc0242c8`.
-// Used by the user to relay data from an opened reply keyboard bot mini app¹ to the bot
-// that owns it.
-//
-// Links:
-//  1. https://core.telegram.org/api/bots/webapps
-//
-// See https://core.telegram.org/method/messages.sendWebViewData for reference.
 type MessagesSendWebViewDataRequest struct {
-	// Bot that owns the web app
+	// Bot field of MessagesSendWebViewDataRequest.
 	Bot InputUserClass
-	// Unique client message ID to prevent duplicate sending of the same event
+	// RandomID field of MessagesSendWebViewDataRequest.
 	RandomID int64
-	// Text of the keyboardButtonSimpleWebView¹ that was pressed to open the web app.
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/keyboardButtonSimpleWebView
+	// ButtonText field of MessagesSendWebViewDataRequest.
 	ButtonText string
-	// Data to relay to the bot, obtained from a web_app_data_send JS event¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/web-events#web-app-data-send
+	// Data field of MessagesSendWebViewDataRequest.
 	Data string
 }
 
@@ -94,19 +81,6 @@ func (s *MessagesSendWebViewDataRequest) String() string {
 	}
 	type Alias MessagesSendWebViewDataRequest
 	return fmt.Sprintf("MessagesSendWebViewDataRequest%+v", Alias(*s))
-}
-
-// FillFrom fills MessagesSendWebViewDataRequest from given interface.
-func (s *MessagesSendWebViewDataRequest) FillFrom(from interface {
-	GetBot() (value InputUserClass)
-	GetRandomID() (value int64)
-	GetButtonText() (value string)
-	GetData() (value string)
-}) {
-	s.Bot = from.GetBot()
-	s.RandomID = from.GetRandomID()
-	s.ButtonText = from.GetButtonText()
-	s.Data = from.GetData()
 }
 
 // TypeID returns type id in TL schema.
@@ -258,17 +232,6 @@ func (s *MessagesSendWebViewDataRequest) GetData() (value string) {
 }
 
 // MessagesSendWebViewData invokes method messages.sendWebViewData#dc0242c8 returning error if any.
-// Used by the user to relay data from an opened reply keyboard bot mini app¹ to the bot
-// that owns it.
-//
-// Links:
-//  1. https://core.telegram.org/api/bots/webapps
-//
-// Possible errors:
-//
-//	400 BOT_INVALID: This is not a valid bot.
-//
-// See https://core.telegram.org/method/messages.sendWebViewData for reference.
 func (c *Client) MessagesSendWebViewData(ctx context.Context, request *MessagesSendWebViewDataRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

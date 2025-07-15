@@ -32,18 +32,12 @@ var (
 )
 
 // StoriesPeerStories represents TL type `stories.peerStories#cae68768`.
-// Active story list¹ of a specific peer.
-//
-// Links:
-//  1. https://core.telegram.org/api/stories#watching-stories
-//
-// See https://core.telegram.org/constructor/stories.peerStories for reference.
 type StoriesPeerStories struct {
-	// Stories
+	// Stories field of StoriesPeerStories.
 	Stories PeerStories
-	// Mentioned chats
+	// Chats field of StoriesPeerStories.
 	Chats []ChatClass
-	// Mentioned users
+	// Users field of StoriesPeerStories.
 	Users []UserClass
 }
 
@@ -82,17 +76,6 @@ func (p *StoriesPeerStories) String() string {
 	}
 	type Alias StoriesPeerStories
 	return fmt.Sprintf("StoriesPeerStories%+v", Alias(*p))
-}
-
-// FillFrom fills StoriesPeerStories from given interface.
-func (p *StoriesPeerStories) FillFrom(from interface {
-	GetStories() (value PeerStories)
-	GetChats() (value []ChatClass)
-	GetUsers() (value []UserClass)
-}) {
-	p.Stories = from.GetStories()
-	p.Chats = from.GetChats()
-	p.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -252,14 +235,4 @@ func (p *StoriesPeerStories) GetUsers() (value []UserClass) {
 		return
 	}
 	return p.Users
-}
-
-// MapChats returns field Chats wrapped in ChatClassArray helper.
-func (p *StoriesPeerStories) MapChats() (value ChatClassArray) {
-	return ChatClassArray(p.Chats)
-}
-
-// MapUsers returns field Users wrapped in UserClassArray helper.
-func (p *StoriesPeerStories) MapUsers() (value UserClassArray) {
-	return UserClassArray(p.Users)
 }

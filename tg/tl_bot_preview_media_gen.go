@@ -32,16 +32,10 @@ var (
 )
 
 // BotPreviewMedia represents TL type `botPreviewMedia#23e91ba3`.
-// Represents a Main Mini App preview media, see here »¹ for more info.
-//
-// Links:
-//  1. https://core.telegram.org/api/bots/webapps#main-mini-app-previews
-//
-// See https://core.telegram.org/constructor/botPreviewMedia for reference.
 type BotPreviewMedia struct {
-	// When was this media last updated.
+	// Date field of BotPreviewMedia.
 	Date int
-	// The actual photo/video.
+	// Media field of BotPreviewMedia.
 	Media MessageMediaClass
 }
 
@@ -77,15 +71,6 @@ func (b *BotPreviewMedia) String() string {
 	}
 	type Alias BotPreviewMedia
 	return fmt.Sprintf("BotPreviewMedia%+v", Alias(*b))
-}
-
-// FillFrom fills BotPreviewMedia from given interface.
-func (b *BotPreviewMedia) FillFrom(from interface {
-	GetDate() (value int)
-	GetMedia() (value MessageMediaClass)
-}) {
-	b.Date = from.GetDate()
-	b.Media = from.GetMedia()
 }
 
 // TypeID returns type id in TL schema.

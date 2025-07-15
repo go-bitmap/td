@@ -32,12 +32,6 @@ var (
 )
 
 // HelpGetCDNConfigRequest represents TL type `help.getCdnConfig#52029342`.
-// Get configuration for CDN¹ file downloads.
-//
-// Links:
-//  1. https://core.telegram.org/cdn
-//
-// See https://core.telegram.org/method/help.getCdnConfig for reference.
 type HelpGetCDNConfigRequest struct {
 }
 
@@ -132,13 +126,6 @@ func (g *HelpGetCDNConfigRequest) DecodeBare(b *bin.Buffer) error {
 }
 
 // HelpGetCDNConfig invokes method help.getCdnConfig#52029342 returning error if any.
-// Get configuration for CDN¹ file downloads.
-//
-// Links:
-//  1. https://core.telegram.org/cdn
-//
-// See https://core.telegram.org/method/help.getCdnConfig for reference.
-// Can be used by bots.
 func (c *Client) HelpGetCDNConfig(ctx context.Context) (*CDNConfig, error) {
 	var result CDNConfig
 

@@ -32,11 +32,8 @@ var (
 )
 
 // PageListItemText represents TL type `pageListItemText#b92fb6cd`.
-// List item
-//
-// See https://core.telegram.org/constructor/pageListItemText for reference.
 type PageListItemText struct {
-	// Text
+	// Text field of PageListItemText.
 	Text RichTextClass
 }
 
@@ -74,13 +71,6 @@ func (p *PageListItemText) String() string {
 	}
 	type Alias PageListItemText
 	return fmt.Sprintf("PageListItemText%+v", Alias(*p))
-}
-
-// FillFrom fills PageListItemText from given interface.
-func (p *PageListItemText) FillFrom(from interface {
-	GetText() (value RichTextClass)
-}) {
-	p.Text = from.GetText()
 }
 
 // TypeID returns type id in TL schema.
@@ -172,11 +162,8 @@ func (p *PageListItemText) GetText() (value RichTextClass) {
 }
 
 // PageListItemBlocks represents TL type `pageListItemBlocks#25e073fc`.
-// List item
-//
-// See https://core.telegram.org/constructor/pageListItemBlocks for reference.
 type PageListItemBlocks struct {
-	// Blocks
+	// Blocks field of PageListItemBlocks.
 	Blocks []PageBlockClass
 }
 
@@ -214,13 +201,6 @@ func (p *PageListItemBlocks) String() string {
 	}
 	type Alias PageListItemBlocks
 	return fmt.Sprintf("PageListItemBlocks%+v", Alias(*p))
-}
-
-// FillFrom fills PageListItemBlocks from given interface.
-func (p *PageListItemBlocks) FillFrom(from interface {
-	GetBlocks() (value []PageBlockClass)
-}) {
-	p.Blocks = from.GetBlocks()
 }
 
 // TypeID returns type id in TL schema.
@@ -324,17 +304,10 @@ func (p *PageListItemBlocks) GetBlocks() (value []PageBlockClass) {
 	return p.Blocks
 }
 
-// MapBlocks returns field Blocks wrapped in PageBlockClassArray helper.
-func (p *PageListItemBlocks) MapBlocks() (value PageBlockClassArray) {
-	return PageBlockClassArray(p.Blocks)
-}
-
 // PageListItemClassName is schema name of PageListItemClass.
 const PageListItemClassName = "PageListItem"
 
 // PageListItemClass represents PageListItem generic type.
-//
-// See https://core.telegram.org/type/PageListItem for reference.
 //
 // Constructors:
 //   - [PageListItemText]

@@ -32,19 +32,8 @@ var (
 )
 
 // AccountGetDefaultBackgroundEmojisRequest represents TL type `account.getDefaultBackgroundEmojis#a60ab9ce`.
-// Get a set of suggested custom emoji stickers¹ that can be used in an accent color
-// pattern².
-//
-// Links:
-//  1. https://core.telegram.org/api/custom-emoji
-//  2. https://core.telegram.org/api/colors
-//
-// See https://core.telegram.org/method/account.getDefaultBackgroundEmojis for reference.
 type AccountGetDefaultBackgroundEmojisRequest struct {
-	// Hash used for caching, for more info click here¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets#hash-generation
+	// Hash field of AccountGetDefaultBackgroundEmojisRequest.
 	Hash int64
 }
 
@@ -77,13 +66,6 @@ func (g *AccountGetDefaultBackgroundEmojisRequest) String() string {
 	}
 	type Alias AccountGetDefaultBackgroundEmojisRequest
 	return fmt.Sprintf("AccountGetDefaultBackgroundEmojisRequest%+v", Alias(*g))
-}
-
-// FillFrom fills AccountGetDefaultBackgroundEmojisRequest from given interface.
-func (g *AccountGetDefaultBackgroundEmojisRequest) FillFrom(from interface {
-	GetHash() (value int64)
-}) {
-	g.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -170,14 +152,6 @@ func (g *AccountGetDefaultBackgroundEmojisRequest) GetHash() (value int64) {
 }
 
 // AccountGetDefaultBackgroundEmojis invokes method account.getDefaultBackgroundEmojis#a60ab9ce returning error if any.
-// Get a set of suggested custom emoji stickers¹ that can be used in an accent color
-// pattern².
-//
-// Links:
-//  1. https://core.telegram.org/api/custom-emoji
-//  2. https://core.telegram.org/api/colors
-//
-// See https://core.telegram.org/method/account.getDefaultBackgroundEmojis for reference.
 func (c *Client) AccountGetDefaultBackgroundEmojis(ctx context.Context, hash int64) (EmojiListClass, error) {
 	var result EmojiListBox
 

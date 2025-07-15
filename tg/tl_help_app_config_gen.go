@@ -32,9 +32,6 @@ var (
 )
 
 // HelpAppConfigNotModified represents TL type `help.appConfigNotModified#7cde641d`.
-// The client configuration parameters haven't changed
-//
-// See https://core.telegram.org/constructor/help.appConfigNotModified for reference.
 type HelpAppConfigNotModified struct {
 }
 
@@ -134,22 +131,10 @@ func (a *HelpAppConfigNotModified) DecodeBare(b *bin.Buffer) error {
 }
 
 // HelpAppConfig represents TL type `help.appConfig#dd18782e`.
-// Contains various client configuration parameters¹
-//
-// Links:
-//  1. https://core.telegram.org/api/config#client-configuration
-//
-// See https://core.telegram.org/constructor/help.appConfig for reference.
 type HelpAppConfig struct {
-	// Hash used for caching, for more info click here¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets#hash-generation
+	// Hash field of HelpAppConfig.
 	Hash int
-	// Client configuration parameters¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/config#client-configuration
+	// Config field of HelpAppConfig.
 	Config JSONValueClass
 }
 
@@ -190,15 +175,6 @@ func (a *HelpAppConfig) String() string {
 	}
 	type Alias HelpAppConfig
 	return fmt.Sprintf("HelpAppConfig%+v", Alias(*a))
-}
-
-// FillFrom fills HelpAppConfig from given interface.
-func (a *HelpAppConfig) FillFrom(from interface {
-	GetHash() (value int)
-	GetConfig() (value JSONValueClass)
-}) {
-	a.Hash = from.GetHash()
-	a.Config = from.GetConfig()
 }
 
 // TypeID returns type id in TL schema.
@@ -314,8 +290,6 @@ const HelpAppConfigClassName = "help.AppConfig"
 
 // HelpAppConfigClass represents help.AppConfig generic type.
 //
-// See https://core.telegram.org/type/help.AppConfig for reference.
-//
 // Constructors:
 //   - [HelpAppConfigNotModified]
 //   - [HelpAppConfig]
@@ -348,19 +322,6 @@ type HelpAppConfigClass interface {
 	String() string
 	// Zero returns true if current object has a zero value.
 	Zero() bool
-
-	// AsModified tries to map HelpAppConfigClass to HelpAppConfig.
-	AsModified() (*HelpAppConfig, bool)
-}
-
-// AsModified tries to map HelpAppConfigNotModified to HelpAppConfig.
-func (a *HelpAppConfigNotModified) AsModified() (*HelpAppConfig, bool) {
-	return nil, false
-}
-
-// AsModified tries to map HelpAppConfig to HelpAppConfig.
-func (a *HelpAppConfig) AsModified() (*HelpAppConfig, bool) {
-	return a, true
 }
 
 // DecodeHelpAppConfig implements binary de-serialization for HelpAppConfigClass.

@@ -32,16 +32,10 @@ var (
 )
 
 // ChannelsToggleJoinRequestRequest represents TL type `channels.toggleJoinRequest#4c2985b6`.
-// Set whether all users should request admin approval to join the group »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/invites#join-requests
-//
-// See https://core.telegram.org/method/channels.toggleJoinRequest for reference.
 type ChannelsToggleJoinRequestRequest struct {
-	// Group
+	// Channel field of ChannelsToggleJoinRequestRequest.
 	Channel InputChannelClass
-	// Toggle
+	// Enabled field of ChannelsToggleJoinRequestRequest.
 	Enabled bool
 }
 
@@ -77,15 +71,6 @@ func (t *ChannelsToggleJoinRequestRequest) String() string {
 	}
 	type Alias ChannelsToggleJoinRequestRequest
 	return fmt.Sprintf("ChannelsToggleJoinRequestRequest%+v", Alias(*t))
-}
-
-// FillFrom fills ChannelsToggleJoinRequestRequest from given interface.
-func (t *ChannelsToggleJoinRequestRequest) FillFrom(from interface {
-	GetChannel() (value InputChannelClass)
-	GetEnabled() (value bool)
-}) {
-	t.Channel = from.GetChannel()
-	t.Enabled = from.GetEnabled()
 }
 
 // TypeID returns type id in TL schema.
@@ -196,26 +181,7 @@ func (t *ChannelsToggleJoinRequestRequest) GetEnabled() (value bool) {
 	return t.Enabled
 }
 
-// GetChannelAsNotEmpty returns mapped value of Channel field.
-func (t *ChannelsToggleJoinRequestRequest) GetChannelAsNotEmpty() (NotEmptyInputChannel, bool) {
-	return t.Channel.AsNotEmpty()
-}
-
 // ChannelsToggleJoinRequest invokes method channels.toggleJoinRequest#4c2985b6 returning error if any.
-// Set whether all users should request admin approval to join the group »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/invites#join-requests
-//
-// Possible errors:
-//
-//	400 CHANNEL_INVALID: The provided channel is invalid.
-//	400 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
-//	400 CHAT_ID_INVALID: The provided chat id is invalid.
-//	400 CHAT_NOT_MODIFIED: No changes were made to chat information because the new information you passed is identical to the current information.
-//	400 CHAT_PUBLIC_REQUIRED: You can only enable join requests in public groups.
-//
-// See https://core.telegram.org/method/channels.toggleJoinRequest for reference.
 func (c *Client) ChannelsToggleJoinRequest(ctx context.Context, request *ChannelsToggleJoinRequestRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

@@ -32,16 +32,10 @@ var (
 )
 
 // InputClientProxy represents TL type `inputClientProxy#75588b3f`.
-// Info about an MTProxy¹ used to connect.
-//
-// Links:
-//  1. https://core.telegram.org/mtproto/mtproto-transports#transport-obfuscation
-//
-// See https://core.telegram.org/constructor/inputClientProxy for reference.
 type InputClientProxy struct {
-	// Proxy address
+	// Address field of InputClientProxy.
 	Address string
-	// Proxy port
+	// Port field of InputClientProxy.
 	Port int
 }
 
@@ -77,15 +71,6 @@ func (i *InputClientProxy) String() string {
 	}
 	type Alias InputClientProxy
 	return fmt.Sprintf("InputClientProxy%+v", Alias(*i))
-}
-
-// FillFrom fills InputClientProxy from given interface.
-func (i *InputClientProxy) FillFrom(from interface {
-	GetAddress() (value string)
-	GetPort() (value int)
-}) {
-	i.Address = from.GetAddress()
-	i.Port = from.GetPort()
 }
 
 // TypeID returns type id in TL schema.

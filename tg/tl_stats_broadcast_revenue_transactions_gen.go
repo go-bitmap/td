@@ -32,16 +32,10 @@ var (
 )
 
 // StatsBroadcastRevenueTransactions represents TL type `stats.broadcastRevenueTransactions#87158466`.
-// Channel ad revenue transactions »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/revenue
-//
-// See https://core.telegram.org/constructor/stats.broadcastRevenueTransactions for reference.
 type StatsBroadcastRevenueTransactions struct {
-	// Total number of transactions.
+	// Count field of StatsBroadcastRevenueTransactions.
 	Count int
-	// Transactions
+	// Transactions field of StatsBroadcastRevenueTransactions.
 	Transactions []BroadcastRevenueTransactionClass
 }
 
@@ -77,15 +71,6 @@ func (b *StatsBroadcastRevenueTransactions) String() string {
 	}
 	type Alias StatsBroadcastRevenueTransactions
 	return fmt.Sprintf("StatsBroadcastRevenueTransactions%+v", Alias(*b))
-}
-
-// FillFrom fills StatsBroadcastRevenueTransactions from given interface.
-func (b *StatsBroadcastRevenueTransactions) FillFrom(from interface {
-	GetCount() (value int)
-	GetTransactions() (value []BroadcastRevenueTransactionClass)
-}) {
-	b.Count = from.GetCount()
-	b.Transactions = from.GetTransactions()
 }
 
 // TypeID returns type id in TL schema.
@@ -207,9 +192,4 @@ func (b *StatsBroadcastRevenueTransactions) GetTransactions() (value []Broadcast
 		return
 	}
 	return b.Transactions
-}
-
-// MapTransactions returns field Transactions wrapped in BroadcastRevenueTransactionClassArray helper.
-func (b *StatsBroadcastRevenueTransactions) MapTransactions() (value BroadcastRevenueTransactionClassArray) {
-	return BroadcastRevenueTransactionClassArray(b.Transactions)
 }

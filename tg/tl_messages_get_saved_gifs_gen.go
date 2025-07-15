@@ -32,14 +32,8 @@ var (
 )
 
 // MessagesGetSavedGifsRequest represents TL type `messages.getSavedGifs#5cf09635`.
-// Get saved GIFs.
-//
-// See https://core.telegram.org/method/messages.getSavedGifs for reference.
 type MessagesGetSavedGifsRequest struct {
-	// Hash used for caching, for more info click here¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets#hash-generation
+	// Hash field of MessagesGetSavedGifsRequest.
 	Hash int64
 }
 
@@ -72,13 +66,6 @@ func (g *MessagesGetSavedGifsRequest) String() string {
 	}
 	type Alias MessagesGetSavedGifsRequest
 	return fmt.Sprintf("MessagesGetSavedGifsRequest%+v", Alias(*g))
-}
-
-// FillFrom fills MessagesGetSavedGifsRequest from given interface.
-func (g *MessagesGetSavedGifsRequest) FillFrom(from interface {
-	GetHash() (value int64)
-}) {
-	g.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -165,9 +152,6 @@ func (g *MessagesGetSavedGifsRequest) GetHash() (value int64) {
 }
 
 // MessagesGetSavedGifs invokes method messages.getSavedGifs#5cf09635 returning error if any.
-// Get saved GIFs.
-//
-// See https://core.telegram.org/method/messages.getSavedGifs for reference.
 func (c *Client) MessagesGetSavedGifs(ctx context.Context, hash int64) (MessagesSavedGifsClass, error) {
 	var result MessagesSavedGifsBox
 

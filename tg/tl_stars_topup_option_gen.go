@@ -32,38 +32,20 @@ var (
 )
 
 // StarsTopupOption represents TL type `starsTopupOption#bd915c0`.
-// Telegram Stars topup option¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/stars
-//
-// See https://core.telegram.org/constructor/starsTopupOption for reference.
 type StarsTopupOption struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of StarsTopupOption.
 	Flags bin.Fields
-	// If set, the option must only be shown in the full list of topup options.
+	// Extended field of StarsTopupOption.
 	Extended bool
-	// Amount of Telegram stars.
+	// Stars field of StarsTopupOption.
 	Stars int64
-	// Identifier of the store product associated with the option, official apps only.
+	// StoreProduct field of StarsTopupOption.
 	//
 	// Use SetStoreProduct and GetStoreProduct helpers.
 	StoreProduct string
-	// Three-letter ISO 4217 currency¹ code
-	//
-	// Links:
-	//  1) https://core.telegram.org/bots/payments#supported-currencies
+	// Currency field of StarsTopupOption.
 	Currency string
-	// Price of the product in the smallest units of the currency (integer, not float/double)
-	// For example, for a price of US$ 1.45 pass amount = 145. See the exp parameter in
-	// currencies.json¹, it shows the number of digits past the decimal point for each
-	// currency (2 for the majority of currencies).
-	//
-	// Links:
-	//  1) https://core.telegram.org/bots/payments/currencies.json
+	// Amount field of StarsTopupOption.
 	Amount int64
 }
 
@@ -111,24 +93,6 @@ func (s *StarsTopupOption) String() string {
 	}
 	type Alias StarsTopupOption
 	return fmt.Sprintf("StarsTopupOption%+v", Alias(*s))
-}
-
-// FillFrom fills StarsTopupOption from given interface.
-func (s *StarsTopupOption) FillFrom(from interface {
-	GetExtended() (value bool)
-	GetStars() (value int64)
-	GetStoreProduct() (value string, ok bool)
-	GetCurrency() (value string)
-	GetAmount() (value int64)
-}) {
-	s.Extended = from.GetExtended()
-	s.Stars = from.GetStars()
-	if val, ok := from.GetStoreProduct(); ok {
-		s.StoreProduct = val
-	}
-
-	s.Currency = from.GetCurrency()
-	s.Amount = from.GetAmount()
 }
 
 // TypeID returns type id in TL schema.

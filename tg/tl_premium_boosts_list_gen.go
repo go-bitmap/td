@@ -32,33 +32,18 @@ var (
 )
 
 // PremiumBoostsList represents TL type `premium.boostsList#86f8613c`.
-// List of boosts¹ that were applied to a peer by multiple users.
-//
-// Links:
-//  1. https://core.telegram.org/api/boost
-//
-// See https://core.telegram.org/constructor/premium.boostsList for reference.
 type PremiumBoostsList struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of PremiumBoostsList.
 	Flags bin.Fields
-	// Total number of results
+	// Count field of PremiumBoostsList.
 	Count int
-	// Boosts¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/boost
+	// Boosts field of PremiumBoostsList.
 	Boosts []Boost
-	// Offset that can be used for pagination¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets
+	// NextOffset field of PremiumBoostsList.
 	//
 	// Use SetNextOffset and GetNextOffset helpers.
 	NextOffset string
-	// Mentioned users
+	// Users field of PremiumBoostsList.
 	Users []UserClass
 }
 
@@ -103,22 +88,6 @@ func (b *PremiumBoostsList) String() string {
 	}
 	type Alias PremiumBoostsList
 	return fmt.Sprintf("PremiumBoostsList%+v", Alias(*b))
-}
-
-// FillFrom fills PremiumBoostsList from given interface.
-func (b *PremiumBoostsList) FillFrom(from interface {
-	GetCount() (value int)
-	GetBoosts() (value []Boost)
-	GetNextOffset() (value string, ok bool)
-	GetUsers() (value []UserClass)
-}) {
-	b.Count = from.GetCount()
-	b.Boosts = from.GetBoosts()
-	if val, ok := from.GetNextOffset(); ok {
-		b.NextOffset = val
-	}
-
-	b.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -324,9 +293,4 @@ func (b *PremiumBoostsList) GetUsers() (value []UserClass) {
 		return
 	}
 	return b.Users
-}
-
-// MapUsers returns field Users wrapped in UserClassArray helper.
-func (b *PremiumBoostsList) MapUsers() (value UserClassArray) {
-	return UserClassArray(b.Users)
 }

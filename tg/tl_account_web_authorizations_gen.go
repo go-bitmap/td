@@ -32,13 +32,10 @@ var (
 )
 
 // AccountWebAuthorizations represents TL type `account.webAuthorizations#ed56c9fc`.
-// Web authorizations
-//
-// See https://core.telegram.org/constructor/account.webAuthorizations for reference.
 type AccountWebAuthorizations struct {
-	// Web authorization list
+	// Authorizations field of AccountWebAuthorizations.
 	Authorizations []WebAuthorization
-	// Users
+	// Users field of AccountWebAuthorizations.
 	Users []UserClass
 }
 
@@ -74,15 +71,6 @@ func (w *AccountWebAuthorizations) String() string {
 	}
 	type Alias AccountWebAuthorizations
 	return fmt.Sprintf("AccountWebAuthorizations%+v", Alias(*w))
-}
-
-// FillFrom fills AccountWebAuthorizations from given interface.
-func (w *AccountWebAuthorizations) FillFrom(from interface {
-	GetAuthorizations() (value []WebAuthorization)
-	GetUsers() (value []UserClass)
-}) {
-	w.Authorizations = from.GetAuthorizations()
-	w.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -219,9 +207,4 @@ func (w *AccountWebAuthorizations) GetUsers() (value []UserClass) {
 		return
 	}
 	return w.Users
-}
-
-// MapUsers returns field Users wrapped in UserClassArray helper.
-func (w *AccountWebAuthorizations) MapUsers() (value UserClassArray) {
-	return UserClassArray(w.Users)
 }

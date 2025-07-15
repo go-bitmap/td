@@ -68,13 +68,6 @@ func (vec *ReadParticipantDateVector) String() string {
 	return fmt.Sprintf("ReadParticipantDateVector%+v", Alias(*vec))
 }
 
-// FillFrom fills ReadParticipantDateVector from given interface.
-func (vec *ReadParticipantDateVector) FillFrom(from interface {
-	GetElems() (value []ReadParticipantDate)
-}) {
-	vec.Elems = from.GetElems()
-}
-
 // TypeID returns type id in TL schema.
 //
 // See https://core.telegram.org/mtproto/TL-tl#remarks.

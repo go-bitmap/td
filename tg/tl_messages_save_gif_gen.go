@@ -32,13 +32,10 @@ var (
 )
 
 // MessagesSaveGifRequest represents TL type `messages.saveGif#327a30cb`.
-// Add GIF to saved gifs list
-//
-// See https://core.telegram.org/method/messages.saveGif for reference.
 type MessagesSaveGifRequest struct {
-	// GIF to save
+	// ID field of MessagesSaveGifRequest.
 	ID InputDocumentClass
-	// Whether to remove GIF from saved gifs list
+	// Unsave field of MessagesSaveGifRequest.
 	Unsave bool
 }
 
@@ -74,15 +71,6 @@ func (s *MessagesSaveGifRequest) String() string {
 	}
 	type Alias MessagesSaveGifRequest
 	return fmt.Sprintf("MessagesSaveGifRequest%+v", Alias(*s))
-}
-
-// FillFrom fills MessagesSaveGifRequest from given interface.
-func (s *MessagesSaveGifRequest) FillFrom(from interface {
-	GetID() (value InputDocumentClass)
-	GetUnsave() (value bool)
-}) {
-	s.ID = from.GetID()
-	s.Unsave = from.GetUnsave()
 }
 
 // TypeID returns type id in TL schema.
@@ -193,19 +181,7 @@ func (s *MessagesSaveGifRequest) GetUnsave() (value bool) {
 	return s.Unsave
 }
 
-// GetIDAsNotEmpty returns mapped value of ID field.
-func (s *MessagesSaveGifRequest) GetIDAsNotEmpty() (*InputDocument, bool) {
-	return s.ID.AsNotEmpty()
-}
-
 // MessagesSaveGif invokes method messages.saveGif#327a30cb returning error if any.
-// Add GIF to saved gifs list
-//
-// Possible errors:
-//
-//	400 GIF_ID_INVALID: The provided GIF ID is invalid.
-//
-// See https://core.telegram.org/method/messages.saveGif for reference.
 func (c *Client) MessagesSaveGif(ctx context.Context, request *MessagesSaveGifRequest) (bool, error) {
 	var result BoolBox
 

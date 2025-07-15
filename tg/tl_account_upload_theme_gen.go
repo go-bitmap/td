@@ -32,28 +32,18 @@ var (
 )
 
 // AccountUploadThemeRequest represents TL type `account.uploadTheme#1c3db333`.
-// Upload theme
-//
-// See https://core.telegram.org/method/account.uploadTheme for reference.
 type AccountUploadThemeRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of AccountUploadThemeRequest.
 	Flags bin.Fields
-	// Previously uploaded¹ theme file with platform-specific colors for UI components, can
-	// be left unset when creating themes that only modify the wallpaper or accent colors.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/themes#uploading-theme-files
+	// File field of AccountUploadThemeRequest.
 	File InputFileClass
-	// Thumbnail
+	// Thumb field of AccountUploadThemeRequest.
 	//
 	// Use SetThumb and GetThumb helpers.
 	Thumb InputFileClass
-	// File name
+	// FileName field of AccountUploadThemeRequest.
 	FileName string
-	// MIME type, must be application/x-tgtheme-{format}, where format depends on the client
+	// MimeType field of AccountUploadThemeRequest.
 	MimeType string
 }
 
@@ -98,22 +88,6 @@ func (u *AccountUploadThemeRequest) String() string {
 	}
 	type Alias AccountUploadThemeRequest
 	return fmt.Sprintf("AccountUploadThemeRequest%+v", Alias(*u))
-}
-
-// FillFrom fills AccountUploadThemeRequest from given interface.
-func (u *AccountUploadThemeRequest) FillFrom(from interface {
-	GetFile() (value InputFileClass)
-	GetThumb() (value InputFileClass, ok bool)
-	GetFileName() (value string)
-	GetMimeType() (value string)
-}) {
-	u.File = from.GetFile()
-	if val, ok := from.GetThumb(); ok {
-		u.Thumb = val
-	}
-
-	u.FileName = from.GetFileName()
-	u.MimeType = from.GetMimeType()
 }
 
 // TypeID returns type id in TL schema.
@@ -299,14 +273,6 @@ func (u *AccountUploadThemeRequest) GetMimeType() (value string) {
 }
 
 // AccountUploadTheme invokes method account.uploadTheme#1c3db333 returning error if any.
-// Upload theme
-//
-// Possible errors:
-//
-//	400 THEME_FILE_INVALID: Invalid theme file provided.
-//	400 THEME_MIME_INVALID: The theme's MIME type is invalid.
-//
-// See https://core.telegram.org/method/account.uploadTheme for reference.
 func (c *Client) AccountUploadTheme(ctx context.Context, request *AccountUploadThemeRequest) (DocumentClass, error) {
 	var result DocumentBox
 

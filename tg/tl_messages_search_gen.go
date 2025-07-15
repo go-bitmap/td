@@ -32,86 +32,46 @@ var (
 )
 
 // MessagesSearchRequest represents TL type `messages.search#29ee847a`.
-// Search for messages.
-//
-// See https://core.telegram.org/method/messages.search for reference.
 type MessagesSearchRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessagesSearchRequest.
 	Flags bin.Fields
-	// User or chat, histories with which are searched, or (inputPeerEmpty)¹ constructor to
-	// search in all private chats and normal groups (not channels) »². Use messages
-	// searchGlobal³ to search globally in all chats, groups, supergroups and channels.
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/inputPeerEmpty
-	//  2) https://core.telegram.org/api/channel
-	//  3) https://core.telegram.org/method/messages.searchGlobal
+	// Peer field of MessagesSearchRequest.
 	Peer InputPeerClass
-	// Text search request
+	// Q field of MessagesSearchRequest.
 	Q string
-	// Only return messages sent by the specified user ID
+	// FromID field of MessagesSearchRequest.
 	//
 	// Use SetFromID and GetFromID helpers.
 	FromID InputPeerClass
-	// Search within the saved message dialog »¹ with this ID.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/saved-messages
+	// SavedPeerID field of MessagesSearchRequest.
 	//
 	// Use SetSavedPeerID and GetSavedPeerID helpers.
 	SavedPeerID InputPeerClass
-	// You may search for saved messages tagged »¹ with one or more reactions using this
-	// flag.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/saved-messages#tags
+	// SavedReaction field of MessagesSearchRequest.
 	//
 	// Use SetSavedReaction and GetSavedReaction helpers.
 	SavedReaction []ReactionClass
-	// Thread ID¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/threads
+	// TopMsgID field of MessagesSearchRequest.
 	//
 	// Use SetTopMsgID and GetTopMsgID helpers.
 	TopMsgID int
-	// Filter to return only specified message types
+	// Filter field of MessagesSearchRequest.
 	Filter MessagesFilterClass
-	// If a positive value was transferred, only messages with a sending date bigger than the
-	// transferred one will be returned
+	// MinDate field of MessagesSearchRequest.
 	MinDate int
-	// If a positive value was transferred, only messages with a sending date smaller than
-	// the transferred one will be returned
+	// MaxDate field of MessagesSearchRequest.
 	MaxDate int
-	// Only return messages starting from the specified message ID
+	// OffsetID field of MessagesSearchRequest.
 	OffsetID int
-	// Additional offset¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets
+	// AddOffset field of MessagesSearchRequest.
 	AddOffset int
-	// Number of results to return¹, can be 0 to only return the message counter.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets
+	// Limit field of MessagesSearchRequest.
 	Limit int
-	// Maximum message ID to return¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets
+	// MaxID field of MessagesSearchRequest.
 	MaxID int
-	// Minimum message ID to return¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets
+	// MinID field of MessagesSearchRequest.
 	MinID int
-	// Hash¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets
+	// Hash field of MessagesSearchRequest.
 	Hash int64
 }
 
@@ -189,53 +149,6 @@ func (s *MessagesSearchRequest) String() string {
 	}
 	type Alias MessagesSearchRequest
 	return fmt.Sprintf("MessagesSearchRequest%+v", Alias(*s))
-}
-
-// FillFrom fills MessagesSearchRequest from given interface.
-func (s *MessagesSearchRequest) FillFrom(from interface {
-	GetPeer() (value InputPeerClass)
-	GetQ() (value string)
-	GetFromID() (value InputPeerClass, ok bool)
-	GetSavedPeerID() (value InputPeerClass, ok bool)
-	GetSavedReaction() (value []ReactionClass, ok bool)
-	GetTopMsgID() (value int, ok bool)
-	GetFilter() (value MessagesFilterClass)
-	GetMinDate() (value int)
-	GetMaxDate() (value int)
-	GetOffsetID() (value int)
-	GetAddOffset() (value int)
-	GetLimit() (value int)
-	GetMaxID() (value int)
-	GetMinID() (value int)
-	GetHash() (value int64)
-}) {
-	s.Peer = from.GetPeer()
-	s.Q = from.GetQ()
-	if val, ok := from.GetFromID(); ok {
-		s.FromID = val
-	}
-
-	if val, ok := from.GetSavedPeerID(); ok {
-		s.SavedPeerID = val
-	}
-
-	if val, ok := from.GetSavedReaction(); ok {
-		s.SavedReaction = val
-	}
-
-	if val, ok := from.GetTopMsgID(); ok {
-		s.TopMsgID = val
-	}
-
-	s.Filter = from.GetFilter()
-	s.MinDate = from.GetMinDate()
-	s.MaxDate = from.GetMaxDate()
-	s.OffsetID = from.GetOffsetID()
-	s.AddOffset = from.GetAddOffset()
-	s.Limit = from.GetLimit()
-	s.MaxID = from.GetMaxID()
-	s.MinID = from.GetMinID()
-	s.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -716,33 +629,7 @@ func (s *MessagesSearchRequest) GetHash() (value int64) {
 	return s.Hash
 }
 
-// MapSavedReaction returns field SavedReaction wrapped in ReactionClassArray helper.
-func (s *MessagesSearchRequest) MapSavedReaction() (value ReactionClassArray, ok bool) {
-	if !s.Flags.Has(3) {
-		return value, false
-	}
-	return ReactionClassArray(s.SavedReaction), true
-}
-
 // MessagesSearch invokes method messages.search#29ee847a returning error if any.
-// Search for messages.
-//
-// Possible errors:
-//
-//	400 CHANNEL_INVALID: The provided channel is invalid.
-//	400 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
-//	403 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
-//	400 CHAT_ID_INVALID: The provided chat id is invalid.
-//	400 FROM_PEER_INVALID: The specified from_id is invalid.
-//	400 INPUT_FILTER_INVALID: The specified filter is invalid.
-//	400 INPUT_USER_DEACTIVATED: The specified user was deleted.
-//	400 MSG_ID_INVALID: Invalid message ID provided.
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//	400 PEER_ID_NOT_SUPPORTED: The provided peer ID is not supported.
-//	400 SEARCH_QUERY_EMPTY: The search query is empty.
-//	400 USER_ID_INVALID: The provided user ID is invalid.
-//
-// See https://core.telegram.org/method/messages.search for reference.
 func (c *Client) MessagesSearch(ctx context.Context, request *MessagesSearchRequest) (MessagesMessagesClass, error) {
 	var result MessagesMessagesBox
 

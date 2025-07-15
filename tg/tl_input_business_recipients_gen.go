@@ -32,35 +32,20 @@ var (
 )
 
 // InputBusinessRecipients represents TL type `inputBusinessRecipients#6f8b32aa`.
-// Specifies the chats that can receive Telegram Business away »¹ and greeting »²
-// messages.
-// If exclude_selected is set, specifies all chats that cannot receive Telegram Business
-// away »¹ and greeting »² messages.
-//
-// Links:
-//  1. https://core.telegram.org/api/business#away-messages
-//  2. https://core.telegram.org/api/business#greeting-messages
-//  3. https://core.telegram.org/api/business#away-messages
-//  4. https://core.telegram.org/api/business#greeting-messages
-//
-// See https://core.telegram.org/constructor/inputBusinessRecipients for reference.
 type InputBusinessRecipients struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of InputBusinessRecipients.
 	Flags bin.Fields
-	// All existing private chats.
+	// ExistingChats field of InputBusinessRecipients.
 	ExistingChats bool
-	// All new private chats.
+	// NewChats field of InputBusinessRecipients.
 	NewChats bool
-	// All private chats with contacts.
+	// Contacts field of InputBusinessRecipients.
 	Contacts bool
-	// All private chats with non-contacts.
+	// NonContacts field of InputBusinessRecipients.
 	NonContacts bool
-	// If set, inverts the selection.
+	// ExcludeSelected field of InputBusinessRecipients.
 	ExcludeSelected bool
-	// Only private chats with the specified users.
+	// Users field of InputBusinessRecipients.
 	//
 	// Use SetUsers and GetUsers helpers.
 	Users []InputUserClass
@@ -113,26 +98,6 @@ func (i *InputBusinessRecipients) String() string {
 	}
 	type Alias InputBusinessRecipients
 	return fmt.Sprintf("InputBusinessRecipients%+v", Alias(*i))
-}
-
-// FillFrom fills InputBusinessRecipients from given interface.
-func (i *InputBusinessRecipients) FillFrom(from interface {
-	GetExistingChats() (value bool)
-	GetNewChats() (value bool)
-	GetContacts() (value bool)
-	GetNonContacts() (value bool)
-	GetExcludeSelected() (value bool)
-	GetUsers() (value []InputUserClass, ok bool)
-}) {
-	i.ExistingChats = from.GetExistingChats()
-	i.NewChats = from.GetNewChats()
-	i.Contacts = from.GetContacts()
-	i.NonContacts = from.GetNonContacts()
-	i.ExcludeSelected = from.GetExcludeSelected()
-	if val, ok := from.GetUsers(); ok {
-		i.Users = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -403,12 +368,4 @@ func (i *InputBusinessRecipients) GetUsers() (value []InputUserClass, ok bool) {
 		return value, false
 	}
 	return i.Users, true
-}
-
-// MapUsers returns field Users wrapped in InputUserClassArray helper.
-func (i *InputBusinessRecipients) MapUsers() (value InputUserClassArray, ok bool) {
-	if !i.Flags.Has(4) {
-		return value, false
-	}
-	return InputUserClassArray(i.Users), true
 }

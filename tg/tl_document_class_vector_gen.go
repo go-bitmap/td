@@ -68,13 +68,6 @@ func (vec *DocumentClassVector) String() string {
 	return fmt.Sprintf("DocumentClassVector%+v", Alias(*vec))
 }
 
-// FillFrom fills DocumentClassVector from given interface.
-func (vec *DocumentClassVector) FillFrom(from interface {
-	GetElems() (value []DocumentClass)
-}) {
-	vec.Elems = from.GetElems()
-}
-
 // TypeID returns type id in TL schema.
 //
 // See https://core.telegram.org/mtproto/TL-tl#remarks.
@@ -172,9 +165,4 @@ func (vec *DocumentClassVector) GetElems() (value []DocumentClass) {
 		return
 	}
 	return vec.Elems
-}
-
-// MapElems returns field Elems wrapped in DocumentClassArray helper.
-func (vec *DocumentClassVector) MapElems() (value DocumentClassArray) {
-	return DocumentClassArray(vec.Elems)
 }

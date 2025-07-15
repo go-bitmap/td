@@ -32,17 +32,8 @@ var (
 )
 
 // MessagesHistoryImport represents TL type `messages.historyImport#1662af0b`.
-// ID of a specific chat import session, click here for more info »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/import
-//
-// See https://core.telegram.org/constructor/messages.historyImport for reference.
 type MessagesHistoryImport struct {
-	// History import ID¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/import
+	// ID field of MessagesHistoryImport.
 	ID int64
 }
 
@@ -75,13 +66,6 @@ func (h *MessagesHistoryImport) String() string {
 	}
 	type Alias MessagesHistoryImport
 	return fmt.Sprintf("MessagesHistoryImport%+v", Alias(*h))
-}
-
-// FillFrom fills MessagesHistoryImport from given interface.
-func (h *MessagesHistoryImport) FillFrom(from interface {
-	GetID() (value int64)
-}) {
-	h.ID = from.GetID()
 }
 
 // TypeID returns type id in TL schema.

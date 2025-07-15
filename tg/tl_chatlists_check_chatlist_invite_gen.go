@@ -32,17 +32,8 @@ var (
 )
 
 // ChatlistsCheckChatlistInviteRequest represents TL type `chatlists.checkChatlistInvite#41c10fff`.
-// Obtain information about a chat folder deep link »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/links#chat-folder-links
-//
-// See https://core.telegram.org/method/chatlists.checkChatlistInvite for reference.
 type ChatlistsCheckChatlistInviteRequest struct {
-	// slug obtained from the chat folder deep link »¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/links#chat-folder-links
+	// Slug field of ChatlistsCheckChatlistInviteRequest.
 	Slug string
 }
 
@@ -75,13 +66,6 @@ func (c *ChatlistsCheckChatlistInviteRequest) String() string {
 	}
 	type Alias ChatlistsCheckChatlistInviteRequest
 	return fmt.Sprintf("ChatlistsCheckChatlistInviteRequest%+v", Alias(*c))
-}
-
-// FillFrom fills ChatlistsCheckChatlistInviteRequest from given interface.
-func (c *ChatlistsCheckChatlistInviteRequest) FillFrom(from interface {
-	GetSlug() (value string)
-}) {
-	c.Slug = from.GetSlug()
 }
 
 // TypeID returns type id in TL schema.
@@ -168,17 +152,6 @@ func (c *ChatlistsCheckChatlistInviteRequest) GetSlug() (value string) {
 }
 
 // ChatlistsCheckChatlistInvite invokes method chatlists.checkChatlistInvite#41c10fff returning error if any.
-// Obtain information about a chat folder deep link »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/links#chat-folder-links
-//
-// Possible errors:
-//
-//	400 INVITE_SLUG_EMPTY: The specified invite slug is empty.
-//	400 INVITE_SLUG_EXPIRED: The specified chat folder link has expired.
-//
-// See https://core.telegram.org/method/chatlists.checkChatlistInvite for reference.
 func (c *Client) ChatlistsCheckChatlistInvite(ctx context.Context, slug string) (ChatlistsChatlistInviteClass, error) {
 	var result ChatlistsChatlistInviteBox
 

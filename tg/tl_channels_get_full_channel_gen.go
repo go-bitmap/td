@@ -32,21 +32,8 @@ var (
 )
 
 // ChannelsGetFullChannelRequest represents TL type `channels.getFullChannel#8736a09`.
-// Get full info about a supergroup¹, gigagroup² or channel³
-//
-// Links:
-//  1. https://core.telegram.org/api/channel#supergroups
-//  2. https://core.telegram.org/api/channel#gigagroups
-//  3. https://core.telegram.org/api/channel#channels
-//
-// See https://core.telegram.org/method/channels.getFullChannel for reference.
 type ChannelsGetFullChannelRequest struct {
-	// The channel¹, supergroup² or gigagroup³ to get info about
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/channel#channels
-	//  2) https://core.telegram.org/api/channel#supergroups
-	//  3) https://core.telegram.org/api/channel#gigagroups
+	// Channel field of ChannelsGetFullChannelRequest.
 	Channel InputChannelClass
 }
 
@@ -79,13 +66,6 @@ func (g *ChannelsGetFullChannelRequest) String() string {
 	}
 	type Alias ChannelsGetFullChannelRequest
 	return fmt.Sprintf("ChannelsGetFullChannelRequest%+v", Alias(*g))
-}
-
-// FillFrom fills ChannelsGetFullChannelRequest from given interface.
-func (g *ChannelsGetFullChannelRequest) FillFrom(from interface {
-	GetChannel() (value InputChannelClass)
-}) {
-	g.Channel = from.GetChannel()
 }
 
 // TypeID returns type id in TL schema.
@@ -176,29 +156,7 @@ func (g *ChannelsGetFullChannelRequest) GetChannel() (value InputChannelClass) {
 	return g.Channel
 }
 
-// GetChannelAsNotEmpty returns mapped value of Channel field.
-func (g *ChannelsGetFullChannelRequest) GetChannelAsNotEmpty() (NotEmptyInputChannel, bool) {
-	return g.Channel.AsNotEmpty()
-}
-
 // ChannelsGetFullChannel invokes method channels.getFullChannel#8736a09 returning error if any.
-// Get full info about a supergroup¹, gigagroup² or channel³
-//
-// Links:
-//  1. https://core.telegram.org/api/channel#supergroups
-//  2. https://core.telegram.org/api/channel#gigagroups
-//  3. https://core.telegram.org/api/channel#channels
-//
-// Possible errors:
-//
-//	400 CHANNEL_INVALID: The provided channel is invalid.
-//	406 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
-//	403 CHANNEL_PUBLIC_GROUP_NA: channel/supergroup not available.
-//	400 CHAT_NOT_MODIFIED: No changes were made to chat information because the new information you passed is identical to the current information.
-//	400 MSG_ID_INVALID: Invalid message ID provided.
-//
-// See https://core.telegram.org/method/channels.getFullChannel for reference.
-// Can be used by bots.
 func (c *Client) ChannelsGetFullChannel(ctx context.Context, channel InputChannelClass) (*MessagesChatFull, error) {
 	var result MessagesChatFull
 

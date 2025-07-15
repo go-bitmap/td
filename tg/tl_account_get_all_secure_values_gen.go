@@ -32,13 +32,6 @@ var (
 )
 
 // AccountGetAllSecureValuesRequest represents TL type `account.getAllSecureValues#b288bc7d`.
-// Get all saved Telegram Passport¹ documents, for more info see the passport docs »²
-//
-// Links:
-//  1. https://core.telegram.org/passport
-//  2. https://core.telegram.org/passport/encryption#encryption
-//
-// See https://core.telegram.org/method/account.getAllSecureValues for reference.
 type AccountGetAllSecureValuesRequest struct {
 }
 
@@ -133,13 +126,6 @@ func (g *AccountGetAllSecureValuesRequest) DecodeBare(b *bin.Buffer) error {
 }
 
 // AccountGetAllSecureValues invokes method account.getAllSecureValues#b288bc7d returning error if any.
-// Get all saved Telegram Passport¹ documents, for more info see the passport docs »²
-//
-// Links:
-//  1. https://core.telegram.org/passport
-//  2. https://core.telegram.org/passport/encryption#encryption
-//
-// See https://core.telegram.org/method/account.getAllSecureValues for reference.
 func (c *Client) AccountGetAllSecureValues(ctx context.Context) ([]SecureValue, error) {
 	var result SecureValueVector
 

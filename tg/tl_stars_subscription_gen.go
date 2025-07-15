@@ -32,59 +32,38 @@ var (
 )
 
 // StarsSubscription represents TL type `starsSubscription#2e6eab1a`.
-// Represents a Telegram Star subscription »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/invites#paid-invite-links
-//
-// See https://core.telegram.org/constructor/starsSubscription for reference.
 type StarsSubscription struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of StarsSubscription.
 	Flags bin.Fields
-	// Whether this subscription was cancelled.
+	// Canceled field of StarsSubscription.
 	Canceled bool
-	// Whether we left the associated private channel, but we can still rejoin it using
-	// payments.fulfillStarsSubscription¹ because the current subscription period hasn't
-	// expired yet.
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/payments.fulfillStarsSubscription
+	// CanRefulfill field of StarsSubscription.
 	CanRefulfill bool
-	// Whether this subscription has expired because there are not enough stars on the user's
-	// balance to extend it.
+	// MissingBalance field of StarsSubscription.
 	MissingBalance bool
-	// Set if this bot subscription¹ was cancelled by the bot
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/subscriptions#bot-subscriptions
+	// BotCanceled field of StarsSubscription.
 	BotCanceled bool
-	// Subscription ID.
+	// ID field of StarsSubscription.
 	ID string
-	// Identifier of the associated private chat.
+	// Peer field of StarsSubscription.
 	Peer PeerClass
-	// Expiration date of the current subscription period.
+	// UntilDate field of StarsSubscription.
 	UntilDate int
-	// Pricing of the subscription in Telegram Stars.
+	// Pricing field of StarsSubscription.
 	Pricing StarsSubscriptionPricing
-	// Invitation link, used to renew the subscription after cancellation or expiration.
+	// ChatInviteHash field of StarsSubscription.
 	//
 	// Use SetChatInviteHash and GetChatInviteHash helpers.
 	ChatInviteHash string
-	// For bot subscriptions, the title of the subscription invoice
+	// Title field of StarsSubscription.
 	//
 	// Use SetTitle and GetTitle helpers.
 	Title string
-	// For bot subscriptions, the photo from the subscription invoice
+	// Photo field of StarsSubscription.
 	//
 	// Use SetPhoto and GetPhoto helpers.
 	Photo WebDocumentClass
-	// For bot subscriptions, the identifier¹ of the subscription invoice
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/links#invoice-links
+	// InvoiceSlug field of StarsSubscription.
 	//
 	// Use SetInvoiceSlug and GetInvoiceSlug helpers.
 	InvoiceSlug string
@@ -155,47 +134,6 @@ func (s *StarsSubscription) String() string {
 	}
 	type Alias StarsSubscription
 	return fmt.Sprintf("StarsSubscription%+v", Alias(*s))
-}
-
-// FillFrom fills StarsSubscription from given interface.
-func (s *StarsSubscription) FillFrom(from interface {
-	GetCanceled() (value bool)
-	GetCanRefulfill() (value bool)
-	GetMissingBalance() (value bool)
-	GetBotCanceled() (value bool)
-	GetID() (value string)
-	GetPeer() (value PeerClass)
-	GetUntilDate() (value int)
-	GetPricing() (value StarsSubscriptionPricing)
-	GetChatInviteHash() (value string, ok bool)
-	GetTitle() (value string, ok bool)
-	GetPhoto() (value WebDocumentClass, ok bool)
-	GetInvoiceSlug() (value string, ok bool)
-}) {
-	s.Canceled = from.GetCanceled()
-	s.CanRefulfill = from.GetCanRefulfill()
-	s.MissingBalance = from.GetMissingBalance()
-	s.BotCanceled = from.GetBotCanceled()
-	s.ID = from.GetID()
-	s.Peer = from.GetPeer()
-	s.UntilDate = from.GetUntilDate()
-	s.Pricing = from.GetPricing()
-	if val, ok := from.GetChatInviteHash(); ok {
-		s.ChatInviteHash = val
-	}
-
-	if val, ok := from.GetTitle(); ok {
-		s.Title = val
-	}
-
-	if val, ok := from.GetPhoto(); ok {
-		s.Photo = val
-	}
-
-	if val, ok := from.GetInvoiceSlug(); ok {
-		s.InvoiceSlug = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.

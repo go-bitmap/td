@@ -32,15 +32,12 @@ var (
 )
 
 // InvokeWithGooglePlayIntegrityRequest represents TL type `invokeWithGooglePlayIntegrity#1df92984`.
-// Official clients only, invoke with Google Play Integrity token.
-//
-// See https://core.telegram.org/constructor/invokeWithGooglePlayIntegrity for reference.
 type InvokeWithGooglePlayIntegrityRequest struct {
-	// Nonce.
+	// Nonce field of InvokeWithGooglePlayIntegrityRequest.
 	Nonce string
-	// Token.
+	// Token field of InvokeWithGooglePlayIntegrityRequest.
 	Token string
-	// Query.
+	// Query field of InvokeWithGooglePlayIntegrityRequest.
 	Query bin.Object
 }
 
@@ -79,17 +76,6 @@ func (i *InvokeWithGooglePlayIntegrityRequest) String() string {
 	}
 	type Alias InvokeWithGooglePlayIntegrityRequest
 	return fmt.Sprintf("InvokeWithGooglePlayIntegrityRequest%+v", Alias(*i))
-}
-
-// FillFrom fills InvokeWithGooglePlayIntegrityRequest from given interface.
-func (i *InvokeWithGooglePlayIntegrityRequest) FillFrom(from interface {
-	GetNonce() (value string)
-	GetToken() (value string)
-	GetQuery() (value bin.Object)
-}) {
-	i.Nonce = from.GetNonce()
-	i.Token = from.GetToken()
-	i.Query = from.GetQuery()
 }
 
 // TypeID returns type id in TL schema.

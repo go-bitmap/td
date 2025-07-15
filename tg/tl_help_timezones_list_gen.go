@@ -32,9 +32,6 @@ var (
 )
 
 // HelpTimezonesListNotModified represents TL type `help.timezonesListNotModified#970708cc`.
-// The timezone list has not changed.
-//
-// See https://core.telegram.org/constructor/help.timezonesListNotModified for reference.
 type HelpTimezonesListNotModified struct {
 }
 
@@ -134,20 +131,10 @@ func (t *HelpTimezonesListNotModified) DecodeBare(b *bin.Buffer) error {
 }
 
 // HelpTimezonesList represents TL type `help.timezonesList#7b74ed71`.
-// Timezone information that may be used elsewhere in the API, such as to set Telegram
-// Business opening hours »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/business#opening-hours
-//
-// See https://core.telegram.org/constructor/help.timezonesList for reference.
 type HelpTimezonesList struct {
-	// Timezones
+	// Timezones field of HelpTimezonesList.
 	Timezones []Timezone
-	// Hash used for caching, for more info click here¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets#hash-generation
+	// Hash field of HelpTimezonesList.
 	Hash int
 }
 
@@ -188,15 +175,6 @@ func (t *HelpTimezonesList) String() string {
 	}
 	type Alias HelpTimezonesList
 	return fmt.Sprintf("HelpTimezonesList%+v", Alias(*t))
-}
-
-// FillFrom fills HelpTimezonesList from given interface.
-func (t *HelpTimezonesList) FillFrom(from interface {
-	GetTimezones() (value []Timezone)
-	GetHash() (value int)
-}) {
-	t.Timezones = from.GetTimezones()
-	t.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -322,8 +300,6 @@ const HelpTimezonesListClassName = "help.TimezonesList"
 
 // HelpTimezonesListClass represents help.TimezonesList generic type.
 //
-// See https://core.telegram.org/type/help.TimezonesList for reference.
-//
 // Constructors:
 //   - [HelpTimezonesListNotModified]
 //   - [HelpTimezonesList]
@@ -356,19 +332,6 @@ type HelpTimezonesListClass interface {
 	String() string
 	// Zero returns true if current object has a zero value.
 	Zero() bool
-
-	// AsModified tries to map HelpTimezonesListClass to HelpTimezonesList.
-	AsModified() (*HelpTimezonesList, bool)
-}
-
-// AsModified tries to map HelpTimezonesListNotModified to HelpTimezonesList.
-func (t *HelpTimezonesListNotModified) AsModified() (*HelpTimezonesList, bool) {
-	return nil, false
-}
-
-// AsModified tries to map HelpTimezonesList to HelpTimezonesList.
-func (t *HelpTimezonesList) AsModified() (*HelpTimezonesList, bool) {
-	return t, true
 }
 
 // DecodeHelpTimezonesList implements binary de-serialization for HelpTimezonesListClass.

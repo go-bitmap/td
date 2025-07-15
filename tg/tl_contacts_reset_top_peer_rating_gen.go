@@ -32,16 +32,10 @@ var (
 )
 
 // ContactsResetTopPeerRatingRequest represents TL type `contacts.resetTopPeerRating#1ae373ac`.
-// Reset rating¹ of top peer
-//
-// Links:
-//  1. https://core.telegram.org/api/top-rating
-//
-// See https://core.telegram.org/method/contacts.resetTopPeerRating for reference.
 type ContactsResetTopPeerRatingRequest struct {
-	// Top peer category
+	// Category field of ContactsResetTopPeerRatingRequest.
 	Category TopPeerCategoryClass
-	// Peer whose rating should be reset
+	// Peer field of ContactsResetTopPeerRatingRequest.
 	Peer InputPeerClass
 }
 
@@ -77,15 +71,6 @@ func (r *ContactsResetTopPeerRatingRequest) String() string {
 	}
 	type Alias ContactsResetTopPeerRatingRequest
 	return fmt.Sprintf("ContactsResetTopPeerRatingRequest%+v", Alias(*r))
-}
-
-// FillFrom fills ContactsResetTopPeerRatingRequest from given interface.
-func (r *ContactsResetTopPeerRatingRequest) FillFrom(from interface {
-	GetCategory() (value TopPeerCategoryClass)
-	GetPeer() (value InputPeerClass)
-}) {
-	r.Category = from.GetCategory()
-	r.Peer = from.GetPeer()
 }
 
 // TypeID returns type id in TL schema.
@@ -202,16 +187,6 @@ func (r *ContactsResetTopPeerRatingRequest) GetPeer() (value InputPeerClass) {
 }
 
 // ContactsResetTopPeerRating invokes method contacts.resetTopPeerRating#1ae373ac returning error if any.
-// Reset rating¹ of top peer
-//
-// Links:
-//  1. https://core.telegram.org/api/top-rating
-//
-// Possible errors:
-//
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//
-// See https://core.telegram.org/method/contacts.resetTopPeerRating for reference.
 func (c *Client) ContactsResetTopPeerRating(ctx context.Context, request *ContactsResetTopPeerRatingRequest) (bool, error) {
 	var result BoolBox
 

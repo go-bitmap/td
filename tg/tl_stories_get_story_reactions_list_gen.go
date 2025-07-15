@@ -32,47 +32,24 @@ var (
 )
 
 // StoriesGetStoryReactionsListRequest represents TL type `stories.getStoryReactionsList#b9b2881f`.
-// Get the reaction¹ and interaction list of a story² posted to a channel, along with
-// the sender of each reaction.
-// Can only be used by channel admins.
-//
-// Links:
-//  1. https://core.telegram.org/api/reactions
-//  2. https://core.telegram.org/api/stories
-//
-// See https://core.telegram.org/method/stories.getStoryReactionsList for reference.
 type StoriesGetStoryReactionsListRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of StoriesGetStoryReactionsListRequest.
 	Flags bin.Fields
-	// If set, returns forwards and reposts first, then reactions, then other views;
-	// otherwise returns interactions sorted just by interaction date.
+	// ForwardsFirst field of StoriesGetStoryReactionsListRequest.
 	ForwardsFirst bool
-	// Channel
+	// Peer field of StoriesGetStoryReactionsListRequest.
 	Peer InputPeerClass
-	// Story¹ ID
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/stories
+	// ID field of StoriesGetStoryReactionsListRequest.
 	ID int
-	// Get only reactions of this type
+	// Reaction field of StoriesGetStoryReactionsListRequest.
 	//
 	// Use SetReaction and GetReaction helpers.
 	Reaction ReactionClass
-	// Offset for pagination (taken from the next_offset field of the returned stories
-	// StoryReactionsList¹); empty in the first request.
-	//
-	// Links:
-	//  1) https://core.telegram.org/type/stories.StoryReactionsList
+	// Offset field of StoriesGetStoryReactionsListRequest.
 	//
 	// Use SetOffset and GetOffset helpers.
 	Offset string
-	// Maximum number of results to return, see pagination¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets
+	// Limit field of StoriesGetStoryReactionsListRequest.
 	Limit int
 }
 
@@ -123,29 +100,6 @@ func (g *StoriesGetStoryReactionsListRequest) String() string {
 	}
 	type Alias StoriesGetStoryReactionsListRequest
 	return fmt.Sprintf("StoriesGetStoryReactionsListRequest%+v", Alias(*g))
-}
-
-// FillFrom fills StoriesGetStoryReactionsListRequest from given interface.
-func (g *StoriesGetStoryReactionsListRequest) FillFrom(from interface {
-	GetForwardsFirst() (value bool)
-	GetPeer() (value InputPeerClass)
-	GetID() (value int)
-	GetReaction() (value ReactionClass, ok bool)
-	GetOffset() (value string, ok bool)
-	GetLimit() (value int)
-}) {
-	g.ForwardsFirst = from.GetForwardsFirst()
-	g.Peer = from.GetPeer()
-	g.ID = from.GetID()
-	if val, ok := from.GetReaction(); ok {
-		g.Reaction = val
-	}
-
-	if val, ok := from.GetOffset(); ok {
-		g.Offset = val
-	}
-
-	g.Limit = from.GetLimit()
 }
 
 // TypeID returns type id in TL schema.
@@ -395,19 +349,6 @@ func (g *StoriesGetStoryReactionsListRequest) GetLimit() (value int) {
 }
 
 // StoriesGetStoryReactionsList invokes method stories.getStoryReactionsList#b9b2881f returning error if any.
-// Get the reaction¹ and interaction list of a story² posted to a channel, along with
-// the sender of each reaction.
-// Can only be used by channel admins.
-//
-// Links:
-//  1. https://core.telegram.org/api/reactions
-//  2. https://core.telegram.org/api/stories
-//
-// Possible errors:
-//
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//
-// See https://core.telegram.org/method/stories.getStoryReactionsList for reference.
 func (c *Client) StoriesGetStoryReactionsList(ctx context.Context, request *StoriesGetStoryReactionsListRequest) (*StoriesStoryReactionsList, error) {
 	var result StoriesStoryReactionsList
 

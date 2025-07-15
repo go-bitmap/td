@@ -32,30 +32,14 @@ var (
 )
 
 // AccountPasswordSettings represents TL type `account.passwordSettings#9a5c33e5`.
-// Private info associated to the password info (recovery email, telegram passport¹ info
-// & so on)
-//
-// Links:
-//  1. https://core.telegram.org/passport
-//
-// See https://core.telegram.org/constructor/account.passwordSettings for reference.
 type AccountPasswordSettings struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of AccountPasswordSettings.
 	Flags bin.Fields
-	// 2FA Recovery email¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/srp#email-verification
+	// Email field of AccountPasswordSettings.
 	//
 	// Use SetEmail and GetEmail helpers.
 	Email string
-	// Telegram passport¹ settings
-	//
-	// Links:
-	//  1) https://core.telegram.org/passport
+	// SecureSettings field of AccountPasswordSettings.
 	//
 	// Use SetSecureSettings and GetSecureSettings helpers.
 	SecureSettings SecureSecretSettings
@@ -96,21 +80,6 @@ func (p *AccountPasswordSettings) String() string {
 	}
 	type Alias AccountPasswordSettings
 	return fmt.Sprintf("AccountPasswordSettings%+v", Alias(*p))
-}
-
-// FillFrom fills AccountPasswordSettings from given interface.
-func (p *AccountPasswordSettings) FillFrom(from interface {
-	GetEmail() (value string, ok bool)
-	GetSecureSettings() (value SecureSecretSettings, ok bool)
-}) {
-	if val, ok := from.GetEmail(); ok {
-		p.Email = val
-	}
-
-	if val, ok := from.GetSecureSettings(); ok {
-		p.SecureSettings = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.

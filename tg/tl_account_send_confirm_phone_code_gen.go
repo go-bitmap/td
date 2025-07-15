@@ -32,19 +32,10 @@ var (
 )
 
 // AccountSendConfirmPhoneCodeRequest represents TL type `account.sendConfirmPhoneCode#1b3faa88`.
-// Send confirmation code to cancel account deletion, for more info click here »¹
-//
-// Links:
-//  1. https://core.telegram.org/api/account-deletion
-//
-// See https://core.telegram.org/method/account.sendConfirmPhoneCode for reference.
 type AccountSendConfirmPhoneCodeRequest struct {
-	// The hash from the service notification, for more info click here »¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/account-deletion
+	// Hash field of AccountSendConfirmPhoneCodeRequest.
 	Hash string
-	// Phone code settings
+	// Settings field of AccountSendConfirmPhoneCodeRequest.
 	Settings CodeSettings
 }
 
@@ -80,15 +71,6 @@ func (s *AccountSendConfirmPhoneCodeRequest) String() string {
 	}
 	type Alias AccountSendConfirmPhoneCodeRequest
 	return fmt.Sprintf("AccountSendConfirmPhoneCodeRequest%+v", Alias(*s))
-}
-
-// FillFrom fills AccountSendConfirmPhoneCodeRequest from given interface.
-func (s *AccountSendConfirmPhoneCodeRequest) FillFrom(from interface {
-	GetHash() (value string)
-	GetSettings() (value CodeSettings)
-}) {
-	s.Hash = from.GetHash()
-	s.Settings = from.GetSettings()
 }
 
 // TypeID returns type id in TL schema.
@@ -195,16 +177,6 @@ func (s *AccountSendConfirmPhoneCodeRequest) GetSettings() (value CodeSettings) 
 }
 
 // AccountSendConfirmPhoneCode invokes method account.sendConfirmPhoneCode#1b3faa88 returning error if any.
-// Send confirmation code to cancel account deletion, for more info click here »¹
-//
-// Links:
-//  1. https://core.telegram.org/api/account-deletion
-//
-// Possible errors:
-//
-//	400 HASH_INVALID: The provided hash is invalid.
-//
-// See https://core.telegram.org/method/account.sendConfirmPhoneCode for reference.
 func (c *Client) AccountSendConfirmPhoneCode(ctx context.Context, request *AccountSendConfirmPhoneCodeRequest) (AuthSentCodeClass, error) {
 	var result AuthSentCodeBox
 

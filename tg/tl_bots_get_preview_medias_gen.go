@@ -32,14 +32,8 @@ var (
 )
 
 // BotsGetPreviewMediasRequest represents TL type `bots.getPreviewMedias#a2a5594d`.
-// Fetch main mini app previews, see here »¹ for more info.
-//
-// Links:
-//  1. https://core.telegram.org/api/bots/webapps#main-mini-app-previews
-//
-// See https://core.telegram.org/method/bots.getPreviewMedias for reference.
 type BotsGetPreviewMediasRequest struct {
-	// The bot that owns the Main Mini App.
+	// Bot field of BotsGetPreviewMediasRequest.
 	Bot InputUserClass
 }
 
@@ -72,13 +66,6 @@ func (g *BotsGetPreviewMediasRequest) String() string {
 	}
 	type Alias BotsGetPreviewMediasRequest
 	return fmt.Sprintf("BotsGetPreviewMediasRequest%+v", Alias(*g))
-}
-
-// FillFrom fills BotsGetPreviewMediasRequest from given interface.
-func (g *BotsGetPreviewMediasRequest) FillFrom(from interface {
-	GetBot() (value InputUserClass)
-}) {
-	g.Bot = from.GetBot()
 }
 
 // TypeID returns type id in TL schema.
@@ -170,16 +157,6 @@ func (g *BotsGetPreviewMediasRequest) GetBot() (value InputUserClass) {
 }
 
 // BotsGetPreviewMedias invokes method bots.getPreviewMedias#a2a5594d returning error if any.
-// Fetch main mini app previews, see here »¹ for more info.
-//
-// Links:
-//  1. https://core.telegram.org/api/bots/webapps#main-mini-app-previews
-//
-// Possible errors:
-//
-//	400 BOT_INVALID: This is not a valid bot.
-//
-// See https://core.telegram.org/method/bots.getPreviewMedias for reference.
 func (c *Client) BotsGetPreviewMedias(ctx context.Context, bot InputUserClass) ([]BotPreviewMedia, error) {
 	var result BotPreviewMediaVector
 

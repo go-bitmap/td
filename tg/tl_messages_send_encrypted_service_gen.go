@@ -32,19 +32,12 @@ var (
 )
 
 // MessagesSendEncryptedServiceRequest represents TL type `messages.sendEncryptedService#32d439a4`.
-// Sends a service message to a secret chat.
-//
-// See https://core.telegram.org/method/messages.sendEncryptedService for reference.
 type MessagesSendEncryptedServiceRequest struct {
-	// Secret chat ID
+	// Peer field of MessagesSendEncryptedServiceRequest.
 	Peer InputEncryptedChat
-	// Unique client message ID required to prevent message resending
+	// RandomID field of MessagesSendEncryptedServiceRequest.
 	RandomID int64
-	// TL-serialization of  DecryptedMessage¹ type, encrypted with a key generated during
-	// chat initialization
-	//
-	// Links:
-	//  1) https://core.telegram.org/type/DecryptedMessage
+	// Data field of MessagesSendEncryptedServiceRequest.
 	Data []byte
 }
 
@@ -83,17 +76,6 @@ func (s *MessagesSendEncryptedServiceRequest) String() string {
 	}
 	type Alias MessagesSendEncryptedServiceRequest
 	return fmt.Sprintf("MessagesSendEncryptedServiceRequest%+v", Alias(*s))
-}
-
-// FillFrom fills MessagesSendEncryptedServiceRequest from given interface.
-func (s *MessagesSendEncryptedServiceRequest) FillFrom(from interface {
-	GetPeer() (value InputEncryptedChat)
-	GetRandomID() (value int64)
-	GetData() (value []byte)
-}) {
-	s.Peer = from.GetPeer()
-	s.RandomID = from.GetRandomID()
-	s.Data = from.GetData()
 }
 
 // TypeID returns type id in TL schema.
@@ -220,19 +202,6 @@ func (s *MessagesSendEncryptedServiceRequest) GetData() (value []byte) {
 }
 
 // MessagesSendEncryptedService invokes method messages.sendEncryptedService#32d439a4 returning error if any.
-// Sends a service message to a secret chat.
-//
-// Possible errors:
-//
-//	400 CHAT_ID_INVALID: The provided chat id is invalid.
-//	400 DATA_INVALID: Encrypted data invalid.
-//	400 ENCRYPTION_DECLINED: The secret chat was declined.
-//	400 ENCRYPTION_ID_INVALID: The provided secret chat ID is invalid.
-//	500 MSG_WAIT_FAILED: A waiting call returned an error.
-//	403 USER_DELETED: You can't send this secret message because the other participant deleted their account.
-//	403 USER_IS_BLOCKED: You were blocked by this user.
-//
-// See https://core.telegram.org/method/messages.sendEncryptedService for reference.
 func (c *Client) MessagesSendEncryptedService(ctx context.Context, request *MessagesSendEncryptedServiceRequest) (MessagesSentEncryptedMessageClass, error) {
 	var result MessagesSentEncryptedMessageBox
 

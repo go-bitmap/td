@@ -32,11 +32,8 @@ var (
 )
 
 // HelpGetAppUpdateRequest represents TL type `help.getAppUpdate#522d5a7d`.
-// Returns information on update availability for the current application.
-//
-// See https://core.telegram.org/method/help.getAppUpdate for reference.
 type HelpGetAppUpdateRequest struct {
-	// Source
+	// Source field of HelpGetAppUpdateRequest.
 	Source string
 }
 
@@ -69,13 +66,6 @@ func (g *HelpGetAppUpdateRequest) String() string {
 	}
 	type Alias HelpGetAppUpdateRequest
 	return fmt.Sprintf("HelpGetAppUpdateRequest%+v", Alias(*g))
-}
-
-// FillFrom fills HelpGetAppUpdateRequest from given interface.
-func (g *HelpGetAppUpdateRequest) FillFrom(from interface {
-	GetSource() (value string)
-}) {
-	g.Source = from.GetSource()
 }
 
 // TypeID returns type id in TL schema.
@@ -162,9 +152,6 @@ func (g *HelpGetAppUpdateRequest) GetSource() (value string) {
 }
 
 // HelpGetAppUpdate invokes method help.getAppUpdate#522d5a7d returning error if any.
-// Returns information on update availability for the current application.
-//
-// See https://core.telegram.org/method/help.getAppUpdate for reference.
 func (c *Client) HelpGetAppUpdate(ctx context.Context, source string) (HelpAppUpdateClass, error) {
 	var result HelpAppUpdateBox
 

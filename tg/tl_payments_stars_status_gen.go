@@ -32,59 +32,34 @@ var (
 )
 
 // PaymentsStarsStatus represents TL type `payments.starsStatus#6c9ce8ed`.
-// Info about the current Telegram Star subscriptions, balance and transaction history
-// »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/stars#balance-and-transaction-history
-//
-// See https://core.telegram.org/constructor/payments.starsStatus for reference.
 type PaymentsStarsStatus struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of PaymentsStarsStatus.
 	Flags bin.Fields
-	// Current Telegram Star balance.
+	// Balance field of PaymentsStarsStatus.
 	Balance StarsAmount
-	// Info about current Telegram Star subscriptions, only returned when invoking payments
-	// getStarsTransactions¹ and payments.getStarsSubscriptions².
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/payments.getStarsTransactions
-	//  2) https://core.telegram.org/method/payments.getStarsSubscriptions
+	// Subscriptions field of PaymentsStarsStatus.
 	//
 	// Use SetSubscriptions and GetSubscriptions helpers.
 	Subscriptions []StarsSubscription
-	// Offset for pagination of subscriptions: only usable and returned when invoking
-	// payments.getStarsSubscriptions¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/payments.getStarsSubscriptions
+	// SubscriptionsNextOffset field of PaymentsStarsStatus.
 	//
 	// Use SetSubscriptionsNextOffset and GetSubscriptionsNextOffset helpers.
 	SubscriptionsNextOffset string
-	// The number of Telegram Stars the user should buy to be able to extend expired
-	// subscriptions soon (i.e. the current balance is not enough to extend all expired
-	// subscriptions).
+	// SubscriptionsMissingBalance field of PaymentsStarsStatus.
 	//
 	// Use SetSubscriptionsMissingBalance and GetSubscriptionsMissingBalance helpers.
 	SubscriptionsMissingBalance int64
-	// List of Telegram Star transactions (partial if next_offset is set).
+	// History field of PaymentsStarsStatus.
 	//
 	// Use SetHistory and GetHistory helpers.
 	History []StarsTransaction
-	// Offset to use to fetch more transactions from the transaction history using payments
-	// getStarsTransactions¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/payments.getStarsTransactions
+	// NextOffset field of PaymentsStarsStatus.
 	//
 	// Use SetNextOffset and GetNextOffset helpers.
 	NextOffset string
-	// Chats mentioned in history.
+	// Chats field of PaymentsStarsStatus.
 	Chats []ChatClass
-	// Users mentioned in history.
+	// Users field of PaymentsStarsStatus.
 	Users []UserClass
 }
 
@@ -141,42 +116,6 @@ func (s *PaymentsStarsStatus) String() string {
 	}
 	type Alias PaymentsStarsStatus
 	return fmt.Sprintf("PaymentsStarsStatus%+v", Alias(*s))
-}
-
-// FillFrom fills PaymentsStarsStatus from given interface.
-func (s *PaymentsStarsStatus) FillFrom(from interface {
-	GetBalance() (value StarsAmount)
-	GetSubscriptions() (value []StarsSubscription, ok bool)
-	GetSubscriptionsNextOffset() (value string, ok bool)
-	GetSubscriptionsMissingBalance() (value int64, ok bool)
-	GetHistory() (value []StarsTransaction, ok bool)
-	GetNextOffset() (value string, ok bool)
-	GetChats() (value []ChatClass)
-	GetUsers() (value []UserClass)
-}) {
-	s.Balance = from.GetBalance()
-	if val, ok := from.GetSubscriptions(); ok {
-		s.Subscriptions = val
-	}
-
-	if val, ok := from.GetSubscriptionsNextOffset(); ok {
-		s.SubscriptionsNextOffset = val
-	}
-
-	if val, ok := from.GetSubscriptionsMissingBalance(); ok {
-		s.SubscriptionsMissingBalance = val
-	}
-
-	if val, ok := from.GetHistory(); ok {
-		s.History = val
-	}
-
-	if val, ok := from.GetNextOffset(); ok {
-		s.NextOffset = val
-	}
-
-	s.Chats = from.GetChats()
-	s.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -559,14 +498,4 @@ func (s *PaymentsStarsStatus) GetUsers() (value []UserClass) {
 		return
 	}
 	return s.Users
-}
-
-// MapChats returns field Chats wrapped in ChatClassArray helper.
-func (s *PaymentsStarsStatus) MapChats() (value ChatClassArray) {
-	return ChatClassArray(s.Chats)
-}
-
-// MapUsers returns field Users wrapped in UserClassArray helper.
-func (s *PaymentsStarsStatus) MapUsers() (value UserClassArray) {
-	return UserClassArray(s.Users)
 }

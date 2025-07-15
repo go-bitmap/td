@@ -32,13 +32,10 @@ var (
 )
 
 // JSONObjectValue represents TL type `jsonObjectValue#c0de1bd9`.
-// JSON key: value pair
-//
-// See https://core.telegram.org/constructor/jsonObjectValue for reference.
 type JSONObjectValue struct {
-	// Key
+	// Key field of JSONObjectValue.
 	Key string
-	// Value
+	// Value field of JSONObjectValue.
 	Value JSONValueClass
 }
 
@@ -74,15 +71,6 @@ func (j *JSONObjectValue) String() string {
 	}
 	type Alias JSONObjectValue
 	return fmt.Sprintf("JSONObjectValue%+v", Alias(*j))
-}
-
-// FillFrom fills JSONObjectValue from given interface.
-func (j *JSONObjectValue) FillFrom(from interface {
-	GetKey() (value string)
-	GetValue() (value JSONValueClass)
-}) {
-	j.Key = from.GetKey()
-	j.Value = from.GetValue()
 }
 
 // TypeID returns type id in TL schema.

@@ -32,23 +32,12 @@ var (
 )
 
 // AuthRecoverPasswordRequest represents TL type `auth.recoverPassword#37096c70`.
-// Reset the 2FA password¹ using the recovery code sent using auth
-// requestPasswordRecovery².
-//
-// Links:
-//  1. https://core.telegram.org/api/srp
-//  2. https://core.telegram.org/method/auth.requestPasswordRecovery
-//
-// See https://core.telegram.org/method/auth.recoverPassword for reference.
 type AuthRecoverPasswordRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of AuthRecoverPasswordRequest.
 	Flags bin.Fields
-	// Code received via email
+	// Code field of AuthRecoverPasswordRequest.
 	Code string
-	// New password
+	// NewSettings field of AuthRecoverPasswordRequest.
 	//
 	// Use SetNewSettings and GetNewSettings helpers.
 	NewSettings AccountPasswordInputSettings
@@ -89,18 +78,6 @@ func (r *AuthRecoverPasswordRequest) String() string {
 	}
 	type Alias AuthRecoverPasswordRequest
 	return fmt.Sprintf("AuthRecoverPasswordRequest%+v", Alias(*r))
-}
-
-// FillFrom fills AuthRecoverPasswordRequest from given interface.
-func (r *AuthRecoverPasswordRequest) FillFrom(from interface {
-	GetCode() (value string)
-	GetNewSettings() (value AccountPasswordInputSettings, ok bool)
-}) {
-	r.Code = from.GetCode()
-	if val, ok := from.GetNewSettings(); ok {
-		r.NewSettings = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -236,19 +213,6 @@ func (r *AuthRecoverPasswordRequest) GetNewSettings() (value AccountPasswordInpu
 }
 
 // AuthRecoverPassword invokes method auth.recoverPassword#37096c70 returning error if any.
-// Reset the 2FA password¹ using the recovery code sent using auth
-// requestPasswordRecovery².
-//
-// Links:
-//  1. https://core.telegram.org/api/srp
-//  2. https://core.telegram.org/method/auth.requestPasswordRecovery
-//
-// Possible errors:
-//
-//	400 CODE_EMPTY: The provided code is empty.
-//	400 NEW_SETTINGS_INVALID: The new password settings are invalid.
-//
-// See https://core.telegram.org/method/auth.recoverPassword for reference.
 func (c *Client) AuthRecoverPassword(ctx context.Context, request *AuthRecoverPasswordRequest) (AuthAuthorizationClass, error) {
 	var result AuthAuthorizationBox
 

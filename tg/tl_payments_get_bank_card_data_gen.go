@@ -32,11 +32,8 @@ var (
 )
 
 // PaymentsGetBankCardDataRequest represents TL type `payments.getBankCardData#2e79d779`.
-// Get info about a credit card
-//
-// See https://core.telegram.org/method/payments.getBankCardData for reference.
 type PaymentsGetBankCardDataRequest struct {
-	// Credit card number
+	// Number field of PaymentsGetBankCardDataRequest.
 	Number string
 }
 
@@ -69,13 +66,6 @@ func (g *PaymentsGetBankCardDataRequest) String() string {
 	}
 	type Alias PaymentsGetBankCardDataRequest
 	return fmt.Sprintf("PaymentsGetBankCardDataRequest%+v", Alias(*g))
-}
-
-// FillFrom fills PaymentsGetBankCardDataRequest from given interface.
-func (g *PaymentsGetBankCardDataRequest) FillFrom(from interface {
-	GetNumber() (value string)
-}) {
-	g.Number = from.GetNumber()
 }
 
 // TypeID returns type id in TL schema.
@@ -162,13 +152,6 @@ func (g *PaymentsGetBankCardDataRequest) GetNumber() (value string) {
 }
 
 // PaymentsGetBankCardData invokes method payments.getBankCardData#2e79d779 returning error if any.
-// Get info about a credit card
-//
-// Possible errors:
-//
-//	400 BANK_CARD_NUMBER_INVALID: The specified card number is invalid.
-//
-// See https://core.telegram.org/method/payments.getBankCardData for reference.
 func (c *Client) PaymentsGetBankCardData(ctx context.Context, number string) (*PaymentsBankCardData, error) {
 	var result PaymentsBankCardData
 

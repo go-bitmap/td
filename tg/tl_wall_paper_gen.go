@@ -32,46 +32,26 @@ var (
 )
 
 // WallPaper represents TL type `wallPaper#a437c3ed`.
-// Represents a wallpaper¹ based on an image.
-//
-// Links:
-//  1. https://core.telegram.org/api/wallpapers
-//
-// See https://core.telegram.org/constructor/wallPaper for reference.
 type WallPaper struct {
-	// Identifier
+	// ID field of WallPaper.
 	ID int64
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of WallPaper.
 	Flags bin.Fields
-	// Whether we created this wallpaper
+	// Creator field of WallPaper.
 	Creator bool
-	// Whether this is the default wallpaper
+	// Default field of WallPaper.
 	Default bool
-	// Whether this is a pattern wallpaper »¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/wallpapers#pattern-wallpapers
+	// Pattern field of WallPaper.
 	Pattern bool
-	// Whether this wallpaper should be used in dark mode.
+	// Dark field of WallPaper.
 	Dark bool
-	// Access hash
+	// AccessHash field of WallPaper.
 	AccessHash int64
-	// Unique wallpaper ID, used when generating wallpaper links¹ or importing wallpaper
-	// links².
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/links#wallpaper-links
-	//  2) https://core.telegram.org/api/wallpapers
+	// Slug field of WallPaper.
 	Slug string
-	// The actual wallpaper
+	// Document field of WallPaper.
 	Document DocumentClass
-	// Info on how to generate the wallpaper, according to these instructions »¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/wallpapers
+	// Settings field of WallPaper.
 	//
 	// Use SetSettings and GetSettings helpers.
 	Settings WallPaperSettings
@@ -138,32 +118,6 @@ func (w *WallPaper) String() string {
 	}
 	type Alias WallPaper
 	return fmt.Sprintf("WallPaper%+v", Alias(*w))
-}
-
-// FillFrom fills WallPaper from given interface.
-func (w *WallPaper) FillFrom(from interface {
-	GetID() (value int64)
-	GetCreator() (value bool)
-	GetDefault() (value bool)
-	GetPattern() (value bool)
-	GetDark() (value bool)
-	GetAccessHash() (value int64)
-	GetSlug() (value string)
-	GetDocument() (value DocumentClass)
-	GetSettings() (value WallPaperSettings, ok bool)
-}) {
-	w.ID = from.GetID()
-	w.Creator = from.GetCreator()
-	w.Default = from.GetDefault()
-	w.Pattern = from.GetPattern()
-	w.Dark = from.GetDark()
-	w.AccessHash = from.GetAccessHash()
-	w.Slug = from.GetSlug()
-	w.Document = from.GetDocument()
-	if val, ok := from.GetSettings(); ok {
-		w.Settings = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -476,25 +430,16 @@ func (w *WallPaper) GetSettings() (value WallPaperSettings, ok bool) {
 }
 
 // WallPaperNoFile represents TL type `wallPaperNoFile#e0804116`.
-// Represents a wallpaper¹ only based on colors/gradients.
-//
-// Links:
-//  1. https://core.telegram.org/api/wallpapers
-//
-// See https://core.telegram.org/constructor/wallPaperNoFile for reference.
 type WallPaperNoFile struct {
-	// Wallpaper ID
+	// ID field of WallPaperNoFile.
 	ID int64
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of WallPaperNoFile.
 	Flags bin.Fields
-	// Whether this is the default wallpaper
+	// Default field of WallPaperNoFile.
 	Default bool
-	// Whether this wallpaper should be used in dark mode.
+	// Dark field of WallPaperNoFile.
 	Dark bool
-	// Info on how to generate the wallpaper.
+	// Settings field of WallPaperNoFile.
 	//
 	// Use SetSettings and GetSettings helpers.
 	Settings WallPaperSettings
@@ -546,22 +491,6 @@ func (w *WallPaperNoFile) String() string {
 	}
 	type Alias WallPaperNoFile
 	return fmt.Sprintf("WallPaperNoFile%+v", Alias(*w))
-}
-
-// FillFrom fills WallPaperNoFile from given interface.
-func (w *WallPaperNoFile) FillFrom(from interface {
-	GetID() (value int64)
-	GetDefault() (value bool)
-	GetDark() (value bool)
-	GetSettings() (value WallPaperSettings, ok bool)
-}) {
-	w.ID = from.GetID()
-	w.Default = from.GetDefault()
-	w.Dark = from.GetDark()
-	if val, ok := from.GetSettings(); ok {
-		w.Settings = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -757,8 +686,6 @@ const WallPaperClassName = "WallPaper"
 
 // WallPaperClass represents WallPaper generic type.
 //
-// See https://core.telegram.org/type/WallPaper for reference.
-//
 // Constructors:
 //   - [WallPaper]
 //   - [WallPaperNoFile]
@@ -792,53 +719,14 @@ type WallPaperClass interface {
 	// Zero returns true if current object has a zero value.
 	Zero() bool
 
-	// Identifier
+	// ID field of WallPaper.
 	GetID() (value int64)
-
-	// Whether this is the default wallpaper
+	// Default field of WallPaper.
 	GetDefault() (value bool)
-
-	// Whether this wallpaper should be used in dark mode.
+	// Dark field of WallPaper.
 	GetDark() (value bool)
-
-	// Info on how to generate the wallpaper, according to these instructions »¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/wallpapers
+	// Settings field of WallPaper.
 	GetSettings() (value WallPaperSettings, ok bool)
-}
-
-// AsInput tries to map WallPaper to InputWallPaper.
-func (w *WallPaper) AsInput() *InputWallPaper {
-	value := new(InputWallPaper)
-	value.ID = w.GetID()
-	value.AccessHash = w.GetAccessHash()
-
-	return value
-}
-
-// AsInputWallPaperSlug tries to map WallPaper to InputWallPaperSlug.
-func (w *WallPaper) AsInputWallPaperSlug() *InputWallPaperSlug {
-	value := new(InputWallPaperSlug)
-	value.Slug = w.GetSlug()
-
-	return value
-}
-
-// AsInputWallPaperNoFile tries to map WallPaper to InputWallPaperNoFile.
-func (w *WallPaper) AsInputWallPaperNoFile() *InputWallPaperNoFile {
-	value := new(InputWallPaperNoFile)
-	value.ID = w.GetID()
-
-	return value
-}
-
-// AsInput tries to map WallPaperNoFile to InputWallPaperNoFile.
-func (w *WallPaperNoFile) AsInput() *InputWallPaperNoFile {
-	value := new(InputWallPaperNoFile)
-	value.ID = w.GetID()
-
-	return value
 }
 
 // DecodeWallPaper implements binary de-serialization for WallPaperClass.

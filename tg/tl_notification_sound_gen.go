@@ -32,9 +32,6 @@ var (
 )
 
 // NotificationSoundDefault represents TL type `notificationSoundDefault#97e8bebe`.
-// Indicates the default notification sound should be used
-//
-// See https://core.telegram.org/constructor/notificationSoundDefault for reference.
 type NotificationSoundDefault struct {
 }
 
@@ -134,9 +131,6 @@ func (n *NotificationSoundDefault) DecodeBare(b *bin.Buffer) error {
 }
 
 // NotificationSoundNone represents TL type `notificationSoundNone#6f0c34df`.
-// No notification sound should be used
-//
-// See https://core.telegram.org/constructor/notificationSoundNone for reference.
 type NotificationSoundNone struct {
 }
 
@@ -236,14 +230,10 @@ func (n *NotificationSoundNone) DecodeBare(b *bin.Buffer) error {
 }
 
 // NotificationSoundLocal represents TL type `notificationSoundLocal#830b9ae4`.
-// Indicates a specific local notification sound should be used
-//
-// See https://core.telegram.org/constructor/notificationSoundLocal for reference.
 type NotificationSoundLocal struct {
-	// Notification sound title
+	// Title field of NotificationSoundLocal.
 	Title string
-	// Notification sound identifier (arbitrary data used by the client to identify a
-	// specific local notification sound)
+	// Data field of NotificationSoundLocal.
 	Data string
 }
 
@@ -284,15 +274,6 @@ func (n *NotificationSoundLocal) String() string {
 	}
 	type Alias NotificationSoundLocal
 	return fmt.Sprintf("NotificationSoundLocal%+v", Alias(*n))
-}
-
-// FillFrom fills NotificationSoundLocal from given interface.
-func (n *NotificationSoundLocal) FillFrom(from interface {
-	GetTitle() (value string)
-	GetData() (value string)
-}) {
-	n.Title = from.GetTitle()
-	n.Data = from.GetData()
 }
 
 // TypeID returns type id in TL schema.
@@ -399,14 +380,8 @@ func (n *NotificationSoundLocal) GetData() (value string) {
 }
 
 // NotificationSoundRingtone represents TL type `notificationSoundRingtone#ff6c8049`.
-// A specific previously uploaded notification sound should be used
-//
-// See https://core.telegram.org/constructor/notificationSoundRingtone for reference.
 type NotificationSoundRingtone struct {
-	// Document ID of notification sound uploaded using account.uploadRingtone¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/account.uploadRingtone
+	// ID field of NotificationSoundRingtone.
 	ID int64
 }
 
@@ -444,13 +419,6 @@ func (n *NotificationSoundRingtone) String() string {
 	}
 	type Alias NotificationSoundRingtone
 	return fmt.Sprintf("NotificationSoundRingtone%+v", Alias(*n))
-}
-
-// FillFrom fills NotificationSoundRingtone from given interface.
-func (n *NotificationSoundRingtone) FillFrom(from interface {
-	GetID() (value int64)
-}) {
-	n.ID = from.GetID()
 }
 
 // TypeID returns type id in TL schema.
@@ -540,8 +508,6 @@ func (n *NotificationSoundRingtone) GetID() (value int64) {
 const NotificationSoundClassName = "NotificationSound"
 
 // NotificationSoundClass represents NotificationSound generic type.
-//
-// See https://core.telegram.org/type/NotificationSound for reference.
 //
 // Constructors:
 //   - [NotificationSoundDefault]

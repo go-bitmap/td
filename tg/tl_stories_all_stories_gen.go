@@ -32,24 +32,12 @@ var (
 )
 
 // StoriesAllStoriesNotModified represents TL type `stories.allStoriesNotModified#1158fe3e`.
-// The list of active (or active and hidden) stories¹ has not changed.
-//
-// Links:
-//  1. https://core.telegram.org/api/stories#watching-stories
-//
-// See https://core.telegram.org/constructor/stories.allStoriesNotModified for reference.
 type StoriesAllStoriesNotModified struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of StoriesAllStoriesNotModified.
 	Flags bin.Fields
-	// State to use to ask for updates
+	// State field of StoriesAllStoriesNotModified.
 	State string
-	// Current stealth mode¹ information
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/stories#stealth-mode
+	// StealthMode field of StoriesAllStoriesNotModified.
 	StealthMode StoriesStealthMode
 }
 
@@ -93,15 +81,6 @@ func (a *StoriesAllStoriesNotModified) String() string {
 	}
 	type Alias StoriesAllStoriesNotModified
 	return fmt.Sprintf("StoriesAllStoriesNotModified%+v", Alias(*a))
-}
-
-// FillFrom fills StoriesAllStoriesNotModified from given interface.
-func (a *StoriesAllStoriesNotModified) FillFrom(from interface {
-	GetState() (value string)
-	GetStealthMode() (value StoriesStealthMode)
-}) {
-	a.State = from.GetState()
-	a.StealthMode = from.GetStealthMode()
 }
 
 // TypeID returns type id in TL schema.
@@ -221,37 +200,22 @@ func (a *StoriesAllStoriesNotModified) GetStealthMode() (value StoriesStealthMod
 }
 
 // StoriesAllStories represents TL type `stories.allStories#6efc5e81`.
-// Full list of active (or active and hidden) stories¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/stories#watching-stories
-//
-// See https://core.telegram.org/constructor/stories.allStories for reference.
 type StoriesAllStories struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of StoriesAllStories.
 	Flags bin.Fields
-	// Whether more results can be fetched as described here »¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/stories#watching-stories
+	// HasMore field of StoriesAllStories.
 	HasMore bool
-	// Total number of active (or active and hidden) stories
+	// Count field of StoriesAllStories.
 	Count int
-	// State to use for pagination
+	// State field of StoriesAllStories.
 	State string
-	// Stories
+	// PeerStories field of StoriesAllStories.
 	PeerStories []PeerStories
-	// Mentioned chats
+	// Chats field of StoriesAllStories.
 	Chats []ChatClass
-	// Mentioned users
+	// Users field of StoriesAllStories.
 	Users []UserClass
-	// Current stealth mode¹ information
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/stories#stealth-mode
+	// StealthMode field of StoriesAllStories.
 	StealthMode StoriesStealthMode
 }
 
@@ -310,25 +274,6 @@ func (a *StoriesAllStories) String() string {
 	}
 	type Alias StoriesAllStories
 	return fmt.Sprintf("StoriesAllStories%+v", Alias(*a))
-}
-
-// FillFrom fills StoriesAllStories from given interface.
-func (a *StoriesAllStories) FillFrom(from interface {
-	GetHasMore() (value bool)
-	GetCount() (value int)
-	GetState() (value string)
-	GetPeerStories() (value []PeerStories)
-	GetChats() (value []ChatClass)
-	GetUsers() (value []UserClass)
-	GetStealthMode() (value StoriesStealthMode)
-}) {
-	a.HasMore = from.GetHasMore()
-	a.Count = from.GetCount()
-	a.State = from.GetState()
-	a.PeerStories = from.GetPeerStories()
-	a.Chats = from.GetChats()
-	a.Users = from.GetUsers()
-	a.StealthMode = from.GetStealthMode()
 }
 
 // TypeID returns type id in TL schema.
@@ -606,22 +551,10 @@ func (a *StoriesAllStories) GetStealthMode() (value StoriesStealthMode) {
 	return a.StealthMode
 }
 
-// MapChats returns field Chats wrapped in ChatClassArray helper.
-func (a *StoriesAllStories) MapChats() (value ChatClassArray) {
-	return ChatClassArray(a.Chats)
-}
-
-// MapUsers returns field Users wrapped in UserClassArray helper.
-func (a *StoriesAllStories) MapUsers() (value UserClassArray) {
-	return UserClassArray(a.Users)
-}
-
 // StoriesAllStoriesClassName is schema name of StoriesAllStoriesClass.
 const StoriesAllStoriesClassName = "stories.AllStories"
 
 // StoriesAllStoriesClass represents stories.AllStories generic type.
-//
-// See https://core.telegram.org/type/stories.AllStories for reference.
 //
 // Constructors:
 //   - [StoriesAllStoriesNotModified]
@@ -656,27 +589,10 @@ type StoriesAllStoriesClass interface {
 	// Zero returns true if current object has a zero value.
 	Zero() bool
 
-	// State to use to ask for updates
+	// State field of StoriesAllStoriesNotModified.
 	GetState() (value string)
-
-	// Current stealth mode¹ information
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/stories#stealth-mode
+	// StealthMode field of StoriesAllStoriesNotModified.
 	GetStealthMode() (value StoriesStealthMode)
-
-	// AsModified tries to map StoriesAllStoriesClass to StoriesAllStories.
-	AsModified() (*StoriesAllStories, bool)
-}
-
-// AsModified tries to map StoriesAllStoriesNotModified to StoriesAllStories.
-func (a *StoriesAllStoriesNotModified) AsModified() (*StoriesAllStories, bool) {
-	return nil, false
-}
-
-// AsModified tries to map StoriesAllStories to StoriesAllStories.
-func (a *StoriesAllStories) AsModified() (*StoriesAllStories, bool) {
-	return a, true
 }
 
 // DecodeStoriesAllStories implements binary de-serialization for StoriesAllStoriesClass.

@@ -32,9 +32,6 @@ var (
 )
 
 // InputEncryptedFileEmpty represents TL type `inputEncryptedFileEmpty#1837c364`.
-// Empty constructor.
-//
-// See https://core.telegram.org/constructor/inputEncryptedFileEmpty for reference.
 type InputEncryptedFileEmpty struct {
 }
 
@@ -134,21 +131,14 @@ func (i *InputEncryptedFileEmpty) DecodeBare(b *bin.Buffer) error {
 }
 
 // InputEncryptedFileUploaded represents TL type `inputEncryptedFileUploaded#64bd0306`.
-// Sets new encrypted file saved by parts using upload.saveFilePart method.
-//
-// See https://core.telegram.org/constructor/inputEncryptedFileUploaded for reference.
 type InputEncryptedFileUploaded struct {
-	// Random file ID created by client
+	// ID field of InputEncryptedFileUploaded.
 	ID int64
-	// Number of saved parts
+	// Parts field of InputEncryptedFileUploaded.
 	Parts int
-	// In case md5-HASH¹ of the (already encrypted) file was transmitted, file content will
-	// be checked prior to use
-	//
-	// Links:
-	//  1) https://en.wikipedia.org/wiki/MD5
+	// MD5Checksum field of InputEncryptedFileUploaded.
 	MD5Checksum string
-	// 32-bit fingerprint of the key used to encrypt a file
+	// KeyFingerprint field of InputEncryptedFileUploaded.
 	KeyFingerprint int
 }
 
@@ -195,19 +185,6 @@ func (i *InputEncryptedFileUploaded) String() string {
 	}
 	type Alias InputEncryptedFileUploaded
 	return fmt.Sprintf("InputEncryptedFileUploaded%+v", Alias(*i))
-}
-
-// FillFrom fills InputEncryptedFileUploaded from given interface.
-func (i *InputEncryptedFileUploaded) FillFrom(from interface {
-	GetID() (value int64)
-	GetParts() (value int)
-	GetMD5Checksum() (value string)
-	GetKeyFingerprint() (value int)
-}) {
-	i.ID = from.GetID()
-	i.Parts = from.GetParts()
-	i.MD5Checksum = from.GetMD5Checksum()
-	i.KeyFingerprint = from.GetKeyFingerprint()
 }
 
 // TypeID returns type id in TL schema.
@@ -354,19 +331,10 @@ func (i *InputEncryptedFileUploaded) GetKeyFingerprint() (value int) {
 }
 
 // InputEncryptedFile represents TL type `inputEncryptedFile#5a17b5e5`.
-// Sets forwarded encrypted file for attachment.
-//
-// See https://core.telegram.org/constructor/inputEncryptedFile for reference.
 type InputEncryptedFile struct {
-	// File ID, value of id parameter from encryptedFile¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/encryptedFile
+	// ID field of InputEncryptedFile.
 	ID int64
-	// Checking sum, value of access_hash parameter from encryptedFile¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/encryptedFile
+	// AccessHash field of InputEncryptedFile.
 	AccessHash int64
 }
 
@@ -407,15 +375,6 @@ func (i *InputEncryptedFile) String() string {
 	}
 	type Alias InputEncryptedFile
 	return fmt.Sprintf("InputEncryptedFile%+v", Alias(*i))
-}
-
-// FillFrom fills InputEncryptedFile from given interface.
-func (i *InputEncryptedFile) FillFrom(from interface {
-	GetID() (value int64)
-	GetAccessHash() (value int64)
-}) {
-	i.ID = from.GetID()
-	i.AccessHash = from.GetAccessHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -522,19 +481,12 @@ func (i *InputEncryptedFile) GetAccessHash() (value int64) {
 }
 
 // InputEncryptedFileBigUploaded represents TL type `inputEncryptedFileBigUploaded#2dc173c8`.
-// Assigns a new big encrypted file (over 10 MB in size), saved in parts using the method
-// upload.saveBigFilePart¹.
-//
-// Links:
-//  1. https://core.telegram.org/method/upload.saveBigFilePart
-//
-// See https://core.telegram.org/constructor/inputEncryptedFileBigUploaded for reference.
 type InputEncryptedFileBigUploaded struct {
-	// Random file id, created by the client
+	// ID field of InputEncryptedFileBigUploaded.
 	ID int64
-	// Number of saved parts
+	// Parts field of InputEncryptedFileBigUploaded.
 	Parts int
-	// 32-bit imprint of the key used to encrypt the file
+	// KeyFingerprint field of InputEncryptedFileBigUploaded.
 	KeyFingerprint int
 }
 
@@ -578,17 +530,6 @@ func (i *InputEncryptedFileBigUploaded) String() string {
 	}
 	type Alias InputEncryptedFileBigUploaded
 	return fmt.Sprintf("InputEncryptedFileBigUploaded%+v", Alias(*i))
-}
-
-// FillFrom fills InputEncryptedFileBigUploaded from given interface.
-func (i *InputEncryptedFileBigUploaded) FillFrom(from interface {
-	GetID() (value int64)
-	GetParts() (value int)
-	GetKeyFingerprint() (value int)
-}) {
-	i.ID = from.GetID()
-	i.Parts = from.GetParts()
-	i.KeyFingerprint = from.GetKeyFingerprint()
 }
 
 // TypeID returns type id in TL schema.
@@ -719,8 +660,6 @@ const InputEncryptedFileClassName = "InputEncryptedFile"
 
 // InputEncryptedFileClass represents InputEncryptedFile generic type.
 //
-// See https://core.telegram.org/type/InputEncryptedFile for reference.
-//
 // Constructors:
 //   - [InputEncryptedFileEmpty]
 //   - [InputEncryptedFileUploaded]
@@ -757,65 +696,6 @@ type InputEncryptedFileClass interface {
 	String() string
 	// Zero returns true if current object has a zero value.
 	Zero() bool
-
-	// AsNotEmpty tries to map InputEncryptedFileClass to NotEmptyInputEncryptedFile.
-	AsNotEmpty() (NotEmptyInputEncryptedFile, bool)
-}
-
-// AsInputEncryptedFileLocation tries to map InputEncryptedFile to InputEncryptedFileLocation.
-func (i *InputEncryptedFile) AsInputEncryptedFileLocation() *InputEncryptedFileLocation {
-	value := new(InputEncryptedFileLocation)
-	value.ID = i.GetID()
-	value.AccessHash = i.GetAccessHash()
-
-	return value
-}
-
-// NotEmptyInputEncryptedFile represents NotEmpty subset of InputEncryptedFileClass.
-type NotEmptyInputEncryptedFile interface {
-	bin.Encoder
-	bin.Decoder
-	bin.BareEncoder
-	bin.BareDecoder
-	construct() InputEncryptedFileClass
-
-	// TypeID returns type id in TL schema.
-	//
-	// See https://core.telegram.org/mtproto/TL-tl#remarks.
-	TypeID() uint32
-	// TypeName returns name of type in TL schema.
-	TypeName() string
-	// String implements fmt.Stringer.
-	String() string
-	// Zero returns true if current object has a zero value.
-	Zero() bool
-
-	// Random file ID created by client
-	GetID() (value int64)
-}
-
-// AsNotEmpty tries to map InputEncryptedFileEmpty to NotEmptyInputEncryptedFile.
-func (i *InputEncryptedFileEmpty) AsNotEmpty() (NotEmptyInputEncryptedFile, bool) {
-	value, ok := (InputEncryptedFileClass(i)).(NotEmptyInputEncryptedFile)
-	return value, ok
-}
-
-// AsNotEmpty tries to map InputEncryptedFileUploaded to NotEmptyInputEncryptedFile.
-func (i *InputEncryptedFileUploaded) AsNotEmpty() (NotEmptyInputEncryptedFile, bool) {
-	value, ok := (InputEncryptedFileClass(i)).(NotEmptyInputEncryptedFile)
-	return value, ok
-}
-
-// AsNotEmpty tries to map InputEncryptedFile to NotEmptyInputEncryptedFile.
-func (i *InputEncryptedFile) AsNotEmpty() (NotEmptyInputEncryptedFile, bool) {
-	value, ok := (InputEncryptedFileClass(i)).(NotEmptyInputEncryptedFile)
-	return value, ok
-}
-
-// AsNotEmpty tries to map InputEncryptedFileBigUploaded to NotEmptyInputEncryptedFile.
-func (i *InputEncryptedFileBigUploaded) AsNotEmpty() (NotEmptyInputEncryptedFile, bool) {
-	value, ok := (InputEncryptedFileClass(i)).(NotEmptyInputEncryptedFile)
-	return value, ok
 }
 
 // DecodeInputEncryptedFile implements binary de-serialization for InputEncryptedFileClass.

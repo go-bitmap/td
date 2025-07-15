@@ -32,14 +32,8 @@ var (
 )
 
 // ChatlistsGetExportedInvitesRequest represents TL type `chatlists.getExportedInvites#ce03da83`.
-// List all chat folder deep links »¹ associated to a folder
-//
-// Links:
-//  1. https://core.telegram.org/api/links#chat-folder-links
-//
-// See https://core.telegram.org/method/chatlists.getExportedInvites for reference.
 type ChatlistsGetExportedInvitesRequest struct {
-	// The folder
+	// Chatlist field of ChatlistsGetExportedInvitesRequest.
 	Chatlist InputChatlistDialogFilter
 }
 
@@ -72,13 +66,6 @@ func (g *ChatlistsGetExportedInvitesRequest) String() string {
 	}
 	type Alias ChatlistsGetExportedInvitesRequest
 	return fmt.Sprintf("ChatlistsGetExportedInvitesRequest%+v", Alias(*g))
-}
-
-// FillFrom fills ChatlistsGetExportedInvitesRequest from given interface.
-func (g *ChatlistsGetExportedInvitesRequest) FillFrom(from interface {
-	GetChatlist() (value InputChatlistDialogFilter)
-}) {
-	g.Chatlist = from.GetChatlist()
 }
 
 // TypeID returns type id in TL schema.
@@ -165,16 +152,6 @@ func (g *ChatlistsGetExportedInvitesRequest) GetChatlist() (value InputChatlistD
 }
 
 // ChatlistsGetExportedInvites invokes method chatlists.getExportedInvites#ce03da83 returning error if any.
-// List all chat folder deep links »¹ associated to a folder
-//
-// Links:
-//  1. https://core.telegram.org/api/links#chat-folder-links
-//
-// Possible errors:
-//
-//	400 FILTER_ID_INVALID: The specified filter ID is invalid.
-//
-// See https://core.telegram.org/method/chatlists.getExportedInvites for reference.
 func (c *Client) ChatlistsGetExportedInvites(ctx context.Context, chatlist InputChatlistDialogFilter) (*ChatlistsExportedInvites, error) {
 	var result ChatlistsExportedInvites
 

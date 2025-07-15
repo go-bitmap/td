@@ -32,16 +32,8 @@ var (
 )
 
 // InvokeWithoutUpdatesRequest represents TL type `invokeWithoutUpdates#bf9459b7`.
-// Invoke a request without subscribing the used connection for updates¹ (this is
-// enabled by default for file queries²).
-//
-// Links:
-//  1. https://core.telegram.org/api/updates
-//  2. https://core.telegram.org/api/files
-//
-// See https://core.telegram.org/constructor/invokeWithoutUpdates for reference.
 type InvokeWithoutUpdatesRequest struct {
-	// The query
+	// Query field of InvokeWithoutUpdatesRequest.
 	Query bin.Object
 }
 
@@ -74,13 +66,6 @@ func (i *InvokeWithoutUpdatesRequest) String() string {
 	}
 	type Alias InvokeWithoutUpdatesRequest
 	return fmt.Sprintf("InvokeWithoutUpdatesRequest%+v", Alias(*i))
-}
-
-// FillFrom fills InvokeWithoutUpdatesRequest from given interface.
-func (i *InvokeWithoutUpdatesRequest) FillFrom(from interface {
-	GetQuery() (value bin.Object)
-}) {
-	i.Query = from.GetQuery()
 }
 
 // TypeID returns type id in TL schema.

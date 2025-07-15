@@ -32,13 +32,10 @@ var (
 )
 
 // MessagesGetScheduledMessagesRequest represents TL type `messages.getScheduledMessages#bdbb0464`.
-// Get scheduled messages
-//
-// See https://core.telegram.org/method/messages.getScheduledMessages for reference.
 type MessagesGetScheduledMessagesRequest struct {
-	// Peer
+	// Peer field of MessagesGetScheduledMessagesRequest.
 	Peer InputPeerClass
-	// IDs of scheduled messages
+	// ID field of MessagesGetScheduledMessagesRequest.
 	ID []int
 }
 
@@ -74,15 +71,6 @@ func (g *MessagesGetScheduledMessagesRequest) String() string {
 	}
 	type Alias MessagesGetScheduledMessagesRequest
 	return fmt.Sprintf("MessagesGetScheduledMessagesRequest%+v", Alias(*g))
-}
-
-// FillFrom fills MessagesGetScheduledMessagesRequest from given interface.
-func (g *MessagesGetScheduledMessagesRequest) FillFrom(from interface {
-	GetPeer() (value InputPeerClass)
-	GetID() (value []int)
-}) {
-	g.Peer = from.GetPeer()
-	g.ID = from.GetID()
 }
 
 // TypeID returns type id in TL schema.
@@ -207,14 +195,6 @@ func (g *MessagesGetScheduledMessagesRequest) GetID() (value []int) {
 }
 
 // MessagesGetScheduledMessages invokes method messages.getScheduledMessages#bdbb0464 returning error if any.
-// Get scheduled messages
-//
-// Possible errors:
-//
-//	400 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//
-// See https://core.telegram.org/method/messages.getScheduledMessages for reference.
 func (c *Client) MessagesGetScheduledMessages(ctx context.Context, request *MessagesGetScheduledMessagesRequest) (MessagesMessagesClass, error) {
 	var result MessagesMessagesBox
 

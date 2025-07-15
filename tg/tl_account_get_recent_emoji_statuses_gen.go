@@ -32,17 +32,8 @@ var (
 )
 
 // AccountGetRecentEmojiStatusesRequest represents TL type `account.getRecentEmojiStatuses#f578105`.
-// Get recently used emoji statuses¹
-//
-// Links:
-//  1. https://core.telegram.org/api/emoji-status
-//
-// See https://core.telegram.org/method/account.getRecentEmojiStatuses for reference.
 type AccountGetRecentEmojiStatusesRequest struct {
-	// Hash used for caching, for more info click here¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets#hash-generation
+	// Hash field of AccountGetRecentEmojiStatusesRequest.
 	Hash int64
 }
 
@@ -75,13 +66,6 @@ func (g *AccountGetRecentEmojiStatusesRequest) String() string {
 	}
 	type Alias AccountGetRecentEmojiStatusesRequest
 	return fmt.Sprintf("AccountGetRecentEmojiStatusesRequest%+v", Alias(*g))
-}
-
-// FillFrom fills AccountGetRecentEmojiStatusesRequest from given interface.
-func (g *AccountGetRecentEmojiStatusesRequest) FillFrom(from interface {
-	GetHash() (value int64)
-}) {
-	g.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -168,12 +152,6 @@ func (g *AccountGetRecentEmojiStatusesRequest) GetHash() (value int64) {
 }
 
 // AccountGetRecentEmojiStatuses invokes method account.getRecentEmojiStatuses#f578105 returning error if any.
-// Get recently used emoji statuses¹
-//
-// Links:
-//  1. https://core.telegram.org/api/emoji-status
-//
-// See https://core.telegram.org/method/account.getRecentEmojiStatuses for reference.
 func (c *Client) AccountGetRecentEmojiStatuses(ctx context.Context, hash int64) (AccountEmojiStatusesClass, error) {
 	var result AccountEmojiStatusesBox
 

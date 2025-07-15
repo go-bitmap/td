@@ -68,13 +68,6 @@ func (vec *LangPackStringClassVector) String() string {
 	return fmt.Sprintf("LangPackStringClassVector%+v", Alias(*vec))
 }
 
-// FillFrom fills LangPackStringClassVector from given interface.
-func (vec *LangPackStringClassVector) FillFrom(from interface {
-	GetElems() (value []LangPackStringClass)
-}) {
-	vec.Elems = from.GetElems()
-}
-
 // TypeID returns type id in TL schema.
 //
 // See https://core.telegram.org/mtproto/TL-tl#remarks.
@@ -172,9 +165,4 @@ func (vec *LangPackStringClassVector) GetElems() (value []LangPackStringClass) {
 		return
 	}
 	return vec.Elems
-}
-
-// MapElems returns field Elems wrapped in LangPackStringClassArray helper.
-func (vec *LangPackStringClassVector) MapElems() (value LangPackStringClassArray) {
-	return LangPackStringClassArray(vec.Elems)
 }

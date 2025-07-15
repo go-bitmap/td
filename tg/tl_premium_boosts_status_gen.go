@@ -32,65 +32,36 @@ var (
 )
 
 // PremiumBoostsStatus represents TL type `premium.boostsStatus#4959427a`.
-// Contains info about the current boost status¹ of a peer.
-//
-// Links:
-//  1. https://core.telegram.org/api/boost
-//
-// See https://core.telegram.org/constructor/premium.boostsStatus for reference.
 type PremiumBoostsStatus struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of PremiumBoostsStatus.
 	Flags bin.Fields
-	// Whether we're currently boosting this channel/supergroup, my_boost_slots will also be
-	// set.
+	// MyBoost field of PremiumBoostsStatus.
 	MyBoost bool
-	// The current boost level of the channel/supergroup.
+	// Level field of PremiumBoostsStatus.
 	Level int
-	// The number of boosts acquired so far in the current level.
+	// CurrentLevelBoosts field of PremiumBoostsStatus.
 	CurrentLevelBoosts int
-	// Total number of boosts acquired so far.
+	// Boosts field of PremiumBoostsStatus.
 	Boosts int
-	// The number of boosts acquired from created Telegram Premium gift codes¹ and
-	// giveaways²; only returned to channel/supergroup admins.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/giveaways
-	//  2) https://core.telegram.org/api/giveaways
+	// GiftBoosts field of PremiumBoostsStatus.
 	//
 	// Use SetGiftBoosts and GetGiftBoosts helpers.
 	GiftBoosts int
-	// Total number of boosts needed to reach the next level; if absent, the next level isn't
-	// available.
+	// NextLevelBoosts field of PremiumBoostsStatus.
 	//
 	// Use SetNextLevelBoosts and GetNextLevelBoosts helpers.
 	NextLevelBoosts int
-	// Only returned to channel/supergroup admins: contains the approximated number of
-	// Premium users subscribed to the channel/supergroup, related to the total number of
-	// subscribers.
+	// PremiumAudience field of PremiumBoostsStatus.
 	//
 	// Use SetPremiumAudience and GetPremiumAudience helpers.
 	PremiumAudience StatsPercentValue
-	// Boost deep link »¹ that can be used to boost the chat.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/links#boost-links
+	// BoostURL field of PremiumBoostsStatus.
 	BoostURL string
-	// A list of prepaid giveaways¹ available for the chat; only returned to
-	// channel/supergroup admins.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/giveaways
+	// PrepaidGiveaways field of PremiumBoostsStatus.
 	//
 	// Use SetPrepaidGiveaways and GetPrepaidGiveaways helpers.
 	PrepaidGiveaways []PrepaidGiveawayClass
-	// Indicates which of our boost slots¹ we've assigned to this peer (populated if
-	// my_boost is set).
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/boost
+	// MyBoostSlots field of PremiumBoostsStatus.
 	//
 	// Use SetMyBoostSlots and GetMyBoostSlots helpers.
 	MyBoostSlots []int
@@ -155,46 +126,6 @@ func (b *PremiumBoostsStatus) String() string {
 	}
 	type Alias PremiumBoostsStatus
 	return fmt.Sprintf("PremiumBoostsStatus%+v", Alias(*b))
-}
-
-// FillFrom fills PremiumBoostsStatus from given interface.
-func (b *PremiumBoostsStatus) FillFrom(from interface {
-	GetMyBoost() (value bool)
-	GetLevel() (value int)
-	GetCurrentLevelBoosts() (value int)
-	GetBoosts() (value int)
-	GetGiftBoosts() (value int, ok bool)
-	GetNextLevelBoosts() (value int, ok bool)
-	GetPremiumAudience() (value StatsPercentValue, ok bool)
-	GetBoostURL() (value string)
-	GetPrepaidGiveaways() (value []PrepaidGiveawayClass, ok bool)
-	GetMyBoostSlots() (value []int, ok bool)
-}) {
-	b.MyBoost = from.GetMyBoost()
-	b.Level = from.GetLevel()
-	b.CurrentLevelBoosts = from.GetCurrentLevelBoosts()
-	b.Boosts = from.GetBoosts()
-	if val, ok := from.GetGiftBoosts(); ok {
-		b.GiftBoosts = val
-	}
-
-	if val, ok := from.GetNextLevelBoosts(); ok {
-		b.NextLevelBoosts = val
-	}
-
-	if val, ok := from.GetPremiumAudience(); ok {
-		b.PremiumAudience = val
-	}
-
-	b.BoostURL = from.GetBoostURL()
-	if val, ok := from.GetPrepaidGiveaways(); ok {
-		b.PrepaidGiveaways = val
-	}
-
-	if val, ok := from.GetMyBoostSlots(); ok {
-		b.MyBoostSlots = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -590,12 +521,4 @@ func (b *PremiumBoostsStatus) GetMyBoostSlots() (value []int, ok bool) {
 		return value, false
 	}
 	return b.MyBoostSlots, true
-}
-
-// MapPrepaidGiveaways returns field PrepaidGiveaways wrapped in PrepaidGiveawayClassArray helper.
-func (b *PremiumBoostsStatus) MapPrepaidGiveaways() (value PrepaidGiveawayClassArray, ok bool) {
-	if !b.Flags.Has(3) {
-		return value, false
-	}
-	return PrepaidGiveawayClassArray(b.PrepaidGiveaways), true
 }

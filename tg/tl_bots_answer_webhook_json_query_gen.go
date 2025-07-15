@@ -32,13 +32,10 @@ var (
 )
 
 // BotsAnswerWebhookJSONQueryRequest represents TL type `bots.answerWebhookJSONQuery#e6213f4d`.
-// Answers a custom query; for bots only
-//
-// See https://core.telegram.org/method/bots.answerWebhookJSONQuery for reference.
 type BotsAnswerWebhookJSONQueryRequest struct {
-	// Identifier of a custom query
+	// QueryID field of BotsAnswerWebhookJSONQueryRequest.
 	QueryID int64
-	// JSON-serialized answer to the query
+	// Data field of BotsAnswerWebhookJSONQueryRequest.
 	Data DataJSON
 }
 
@@ -74,15 +71,6 @@ func (a *BotsAnswerWebhookJSONQueryRequest) String() string {
 	}
 	type Alias BotsAnswerWebhookJSONQueryRequest
 	return fmt.Sprintf("BotsAnswerWebhookJSONQueryRequest%+v", Alias(*a))
-}
-
-// FillFrom fills BotsAnswerWebhookJSONQueryRequest from given interface.
-func (a *BotsAnswerWebhookJSONQueryRequest) FillFrom(from interface {
-	GetQueryID() (value int64)
-	GetData() (value DataJSON)
-}) {
-	a.QueryID = from.GetQueryID()
-	a.Data = from.GetData()
 }
 
 // TypeID returns type id in TL schema.
@@ -189,17 +177,6 @@ func (a *BotsAnswerWebhookJSONQueryRequest) GetData() (value DataJSON) {
 }
 
 // BotsAnswerWebhookJSONQuery invokes method bots.answerWebhookJSONQuery#e6213f4d returning error if any.
-// Answers a custom query; for bots only
-//
-// Possible errors:
-//
-//	400 DATA_JSON_INVALID: The provided JSON data is invalid.
-//	400 QUERY_ID_INVALID: The query ID is invalid.
-//	403 USER_BOT_INVALID: User accounts must provide the bot method parameter when calling this method. If there is no such method parameter, this method can only be invoked by bot accounts.
-//	400 USER_BOT_REQUIRED: This method can only be called by a bot.
-//
-// See https://core.telegram.org/method/bots.answerWebhookJSONQuery for reference.
-// Can be used by bots.
 func (c *Client) BotsAnswerWebhookJSONQuery(ctx context.Context, request *BotsAnswerWebhookJSONQueryRequest) (bool, error) {
 	var result BoolBox
 

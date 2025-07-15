@@ -32,24 +32,18 @@ var (
 )
 
 // AccountUpdateProfileRequest represents TL type `account.updateProfile#78515775`.
-// Updates user profile.
-//
-// See https://core.telegram.org/method/account.updateProfile for reference.
 type AccountUpdateProfileRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of AccountUpdateProfileRequest.
 	Flags bin.Fields
-	// New user first name
+	// FirstName field of AccountUpdateProfileRequest.
 	//
 	// Use SetFirstName and GetFirstName helpers.
 	FirstName string
-	// New user last name
+	// LastName field of AccountUpdateProfileRequest.
 	//
 	// Use SetLastName and GetLastName helpers.
 	LastName string
-	// New bio
+	// About field of AccountUpdateProfileRequest.
 	//
 	// Use SetAbout and GetAbout helpers.
 	About string
@@ -93,26 +87,6 @@ func (u *AccountUpdateProfileRequest) String() string {
 	}
 	type Alias AccountUpdateProfileRequest
 	return fmt.Sprintf("AccountUpdateProfileRequest%+v", Alias(*u))
-}
-
-// FillFrom fills AccountUpdateProfileRequest from given interface.
-func (u *AccountUpdateProfileRequest) FillFrom(from interface {
-	GetFirstName() (value string, ok bool)
-	GetLastName() (value string, ok bool)
-	GetAbout() (value string, ok bool)
-}) {
-	if val, ok := from.GetFirstName(); ok {
-		u.FirstName = val
-	}
-
-	if val, ok := from.GetLastName(); ok {
-		u.LastName = val
-	}
-
-	if val, ok := from.GetAbout(); ok {
-		u.About = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -300,14 +274,6 @@ func (u *AccountUpdateProfileRequest) GetAbout() (value string, ok bool) {
 }
 
 // AccountUpdateProfile invokes method account.updateProfile#78515775 returning error if any.
-// Updates user profile.
-//
-// Possible errors:
-//
-//	400 ABOUT_TOO_LONG: About string too long.
-//	400 FIRSTNAME_INVALID: The first name is invalid.
-//
-// See https://core.telegram.org/method/account.updateProfile for reference.
 func (c *Client) AccountUpdateProfile(ctx context.Context, request *AccountUpdateProfileRequest) (UserClass, error) {
 	var result UserBox
 

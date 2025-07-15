@@ -32,18 +32,12 @@ var (
 )
 
 // PaymentsConnectedStarRefBots represents TL type `payments.connectedStarRefBots#98d5ea1d`.
-// Active affiliations¹
-//
-// Links:
-//  1. https://core.telegram.org/api/bots/referrals#becoming-an-affiliate
-//
-// See https://core.telegram.org/constructor/payments.connectedStarRefBots for reference.
 type PaymentsConnectedStarRefBots struct {
-	// Total number of active affiliations
+	// Count field of PaymentsConnectedStarRefBots.
 	Count int
-	// The affiliations
+	// ConnectedBots field of PaymentsConnectedStarRefBots.
 	ConnectedBots []ConnectedBotStarRef
-	// Peers mentioned in connected_bots
+	// Users field of PaymentsConnectedStarRefBots.
 	Users []UserClass
 }
 
@@ -82,17 +76,6 @@ func (c *PaymentsConnectedStarRefBots) String() string {
 	}
 	type Alias PaymentsConnectedStarRefBots
 	return fmt.Sprintf("PaymentsConnectedStarRefBots%+v", Alias(*c))
-}
-
-// FillFrom fills PaymentsConnectedStarRefBots from given interface.
-func (c *PaymentsConnectedStarRefBots) FillFrom(from interface {
-	GetCount() (value int)
-	GetConnectedBots() (value []ConnectedBotStarRef)
-	GetUsers() (value []UserClass)
-}) {
-	c.Count = from.GetCount()
-	c.ConnectedBots = from.GetConnectedBots()
-	c.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -249,9 +232,4 @@ func (c *PaymentsConnectedStarRefBots) GetUsers() (value []UserClass) {
 		return
 	}
 	return c.Users
-}
-
-// MapUsers returns field Users wrapped in UserClassArray helper.
-func (c *PaymentsConnectedStarRefBots) MapUsers() (value UserClassArray) {
-	return UserClassArray(c.Users)
 }

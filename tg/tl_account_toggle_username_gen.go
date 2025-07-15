@@ -32,17 +32,10 @@ var (
 )
 
 // AccountToggleUsernameRequest represents TL type `account.toggleUsername#58d6b376`.
-// Activate or deactivate a purchased fragment.com¹ username associated to the currently
-// logged-in user.
-//
-// Links:
-//  1. https://fragment.com
-//
-// See https://core.telegram.org/method/account.toggleUsername for reference.
 type AccountToggleUsernameRequest struct {
-	// Username
+	// Username field of AccountToggleUsernameRequest.
 	Username string
-	// Whether to activate or deactivate it
+	// Active field of AccountToggleUsernameRequest.
 	Active bool
 }
 
@@ -78,15 +71,6 @@ func (t *AccountToggleUsernameRequest) String() string {
 	}
 	type Alias AccountToggleUsernameRequest
 	return fmt.Sprintf("AccountToggleUsernameRequest%+v", Alias(*t))
-}
-
-// FillFrom fills AccountToggleUsernameRequest from given interface.
-func (t *AccountToggleUsernameRequest) FillFrom(from interface {
-	GetUsername() (value string)
-	GetActive() (value bool)
-}) {
-	t.Username = from.GetUsername()
-	t.Active = from.GetActive()
 }
 
 // TypeID returns type id in TL schema.
@@ -193,19 +177,6 @@ func (t *AccountToggleUsernameRequest) GetActive() (value bool) {
 }
 
 // AccountToggleUsername invokes method account.toggleUsername#58d6b376 returning error if any.
-// Activate or deactivate a purchased fragment.com¹ username associated to the currently
-// logged-in user.
-//
-// Links:
-//  1. https://fragment.com
-//
-// Possible errors:
-//
-//	400 USERNAMES_ACTIVE_TOO_MUCH: The maximum number of active usernames was reached.
-//	400 USERNAME_INVALID: The provided username is not valid.
-//	400 USERNAME_NOT_MODIFIED: The username was not modified.
-//
-// See https://core.telegram.org/method/account.toggleUsername for reference.
 func (c *Client) AccountToggleUsername(ctx context.Context, request *AccountToggleUsernameRequest) (bool, error) {
 	var result BoolBox
 

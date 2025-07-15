@@ -32,48 +32,26 @@ var (
 )
 
 // PremiumSubscriptionOption represents TL type `premiumSubscriptionOption#5f2d1df2`.
-// Describes a Telegram Premium subscription option
-//
-// See https://core.telegram.org/constructor/premiumSubscriptionOption for reference.
 type PremiumSubscriptionOption struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of PremiumSubscriptionOption.
 	Flags bin.Fields
-	// Whether this subscription option is currently in use.
+	// Current field of PremiumSubscriptionOption.
 	Current bool
-	// Whether this subscription option can be used to upgrade the existing Telegram Premium
-	// subscription. When upgrading Telegram Premium subscriptions bought through stores,
-	// make sure that the store transaction ID is equal to transaction, to avoid upgrading
-	// someone else's account, if the client is currently logged into multiple accounts.
+	// CanPurchaseUpgrade field of PremiumSubscriptionOption.
 	CanPurchaseUpgrade bool
-	// Identifier of the last in-store transaction for the currently used subscription on the
-	// current account.
+	// Transaction field of PremiumSubscriptionOption.
 	//
 	// Use SetTransaction and GetTransaction helpers.
 	Transaction string
-	// Duration of subscription in months
+	// Months field of PremiumSubscriptionOption.
 	Months int
-	// Three-letter ISO 4217 currency¹ code
-	//
-	// Links:
-	//  1) https://core.telegram.org/bots/payments#supported-currencies
+	// Currency field of PremiumSubscriptionOption.
 	Currency string
-	// Total price in the smallest units of the currency (integer, not float/double). For
-	// example, for a price of US$ 1.45 pass amount = 145. See the exp parameter in
-	// currencies.json¹, it shows the number of digits past the decimal point for each
-	// currency (2 for the majority of currencies).
-	//
-	// Links:
-	//  1) https://core.telegram.org/bots/payments/currencies.json
+	// Amount field of PremiumSubscriptionOption.
 	Amount int64
-	// Deep link¹ used to initiate payment
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/links
+	// BotURL field of PremiumSubscriptionOption.
 	BotURL string
-	// Store product ID, only for official apps
+	// StoreProduct field of PremiumSubscriptionOption.
 	//
 	// Use SetStoreProduct and GetStoreProduct helpers.
 	StoreProduct string
@@ -132,33 +110,6 @@ func (p *PremiumSubscriptionOption) String() string {
 	}
 	type Alias PremiumSubscriptionOption
 	return fmt.Sprintf("PremiumSubscriptionOption%+v", Alias(*p))
-}
-
-// FillFrom fills PremiumSubscriptionOption from given interface.
-func (p *PremiumSubscriptionOption) FillFrom(from interface {
-	GetCurrent() (value bool)
-	GetCanPurchaseUpgrade() (value bool)
-	GetTransaction() (value string, ok bool)
-	GetMonths() (value int)
-	GetCurrency() (value string)
-	GetAmount() (value int64)
-	GetBotURL() (value string)
-	GetStoreProduct() (value string, ok bool)
-}) {
-	p.Current = from.GetCurrent()
-	p.CanPurchaseUpgrade = from.GetCanPurchaseUpgrade()
-	if val, ok := from.GetTransaction(); ok {
-		p.Transaction = val
-	}
-
-	p.Months = from.GetMonths()
-	p.Currency = from.GetCurrency()
-	p.Amount = from.GetAmount()
-	p.BotURL = from.GetBotURL()
-	if val, ok := from.GetStoreProduct(); ok {
-		p.StoreProduct = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.

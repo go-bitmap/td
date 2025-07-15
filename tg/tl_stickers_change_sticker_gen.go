@@ -32,33 +32,20 @@ var (
 )
 
 // StickersChangeStickerRequest represents TL type `stickers.changeSticker#f5537ebc`.
-// Update the keywords, emojis or mask coordinates¹ of a sticker.
-//
-// Links:
-//  1. https://core.telegram.org/api/stickers#mask-stickers
-//
-// See https://core.telegram.org/method/stickers.changeSticker for reference.
 type StickersChangeStickerRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of StickersChangeStickerRequest.
 	Flags bin.Fields
-	// The sticker
+	// Sticker field of StickersChangeStickerRequest.
 	Sticker InputDocumentClass
-	// If set, updates the emoji list associated to the sticker
+	// Emoji field of StickersChangeStickerRequest.
 	//
 	// Use SetEmoji and GetEmoji helpers.
 	Emoji string
-	// If set, updates the mask coordinates¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/stickers#mask-stickers
+	// MaskCoords field of StickersChangeStickerRequest.
 	//
 	// Use SetMaskCoords and GetMaskCoords helpers.
 	MaskCoords MaskCoords
-	// If set, updates the sticker keywords (separated by commas). Can't be provided for mask
-	// stickers.
+	// Keywords field of StickersChangeStickerRequest.
 	//
 	// Use SetKeywords and GetKeywords helpers.
 	Keywords string
@@ -105,28 +92,6 @@ func (c *StickersChangeStickerRequest) String() string {
 	}
 	type Alias StickersChangeStickerRequest
 	return fmt.Sprintf("StickersChangeStickerRequest%+v", Alias(*c))
-}
-
-// FillFrom fills StickersChangeStickerRequest from given interface.
-func (c *StickersChangeStickerRequest) FillFrom(from interface {
-	GetSticker() (value InputDocumentClass)
-	GetEmoji() (value string, ok bool)
-	GetMaskCoords() (value MaskCoords, ok bool)
-	GetKeywords() (value string, ok bool)
-}) {
-	c.Sticker = from.GetSticker()
-	if val, ok := from.GetEmoji(); ok {
-		c.Emoji = val
-	}
-
-	if val, ok := from.GetMaskCoords(); ok {
-		c.MaskCoords = val
-	}
-
-	if val, ok := from.GetKeywords(); ok {
-		c.Keywords = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -338,23 +303,7 @@ func (c *StickersChangeStickerRequest) GetKeywords() (value string, ok bool) {
 	return c.Keywords, true
 }
 
-// GetStickerAsNotEmpty returns mapped value of Sticker field.
-func (c *StickersChangeStickerRequest) GetStickerAsNotEmpty() (*InputDocument, bool) {
-	return c.Sticker.AsNotEmpty()
-}
-
 // StickersChangeSticker invokes method stickers.changeSticker#f5537ebc returning error if any.
-// Update the keywords, emojis or mask coordinates¹ of a sticker.
-//
-// Links:
-//  1. https://core.telegram.org/api/stickers#mask-stickers
-//
-// Possible errors:
-//
-//	400 STICKER_INVALID: The provided sticker is invalid.
-//
-// See https://core.telegram.org/method/stickers.changeSticker for reference.
-// Can be used by bots.
 func (c *Client) StickersChangeSticker(ctx context.Context, request *StickersChangeStickerRequest) (MessagesStickerSetClass, error) {
 	var result MessagesStickerSetBox
 

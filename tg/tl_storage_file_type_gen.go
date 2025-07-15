@@ -32,9 +32,6 @@ var (
 )
 
 // StorageFileUnknown represents TL type `storage.fileUnknown#aa963b05`.
-// Unknown type.
-//
-// See https://core.telegram.org/constructor/storage.fileUnknown for reference.
 type StorageFileUnknown struct {
 }
 
@@ -134,9 +131,6 @@ func (f *StorageFileUnknown) DecodeBare(b *bin.Buffer) error {
 }
 
 // StorageFilePartial represents TL type `storage.filePartial#40bc6f52`.
-// Part of a bigger file.
-//
-// See https://core.telegram.org/constructor/storage.filePartial for reference.
 type StorageFilePartial struct {
 }
 
@@ -236,9 +230,6 @@ func (f *StorageFilePartial) DecodeBare(b *bin.Buffer) error {
 }
 
 // StorageFileJpeg represents TL type `storage.fileJpeg#7efe0e`.
-// JPEG image. MIME type: image/jpeg.
-//
-// See https://core.telegram.org/constructor/storage.fileJpeg for reference.
 type StorageFileJpeg struct {
 }
 
@@ -338,9 +329,6 @@ func (f *StorageFileJpeg) DecodeBare(b *bin.Buffer) error {
 }
 
 // StorageFileGif represents TL type `storage.fileGif#cae1aadf`.
-// GIF image. MIME type: image/gif.
-//
-// See https://core.telegram.org/constructor/storage.fileGif for reference.
 type StorageFileGif struct {
 }
 
@@ -440,9 +428,6 @@ func (f *StorageFileGif) DecodeBare(b *bin.Buffer) error {
 }
 
 // StorageFilePng represents TL type `storage.filePng#a4f63c0`.
-// PNG image. MIME type: image/png.
-//
-// See https://core.telegram.org/constructor/storage.filePng for reference.
 type StorageFilePng struct {
 }
 
@@ -542,9 +527,6 @@ func (f *StorageFilePng) DecodeBare(b *bin.Buffer) error {
 }
 
 // StorageFilePdf represents TL type `storage.filePdf#ae1e508d`.
-// PDF document image. MIME type: application/pdf.
-//
-// See https://core.telegram.org/constructor/storage.filePdf for reference.
 type StorageFilePdf struct {
 }
 
@@ -644,9 +626,6 @@ func (f *StorageFilePdf) DecodeBare(b *bin.Buffer) error {
 }
 
 // StorageFileMp3 represents TL type `storage.fileMp3#528a0677`.
-// Mp3 audio. MIME type: audio/mpeg.
-//
-// See https://core.telegram.org/constructor/storage.fileMp3 for reference.
 type StorageFileMp3 struct {
 }
 
@@ -746,9 +725,6 @@ func (f *StorageFileMp3) DecodeBare(b *bin.Buffer) error {
 }
 
 // StorageFileMov represents TL type `storage.fileMov#4b09ebbc`.
-// Quicktime video. MIME type: video/quicktime.
-//
-// See https://core.telegram.org/constructor/storage.fileMov for reference.
 type StorageFileMov struct {
 }
 
@@ -848,9 +824,6 @@ func (f *StorageFileMov) DecodeBare(b *bin.Buffer) error {
 }
 
 // StorageFileMp4 represents TL type `storage.fileMp4#b3cea0e4`.
-// MPEG-4 video. MIME type: video/mp4.
-//
-// See https://core.telegram.org/constructor/storage.fileMp4 for reference.
 type StorageFileMp4 struct {
 }
 
@@ -950,9 +923,6 @@ func (f *StorageFileMp4) DecodeBare(b *bin.Buffer) error {
 }
 
 // StorageFileWebp represents TL type `storage.fileWebp#1081464c`.
-// WEBP image. MIME type: image/webp.
-//
-// See https://core.telegram.org/constructor/storage.fileWebp for reference.
 type StorageFileWebp struct {
 }
 
@@ -1055,8 +1025,6 @@ func (f *StorageFileWebp) DecodeBare(b *bin.Buffer) error {
 const StorageFileTypeClassName = "storage.FileType"
 
 // StorageFileTypeClass represents storage.FileType generic type.
-//
-// See https://core.telegram.org/type/storage.FileType for reference.
 //
 // Constructors:
 //   - [StorageFileUnknown]

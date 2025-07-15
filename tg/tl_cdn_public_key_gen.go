@@ -32,19 +32,10 @@ var (
 )
 
 // CDNPublicKey represents TL type `cdnPublicKey#c982eaba`.
-// Public key to use only during handshakes to CDN¹ DCs.
-//
-// Links:
-//  1. https://core.telegram.org/cdn
-//
-// See https://core.telegram.org/constructor/cdnPublicKey for reference.
 type CDNPublicKey struct {
-	// CDN DC¹ ID
-	//
-	// Links:
-	//  1) https://core.telegram.org/cdn
+	// DCID field of CDNPublicKey.
 	DCID int
-	// RSA public key
+	// PublicKey field of CDNPublicKey.
 	PublicKey string
 }
 
@@ -80,15 +71,6 @@ func (c *CDNPublicKey) String() string {
 	}
 	type Alias CDNPublicKey
 	return fmt.Sprintf("CDNPublicKey%+v", Alias(*c))
-}
-
-// FillFrom fills CDNPublicKey from given interface.
-func (c *CDNPublicKey) FillFrom(from interface {
-	GetDCID() (value int)
-	GetPublicKey() (value string)
-}) {
-	c.DCID = from.GetDCID()
-	c.PublicKey = from.GetPublicKey()
 }
 
 // TypeID returns type id in TL schema.

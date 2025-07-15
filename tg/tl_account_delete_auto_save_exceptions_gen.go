@@ -32,9 +32,6 @@ var (
 )
 
 // AccountDeleteAutoSaveExceptionsRequest represents TL type `account.deleteAutoSaveExceptions#53bc0020`.
-// Clear all peer-specific autosave settings.
-//
-// See https://core.telegram.org/method/account.deleteAutoSaveExceptions for reference.
 type AccountDeleteAutoSaveExceptionsRequest struct {
 }
 
@@ -129,9 +126,6 @@ func (d *AccountDeleteAutoSaveExceptionsRequest) DecodeBare(b *bin.Buffer) error
 }
 
 // AccountDeleteAutoSaveExceptions invokes method account.deleteAutoSaveExceptions#53bc0020 returning error if any.
-// Clear all peer-specific autosave settings.
-//
-// See https://core.telegram.org/method/account.deleteAutoSaveExceptions for reference.
 func (c *Client) AccountDeleteAutoSaveExceptions(ctx context.Context) (bool, error) {
 	var result BoolBox
 

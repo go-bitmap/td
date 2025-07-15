@@ -32,9 +32,6 @@ var (
 )
 
 // AccountResetNotifySettingsRequest represents TL type `account.resetNotifySettings#db7e1747`.
-// Resets all notification settings from users and groups.
-//
-// See https://core.telegram.org/method/account.resetNotifySettings for reference.
 type AccountResetNotifySettingsRequest struct {
 }
 
@@ -129,9 +126,6 @@ func (r *AccountResetNotifySettingsRequest) DecodeBare(b *bin.Buffer) error {
 }
 
 // AccountResetNotifySettings invokes method account.resetNotifySettings#db7e1747 returning error if any.
-// Resets all notification settings from users and groups.
-//
-// See https://core.telegram.org/method/account.resetNotifySettings for reference.
 func (c *Client) AccountResetNotifySettings(ctx context.Context) (bool, error) {
 	var result BoolBox
 

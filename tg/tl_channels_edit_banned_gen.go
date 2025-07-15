@@ -32,21 +32,12 @@ var (
 )
 
 // ChannelsEditBannedRequest represents TL type `channels.editBanned#96e6cd81`.
-// Ban/unban/kick a user in a supergroup/channel¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/channel
-//
-// See https://core.telegram.org/method/channels.editBanned for reference.
 type ChannelsEditBannedRequest struct {
-	// The supergroup/channel¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/channel
+	// Channel field of ChannelsEditBannedRequest.
 	Channel InputChannelClass
-	// Participant to ban
+	// Participant field of ChannelsEditBannedRequest.
 	Participant InputPeerClass
-	// The banned rights
+	// BannedRights field of ChannelsEditBannedRequest.
 	BannedRights ChatBannedRights
 }
 
@@ -85,17 +76,6 @@ func (e *ChannelsEditBannedRequest) String() string {
 	}
 	type Alias ChannelsEditBannedRequest
 	return fmt.Sprintf("ChannelsEditBannedRequest%+v", Alias(*e))
-}
-
-// FillFrom fills ChannelsEditBannedRequest from given interface.
-func (e *ChannelsEditBannedRequest) FillFrom(from interface {
-	GetChannel() (value InputChannelClass)
-	GetParticipant() (value InputPeerClass)
-	GetBannedRights() (value ChatBannedRights)
-}) {
-	e.Channel = from.GetChannel()
-	e.Participant = from.GetParticipant()
-	e.BannedRights = from.GetBannedRights()
 }
 
 // TypeID returns type id in TL schema.
@@ -231,33 +211,7 @@ func (e *ChannelsEditBannedRequest) GetBannedRights() (value ChatBannedRights) {
 	return e.BannedRights
 }
 
-// GetChannelAsNotEmpty returns mapped value of Channel field.
-func (e *ChannelsEditBannedRequest) GetChannelAsNotEmpty() (NotEmptyInputChannel, bool) {
-	return e.Channel.AsNotEmpty()
-}
-
 // ChannelsEditBanned invokes method channels.editBanned#96e6cd81 returning error if any.
-// Ban/unban/kick a user in a supergroup/channel¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/channel
-//
-// Possible errors:
-//
-//	406 BANNED_RIGHTS_INVALID: You provided some invalid flags in the banned rights.
-//	400 CHANNEL_INVALID: The provided channel is invalid.
-//	406 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
-//	403 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
-//	403 CHAT_WRITE_FORBIDDEN: You can't write in this chat.
-//	400 INPUT_USER_DEACTIVATED: The specified user was deleted.
-//	400 MSG_ID_INVALID: Invalid message ID provided.
-//	400 PARTICIPANT_ID_INVALID: The specified participant ID is invalid.
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//	400 USER_ADMIN_INVALID: You're not an admin.
-//	400 USER_ID_INVALID: The provided user ID is invalid.
-//
-// See https://core.telegram.org/method/channels.editBanned for reference.
-// Can be used by bots.
 func (c *Client) ChannelsEditBanned(ctx context.Context, request *ChannelsEditBannedRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

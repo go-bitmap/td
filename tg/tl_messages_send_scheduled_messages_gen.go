@@ -32,13 +32,10 @@ var (
 )
 
 // MessagesSendScheduledMessagesRequest represents TL type `messages.sendScheduledMessages#bd38850a`.
-// Send scheduled messages right away
-//
-// See https://core.telegram.org/method/messages.sendScheduledMessages for reference.
 type MessagesSendScheduledMessagesRequest struct {
-	// Peer
+	// Peer field of MessagesSendScheduledMessagesRequest.
 	Peer InputPeerClass
-	// Scheduled message IDs
+	// ID field of MessagesSendScheduledMessagesRequest.
 	ID []int
 }
 
@@ -74,15 +71,6 @@ func (s *MessagesSendScheduledMessagesRequest) String() string {
 	}
 	type Alias MessagesSendScheduledMessagesRequest
 	return fmt.Sprintf("MessagesSendScheduledMessagesRequest%+v", Alias(*s))
-}
-
-// FillFrom fills MessagesSendScheduledMessagesRequest from given interface.
-func (s *MessagesSendScheduledMessagesRequest) FillFrom(from interface {
-	GetPeer() (value InputPeerClass)
-	GetID() (value []int)
-}) {
-	s.Peer = from.GetPeer()
-	s.ID = from.GetID()
 }
 
 // TypeID returns type id in TL schema.
@@ -207,15 +195,6 @@ func (s *MessagesSendScheduledMessagesRequest) GetID() (value []int) {
 }
 
 // MessagesSendScheduledMessages invokes method messages.sendScheduledMessages#bd38850a returning error if any.
-// Send scheduled messages right away
-//
-// Possible errors:
-//
-//	400 MESSAGE_ID_INVALID: The provided message id is invalid.
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//	500 RANDOM_ID_DUPLICATE: You provided a random ID that was already used.
-//
-// See https://core.telegram.org/method/messages.sendScheduledMessages for reference.
 func (c *Client) MessagesSendScheduledMessages(ctx context.Context, request *MessagesSendScheduledMessagesRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

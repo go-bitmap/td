@@ -32,11 +32,8 @@ var (
 )
 
 // MessagesGetAttachedStickersRequest represents TL type `messages.getAttachedStickers#cc5b67cc`.
-// Get stickers attached to a photo or video
-//
-// See https://core.telegram.org/method/messages.getAttachedStickers for reference.
 type MessagesGetAttachedStickersRequest struct {
-	// Stickered media
+	// Media field of MessagesGetAttachedStickersRequest.
 	Media InputStickeredMediaClass
 }
 
@@ -69,13 +66,6 @@ func (g *MessagesGetAttachedStickersRequest) String() string {
 	}
 	type Alias MessagesGetAttachedStickersRequest
 	return fmt.Sprintf("MessagesGetAttachedStickersRequest%+v", Alias(*g))
-}
-
-// FillFrom fills MessagesGetAttachedStickersRequest from given interface.
-func (g *MessagesGetAttachedStickersRequest) FillFrom(from interface {
-	GetMedia() (value InputStickeredMediaClass)
-}) {
-	g.Media = from.GetMedia()
 }
 
 // TypeID returns type id in TL schema.
@@ -167,13 +157,6 @@ func (g *MessagesGetAttachedStickersRequest) GetMedia() (value InputStickeredMed
 }
 
 // MessagesGetAttachedStickers invokes method messages.getAttachedStickers#cc5b67cc returning error if any.
-// Get stickers attached to a photo or video
-//
-// Possible errors:
-//
-//	400 MEDIA_EMPTY: The provided media object is invalid.
-//
-// See https://core.telegram.org/method/messages.getAttachedStickers for reference.
 func (c *Client) MessagesGetAttachedStickers(ctx context.Context, media InputStickeredMediaClass) ([]StickerSetCoveredClass, error) {
 	var result StickerSetCoveredClassVector
 

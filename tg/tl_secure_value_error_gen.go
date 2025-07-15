@@ -32,29 +32,14 @@ var (
 )
 
 // SecureValueErrorData represents TL type `secureValueErrorData#e8a40bd9`.
-// Represents an issue in one of the data fields that was provided by the user. The error
-// is considered resolved when the field's value changes.
-//
-// See https://core.telegram.org/constructor/secureValueErrorData for reference.
 type SecureValueErrorData struct {
-	// The section of the user's Telegram Passport which has the error, one of
-	// secureValueTypePersonalDetails¹, secureValueTypePassport²,
-	// secureValueTypeDriverLicense³, secureValueTypeIdentityCard⁴,
-	// secureValueTypeInternalPassport⁵, secureValueTypeAddress⁶
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/secureValueTypePersonalDetails
-	//  2) https://core.telegram.org/constructor/secureValueTypePassport
-	//  3) https://core.telegram.org/constructor/secureValueTypeDriverLicense
-	//  4) https://core.telegram.org/constructor/secureValueTypeIdentityCard
-	//  5) https://core.telegram.org/constructor/secureValueTypeInternalPassport
-	//  6) https://core.telegram.org/constructor/secureValueTypeAddress
+	// Type field of SecureValueErrorData.
 	Type SecureValueTypeClass
-	// Data hash
+	// DataHash field of SecureValueErrorData.
 	DataHash []byte
-	// Name of the data field which has the error
+	// Field field of SecureValueErrorData.
 	Field string
-	// Error message
+	// Text field of SecureValueErrorData.
 	Text string
 }
 
@@ -101,19 +86,6 @@ func (s *SecureValueErrorData) String() string {
 	}
 	type Alias SecureValueErrorData
 	return fmt.Sprintf("SecureValueErrorData%+v", Alias(*s))
-}
-
-// FillFrom fills SecureValueErrorData from given interface.
-func (s *SecureValueErrorData) FillFrom(from interface {
-	GetType() (value SecureValueTypeClass)
-	GetDataHash() (value []byte)
-	GetField() (value string)
-	GetText() (value string)
-}) {
-	s.Type = from.GetType()
-	s.DataHash = from.GetDataHash()
-	s.Field = from.GetField()
-	s.Text = from.GetText()
 }
 
 // TypeID returns type id in TL schema.
@@ -265,23 +237,12 @@ func (s *SecureValueErrorData) GetText() (value string) {
 }
 
 // SecureValueErrorFrontSide represents TL type `secureValueErrorFrontSide#be3dfa`.
-// Represents an issue with the front side of a document. The error is considered
-// resolved when the file with the front side of the document changes.
-//
-// See https://core.telegram.org/constructor/secureValueErrorFrontSide for reference.
 type SecureValueErrorFrontSide struct {
-	// One of secureValueTypePassport¹, secureValueTypeDriverLicense²,
-	// secureValueTypeIdentityCard³, secureValueTypeInternalPassport⁴
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/secureValueTypePassport
-	//  2) https://core.telegram.org/constructor/secureValueTypeDriverLicense
-	//  3) https://core.telegram.org/constructor/secureValueTypeIdentityCard
-	//  4) https://core.telegram.org/constructor/secureValueTypeInternalPassport
+	// Type field of SecureValueErrorFrontSide.
 	Type SecureValueTypeClass
-	// File hash
+	// FileHash field of SecureValueErrorFrontSide.
 	FileHash []byte
-	// Error message
+	// Text field of SecureValueErrorFrontSide.
 	Text string
 }
 
@@ -325,17 +286,6 @@ func (s *SecureValueErrorFrontSide) String() string {
 	}
 	type Alias SecureValueErrorFrontSide
 	return fmt.Sprintf("SecureValueErrorFrontSide%+v", Alias(*s))
-}
-
-// FillFrom fills SecureValueErrorFrontSide from given interface.
-func (s *SecureValueErrorFrontSide) FillFrom(from interface {
-	GetType() (value SecureValueTypeClass)
-	GetFileHash() (value []byte)
-	GetText() (value string)
-}) {
-	s.Type = from.GetType()
-	s.FileHash = from.GetFileHash()
-	s.Text = from.GetText()
 }
 
 // TypeID returns type id in TL schema.
@@ -467,20 +417,12 @@ func (s *SecureValueErrorFrontSide) GetText() (value string) {
 }
 
 // SecureValueErrorReverseSide represents TL type `secureValueErrorReverseSide#868a2aa5`.
-// Represents an issue with the reverse side of a document. The error is considered
-// resolved when the file with reverse side of the document changes.
-//
-// See https://core.telegram.org/constructor/secureValueErrorReverseSide for reference.
 type SecureValueErrorReverseSide struct {
-	// One of secureValueTypeDriverLicense¹, secureValueTypeIdentityCard²
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/secureValueTypeDriverLicense
-	//  2) https://core.telegram.org/constructor/secureValueTypeIdentityCard
+	// Type field of SecureValueErrorReverseSide.
 	Type SecureValueTypeClass
-	// File hash
+	// FileHash field of SecureValueErrorReverseSide.
 	FileHash []byte
-	// Error message
+	// Text field of SecureValueErrorReverseSide.
 	Text string
 }
 
@@ -524,17 +466,6 @@ func (s *SecureValueErrorReverseSide) String() string {
 	}
 	type Alias SecureValueErrorReverseSide
 	return fmt.Sprintf("SecureValueErrorReverseSide%+v", Alias(*s))
-}
-
-// FillFrom fills SecureValueErrorReverseSide from given interface.
-func (s *SecureValueErrorReverseSide) FillFrom(from interface {
-	GetType() (value SecureValueTypeClass)
-	GetFileHash() (value []byte)
-	GetText() (value string)
-}) {
-	s.Type = from.GetType()
-	s.FileHash = from.GetFileHash()
-	s.Text = from.GetText()
 }
 
 // TypeID returns type id in TL schema.
@@ -666,23 +597,12 @@ func (s *SecureValueErrorReverseSide) GetText() (value string) {
 }
 
 // SecureValueErrorSelfie represents TL type `secureValueErrorSelfie#e537ced6`.
-// Represents an issue with the selfie with a document. The error is considered resolved
-// when the file with the selfie changes.
-//
-// See https://core.telegram.org/constructor/secureValueErrorSelfie for reference.
 type SecureValueErrorSelfie struct {
-	// One of secureValueTypePassport¹, secureValueTypeDriverLicense²,
-	// secureValueTypeIdentityCard³, secureValueTypeInternalPassport⁴
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/secureValueTypePassport
-	//  2) https://core.telegram.org/constructor/secureValueTypeDriverLicense
-	//  3) https://core.telegram.org/constructor/secureValueTypeIdentityCard
-	//  4) https://core.telegram.org/constructor/secureValueTypeInternalPassport
+	// Type field of SecureValueErrorSelfie.
 	Type SecureValueTypeClass
-	// File hash
+	// FileHash field of SecureValueErrorSelfie.
 	FileHash []byte
-	// Error message
+	// Text field of SecureValueErrorSelfie.
 	Text string
 }
 
@@ -726,17 +646,6 @@ func (s *SecureValueErrorSelfie) String() string {
 	}
 	type Alias SecureValueErrorSelfie
 	return fmt.Sprintf("SecureValueErrorSelfie%+v", Alias(*s))
-}
-
-// FillFrom fills SecureValueErrorSelfie from given interface.
-func (s *SecureValueErrorSelfie) FillFrom(from interface {
-	GetType() (value SecureValueTypeClass)
-	GetFileHash() (value []byte)
-	GetText() (value string)
-}) {
-	s.Type = from.GetType()
-	s.FileHash = from.GetFileHash()
-	s.Text = from.GetText()
 }
 
 // TypeID returns type id in TL schema.
@@ -868,25 +777,12 @@ func (s *SecureValueErrorSelfie) GetText() (value string) {
 }
 
 // SecureValueErrorFile represents TL type `secureValueErrorFile#7a700873`.
-// Represents an issue with a document scan. The error is considered resolved when the
-// file with the document scan changes.
-//
-// See https://core.telegram.org/constructor/secureValueErrorFile for reference.
 type SecureValueErrorFile struct {
-	// One of secureValueTypeUtilityBill¹, secureValueTypeBankStatement²,
-	// secureValueTypeRentalAgreement³, secureValueTypePassportRegistration⁴,
-	// secureValueTypeTemporaryRegistration⁵
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/secureValueTypeUtilityBill
-	//  2) https://core.telegram.org/constructor/secureValueTypeBankStatement
-	//  3) https://core.telegram.org/constructor/secureValueTypeRentalAgreement
-	//  4) https://core.telegram.org/constructor/secureValueTypePassportRegistration
-	//  5) https://core.telegram.org/constructor/secureValueTypeTemporaryRegistration
+	// Type field of SecureValueErrorFile.
 	Type SecureValueTypeClass
-	// File hash
+	// FileHash field of SecureValueErrorFile.
 	FileHash []byte
-	// Error message
+	// Text field of SecureValueErrorFile.
 	Text string
 }
 
@@ -930,17 +826,6 @@ func (s *SecureValueErrorFile) String() string {
 	}
 	type Alias SecureValueErrorFile
 	return fmt.Sprintf("SecureValueErrorFile%+v", Alias(*s))
-}
-
-// FillFrom fills SecureValueErrorFile from given interface.
-func (s *SecureValueErrorFile) FillFrom(from interface {
-	GetType() (value SecureValueTypeClass)
-	GetFileHash() (value []byte)
-	GetText() (value string)
-}) {
-	s.Type = from.GetType()
-	s.FileHash = from.GetFileHash()
-	s.Text = from.GetText()
 }
 
 // TypeID returns type id in TL schema.
@@ -1072,25 +957,12 @@ func (s *SecureValueErrorFile) GetText() (value string) {
 }
 
 // SecureValueErrorFiles represents TL type `secureValueErrorFiles#666220e9`.
-// Represents an issue with a list of scans. The error is considered resolved when the
-// list of files containing the scans changes.
-//
-// See https://core.telegram.org/constructor/secureValueErrorFiles for reference.
 type SecureValueErrorFiles struct {
-	// One of secureValueTypeUtilityBill¹, secureValueTypeBankStatement²,
-	// secureValueTypeRentalAgreement³, secureValueTypePassportRegistration⁴,
-	// secureValueTypeTemporaryRegistration⁵
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/secureValueTypeUtilityBill
-	//  2) https://core.telegram.org/constructor/secureValueTypeBankStatement
-	//  3) https://core.telegram.org/constructor/secureValueTypeRentalAgreement
-	//  4) https://core.telegram.org/constructor/secureValueTypePassportRegistration
-	//  5) https://core.telegram.org/constructor/secureValueTypeTemporaryRegistration
+	// Type field of SecureValueErrorFiles.
 	Type SecureValueTypeClass
-	// File hash
+	// FileHash field of SecureValueErrorFiles.
 	FileHash [][]byte
-	// Error message
+	// Text field of SecureValueErrorFiles.
 	Text string
 }
 
@@ -1134,17 +1006,6 @@ func (s *SecureValueErrorFiles) String() string {
 	}
 	type Alias SecureValueErrorFiles
 	return fmt.Sprintf("SecureValueErrorFiles%+v", Alias(*s))
-}
-
-// FillFrom fills SecureValueErrorFiles from given interface.
-func (s *SecureValueErrorFiles) FillFrom(from interface {
-	GetType() (value SecureValueTypeClass)
-	GetFileHash() (value [][]byte)
-	GetText() (value string)
-}) {
-	s.Type = from.GetType()
-	s.FileHash = from.GetFileHash()
-	s.Text = from.GetText()
 }
 
 // TypeID returns type id in TL schema.
@@ -1289,15 +1150,12 @@ func (s *SecureValueErrorFiles) GetText() (value string) {
 }
 
 // SecureValueError represents TL type `secureValueError#869d758f`.
-// Secure value error
-//
-// See https://core.telegram.org/constructor/secureValueError for reference.
 type SecureValueError struct {
-	// Type of element which has the issue
+	// Type field of SecureValueError.
 	Type SecureValueTypeClass
-	// Hash
+	// Hash field of SecureValueError.
 	Hash []byte
-	// Error message
+	// Text field of SecureValueError.
 	Text string
 }
 
@@ -1341,17 +1199,6 @@ func (s *SecureValueError) String() string {
 	}
 	type Alias SecureValueError
 	return fmt.Sprintf("SecureValueError%+v", Alias(*s))
-}
-
-// FillFrom fills SecureValueError from given interface.
-func (s *SecureValueError) FillFrom(from interface {
-	GetType() (value SecureValueTypeClass)
-	GetHash() (value []byte)
-	GetText() (value string)
-}) {
-	s.Type = from.GetType()
-	s.Hash = from.GetHash()
-	s.Text = from.GetText()
 }
 
 // TypeID returns type id in TL schema.
@@ -1483,32 +1330,12 @@ func (s *SecureValueError) GetText() (value string) {
 }
 
 // SecureValueErrorTranslationFile represents TL type `secureValueErrorTranslationFile#a1144770`.
-// Represents an issue with one of the files that constitute the translation of a
-// document. The error is considered resolved when the file changes.
-//
-// See https://core.telegram.org/constructor/secureValueErrorTranslationFile for reference.
 type SecureValueErrorTranslationFile struct {
-	// One of secureValueTypePersonalDetails¹, secureValueTypePassport²,
-	// secureValueTypeDriverLicense³, secureValueTypeIdentityCard⁴,
-	// secureValueTypeInternalPassport⁵, secureValueTypeUtilityBill⁶,
-	// secureValueTypeBankStatement⁷, secureValueTypeRentalAgreement⁸,
-	// secureValueTypePassportRegistration⁹, secureValueTypeTemporaryRegistration¹⁰
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/secureValueTypePersonalDetails
-	//  2) https://core.telegram.org/constructor/secureValueTypePassport
-	//  3) https://core.telegram.org/constructor/secureValueTypeDriverLicense
-	//  4) https://core.telegram.org/constructor/secureValueTypeIdentityCard
-	//  5) https://core.telegram.org/constructor/secureValueTypeInternalPassport
-	//  6) https://core.telegram.org/constructor/secureValueTypeUtilityBill
-	//  7) https://core.telegram.org/constructor/secureValueTypeBankStatement
-	//  8) https://core.telegram.org/constructor/secureValueTypeRentalAgreement
-	//  9) https://core.telegram.org/constructor/secureValueTypePassportRegistration
-	//  10) https://core.telegram.org/constructor/secureValueTypeTemporaryRegistration
+	// Type field of SecureValueErrorTranslationFile.
 	Type SecureValueTypeClass
-	// File hash
+	// FileHash field of SecureValueErrorTranslationFile.
 	FileHash []byte
-	// Error message
+	// Text field of SecureValueErrorTranslationFile.
 	Text string
 }
 
@@ -1552,17 +1379,6 @@ func (s *SecureValueErrorTranslationFile) String() string {
 	}
 	type Alias SecureValueErrorTranslationFile
 	return fmt.Sprintf("SecureValueErrorTranslationFile%+v", Alias(*s))
-}
-
-// FillFrom fills SecureValueErrorTranslationFile from given interface.
-func (s *SecureValueErrorTranslationFile) FillFrom(from interface {
-	GetType() (value SecureValueTypeClass)
-	GetFileHash() (value []byte)
-	GetText() (value string)
-}) {
-	s.Type = from.GetType()
-	s.FileHash = from.GetFileHash()
-	s.Text = from.GetText()
 }
 
 // TypeID returns type id in TL schema.
@@ -1694,32 +1510,12 @@ func (s *SecureValueErrorTranslationFile) GetText() (value string) {
 }
 
 // SecureValueErrorTranslationFiles represents TL type `secureValueErrorTranslationFiles#34636dd8`.
-// Represents an issue with the translated version of a document. The error is considered
-// resolved when a file with the document translation changes.
-//
-// See https://core.telegram.org/constructor/secureValueErrorTranslationFiles for reference.
 type SecureValueErrorTranslationFiles struct {
-	// One of secureValueTypePersonalDetails¹, secureValueTypePassport²,
-	// secureValueTypeDriverLicense³, secureValueTypeIdentityCard⁴,
-	// secureValueTypeInternalPassport⁵, secureValueTypeUtilityBill⁶,
-	// secureValueTypeBankStatement⁷, secureValueTypeRentalAgreement⁸,
-	// secureValueTypePassportRegistration⁹, secureValueTypeTemporaryRegistration¹⁰
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/secureValueTypePersonalDetails
-	//  2) https://core.telegram.org/constructor/secureValueTypePassport
-	//  3) https://core.telegram.org/constructor/secureValueTypeDriverLicense
-	//  4) https://core.telegram.org/constructor/secureValueTypeIdentityCard
-	//  5) https://core.telegram.org/constructor/secureValueTypeInternalPassport
-	//  6) https://core.telegram.org/constructor/secureValueTypeUtilityBill
-	//  7) https://core.telegram.org/constructor/secureValueTypeBankStatement
-	//  8) https://core.telegram.org/constructor/secureValueTypeRentalAgreement
-	//  9) https://core.telegram.org/constructor/secureValueTypePassportRegistration
-	//  10) https://core.telegram.org/constructor/secureValueTypeTemporaryRegistration
+	// Type field of SecureValueErrorTranslationFiles.
 	Type SecureValueTypeClass
-	// Hash
+	// FileHash field of SecureValueErrorTranslationFiles.
 	FileHash [][]byte
-	// Error message
+	// Text field of SecureValueErrorTranslationFiles.
 	Text string
 }
 
@@ -1763,17 +1559,6 @@ func (s *SecureValueErrorTranslationFiles) String() string {
 	}
 	type Alias SecureValueErrorTranslationFiles
 	return fmt.Sprintf("SecureValueErrorTranslationFiles%+v", Alias(*s))
-}
-
-// FillFrom fills SecureValueErrorTranslationFiles from given interface.
-func (s *SecureValueErrorTranslationFiles) FillFrom(from interface {
-	GetType() (value SecureValueTypeClass)
-	GetFileHash() (value [][]byte)
-	GetText() (value string)
-}) {
-	s.Type = from.GetType()
-	s.FileHash = from.GetFileHash()
-	s.Text = from.GetText()
 }
 
 // TypeID returns type id in TL schema.
@@ -1922,8 +1707,6 @@ const SecureValueErrorClassName = "SecureValueError"
 
 // SecureValueErrorClass represents SecureValueError generic type.
 //
-// See https://core.telegram.org/type/SecureValueError for reference.
-//
 // Constructors:
 //   - [SecureValueErrorData]
 //   - [SecureValueErrorFrontSide]
@@ -1971,21 +1754,9 @@ type SecureValueErrorClass interface {
 	// Zero returns true if current object has a zero value.
 	Zero() bool
 
-	// The section of the user's Telegram Passport which has the error, one of
-	// secureValueTypePersonalDetails¹, secureValueTypePassport²,
-	// secureValueTypeDriverLicense³, secureValueTypeIdentityCard⁴,
-	// secureValueTypeInternalPassport⁵, secureValueTypeAddress⁶
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/secureValueTypePersonalDetails
-	//  2) https://core.telegram.org/constructor/secureValueTypePassport
-	//  3) https://core.telegram.org/constructor/secureValueTypeDriverLicense
-	//  4) https://core.telegram.org/constructor/secureValueTypeIdentityCard
-	//  5) https://core.telegram.org/constructor/secureValueTypeInternalPassport
-	//  6) https://core.telegram.org/constructor/secureValueTypeAddress
+	// Type field of SecureValueErrorData.
 	GetType() (value SecureValueTypeClass)
-
-	// Error message
+	// Text field of SecureValueErrorData.
 	GetText() (value string)
 }
 

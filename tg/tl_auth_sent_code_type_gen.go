@@ -32,11 +32,8 @@ var (
 )
 
 // AuthSentCodeTypeApp represents TL type `auth.sentCodeTypeApp#3dbb5986`.
-// The code was sent through the telegram app
-//
-// See https://core.telegram.org/constructor/auth.sentCodeTypeApp for reference.
 type AuthSentCodeTypeApp struct {
-	// Length of the code in bytes
+	// Length field of AuthSentCodeTypeApp.
 	Length int
 }
 
@@ -74,13 +71,6 @@ func (s *AuthSentCodeTypeApp) String() string {
 	}
 	type Alias AuthSentCodeTypeApp
 	return fmt.Sprintf("AuthSentCodeTypeApp%+v", Alias(*s))
-}
-
-// FillFrom fills AuthSentCodeTypeApp from given interface.
-func (s *AuthSentCodeTypeApp) FillFrom(from interface {
-	GetLength() (value int)
-}) {
-	s.Length = from.GetLength()
 }
 
 // TypeID returns type id in TL schema.
@@ -167,11 +157,8 @@ func (s *AuthSentCodeTypeApp) GetLength() (value int) {
 }
 
 // AuthSentCodeTypeSMS represents TL type `auth.sentCodeTypeSms#c000bba2`.
-// The code was sent via SMS
-//
-// See https://core.telegram.org/constructor/auth.sentCodeTypeSms for reference.
 type AuthSentCodeTypeSMS struct {
-	// Length of the code in bytes
+	// Length field of AuthSentCodeTypeSMS.
 	Length int
 }
 
@@ -209,13 +196,6 @@ func (s *AuthSentCodeTypeSMS) String() string {
 	}
 	type Alias AuthSentCodeTypeSMS
 	return fmt.Sprintf("AuthSentCodeTypeSMS%+v", Alias(*s))
-}
-
-// FillFrom fills AuthSentCodeTypeSMS from given interface.
-func (s *AuthSentCodeTypeSMS) FillFrom(from interface {
-	GetLength() (value int)
-}) {
-	s.Length = from.GetLength()
 }
 
 // TypeID returns type id in TL schema.
@@ -302,12 +282,8 @@ func (s *AuthSentCodeTypeSMS) GetLength() (value int) {
 }
 
 // AuthSentCodeTypeCall represents TL type `auth.sentCodeTypeCall#5353e5a7`.
-// The code will be sent via a phone call: a synthesized voice will tell the user which
-// verification code to input.
-//
-// See https://core.telegram.org/constructor/auth.sentCodeTypeCall for reference.
 type AuthSentCodeTypeCall struct {
-	// Length of the verification code
+	// Length field of AuthSentCodeTypeCall.
 	Length int
 }
 
@@ -345,13 +321,6 @@ func (s *AuthSentCodeTypeCall) String() string {
 	}
 	type Alias AuthSentCodeTypeCall
 	return fmt.Sprintf("AuthSentCodeTypeCall%+v", Alias(*s))
-}
-
-// FillFrom fills AuthSentCodeTypeCall from given interface.
-func (s *AuthSentCodeTypeCall) FillFrom(from interface {
-	GetLength() (value int)
-}) {
-	s.Length = from.GetLength()
 }
 
 // TypeID returns type id in TL schema.
@@ -438,16 +407,8 @@ func (s *AuthSentCodeTypeCall) GetLength() (value int) {
 }
 
 // AuthSentCodeTypeFlashCall represents TL type `auth.sentCodeTypeFlashCall#ab03c6d9`.
-// The code will be sent via a flash phone call, that will be closed immediately. The
-// phone code will then be the phone number itself, just make sure that the phone number
-// matches the specified pattern.
-//
-// See https://core.telegram.org/constructor/auth.sentCodeTypeFlashCall for reference.
 type AuthSentCodeTypeFlashCall struct {
-	// pattern¹ to match
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/pattern
+	// Pattern field of AuthSentCodeTypeFlashCall.
 	Pattern string
 }
 
@@ -485,13 +446,6 @@ func (s *AuthSentCodeTypeFlashCall) String() string {
 	}
 	type Alias AuthSentCodeTypeFlashCall
 	return fmt.Sprintf("AuthSentCodeTypeFlashCall%+v", Alias(*s))
-}
-
-// FillFrom fills AuthSentCodeTypeFlashCall from given interface.
-func (s *AuthSentCodeTypeFlashCall) FillFrom(from interface {
-	GetPattern() (value string)
-}) {
-	s.Pattern = from.GetPattern()
 }
 
 // TypeID returns type id in TL schema.
@@ -578,15 +532,10 @@ func (s *AuthSentCodeTypeFlashCall) GetPattern() (value string) {
 }
 
 // AuthSentCodeTypeMissedCall represents TL type `auth.sentCodeTypeMissedCall#82006484`.
-// The code will be sent via a flash phone call, that will be closed immediately. The
-// last digits of the phone number that calls are the code that must be entered manually
-// by the user.
-//
-// See https://core.telegram.org/constructor/auth.sentCodeTypeMissedCall for reference.
 type AuthSentCodeTypeMissedCall struct {
-	// Prefix of the phone number from which the call will be made
+	// Prefix field of AuthSentCodeTypeMissedCall.
 	Prefix string
-	// Length of the verification code
+	// Length field of AuthSentCodeTypeMissedCall.
 	Length int
 }
 
@@ -627,15 +576,6 @@ func (s *AuthSentCodeTypeMissedCall) String() string {
 	}
 	type Alias AuthSentCodeTypeMissedCall
 	return fmt.Sprintf("AuthSentCodeTypeMissedCall%+v", Alias(*s))
-}
-
-// FillFrom fills AuthSentCodeTypeMissedCall from given interface.
-func (s *AuthSentCodeTypeMissedCall) FillFrom(from interface {
-	GetPrefix() (value string)
-	GetLength() (value int)
-}) {
-	s.Prefix = from.GetPrefix()
-	s.Length = from.GetLength()
 }
 
 // TypeID returns type id in TL schema.
@@ -742,39 +682,22 @@ func (s *AuthSentCodeTypeMissedCall) GetLength() (value int) {
 }
 
 // AuthSentCodeTypeEmailCode represents TL type `auth.sentCodeTypeEmailCode#f450f59b`.
-// The code was sent via the previously configured login email »¹
-//
-// Links:
-//  1. https://core.telegram.org/api/auth#email-verification
-//
-// See https://core.telegram.org/constructor/auth.sentCodeTypeEmailCode for reference.
 type AuthSentCodeTypeEmailCode struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of AuthSentCodeTypeEmailCode.
 	Flags bin.Fields
-	// Whether authorization through Apple ID is allowed
+	// AppleSigninAllowed field of AuthSentCodeTypeEmailCode.
 	AppleSigninAllowed bool
-	// Whether authorization through Google ID is allowed
+	// GoogleSigninAllowed field of AuthSentCodeTypeEmailCode.
 	GoogleSigninAllowed bool
-	// Pattern¹ of the email
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/pattern
+	// EmailPattern field of AuthSentCodeTypeEmailCode.
 	EmailPattern string
-	// Length of the sent verification code
+	// Length field of AuthSentCodeTypeEmailCode.
 	Length int
-	// Clients should wait for the specified amount of seconds before allowing the user to
-	// invoke auth.resetLoginEmail¹ (will be 0 for Premium² users).
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/auth.resetLoginEmail
-	//  2) https://core.telegram.org/api/premium
+	// ResetAvailablePeriod field of AuthSentCodeTypeEmailCode.
 	//
 	// Use SetResetAvailablePeriod and GetResetAvailablePeriod helpers.
 	ResetAvailablePeriod int
-	// An email reset was already requested, and will occur at the specified date.
+	// ResetPendingDate field of AuthSentCodeTypeEmailCode.
 	//
 	// Use SetResetPendingDate and GetResetPendingDate helpers.
 	ResetPendingDate int
@@ -832,29 +755,6 @@ func (s *AuthSentCodeTypeEmailCode) String() string {
 	}
 	type Alias AuthSentCodeTypeEmailCode
 	return fmt.Sprintf("AuthSentCodeTypeEmailCode%+v", Alias(*s))
-}
-
-// FillFrom fills AuthSentCodeTypeEmailCode from given interface.
-func (s *AuthSentCodeTypeEmailCode) FillFrom(from interface {
-	GetAppleSigninAllowed() (value bool)
-	GetGoogleSigninAllowed() (value bool)
-	GetEmailPattern() (value string)
-	GetLength() (value int)
-	GetResetAvailablePeriod() (value int, ok bool)
-	GetResetPendingDate() (value int, ok bool)
-}) {
-	s.AppleSigninAllowed = from.GetAppleSigninAllowed()
-	s.GoogleSigninAllowed = from.GetGoogleSigninAllowed()
-	s.EmailPattern = from.GetEmailPattern()
-	s.Length = from.GetLength()
-	if val, ok := from.GetResetAvailablePeriod(); ok {
-		s.ResetAvailablePeriod = val
-	}
-
-	if val, ok := from.GetResetPendingDate(); ok {
-		s.ResetPendingDate = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -1102,22 +1002,12 @@ func (s *AuthSentCodeTypeEmailCode) GetResetPendingDate() (value int, ok bool) {
 }
 
 // AuthSentCodeTypeSetUpEmailRequired represents TL type `auth.sentCodeTypeSetUpEmailRequired#a5491dea`.
-// The user should add and verify an email address in order to login as described here
-// »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/auth#email-verification
-//
-// See https://core.telegram.org/constructor/auth.sentCodeTypeSetUpEmailRequired for reference.
 type AuthSentCodeTypeSetUpEmailRequired struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of AuthSentCodeTypeSetUpEmailRequired.
 	Flags bin.Fields
-	// Whether authorization through Apple ID is allowed
+	// AppleSigninAllowed field of AuthSentCodeTypeSetUpEmailRequired.
 	AppleSigninAllowed bool
-	// Whether authorization through Google ID is allowed
+	// GoogleSigninAllowed field of AuthSentCodeTypeSetUpEmailRequired.
 	GoogleSigninAllowed bool
 }
 
@@ -1161,15 +1051,6 @@ func (s *AuthSentCodeTypeSetUpEmailRequired) String() string {
 	}
 	type Alias AuthSentCodeTypeSetUpEmailRequired
 	return fmt.Sprintf("AuthSentCodeTypeSetUpEmailRequired%+v", Alias(*s))
-}
-
-// FillFrom fills AuthSentCodeTypeSetUpEmailRequired from given interface.
-func (s *AuthSentCodeTypeSetUpEmailRequired) FillFrom(from interface {
-	GetAppleSigninAllowed() (value bool)
-	GetGoogleSigninAllowed() (value bool)
-}) {
-	s.AppleSigninAllowed = from.GetAppleSigninAllowed()
-	s.GoogleSigninAllowed = from.GetGoogleSigninAllowed()
 }
 
 // TypeID returns type id in TL schema.
@@ -1305,20 +1186,10 @@ func (s *AuthSentCodeTypeSetUpEmailRequired) GetGoogleSigninAllowed() (value boo
 }
 
 // AuthSentCodeTypeFragmentSMS represents TL type `auth.sentCodeTypeFragmentSms#d9565c39`.
-// The code was delivered via fragment.com¹.
-//
-// Links:
-//  1. https://fragment.com
-//
-// See https://core.telegram.org/constructor/auth.sentCodeTypeFragmentSms for reference.
 type AuthSentCodeTypeFragmentSMS struct {
-	// Open the specified URL to log into fragment.com¹ with the wallet that owns the
-	// specified phone number and view the code.
-	//
-	// Links:
-	//  1) https://fragment.com
+	// URL field of AuthSentCodeTypeFragmentSMS.
 	URL string
-	// Length of the delivered code.
+	// Length field of AuthSentCodeTypeFragmentSMS.
 	Length int
 }
 
@@ -1359,15 +1230,6 @@ func (s *AuthSentCodeTypeFragmentSMS) String() string {
 	}
 	type Alias AuthSentCodeTypeFragmentSMS
 	return fmt.Sprintf("AuthSentCodeTypeFragmentSMS%+v", Alias(*s))
-}
-
-// FillFrom fills AuthSentCodeTypeFragmentSMS from given interface.
-func (s *AuthSentCodeTypeFragmentSMS) FillFrom(from interface {
-	GetURL() (value string)
-	GetLength() (value int)
-}) {
-	s.URL = from.GetURL()
-	s.Length = from.GetLength()
 }
 
 // TypeID returns type id in TL schema.
@@ -1474,49 +1336,30 @@ func (s *AuthSentCodeTypeFragmentSMS) GetLength() (value int) {
 }
 
 // AuthSentCodeTypeFirebaseSMS represents TL type `auth.sentCodeTypeFirebaseSms#9fd736`.
-// An authentication code should be delivered via SMS after Firebase attestation, as
-// described in the auth documentation »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/auth
-//
-// See https://core.telegram.org/constructor/auth.sentCodeTypeFirebaseSms for reference.
 type AuthSentCodeTypeFirebaseSMS struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of AuthSentCodeTypeFirebaseSMS.
 	Flags bin.Fields
-	// On Android, the nonce to be used as described in the auth documentation »¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/auth
+	// Nonce field of AuthSentCodeTypeFirebaseSMS.
 	//
 	// Use SetNonce and GetNonce helpers.
 	Nonce []byte
-	// Google Play Integrity project ID
+	// PlayIntegrityProjectID field of AuthSentCodeTypeFirebaseSMS.
 	//
 	// Use SetPlayIntegrityProjectID and GetPlayIntegrityProjectID helpers.
 	PlayIntegrityProjectID int64
-	// Play Integrity API nonce
+	// PlayIntegrityNonce field of AuthSentCodeTypeFirebaseSMS.
 	//
 	// Use SetPlayIntegrityNonce and GetPlayIntegrityNonce helpers.
 	PlayIntegrityNonce []byte
-	// On iOS, must be compared with the receipt extracted from the received push
-	// notification.
+	// Receipt field of AuthSentCodeTypeFirebaseSMS.
 	//
 	// Use SetReceipt and GetReceipt helpers.
 	Receipt string
-	// On iOS: if a push notification with the ios_push_secret isn't received within
-	// push_timeout seconds, the next_type authentication method must be used, with auth
-	// resendCode¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/auth.resendCode
+	// PushTimeout field of AuthSentCodeTypeFirebaseSMS.
 	//
 	// Use SetPushTimeout and GetPushTimeout helpers.
 	PushTimeout int
-	// Length of the code that will be delivered.
+	// Length field of AuthSentCodeTypeFirebaseSMS.
 	Length int
 }
 
@@ -1572,38 +1415,6 @@ func (s *AuthSentCodeTypeFirebaseSMS) String() string {
 	}
 	type Alias AuthSentCodeTypeFirebaseSMS
 	return fmt.Sprintf("AuthSentCodeTypeFirebaseSMS%+v", Alias(*s))
-}
-
-// FillFrom fills AuthSentCodeTypeFirebaseSMS from given interface.
-func (s *AuthSentCodeTypeFirebaseSMS) FillFrom(from interface {
-	GetNonce() (value []byte, ok bool)
-	GetPlayIntegrityProjectID() (value int64, ok bool)
-	GetPlayIntegrityNonce() (value []byte, ok bool)
-	GetReceipt() (value string, ok bool)
-	GetPushTimeout() (value int, ok bool)
-	GetLength() (value int)
-}) {
-	if val, ok := from.GetNonce(); ok {
-		s.Nonce = val
-	}
-
-	if val, ok := from.GetPlayIntegrityProjectID(); ok {
-		s.PlayIntegrityProjectID = val
-	}
-
-	if val, ok := from.GetPlayIntegrityNonce(); ok {
-		s.PlayIntegrityNonce = val
-	}
-
-	if val, ok := from.GetReceipt(); ok {
-		s.Receipt = val
-	}
-
-	if val, ok := from.GetPushTimeout(); ok {
-		s.PushTimeout = val
-	}
-
-	s.Length = from.GetLength()
 }
 
 // TypeID returns type id in TL schema.
@@ -1883,18 +1694,10 @@ func (s *AuthSentCodeTypeFirebaseSMS) GetLength() (value int) {
 }
 
 // AuthSentCodeTypeSMSWord represents TL type `auth.sentCodeTypeSmsWord#a416ac81`.
-// The code was sent via SMS as a secret word, starting with the letter specified in
-// beginning
-//
-// See https://core.telegram.org/constructor/auth.sentCodeTypeSmsWord for reference.
 type AuthSentCodeTypeSMSWord struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of AuthSentCodeTypeSMSWord.
 	Flags bin.Fields
-	// If set, the secret word in the sent SMS (which may contain multiple words) starts with
-	// this letter.
+	// Beginning field of AuthSentCodeTypeSMSWord.
 	//
 	// Use SetBeginning and GetBeginning helpers.
 	Beginning string
@@ -1937,16 +1740,6 @@ func (s *AuthSentCodeTypeSMSWord) String() string {
 	}
 	type Alias AuthSentCodeTypeSMSWord
 	return fmt.Sprintf("AuthSentCodeTypeSMSWord%+v", Alias(*s))
-}
-
-// FillFrom fills AuthSentCodeTypeSMSWord from given interface.
-func (s *AuthSentCodeTypeSMSWord) FillFrom(from interface {
-	GetBeginning() (value string, ok bool)
-}) {
-	if val, ok := from.GetBeginning(); ok {
-		s.Beginning = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -2062,17 +1855,10 @@ func (s *AuthSentCodeTypeSMSWord) GetBeginning() (value string, ok bool) {
 }
 
 // AuthSentCodeTypeSMSPhrase represents TL type `auth.sentCodeTypeSmsPhrase#b37794af`.
-// The code was sent via SMS as a secret phrase starting with the word specified in
-// beginning
-//
-// See https://core.telegram.org/constructor/auth.sentCodeTypeSmsPhrase for reference.
 type AuthSentCodeTypeSMSPhrase struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of AuthSentCodeTypeSMSPhrase.
 	Flags bin.Fields
-	// If set, the secret phrase (and the SMS) starts with this word.
+	// Beginning field of AuthSentCodeTypeSMSPhrase.
 	//
 	// Use SetBeginning and GetBeginning helpers.
 	Beginning string
@@ -2115,16 +1901,6 @@ func (s *AuthSentCodeTypeSMSPhrase) String() string {
 	}
 	type Alias AuthSentCodeTypeSMSPhrase
 	return fmt.Sprintf("AuthSentCodeTypeSMSPhrase%+v", Alias(*s))
-}
-
-// FillFrom fills AuthSentCodeTypeSMSPhrase from given interface.
-func (s *AuthSentCodeTypeSMSPhrase) FillFrom(from interface {
-	GetBeginning() (value string, ok bool)
-}) {
-	if val, ok := from.GetBeginning(); ok {
-		s.Beginning = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -2243,8 +2019,6 @@ func (s *AuthSentCodeTypeSMSPhrase) GetBeginning() (value string, ok bool) {
 const AuthSentCodeTypeClassName = "auth.SentCodeType"
 
 // AuthSentCodeTypeClass represents auth.SentCodeType generic type.
-//
-// See https://core.telegram.org/type/auth.SentCodeType for reference.
 //
 // Constructors:
 //   - [AuthSentCodeTypeApp]

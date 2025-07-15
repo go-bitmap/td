@@ -32,9 +32,6 @@ var (
 )
 
 // MessagesAvailableReactionsNotModified represents TL type `messages.availableReactionsNotModified#9f071957`.
-// No new reactions are available
-//
-// See https://core.telegram.org/constructor/messages.availableReactionsNotModified for reference.
 type MessagesAvailableReactionsNotModified struct {
 }
 
@@ -134,22 +131,10 @@ func (a *MessagesAvailableReactionsNotModified) DecodeBare(b *bin.Buffer) error 
 }
 
 // MessagesAvailableReactions represents TL type `messages.availableReactions#768e3aad`.
-// Animations and metadata associated with message reactions »¹
-//
-// Links:
-//  1. https://core.telegram.org/api/reactions
-//
-// See https://core.telegram.org/constructor/messages.availableReactions for reference.
 type MessagesAvailableReactions struct {
-	// Hash used for caching, for more info click here¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets#hash-generation
+	// Hash field of MessagesAvailableReactions.
 	Hash int
-	// Animations and metadata associated with message reactions »¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/reactions
+	// Reactions field of MessagesAvailableReactions.
 	Reactions []AvailableReaction
 }
 
@@ -190,15 +175,6 @@ func (a *MessagesAvailableReactions) String() string {
 	}
 	type Alias MessagesAvailableReactions
 	return fmt.Sprintf("MessagesAvailableReactions%+v", Alias(*a))
-}
-
-// FillFrom fills MessagesAvailableReactions from given interface.
-func (a *MessagesAvailableReactions) FillFrom(from interface {
-	GetHash() (value int)
-	GetReactions() (value []AvailableReaction)
-}) {
-	a.Hash = from.GetHash()
-	a.Reactions = from.GetReactions()
 }
 
 // TypeID returns type id in TL schema.
@@ -324,8 +300,6 @@ const MessagesAvailableReactionsClassName = "messages.AvailableReactions"
 
 // MessagesAvailableReactionsClass represents messages.AvailableReactions generic type.
 //
-// See https://core.telegram.org/type/messages.AvailableReactions for reference.
-//
 // Constructors:
 //   - [MessagesAvailableReactionsNotModified]
 //   - [MessagesAvailableReactions]
@@ -358,19 +332,6 @@ type MessagesAvailableReactionsClass interface {
 	String() string
 	// Zero returns true if current object has a zero value.
 	Zero() bool
-
-	// AsModified tries to map MessagesAvailableReactionsClass to MessagesAvailableReactions.
-	AsModified() (*MessagesAvailableReactions, bool)
-}
-
-// AsModified tries to map MessagesAvailableReactionsNotModified to MessagesAvailableReactions.
-func (a *MessagesAvailableReactionsNotModified) AsModified() (*MessagesAvailableReactions, bool) {
-	return nil, false
-}
-
-// AsModified tries to map MessagesAvailableReactions to MessagesAvailableReactions.
-func (a *MessagesAvailableReactions) AsModified() (*MessagesAvailableReactions, bool) {
-	return a, true
 }
 
 // DecodeMessagesAvailableReactions implements binary de-serialization for MessagesAvailableReactionsClass.

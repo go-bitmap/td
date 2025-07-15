@@ -32,19 +32,10 @@ var (
 )
 
 // AccountFinishTakeoutSessionRequest represents TL type `account.finishTakeoutSession#1d2652ee`.
-// Terminate a takeout session, see here » for more info¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/takeout
-//
-// See https://core.telegram.org/method/account.finishTakeoutSession for reference.
 type AccountFinishTakeoutSessionRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of AccountFinishTakeoutSessionRequest.
 	Flags bin.Fields
-	// Data exported successfully
+	// Success field of AccountFinishTakeoutSessionRequest.
 	Success bool
 }
 
@@ -80,13 +71,6 @@ func (f *AccountFinishTakeoutSessionRequest) String() string {
 	}
 	type Alias AccountFinishTakeoutSessionRequest
 	return fmt.Sprintf("AccountFinishTakeoutSessionRequest%+v", Alias(*f))
-}
-
-// FillFrom fills AccountFinishTakeoutSessionRequest from given interface.
-func (f *AccountFinishTakeoutSessionRequest) FillFrom(from interface {
-	GetSuccess() (value bool)
-}) {
-	f.Success = from.GetSuccess()
 }
 
 // TypeID returns type id in TL schema.
@@ -194,16 +178,6 @@ func (f *AccountFinishTakeoutSessionRequest) GetSuccess() (value bool) {
 }
 
 // AccountFinishTakeoutSession invokes method account.finishTakeoutSession#1d2652ee returning error if any.
-// Terminate a takeout session, see here » for more info¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/takeout
-//
-// Possible errors:
-//
-//	403 TAKEOUT_REQUIRED: A takeout session needs to be initialized first, see here » for more info.
-//
-// See https://core.telegram.org/method/account.finishTakeoutSession for reference.
 func (c *Client) AccountFinishTakeoutSession(ctx context.Context, request *AccountFinishTakeoutSessionRequest) (bool, error) {
 	var result BoolBox
 

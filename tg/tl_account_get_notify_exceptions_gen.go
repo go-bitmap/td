@@ -32,20 +32,14 @@ var (
 )
 
 // AccountGetNotifyExceptionsRequest represents TL type `account.getNotifyExceptions#53577479`.
-// Returns list of chats with non-default notification settings
-//
-// See https://core.telegram.org/method/account.getNotifyExceptions for reference.
 type AccountGetNotifyExceptionsRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of AccountGetNotifyExceptionsRequest.
 	Flags bin.Fields
-	// If set, chats with non-default sound will be returned
+	// CompareSound field of AccountGetNotifyExceptionsRequest.
 	CompareSound bool
-	// If set, chats with non-default notification settings for stories will be returned
+	// CompareStories field of AccountGetNotifyExceptionsRequest.
 	CompareStories bool
-	// If specified, only chats of the specified category will be returned
+	// Peer field of AccountGetNotifyExceptionsRequest.
 	//
 	// Use SetPeer and GetPeer helpers.
 	Peer InputNotifyPeerClass
@@ -89,20 +83,6 @@ func (g *AccountGetNotifyExceptionsRequest) String() string {
 	}
 	type Alias AccountGetNotifyExceptionsRequest
 	return fmt.Sprintf("AccountGetNotifyExceptionsRequest%+v", Alias(*g))
-}
-
-// FillFrom fills AccountGetNotifyExceptionsRequest from given interface.
-func (g *AccountGetNotifyExceptionsRequest) FillFrom(from interface {
-	GetCompareSound() (value bool)
-	GetCompareStories() (value bool)
-	GetPeer() (value InputNotifyPeerClass, ok bool)
-}) {
-	g.CompareSound = from.GetCompareSound()
-	g.CompareStories = from.GetCompareStories()
-	if val, ok := from.GetPeer(); ok {
-		g.Peer = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -279,9 +259,6 @@ func (g *AccountGetNotifyExceptionsRequest) GetPeer() (value InputNotifyPeerClas
 }
 
 // AccountGetNotifyExceptions invokes method account.getNotifyExceptions#53577479 returning error if any.
-// Returns list of chats with non-default notification settings
-//
-// See https://core.telegram.org/method/account.getNotifyExceptions for reference.
 func (c *Client) AccountGetNotifyExceptions(ctx context.Context, request *AccountGetNotifyExceptionsRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

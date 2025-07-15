@@ -32,16 +32,8 @@ var (
 )
 
 // StatsGraphAsync represents TL type `statsGraphAsync#4a27eb2d`.
-// This channel statistics graph¹ must be generated asynchronously using stats
-// loadAsyncGraph² to reduce server load
-//
-// Links:
-//  1. https://core.telegram.org/api/stats
-//  2. https://core.telegram.org/method/stats.loadAsyncGraph
-//
-// See https://core.telegram.org/constructor/statsGraphAsync for reference.
 type StatsGraphAsync struct {
-	// Token to use for fetching the async graph
+	// Token field of StatsGraphAsync.
 	Token string
 }
 
@@ -79,13 +71,6 @@ func (s *StatsGraphAsync) String() string {
 	}
 	type Alias StatsGraphAsync
 	return fmt.Sprintf("StatsGraphAsync%+v", Alias(*s))
-}
-
-// FillFrom fills StatsGraphAsync from given interface.
-func (s *StatsGraphAsync) FillFrom(from interface {
-	GetToken() (value string)
-}) {
-	s.Token = from.GetToken()
 }
 
 // TypeID returns type id in TL schema.
@@ -172,14 +157,8 @@ func (s *StatsGraphAsync) GetToken() (value string) {
 }
 
 // StatsGraphError represents TL type `statsGraphError#bedc9822`.
-// An error occurred while generating the statistics graph¹
-//
-// Links:
-//  1. https://core.telegram.org/api/stats
-//
-// See https://core.telegram.org/constructor/statsGraphError for reference.
 type StatsGraphError struct {
-	// The error
+	// Error field of StatsGraphError.
 	Error string
 }
 
@@ -217,13 +196,6 @@ func (s *StatsGraphError) String() string {
 	}
 	type Alias StatsGraphError
 	return fmt.Sprintf("StatsGraphError%+v", Alias(*s))
-}
-
-// FillFrom fills StatsGraphError from given interface.
-func (s *StatsGraphError) FillFrom(from interface {
-	GetError() (value string)
-}) {
-	s.Error = from.GetError()
 }
 
 // TypeID returns type id in TL schema.
@@ -310,21 +282,12 @@ func (s *StatsGraphError) GetError() (value string) {
 }
 
 // StatsGraph represents TL type `statsGraph#8ea464b6`.
-// Channel statistics graph¹
-//
-// Links:
-//  1. https://core.telegram.org/api/stats
-//
-// See https://core.telegram.org/constructor/statsGraph for reference.
 type StatsGraph struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of StatsGraph.
 	Flags bin.Fields
-	// Statistics data
+	// JSON field of StatsGraph.
 	JSON DataJSON
-	// Zoom token
+	// ZoomToken field of StatsGraph.
 	//
 	// Use SetZoomToken and GetZoomToken helpers.
 	ZoomToken string
@@ -370,18 +333,6 @@ func (s *StatsGraph) String() string {
 	}
 	type Alias StatsGraph
 	return fmt.Sprintf("StatsGraph%+v", Alias(*s))
-}
-
-// FillFrom fills StatsGraph from given interface.
-func (s *StatsGraph) FillFrom(from interface {
-	GetJSON() (value DataJSON)
-	GetZoomToken() (value string, ok bool)
-}) {
-	s.JSON = from.GetJSON()
-	if val, ok := from.GetZoomToken(); ok {
-		s.ZoomToken = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -520,8 +471,6 @@ func (s *StatsGraph) GetZoomToken() (value string, ok bool) {
 const StatsGraphClassName = "StatsGraph"
 
 // StatsGraphClass represents StatsGraph generic type.
-//
-// See https://core.telegram.org/type/StatsGraph for reference.
 //
 // Constructors:
 //   - [StatsGraphAsync]

@@ -32,25 +32,14 @@ var (
 )
 
 // StatsBroadcastRevenueStats represents TL type `stats.broadcastRevenueStats#5407e297`.
-// Channel revenue ad statistics, see here »¹ for more info.
-// Note that all balances and currency amounts and graph values are in the smallest unit
-// of the chosen cryptocurrency (currently nanotons for TONs, so to obtain a value in USD
-// divide the chosen amount by 10^9, and then divide by usd_rate).
-//
-// Links:
-//  1. https://core.telegram.org/api/revenue
-//
-// See https://core.telegram.org/constructor/stats.broadcastRevenueStats for reference.
 type StatsBroadcastRevenueStats struct {
-	// Ad impressions graph
+	// TopHoursGraph field of StatsBroadcastRevenueStats.
 	TopHoursGraph StatsGraphClass
-	// Ad revenue graph (in the smallest unit of the cryptocurrency in which revenue is
-	// calculated)
+	// RevenueGraph field of StatsBroadcastRevenueStats.
 	RevenueGraph StatsGraphClass
-	// Current balance, current withdrawable balance and overall revenue
+	// Balances field of StatsBroadcastRevenueStats.
 	Balances BroadcastRevenueBalances
-	// Current conversion rate of the cryptocurrency (not in the smallest unit) in which
-	// revenue is calculated to USD
+	// UsdRate field of StatsBroadcastRevenueStats.
 	UsdRate float64
 }
 
@@ -92,19 +81,6 @@ func (b *StatsBroadcastRevenueStats) String() string {
 	}
 	type Alias StatsBroadcastRevenueStats
 	return fmt.Sprintf("StatsBroadcastRevenueStats%+v", Alias(*b))
-}
-
-// FillFrom fills StatsBroadcastRevenueStats from given interface.
-func (b *StatsBroadcastRevenueStats) FillFrom(from interface {
-	GetTopHoursGraph() (value StatsGraphClass)
-	GetRevenueGraph() (value StatsGraphClass)
-	GetBalances() (value BroadcastRevenueBalances)
-	GetUsdRate() (value float64)
-}) {
-	b.TopHoursGraph = from.GetTopHoursGraph()
-	b.RevenueGraph = from.GetRevenueGraph()
-	b.Balances = from.GetBalances()
-	b.UsdRate = from.GetUsdRate()
 }
 
 // TypeID returns type id in TL schema.

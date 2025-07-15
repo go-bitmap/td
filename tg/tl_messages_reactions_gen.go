@@ -32,12 +32,6 @@ var (
 )
 
 // MessagesReactionsNotModified represents TL type `messages.reactionsNotModified#b06fdbdf`.
-// The server-side list of message reactions¹ hasn't changed
-//
-// Links:
-//  1. https://core.telegram.org/api/reactions
-//
-// See https://core.telegram.org/constructor/messages.reactionsNotModified for reference.
 type MessagesReactionsNotModified struct {
 }
 
@@ -137,19 +131,10 @@ func (r *MessagesReactionsNotModified) DecodeBare(b *bin.Buffer) error {
 }
 
 // MessagesReactions represents TL type `messages.reactions#eafdf716`.
-// List of message reactions¹
-//
-// Links:
-//  1. https://core.telegram.org/api/reactions
-//
-// See https://core.telegram.org/constructor/messages.reactions for reference.
 type MessagesReactions struct {
-	// Hash used for caching, for more info click here¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets#hash-generation
+	// Hash field of MessagesReactions.
 	Hash int64
-	// Reactions
+	// Reactions field of MessagesReactions.
 	Reactions []ReactionClass
 }
 
@@ -190,15 +175,6 @@ func (r *MessagesReactions) String() string {
 	}
 	type Alias MessagesReactions
 	return fmt.Sprintf("MessagesReactions%+v", Alias(*r))
-}
-
-// FillFrom fills MessagesReactions from given interface.
-func (r *MessagesReactions) FillFrom(from interface {
-	GetHash() (value int64)
-	GetReactions() (value []ReactionClass)
-}) {
-	r.Hash = from.GetHash()
-	r.Reactions = from.GetReactions()
 }
 
 // TypeID returns type id in TL schema.
@@ -322,17 +298,10 @@ func (r *MessagesReactions) GetReactions() (value []ReactionClass) {
 	return r.Reactions
 }
 
-// MapReactions returns field Reactions wrapped in ReactionClassArray helper.
-func (r *MessagesReactions) MapReactions() (value ReactionClassArray) {
-	return ReactionClassArray(r.Reactions)
-}
-
 // MessagesReactionsClassName is schema name of MessagesReactionsClass.
 const MessagesReactionsClassName = "messages.Reactions"
 
 // MessagesReactionsClass represents messages.Reactions generic type.
-//
-// See https://core.telegram.org/type/messages.Reactions for reference.
 //
 // Constructors:
 //   - [MessagesReactionsNotModified]
@@ -366,19 +335,6 @@ type MessagesReactionsClass interface {
 	String() string
 	// Zero returns true if current object has a zero value.
 	Zero() bool
-
-	// AsModified tries to map MessagesReactionsClass to MessagesReactions.
-	AsModified() (*MessagesReactions, bool)
-}
-
-// AsModified tries to map MessagesReactionsNotModified to MessagesReactions.
-func (r *MessagesReactionsNotModified) AsModified() (*MessagesReactions, bool) {
-	return nil, false
-}
-
-// AsModified tries to map MessagesReactions to MessagesReactions.
-func (r *MessagesReactions) AsModified() (*MessagesReactions, bool) {
-	return r, true
 }
 
 // DecodeMessagesReactions implements binary de-serialization for MessagesReactionsClass.

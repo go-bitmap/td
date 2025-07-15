@@ -32,15 +32,12 @@ var (
 )
 
 // MessagesMessageViews represents TL type `messages.messageViews#b6c4f543`.
-// View, forward counter + info about replies
-//
-// See https://core.telegram.org/constructor/messages.messageViews for reference.
 type MessagesMessageViews struct {
-	// View, forward counter + info about replies
+	// Views field of MessagesMessageViews.
 	Views []MessageViews
-	// Chats mentioned in constructor
+	// Chats field of MessagesMessageViews.
 	Chats []ChatClass
-	// Users mentioned in constructor
+	// Users field of MessagesMessageViews.
 	Users []UserClass
 }
 
@@ -79,17 +76,6 @@ func (m *MessagesMessageViews) String() string {
 	}
 	type Alias MessagesMessageViews
 	return fmt.Sprintf("MessagesMessageViews%+v", Alias(*m))
-}
-
-// FillFrom fills MessagesMessageViews from given interface.
-func (m *MessagesMessageViews) FillFrom(from interface {
-	GetViews() (value []MessageViews)
-	GetChats() (value []ChatClass)
-	GetUsers() (value []UserClass)
-}) {
-	m.Views = from.GetViews()
-	m.Chats = from.GetChats()
-	m.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -264,14 +250,4 @@ func (m *MessagesMessageViews) GetUsers() (value []UserClass) {
 		return
 	}
 	return m.Users
-}
-
-// MapChats returns field Chats wrapped in ChatClassArray helper.
-func (m *MessagesMessageViews) MapChats() (value ChatClassArray) {
-	return ChatClassArray(m.Chats)
-}
-
-// MapUsers returns field Users wrapped in UserClassArray helper.
-func (m *MessagesMessageViews) MapUsers() (value UserClassArray) {
-	return UserClassArray(m.Users)
 }

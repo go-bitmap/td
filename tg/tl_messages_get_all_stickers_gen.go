@@ -32,14 +32,8 @@ var (
 )
 
 // MessagesGetAllStickersRequest represents TL type `messages.getAllStickers#b8a0a1a8`.
-// Get all installed stickers
-//
-// See https://core.telegram.org/method/messages.getAllStickers for reference.
 type MessagesGetAllStickersRequest struct {
-	// Hash used for caching, for more info click here¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets#hash-generation
+	// Hash field of MessagesGetAllStickersRequest.
 	Hash int64
 }
 
@@ -72,13 +66,6 @@ func (g *MessagesGetAllStickersRequest) String() string {
 	}
 	type Alias MessagesGetAllStickersRequest
 	return fmt.Sprintf("MessagesGetAllStickersRequest%+v", Alias(*g))
-}
-
-// FillFrom fills MessagesGetAllStickersRequest from given interface.
-func (g *MessagesGetAllStickersRequest) FillFrom(from interface {
-	GetHash() (value int64)
-}) {
-	g.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -165,9 +152,6 @@ func (g *MessagesGetAllStickersRequest) GetHash() (value int64) {
 }
 
 // MessagesGetAllStickers invokes method messages.getAllStickers#b8a0a1a8 returning error if any.
-// Get all installed stickers
-//
-// See https://core.telegram.org/method/messages.getAllStickers for reference.
 func (c *Client) MessagesGetAllStickers(ctx context.Context, hash int64) (MessagesAllStickersClass, error) {
 	var result MessagesAllStickersBox
 

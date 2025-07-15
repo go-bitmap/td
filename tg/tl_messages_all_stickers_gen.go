@@ -32,9 +32,6 @@ var (
 )
 
 // MessagesAllStickersNotModified represents TL type `messages.allStickersNotModified#e86602c3`.
-// Info about all installed stickers hasn't changed
-//
-// See https://core.telegram.org/constructor/messages.allStickersNotModified for reference.
 type MessagesAllStickersNotModified struct {
 }
 
@@ -134,16 +131,10 @@ func (a *MessagesAllStickersNotModified) DecodeBare(b *bin.Buffer) error {
 }
 
 // MessagesAllStickers represents TL type `messages.allStickers#cdbbcebb`.
-// Info about all installed stickers
-//
-// See https://core.telegram.org/constructor/messages.allStickers for reference.
 type MessagesAllStickers struct {
-	// Hash used for caching, for more info click here¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets#hash-generation
+	// Hash field of MessagesAllStickers.
 	Hash int64
-	// All stickersets
+	// Sets field of MessagesAllStickers.
 	Sets []StickerSet
 }
 
@@ -184,15 +175,6 @@ func (a *MessagesAllStickers) String() string {
 	}
 	type Alias MessagesAllStickers
 	return fmt.Sprintf("MessagesAllStickers%+v", Alias(*a))
-}
-
-// FillFrom fills MessagesAllStickers from given interface.
-func (a *MessagesAllStickers) FillFrom(from interface {
-	GetHash() (value int64)
-	GetSets() (value []StickerSet)
-}) {
-	a.Hash = from.GetHash()
-	a.Sets = from.GetSets()
 }
 
 // TypeID returns type id in TL schema.
@@ -318,8 +300,6 @@ const MessagesAllStickersClassName = "messages.AllStickers"
 
 // MessagesAllStickersClass represents messages.AllStickers generic type.
 //
-// See https://core.telegram.org/type/messages.AllStickers for reference.
-//
 // Constructors:
 //   - [MessagesAllStickersNotModified]
 //   - [MessagesAllStickers]
@@ -352,19 +332,6 @@ type MessagesAllStickersClass interface {
 	String() string
 	// Zero returns true if current object has a zero value.
 	Zero() bool
-
-	// AsModified tries to map MessagesAllStickersClass to MessagesAllStickers.
-	AsModified() (*MessagesAllStickers, bool)
-}
-
-// AsModified tries to map MessagesAllStickersNotModified to MessagesAllStickers.
-func (a *MessagesAllStickersNotModified) AsModified() (*MessagesAllStickers, bool) {
-	return nil, false
-}
-
-// AsModified tries to map MessagesAllStickers to MessagesAllStickers.
-func (a *MessagesAllStickers) AsModified() (*MessagesAllStickers, bool) {
-	return a, true
 }
 
 // DecodeMessagesAllStickers implements binary de-serialization for MessagesAllStickersClass.

@@ -32,17 +32,10 @@ var (
 )
 
 // PaymentsConnectStarRefBotRequest represents TL type `payments.connectStarRefBot#7ed5348a`.
-// Join a bot's affiliate program, becoming an affiliate »¹
-//
-// Links:
-//  1. https://core.telegram.org/api/bots/referrals#becoming-an-affiliate
-//
-// See https://core.telegram.org/method/payments.connectStarRefBot for reference.
 type PaymentsConnectStarRefBotRequest struct {
-	// The peer that will become the affiliate: star commissions will be transferred to this
-	// peer's star balance.
+	// Peer field of PaymentsConnectStarRefBotRequest.
 	Peer InputPeerClass
-	// The bot that offers the affiliate program
+	// Bot field of PaymentsConnectStarRefBotRequest.
 	Bot InputUserClass
 }
 
@@ -78,15 +71,6 @@ func (c *PaymentsConnectStarRefBotRequest) String() string {
 	}
 	type Alias PaymentsConnectStarRefBotRequest
 	return fmt.Sprintf("PaymentsConnectStarRefBotRequest%+v", Alias(*c))
-}
-
-// FillFrom fills PaymentsConnectStarRefBotRequest from given interface.
-func (c *PaymentsConnectStarRefBotRequest) FillFrom(from interface {
-	GetPeer() (value InputPeerClass)
-	GetBot() (value InputUserClass)
-}) {
-	c.Peer = from.GetPeer()
-	c.Bot = from.GetBot()
 }
 
 // TypeID returns type id in TL schema.
@@ -203,12 +187,6 @@ func (c *PaymentsConnectStarRefBotRequest) GetBot() (value InputUserClass) {
 }
 
 // PaymentsConnectStarRefBot invokes method payments.connectStarRefBot#7ed5348a returning error if any.
-// Join a bot's affiliate program, becoming an affiliate »¹
-//
-// Links:
-//  1. https://core.telegram.org/api/bots/referrals#becoming-an-affiliate
-//
-// See https://core.telegram.org/method/payments.connectStarRefBot for reference.
 func (c *Client) PaymentsConnectStarRefBot(ctx context.Context, request *PaymentsConnectStarRefBotRequest) (*PaymentsConnectedStarRefBots, error) {
 	var result PaymentsConnectedStarRefBots
 

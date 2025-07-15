@@ -32,15 +32,12 @@ var (
 )
 
 // AccountReportPeerRequest represents TL type `account.reportPeer#c5ba3d86`.
-// Report a peer for violation of telegram's Terms of Service
-//
-// See https://core.telegram.org/method/account.reportPeer for reference.
 type AccountReportPeerRequest struct {
-	// The peer to report
+	// Peer field of AccountReportPeerRequest.
 	Peer InputPeerClass
-	// The reason why this peer is being reported
+	// Reason field of AccountReportPeerRequest.
 	Reason ReportReasonClass
-	// Comment for report moderation
+	// Message field of AccountReportPeerRequest.
 	Message string
 }
 
@@ -79,17 +76,6 @@ func (r *AccountReportPeerRequest) String() string {
 	}
 	type Alias AccountReportPeerRequest
 	return fmt.Sprintf("AccountReportPeerRequest%+v", Alias(*r))
-}
-
-// FillFrom fills AccountReportPeerRequest from given interface.
-func (r *AccountReportPeerRequest) FillFrom(from interface {
-	GetPeer() (value InputPeerClass)
-	GetReason() (value ReportReasonClass)
-	GetMessage() (value string)
-}) {
-	r.Peer = from.GetPeer()
-	r.Reason = from.GetReason()
-	r.Message = from.GetMessage()
 }
 
 // TypeID returns type id in TL schema.
@@ -226,14 +212,6 @@ func (r *AccountReportPeerRequest) GetMessage() (value string) {
 }
 
 // AccountReportPeer invokes method account.reportPeer#c5ba3d86 returning error if any.
-// Report a peer for violation of telegram's Terms of Service
-//
-// Possible errors:
-//
-//	400 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//
-// See https://core.telegram.org/method/account.reportPeer for reference.
 func (c *Client) AccountReportPeer(ctx context.Context, request *AccountReportPeerRequest) (bool, error) {
 	var result BoolBox
 

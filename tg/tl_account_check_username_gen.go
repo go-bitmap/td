@@ -32,12 +32,8 @@ var (
 )
 
 // AccountCheckUsernameRequest represents TL type `account.checkUsername#2714d86c`.
-// Validates a username and checks availability.
-//
-// See https://core.telegram.org/method/account.checkUsername for reference.
 type AccountCheckUsernameRequest struct {
-	// usernameAccepted characters: A-z (case-insensitive), 0-9 and underscores.Length: 5-32
-	// characters.
+	// Username field of AccountCheckUsernameRequest.
 	Username string
 }
 
@@ -70,13 +66,6 @@ func (c *AccountCheckUsernameRequest) String() string {
 	}
 	type Alias AccountCheckUsernameRequest
 	return fmt.Sprintf("AccountCheckUsernameRequest%+v", Alias(*c))
-}
-
-// FillFrom fills AccountCheckUsernameRequest from given interface.
-func (c *AccountCheckUsernameRequest) FillFrom(from interface {
-	GetUsername() (value string)
-}) {
-	c.Username = from.GetUsername()
 }
 
 // TypeID returns type id in TL schema.
@@ -163,15 +152,6 @@ func (c *AccountCheckUsernameRequest) GetUsername() (value string) {
 }
 
 // AccountCheckUsername invokes method account.checkUsername#2714d86c returning error if any.
-// Validates a username and checks availability.
-//
-// Possible errors:
-//
-//	400 USERNAME_INVALID: The provided username is not valid.
-//	400 USERNAME_OCCUPIED: The provided username is already occupied.
-//	400 USERNAME_PURCHASE_AVAILABLE: The specified username can be purchased on https://fragment.com.
-//
-// See https://core.telegram.org/method/account.checkUsername for reference.
 func (c *Client) AccountCheckUsername(ctx context.Context, username string) (bool, error) {
 	var result BoolBox
 

@@ -32,9 +32,6 @@ var (
 )
 
 // ContactsResetSavedRequest represents TL type `contacts.resetSaved#879537f1`.
-// Removes all contacts without an associated Telegram account.
-//
-// See https://core.telegram.org/method/contacts.resetSaved for reference.
 type ContactsResetSavedRequest struct {
 }
 
@@ -129,9 +126,6 @@ func (r *ContactsResetSavedRequest) DecodeBare(b *bin.Buffer) error {
 }
 
 // ContactsResetSaved invokes method contacts.resetSaved#879537f1 returning error if any.
-// Removes all contacts without an associated Telegram account.
-//
-// See https://core.telegram.org/method/contacts.resetSaved for reference.
 func (c *Client) ContactsResetSaved(ctx context.Context) (bool, error) {
 	var result BoolBox
 

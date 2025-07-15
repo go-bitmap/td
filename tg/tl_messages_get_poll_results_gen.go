@@ -32,13 +32,10 @@ var (
 )
 
 // MessagesGetPollResultsRequest represents TL type `messages.getPollResults#73bb643b`.
-// Get poll results
-//
-// See https://core.telegram.org/method/messages.getPollResults for reference.
 type MessagesGetPollResultsRequest struct {
-	// Peer where the poll was found
+	// Peer field of MessagesGetPollResultsRequest.
 	Peer InputPeerClass
-	// Message ID of poll message
+	// MsgID field of MessagesGetPollResultsRequest.
 	MsgID int
 }
 
@@ -74,15 +71,6 @@ func (g *MessagesGetPollResultsRequest) String() string {
 	}
 	type Alias MessagesGetPollResultsRequest
 	return fmt.Sprintf("MessagesGetPollResultsRequest%+v", Alias(*g))
-}
-
-// FillFrom fills MessagesGetPollResultsRequest from given interface.
-func (g *MessagesGetPollResultsRequest) FillFrom(from interface {
-	GetPeer() (value InputPeerClass)
-	GetMsgID() (value int)
-}) {
-	g.Peer = from.GetPeer()
-	g.MsgID = from.GetMsgID()
 }
 
 // TypeID returns type id in TL schema.
@@ -194,14 +182,6 @@ func (g *MessagesGetPollResultsRequest) GetMsgID() (value int) {
 }
 
 // MessagesGetPollResults invokes method messages.getPollResults#73bb643b returning error if any.
-// Get poll results
-//
-// Possible errors:
-//
-//	400 MESSAGE_ID_INVALID: The provided message id is invalid.
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//
-// See https://core.telegram.org/method/messages.getPollResults for reference.
 func (c *Client) MessagesGetPollResults(ctx context.Context, request *MessagesGetPollResultsRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

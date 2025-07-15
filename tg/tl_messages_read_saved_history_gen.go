@@ -32,8 +32,6 @@ var (
 )
 
 // MessagesReadSavedHistoryRequest represents TL type `messages.readSavedHistory#ba4a3b5b`.
-//
-// See https://core.telegram.org/method/messages.readSavedHistory for reference.
 type MessagesReadSavedHistoryRequest struct {
 	// ParentPeer field of MessagesReadSavedHistoryRequest.
 	ParentPeer InputPeerClass
@@ -78,17 +76,6 @@ func (r *MessagesReadSavedHistoryRequest) String() string {
 	}
 	type Alias MessagesReadSavedHistoryRequest
 	return fmt.Sprintf("MessagesReadSavedHistoryRequest%+v", Alias(*r))
-}
-
-// FillFrom fills MessagesReadSavedHistoryRequest from given interface.
-func (r *MessagesReadSavedHistoryRequest) FillFrom(from interface {
-	GetParentPeer() (value InputPeerClass)
-	GetPeer() (value InputPeerClass)
-	GetMaxID() (value int)
-}) {
-	r.ParentPeer = from.GetParentPeer()
-	r.Peer = from.GetPeer()
-	r.MaxID = from.GetMaxID()
 }
 
 // TypeID returns type id in TL schema.
@@ -225,8 +212,6 @@ func (r *MessagesReadSavedHistoryRequest) GetMaxID() (value int) {
 }
 
 // MessagesReadSavedHistory invokes method messages.readSavedHistory#ba4a3b5b returning error if any.
-//
-// See https://core.telegram.org/method/messages.readSavedHistory for reference.
 func (c *Client) MessagesReadSavedHistory(ctx context.Context, request *MessagesReadSavedHistoryRequest) (bool, error) {
 	var result BoolBox
 

@@ -32,11 +32,8 @@ var (
 )
 
 // UsersGetFullUserRequest represents TL type `users.getFullUser#b60f5918`.
-// Returns extended user info by ID.
-//
-// See https://core.telegram.org/method/users.getFullUser for reference.
 type UsersGetFullUserRequest struct {
-	// User ID
+	// ID field of UsersGetFullUserRequest.
 	ID InputUserClass
 }
 
@@ -69,13 +66,6 @@ func (g *UsersGetFullUserRequest) String() string {
 	}
 	type Alias UsersGetFullUserRequest
 	return fmt.Sprintf("UsersGetFullUserRequest%+v", Alias(*g))
-}
-
-// FillFrom fills UsersGetFullUserRequest from given interface.
-func (g *UsersGetFullUserRequest) FillFrom(from interface {
-	GetID() (value InputUserClass)
-}) {
-	g.ID = from.GetID()
 }
 
 // TypeID returns type id in TL schema.
@@ -167,18 +157,6 @@ func (g *UsersGetFullUserRequest) GetID() (value InputUserClass) {
 }
 
 // UsersGetFullUser invokes method users.getFullUser#b60f5918 returning error if any.
-// Returns extended user info by ID.
-//
-// Possible errors:
-//
-//	400 CHANNEL_INVALID: The provided channel is invalid.
-//	400 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
-//	400 MSG_ID_INVALID: Invalid message ID provided.
-//	400 USERNAME_OCCUPIED: The provided username is already occupied.
-//	400 USER_ID_INVALID: The provided user ID is invalid.
-//
-// See https://core.telegram.org/method/users.getFullUser for reference.
-// Can be used by bots.
 func (c *Client) UsersGetFullUser(ctx context.Context, id InputUserClass) (*UsersUserFull, error) {
 	var result UsersUserFull
 

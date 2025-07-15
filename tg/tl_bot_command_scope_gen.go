@@ -32,9 +32,6 @@ var (
 )
 
 // BotCommandScopeDefault represents TL type `botCommandScopeDefault#2f6cb2ab`.
-// The commands will be valid in all dialogs
-//
-// See https://core.telegram.org/constructor/botCommandScopeDefault for reference.
 type BotCommandScopeDefault struct {
 }
 
@@ -134,9 +131,6 @@ func (b *BotCommandScopeDefault) DecodeBare(buf *bin.Buffer) error {
 }
 
 // BotCommandScopeUsers represents TL type `botCommandScopeUsers#3c4f04d8`.
-// The specified bot commands will only be valid in all private chats with users.
-//
-// See https://core.telegram.org/constructor/botCommandScopeUsers for reference.
 type BotCommandScopeUsers struct {
 }
 
@@ -236,12 +230,6 @@ func (b *BotCommandScopeUsers) DecodeBare(buf *bin.Buffer) error {
 }
 
 // BotCommandScopeChats represents TL type `botCommandScopeChats#6fe1a881`.
-// The specified bot commands will be valid in all groups and supergroups¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/channel
-//
-// See https://core.telegram.org/constructor/botCommandScopeChats for reference.
 type BotCommandScopeChats struct {
 }
 
@@ -341,13 +329,6 @@ func (b *BotCommandScopeChats) DecodeBare(buf *bin.Buffer) error {
 }
 
 // BotCommandScopeChatAdmins represents TL type `botCommandScopeChatAdmins#b9aa606a`.
-// The specified bot commands will be valid only for chat administrators, in all groups
-// and supergroups¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/channel
-//
-// See https://core.telegram.org/constructor/botCommandScopeChatAdmins for reference.
 type BotCommandScopeChatAdmins struct {
 }
 
@@ -447,11 +428,8 @@ func (b *BotCommandScopeChatAdmins) DecodeBare(buf *bin.Buffer) error {
 }
 
 // BotCommandScopePeer represents TL type `botCommandScopePeer#db9d897d`.
-// The specified bot commands will be valid only in a specific dialog.
-//
-// See https://core.telegram.org/constructor/botCommandScopePeer for reference.
 type BotCommandScopePeer struct {
-	// The dialog
+	// Peer field of BotCommandScopePeer.
 	Peer InputPeerClass
 }
 
@@ -489,13 +467,6 @@ func (b *BotCommandScopePeer) String() string {
 	}
 	type Alias BotCommandScopePeer
 	return fmt.Sprintf("BotCommandScopePeer%+v", Alias(*b))
-}
-
-// FillFrom fills BotCommandScopePeer from given interface.
-func (b *BotCommandScopePeer) FillFrom(from interface {
-	GetPeer() (value InputPeerClass)
-}) {
-	b.Peer = from.GetPeer()
 }
 
 // TypeID returns type id in TL schema.
@@ -587,15 +558,8 @@ func (b *BotCommandScopePeer) GetPeer() (value InputPeerClass) {
 }
 
 // BotCommandScopePeerAdmins represents TL type `botCommandScopePeerAdmins#3fd863d1`.
-// The specified bot commands will be valid for all admins of the specified group or
-// supergroup¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/channel
-//
-// See https://core.telegram.org/constructor/botCommandScopePeerAdmins for reference.
 type BotCommandScopePeerAdmins struct {
-	// The chat
+	// Peer field of BotCommandScopePeerAdmins.
 	Peer InputPeerClass
 }
 
@@ -633,13 +597,6 @@ func (b *BotCommandScopePeerAdmins) String() string {
 	}
 	type Alias BotCommandScopePeerAdmins
 	return fmt.Sprintf("BotCommandScopePeerAdmins%+v", Alias(*b))
-}
-
-// FillFrom fills BotCommandScopePeerAdmins from given interface.
-func (b *BotCommandScopePeerAdmins) FillFrom(from interface {
-	GetPeer() (value InputPeerClass)
-}) {
-	b.Peer = from.GetPeer()
 }
 
 // TypeID returns type id in TL schema.
@@ -731,17 +688,10 @@ func (b *BotCommandScopePeerAdmins) GetPeer() (value InputPeerClass) {
 }
 
 // BotCommandScopePeerUser represents TL type `botCommandScopePeerUser#a1321f3`.
-// The specified bot commands will be valid only for a specific user in the specified
-// group or supergroup¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/channel
-//
-// See https://core.telegram.org/constructor/botCommandScopePeerUser for reference.
 type BotCommandScopePeerUser struct {
-	// The chat
+	// Peer field of BotCommandScopePeerUser.
 	Peer InputPeerClass
-	// The user
+	// UserID field of BotCommandScopePeerUser.
 	UserID InputUserClass
 }
 
@@ -782,15 +732,6 @@ func (b *BotCommandScopePeerUser) String() string {
 	}
 	type Alias BotCommandScopePeerUser
 	return fmt.Sprintf("BotCommandScopePeerUser%+v", Alias(*b))
-}
-
-// FillFrom fills BotCommandScopePeerUser from given interface.
-func (b *BotCommandScopePeerUser) FillFrom(from interface {
-	GetPeer() (value InputPeerClass)
-	GetUserID() (value InputUserClass)
-}) {
-	b.Peer = from.GetPeer()
-	b.UserID = from.GetUserID()
 }
 
 // TypeID returns type id in TL schema.
@@ -910,8 +851,6 @@ func (b *BotCommandScopePeerUser) GetUserID() (value InputUserClass) {
 const BotCommandScopeClassName = "BotCommandScope"
 
 // BotCommandScopeClass represents BotCommandScope generic type.
-//
-// See https://core.telegram.org/type/BotCommandScope for reference.
 //
 // Constructors:
 //   - [BotCommandScopeDefault]

@@ -32,9 +32,6 @@ var (
 )
 
 // MessageMediaEmpty represents TL type `messageMediaEmpty#3ded6320`.
-// Empty constructor.
-//
-// See https://core.telegram.org/constructor/messageMediaEmpty for reference.
 type MessageMediaEmpty struct {
 }
 
@@ -134,22 +131,16 @@ func (m *MessageMediaEmpty) DecodeBare(b *bin.Buffer) error {
 }
 
 // MessageMediaPhoto represents TL type `messageMediaPhoto#695150d7`.
-// Attached photo.
-//
-// See https://core.telegram.org/constructor/messageMediaPhoto for reference.
 type MessageMediaPhoto struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessageMediaPhoto.
 	Flags bin.Fields
-	// Whether this media should be hidden behind a spoiler warning
+	// Spoiler field of MessageMediaPhoto.
 	Spoiler bool
-	// Photo
+	// Photo field of MessageMediaPhoto.
 	//
 	// Use SetPhoto and GetPhoto helpers.
 	Photo PhotoClass
-	// Time to live in seconds of self-destructing photo
+	// TTLSeconds field of MessageMediaPhoto.
 	//
 	// Use SetTTLSeconds and GetTTLSeconds helpers.
 	TTLSeconds int
@@ -198,23 +189,6 @@ func (m *MessageMediaPhoto) String() string {
 	}
 	type Alias MessageMediaPhoto
 	return fmt.Sprintf("MessageMediaPhoto%+v", Alias(*m))
-}
-
-// FillFrom fills MessageMediaPhoto from given interface.
-func (m *MessageMediaPhoto) FillFrom(from interface {
-	GetSpoiler() (value bool)
-	GetPhoto() (value PhotoClass, ok bool)
-	GetTTLSeconds() (value int, ok bool)
-}) {
-	m.Spoiler = from.GetSpoiler()
-	if val, ok := from.GetPhoto(); ok {
-		m.Photo = val
-	}
-
-	if val, ok := from.GetTTLSeconds(); ok {
-		m.TTLSeconds = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -399,11 +373,8 @@ func (m *MessageMediaPhoto) GetTTLSeconds() (value int, ok bool) {
 }
 
 // MessageMediaGeo represents TL type `messageMediaGeo#56e0d474`.
-// Attached map.
-//
-// See https://core.telegram.org/constructor/messageMediaGeo for reference.
 type MessageMediaGeo struct {
-	// GeoPoint
+	// Geo field of MessageMediaGeo.
 	Geo GeoPointClass
 }
 
@@ -441,13 +412,6 @@ func (m *MessageMediaGeo) String() string {
 	}
 	type Alias MessageMediaGeo
 	return fmt.Sprintf("MessageMediaGeo%+v", Alias(*m))
-}
-
-// FillFrom fills MessageMediaGeo from given interface.
-func (m *MessageMediaGeo) FillFrom(from interface {
-	GetGeo() (value GeoPointClass)
-}) {
-	m.Geo = from.GetGeo()
 }
 
 // TypeID returns type id in TL schema.
@@ -539,19 +503,16 @@ func (m *MessageMediaGeo) GetGeo() (value GeoPointClass) {
 }
 
 // MessageMediaContact represents TL type `messageMediaContact#70322949`.
-// Attached contact.
-//
-// See https://core.telegram.org/constructor/messageMediaContact for reference.
 type MessageMediaContact struct {
-	// Phone number
+	// PhoneNumber field of MessageMediaContact.
 	PhoneNumber string
-	// Contact's first name
+	// FirstName field of MessageMediaContact.
 	FirstName string
-	// Contact's last name
+	// LastName field of MessageMediaContact.
 	LastName string
-	// VCARD of contact
+	// Vcard field of MessageMediaContact.
 	Vcard string
-	// User identifier or 0, if the user with the given phone number is not registered
+	// UserID field of MessageMediaContact.
 	UserID int64
 }
 
@@ -601,21 +562,6 @@ func (m *MessageMediaContact) String() string {
 	}
 	type Alias MessageMediaContact
 	return fmt.Sprintf("MessageMediaContact%+v", Alias(*m))
-}
-
-// FillFrom fills MessageMediaContact from given interface.
-func (m *MessageMediaContact) FillFrom(from interface {
-	GetPhoneNumber() (value string)
-	GetFirstName() (value string)
-	GetLastName() (value string)
-	GetVcard() (value string)
-	GetUserID() (value int64)
-}) {
-	m.PhoneNumber = from.GetPhoneNumber()
-	m.FirstName = from.GetFirstName()
-	m.LastName = from.GetLastName()
-	m.Vcard = from.GetVcard()
-	m.UserID = from.GetUserID()
 }
 
 // TypeID returns type id in TL schema.
@@ -782,9 +728,6 @@ func (m *MessageMediaContact) GetUserID() (value int64) {
 }
 
 // MessageMediaUnsupported represents TL type `messageMediaUnsupported#9f84f49e`.
-// Current version of the client does not support this media type.
-//
-// See https://core.telegram.org/constructor/messageMediaUnsupported for reference.
 type MessageMediaUnsupported struct {
 }
 
@@ -884,31 +827,24 @@ func (m *MessageMediaUnsupported) DecodeBare(b *bin.Buffer) error {
 }
 
 // MessageMediaDocument represents TL type `messageMediaDocument#52d8ccd9`.
-// Document (video, audio, voice, sticker, any media type except photo)
-//
-// See https://core.telegram.org/constructor/messageMediaDocument for reference.
 type MessageMediaDocument struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessageMediaDocument.
 	Flags bin.Fields
-	// Whether this is a normal sticker, if not set this is a premium sticker and a premium
-	// sticker animation must be played.
+	// Nopremium field of MessageMediaDocument.
 	Nopremium bool
-	// Whether this media should be hidden behind a spoiler warning
+	// Spoiler field of MessageMediaDocument.
 	Spoiler bool
-	// Whether this is a video.
+	// Video field of MessageMediaDocument.
 	Video bool
-	// Whether this is a round video.
+	// Round field of MessageMediaDocument.
 	Round bool
-	// Whether this is a voice message.
+	// Voice field of MessageMediaDocument.
 	Voice bool
-	// Attached document
+	// Document field of MessageMediaDocument.
 	//
 	// Use SetDocument and GetDocument helpers.
 	Document DocumentClass
-	// Videos only, contains alternative qualities of the video.
+	// AltDocuments field of MessageMediaDocument.
 	//
 	// Use SetAltDocuments and GetAltDocuments helpers.
 	AltDocuments []DocumentClass
@@ -920,7 +856,7 @@ type MessageMediaDocument struct {
 	//
 	// Use SetVideoTimestamp and GetVideoTimestamp helpers.
 	VideoTimestamp int
-	// Time to live of self-destructing document
+	// TTLSeconds field of MessageMediaDocument.
 	//
 	// Use SetTTLSeconds and GetTTLSeconds helpers.
 	TTLSeconds int
@@ -990,46 +926,6 @@ func (m *MessageMediaDocument) String() string {
 	}
 	type Alias MessageMediaDocument
 	return fmt.Sprintf("MessageMediaDocument%+v", Alias(*m))
-}
-
-// FillFrom fills MessageMediaDocument from given interface.
-func (m *MessageMediaDocument) FillFrom(from interface {
-	GetNopremium() (value bool)
-	GetSpoiler() (value bool)
-	GetVideo() (value bool)
-	GetRound() (value bool)
-	GetVoice() (value bool)
-	GetDocument() (value DocumentClass, ok bool)
-	GetAltDocuments() (value []DocumentClass, ok bool)
-	GetVideoCover() (value PhotoClass, ok bool)
-	GetVideoTimestamp() (value int, ok bool)
-	GetTTLSeconds() (value int, ok bool)
-}) {
-	m.Nopremium = from.GetNopremium()
-	m.Spoiler = from.GetSpoiler()
-	m.Video = from.GetVideo()
-	m.Round = from.GetRound()
-	m.Voice = from.GetVoice()
-	if val, ok := from.GetDocument(); ok {
-		m.Document = val
-	}
-
-	if val, ok := from.GetAltDocuments(); ok {
-		m.AltDocuments = val
-	}
-
-	if val, ok := from.GetVideoCover(); ok {
-		m.VideoCover = val
-	}
-
-	if val, ok := from.GetVideoTimestamp(); ok {
-		m.VideoTimestamp = val
-	}
-
-	if val, ok := from.GetTTLSeconds(); ok {
-		m.TTLSeconds = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -1456,39 +1352,19 @@ func (m *MessageMediaDocument) GetTTLSeconds() (value int, ok bool) {
 	return m.TTLSeconds, true
 }
 
-// MapAltDocuments returns field AltDocuments wrapped in DocumentClassArray helper.
-func (m *MessageMediaDocument) MapAltDocuments() (value DocumentClassArray, ok bool) {
-	if !m.Flags.Has(5) {
-		return value, false
-	}
-	return DocumentClassArray(m.AltDocuments), true
-}
-
 // MessageMediaWebPage represents TL type `messageMediaWebPage#ddf10c3b`.
-// Preview of webpage
-//
-// See https://core.telegram.org/constructor/messageMediaWebPage for reference.
 type MessageMediaWebPage struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessageMediaWebPage.
 	Flags bin.Fields
-	// If set, specifies that a large media preview should be used.
+	// ForceLargeMedia field of MessageMediaWebPage.
 	ForceLargeMedia bool
-	// If set, specifies that a small media preview should be used.
+	// ForceSmallMedia field of MessageMediaWebPage.
 	ForceSmallMedia bool
-	// If set, indicates that the URL used for the webpage preview was specified manually
-	// using inputMediaWebPage¹, and may not be related to any of the URLs specified in the
-	// message.
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/inputMediaWebPage
+	// Manual field of MessageMediaWebPage.
 	Manual bool
-	// If set, the webpage can be opened directly without user confirmation; otherwise, user
-	// confirmation is required, showing the exact URL that will be opened.
+	// Safe field of MessageMediaWebPage.
 	Safe bool
-	// Webpage preview
+	// Webpage field of MessageMediaWebPage.
 	Webpage WebPageClass
 }
 
@@ -1541,21 +1417,6 @@ func (m *MessageMediaWebPage) String() string {
 	}
 	type Alias MessageMediaWebPage
 	return fmt.Sprintf("MessageMediaWebPage%+v", Alias(*m))
-}
-
-// FillFrom fills MessageMediaWebPage from given interface.
-func (m *MessageMediaWebPage) FillFrom(from interface {
-	GetForceLargeMedia() (value bool)
-	GetForceSmallMedia() (value bool)
-	GetManual() (value bool)
-	GetSafe() (value bool)
-	GetWebpage() (value WebPageClass)
-}) {
-	m.ForceLargeMedia = from.GetForceLargeMedia()
-	m.ForceSmallMedia = from.GetForceSmallMedia()
-	m.Manual = from.GetManual()
-	m.Safe = from.GetSafe()
-	m.Webpage = from.GetWebpage()
 }
 
 // TypeID returns type id in TL schema.
@@ -1772,22 +1633,18 @@ func (m *MessageMediaWebPage) GetWebpage() (value WebPageClass) {
 }
 
 // MessageMediaVenue represents TL type `messageMediaVenue#2ec0533f`.
-// Venue
-//
-// See https://core.telegram.org/constructor/messageMediaVenue for reference.
 type MessageMediaVenue struct {
-	// Geolocation of venue
+	// Geo field of MessageMediaVenue.
 	Geo GeoPointClass
-	// Venue name
+	// Title field of MessageMediaVenue.
 	Title string
-	// Address
+	// Address field of MessageMediaVenue.
 	Address string
-	// Venue provider: currently only "foursquare" and "gplaces" (Google Places) need to be
-	// supported
+	// Provider field of MessageMediaVenue.
 	Provider string
-	// Venue ID in the provider's database
+	// VenueID field of MessageMediaVenue.
 	VenueID string
-	// Venue type in the provider's database
+	// VenueType field of MessageMediaVenue.
 	VenueType string
 }
 
@@ -1840,23 +1697,6 @@ func (m *MessageMediaVenue) String() string {
 	}
 	type Alias MessageMediaVenue
 	return fmt.Sprintf("MessageMediaVenue%+v", Alias(*m))
-}
-
-// FillFrom fills MessageMediaVenue from given interface.
-func (m *MessageMediaVenue) FillFrom(from interface {
-	GetGeo() (value GeoPointClass)
-	GetTitle() (value string)
-	GetAddress() (value string)
-	GetProvider() (value string)
-	GetVenueID() (value string)
-	GetVenueType() (value string)
-}) {
-	m.Geo = from.GetGeo()
-	m.Title = from.GetTitle()
-	m.Address = from.GetAddress()
-	m.Provider = from.GetProvider()
-	m.VenueID = from.GetVenueID()
-	m.VenueType = from.GetVenueType()
 }
 
 // TypeID returns type id in TL schema.
@@ -2048,11 +1888,8 @@ func (m *MessageMediaVenue) GetVenueType() (value string) {
 }
 
 // MessageMediaGame represents TL type `messageMediaGame#fdb19008`.
-// Telegram game
-//
-// See https://core.telegram.org/constructor/messageMediaGame for reference.
 type MessageMediaGame struct {
-	// Game
+	// Game field of MessageMediaGame.
 	Game Game
 }
 
@@ -2090,13 +1927,6 @@ func (m *MessageMediaGame) String() string {
 	}
 	type Alias MessageMediaGame
 	return fmt.Sprintf("MessageMediaGame%+v", Alias(*m))
-}
-
-// FillFrom fills MessageMediaGame from given interface.
-func (m *MessageMediaGame) FillFrom(from interface {
-	GetGame() (value Game)
-}) {
-	m.Game = from.GetGame()
 }
 
 // TypeID returns type id in TL schema.
@@ -2183,55 +2013,32 @@ func (m *MessageMediaGame) GetGame() (value Game) {
 }
 
 // MessageMediaInvoice represents TL type `messageMediaInvoice#f6a548d3`.
-// Invoice
-//
-// See https://core.telegram.org/constructor/messageMediaInvoice for reference.
 type MessageMediaInvoice struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessageMediaInvoice.
 	Flags bin.Fields
-	// Whether the shipping address was requested
+	// ShippingAddressRequested field of MessageMediaInvoice.
 	ShippingAddressRequested bool
-	// Whether this is an example invoice
+	// Test field of MessageMediaInvoice.
 	Test bool
-	// Product name, 1-32 characters
+	// Title field of MessageMediaInvoice.
 	Title string
-	// Product description, 1-255 characters
+	// Description field of MessageMediaInvoice.
 	Description string
-	// URL of the product photo for the invoice. Can be a photo of the goods or a marketing
-	// image for a service. People like it better when they see what they are paying for.
+	// Photo field of MessageMediaInvoice.
 	//
 	// Use SetPhoto and GetPhoto helpers.
 	Photo WebDocumentClass
-	// Message ID of receipt: if set, clients should change the text of the first
-	// keyboardButtonBuy¹ button always attached to the message² to a localized version of
-	// the word Receipt
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/keyboardButtonBuy
-	//  2) https://core.telegram.org/constructor/message
+	// ReceiptMsgID field of MessageMediaInvoice.
 	//
 	// Use SetReceiptMsgID and GetReceiptMsgID helpers.
 	ReceiptMsgID int
-	// Three-letter ISO 4217 currency¹ code, or XTR for Telegram Stars².
-	//
-	// Links:
-	//  1) https://core.telegram.org/bots/payments#supported-currencies
-	//  2) https://core.telegram.org/api/stars
+	// Currency field of MessageMediaInvoice.
 	Currency string
-	// Total price in the smallest units of the currency (integer, not float/double). For
-	// example, for a price of US$ 1.45 pass amount = 145. See the exp parameter in
-	// currencies.json¹, it shows the number of digits past the decimal point for each
-	// currency (2 for the majority of currencies).
-	//
-	// Links:
-	//  1) https://core.telegram.org/bots/payments/currencies.json
+	// TotalAmount field of MessageMediaInvoice.
 	TotalAmount int64
-	// Unique bot deep-linking parameter that can be used to generate this invoice
+	// StartParam field of MessageMediaInvoice.
 	StartParam string
-	// Deprecated
+	// ExtendedMedia field of MessageMediaInvoice.
 	//
 	// Use SetExtendedMedia and GetExtendedMedia helpers.
 	ExtendedMedia MessageExtendedMediaClass
@@ -2301,40 +2108,6 @@ func (m *MessageMediaInvoice) String() string {
 	}
 	type Alias MessageMediaInvoice
 	return fmt.Sprintf("MessageMediaInvoice%+v", Alias(*m))
-}
-
-// FillFrom fills MessageMediaInvoice from given interface.
-func (m *MessageMediaInvoice) FillFrom(from interface {
-	GetShippingAddressRequested() (value bool)
-	GetTest() (value bool)
-	GetTitle() (value string)
-	GetDescription() (value string)
-	GetPhoto() (value WebDocumentClass, ok bool)
-	GetReceiptMsgID() (value int, ok bool)
-	GetCurrency() (value string)
-	GetTotalAmount() (value int64)
-	GetStartParam() (value string)
-	GetExtendedMedia() (value MessageExtendedMediaClass, ok bool)
-}) {
-	m.ShippingAddressRequested = from.GetShippingAddressRequested()
-	m.Test = from.GetTest()
-	m.Title = from.GetTitle()
-	m.Description = from.GetDescription()
-	if val, ok := from.GetPhoto(); ok {
-		m.Photo = val
-	}
-
-	if val, ok := from.GetReceiptMsgID(); ok {
-		m.ReceiptMsgID = val
-	}
-
-	m.Currency = from.GetCurrency()
-	m.TotalAmount = from.GetTotalAmount()
-	m.StartParam = from.GetStartParam()
-	if val, ok := from.GetExtendedMedia(); ok {
-		m.ExtendedMedia = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -2688,34 +2461,18 @@ func (m *MessageMediaInvoice) GetExtendedMedia() (value MessageExtendedMediaClas
 }
 
 // MessageMediaGeoLive represents TL type `messageMediaGeoLive#b940c666`.
-// Indicates a live geolocation¹
-//
-// Links:
-//  1. https://core.telegram.org/api/live-location
-//
-// See https://core.telegram.org/constructor/messageMediaGeoLive for reference.
 type MessageMediaGeoLive struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessageMediaGeoLive.
 	Flags bin.Fields
-	// Geolocation
+	// Geo field of MessageMediaGeoLive.
 	Geo GeoPointClass
-	// For live locations¹, a direction in which the location moves, in degrees; 1-360
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/live-location
+	// Heading field of MessageMediaGeoLive.
 	//
 	// Use SetHeading and GetHeading helpers.
 	Heading int
-	// Validity period of provided geolocation
+	// Period field of MessageMediaGeoLive.
 	Period int
-	// For live locations¹, a maximum distance to another chat member for proximity alerts,
-	// in meters (0-100000).
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/live-location
+	// ProximityNotificationRadius field of MessageMediaGeoLive.
 	//
 	// Use SetProximityNotificationRadius and GetProximityNotificationRadius helpers.
 	ProximityNotificationRadius int
@@ -2767,25 +2524,6 @@ func (m *MessageMediaGeoLive) String() string {
 	}
 	type Alias MessageMediaGeoLive
 	return fmt.Sprintf("MessageMediaGeoLive%+v", Alias(*m))
-}
-
-// FillFrom fills MessageMediaGeoLive from given interface.
-func (m *MessageMediaGeoLive) FillFrom(from interface {
-	GetGeo() (value GeoPointClass)
-	GetHeading() (value int, ok bool)
-	GetPeriod() (value int)
-	GetProximityNotificationRadius() (value int, ok bool)
-}) {
-	m.Geo = from.GetGeo()
-	if val, ok := from.GetHeading(); ok {
-		m.Heading = val
-	}
-
-	m.Period = from.GetPeriod()
-	if val, ok := from.GetProximityNotificationRadius(); ok {
-		m.ProximityNotificationRadius = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -2982,13 +2720,10 @@ func (m *MessageMediaGeoLive) GetProximityNotificationRadius() (value int, ok bo
 }
 
 // MessageMediaPoll represents TL type `messageMediaPoll#4bd6e798`.
-// Poll
-//
-// See https://core.telegram.org/constructor/messageMediaPoll for reference.
 type MessageMediaPoll struct {
-	// The poll
+	// Poll field of MessageMediaPoll.
 	Poll Poll
-	// The results of the poll
+	// Results field of MessageMediaPoll.
 	Results PollResults
 }
 
@@ -3029,15 +2764,6 @@ func (m *MessageMediaPoll) String() string {
 	}
 	type Alias MessageMediaPoll
 	return fmt.Sprintf("MessageMediaPoll%+v", Alias(*m))
-}
-
-// FillFrom fills MessageMediaPoll from given interface.
-func (m *MessageMediaPoll) FillFrom(from interface {
-	GetPoll() (value Poll)
-	GetResults() (value PollResults)
-}) {
-	m.Poll = from.GetPoll()
-	m.Results = from.GetResults()
 }
 
 // TypeID returns type id in TL schema.
@@ -3144,19 +2870,10 @@ func (m *MessageMediaPoll) GetResults() (value PollResults) {
 }
 
 // MessageMediaDice represents TL type `messageMediaDice#3f7ee58b`.
-// Dice-based animated sticker¹
-//
-// Links:
-//  1. https://core.telegram.org/api/dice
-//
-// See https://core.telegram.org/constructor/messageMediaDice for reference.
 type MessageMediaDice struct {
-	// Dice value¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/dice
+	// Value field of MessageMediaDice.
 	Value int
-	// The emoji, for now ,  and  are supported
+	// Emoticon field of MessageMediaDice.
 	Emoticon string
 }
 
@@ -3197,15 +2914,6 @@ func (m *MessageMediaDice) String() string {
 	}
 	type Alias MessageMediaDice
 	return fmt.Sprintf("MessageMediaDice%+v", Alias(*m))
-}
-
-// FillFrom fills MessageMediaDice from given interface.
-func (m *MessageMediaDice) FillFrom(from interface {
-	GetValue() (value int)
-	GetEmoticon() (value string)
-}) {
-	m.Value = from.GetValue()
-	m.Emoticon = from.GetEmoticon()
 }
 
 // TypeID returns type id in TL schema.
@@ -3312,31 +3020,16 @@ func (m *MessageMediaDice) GetEmoticon() (value string) {
 }
 
 // MessageMediaStory represents TL type `messageMediaStory#68cb6283`.
-// Represents a forwarded story¹ or a story mention.
-//
-// Links:
-//  1. https://core.telegram.org/api/stories
-//
-// See https://core.telegram.org/constructor/messageMediaStory for reference.
 type MessageMediaStory struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessageMediaStory.
 	Flags bin.Fields
-	// If set, indicates that this someone has mentioned us in this story (i.e. by tagging us
-	// in the description) or vice versa, we have mentioned the other peer (if the message is
-	// outgoing).
+	// ViaMention field of MessageMediaStory.
 	ViaMention bool
-	// Peer that posted the story.
+	// Peer field of MessageMediaStory.
 	Peer PeerClass
-	// Story ID
+	// ID field of MessageMediaStory.
 	ID int
-	// The story itself, if absent fetch it using stories.getStoriesByID¹ and the peer/id
-	// parameters specified above.
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/stories.getStoriesByID
+	// Story field of MessageMediaStory.
 	//
 	// Use SetStory and GetStory helpers.
 	Story StoryItemClass
@@ -3388,22 +3081,6 @@ func (m *MessageMediaStory) String() string {
 	}
 	type Alias MessageMediaStory
 	return fmt.Sprintf("MessageMediaStory%+v", Alias(*m))
-}
-
-// FillFrom fills MessageMediaStory from given interface.
-func (m *MessageMediaStory) FillFrom(from interface {
-	GetViaMention() (value bool)
-	GetPeer() (value PeerClass)
-	GetID() (value int)
-	GetStory() (value StoryItemClass, ok bool)
-}) {
-	m.ViaMention = from.GetViaMention()
-	m.Peer = from.GetPeer()
-	m.ID = from.GetID()
-	if val, ok := from.GetStory(); ok {
-		m.Story = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -3597,60 +3274,34 @@ func (m *MessageMediaStory) GetStory() (value StoryItemClass, ok bool) {
 }
 
 // MessageMediaGiveaway represents TL type `messageMediaGiveaway#aa073beb`.
-// Contains info about a giveaway, see here »¹ for more info.
-//
-// Links:
-//  1. https://core.telegram.org/api/giveaways
-//
-// See https://core.telegram.org/constructor/messageMediaGiveaway for reference.
 type MessageMediaGiveaway struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessageMediaGiveaway.
 	Flags bin.Fields
-	// If set, only new subscribers starting from the giveaway creation date will be able to
-	// participate to the giveaway.
+	// OnlyNewSubscribers field of MessageMediaGiveaway.
 	OnlyNewSubscribers bool
-	// If set, giveaway winners are public and will be listed in a
-	// messageMediaGiveawayResults¹ message that will be automatically sent to the channel
-	// once the giveaway ends.
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/messageMediaGiveawayResults
+	// WinnersAreVisible field of MessageMediaGiveaway.
 	WinnersAreVisible bool
-	// The channels that the user must join to participate in the giveaway.
+	// Channels field of MessageMediaGiveaway.
 	Channels []int64
-	// If set, only users residing in these countries can participate in the giveaway,
-	// (specified as a list of two-letter ISO 3166-1 alpha-2 country codes); otherwise there
-	// are no country-based limitations.
+	// CountriesISO2 field of MessageMediaGiveaway.
 	//
 	// Use SetCountriesISO2 and GetCountriesISO2 helpers.
 	CountriesISO2 []string
-	// Can contain a textual description of additional giveaway prizes.
+	// PrizeDescription field of MessageMediaGiveaway.
 	//
 	// Use SetPrizeDescription and GetPrizeDescription helpers.
 	PrizeDescription string
-	// Number of Telegram Premium¹ subscriptions given away.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/premium
+	// Quantity field of MessageMediaGiveaway.
 	Quantity int
-	// Duration in months of each Telegram Premium¹ subscription in the giveaway.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/premium
+	// Months field of MessageMediaGiveaway.
 	//
 	// Use SetMonths and GetMonths helpers.
 	Months int
-	// For Telegram Star giveaways¹, the total number of Telegram Stars being given away.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/stars#star-giveaways
+	// Stars field of MessageMediaGiveaway.
 	//
 	// Use SetStars and GetStars helpers.
 	Stars int64
-	// The end date of the giveaway.
+	// UntilDate field of MessageMediaGiveaway.
 	UntilDate int
 }
 
@@ -3715,41 +3366,6 @@ func (m *MessageMediaGiveaway) String() string {
 	}
 	type Alias MessageMediaGiveaway
 	return fmt.Sprintf("MessageMediaGiveaway%+v", Alias(*m))
-}
-
-// FillFrom fills MessageMediaGiveaway from given interface.
-func (m *MessageMediaGiveaway) FillFrom(from interface {
-	GetOnlyNewSubscribers() (value bool)
-	GetWinnersAreVisible() (value bool)
-	GetChannels() (value []int64)
-	GetCountriesISO2() (value []string, ok bool)
-	GetPrizeDescription() (value string, ok bool)
-	GetQuantity() (value int)
-	GetMonths() (value int, ok bool)
-	GetStars() (value int64, ok bool)
-	GetUntilDate() (value int)
-}) {
-	m.OnlyNewSubscribers = from.GetOnlyNewSubscribers()
-	m.WinnersAreVisible = from.GetWinnersAreVisible()
-	m.Channels = from.GetChannels()
-	if val, ok := from.GetCountriesISO2(); ok {
-		m.CountriesISO2 = val
-	}
-
-	if val, ok := from.GetPrizeDescription(); ok {
-		m.PrizeDescription = val
-	}
-
-	m.Quantity = from.GetQuantity()
-	if val, ok := from.GetMonths(); ok {
-		m.Months = val
-	}
-
-	if val, ok := from.GetStars(); ok {
-		m.Stars = val
-	}
-
-	m.UntilDate = from.GetUntilDate()
 }
 
 // TypeID returns type id in TL schema.
@@ -4115,62 +3731,40 @@ func (m *MessageMediaGiveaway) GetUntilDate() (value int) {
 }
 
 // MessageMediaGiveawayResults represents TL type `messageMediaGiveawayResults#ceaa3ea1`.
-// A giveaway¹ with public winners has finished, this constructor contains info about
-// the winners.
-//
-// Links:
-//  1. https://core.telegram.org/api/giveaways
-//
-// See https://core.telegram.org/constructor/messageMediaGiveawayResults for reference.
 type MessageMediaGiveawayResults struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessageMediaGiveawayResults.
 	Flags bin.Fields
-	// If set, only new subscribers starting from the giveaway creation date participated in
-	// the giveaway.
+	// OnlyNewSubscribers field of MessageMediaGiveawayResults.
 	OnlyNewSubscribers bool
-	// If set, the giveaway was canceled and was fully refunded.
+	// Refunded field of MessageMediaGiveawayResults.
 	Refunded bool
-	// ID of the channel/supergroup that was automatically boosted¹ by the winners of the
-	// giveaway for duration of the Premium subscription.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/boost
+	// ChannelID field of MessageMediaGiveawayResults.
 	ChannelID int64
-	// Number of other channels that participated in the giveaway.
+	// AdditionalPeersCount field of MessageMediaGiveawayResults.
 	//
 	// Use SetAdditionalPeersCount and GetAdditionalPeersCount helpers.
 	AdditionalPeersCount int
-	// Identifier of the message with the giveaway in channel_id.
+	// LaunchMsgID field of MessageMediaGiveawayResults.
 	LaunchMsgID int
-	// Total number of winners in the giveaway.
+	// WinnersCount field of MessageMediaGiveawayResults.
 	WinnersCount int
-	// Number of not-yet-claimed prizes.
+	// UnclaimedCount field of MessageMediaGiveawayResults.
 	UnclaimedCount int
-	// Up to 100 user identifiers of the winners of the giveaway.
+	// Winners field of MessageMediaGiveawayResults.
 	Winners []int64
-	// Duration in months of each Telegram Premium¹ subscription in the giveaway.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/premium
+	// Months field of MessageMediaGiveawayResults.
 	//
 	// Use SetMonths and GetMonths helpers.
 	Months int
-	// For Telegram Star giveaways¹, the total number of Telegram Stars being given away.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/stars#star-giveaways
+	// Stars field of MessageMediaGiveawayResults.
 	//
 	// Use SetStars and GetStars helpers.
 	Stars int64
-	// Can contain a textual description of additional giveaway prizes.
+	// PrizeDescription field of MessageMediaGiveawayResults.
 	//
 	// Use SetPrizeDescription and GetPrizeDescription helpers.
 	PrizeDescription string
-	// Point in time (Unix timestamp) when the winners were selected. May be bigger than
-	// winners selection date specified in initial parameters of the giveaway.
+	// UntilDate field of MessageMediaGiveawayResults.
 	UntilDate int
 }
 
@@ -4244,47 +3838,6 @@ func (m *MessageMediaGiveawayResults) String() string {
 	}
 	type Alias MessageMediaGiveawayResults
 	return fmt.Sprintf("MessageMediaGiveawayResults%+v", Alias(*m))
-}
-
-// FillFrom fills MessageMediaGiveawayResults from given interface.
-func (m *MessageMediaGiveawayResults) FillFrom(from interface {
-	GetOnlyNewSubscribers() (value bool)
-	GetRefunded() (value bool)
-	GetChannelID() (value int64)
-	GetAdditionalPeersCount() (value int, ok bool)
-	GetLaunchMsgID() (value int)
-	GetWinnersCount() (value int)
-	GetUnclaimedCount() (value int)
-	GetWinners() (value []int64)
-	GetMonths() (value int, ok bool)
-	GetStars() (value int64, ok bool)
-	GetPrizeDescription() (value string, ok bool)
-	GetUntilDate() (value int)
-}) {
-	m.OnlyNewSubscribers = from.GetOnlyNewSubscribers()
-	m.Refunded = from.GetRefunded()
-	m.ChannelID = from.GetChannelID()
-	if val, ok := from.GetAdditionalPeersCount(); ok {
-		m.AdditionalPeersCount = val
-	}
-
-	m.LaunchMsgID = from.GetLaunchMsgID()
-	m.WinnersCount = from.GetWinnersCount()
-	m.UnclaimedCount = from.GetUnclaimedCount()
-	m.Winners = from.GetWinners()
-	if val, ok := from.GetMonths(); ok {
-		m.Months = val
-	}
-
-	if val, ok := from.GetStars(); ok {
-		m.Stars = val
-	}
-
-	if val, ok := from.GetPrizeDescription(); ok {
-		m.PrizeDescription = val
-	}
-
-	m.UntilDate = from.GetUntilDate()
 }
 
 // TypeID returns type id in TL schema.
@@ -4697,23 +4250,10 @@ func (m *MessageMediaGiveawayResults) GetUntilDate() (value int) {
 }
 
 // MessageMediaPaidMedia represents TL type `messageMediaPaidMedia#a8852491`.
-// Paid media, see here »¹ for more info.
-//
-// Links:
-//  1. https://core.telegram.org/api/paid-media
-//
-// See https://core.telegram.org/constructor/messageMediaPaidMedia for reference.
 type MessageMediaPaidMedia struct {
-	// The price of the media in Telegram Stars¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/stars
+	// StarsAmount field of MessageMediaPaidMedia.
 	StarsAmount int64
-	// Either the paid-for media, or super low resolution media previews if the media wasn't
-	// purchased yet, see here »¹ for more info.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/paid-media#viewing-paid-media
+	// ExtendedMedia field of MessageMediaPaidMedia.
 	ExtendedMedia []MessageExtendedMediaClass
 }
 
@@ -4754,15 +4294,6 @@ func (m *MessageMediaPaidMedia) String() string {
 	}
 	type Alias MessageMediaPaidMedia
 	return fmt.Sprintf("MessageMediaPaidMedia%+v", Alias(*m))
-}
-
-// FillFrom fills MessageMediaPaidMedia from given interface.
-func (m *MessageMediaPaidMedia) FillFrom(from interface {
-	GetStarsAmount() (value int64)
-	GetExtendedMedia() (value []MessageExtendedMediaClass)
-}) {
-	m.StarsAmount = from.GetStarsAmount()
-	m.ExtendedMedia = from.GetExtendedMedia()
 }
 
 // TypeID returns type id in TL schema.
@@ -4886,17 +4417,211 @@ func (m *MessageMediaPaidMedia) GetExtendedMedia() (value []MessageExtendedMedia
 	return m.ExtendedMedia
 }
 
-// MapExtendedMedia returns field ExtendedMedia wrapped in MessageExtendedMediaClassArray helper.
-func (m *MessageMediaPaidMedia) MapExtendedMedia() (value MessageExtendedMediaClassArray) {
-	return MessageExtendedMediaClassArray(m.ExtendedMedia)
+// MessageMediaToDo represents TL type `messageMediaToDo#8a53b014`.
+type MessageMediaToDo struct {
+	// Flags field of MessageMediaToDo.
+	Flags bin.Fields
+	// Todo field of MessageMediaToDo.
+	Todo TodoList
+	// Completions field of MessageMediaToDo.
+	//
+	// Use SetCompletions and GetCompletions helpers.
+	Completions []TodoCompletion
+}
+
+// MessageMediaToDoTypeID is TL type id of MessageMediaToDo.
+const MessageMediaToDoTypeID = 0x8a53b014
+
+// construct implements constructor of MessageMediaClass.
+func (m MessageMediaToDo) construct() MessageMediaClass { return &m }
+
+// Ensuring interfaces in compile-time for MessageMediaToDo.
+var (
+	_ bin.Encoder     = &MessageMediaToDo{}
+	_ bin.Decoder     = &MessageMediaToDo{}
+	_ bin.BareEncoder = &MessageMediaToDo{}
+	_ bin.BareDecoder = &MessageMediaToDo{}
+
+	_ MessageMediaClass = &MessageMediaToDo{}
+)
+
+func (m *MessageMediaToDo) Zero() bool {
+	if m == nil {
+		return true
+	}
+	if !(m.Flags.Zero()) {
+		return false
+	}
+	if !(m.Todo.Zero()) {
+		return false
+	}
+	if !(m.Completions == nil) {
+		return false
+	}
+
+	return true
+}
+
+// String implements fmt.Stringer.
+func (m *MessageMediaToDo) String() string {
+	if m == nil {
+		return "MessageMediaToDo(nil)"
+	}
+	type Alias MessageMediaToDo
+	return fmt.Sprintf("MessageMediaToDo%+v", Alias(*m))
+}
+
+// TypeID returns type id in TL schema.
+//
+// See https://core.telegram.org/mtproto/TL-tl#remarks.
+func (*MessageMediaToDo) TypeID() uint32 {
+	return MessageMediaToDoTypeID
+}
+
+// TypeName returns name of type in TL schema.
+func (*MessageMediaToDo) TypeName() string {
+	return "messageMediaToDo"
+}
+
+// TypeInfo returns info about TL type.
+func (m *MessageMediaToDo) TypeInfo() tdp.Type {
+	typ := tdp.Type{
+		Name: "messageMediaToDo",
+		ID:   MessageMediaToDoTypeID,
+	}
+	if m == nil {
+		typ.Null = true
+		return typ
+	}
+	typ.Fields = []tdp.Field{
+		{
+			Name:       "Todo",
+			SchemaName: "todo",
+		},
+		{
+			Name:       "Completions",
+			SchemaName: "completions",
+			Null:       !m.Flags.Has(0),
+		},
+	}
+	return typ
+}
+
+// SetFlags sets flags for non-zero fields.
+func (m *MessageMediaToDo) SetFlags() {
+	if !(m.Completions == nil) {
+		m.Flags.Set(0)
+	}
+}
+
+// Encode implements bin.Encoder.
+func (m *MessageMediaToDo) Encode(b *bin.Buffer) error {
+	if m == nil {
+		return fmt.Errorf("can't encode messageMediaToDo#8a53b014 as nil")
+	}
+	b.PutID(MessageMediaToDoTypeID)
+	return m.EncodeBare(b)
+}
+
+// EncodeBare implements bin.BareEncoder.
+func (m *MessageMediaToDo) EncodeBare(b *bin.Buffer) error {
+	if m == nil {
+		return fmt.Errorf("can't encode messageMediaToDo#8a53b014 as nil")
+	}
+	m.SetFlags()
+	if err := m.Flags.Encode(b); err != nil {
+		return fmt.Errorf("unable to encode messageMediaToDo#8a53b014: field flags: %w", err)
+	}
+	if err := m.Todo.Encode(b); err != nil {
+		return fmt.Errorf("unable to encode messageMediaToDo#8a53b014: field todo: %w", err)
+	}
+	if m.Flags.Has(0) {
+		b.PutVectorHeader(len(m.Completions))
+		for idx, v := range m.Completions {
+			if err := v.Encode(b); err != nil {
+				return fmt.Errorf("unable to encode messageMediaToDo#8a53b014: field completions element with index %d: %w", idx, err)
+			}
+		}
+	}
+	return nil
+}
+
+// Decode implements bin.Decoder.
+func (m *MessageMediaToDo) Decode(b *bin.Buffer) error {
+	if m == nil {
+		return fmt.Errorf("can't decode messageMediaToDo#8a53b014 to nil")
+	}
+	if err := b.ConsumeID(MessageMediaToDoTypeID); err != nil {
+		return fmt.Errorf("unable to decode messageMediaToDo#8a53b014: %w", err)
+	}
+	return m.DecodeBare(b)
+}
+
+// DecodeBare implements bin.BareDecoder.
+func (m *MessageMediaToDo) DecodeBare(b *bin.Buffer) error {
+	if m == nil {
+		return fmt.Errorf("can't decode messageMediaToDo#8a53b014 to nil")
+	}
+	{
+		if err := m.Flags.Decode(b); err != nil {
+			return fmt.Errorf("unable to decode messageMediaToDo#8a53b014: field flags: %w", err)
+		}
+	}
+	{
+		if err := m.Todo.Decode(b); err != nil {
+			return fmt.Errorf("unable to decode messageMediaToDo#8a53b014: field todo: %w", err)
+		}
+	}
+	if m.Flags.Has(0) {
+		headerLen, err := b.VectorHeader()
+		if err != nil {
+			return fmt.Errorf("unable to decode messageMediaToDo#8a53b014: field completions: %w", err)
+		}
+
+		if headerLen > 0 {
+			m.Completions = make([]TodoCompletion, 0, headerLen%bin.PreallocateLimit)
+		}
+		for idx := 0; idx < headerLen; idx++ {
+			var value TodoCompletion
+			if err := value.Decode(b); err != nil {
+				return fmt.Errorf("unable to decode messageMediaToDo#8a53b014: field completions: %w", err)
+			}
+			m.Completions = append(m.Completions, value)
+		}
+	}
+	return nil
+}
+
+// GetTodo returns value of Todo field.
+func (m *MessageMediaToDo) GetTodo() (value TodoList) {
+	if m == nil {
+		return
+	}
+	return m.Todo
+}
+
+// SetCompletions sets value of Completions conditional field.
+func (m *MessageMediaToDo) SetCompletions(value []TodoCompletion) {
+	m.Flags.Set(0)
+	m.Completions = value
+}
+
+// GetCompletions returns value of Completions conditional field and
+// boolean which is true if field was set.
+func (m *MessageMediaToDo) GetCompletions() (value []TodoCompletion, ok bool) {
+	if m == nil {
+		return
+	}
+	if !m.Flags.Has(0) {
+		return value, false
+	}
+	return m.Completions, true
 }
 
 // MessageMediaClassName is schema name of MessageMediaClass.
 const MessageMediaClassName = "MessageMedia"
 
 // MessageMediaClass represents MessageMedia generic type.
-//
-// See https://core.telegram.org/type/MessageMedia for reference.
 //
 // Constructors:
 //   - [MessageMediaEmpty]
@@ -4916,6 +4641,7 @@ const MessageMediaClassName = "MessageMedia"
 //   - [MessageMediaGiveaway]
 //   - [MessageMediaGiveawayResults]
 //   - [MessageMediaPaidMedia]
+//   - [MessageMediaToDo]
 //
 // Example:
 //
@@ -4941,6 +4667,7 @@ const MessageMediaClassName = "MessageMedia"
 //	case *tg.MessageMediaGiveaway: // messageMediaGiveaway#aa073beb
 //	case *tg.MessageMediaGiveawayResults: // messageMediaGiveawayResults#ceaa3ea1
 //	case *tg.MessageMediaPaidMedia: // messageMediaPaidMedia#a8852491
+//	case *tg.MessageMediaToDo: // messageMediaToDo#8a53b014
 //	default: panic(v)
 //	}
 type MessageMediaClass interface {
@@ -5084,6 +4811,13 @@ func DecodeMessageMedia(buf *bin.Buffer) (MessageMediaClass, error) {
 	case MessageMediaPaidMediaTypeID:
 		// Decoding messageMediaPaidMedia#a8852491.
 		v := MessageMediaPaidMedia{}
+		if err := v.Decode(buf); err != nil {
+			return nil, fmt.Errorf("unable to decode MessageMediaClass: %w", err)
+		}
+		return &v, nil
+	case MessageMediaToDoTypeID:
+		// Decoding messageMediaToDo#8a53b014.
+		v := MessageMediaToDo{}
 		if err := v.Decode(buf); err != nil {
 			return nil, fmt.Errorf("unable to decode MessageMediaClass: %w", err)
 		}

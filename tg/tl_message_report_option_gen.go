@@ -32,17 +32,10 @@ var (
 )
 
 // MessageReportOption represents TL type `messageReportOption#7903e3d9`.
-// Report menu option
-//
-// See https://core.telegram.org/constructor/messageReportOption for reference.
 type MessageReportOption struct {
-	// Option title
+	// Text field of MessageReportOption.
 	Text string
-	// Option identifier: if the user selects this option, re-invoke messages.report¹,
-	// passing this option to option
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/messages.report
+	// Option field of MessageReportOption.
 	Option []byte
 }
 
@@ -78,15 +71,6 @@ func (m *MessageReportOption) String() string {
 	}
 	type Alias MessageReportOption
 	return fmt.Sprintf("MessageReportOption%+v", Alias(*m))
-}
-
-// FillFrom fills MessageReportOption from given interface.
-func (m *MessageReportOption) FillFrom(from interface {
-	GetText() (value string)
-	GetOption() (value []byte)
-}) {
-	m.Text = from.GetText()
-	m.Option = from.GetOption()
 }
 
 // TypeID returns type id in TL schema.

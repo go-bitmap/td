@@ -32,11 +32,8 @@ var (
 )
 
 // AccountTakeout represents TL type `account.takeout#4dba4501`.
-// Takeout info
-//
-// See https://core.telegram.org/constructor/account.takeout for reference.
 type AccountTakeout struct {
-	// Takeout ID
+	// ID field of AccountTakeout.
 	ID int64
 }
 
@@ -69,13 +66,6 @@ func (t *AccountTakeout) String() string {
 	}
 	type Alias AccountTakeout
 	return fmt.Sprintf("AccountTakeout%+v", Alias(*t))
-}
-
-// FillFrom fills AccountTakeout from given interface.
-func (t *AccountTakeout) FillFrom(from interface {
-	GetID() (value int64)
-}) {
-	t.ID = from.GetID()
 }
 
 // TypeID returns type id in TL schema.

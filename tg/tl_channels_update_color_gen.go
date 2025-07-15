@@ -32,38 +32,18 @@ var (
 )
 
 // ChannelsUpdateColorRequest represents TL type `channels.updateColor#d8aa3671`.
-// Update the accent color and background custom emoji »¹ of a channel.
-//
-// Links:
-//  1. https://core.telegram.org/api/colors
-//
-// See https://core.telegram.org/method/channels.updateColor for reference.
 type ChannelsUpdateColorRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of ChannelsUpdateColorRequest.
 	Flags bin.Fields
-	// Whether to change the accent color emoji pattern of the profile page; otherwise, the
-	// accent color and emoji pattern of messages will be changed. Channels can change both
-	// message and profile palettes; supergroups can only change the profile palette, of
-	// course after reaching the appropriate boost level¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/colors
+	// ForProfile field of ChannelsUpdateColorRequest.
 	ForProfile bool
-	// Channel whose accent color should be changed.
+	// Channel field of ChannelsUpdateColorRequest.
 	Channel InputChannelClass
-	// ID of the accent color palette »¹ to use (not RGB24, see here »² for more info);
-	// if not set, the default palette is used.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/colors
-	//  2) https://core.telegram.org/api/colors
+	// Color field of ChannelsUpdateColorRequest.
 	//
 	// Use SetColor and GetColor helpers.
 	Color int
-	// Custom emoji ID used in the accent color pattern.
+	// BackgroundEmojiID field of ChannelsUpdateColorRequest.
 	//
 	// Use SetBackgroundEmojiID and GetBackgroundEmojiID helpers.
 	BackgroundEmojiID int64
@@ -110,25 +90,6 @@ func (u *ChannelsUpdateColorRequest) String() string {
 	}
 	type Alias ChannelsUpdateColorRequest
 	return fmt.Sprintf("ChannelsUpdateColorRequest%+v", Alias(*u))
-}
-
-// FillFrom fills ChannelsUpdateColorRequest from given interface.
-func (u *ChannelsUpdateColorRequest) FillFrom(from interface {
-	GetForProfile() (value bool)
-	GetChannel() (value InputChannelClass)
-	GetColor() (value int, ok bool)
-	GetBackgroundEmojiID() (value int64, ok bool)
-}) {
-	u.ForProfile = from.GetForProfile()
-	u.Channel = from.GetChannel()
-	if val, ok := from.GetColor(); ok {
-		u.Color = val
-	}
-
-	if val, ok := from.GetBackgroundEmojiID(); ok {
-		u.BackgroundEmojiID = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -332,23 +293,7 @@ func (u *ChannelsUpdateColorRequest) GetBackgroundEmojiID() (value int64, ok boo
 	return u.BackgroundEmojiID, true
 }
 
-// GetChannelAsNotEmpty returns mapped value of Channel field.
-func (u *ChannelsUpdateColorRequest) GetChannelAsNotEmpty() (NotEmptyInputChannel, bool) {
-	return u.Channel.AsNotEmpty()
-}
-
 // ChannelsUpdateColor invokes method channels.updateColor#d8aa3671 returning error if any.
-// Update the accent color and background custom emoji »¹ of a channel.
-//
-// Links:
-//  1. https://core.telegram.org/api/colors
-//
-// Possible errors:
-//
-//	400 BOOSTS_REQUIRED: The specified channel must first be boosted by its users in order to perform this action.
-//	400 CHANNEL_INVALID: The provided channel is invalid.
-//
-// See https://core.telegram.org/method/channels.updateColor for reference.
 func (c *Client) ChannelsUpdateColor(ctx context.Context, request *ChannelsUpdateColorRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

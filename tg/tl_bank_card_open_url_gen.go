@@ -32,13 +32,10 @@ var (
 )
 
 // BankCardOpenURL represents TL type `bankCardOpenUrl#f568028a`.
-// Credit card info URL provided by the bank
-//
-// See https://core.telegram.org/constructor/bankCardOpenUrl for reference.
 type BankCardOpenURL struct {
-	// Info URL
+	// URL field of BankCardOpenURL.
 	URL string
-	// Bank name
+	// Name field of BankCardOpenURL.
 	Name string
 }
 
@@ -74,15 +71,6 @@ func (b *BankCardOpenURL) String() string {
 	}
 	type Alias BankCardOpenURL
 	return fmt.Sprintf("BankCardOpenURL%+v", Alias(*b))
-}
-
-// FillFrom fills BankCardOpenURL from given interface.
-func (b *BankCardOpenURL) FillFrom(from interface {
-	GetURL() (value string)
-	GetName() (value string)
-}) {
-	b.URL = from.GetURL()
-	b.Name = from.GetName()
 }
 
 // TypeID returns type id in TL schema.

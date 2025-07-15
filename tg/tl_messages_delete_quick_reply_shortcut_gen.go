@@ -32,22 +32,8 @@ var (
 )
 
 // MessagesDeleteQuickReplyShortcutRequest represents TL type `messages.deleteQuickReplyShortcut#3cc04740`.
-// Completely delete a quick reply shortcut¹.
-// This will also emit an updateDeleteQuickReply² update to other logged-in sessions
-// (and no updateDeleteQuickReplyMessages³ updates, even if all the messages in the
-// shortcuts are also deleted by this method).
-//
-// Links:
-//  1. https://core.telegram.org/api/business#quick-reply-shortcuts
-//  2. https://core.telegram.org/constructor/updateDeleteQuickReply
-//  3. https://core.telegram.org/constructor/updateDeleteQuickReplyMessages
-//
-// See https://core.telegram.org/method/messages.deleteQuickReplyShortcut for reference.
 type MessagesDeleteQuickReplyShortcutRequest struct {
-	// Shortcut ID¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/business#quick-reply-shortcuts
+	// ShortcutID field of MessagesDeleteQuickReplyShortcutRequest.
 	ShortcutID int
 }
 
@@ -80,13 +66,6 @@ func (d *MessagesDeleteQuickReplyShortcutRequest) String() string {
 	}
 	type Alias MessagesDeleteQuickReplyShortcutRequest
 	return fmt.Sprintf("MessagesDeleteQuickReplyShortcutRequest%+v", Alias(*d))
-}
-
-// FillFrom fills MessagesDeleteQuickReplyShortcutRequest from given interface.
-func (d *MessagesDeleteQuickReplyShortcutRequest) FillFrom(from interface {
-	GetShortcutID() (value int)
-}) {
-	d.ShortcutID = from.GetShortcutID()
 }
 
 // TypeID returns type id in TL schema.
@@ -173,21 +152,6 @@ func (d *MessagesDeleteQuickReplyShortcutRequest) GetShortcutID() (value int) {
 }
 
 // MessagesDeleteQuickReplyShortcut invokes method messages.deleteQuickReplyShortcut#3cc04740 returning error if any.
-// Completely delete a quick reply shortcut¹.
-// This will also emit an updateDeleteQuickReply² update to other logged-in sessions
-// (and no updateDeleteQuickReplyMessages³ updates, even if all the messages in the
-// shortcuts are also deleted by this method).
-//
-// Links:
-//  1. https://core.telegram.org/api/business#quick-reply-shortcuts
-//  2. https://core.telegram.org/constructor/updateDeleteQuickReply
-//  3. https://core.telegram.org/constructor/updateDeleteQuickReplyMessages
-//
-// Possible errors:
-//
-//	400 SHORTCUT_INVALID: The specified shortcut is invalid.
-//
-// See https://core.telegram.org/method/messages.deleteQuickReplyShortcut for reference.
 func (c *Client) MessagesDeleteQuickReplyShortcut(ctx context.Context, shortcutid int) (bool, error) {
 	var result BoolBox
 

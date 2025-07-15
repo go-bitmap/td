@@ -32,13 +32,10 @@ var (
 )
 
 // ChannelsTogglePreHistoryHiddenRequest represents TL type `channels.togglePreHistoryHidden#eabbb94c`.
-// Hide/unhide message history for new channel/supergroup users
-//
-// See https://core.telegram.org/method/channels.togglePreHistoryHidden for reference.
 type ChannelsTogglePreHistoryHiddenRequest struct {
-	// Channel/supergroup
+	// Channel field of ChannelsTogglePreHistoryHiddenRequest.
 	Channel InputChannelClass
-	// Hide/unhide
+	// Enabled field of ChannelsTogglePreHistoryHiddenRequest.
 	Enabled bool
 }
 
@@ -74,15 +71,6 @@ func (t *ChannelsTogglePreHistoryHiddenRequest) String() string {
 	}
 	type Alias ChannelsTogglePreHistoryHiddenRequest
 	return fmt.Sprintf("ChannelsTogglePreHistoryHiddenRequest%+v", Alias(*t))
-}
-
-// FillFrom fills ChannelsTogglePreHistoryHiddenRequest from given interface.
-func (t *ChannelsTogglePreHistoryHiddenRequest) FillFrom(from interface {
-	GetChannel() (value InputChannelClass)
-	GetEnabled() (value bool)
-}) {
-	t.Channel = from.GetChannel()
-	t.Enabled = from.GetEnabled()
 }
 
 // TypeID returns type id in TL schema.
@@ -193,25 +181,7 @@ func (t *ChannelsTogglePreHistoryHiddenRequest) GetEnabled() (value bool) {
 	return t.Enabled
 }
 
-// GetChannelAsNotEmpty returns mapped value of Channel field.
-func (t *ChannelsTogglePreHistoryHiddenRequest) GetChannelAsNotEmpty() (NotEmptyInputChannel, bool) {
-	return t.Channel.AsNotEmpty()
-}
-
 // ChannelsTogglePreHistoryHidden invokes method channels.togglePreHistoryHidden#eabbb94c returning error if any.
-// Hide/unhide message history for new channel/supergroup users
-//
-// Possible errors:
-//
-//	400 CHANNEL_INVALID: The provided channel is invalid.
-//	400 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
-//	400 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
-//	400 CHAT_ID_INVALID: The provided chat id is invalid.
-//	400 CHAT_LINK_EXISTS: The chat is public, you can't hide the history to new users.
-//	400 CHAT_NOT_MODIFIED: No changes were made to chat information because the new information you passed is identical to the current information.
-//	400 FORUM_ENABLED: You can't execute the specified action because the group is a forum, disable forum functionality to continue.
-//
-// See https://core.telegram.org/method/channels.togglePreHistoryHidden for reference.
 func (c *Client) ChannelsTogglePreHistoryHidden(ctx context.Context, request *ChannelsTogglePreHistoryHiddenRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

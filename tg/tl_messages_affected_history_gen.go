@@ -32,17 +32,12 @@ var (
 )
 
 // MessagesAffectedHistory represents TL type `messages.affectedHistory#b45c69d1`.
-// Affected part of communication history with the user or in a chat.
-//
-// See https://core.telegram.org/constructor/messages.affectedHistory for reference.
 type MessagesAffectedHistory struct {
-	// Number of events occurred in a text box
+	// Pts field of MessagesAffectedHistory.
 	Pts int
-	// Number of affected events
+	// PtsCount field of MessagesAffectedHistory.
 	PtsCount int
-	// If a parameter contains positive value, it is necessary to repeat the method call
-	// using the given value; during the proceeding of all the history the value itself shall
-	// gradually decrease
+	// Offset field of MessagesAffectedHistory.
 	Offset int
 }
 
@@ -81,17 +76,6 @@ func (a *MessagesAffectedHistory) String() string {
 	}
 	type Alias MessagesAffectedHistory
 	return fmt.Sprintf("MessagesAffectedHistory%+v", Alias(*a))
-}
-
-// FillFrom fills MessagesAffectedHistory from given interface.
-func (a *MessagesAffectedHistory) FillFrom(from interface {
-	GetPts() (value int)
-	GetPtsCount() (value int)
-	GetOffset() (value int)
-}) {
-	a.Pts = from.GetPts()
-	a.PtsCount = from.GetPtsCount()
-	a.Offset = from.GetOffset()
 }
 
 // TypeID returns type id in TL schema.

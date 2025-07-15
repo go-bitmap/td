@@ -32,20 +32,14 @@ var (
 )
 
 // InputWebDocument represents TL type `inputWebDocument#9bed434d`.
-// The document
-//
-// See https://core.telegram.org/constructor/inputWebDocument for reference.
 type InputWebDocument struct {
-	// Remote document URL to be downloaded using the appropriate method¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/files
+	// URL field of InputWebDocument.
 	URL string
-	// Remote file size
+	// Size field of InputWebDocument.
 	Size int
-	// Mime type
+	// MimeType field of InputWebDocument.
 	MimeType string
-	// Attributes for media types
+	// Attributes field of InputWebDocument.
 	Attributes []DocumentAttributeClass
 }
 
@@ -87,19 +81,6 @@ func (i *InputWebDocument) String() string {
 	}
 	type Alias InputWebDocument
 	return fmt.Sprintf("InputWebDocument%+v", Alias(*i))
-}
-
-// FillFrom fills InputWebDocument from given interface.
-func (i *InputWebDocument) FillFrom(from interface {
-	GetURL() (value string)
-	GetSize() (value int)
-	GetMimeType() (value string)
-	GetAttributes() (value []DocumentAttributeClass)
-}) {
-	i.URL = from.GetURL()
-	i.Size = from.GetSize()
-	i.MimeType = from.GetMimeType()
-	i.Attributes = from.GetAttributes()
 }
 
 // TypeID returns type id in TL schema.
@@ -261,9 +242,4 @@ func (i *InputWebDocument) GetAttributes() (value []DocumentAttributeClass) {
 		return
 	}
 	return i.Attributes
-}
-
-// MapAttributes returns field Attributes wrapped in DocumentAttributeClassArray helper.
-func (i *InputWebDocument) MapAttributes() (value DocumentAttributeClassArray) {
-	return DocumentAttributeClassArray(i.Attributes)
 }

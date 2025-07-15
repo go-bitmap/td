@@ -32,11 +32,8 @@ var (
 )
 
 // PhoneExportedGroupCallInvite represents TL type `phone.exportedGroupCallInvite#204bd158`.
-// An invite to a group call or livestream
-//
-// See https://core.telegram.org/constructor/phone.exportedGroupCallInvite for reference.
 type PhoneExportedGroupCallInvite struct {
-	// Invite link
+	// Link field of PhoneExportedGroupCallInvite.
 	Link string
 }
 
@@ -69,13 +66,6 @@ func (e *PhoneExportedGroupCallInvite) String() string {
 	}
 	type Alias PhoneExportedGroupCallInvite
 	return fmt.Sprintf("PhoneExportedGroupCallInvite%+v", Alias(*e))
-}
-
-// FillFrom fills PhoneExportedGroupCallInvite from given interface.
-func (e *PhoneExportedGroupCallInvite) FillFrom(from interface {
-	GetLink() (value string)
-}) {
-	e.Link = from.GetLink()
 }
 
 // TypeID returns type id in TL schema.

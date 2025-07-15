@@ -32,9 +32,6 @@ var (
 )
 
 // AccountGetPasswordRequest represents TL type `account.getPassword#548a30f5`.
-// Obtain configuration for two-factor authorization with password
-//
-// See https://core.telegram.org/method/account.getPassword for reference.
 type AccountGetPasswordRequest struct {
 }
 
@@ -129,9 +126,6 @@ func (g *AccountGetPasswordRequest) DecodeBare(b *bin.Buffer) error {
 }
 
 // AccountGetPassword invokes method account.getPassword#548a30f5 returning error if any.
-// Obtain configuration for two-factor authorization with password
-//
-// See https://core.telegram.org/method/account.getPassword for reference.
 func (c *Client) AccountGetPassword(ctx context.Context) (*AccountPassword, error) {
 	var result AccountPassword
 

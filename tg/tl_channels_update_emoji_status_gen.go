@@ -32,24 +32,10 @@ var (
 )
 
 // ChannelsUpdateEmojiStatusRequest represents TL type `channels.updateEmojiStatus#f0d3e6a8`.
-// Set an emoji status¹ for a channel or supergroup.
-//
-// Links:
-//  1. https://core.telegram.org/api/emoji-status
-//
-// See https://core.telegram.org/method/channels.updateEmojiStatus for reference.
 type ChannelsUpdateEmojiStatusRequest struct {
-	// The channel/supergroup, must have at least
-	// channel_emoji_status_level_min¹/group_emoji_status_level_min² boosts.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/config#channel-emoji-status-level-min
-	//  2) https://core.telegram.org/api/config#group-emoji-status-level-min
+	// Channel field of ChannelsUpdateEmojiStatusRequest.
 	Channel InputChannelClass
-	// Emoji status¹ to set
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/emoji-status
+	// EmojiStatus field of ChannelsUpdateEmojiStatusRequest.
 	EmojiStatus EmojiStatusClass
 }
 
@@ -85,15 +71,6 @@ func (u *ChannelsUpdateEmojiStatusRequest) String() string {
 	}
 	type Alias ChannelsUpdateEmojiStatusRequest
 	return fmt.Sprintf("ChannelsUpdateEmojiStatusRequest%+v", Alias(*u))
-}
-
-// FillFrom fills ChannelsUpdateEmojiStatusRequest from given interface.
-func (u *ChannelsUpdateEmojiStatusRequest) FillFrom(from interface {
-	GetChannel() (value InputChannelClass)
-	GetEmojiStatus() (value EmojiStatusClass)
-}) {
-	u.Channel = from.GetChannel()
-	u.EmojiStatus = from.GetEmojiStatus()
 }
 
 // TypeID returns type id in TL schema.
@@ -209,27 +186,7 @@ func (u *ChannelsUpdateEmojiStatusRequest) GetEmojiStatus() (value EmojiStatusCl
 	return u.EmojiStatus
 }
 
-// GetChannelAsNotEmpty returns mapped value of Channel field.
-func (u *ChannelsUpdateEmojiStatusRequest) GetChannelAsNotEmpty() (NotEmptyInputChannel, bool) {
-	return u.Channel.AsNotEmpty()
-}
-
-// GetEmojiStatusAsNotEmpty returns mapped value of EmojiStatus field.
-func (u *ChannelsUpdateEmojiStatusRequest) GetEmojiStatusAsNotEmpty() (NotEmptyEmojiStatus, bool) {
-	return u.EmojiStatus.AsNotEmpty()
-}
-
 // ChannelsUpdateEmojiStatus invokes method channels.updateEmojiStatus#f0d3e6a8 returning error if any.
-// Set an emoji status¹ for a channel or supergroup.
-//
-// Links:
-//  1. https://core.telegram.org/api/emoji-status
-//
-// Possible errors:
-//
-//	400 CHANNEL_INVALID: The provided channel is invalid.
-//
-// See https://core.telegram.org/method/channels.updateEmojiStatus for reference.
 func (c *Client) ChannelsUpdateEmojiStatus(ctx context.Context, request *ChannelsUpdateEmojiStatusRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

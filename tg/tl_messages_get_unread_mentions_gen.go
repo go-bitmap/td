@@ -32,48 +32,24 @@ var (
 )
 
 // MessagesGetUnreadMentionsRequest represents TL type `messages.getUnreadMentions#f107e790`.
-// Get unread messages where we were mentioned
-//
-// See https://core.telegram.org/method/messages.getUnreadMentions for reference.
 type MessagesGetUnreadMentionsRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessagesGetUnreadMentionsRequest.
 	Flags bin.Fields
-	// Peer where to look for mentions
+	// Peer field of MessagesGetUnreadMentionsRequest.
 	Peer InputPeerClass
-	// If set, considers only messages within the specified forum topic¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/forum#forum-topics
+	// TopMsgID field of MessagesGetUnreadMentionsRequest.
 	//
 	// Use SetTopMsgID and GetTopMsgID helpers.
 	TopMsgID int
-	// Offsets for pagination, for more info click here¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets
+	// OffsetID field of MessagesGetUnreadMentionsRequest.
 	OffsetID int
-	// Offsets for pagination, for more info click here¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets
+	// AddOffset field of MessagesGetUnreadMentionsRequest.
 	AddOffset int
-	// Maximum number of results to return, see pagination¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets
+	// Limit field of MessagesGetUnreadMentionsRequest.
 	Limit int
-	// Maximum message ID to return, see pagination¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets
+	// MaxID field of MessagesGetUnreadMentionsRequest.
 	MaxID int
-	// Minimum message ID to return, see pagination¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets
+	// MinID field of MessagesGetUnreadMentionsRequest.
 	MinID int
 }
 
@@ -127,28 +103,6 @@ func (g *MessagesGetUnreadMentionsRequest) String() string {
 	}
 	type Alias MessagesGetUnreadMentionsRequest
 	return fmt.Sprintf("MessagesGetUnreadMentionsRequest%+v", Alias(*g))
-}
-
-// FillFrom fills MessagesGetUnreadMentionsRequest from given interface.
-func (g *MessagesGetUnreadMentionsRequest) FillFrom(from interface {
-	GetPeer() (value InputPeerClass)
-	GetTopMsgID() (value int, ok bool)
-	GetOffsetID() (value int)
-	GetAddOffset() (value int)
-	GetLimit() (value int)
-	GetMaxID() (value int)
-	GetMinID() (value int)
-}) {
-	g.Peer = from.GetPeer()
-	if val, ok := from.GetTopMsgID(); ok {
-		g.TopMsgID = val
-	}
-
-	g.OffsetID = from.GetOffsetID()
-	g.AddOffset = from.GetAddOffset()
-	g.Limit = from.GetLimit()
-	g.MaxID = from.GetMaxID()
-	g.MinID = from.GetMinID()
 }
 
 // TypeID returns type id in TL schema.
@@ -389,16 +343,6 @@ func (g *MessagesGetUnreadMentionsRequest) GetMinID() (value int) {
 }
 
 // MessagesGetUnreadMentions invokes method messages.getUnreadMentions#f107e790 returning error if any.
-// Get unread messages where we were mentioned
-//
-// Possible errors:
-//
-//	400 CHANNEL_INVALID: The provided channel is invalid.
-//	400 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
-//	400 MSG_ID_INVALID: Invalid message ID provided.
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//
-// See https://core.telegram.org/method/messages.getUnreadMentions for reference.
 func (c *Client) MessagesGetUnreadMentions(ctx context.Context, request *MessagesGetUnreadMentionsRequest) (MessagesMessagesClass, error) {
 	var result MessagesMessagesBox
 

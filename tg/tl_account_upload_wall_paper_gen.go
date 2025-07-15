@@ -32,28 +32,16 @@ var (
 )
 
 // AccountUploadWallPaperRequest represents TL type `account.uploadWallPaper#e39a8f03`.
-// Create and upload a new wallpaper¹
-//
-// Links:
-//  1. https://core.telegram.org/api/wallpapers
-//
-// See https://core.telegram.org/method/account.uploadWallPaper for reference.
 type AccountUploadWallPaperRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of AccountUploadWallPaperRequest.
 	Flags bin.Fields
-	// Set this flag when uploading wallpapers to be passed to messages.setChatWallPaper¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/messages.setChatWallPaper
+	// ForChat field of AccountUploadWallPaperRequest.
 	ForChat bool
-	// The JPG/PNG wallpaper
+	// File field of AccountUploadWallPaperRequest.
 	File InputFileClass
-	// MIME type of uploaded wallpaper
+	// MimeType field of AccountUploadWallPaperRequest.
 	MimeType string
-	// Wallpaper settings
+	// Settings field of AccountUploadWallPaperRequest.
 	Settings WallPaperSettings
 }
 
@@ -98,19 +86,6 @@ func (u *AccountUploadWallPaperRequest) String() string {
 	}
 	type Alias AccountUploadWallPaperRequest
 	return fmt.Sprintf("AccountUploadWallPaperRequest%+v", Alias(*u))
-}
-
-// FillFrom fills AccountUploadWallPaperRequest from given interface.
-func (u *AccountUploadWallPaperRequest) FillFrom(from interface {
-	GetForChat() (value bool)
-	GetFile() (value InputFileClass)
-	GetMimeType() (value string)
-	GetSettings() (value WallPaperSettings)
-}) {
-	u.ForChat = from.GetForChat()
-	u.File = from.GetFile()
-	u.MimeType = from.GetMimeType()
-	u.Settings = from.GetSettings()
 }
 
 // TypeID returns type id in TL schema.
@@ -283,17 +258,6 @@ func (u *AccountUploadWallPaperRequest) GetSettings() (value WallPaperSettings) 
 }
 
 // AccountUploadWallPaper invokes method account.uploadWallPaper#e39a8f03 returning error if any.
-// Create and upload a new wallpaper¹
-//
-// Links:
-//  1. https://core.telegram.org/api/wallpapers
-//
-// Possible errors:
-//
-//	400 WALLPAPER_FILE_INVALID: The specified wallpaper file is invalid.
-//	400 WALLPAPER_MIME_INVALID: The specified wallpaper MIME type is invalid.
-//
-// See https://core.telegram.org/method/account.uploadWallPaper for reference.
 func (c *Client) AccountUploadWallPaper(ctx context.Context, request *AccountUploadWallPaperRequest) (WallPaperClass, error) {
 	var result WallPaperBox
 

@@ -32,16 +32,10 @@ var (
 )
 
 // FoundStory represents TL type `foundStory#e87acbc0`.
-// A story found using global story search »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/stories#searching-stories
-//
-// See https://core.telegram.org/constructor/foundStory for reference.
 type FoundStory struct {
-	// The peer that posted the story.
+	// Peer field of FoundStory.
 	Peer PeerClass
-	// The story.
+	// Story field of FoundStory.
 	Story StoryItemClass
 }
 
@@ -77,15 +71,6 @@ func (f *FoundStory) String() string {
 	}
 	type Alias FoundStory
 	return fmt.Sprintf("FoundStory%+v", Alias(*f))
-}
-
-// FillFrom fills FoundStory from given interface.
-func (f *FoundStory) FillFrom(from interface {
-	GetPeer() (value PeerClass)
-	GetStory() (value StoryItemClass)
-}) {
-	f.Peer = from.GetPeer()
-	f.Story = from.GetStory()
 }
 
 // TypeID returns type id in TL schema.

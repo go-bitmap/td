@@ -32,17 +32,8 @@ var (
 )
 
 // PaymentsStarsRevenueWithdrawalURL represents TL type `payments.starsRevenueWithdrawalUrl#1dab80b7`.
-// Contains the URL to use to withdraw Telegram Star revenue¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/stars#withdrawing-stars
-//
-// See https://core.telegram.org/constructor/payments.starsRevenueWithdrawalUrl for reference.
 type PaymentsStarsRevenueWithdrawalURL struct {
-	// Contains the URL to use to withdraw Telegram Star revenue¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/stars#withdrawing-stars
+	// URL field of PaymentsStarsRevenueWithdrawalURL.
 	URL string
 }
 
@@ -75,13 +66,6 @@ func (s *PaymentsStarsRevenueWithdrawalURL) String() string {
 	}
 	type Alias PaymentsStarsRevenueWithdrawalURL
 	return fmt.Sprintf("PaymentsStarsRevenueWithdrawalURL%+v", Alias(*s))
-}
-
-// FillFrom fills PaymentsStarsRevenueWithdrawalURL from given interface.
-func (s *PaymentsStarsRevenueWithdrawalURL) FillFrom(from interface {
-	GetURL() (value string)
-}) {
-	s.URL = from.GetURL()
 }
 
 // TypeID returns type id in TL schema.

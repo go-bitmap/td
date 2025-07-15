@@ -32,11 +32,8 @@ var (
 )
 
 // DocumentEmpty represents TL type `documentEmpty#36f8c871`.
-// Empty constructor, document doesn't exist.
-//
-// See https://core.telegram.org/constructor/documentEmpty for reference.
 type DocumentEmpty struct {
-	// Document ID or 0
+	// ID field of DocumentEmpty.
 	ID int64
 }
 
@@ -74,13 +71,6 @@ func (d *DocumentEmpty) String() string {
 	}
 	type Alias DocumentEmpty
 	return fmt.Sprintf("DocumentEmpty%+v", Alias(*d))
-}
-
-// FillFrom fills DocumentEmpty from given interface.
-func (d *DocumentEmpty) FillFrom(from interface {
-	GetID() (value int64)
-}) {
-	d.ID = from.GetID()
 }
 
 // TypeID returns type id in TL schema.
@@ -167,41 +157,32 @@ func (d *DocumentEmpty) GetID() (value int64) {
 }
 
 // Document represents TL type `document#8fd4c4d8`.
-// Document
-//
-// See https://core.telegram.org/constructor/document for reference.
 type Document struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of Document.
 	Flags bin.Fields
-	// Document ID
+	// ID field of Document.
 	ID int64
-	// Check sum, dependent on document ID
+	// AccessHash field of Document.
 	AccessHash int64
-	// File reference¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/file_reference
+	// FileReference field of Document.
 	FileReference []byte
-	// Creation date
+	// Date field of Document.
 	Date int
-	// MIME type
+	// MimeType field of Document.
 	MimeType string
-	// Size
+	// Size field of Document.
 	Size int64
-	// Thumbnails
+	// Thumbs field of Document.
 	//
 	// Use SetThumbs and GetThumbs helpers.
 	Thumbs []PhotoSizeClass
-	// Video thumbnails
+	// VideoThumbs field of Document.
 	//
 	// Use SetVideoThumbs and GetVideoThumbs helpers.
 	VideoThumbs []VideoSizeClass
-	// DC ID
+	// DCID field of Document.
 	DCID int
-	// Attributes
+	// Attributes field of Document.
 	Attributes []DocumentAttributeClass
 }
 
@@ -269,37 +250,6 @@ func (d *Document) String() string {
 	}
 	type Alias Document
 	return fmt.Sprintf("Document%+v", Alias(*d))
-}
-
-// FillFrom fills Document from given interface.
-func (d *Document) FillFrom(from interface {
-	GetID() (value int64)
-	GetAccessHash() (value int64)
-	GetFileReference() (value []byte)
-	GetDate() (value int)
-	GetMimeType() (value string)
-	GetSize() (value int64)
-	GetThumbs() (value []PhotoSizeClass, ok bool)
-	GetVideoThumbs() (value []VideoSizeClass, ok bool)
-	GetDCID() (value int)
-	GetAttributes() (value []DocumentAttributeClass)
-}) {
-	d.ID = from.GetID()
-	d.AccessHash = from.GetAccessHash()
-	d.FileReference = from.GetFileReference()
-	d.Date = from.GetDate()
-	d.MimeType = from.GetMimeType()
-	d.Size = from.GetSize()
-	if val, ok := from.GetThumbs(); ok {
-		d.Thumbs = val
-	}
-
-	if val, ok := from.GetVideoThumbs(); ok {
-		d.VideoThumbs = val
-	}
-
-	d.DCID = from.GetDCID()
-	d.Attributes = from.GetAttributes()
 }
 
 // TypeID returns type id in TL schema.
@@ -664,33 +614,10 @@ func (d *Document) GetAttributes() (value []DocumentAttributeClass) {
 	return d.Attributes
 }
 
-// MapThumbs returns field Thumbs wrapped in PhotoSizeClassArray helper.
-func (d *Document) MapThumbs() (value PhotoSizeClassArray, ok bool) {
-	if !d.Flags.Has(0) {
-		return value, false
-	}
-	return PhotoSizeClassArray(d.Thumbs), true
-}
-
-// MapVideoThumbs returns field VideoThumbs wrapped in VideoSizeClassArray helper.
-func (d *Document) MapVideoThumbs() (value VideoSizeClassArray, ok bool) {
-	if !d.Flags.Has(1) {
-		return value, false
-	}
-	return VideoSizeClassArray(d.VideoThumbs), true
-}
-
-// MapAttributes returns field Attributes wrapped in DocumentAttributeClassArray helper.
-func (d *Document) MapAttributes() (value DocumentAttributeClassArray) {
-	return DocumentAttributeClassArray(d.Attributes)
-}
-
 // DocumentClassName is schema name of DocumentClass.
 const DocumentClassName = "Document"
 
 // DocumentClass represents Document generic type.
-//
-// See https://core.telegram.org/type/Document for reference.
 //
 // Constructors:
 //   - [DocumentEmpty]
@@ -725,41 +652,8 @@ type DocumentClass interface {
 	// Zero returns true if current object has a zero value.
 	Zero() bool
 
-	// Document ID or 0
+	// ID field of DocumentEmpty.
 	GetID() (value int64)
-
-	// AsNotEmpty tries to map DocumentClass to Document.
-	AsNotEmpty() (*Document, bool)
-}
-
-// AsInputDocumentFileLocation tries to map Document to InputDocumentFileLocation.
-func (d *Document) AsInputDocumentFileLocation() *InputDocumentFileLocation {
-	value := new(InputDocumentFileLocation)
-	value.ID = d.GetID()
-	value.AccessHash = d.GetAccessHash()
-	value.FileReference = d.GetFileReference()
-
-	return value
-}
-
-// AsInput tries to map Document to InputDocument.
-func (d *Document) AsInput() *InputDocument {
-	value := new(InputDocument)
-	value.ID = d.GetID()
-	value.AccessHash = d.GetAccessHash()
-	value.FileReference = d.GetFileReference()
-
-	return value
-}
-
-// AsNotEmpty tries to map DocumentEmpty to Document.
-func (d *DocumentEmpty) AsNotEmpty() (*Document, bool) {
-	return nil, false
-}
-
-// AsNotEmpty tries to map Document to Document.
-func (d *Document) AsNotEmpty() (*Document, bool) {
-	return d, true
 }
 
 // DecodeDocument implements binary de-serialization for DocumentClass.

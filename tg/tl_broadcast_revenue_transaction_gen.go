@@ -32,19 +32,12 @@ var (
 )
 
 // BroadcastRevenueTransactionProceeds represents TL type `broadcastRevenueTransactionProceeds#557e2cc4`.
-// Describes earnings from sponsored messages in a channel in some time frame, see here
-// »¹ for more info.
-//
-// Links:
-//  1. https://core.telegram.org/api/revenue
-//
-// See https://core.telegram.org/constructor/broadcastRevenueTransactionProceeds for reference.
 type BroadcastRevenueTransactionProceeds struct {
-	// Amount in the smallest unit of the cryptocurrency.
+	// Amount field of BroadcastRevenueTransactionProceeds.
 	Amount int64
-	// Start unixtime for the timeframe.
+	// FromDate field of BroadcastRevenueTransactionProceeds.
 	FromDate int
-	// End unixtime for the timeframe.
+	// ToDate field of BroadcastRevenueTransactionProceeds.
 	ToDate int
 }
 
@@ -88,17 +81,6 @@ func (b *BroadcastRevenueTransactionProceeds) String() string {
 	}
 	type Alias BroadcastRevenueTransactionProceeds
 	return fmt.Sprintf("BroadcastRevenueTransactionProceeds%+v", Alias(*b))
-}
-
-// FillFrom fills BroadcastRevenueTransactionProceeds from given interface.
-func (b *BroadcastRevenueTransactionProceeds) FillFrom(from interface {
-	GetAmount() (value int64)
-	GetFromDate() (value int)
-	GetToDate() (value int)
-}) {
-	b.Amount = from.GetAmount()
-	b.FromDate = from.GetFromDate()
-	b.ToDate = from.GetToDate()
 }
 
 // TypeID returns type id in TL schema.
@@ -225,36 +207,24 @@ func (b *BroadcastRevenueTransactionProceeds) GetToDate() (value int) {
 }
 
 // BroadcastRevenueTransactionWithdrawal represents TL type `broadcastRevenueTransactionWithdrawal#5a590978`.
-// Describes a withdrawal of ad earnings »¹
-//
-// Links:
-//  1. https://core.telegram.org/api/revenue#withdrawing-revenue
-//
-// See https://core.telegram.org/constructor/broadcastRevenueTransactionWithdrawal for reference.
 type BroadcastRevenueTransactionWithdrawal struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of BroadcastRevenueTransactionWithdrawal.
 	Flags bin.Fields
-	// Whether the withdrawal is currently pending
+	// Pending field of BroadcastRevenueTransactionWithdrawal.
 	Pending bool
-	// Whether the withdrawal has failed
+	// Failed field of BroadcastRevenueTransactionWithdrawal.
 	Failed bool
-	// Amount withdrawn
+	// Amount field of BroadcastRevenueTransactionWithdrawal.
 	Amount int64
-	// Withdrawal date
+	// Date field of BroadcastRevenueTransactionWithdrawal.
 	Date int
-	// Payment provider name
+	// Provider field of BroadcastRevenueTransactionWithdrawal.
 	Provider string
-	// If neither pending nor failed are set, the transaction was completed successfully, and
-	// this field will contain the point in time (Unix timestamp) when the withdrawal was
-	// completed successfully.
+	// TransactionDate field of BroadcastRevenueTransactionWithdrawal.
 	//
 	// Use SetTransactionDate and GetTransactionDate helpers.
 	TransactionDate int
-	// If neither pending nor failed are set, the transaction was completed successfully, and
-	// this field will contain a URL where the withdrawal transaction can be viewed.
+	// TransactionURL field of BroadcastRevenueTransactionWithdrawal.
 	//
 	// Use SetTransactionURL and GetTransactionURL helpers.
 	TransactionURL string
@@ -317,31 +287,6 @@ func (b *BroadcastRevenueTransactionWithdrawal) String() string {
 	}
 	type Alias BroadcastRevenueTransactionWithdrawal
 	return fmt.Sprintf("BroadcastRevenueTransactionWithdrawal%+v", Alias(*b))
-}
-
-// FillFrom fills BroadcastRevenueTransactionWithdrawal from given interface.
-func (b *BroadcastRevenueTransactionWithdrawal) FillFrom(from interface {
-	GetPending() (value bool)
-	GetFailed() (value bool)
-	GetAmount() (value int64)
-	GetDate() (value int)
-	GetProvider() (value string)
-	GetTransactionDate() (value int, ok bool)
-	GetTransactionURL() (value string, ok bool)
-}) {
-	b.Pending = from.GetPending()
-	b.Failed = from.GetFailed()
-	b.Amount = from.GetAmount()
-	b.Date = from.GetDate()
-	b.Provider = from.GetProvider()
-	if val, ok := from.GetTransactionDate(); ok {
-		b.TransactionDate = val
-	}
-
-	if val, ok := from.GetTransactionURL(); ok {
-		b.TransactionURL = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -609,18 +554,12 @@ func (b *BroadcastRevenueTransactionWithdrawal) GetTransactionURL() (value strin
 }
 
 // BroadcastRevenueTransactionRefund represents TL type `broadcastRevenueTransactionRefund#42d30d2e`.
-// Describes a refund for failed withdrawal of ad earnings »¹
-//
-// Links:
-//  1. https://core.telegram.org/api/revenue#withdrawing-revenue
-//
-// See https://core.telegram.org/constructor/broadcastRevenueTransactionRefund for reference.
 type BroadcastRevenueTransactionRefund struct {
-	// Amount refunded.
+	// Amount field of BroadcastRevenueTransactionRefund.
 	Amount int64
-	// Date of refund.
+	// Date field of BroadcastRevenueTransactionRefund.
 	Date int
-	// Payment provider name.
+	// Provider field of BroadcastRevenueTransactionRefund.
 	Provider string
 }
 
@@ -664,17 +603,6 @@ func (b *BroadcastRevenueTransactionRefund) String() string {
 	}
 	type Alias BroadcastRevenueTransactionRefund
 	return fmt.Sprintf("BroadcastRevenueTransactionRefund%+v", Alias(*b))
-}
-
-// FillFrom fills BroadcastRevenueTransactionRefund from given interface.
-func (b *BroadcastRevenueTransactionRefund) FillFrom(from interface {
-	GetAmount() (value int64)
-	GetDate() (value int)
-	GetProvider() (value string)
-}) {
-	b.Amount = from.GetAmount()
-	b.Date = from.GetDate()
-	b.Provider = from.GetProvider()
 }
 
 // TypeID returns type id in TL schema.
@@ -805,8 +733,6 @@ const BroadcastRevenueTransactionClassName = "BroadcastRevenueTransaction"
 
 // BroadcastRevenueTransactionClass represents BroadcastRevenueTransaction generic type.
 //
-// See https://core.telegram.org/type/BroadcastRevenueTransaction for reference.
-//
 // Constructors:
 //   - [BroadcastRevenueTransactionProceeds]
 //   - [BroadcastRevenueTransactionWithdrawal]
@@ -842,7 +768,7 @@ type BroadcastRevenueTransactionClass interface {
 	// Zero returns true if current object has a zero value.
 	Zero() bool
 
-	// Amount in the smallest unit of the cryptocurrency.
+	// Amount field of BroadcastRevenueTransactionProceeds.
 	GetAmount() (value int64)
 }
 

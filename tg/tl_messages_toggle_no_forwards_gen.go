@@ -32,16 +32,10 @@ var (
 )
 
 // MessagesToggleNoForwardsRequest represents TL type `messages.toggleNoForwards#b11eafa2`.
-// Enable or disable content protection¹ on a channel or chat
-//
-// Links:
-//  1. https://telegram.org/blog/protected-content-delete-by-date-and-more
-//
-// See https://core.telegram.org/method/messages.toggleNoForwards for reference.
 type MessagesToggleNoForwardsRequest struct {
-	// The chat or channel
+	// Peer field of MessagesToggleNoForwardsRequest.
 	Peer InputPeerClass
-	// Enable or disable content protection
+	// Enabled field of MessagesToggleNoForwardsRequest.
 	Enabled bool
 }
 
@@ -77,15 +71,6 @@ func (t *MessagesToggleNoForwardsRequest) String() string {
 	}
 	type Alias MessagesToggleNoForwardsRequest
 	return fmt.Sprintf("MessagesToggleNoForwardsRequest%+v", Alias(*t))
-}
-
-// FillFrom fills MessagesToggleNoForwardsRequest from given interface.
-func (t *MessagesToggleNoForwardsRequest) FillFrom(from interface {
-	GetPeer() (value InputPeerClass)
-	GetEnabled() (value bool)
-}) {
-	t.Peer = from.GetPeer()
-	t.Enabled = from.GetEnabled()
 }
 
 // TypeID returns type id in TL schema.
@@ -197,18 +182,6 @@ func (t *MessagesToggleNoForwardsRequest) GetEnabled() (value bool) {
 }
 
 // MessagesToggleNoForwards invokes method messages.toggleNoForwards#b11eafa2 returning error if any.
-// Enable or disable content protection¹ on a channel or chat
-//
-// Links:
-//  1. https://telegram.org/blog/protected-content-delete-by-date-and-more
-//
-// Possible errors:
-//
-//	400 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
-//	400 CHAT_NOT_MODIFIED: No changes were made to chat information because the new information you passed is identical to the current information.
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//
-// See https://core.telegram.org/method/messages.toggleNoForwards for reference.
 func (c *Client) MessagesToggleNoForwards(ctx context.Context, request *MessagesToggleNoForwardsRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

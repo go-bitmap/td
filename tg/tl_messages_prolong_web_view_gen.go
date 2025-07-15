@@ -32,45 +32,22 @@ var (
 )
 
 // MessagesProlongWebViewRequest represents TL type `messages.prolongWebView#b0d81a83`.
-// Indicate to the server (from the user side) that the user is still using a web app.
-// If the method returns a QUERY_ID_INVALID error, the webview must be closed.
-//
-// See https://core.telegram.org/method/messages.prolongWebView for reference.
 type MessagesProlongWebViewRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessagesProlongWebViewRequest.
 	Flags bin.Fields
-	// Whether the inline message that will be sent by the bot on behalf of the user once the
-	// web app interaction is terminated¹ should be sent silently (no notifications for the
-	// receivers).
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/messages.sendWebViewResultMessage
+	// Silent field of MessagesProlongWebViewRequest.
 	Silent bool
-	// Dialog where the web app was opened.
+	// Peer field of MessagesProlongWebViewRequest.
 	Peer InputPeerClass
-	// Bot that owns the web app¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/bots/webapps
+	// Bot field of MessagesProlongWebViewRequest.
 	Bot InputUserClass
-	// Web app interaction ID obtained from messages.requestWebView¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/messages.requestWebView
+	// QueryID field of MessagesProlongWebViewRequest.
 	QueryID int64
-	// If set, indicates that the inline message that will be sent by the bot on behalf of
-	// the user once the web app interaction is terminated¹ should be sent in reply to the
-	// specified message or story.
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/messages.sendWebViewResultMessage
+	// ReplyTo field of MessagesProlongWebViewRequest.
 	//
 	// Use SetReplyTo and GetReplyTo helpers.
 	ReplyTo InputReplyToClass
-	// Open the web app as the specified peer
+	// SendAs field of MessagesProlongWebViewRequest.
 	//
 	// Use SetSendAs and GetSendAs helpers.
 	SendAs InputPeerClass
@@ -123,29 +100,6 @@ func (p *MessagesProlongWebViewRequest) String() string {
 	}
 	type Alias MessagesProlongWebViewRequest
 	return fmt.Sprintf("MessagesProlongWebViewRequest%+v", Alias(*p))
-}
-
-// FillFrom fills MessagesProlongWebViewRequest from given interface.
-func (p *MessagesProlongWebViewRequest) FillFrom(from interface {
-	GetSilent() (value bool)
-	GetPeer() (value InputPeerClass)
-	GetBot() (value InputUserClass)
-	GetQueryID() (value int64)
-	GetReplyTo() (value InputReplyToClass, ok bool)
-	GetSendAs() (value InputPeerClass, ok bool)
-}) {
-	p.Silent = from.GetSilent()
-	p.Peer = from.GetPeer()
-	p.Bot = from.GetBot()
-	p.QueryID = from.GetQueryID()
-	if val, ok := from.GetReplyTo(); ok {
-		p.ReplyTo = val
-	}
-
-	if val, ok := from.GetSendAs(); ok {
-		p.SendAs = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -405,14 +359,6 @@ func (p *MessagesProlongWebViewRequest) GetSendAs() (value InputPeerClass, ok bo
 }
 
 // MessagesProlongWebView invokes method messages.prolongWebView#b0d81a83 returning error if any.
-// Indicate to the server (from the user side) that the user is still using a web app.
-// If the method returns a QUERY_ID_INVALID error, the webview must be closed.
-//
-// Possible errors:
-//
-//	400 BOT_INVALID: This is not a valid bot.
-//
-// See https://core.telegram.org/method/messages.prolongWebView for reference.
 func (c *Client) MessagesProlongWebView(ctx context.Context, request *MessagesProlongWebViewRequest) (bool, error) {
 	var result BoolBox
 

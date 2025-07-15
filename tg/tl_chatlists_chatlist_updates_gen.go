@@ -32,18 +32,12 @@ var (
 )
 
 // ChatlistsChatlistUpdates represents TL type `chatlists.chatlistUpdates#93bd878d`.
-// Updated information about a chat folder deep link »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/links#chat-folder-links
-//
-// See https://core.telegram.org/constructor/chatlists.chatlistUpdates for reference.
 type ChatlistsChatlistUpdates struct {
-	// New peers to join
+	// MissingPeers field of ChatlistsChatlistUpdates.
 	MissingPeers []PeerClass
-	// Related chat information
+	// Chats field of ChatlistsChatlistUpdates.
 	Chats []ChatClass
-	// Related user information
+	// Users field of ChatlistsChatlistUpdates.
 	Users []UserClass
 }
 
@@ -82,17 +76,6 @@ func (c *ChatlistsChatlistUpdates) String() string {
 	}
 	type Alias ChatlistsChatlistUpdates
 	return fmt.Sprintf("ChatlistsChatlistUpdates%+v", Alias(*c))
-}
-
-// FillFrom fills ChatlistsChatlistUpdates from given interface.
-func (c *ChatlistsChatlistUpdates) FillFrom(from interface {
-	GetMissingPeers() (value []PeerClass)
-	GetChats() (value []ChatClass)
-	GetUsers() (value []UserClass)
-}) {
-	c.MissingPeers = from.GetMissingPeers()
-	c.Chats = from.GetChats()
-	c.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -270,19 +253,4 @@ func (c *ChatlistsChatlistUpdates) GetUsers() (value []UserClass) {
 		return
 	}
 	return c.Users
-}
-
-// MapMissingPeers returns field MissingPeers wrapped in PeerClassArray helper.
-func (c *ChatlistsChatlistUpdates) MapMissingPeers() (value PeerClassArray) {
-	return PeerClassArray(c.MissingPeers)
-}
-
-// MapChats returns field Chats wrapped in ChatClassArray helper.
-func (c *ChatlistsChatlistUpdates) MapChats() (value ChatClassArray) {
-	return ChatClassArray(c.Chats)
-}
-
-// MapUsers returns field Users wrapped in UserClassArray helper.
-func (c *ChatlistsChatlistUpdates) MapUsers() (value UserClassArray) {
-	return UserClassArray(c.Users)
 }

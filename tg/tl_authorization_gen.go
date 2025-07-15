@@ -32,56 +32,44 @@ var (
 )
 
 // Authorization represents TL type `authorization#ad01d61d`.
-// Logged-in session
-//
-// See https://core.telegram.org/constructor/authorization for reference.
 type Authorization struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of Authorization.
 	Flags bin.Fields
-	// Whether this is the current session
+	// Current field of Authorization.
 	Current bool
-	// Whether the session is from an official app
+	// OfficialApp field of Authorization.
 	OfficialApp bool
-	// Whether the session is still waiting for a 2FA password
+	// PasswordPending field of Authorization.
 	PasswordPending bool
-	// Whether this session will accept encrypted chats
+	// EncryptedRequestsDisabled field of Authorization.
 	EncryptedRequestsDisabled bool
-	// Whether this session will accept phone calls
+	// CallRequestsDisabled field of Authorization.
 	CallRequestsDisabled bool
-	// Whether the session is unconfirmed, see here »¹ for more info.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/auth#confirming-login
+	// Unconfirmed field of Authorization.
 	Unconfirmed bool
-	// Identifier
+	// Hash field of Authorization.
 	Hash int64
-	// Device model
+	// DeviceModel field of Authorization.
 	DeviceModel string
-	// Platform
+	// Platform field of Authorization.
 	Platform string
-	// System version
+	// SystemVersion field of Authorization.
 	SystemVersion string
-	// API ID¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/obtaining_api_id
+	// APIID field of Authorization.
 	APIID int
-	// App name
+	// AppName field of Authorization.
 	AppName string
-	// App version
+	// AppVersion field of Authorization.
 	AppVersion string
-	// When was the session created
+	// DateCreated field of Authorization.
 	DateCreated int
-	// When was the session last active
+	// DateActive field of Authorization.
 	DateActive int
-	// Last known IP
+	// IP field of Authorization.
 	IP string
-	// Country determined from IP
+	// Country field of Authorization.
 	Country string
-	// Region determined from IP
+	// Region field of Authorization.
 	Region string
 }
 
@@ -168,47 +156,6 @@ func (a *Authorization) String() string {
 	}
 	type Alias Authorization
 	return fmt.Sprintf("Authorization%+v", Alias(*a))
-}
-
-// FillFrom fills Authorization from given interface.
-func (a *Authorization) FillFrom(from interface {
-	GetCurrent() (value bool)
-	GetOfficialApp() (value bool)
-	GetPasswordPending() (value bool)
-	GetEncryptedRequestsDisabled() (value bool)
-	GetCallRequestsDisabled() (value bool)
-	GetUnconfirmed() (value bool)
-	GetHash() (value int64)
-	GetDeviceModel() (value string)
-	GetPlatform() (value string)
-	GetSystemVersion() (value string)
-	GetAPIID() (value int)
-	GetAppName() (value string)
-	GetAppVersion() (value string)
-	GetDateCreated() (value int)
-	GetDateActive() (value int)
-	GetIP() (value string)
-	GetCountry() (value string)
-	GetRegion() (value string)
-}) {
-	a.Current = from.GetCurrent()
-	a.OfficialApp = from.GetOfficialApp()
-	a.PasswordPending = from.GetPasswordPending()
-	a.EncryptedRequestsDisabled = from.GetEncryptedRequestsDisabled()
-	a.CallRequestsDisabled = from.GetCallRequestsDisabled()
-	a.Unconfirmed = from.GetUnconfirmed()
-	a.Hash = from.GetHash()
-	a.DeviceModel = from.GetDeviceModel()
-	a.Platform = from.GetPlatform()
-	a.SystemVersion = from.GetSystemVersion()
-	a.APIID = from.GetAPIID()
-	a.AppName = from.GetAppName()
-	a.AppVersion = from.GetAppVersion()
-	a.DateCreated = from.GetDateCreated()
-	a.DateActive = from.GetDateActive()
-	a.IP = from.GetIP()
-	a.Country = from.GetCountry()
-	a.Region = from.GetRegion()
 }
 
 // TypeID returns type id in TL schema.

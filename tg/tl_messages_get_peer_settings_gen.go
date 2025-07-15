@@ -32,11 +32,8 @@ var (
 )
 
 // MessagesGetPeerSettingsRequest represents TL type `messages.getPeerSettings#efd9a6a2`.
-// Get peer settings
-//
-// See https://core.telegram.org/method/messages.getPeerSettings for reference.
 type MessagesGetPeerSettingsRequest struct {
-	// The peer
+	// Peer field of MessagesGetPeerSettingsRequest.
 	Peer InputPeerClass
 }
 
@@ -69,13 +66,6 @@ func (g *MessagesGetPeerSettingsRequest) String() string {
 	}
 	type Alias MessagesGetPeerSettingsRequest
 	return fmt.Sprintf("MessagesGetPeerSettingsRequest%+v", Alias(*g))
-}
-
-// FillFrom fills MessagesGetPeerSettingsRequest from given interface.
-func (g *MessagesGetPeerSettingsRequest) FillFrom(from interface {
-	GetPeer() (value InputPeerClass)
-}) {
-	g.Peer = from.GetPeer()
 }
 
 // TypeID returns type id in TL schema.
@@ -167,16 +157,6 @@ func (g *MessagesGetPeerSettingsRequest) GetPeer() (value InputPeerClass) {
 }
 
 // MessagesGetPeerSettings invokes method messages.getPeerSettings#efd9a6a2 returning error if any.
-// Get peer settings
-//
-// Possible errors:
-//
-//	400 CHANNEL_INVALID: The provided channel is invalid.
-//	400 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
-//	400 MSG_ID_INVALID: Invalid message ID provided.
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//
-// See https://core.telegram.org/method/messages.getPeerSettings for reference.
 func (c *Client) MessagesGetPeerSettings(ctx context.Context, peer InputPeerClass) (*MessagesPeerSettings, error) {
 	var result MessagesPeerSettings
 

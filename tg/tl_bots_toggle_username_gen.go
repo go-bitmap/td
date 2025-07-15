@@ -32,18 +32,12 @@ var (
 )
 
 // BotsToggleUsernameRequest represents TL type `bots.toggleUsername#53ca973`.
-// Activate or deactivate a purchased fragment.com¹ username associated to a bot we own.
-//
-// Links:
-//  1. https://fragment.com
-//
-// See https://core.telegram.org/method/bots.toggleUsername for reference.
 type BotsToggleUsernameRequest struct {
-	// The bot
+	// Bot field of BotsToggleUsernameRequest.
 	Bot InputUserClass
-	// Username
+	// Username field of BotsToggleUsernameRequest.
 	Username string
-	// Whether to activate or deactivate it
+	// Active field of BotsToggleUsernameRequest.
 	Active bool
 }
 
@@ -82,17 +76,6 @@ func (t *BotsToggleUsernameRequest) String() string {
 	}
 	type Alias BotsToggleUsernameRequest
 	return fmt.Sprintf("BotsToggleUsernameRequest%+v", Alias(*t))
-}
-
-// FillFrom fills BotsToggleUsernameRequest from given interface.
-func (t *BotsToggleUsernameRequest) FillFrom(from interface {
-	GetBot() (value InputUserClass)
-	GetUsername() (value string)
-	GetActive() (value bool)
-}) {
-	t.Bot = from.GetBot()
-	t.Username = from.GetUsername()
-	t.Active = from.GetActive()
 }
 
 // TypeID returns type id in TL schema.
@@ -224,17 +207,6 @@ func (t *BotsToggleUsernameRequest) GetActive() (value bool) {
 }
 
 // BotsToggleUsername invokes method bots.toggleUsername#53ca973 returning error if any.
-// Activate or deactivate a purchased fragment.com¹ username associated to a bot we own.
-//
-// Links:
-//  1. https://fragment.com
-//
-// Possible errors:
-//
-//	400 BOT_INVALID: This is not a valid bot.
-//	400 USERNAME_NOT_MODIFIED: The username was not modified.
-//
-// See https://core.telegram.org/method/bots.toggleUsername for reference.
 func (c *Client) BotsToggleUsername(ctx context.Context, request *BotsToggleUsernameRequest) (bool, error) {
 	var result BoolBox
 

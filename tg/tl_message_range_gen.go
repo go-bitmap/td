@@ -32,13 +32,10 @@ var (
 )
 
 // MessageRange represents TL type `messageRange#ae30253`.
-// Indicates a range of chat messages
-//
-// See https://core.telegram.org/constructor/messageRange for reference.
 type MessageRange struct {
-	// Start of range (message ID)
+	// MinID field of MessageRange.
 	MinID int
-	// End of range (message ID)
+	// MaxID field of MessageRange.
 	MaxID int
 }
 
@@ -74,15 +71,6 @@ func (m *MessageRange) String() string {
 	}
 	type Alias MessageRange
 	return fmt.Sprintf("MessageRange%+v", Alias(*m))
-}
-
-// FillFrom fills MessageRange from given interface.
-func (m *MessageRange) FillFrom(from interface {
-	GetMinID() (value int)
-	GetMaxID() (value int)
-}) {
-	m.MinID = from.GetMinID()
-	m.MaxID = from.GetMaxID()
 }
 
 // TypeID returns type id in TL schema.

@@ -32,26 +32,10 @@ var (
 )
 
 // MessagesStartHistoryImportRequest represents TL type `messages.startHistoryImport#b43df344`.
-// Complete the history import process¹, importing all messages into the chat.
-// To be called only after initializing the import with messages.initHistoryImport² and
-// uploading all files using messages.uploadImportedMedia³.
-//
-// Links:
-//  1. https://core.telegram.org/api/import
-//  2. https://core.telegram.org/method/messages.initHistoryImport
-//  3. https://core.telegram.org/method/messages.uploadImportedMedia
-//
-// See https://core.telegram.org/method/messages.startHistoryImport for reference.
 type MessagesStartHistoryImportRequest struct {
-	// The Telegram chat where the messages should be imported, click here for more info »¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/import
+	// Peer field of MessagesStartHistoryImportRequest.
 	Peer InputPeerClass
-	// Identifier of a history import session, returned by messages.initHistoryImport¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/messages.initHistoryImport
+	// ImportID field of MessagesStartHistoryImportRequest.
 	ImportID int64
 }
 
@@ -87,15 +71,6 @@ func (s *MessagesStartHistoryImportRequest) String() string {
 	}
 	type Alias MessagesStartHistoryImportRequest
 	return fmt.Sprintf("MessagesStartHistoryImportRequest%+v", Alias(*s))
-}
-
-// FillFrom fills MessagesStartHistoryImportRequest from given interface.
-func (s *MessagesStartHistoryImportRequest) FillFrom(from interface {
-	GetPeer() (value InputPeerClass)
-	GetImportID() (value int64)
-}) {
-	s.Peer = from.GetPeer()
-	s.ImportID = from.GetImportID()
 }
 
 // TypeID returns type id in TL schema.
@@ -207,20 +182,6 @@ func (s *MessagesStartHistoryImportRequest) GetImportID() (value int64) {
 }
 
 // MessagesStartHistoryImport invokes method messages.startHistoryImport#b43df344 returning error if any.
-// Complete the history import process¹, importing all messages into the chat.
-// To be called only after initializing the import with messages.initHistoryImport² and
-// uploading all files using messages.uploadImportedMedia³.
-//
-// Links:
-//  1. https://core.telegram.org/api/import
-//  2. https://core.telegram.org/method/messages.initHistoryImport
-//  3. https://core.telegram.org/method/messages.uploadImportedMedia
-//
-// Possible errors:
-//
-//	400 IMPORT_ID_INVALID: The specified import ID is invalid.
-//
-// See https://core.telegram.org/method/messages.startHistoryImport for reference.
 func (c *Client) MessagesStartHistoryImport(ctx context.Context, request *MessagesStartHistoryImportRequest) (bool, error) {
 	var result BoolBox
 

@@ -32,39 +32,26 @@ var (
 )
 
 // StoryViews represents TL type `storyViews#8d595cd6`.
-// Aggregated view and reaction information of a story¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/stories
-//
-// See https://core.telegram.org/constructor/storyViews for reference.
 type StoryViews struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of StoryViews.
 	Flags bin.Fields
-	// If set, indicates that the viewers list is currently viewable, and was not yet deleted
-	// because the story has expired while the user didn't have a Premium¹ account.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/premium
+	// HasViewers field of StoryViews.
 	HasViewers bool
-	// View counter of the story
+	// ViewsCount field of StoryViews.
 	ViewsCount int
-	// Forward counter of the story
+	// ForwardsCount field of StoryViews.
 	//
 	// Use SetForwardsCount and GetForwardsCount helpers.
 	ForwardsCount int
-	// All reactions sent to this story
+	// Reactions field of StoryViews.
 	//
 	// Use SetReactions and GetReactions helpers.
 	Reactions []ReactionCount
-	// Number of reactions added to the story
+	// ReactionsCount field of StoryViews.
 	//
 	// Use SetReactionsCount and GetReactionsCount helpers.
 	ReactionsCount int
-	// User IDs of some recent viewers of the story
+	// RecentViewers field of StoryViews.
 	//
 	// Use SetRecentViewers and GetRecentViewers helpers.
 	RecentViewers []int64
@@ -117,35 +104,6 @@ func (s *StoryViews) String() string {
 	}
 	type Alias StoryViews
 	return fmt.Sprintf("StoryViews%+v", Alias(*s))
-}
-
-// FillFrom fills StoryViews from given interface.
-func (s *StoryViews) FillFrom(from interface {
-	GetHasViewers() (value bool)
-	GetViewsCount() (value int)
-	GetForwardsCount() (value int, ok bool)
-	GetReactions() (value []ReactionCount, ok bool)
-	GetReactionsCount() (value int, ok bool)
-	GetRecentViewers() (value []int64, ok bool)
-}) {
-	s.HasViewers = from.GetHasViewers()
-	s.ViewsCount = from.GetViewsCount()
-	if val, ok := from.GetForwardsCount(); ok {
-		s.ForwardsCount = val
-	}
-
-	if val, ok := from.GetReactions(); ok {
-		s.Reactions = val
-	}
-
-	if val, ok := from.GetReactionsCount(); ok {
-		s.ReactionsCount = val
-	}
-
-	if val, ok := from.GetRecentViewers(); ok {
-		s.RecentViewers = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.

@@ -32,15 +32,8 @@ var (
 )
 
 // AccountGetSecureValueRequest represents TL type `account.getSecureValue#73665bc2`.
-// Get saved Telegram Passport¹ document, for more info see the passport docs »²
-//
-// Links:
-//  1. https://core.telegram.org/passport
-//  2. https://core.telegram.org/passport/encryption#encryption
-//
-// See https://core.telegram.org/method/account.getSecureValue for reference.
 type AccountGetSecureValueRequest struct {
-	// Requested value types
+	// Types field of AccountGetSecureValueRequest.
 	Types []SecureValueTypeClass
 }
 
@@ -73,13 +66,6 @@ func (g *AccountGetSecureValueRequest) String() string {
 	}
 	type Alias AccountGetSecureValueRequest
 	return fmt.Sprintf("AccountGetSecureValueRequest%+v", Alias(*g))
-}
-
-// FillFrom fills AccountGetSecureValueRequest from given interface.
-func (g *AccountGetSecureValueRequest) FillFrom(from interface {
-	GetTypes() (value []SecureValueTypeClass)
-}) {
-	g.Types = from.GetTypes()
 }
 
 // TypeID returns type id in TL schema.
@@ -183,19 +169,7 @@ func (g *AccountGetSecureValueRequest) GetTypes() (value []SecureValueTypeClass)
 	return g.Types
 }
 
-// MapTypes returns field Types wrapped in SecureValueTypeClassArray helper.
-func (g *AccountGetSecureValueRequest) MapTypes() (value SecureValueTypeClassArray) {
-	return SecureValueTypeClassArray(g.Types)
-}
-
 // AccountGetSecureValue invokes method account.getSecureValue#73665bc2 returning error if any.
-// Get saved Telegram Passport¹ document, for more info see the passport docs »²
-//
-// Links:
-//  1. https://core.telegram.org/passport
-//  2. https://core.telegram.org/passport/encryption#encryption
-//
-// See https://core.telegram.org/method/account.getSecureValue for reference.
 func (c *Client) AccountGetSecureValue(ctx context.Context, types []SecureValueTypeClass) ([]SecureValue, error) {
 	var result SecureValueVector
 

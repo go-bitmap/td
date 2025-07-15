@@ -32,9 +32,6 @@ var (
 )
 
 // MessagesFavedStickersNotModified represents TL type `messages.favedStickersNotModified#9e8fa6d3`.
-// No new favorited stickers were found
-//
-// See https://core.telegram.org/constructor/messages.favedStickersNotModified for reference.
 type MessagesFavedStickersNotModified struct {
 }
 
@@ -134,18 +131,12 @@ func (f *MessagesFavedStickersNotModified) DecodeBare(b *bin.Buffer) error {
 }
 
 // MessagesFavedStickers represents TL type `messages.favedStickers#2cb51097`.
-// Favorited stickers
-//
-// See https://core.telegram.org/constructor/messages.favedStickers for reference.
 type MessagesFavedStickers struct {
-	// Hash used for caching, for more info click here¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets#hash-generation
+	// Hash field of MessagesFavedStickers.
 	Hash int64
-	// Emojis associated to stickers
+	// Packs field of MessagesFavedStickers.
 	Packs []StickerPack
-	// Favorited stickers
+	// Stickers field of MessagesFavedStickers.
 	Stickers []DocumentClass
 }
 
@@ -189,17 +180,6 @@ func (f *MessagesFavedStickers) String() string {
 	}
 	type Alias MessagesFavedStickers
 	return fmt.Sprintf("MessagesFavedStickers%+v", Alias(*f))
-}
-
-// FillFrom fills MessagesFavedStickers from given interface.
-func (f *MessagesFavedStickers) FillFrom(from interface {
-	GetHash() (value int64)
-	GetPacks() (value []StickerPack)
-	GetStickers() (value []DocumentClass)
-}) {
-	f.Hash = from.GetHash()
-	f.Packs = from.GetPacks()
-	f.Stickers = from.GetStickers()
 }
 
 // TypeID returns type id in TL schema.
@@ -358,17 +338,10 @@ func (f *MessagesFavedStickers) GetStickers() (value []DocumentClass) {
 	return f.Stickers
 }
 
-// MapStickers returns field Stickers wrapped in DocumentClassArray helper.
-func (f *MessagesFavedStickers) MapStickers() (value DocumentClassArray) {
-	return DocumentClassArray(f.Stickers)
-}
-
 // MessagesFavedStickersClassName is schema name of MessagesFavedStickersClass.
 const MessagesFavedStickersClassName = "messages.FavedStickers"
 
 // MessagesFavedStickersClass represents messages.FavedStickers generic type.
-//
-// See https://core.telegram.org/type/messages.FavedStickers for reference.
 //
 // Constructors:
 //   - [MessagesFavedStickersNotModified]
@@ -402,19 +375,6 @@ type MessagesFavedStickersClass interface {
 	String() string
 	// Zero returns true if current object has a zero value.
 	Zero() bool
-
-	// AsModified tries to map MessagesFavedStickersClass to MessagesFavedStickers.
-	AsModified() (*MessagesFavedStickers, bool)
-}
-
-// AsModified tries to map MessagesFavedStickersNotModified to MessagesFavedStickers.
-func (f *MessagesFavedStickersNotModified) AsModified() (*MessagesFavedStickers, bool) {
-	return nil, false
-}
-
-// AsModified tries to map MessagesFavedStickers to MessagesFavedStickers.
-func (f *MessagesFavedStickers) AsModified() (*MessagesFavedStickers, bool) {
-	return f, true
 }
 
 // DecodeMessagesFavedStickers implements binary de-serialization for MessagesFavedStickersClass.

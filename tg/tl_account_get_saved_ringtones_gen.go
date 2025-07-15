@@ -32,14 +32,8 @@ var (
 )
 
 // AccountGetSavedRingtonesRequest represents TL type `account.getSavedRingtones#e1902288`.
-// Fetch saved notification sounds
-//
-// See https://core.telegram.org/method/account.getSavedRingtones for reference.
 type AccountGetSavedRingtonesRequest struct {
-	// Hash used for caching, for more info click here¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets#hash-generation
+	// Hash field of AccountGetSavedRingtonesRequest.
 	Hash int64
 }
 
@@ -72,13 +66,6 @@ func (g *AccountGetSavedRingtonesRequest) String() string {
 	}
 	type Alias AccountGetSavedRingtonesRequest
 	return fmt.Sprintf("AccountGetSavedRingtonesRequest%+v", Alias(*g))
-}
-
-// FillFrom fills AccountGetSavedRingtonesRequest from given interface.
-func (g *AccountGetSavedRingtonesRequest) FillFrom(from interface {
-	GetHash() (value int64)
-}) {
-	g.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -165,9 +152,6 @@ func (g *AccountGetSavedRingtonesRequest) GetHash() (value int64) {
 }
 
 // AccountGetSavedRingtones invokes method account.getSavedRingtones#e1902288 returning error if any.
-// Fetch saved notification sounds
-//
-// See https://core.telegram.org/method/account.getSavedRingtones for reference.
 func (c *Client) AccountGetSavedRingtones(ctx context.Context, hash int64) (AccountSavedRingtonesClass, error) {
 	var result AccountSavedRingtonesBox
 

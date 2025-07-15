@@ -32,13 +32,10 @@ var (
 )
 
 // PageListOrderedItemText represents TL type `pageListOrderedItemText#5e068047`.
-// Ordered list of text items
-//
-// See https://core.telegram.org/constructor/pageListOrderedItemText for reference.
 type PageListOrderedItemText struct {
-	// Number of element within ordered list
+	// Num field of PageListOrderedItemText.
 	Num string
-	// Text
+	// Text field of PageListOrderedItemText.
 	Text RichTextClass
 }
 
@@ -79,15 +76,6 @@ func (p *PageListOrderedItemText) String() string {
 	}
 	type Alias PageListOrderedItemText
 	return fmt.Sprintf("PageListOrderedItemText%+v", Alias(*p))
-}
-
-// FillFrom fills PageListOrderedItemText from given interface.
-func (p *PageListOrderedItemText) FillFrom(from interface {
-	GetNum() (value string)
-	GetText() (value RichTextClass)
-}) {
-	p.Num = from.GetNum()
-	p.Text = from.GetText()
 }
 
 // TypeID returns type id in TL schema.
@@ -199,16 +187,10 @@ func (p *PageListOrderedItemText) GetText() (value RichTextClass) {
 }
 
 // PageListOrderedItemBlocks represents TL type `pageListOrderedItemBlocks#98dd8936`.
-// Ordered list of IV¹ blocks
-//
-// Links:
-//  1. https://instantview.telegram.org
-//
-// See https://core.telegram.org/constructor/pageListOrderedItemBlocks for reference.
 type PageListOrderedItemBlocks struct {
-	// Number of element within ordered list
+	// Num field of PageListOrderedItemBlocks.
 	Num string
-	// Item contents
+	// Blocks field of PageListOrderedItemBlocks.
 	Blocks []PageBlockClass
 }
 
@@ -249,15 +231,6 @@ func (p *PageListOrderedItemBlocks) String() string {
 	}
 	type Alias PageListOrderedItemBlocks
 	return fmt.Sprintf("PageListOrderedItemBlocks%+v", Alias(*p))
-}
-
-// FillFrom fills PageListOrderedItemBlocks from given interface.
-func (p *PageListOrderedItemBlocks) FillFrom(from interface {
-	GetNum() (value string)
-	GetBlocks() (value []PageBlockClass)
-}) {
-	p.Num = from.GetNum()
-	p.Blocks = from.GetBlocks()
 }
 
 // TypeID returns type id in TL schema.
@@ -381,17 +354,10 @@ func (p *PageListOrderedItemBlocks) GetBlocks() (value []PageBlockClass) {
 	return p.Blocks
 }
 
-// MapBlocks returns field Blocks wrapped in PageBlockClassArray helper.
-func (p *PageListOrderedItemBlocks) MapBlocks() (value PageBlockClassArray) {
-	return PageBlockClassArray(p.Blocks)
-}
-
 // PageListOrderedItemClassName is schema name of PageListOrderedItemClass.
 const PageListOrderedItemClassName = "PageListOrderedItem"
 
 // PageListOrderedItemClass represents PageListOrderedItem generic type.
-//
-// See https://core.telegram.org/type/PageListOrderedItem for reference.
 //
 // Constructors:
 //   - [PageListOrderedItemText]
@@ -426,7 +392,7 @@ type PageListOrderedItemClass interface {
 	// Zero returns true if current object has a zero value.
 	Zero() bool
 
-	// Number of element within ordered list
+	// Num field of PageListOrderedItemText.
 	GetNum() (value string)
 }
 

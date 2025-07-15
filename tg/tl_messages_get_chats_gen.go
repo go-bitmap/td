@@ -32,11 +32,8 @@ var (
 )
 
 // MessagesGetChatsRequest represents TL type `messages.getChats#49e9528f`.
-// Returns chat basic info on their IDs.
-//
-// See https://core.telegram.org/method/messages.getChats for reference.
 type MessagesGetChatsRequest struct {
-	// List of chat IDs
+	// ID field of MessagesGetChatsRequest.
 	ID []int64
 }
 
@@ -69,13 +66,6 @@ func (g *MessagesGetChatsRequest) String() string {
 	}
 	type Alias MessagesGetChatsRequest
 	return fmt.Sprintf("MessagesGetChatsRequest%+v", Alias(*g))
-}
-
-// FillFrom fills MessagesGetChatsRequest from given interface.
-func (g *MessagesGetChatsRequest) FillFrom(from interface {
-	GetID() (value []int64)
-}) {
-	g.ID = from.GetID()
 }
 
 // TypeID returns type id in TL schema.
@@ -175,15 +165,6 @@ func (g *MessagesGetChatsRequest) GetID() (value []int64) {
 }
 
 // MessagesGetChats invokes method messages.getChats#49e9528f returning error if any.
-// Returns chat basic info on their IDs.
-//
-// Possible errors:
-//
-//	400 CHAT_ID_INVALID: The provided chat id is invalid.
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//
-// See https://core.telegram.org/method/messages.getChats for reference.
-// Can be used by bots.
 func (c *Client) MessagesGetChats(ctx context.Context, id []int64) (MessagesChatsClass, error) {
 	var result MessagesChatsBox
 

@@ -32,11 +32,8 @@ var (
 )
 
 // MessagesReceivedMessagesRequest represents TL type `messages.receivedMessages#5a954c0`.
-// Confirms receipt of messages by a client, cancels PUSH-notification sending.
-//
-// See https://core.telegram.org/method/messages.receivedMessages for reference.
 type MessagesReceivedMessagesRequest struct {
-	// Maximum message ID available in a client.
+	// MaxID field of MessagesReceivedMessagesRequest.
 	MaxID int
 }
 
@@ -69,13 +66,6 @@ func (r *MessagesReceivedMessagesRequest) String() string {
 	}
 	type Alias MessagesReceivedMessagesRequest
 	return fmt.Sprintf("MessagesReceivedMessagesRequest%+v", Alias(*r))
-}
-
-// FillFrom fills MessagesReceivedMessagesRequest from given interface.
-func (r *MessagesReceivedMessagesRequest) FillFrom(from interface {
-	GetMaxID() (value int)
-}) {
-	r.MaxID = from.GetMaxID()
 }
 
 // TypeID returns type id in TL schema.
@@ -162,9 +152,6 @@ func (r *MessagesReceivedMessagesRequest) GetMaxID() (value int) {
 }
 
 // MessagesReceivedMessages invokes method messages.receivedMessages#5a954c0 returning error if any.
-// Confirms receipt of messages by a client, cancels PUSH-notification sending.
-//
-// See https://core.telegram.org/method/messages.receivedMessages for reference.
 func (c *Client) MessagesReceivedMessages(ctx context.Context, maxid int) ([]ReceivedNotifyMessage, error) {
 	var result ReceivedNotifyMessageVector
 

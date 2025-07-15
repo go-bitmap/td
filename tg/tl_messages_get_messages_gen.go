@@ -32,11 +32,8 @@ var (
 )
 
 // MessagesGetMessagesRequest represents TL type `messages.getMessages#63c66506`.
-// Returns the list of messages by their IDs.
-//
-// See https://core.telegram.org/method/messages.getMessages for reference.
 type MessagesGetMessagesRequest struct {
-	// Message ID list
+	// ID field of MessagesGetMessagesRequest.
 	ID []InputMessageClass
 }
 
@@ -69,13 +66,6 @@ func (g *MessagesGetMessagesRequest) String() string {
 	}
 	type Alias MessagesGetMessagesRequest
 	return fmt.Sprintf("MessagesGetMessagesRequest%+v", Alias(*g))
-}
-
-// FillFrom fills MessagesGetMessagesRequest from given interface.
-func (g *MessagesGetMessagesRequest) FillFrom(from interface {
-	GetID() (value []InputMessageClass)
-}) {
-	g.ID = from.GetID()
 }
 
 // TypeID returns type id in TL schema.
@@ -179,16 +169,7 @@ func (g *MessagesGetMessagesRequest) GetID() (value []InputMessageClass) {
 	return g.ID
 }
 
-// MapID returns field ID wrapped in InputMessageClassArray helper.
-func (g *MessagesGetMessagesRequest) MapID() (value InputMessageClassArray) {
-	return InputMessageClassArray(g.ID)
-}
-
 // MessagesGetMessages invokes method messages.getMessages#63c66506 returning error if any.
-// Returns the list of messages by their IDs.
-//
-// See https://core.telegram.org/method/messages.getMessages for reference.
-// Can be used by bots.
 func (c *Client) MessagesGetMessages(ctx context.Context, id []InputMessageClass) (MessagesMessagesClass, error) {
 	var result MessagesMessagesBox
 

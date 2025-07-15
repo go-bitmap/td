@@ -32,17 +32,8 @@ var (
 )
 
 // ContactsImportContactsRequest represents TL type `contacts.importContacts#2c800be5`.
-// Imports contacts: saves a full list on the server, adds already registered contacts to
-// the contact list, returns added contacts and their info.
-// Use contacts.addContact¹ to add Telegram contacts without actually using their phone
-// number.
-//
-// Links:
-//  1. https://core.telegram.org/method/contacts.addContact
-//
-// See https://core.telegram.org/method/contacts.importContacts for reference.
 type ContactsImportContactsRequest struct {
-	// List of contacts to import
+	// Contacts field of ContactsImportContactsRequest.
 	Contacts []InputPhoneContact
 }
 
@@ -75,13 +66,6 @@ func (i *ContactsImportContactsRequest) String() string {
 	}
 	type Alias ContactsImportContactsRequest
 	return fmt.Sprintf("ContactsImportContactsRequest%+v", Alias(*i))
-}
-
-// FillFrom fills ContactsImportContactsRequest from given interface.
-func (i *ContactsImportContactsRequest) FillFrom(from interface {
-	GetContacts() (value []InputPhoneContact)
-}) {
-	i.Contacts = from.GetContacts()
 }
 
 // TypeID returns type id in TL schema.
@@ -183,15 +167,6 @@ func (i *ContactsImportContactsRequest) GetContacts() (value []InputPhoneContact
 }
 
 // ContactsImportContacts invokes method contacts.importContacts#2c800be5 returning error if any.
-// Imports contacts: saves a full list on the server, adds already registered contacts to
-// the contact list, returns added contacts and their info.
-// Use contacts.addContact¹ to add Telegram contacts without actually using their phone
-// number.
-//
-// Links:
-//  1. https://core.telegram.org/method/contacts.addContact
-//
-// See https://core.telegram.org/method/contacts.importContacts for reference.
 func (c *Client) ContactsImportContacts(ctx context.Context, contacts []InputPhoneContact) (*ContactsImportedContacts, error) {
 	var result ContactsImportedContacts
 

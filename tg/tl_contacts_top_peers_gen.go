@@ -32,9 +32,6 @@ var (
 )
 
 // ContactsTopPeersNotModified represents TL type `contacts.topPeersNotModified#de266ef5`.
-// Top peer info hasn't changed
-//
-// See https://core.telegram.org/constructor/contacts.topPeersNotModified for reference.
 type ContactsTopPeersNotModified struct {
 }
 
@@ -134,15 +131,12 @@ func (t *ContactsTopPeersNotModified) DecodeBare(b *bin.Buffer) error {
 }
 
 // ContactsTopPeers represents TL type `contacts.topPeers#70b772a8`.
-// Top peers
-//
-// See https://core.telegram.org/constructor/contacts.topPeers for reference.
 type ContactsTopPeers struct {
-	// Top peers by top peer category
+	// Categories field of ContactsTopPeers.
 	Categories []TopPeerCategoryPeers
-	// Chats
+	// Chats field of ContactsTopPeers.
 	Chats []ChatClass
-	// Users
+	// Users field of ContactsTopPeers.
 	Users []UserClass
 }
 
@@ -186,17 +180,6 @@ func (t *ContactsTopPeers) String() string {
 	}
 	type Alias ContactsTopPeers
 	return fmt.Sprintf("ContactsTopPeers%+v", Alias(*t))
-}
-
-// FillFrom fills ContactsTopPeers from given interface.
-func (t *ContactsTopPeers) FillFrom(from interface {
-	GetCategories() (value []TopPeerCategoryPeers)
-	GetChats() (value []ChatClass)
-	GetUsers() (value []UserClass)
-}) {
-	t.Categories = from.GetCategories()
-	t.Chats = from.GetChats()
-	t.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -373,20 +356,7 @@ func (t *ContactsTopPeers) GetUsers() (value []UserClass) {
 	return t.Users
 }
 
-// MapChats returns field Chats wrapped in ChatClassArray helper.
-func (t *ContactsTopPeers) MapChats() (value ChatClassArray) {
-	return ChatClassArray(t.Chats)
-}
-
-// MapUsers returns field Users wrapped in UserClassArray helper.
-func (t *ContactsTopPeers) MapUsers() (value UserClassArray) {
-	return UserClassArray(t.Users)
-}
-
 // ContactsTopPeersDisabled represents TL type `contacts.topPeersDisabled#b52c939d`.
-// Top peers disabled
-//
-// See https://core.telegram.org/constructor/contacts.topPeersDisabled for reference.
 type ContactsTopPeersDisabled struct {
 }
 
@@ -489,8 +459,6 @@ func (t *ContactsTopPeersDisabled) DecodeBare(b *bin.Buffer) error {
 const ContactsTopPeersClassName = "contacts.TopPeers"
 
 // ContactsTopPeersClass represents contacts.TopPeers generic type.
-//
-// See https://core.telegram.org/type/contacts.TopPeers for reference.
 //
 // Constructors:
 //   - [ContactsTopPeersNotModified]

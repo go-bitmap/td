@@ -32,33 +32,14 @@ var (
 )
 
 // AttachMenuBotIcon represents TL type `attachMenuBotIcon#b2a7386b`.
-// Represents an attachment menu icon for bot mini apps »¹
-//
-// Links:
-//  1. https://core.telegram.org/api/bots/attach
-//
-// See https://core.telegram.org/constructor/attachMenuBotIcon for reference.
 type AttachMenuBotIcon struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of AttachMenuBotIcon.
 	Flags bin.Fields
-	// One of the following values: note that animated icons must be played when the user
-	// clicks on the button, activating the bot mini app. default_static - Default attachment
-	// menu icon in SVG format placeholder_static - Default placeholder for opened Web Apps
-	// in SVG format ios_static - Attachment menu icon in SVG format for the official iOS app
-	// ios_animated - Animated attachment menu icon in TGS format for the official iOS app
-	// android_animated - Animated attachment menu icon in TGS format for the official
-	// Android app macos_animated - Animated attachment menu icon in TGS format for the
-	// official native Mac OS app ios_side_menu_static - Side menu icon in PNG format for the
-	// official iOS app android_side_menu_static - Side menu icon in SVG format for the
-	// official android app macos_side_menu_static - Side menu icon in PNG format for the
-	// official native Mac OS app
+	// Name field of AttachMenuBotIcon.
 	Name string
-	// The actual icon file.
+	// Icon field of AttachMenuBotIcon.
 	Icon DocumentClass
-	// Attachment menu icon colors.
+	// Colors field of AttachMenuBotIcon.
 	//
 	// Use SetColors and GetColors helpers.
 	Colors []AttachMenuBotIconColor
@@ -102,20 +83,6 @@ func (a *AttachMenuBotIcon) String() string {
 	}
 	type Alias AttachMenuBotIcon
 	return fmt.Sprintf("AttachMenuBotIcon%+v", Alias(*a))
-}
-
-// FillFrom fills AttachMenuBotIcon from given interface.
-func (a *AttachMenuBotIcon) FillFrom(from interface {
-	GetName() (value string)
-	GetIcon() (value DocumentClass)
-	GetColors() (value []AttachMenuBotIconColor, ok bool)
-}) {
-	a.Name = from.GetName()
-	a.Icon = from.GetIcon()
-	if val, ok := from.GetColors(); ok {
-		a.Colors = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -288,9 +255,4 @@ func (a *AttachMenuBotIcon) GetColors() (value []AttachMenuBotIconColor, ok bool
 		return value, false
 	}
 	return a.Colors, true
-}
-
-// GetIconAsNotEmpty returns mapped value of Icon field.
-func (a *AttachMenuBotIcon) GetIconAsNotEmpty() (*Document, bool) {
-	return a.Icon.AsNotEmpty()
 }

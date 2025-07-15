@@ -32,50 +32,28 @@ var (
 )
 
 // StickersCreateStickerSetRequest represents TL type `stickers.createStickerSet#9021ab67`.
-// Create a stickerset.
-//
-// See https://core.telegram.org/method/stickers.createStickerSet for reference.
 type StickersCreateStickerSetRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of StickersCreateStickerSetRequest.
 	Flags bin.Fields
-	// Whether this is a mask stickerset
+	// Masks field of StickersCreateStickerSetRequest.
 	Masks bool
-	// Whether this is a custom emoji¹ stickerset.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/custom-emoji
+	// Emojis field of StickersCreateStickerSetRequest.
 	Emojis bool
-	// Whether the color of TGS custom emojis contained in this set should be changed to the
-	// text color when used in messages, the accent color if used as emoji status, white on
-	// chat photos, or another appropriate color based on context. For custom emoji
-	// stickersets only.
+	// TextColor field of StickersCreateStickerSetRequest.
 	TextColor bool
-	// Stickerset owner
+	// UserID field of StickersCreateStickerSetRequest.
 	UserID InputUserClass
-	// Stickerset name, 1-64 chars
+	// Title field of StickersCreateStickerSetRequest.
 	Title string
-	// Short name of sticker set, to be used in sticker deep links »¹. Can contain only
-	// english letters, digits and underscores. Must begin with a letter, can't contain
-	// consecutive underscores and, if called by a bot, must end in "_by_<bot_username>".
-	// <bot_username> is case insensitive. 1-64 characters.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/links#stickerset-links
+	// ShortName field of StickersCreateStickerSetRequest.
 	ShortName string
-	// Thumbnail
+	// Thumb field of StickersCreateStickerSetRequest.
 	//
 	// Use SetThumb and GetThumb helpers.
 	Thumb InputDocumentClass
-	// Stickers
+	// Stickers field of StickersCreateStickerSetRequest.
 	Stickers []InputStickerSetItem
-	// Used when importing stickers using the sticker import SDKs¹, specifies the name of
-	// the software that created the stickers
-	//
-	// Links:
-	//  1) https://core.telegram.org/import-stickers
+	// Software field of StickersCreateStickerSetRequest.
 	//
 	// Use SetSoftware and GetSoftware helpers.
 	Software string
@@ -137,35 +115,6 @@ func (c *StickersCreateStickerSetRequest) String() string {
 	}
 	type Alias StickersCreateStickerSetRequest
 	return fmt.Sprintf("StickersCreateStickerSetRequest%+v", Alias(*c))
-}
-
-// FillFrom fills StickersCreateStickerSetRequest from given interface.
-func (c *StickersCreateStickerSetRequest) FillFrom(from interface {
-	GetMasks() (value bool)
-	GetEmojis() (value bool)
-	GetTextColor() (value bool)
-	GetUserID() (value InputUserClass)
-	GetTitle() (value string)
-	GetShortName() (value string)
-	GetThumb() (value InputDocumentClass, ok bool)
-	GetStickers() (value []InputStickerSetItem)
-	GetSoftware() (value string, ok bool)
-}) {
-	c.Masks = from.GetMasks()
-	c.Emojis = from.GetEmojis()
-	c.TextColor = from.GetTextColor()
-	c.UserID = from.GetUserID()
-	c.Title = from.GetTitle()
-	c.ShortName = from.GetShortName()
-	if val, ok := from.GetThumb(); ok {
-		c.Thumb = val
-	}
-
-	c.Stickers = from.GetStickers()
-	if val, ok := from.GetSoftware(); ok {
-		c.Software = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -505,41 +454,7 @@ func (c *StickersCreateStickerSetRequest) GetSoftware() (value string, ok bool) 
 	return c.Software, true
 }
 
-// GetThumbAsNotEmpty returns mapped value of Thumb conditional field and
-// boolean which is true if field was set.
-func (c *StickersCreateStickerSetRequest) GetThumbAsNotEmpty() (*InputDocument, bool) {
-	if value, ok := c.GetThumb(); ok {
-		return value.AsNotEmpty()
-	}
-	return nil, false
-}
-
 // StickersCreateStickerSet invokes method stickers.createStickerSet#9021ab67 returning error if any.
-// Create a stickerset.
-//
-// Possible errors:
-//
-//	400 PACK_SHORT_NAME_INVALID: Short pack name invalid.
-//	400 PACK_SHORT_NAME_OCCUPIED: A stickerpack with this name already exists.
-//	400 PACK_TITLE_INVALID: The stickerpack title is invalid.
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//	400 STICKERS_EMPTY: No sticker provided.
-//	400 STICKER_EMOJI_INVALID: Sticker emoji invalid.
-//	400 STICKER_FILE_INVALID: Sticker file invalid.
-//	400 STICKER_GIF_DIMENSIONS: The specified video sticker has invalid dimensions.
-//	400 STICKER_PNG_DIMENSIONS: Sticker png dimensions invalid.
-//	400 STICKER_PNG_NOPNG: One of the specified stickers is not a valid PNG file.
-//	400 STICKER_TGS_NODOC: You must send the animated sticker as a document.
-//	400 STICKER_TGS_NOTGS: Invalid TGS sticker provided.
-//	400 STICKER_THUMB_PNG_NOPNG: Incorrect stickerset thumb file provided, PNG / WEBP expected.
-//	400 STICKER_THUMB_TGS_NOTGS: Incorrect stickerset TGS thumb file provided.
-//	400 STICKER_VIDEO_BIG: The specified video sticker is too big.
-//	400 STICKER_VIDEO_NODOC: You must send the video sticker as a document.
-//	400 STICKER_VIDEO_NOWEBM: The specified video sticker is not in webm format.
-//	400 USER_ID_INVALID: The provided user ID is invalid.
-//
-// See https://core.telegram.org/method/stickers.createStickerSet for reference.
-// Can be used by bots.
 func (c *Client) StickersCreateStickerSet(ctx context.Context, request *StickersCreateStickerSetRequest) (MessagesStickerSetClass, error) {
 	var result MessagesStickerSetBox
 

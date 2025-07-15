@@ -32,9 +32,6 @@ var (
 )
 
 // AttachMenuPeerTypeSameBotPM represents TL type `attachMenuPeerTypeSameBotPM#7d6be90e`.
-// The bot attachment menu entry is available in the chat with the bot that offers it
-//
-// See https://core.telegram.org/constructor/attachMenuPeerTypeSameBotPM for reference.
 type AttachMenuPeerTypeSameBotPM struct {
 }
 
@@ -134,10 +131,6 @@ func (a *AttachMenuPeerTypeSameBotPM) DecodeBare(b *bin.Buffer) error {
 }
 
 // AttachMenuPeerTypeBotPM represents TL type `attachMenuPeerTypeBotPM#c32bfa1a`.
-// The bot attachment menu entry is available in private chats with other bots (excluding
-// the bot that offers the current attachment menu)
-//
-// See https://core.telegram.org/constructor/attachMenuPeerTypeBotPM for reference.
 type AttachMenuPeerTypeBotPM struct {
 }
 
@@ -237,10 +230,6 @@ func (a *AttachMenuPeerTypeBotPM) DecodeBare(b *bin.Buffer) error {
 }
 
 // AttachMenuPeerTypePM represents TL type `attachMenuPeerTypePM#f146d31f`.
-// The bot attachment menu entry is available in private chats with other users (not
-// bots)
-//
-// See https://core.telegram.org/constructor/attachMenuPeerTypePM for reference.
 type AttachMenuPeerTypePM struct {
 }
 
@@ -340,12 +329,6 @@ func (a *AttachMenuPeerTypePM) DecodeBare(b *bin.Buffer) error {
 }
 
 // AttachMenuPeerTypeChat represents TL type `attachMenuPeerTypeChat#509113f`.
-// The bot attachment menu entry is available in groups and supergroups¹
-//
-// Links:
-//  1. https://core.telegram.org/api/channel
-//
-// See https://core.telegram.org/constructor/attachMenuPeerTypeChat for reference.
 type AttachMenuPeerTypeChat struct {
 }
 
@@ -445,9 +428,6 @@ func (a *AttachMenuPeerTypeChat) DecodeBare(b *bin.Buffer) error {
 }
 
 // AttachMenuPeerTypeBroadcast represents TL type `attachMenuPeerTypeBroadcast#7bfbdefc`.
-// The bot attachment menu entry is available in channels
-//
-// See https://core.telegram.org/constructor/attachMenuPeerTypeBroadcast for reference.
 type AttachMenuPeerTypeBroadcast struct {
 }
 
@@ -550,8 +530,6 @@ func (a *AttachMenuPeerTypeBroadcast) DecodeBare(b *bin.Buffer) error {
 const AttachMenuPeerTypeClassName = "AttachMenuPeerType"
 
 // AttachMenuPeerTypeClass represents AttachMenuPeerType generic type.
-//
-// See https://core.telegram.org/type/AttachMenuPeerType for reference.
 //
 // Constructors:
 //   - [AttachMenuPeerTypeSameBotPM]

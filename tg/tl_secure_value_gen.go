@@ -32,70 +32,40 @@ var (
 )
 
 // SecureValue represents TL type `secureValue#187fa0ca`.
-// Secure value
-//
-// See https://core.telegram.org/constructor/secureValue for reference.
 type SecureValue struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of SecureValue.
 	Flags bin.Fields
-	// Secure passport¹ value type
-	//
-	// Links:
-	//  1) https://core.telegram.org/passport
+	// Type field of SecureValue.
 	Type SecureValueTypeClass
-	// Encrypted Telegram Passport¹ element data
-	//
-	// Links:
-	//  1) https://core.telegram.org/passport
+	// Data field of SecureValue.
 	//
 	// Use SetData and GetData helpers.
 	Data SecureData
-	// Encrypted passport¹ file with the front side of the document
-	//
-	// Links:
-	//  1) https://core.telegram.org/passport
+	// FrontSide field of SecureValue.
 	//
 	// Use SetFrontSide and GetFrontSide helpers.
 	FrontSide SecureFileClass
-	// Encrypted passport¹ file with the reverse side of the document
-	//
-	// Links:
-	//  1) https://core.telegram.org/passport
+	// ReverseSide field of SecureValue.
 	//
 	// Use SetReverseSide and GetReverseSide helpers.
 	ReverseSide SecureFileClass
-	// Encrypted passport¹ file with a selfie of the user holding the document
-	//
-	// Links:
-	//  1) https://core.telegram.org/passport
+	// Selfie field of SecureValue.
 	//
 	// Use SetSelfie and GetSelfie helpers.
 	Selfie SecureFileClass
-	// Array of encrypted passport¹ files with translated versions of the provided documents
-	//
-	// Links:
-	//  1) https://core.telegram.org/passport
+	// Translation field of SecureValue.
 	//
 	// Use SetTranslation and GetTranslation helpers.
 	Translation []SecureFileClass
-	// Array of encrypted passport¹ files with photos the of the documents
-	//
-	// Links:
-	//  1) https://core.telegram.org/passport
+	// Files field of SecureValue.
 	//
 	// Use SetFiles and GetFiles helpers.
 	Files []SecureFileClass
-	// Plaintext verified passport¹ data
-	//
-	// Links:
-	//  1) https://core.telegram.org/passport
+	// PlainData field of SecureValue.
 	//
 	// Use SetPlainData and GetPlainData helpers.
 	PlainData SecurePlainDataClass
-	// Data hash
+	// Hash field of SecureValue.
 	Hash []byte
 }
 
@@ -155,50 +125,6 @@ func (s *SecureValue) String() string {
 	}
 	type Alias SecureValue
 	return fmt.Sprintf("SecureValue%+v", Alias(*s))
-}
-
-// FillFrom fills SecureValue from given interface.
-func (s *SecureValue) FillFrom(from interface {
-	GetType() (value SecureValueTypeClass)
-	GetData() (value SecureData, ok bool)
-	GetFrontSide() (value SecureFileClass, ok bool)
-	GetReverseSide() (value SecureFileClass, ok bool)
-	GetSelfie() (value SecureFileClass, ok bool)
-	GetTranslation() (value []SecureFileClass, ok bool)
-	GetFiles() (value []SecureFileClass, ok bool)
-	GetPlainData() (value SecurePlainDataClass, ok bool)
-	GetHash() (value []byte)
-}) {
-	s.Type = from.GetType()
-	if val, ok := from.GetData(); ok {
-		s.Data = val
-	}
-
-	if val, ok := from.GetFrontSide(); ok {
-		s.FrontSide = val
-	}
-
-	if val, ok := from.GetReverseSide(); ok {
-		s.ReverseSide = val
-	}
-
-	if val, ok := from.GetSelfie(); ok {
-		s.Selfie = val
-	}
-
-	if val, ok := from.GetTranslation(); ok {
-		s.Translation = val
-	}
-
-	if val, ok := from.GetFiles(); ok {
-		s.Files = val
-	}
-
-	if val, ok := from.GetPlainData(); ok {
-		s.PlainData = val
-	}
-
-	s.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -628,47 +554,4 @@ func (s *SecureValue) GetHash() (value []byte) {
 		return
 	}
 	return s.Hash
-}
-
-// GetFrontSideAsNotEmpty returns mapped value of FrontSide conditional field and
-// boolean which is true if field was set.
-func (s *SecureValue) GetFrontSideAsNotEmpty() (*SecureFile, bool) {
-	if value, ok := s.GetFrontSide(); ok {
-		return value.AsNotEmpty()
-	}
-	return nil, false
-}
-
-// GetReverseSideAsNotEmpty returns mapped value of ReverseSide conditional field and
-// boolean which is true if field was set.
-func (s *SecureValue) GetReverseSideAsNotEmpty() (*SecureFile, bool) {
-	if value, ok := s.GetReverseSide(); ok {
-		return value.AsNotEmpty()
-	}
-	return nil, false
-}
-
-// GetSelfieAsNotEmpty returns mapped value of Selfie conditional field and
-// boolean which is true if field was set.
-func (s *SecureValue) GetSelfieAsNotEmpty() (*SecureFile, bool) {
-	if value, ok := s.GetSelfie(); ok {
-		return value.AsNotEmpty()
-	}
-	return nil, false
-}
-
-// MapTranslation returns field Translation wrapped in SecureFileClassArray helper.
-func (s *SecureValue) MapTranslation() (value SecureFileClassArray, ok bool) {
-	if !s.Flags.Has(6) {
-		return value, false
-	}
-	return SecureFileClassArray(s.Translation), true
-}
-
-// MapFiles returns field Files wrapped in SecureFileClassArray helper.
-func (s *SecureValue) MapFiles() (value SecureFileClassArray, ok bool) {
-	if !s.Flags.Has(4) {
-		return value, false
-	}
-	return SecureFileClassArray(s.Files), true
 }

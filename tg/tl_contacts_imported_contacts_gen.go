@@ -32,18 +32,14 @@ var (
 )
 
 // ContactsImportedContacts represents TL type `contacts.importedContacts#77d01c3b`.
-// Info on successfully imported contacts.
-//
-// See https://core.telegram.org/constructor/contacts.importedContacts for reference.
 type ContactsImportedContacts struct {
-	// List of successfully imported contacts
+	// Imported field of ContactsImportedContacts.
 	Imported []ImportedContact
-	// Popular contacts
+	// PopularInvites field of ContactsImportedContacts.
 	PopularInvites []PopularContact
-	// List of contact ids that could not be imported due to system limitation and will need
-	// to be imported at a later date.
+	// RetryContacts field of ContactsImportedContacts.
 	RetryContacts []int64
-	// List of users
+	// Users field of ContactsImportedContacts.
 	Users []UserClass
 }
 
@@ -85,19 +81,6 @@ func (i *ContactsImportedContacts) String() string {
 	}
 	type Alias ContactsImportedContacts
 	return fmt.Sprintf("ContactsImportedContacts%+v", Alias(*i))
-}
-
-// FillFrom fills ContactsImportedContacts from given interface.
-func (i *ContactsImportedContacts) FillFrom(from interface {
-	GetImported() (value []ImportedContact)
-	GetPopularInvites() (value []PopularContact)
-	GetRetryContacts() (value []int64)
-	GetUsers() (value []UserClass)
-}) {
-	i.Imported = from.GetImported()
-	i.PopularInvites = from.GetPopularInvites()
-	i.RetryContacts = from.GetRetryContacts()
-	i.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -302,9 +285,4 @@ func (i *ContactsImportedContacts) GetUsers() (value []UserClass) {
 		return
 	}
 	return i.Users
-}
-
-// MapUsers returns field Users wrapped in UserClassArray helper.
-func (i *ContactsImportedContacts) MapUsers() (value UserClassArray) {
-	return UserClassArray(i.Users)
 }

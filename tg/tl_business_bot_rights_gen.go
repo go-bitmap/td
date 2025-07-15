@@ -32,8 +32,6 @@ var (
 )
 
 // BusinessBotRights represents TL type `businessBotRights#a0624cf7`.
-//
-// See https://core.telegram.org/constructor/businessBotRights for reference.
 type BusinessBotRights struct {
 	// Flags field of BusinessBotRights.
 	Flags bin.Fields
@@ -138,39 +136,6 @@ func (b *BusinessBotRights) String() string {
 	}
 	type Alias BusinessBotRights
 	return fmt.Sprintf("BusinessBotRights%+v", Alias(*b))
-}
-
-// FillFrom fills BusinessBotRights from given interface.
-func (b *BusinessBotRights) FillFrom(from interface {
-	GetReply() (value bool)
-	GetReadMessages() (value bool)
-	GetDeleteSentMessages() (value bool)
-	GetDeleteReceivedMessages() (value bool)
-	GetEditName() (value bool)
-	GetEditBio() (value bool)
-	GetEditProfilePhoto() (value bool)
-	GetEditUsername() (value bool)
-	GetViewGifts() (value bool)
-	GetSellGifts() (value bool)
-	GetChangeGiftSettings() (value bool)
-	GetTransferAndUpgradeGifts() (value bool)
-	GetTransferStars() (value bool)
-	GetManageStories() (value bool)
-}) {
-	b.Reply = from.GetReply()
-	b.ReadMessages = from.GetReadMessages()
-	b.DeleteSentMessages = from.GetDeleteSentMessages()
-	b.DeleteReceivedMessages = from.GetDeleteReceivedMessages()
-	b.EditName = from.GetEditName()
-	b.EditBio = from.GetEditBio()
-	b.EditProfilePhoto = from.GetEditProfilePhoto()
-	b.EditUsername = from.GetEditUsername()
-	b.ViewGifts = from.GetViewGifts()
-	b.SellGifts = from.GetSellGifts()
-	b.ChangeGiftSettings = from.GetChangeGiftSettings()
-	b.TransferAndUpgradeGifts = from.GetTransferAndUpgradeGifts()
-	b.TransferStars = from.GetTransferStars()
-	b.ManageStories = from.GetManageStories()
 }
 
 // TypeID returns type id in TL schema.

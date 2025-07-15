@@ -32,19 +32,12 @@ var (
 )
 
 // PremiumMyBoosts represents TL type `premium.myBoosts#9ae228e2`.
-// A list of peers we are currently boosting¹, and how many boost slots² we have left.
-//
-// Links:
-//  1. https://core.telegram.org/api/boost
-//  2. https://core.telegram.org/api/boost
-//
-// See https://core.telegram.org/constructor/premium.myBoosts for reference.
 type PremiumMyBoosts struct {
-	// Info about boosted peers and remaining boost slots.
+	// MyBoosts field of PremiumMyBoosts.
 	MyBoosts []MyBoost
-	// Referenced chats
+	// Chats field of PremiumMyBoosts.
 	Chats []ChatClass
-	// Referenced users
+	// Users field of PremiumMyBoosts.
 	Users []UserClass
 }
 
@@ -83,17 +76,6 @@ func (m *PremiumMyBoosts) String() string {
 	}
 	type Alias PremiumMyBoosts
 	return fmt.Sprintf("PremiumMyBoosts%+v", Alias(*m))
-}
-
-// FillFrom fills PremiumMyBoosts from given interface.
-func (m *PremiumMyBoosts) FillFrom(from interface {
-	GetMyBoosts() (value []MyBoost)
-	GetChats() (value []ChatClass)
-	GetUsers() (value []UserClass)
-}) {
-	m.MyBoosts = from.GetMyBoosts()
-	m.Chats = from.GetChats()
-	m.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -268,14 +250,4 @@ func (m *PremiumMyBoosts) GetUsers() (value []UserClass) {
 		return
 	}
 	return m.Users
-}
-
-// MapChats returns field Chats wrapped in ChatClassArray helper.
-func (m *PremiumMyBoosts) MapChats() (value ChatClassArray) {
-	return ChatClassArray(m.Chats)
-}
-
-// MapUsers returns field Users wrapped in UserClassArray helper.
-func (m *PremiumMyBoosts) MapUsers() (value UserClassArray) {
-	return UserClassArray(m.Users)
 }

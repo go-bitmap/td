@@ -32,17 +32,14 @@ var (
 )
 
 // MessagesReportRequest represents TL type `messages.report#fc78af9b`.
-// Report a message in a chat for violation of telegram's Terms of Service
-//
-// See https://core.telegram.org/method/messages.report for reference.
 type MessagesReportRequest struct {
-	// Peer
+	// Peer field of MessagesReportRequest.
 	Peer InputPeerClass
-	// IDs of messages to report
+	// ID field of MessagesReportRequest.
 	ID []int
-	// Menu option, intially empty
+	// Option field of MessagesReportRequest.
 	Option []byte
-	// Comment for report moderation
+	// Message field of MessagesReportRequest.
 	Message string
 }
 
@@ -84,19 +81,6 @@ func (r *MessagesReportRequest) String() string {
 	}
 	type Alias MessagesReportRequest
 	return fmt.Sprintf("MessagesReportRequest%+v", Alias(*r))
-}
-
-// FillFrom fills MessagesReportRequest from given interface.
-func (r *MessagesReportRequest) FillFrom(from interface {
-	GetPeer() (value InputPeerClass)
-	GetID() (value []int)
-	GetOption() (value []byte)
-	GetMessage() (value string)
-}) {
-	r.Peer = from.GetPeer()
-	r.ID = from.GetID()
-	r.Option = from.GetOption()
-	r.Message = from.GetMessage()
 }
 
 // TypeID returns type id in TL schema.
@@ -261,15 +245,6 @@ func (r *MessagesReportRequest) GetMessage() (value string) {
 }
 
 // MessagesReport invokes method messages.report#fc78af9b returning error if any.
-// Report a message in a chat for violation of telegram's Terms of Service
-//
-// Possible errors:
-//
-//	400 CHANNEL_INVALID: The provided channel is invalid.
-//	400 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//
-// See https://core.telegram.org/method/messages.report for reference.
 func (c *Client) MessagesReport(ctx context.Context, request *MessagesReportRequest) (ReportResultClass, error) {
 	var result ReportResultBox
 

@@ -32,14 +32,8 @@ var (
 )
 
 // PaymentsCheckGiftCodeRequest represents TL type `payments.checkGiftCode#8e51b4c1`.
-// Obtain information about a Telegram Premium giftcode »¹
-//
-// Links:
-//  1. https://core.telegram.org/api/giveaways
-//
-// See https://core.telegram.org/method/payments.checkGiftCode for reference.
 type PaymentsCheckGiftCodeRequest struct {
-	// The giftcode to check
+	// Slug field of PaymentsCheckGiftCodeRequest.
 	Slug string
 }
 
@@ -72,13 +66,6 @@ func (c *PaymentsCheckGiftCodeRequest) String() string {
 	}
 	type Alias PaymentsCheckGiftCodeRequest
 	return fmt.Sprintf("PaymentsCheckGiftCodeRequest%+v", Alias(*c))
-}
-
-// FillFrom fills PaymentsCheckGiftCodeRequest from given interface.
-func (c *PaymentsCheckGiftCodeRequest) FillFrom(from interface {
-	GetSlug() (value string)
-}) {
-	c.Slug = from.GetSlug()
 }
 
 // TypeID returns type id in TL schema.
@@ -165,17 +152,6 @@ func (c *PaymentsCheckGiftCodeRequest) GetSlug() (value string) {
 }
 
 // PaymentsCheckGiftCode invokes method payments.checkGiftCode#8e51b4c1 returning error if any.
-// Obtain information about a Telegram Premium giftcode »¹
-//
-// Links:
-//  1. https://core.telegram.org/api/giveaways
-//
-// Possible errors:
-//
-//	400 GIFT_SLUG_EXPIRED: The specified gift slug has expired.
-//	400 GIFT_SLUG_INVALID: The specified slug is invalid.
-//
-// See https://core.telegram.org/method/payments.checkGiftCode for reference.
 func (c *Client) PaymentsCheckGiftCode(ctx context.Context, slug string) (*PaymentsCheckedGiftCode, error) {
 	var result PaymentsCheckedGiftCode
 

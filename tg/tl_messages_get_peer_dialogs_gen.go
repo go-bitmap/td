@@ -32,11 +32,8 @@ var (
 )
 
 // MessagesGetPeerDialogsRequest represents TL type `messages.getPeerDialogs#e470bcfd`.
-// Get dialog info of specified peers
-//
-// See https://core.telegram.org/method/messages.getPeerDialogs for reference.
 type MessagesGetPeerDialogsRequest struct {
-	// Peers
+	// Peers field of MessagesGetPeerDialogsRequest.
 	Peers []InputDialogPeerClass
 }
 
@@ -69,13 +66,6 @@ func (g *MessagesGetPeerDialogsRequest) String() string {
 	}
 	type Alias MessagesGetPeerDialogsRequest
 	return fmt.Sprintf("MessagesGetPeerDialogsRequest%+v", Alias(*g))
-}
-
-// FillFrom fills MessagesGetPeerDialogsRequest from given interface.
-func (g *MessagesGetPeerDialogsRequest) FillFrom(from interface {
-	GetPeers() (value []InputDialogPeerClass)
-}) {
-	g.Peers = from.GetPeers()
 }
 
 // TypeID returns type id in TL schema.
@@ -179,23 +169,7 @@ func (g *MessagesGetPeerDialogsRequest) GetPeers() (value []InputDialogPeerClass
 	return g.Peers
 }
 
-// MapPeers returns field Peers wrapped in InputDialogPeerClassArray helper.
-func (g *MessagesGetPeerDialogsRequest) MapPeers() (value InputDialogPeerClassArray) {
-	return InputDialogPeerClassArray(g.Peers)
-}
-
 // MessagesGetPeerDialogs invokes method messages.getPeerDialogs#e470bcfd returning error if any.
-// Get dialog info of specified peers
-//
-// Possible errors:
-//
-//	400 CHANNEL_INVALID: The provided channel is invalid.
-//	406 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
-//	400 INPUT_PEERS_EMPTY: The specified peer array is empty.
-//	400 MSG_ID_INVALID: Invalid message ID provided.
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//
-// See https://core.telegram.org/method/messages.getPeerDialogs for reference.
 func (c *Client) MessagesGetPeerDialogs(ctx context.Context, peers []InputDialogPeerClass) (*MessagesPeerDialogs, error) {
 	var result MessagesPeerDialogs
 

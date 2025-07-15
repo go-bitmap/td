@@ -32,8 +32,6 @@ var (
 )
 
 // PaymentsValidatedRequestedInfo represents TL type `payments.validatedRequestedInfo#d1451883`.
-//
-// See https://core.telegram.org/constructor/payments.validatedRequestedInfo for reference.
 type PaymentsValidatedRequestedInfo struct {
 	// Flags field of PaymentsValidatedRequestedInfo.
 	Flags bin.Fields
@@ -82,21 +80,6 @@ func (v *PaymentsValidatedRequestedInfo) String() string {
 	}
 	type Alias PaymentsValidatedRequestedInfo
 	return fmt.Sprintf("PaymentsValidatedRequestedInfo%+v", Alias(*v))
-}
-
-// FillFrom fills PaymentsValidatedRequestedInfo from given interface.
-func (v *PaymentsValidatedRequestedInfo) FillFrom(from interface {
-	GetID() (value string, ok bool)
-	GetShippingOptions() (value []ShippingOption, ok bool)
-}) {
-	if val, ok := from.GetID(); ok {
-		v.ID = val
-	}
-
-	if val, ok := from.GetShippingOptions(); ok {
-		v.ShippingOptions = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.

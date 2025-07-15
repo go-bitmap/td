@@ -32,19 +32,16 @@ var (
 )
 
 // WebDocument represents TL type `webDocument#1c570ed1`.
-// Remote document
-//
-// See https://core.telegram.org/constructor/webDocument for reference.
 type WebDocument struct {
-	// Document URL
+	// URL field of WebDocument.
 	URL string
-	// Access hash
+	// AccessHash field of WebDocument.
 	AccessHash int64
-	// File size
+	// Size field of WebDocument.
 	Size int
-	// MIME type
+	// MimeType field of WebDocument.
 	MimeType string
-	// Attributes for media types
+	// Attributes field of WebDocument.
 	Attributes []DocumentAttributeClass
 }
 
@@ -94,21 +91,6 @@ func (w *WebDocument) String() string {
 	}
 	type Alias WebDocument
 	return fmt.Sprintf("WebDocument%+v", Alias(*w))
-}
-
-// FillFrom fills WebDocument from given interface.
-func (w *WebDocument) FillFrom(from interface {
-	GetURL() (value string)
-	GetAccessHash() (value int64)
-	GetSize() (value int)
-	GetMimeType() (value string)
-	GetAttributes() (value []DocumentAttributeClass)
-}) {
-	w.URL = from.GetURL()
-	w.AccessHash = from.GetAccessHash()
-	w.Size = from.GetSize()
-	w.MimeType = from.GetMimeType()
-	w.Attributes = from.GetAttributes()
 }
 
 // TypeID returns type id in TL schema.
@@ -292,26 +274,15 @@ func (w *WebDocument) GetAttributes() (value []DocumentAttributeClass) {
 	return w.Attributes
 }
 
-// MapAttributes returns field Attributes wrapped in DocumentAttributeClassArray helper.
-func (w *WebDocument) MapAttributes() (value DocumentAttributeClassArray) {
-	return DocumentAttributeClassArray(w.Attributes)
-}
-
 // WebDocumentNoProxy represents TL type `webDocumentNoProxy#f9c8bcc6`.
-// Remote document that can be downloaded without proxying through telegram¹
-//
-// Links:
-//  1. https://core.telegram.org/api/files
-//
-// See https://core.telegram.org/constructor/webDocumentNoProxy for reference.
 type WebDocumentNoProxy struct {
-	// Document URL
+	// URL field of WebDocumentNoProxy.
 	URL string
-	// File size
+	// Size field of WebDocumentNoProxy.
 	Size int
-	// MIME type
+	// MimeType field of WebDocumentNoProxy.
 	MimeType string
-	// Attributes for media types
+	// Attributes field of WebDocumentNoProxy.
 	Attributes []DocumentAttributeClass
 }
 
@@ -358,19 +329,6 @@ func (w *WebDocumentNoProxy) String() string {
 	}
 	type Alias WebDocumentNoProxy
 	return fmt.Sprintf("WebDocumentNoProxy%+v", Alias(*w))
-}
-
-// FillFrom fills WebDocumentNoProxy from given interface.
-func (w *WebDocumentNoProxy) FillFrom(from interface {
-	GetURL() (value string)
-	GetSize() (value int)
-	GetMimeType() (value string)
-	GetAttributes() (value []DocumentAttributeClass)
-}) {
-	w.URL = from.GetURL()
-	w.Size = from.GetSize()
-	w.MimeType = from.GetMimeType()
-	w.Attributes = from.GetAttributes()
 }
 
 // TypeID returns type id in TL schema.
@@ -534,17 +492,10 @@ func (w *WebDocumentNoProxy) GetAttributes() (value []DocumentAttributeClass) {
 	return w.Attributes
 }
 
-// MapAttributes returns field Attributes wrapped in DocumentAttributeClassArray helper.
-func (w *WebDocumentNoProxy) MapAttributes() (value DocumentAttributeClassArray) {
-	return DocumentAttributeClassArray(w.Attributes)
-}
-
 // WebDocumentClassName is schema name of WebDocumentClass.
 const WebDocumentClassName = "WebDocument"
 
 // WebDocumentClass represents WebDocument generic type.
-//
-// See https://core.telegram.org/type/WebDocument for reference.
 //
 // Constructors:
 //   - [WebDocument]
@@ -579,30 +530,14 @@ type WebDocumentClass interface {
 	// Zero returns true if current object has a zero value.
 	Zero() bool
 
-	// Document URL
+	// URL field of WebDocument.
 	GetURL() (value string)
-
-	// File size
+	// Size field of WebDocument.
 	GetSize() (value int)
-
-	// MIME type
+	// MimeType field of WebDocument.
 	GetMimeType() (value string)
-
-	// Attributes for media types
+	// Attributes field of WebDocument.
 	GetAttributes() (value []DocumentAttributeClass)
-	// Attributes for media types
-	MapAttributes() (value DocumentAttributeClassArray)
-}
-
-// AsInput tries to map WebDocument to InputWebDocument.
-func (w *WebDocument) AsInput() *InputWebDocument {
-	value := new(InputWebDocument)
-	value.URL = w.GetURL()
-	value.Size = w.GetSize()
-	value.MimeType = w.GetMimeType()
-	value.Attributes = w.GetAttributes()
-
-	return value
 }
 
 // DecodeWebDocument implements binary de-serialization for WebDocumentClass.

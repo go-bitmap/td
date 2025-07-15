@@ -32,21 +32,12 @@ var (
 )
 
 // MessagesSendVoteRequest represents TL type `messages.sendVote#10ea6184`.
-// Vote in a poll¹
-// Starting from layer 159, the vote will be sent from the peer specified using messages
-// saveDefaultSendAs¹.
-//
-// Links:
-//  1. https://core.telegram.org/constructor/poll
-//  2. https://core.telegram.org/method/messages.saveDefaultSendAs
-//
-// See https://core.telegram.org/method/messages.sendVote for reference.
 type MessagesSendVoteRequest struct {
-	// The chat where the poll was sent
+	// Peer field of MessagesSendVoteRequest.
 	Peer InputPeerClass
-	// The message ID of the poll
+	// MsgID field of MessagesSendVoteRequest.
 	MsgID int
-	// The options that were chosen
+	// Options field of MessagesSendVoteRequest.
 	Options [][]byte
 }
 
@@ -85,17 +76,6 @@ func (s *MessagesSendVoteRequest) String() string {
 	}
 	type Alias MessagesSendVoteRequest
 	return fmt.Sprintf("MessagesSendVoteRequest%+v", Alias(*s))
-}
-
-// FillFrom fills MessagesSendVoteRequest from given interface.
-func (s *MessagesSendVoteRequest) FillFrom(from interface {
-	GetPeer() (value InputPeerClass)
-	GetMsgID() (value int)
-	GetOptions() (value [][]byte)
-}) {
-	s.Peer = from.GetPeer()
-	s.MsgID = from.GetMsgID()
-	s.Options = from.GetOptions()
 }
 
 // TypeID returns type id in TL schema.
@@ -240,27 +220,6 @@ func (s *MessagesSendVoteRequest) GetOptions() (value [][]byte) {
 }
 
 // MessagesSendVote invokes method messages.sendVote#10ea6184 returning error if any.
-// Vote in a poll¹
-// Starting from layer 159, the vote will be sent from the peer specified using messages
-// saveDefaultSendAs¹.
-//
-// Links:
-//  1. https://core.telegram.org/constructor/poll
-//  2. https://core.telegram.org/method/messages.saveDefaultSendAs
-//
-// Possible errors:
-//
-//	400 CHANNEL_INVALID: The provided channel is invalid.
-//	400 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
-//	400 MESSAGE_ID_INVALID: The provided message id is invalid.
-//	400 MESSAGE_POLL_CLOSED: Poll closed.
-//	400 MSG_ID_INVALID: Invalid message ID provided.
-//	400 OPTIONS_TOO_MUCH: Too many options provided.
-//	400 OPTION_INVALID: Invalid option selected.
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//	400 REVOTE_NOT_ALLOWED: You cannot change your vote.
-//
-// See https://core.telegram.org/method/messages.sendVote for reference.
 func (c *Client) MessagesSendVote(ctx context.Context, request *MessagesSendVoteRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

@@ -32,13 +32,10 @@ var (
 )
 
 // AuthExportedAuthorization represents TL type `auth.exportedAuthorization#b434e2b8`.
-// Data for copying of authorization between data centers.
-//
-// See https://core.telegram.org/constructor/auth.exportedAuthorization for reference.
 type AuthExportedAuthorization struct {
-	// current user identifier
+	// ID field of AuthExportedAuthorization.
 	ID int64
-	// authorizes key
+	// Bytes field of AuthExportedAuthorization.
 	Bytes []byte
 }
 
@@ -74,15 +71,6 @@ func (e *AuthExportedAuthorization) String() string {
 	}
 	type Alias AuthExportedAuthorization
 	return fmt.Sprintf("AuthExportedAuthorization%+v", Alias(*e))
-}
-
-// FillFrom fills AuthExportedAuthorization from given interface.
-func (e *AuthExportedAuthorization) FillFrom(from interface {
-	GetID() (value int64)
-	GetBytes() (value []byte)
-}) {
-	e.ID = from.GetID()
-	e.Bytes = from.GetBytes()
 }
 
 // TypeID returns type id in TL schema.

@@ -32,10 +32,6 @@ var (
 )
 
 // AuthCodeTypeSMS represents TL type `auth.codeTypeSms#72a3158c`.
-// The next time, the authentication code will be delivered via an immediately canceled
-// incoming call.
-//
-// See https://core.telegram.org/constructor/auth.codeTypeSms for reference.
 type AuthCodeTypeSMS struct {
 }
 
@@ -135,9 +131,6 @@ func (c *AuthCodeTypeSMS) DecodeBare(b *bin.Buffer) error {
 }
 
 // AuthCodeTypeCall represents TL type `auth.codeTypeCall#741cd3e3`.
-// The next time, the authentication code is to be delivered via an outgoing phone call.
-//
-// See https://core.telegram.org/constructor/auth.codeTypeCall for reference.
 type AuthCodeTypeCall struct {
 }
 
@@ -237,10 +230,6 @@ func (c *AuthCodeTypeCall) DecodeBare(b *bin.Buffer) error {
 }
 
 // AuthCodeTypeFlashCall represents TL type `auth.codeTypeFlashCall#226ccefb`.
-// The next time, the authentication code will be delivered via an immediately canceled
-// incoming call.
-//
-// See https://core.telegram.org/constructor/auth.codeTypeFlashCall for reference.
 type AuthCodeTypeFlashCall struct {
 }
 
@@ -340,10 +329,6 @@ func (c *AuthCodeTypeFlashCall) DecodeBare(b *bin.Buffer) error {
 }
 
 // AuthCodeTypeMissedCall represents TL type `auth.codeTypeMissedCall#d61ad6ee`.
-// The next time, the authentication code will be delivered via an immediately canceled
-// incoming call, handled manually by the user.
-//
-// See https://core.telegram.org/constructor/auth.codeTypeMissedCall for reference.
 type AuthCodeTypeMissedCall struct {
 }
 
@@ -443,12 +428,6 @@ func (c *AuthCodeTypeMissedCall) DecodeBare(b *bin.Buffer) error {
 }
 
 // AuthCodeTypeFragmentSMS represents TL type `auth.codeTypeFragmentSms#6ed998c`.
-// The next time, the authentication code will be delivered via fragment.com¹
-//
-// Links:
-//  1. https://fragment.com
-//
-// See https://core.telegram.org/constructor/auth.codeTypeFragmentSms for reference.
 type AuthCodeTypeFragmentSMS struct {
 }
 
@@ -551,8 +530,6 @@ func (c *AuthCodeTypeFragmentSMS) DecodeBare(b *bin.Buffer) error {
 const AuthCodeTypeClassName = "auth.CodeType"
 
 // AuthCodeTypeClass represents auth.CodeType generic type.
-//
-// See https://core.telegram.org/type/auth.CodeType for reference.
 //
 // Constructors:
 //   - [AuthCodeTypeSMS]

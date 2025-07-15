@@ -32,21 +32,12 @@ var (
 )
 
 // MessagesGetOldFeaturedStickersRequest represents TL type `messages.getOldFeaturedStickers#7ed094a1`.
-// Method for fetching previously featured stickers
-//
-// See https://core.telegram.org/method/messages.getOldFeaturedStickers for reference.
 type MessagesGetOldFeaturedStickersRequest struct {
-	// Offset
+	// Offset field of MessagesGetOldFeaturedStickersRequest.
 	Offset int
-	// Maximum number of results to return, see pagination¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets
+	// Limit field of MessagesGetOldFeaturedStickersRequest.
 	Limit int
-	// Hash used for caching, for more info click here¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets#hash-generation
+	// Hash field of MessagesGetOldFeaturedStickersRequest.
 	Hash int64
 }
 
@@ -85,17 +76,6 @@ func (g *MessagesGetOldFeaturedStickersRequest) String() string {
 	}
 	type Alias MessagesGetOldFeaturedStickersRequest
 	return fmt.Sprintf("MessagesGetOldFeaturedStickersRequest%+v", Alias(*g))
-}
-
-// FillFrom fills MessagesGetOldFeaturedStickersRequest from given interface.
-func (g *MessagesGetOldFeaturedStickersRequest) FillFrom(from interface {
-	GetOffset() (value int)
-	GetLimit() (value int)
-	GetHash() (value int64)
-}) {
-	g.Offset = from.GetOffset()
-	g.Limit = from.GetLimit()
-	g.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -222,9 +202,6 @@ func (g *MessagesGetOldFeaturedStickersRequest) GetHash() (value int64) {
 }
 
 // MessagesGetOldFeaturedStickers invokes method messages.getOldFeaturedStickers#7ed094a1 returning error if any.
-// Method for fetching previously featured stickers
-//
-// See https://core.telegram.org/method/messages.getOldFeaturedStickers for reference.
 func (c *Client) MessagesGetOldFeaturedStickers(ctx context.Context, request *MessagesGetOldFeaturedStickersRequest) (MessagesFeaturedStickersClass, error) {
 	var result MessagesFeaturedStickersBox
 

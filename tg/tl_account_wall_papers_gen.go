@@ -32,12 +32,6 @@ var (
 )
 
 // AccountWallPapersNotModified represents TL type `account.wallPapersNotModified#1c199183`.
-// No new wallpapers¹ were found
-//
-// Links:
-//  1. https://core.telegram.org/api/wallpapers
-//
-// See https://core.telegram.org/constructor/account.wallPapersNotModified for reference.
 type AccountWallPapersNotModified struct {
 }
 
@@ -137,22 +131,10 @@ func (w *AccountWallPapersNotModified) DecodeBare(b *bin.Buffer) error {
 }
 
 // AccountWallPapers represents TL type `account.wallPapers#cdc3858c`.
-// Installed wallpapers¹
-//
-// Links:
-//  1. https://core.telegram.org/api/wallpapers
-//
-// See https://core.telegram.org/constructor/account.wallPapers for reference.
 type AccountWallPapers struct {
-	// Hash used for caching, for more info click here¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets#hash-generation
+	// Hash field of AccountWallPapers.
 	Hash int64
-	// Wallpapers¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/wallpapers
+	// Wallpapers field of AccountWallPapers.
 	Wallpapers []WallPaperClass
 }
 
@@ -193,15 +175,6 @@ func (w *AccountWallPapers) String() string {
 	}
 	type Alias AccountWallPapers
 	return fmt.Sprintf("AccountWallPapers%+v", Alias(*w))
-}
-
-// FillFrom fills AccountWallPapers from given interface.
-func (w *AccountWallPapers) FillFrom(from interface {
-	GetHash() (value int64)
-	GetWallpapers() (value []WallPaperClass)
-}) {
-	w.Hash = from.GetHash()
-	w.Wallpapers = from.GetWallpapers()
 }
 
 // TypeID returns type id in TL schema.
@@ -325,17 +298,10 @@ func (w *AccountWallPapers) GetWallpapers() (value []WallPaperClass) {
 	return w.Wallpapers
 }
 
-// MapWallpapers returns field Wallpapers wrapped in WallPaperClassArray helper.
-func (w *AccountWallPapers) MapWallpapers() (value WallPaperClassArray) {
-	return WallPaperClassArray(w.Wallpapers)
-}
-
 // AccountWallPapersClassName is schema name of AccountWallPapersClass.
 const AccountWallPapersClassName = "account.WallPapers"
 
 // AccountWallPapersClass represents account.WallPapers generic type.
-//
-// See https://core.telegram.org/type/account.WallPapers for reference.
 //
 // Constructors:
 //   - [AccountWallPapersNotModified]
@@ -369,19 +335,6 @@ type AccountWallPapersClass interface {
 	String() string
 	// Zero returns true if current object has a zero value.
 	Zero() bool
-
-	// AsModified tries to map AccountWallPapersClass to AccountWallPapers.
-	AsModified() (*AccountWallPapers, bool)
-}
-
-// AsModified tries to map AccountWallPapersNotModified to AccountWallPapers.
-func (w *AccountWallPapersNotModified) AsModified() (*AccountWallPapers, bool) {
-	return nil, false
-}
-
-// AsModified tries to map AccountWallPapers to AccountWallPapers.
-func (w *AccountWallPapers) AsModified() (*AccountWallPapers, bool) {
-	return w, true
 }
 
 // DecodeAccountWallPapers implements binary de-serialization for AccountWallPapersClass.

@@ -32,30 +32,14 @@ var (
 )
 
 // ContactsSetBlockedRequest represents TL type `contacts.setBlocked#94c65c76`.
-// Replace the contents of an entire blocklist, see here for more info »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/block
-//
-// See https://core.telegram.org/method/contacts.setBlocked for reference.
 type ContactsSetBlockedRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of ContactsSetBlockedRequest.
 	Flags bin.Fields
-	// Whether to edit the story blocklist; if not set, will edit the main blocklist. See
-	// here »¹ for differences between the two.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/block
+	// MyStoriesFrom field of ContactsSetBlockedRequest.
 	MyStoriesFrom bool
-	// Full content of the blocklist.
+	// ID field of ContactsSetBlockedRequest.
 	ID []InputPeerClass
-	// Maximum number of results to return, see pagination¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets
+	// Limit field of ContactsSetBlockedRequest.
 	Limit int
 }
 
@@ -97,17 +81,6 @@ func (s *ContactsSetBlockedRequest) String() string {
 	}
 	type Alias ContactsSetBlockedRequest
 	return fmt.Sprintf("ContactsSetBlockedRequest%+v", Alias(*s))
-}
-
-// FillFrom fills ContactsSetBlockedRequest from given interface.
-func (s *ContactsSetBlockedRequest) FillFrom(from interface {
-	GetMyStoriesFrom() (value bool)
-	GetID() (value []InputPeerClass)
-	GetLimit() (value int)
-}) {
-	s.MyStoriesFrom = from.GetMyStoriesFrom()
-	s.ID = from.GetID()
-	s.Limit = from.GetLimit()
 }
 
 // TypeID returns type id in TL schema.
@@ -272,18 +245,7 @@ func (s *ContactsSetBlockedRequest) GetLimit() (value int) {
 	return s.Limit
 }
 
-// MapID returns field ID wrapped in InputPeerClassArray helper.
-func (s *ContactsSetBlockedRequest) MapID() (value InputPeerClassArray) {
-	return InputPeerClassArray(s.ID)
-}
-
 // ContactsSetBlocked invokes method contacts.setBlocked#94c65c76 returning error if any.
-// Replace the contents of an entire blocklist, see here for more info »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/block
-//
-// See https://core.telegram.org/method/contacts.setBlocked for reference.
 func (c *Client) ContactsSetBlocked(ctx context.Context, request *ContactsSetBlockedRequest) (bool, error) {
 	var result BoolBox
 

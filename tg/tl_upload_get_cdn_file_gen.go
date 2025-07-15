@@ -32,18 +32,12 @@ var (
 )
 
 // UploadGetCDNFileRequest represents TL type `upload.getCdnFile#395f69da`.
-// Download a CDN¹ file.
-//
-// Links:
-//  1. https://core.telegram.org/cdn
-//
-// See https://core.telegram.org/method/upload.getCdnFile for reference.
 type UploadGetCDNFileRequest struct {
-	// File token
+	// FileToken field of UploadGetCDNFileRequest.
 	FileToken []byte
-	// Offset of chunk to download
+	// Offset field of UploadGetCDNFileRequest.
 	Offset int64
-	// Length of chunk to download
+	// Limit field of UploadGetCDNFileRequest.
 	Limit int
 }
 
@@ -82,17 +76,6 @@ func (g *UploadGetCDNFileRequest) String() string {
 	}
 	type Alias UploadGetCDNFileRequest
 	return fmt.Sprintf("UploadGetCDNFileRequest%+v", Alias(*g))
-}
-
-// FillFrom fills UploadGetCDNFileRequest from given interface.
-func (g *UploadGetCDNFileRequest) FillFrom(from interface {
-	GetFileToken() (value []byte)
-	GetOffset() (value int64)
-	GetLimit() (value int)
-}) {
-	g.FileToken = from.GetFileToken()
-	g.Offset = from.GetOffset()
-	g.Limit = from.GetLimit()
 }
 
 // TypeID returns type id in TL schema.
@@ -219,16 +202,6 @@ func (g *UploadGetCDNFileRequest) GetLimit() (value int) {
 }
 
 // UploadGetCDNFile invokes method upload.getCdnFile#395f69da returning error if any.
-// Download a CDN¹ file.
-//
-// Links:
-//  1. https://core.telegram.org/cdn
-//
-// Possible errors:
-//
-//	400 FILE_TOKEN_INVALID: The master DC did not accept the file_token (e.g., the token has expired). Continue downloading the file from the master DC using upload.getFile.
-//
-// See https://core.telegram.org/method/upload.getCdnFile for reference.
 func (c *Client) UploadGetCDNFile(ctx context.Context, request *UploadGetCDNFileRequest) (UploadCDNFileClass, error) {
 	var result UploadCDNFileBox
 

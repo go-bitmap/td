@@ -32,20 +32,16 @@ var (
 )
 
 // AccountAcceptAuthorizationRequest represents TL type `account.acceptAuthorization#f3ed4c73`.
-// Sends a Telegram Passport authorization form, effectively sharing data with the
-// service
-//
-// See https://core.telegram.org/method/account.acceptAuthorization for reference.
 type AccountAcceptAuthorizationRequest struct {
-	// Bot ID
+	// BotID field of AccountAcceptAuthorizationRequest.
 	BotID int64
-	// Telegram Passport element types requested by the service
+	// Scope field of AccountAcceptAuthorizationRequest.
 	Scope string
-	// Service's public key
+	// PublicKey field of AccountAcceptAuthorizationRequest.
 	PublicKey string
-	// Types of values sent and their hashes
+	// ValueHashes field of AccountAcceptAuthorizationRequest.
 	ValueHashes []SecureValueHash
-	// Encrypted values
+	// Credentials field of AccountAcceptAuthorizationRequest.
 	Credentials SecureCredentialsEncrypted
 }
 
@@ -90,21 +86,6 @@ func (a *AccountAcceptAuthorizationRequest) String() string {
 	}
 	type Alias AccountAcceptAuthorizationRequest
 	return fmt.Sprintf("AccountAcceptAuthorizationRequest%+v", Alias(*a))
-}
-
-// FillFrom fills AccountAcceptAuthorizationRequest from given interface.
-func (a *AccountAcceptAuthorizationRequest) FillFrom(from interface {
-	GetBotID() (value int64)
-	GetScope() (value string)
-	GetPublicKey() (value string)
-	GetValueHashes() (value []SecureValueHash)
-	GetCredentials() (value SecureCredentialsEncrypted)
-}) {
-	a.BotID = from.GetBotID()
-	a.Scope = from.GetScope()
-	a.PublicKey = from.GetPublicKey()
-	a.ValueHashes = from.GetValueHashes()
-	a.Credentials = from.GetCredentials()
 }
 
 // TypeID returns type id in TL schema.
@@ -286,15 +267,6 @@ func (a *AccountAcceptAuthorizationRequest) GetCredentials() (value SecureCreden
 }
 
 // AccountAcceptAuthorization invokes method account.acceptAuthorization#f3ed4c73 returning error if any.
-// Sends a Telegram Passport authorization form, effectively sharing data with the
-// service
-//
-// Possible errors:
-//
-//	400 BOT_INVALID: This is not a valid bot.
-//	400 PUBLIC_KEY_REQUIRED: A public key is required.
-//
-// See https://core.telegram.org/method/account.acceptAuthorization for reference.
 func (c *Client) AccountAcceptAuthorization(ctx context.Context, request *AccountAcceptAuthorizationRequest) (bool, error) {
 	var result BoolBox
 

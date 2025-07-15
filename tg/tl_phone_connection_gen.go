@@ -32,26 +32,20 @@ var (
 )
 
 // PhoneConnection represents TL type `phoneConnection#9cc123c7`.
-// Identifies an endpoint that can be used to connect to the other user in a phone call
-//
-// See https://core.telegram.org/constructor/phoneConnection for reference.
 type PhoneConnection struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of PhoneConnection.
 	Flags bin.Fields
-	// Whether TCP should be used
+	// TCP field of PhoneConnection.
 	TCP bool
-	// Endpoint ID
+	// ID field of PhoneConnection.
 	ID int64
-	// IP address of endpoint
+	// IP field of PhoneConnection.
 	IP string
-	// IPv6 address of endpoint
+	// Ipv6 field of PhoneConnection.
 	Ipv6 string
-	// Port ID
+	// Port field of PhoneConnection.
 	Port int
-	// Our peer tag
+	// PeerTag field of PhoneConnection.
 	PeerTag []byte
 }
 
@@ -107,23 +101,6 @@ func (p *PhoneConnection) String() string {
 	}
 	type Alias PhoneConnection
 	return fmt.Sprintf("PhoneConnection%+v", Alias(*p))
-}
-
-// FillFrom fills PhoneConnection from given interface.
-func (p *PhoneConnection) FillFrom(from interface {
-	GetTCP() (value bool)
-	GetID() (value int64)
-	GetIP() (value string)
-	GetIpv6() (value string)
-	GetPort() (value int)
-	GetPeerTag() (value []byte)
-}) {
-	p.TCP = from.GetTCP()
-	p.ID = from.GetID()
-	p.IP = from.GetIP()
-	p.Ipv6 = from.GetIpv6()
-	p.Port = from.GetPort()
-	p.PeerTag = from.GetPeerTag()
 }
 
 // TypeID returns type id in TL schema.
@@ -331,30 +308,24 @@ func (p *PhoneConnection) GetPeerTag() (value []byte) {
 }
 
 // PhoneConnectionWebrtc represents TL type `phoneConnectionWebrtc#635fe375`.
-// WebRTC connection parameters
-//
-// See https://core.telegram.org/constructor/phoneConnectionWebrtc for reference.
 type PhoneConnectionWebrtc struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of PhoneConnectionWebrtc.
 	Flags bin.Fields
-	// Whether this is a TURN endpoint
+	// Turn field of PhoneConnectionWebrtc.
 	Turn bool
-	// Whether this is a STUN endpoint
+	// Stun field of PhoneConnectionWebrtc.
 	Stun bool
-	// Endpoint ID
+	// ID field of PhoneConnectionWebrtc.
 	ID int64
-	// IP address
+	// IP field of PhoneConnectionWebrtc.
 	IP string
-	// IPv6 address
+	// Ipv6 field of PhoneConnectionWebrtc.
 	Ipv6 string
-	// Port
+	// Port field of PhoneConnectionWebrtc.
 	Port int
-	// Username
+	// Username field of PhoneConnectionWebrtc.
 	Username string
-	// Password
+	// Password field of PhoneConnectionWebrtc.
 	Password string
 }
 
@@ -416,27 +387,6 @@ func (p *PhoneConnectionWebrtc) String() string {
 	}
 	type Alias PhoneConnectionWebrtc
 	return fmt.Sprintf("PhoneConnectionWebrtc%+v", Alias(*p))
-}
-
-// FillFrom fills PhoneConnectionWebrtc from given interface.
-func (p *PhoneConnectionWebrtc) FillFrom(from interface {
-	GetTurn() (value bool)
-	GetStun() (value bool)
-	GetID() (value int64)
-	GetIP() (value string)
-	GetIpv6() (value string)
-	GetPort() (value int)
-	GetUsername() (value string)
-	GetPassword() (value string)
-}) {
-	p.Turn = from.GetTurn()
-	p.Stun = from.GetStun()
-	p.ID = from.GetID()
-	p.IP = from.GetIP()
-	p.Ipv6 = from.GetIpv6()
-	p.Port = from.GetPort()
-	p.Username = from.GetUsername()
-	p.Password = from.GetPassword()
 }
 
 // TypeID returns type id in TL schema.
@@ -696,8 +646,6 @@ const PhoneConnectionClassName = "PhoneConnection"
 
 // PhoneConnectionClass represents PhoneConnection generic type.
 //
-// See https://core.telegram.org/type/PhoneConnection for reference.
-//
 // Constructors:
 //   - [PhoneConnection]
 //   - [PhoneConnectionWebrtc]
@@ -731,16 +679,13 @@ type PhoneConnectionClass interface {
 	// Zero returns true if current object has a zero value.
 	Zero() bool
 
-	// Endpoint ID
+	// ID field of PhoneConnection.
 	GetID() (value int64)
-
-	// IP address of endpoint
+	// IP field of PhoneConnection.
 	GetIP() (value string)
-
-	// IPv6 address of endpoint
+	// Ipv6 field of PhoneConnection.
 	GetIpv6() (value string)
-
-	// Port ID
+	// Port field of PhoneConnection.
 	GetPort() (value int)
 }
 

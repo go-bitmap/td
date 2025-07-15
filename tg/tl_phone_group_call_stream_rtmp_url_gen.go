@@ -32,13 +32,10 @@ var (
 )
 
 // PhoneGroupCallStreamRtmpURL represents TL type `phone.groupCallStreamRtmpUrl#2dbf3432`.
-// RTMP URL and stream key to be used in streaming software
-//
-// See https://core.telegram.org/constructor/phone.groupCallStreamRtmpUrl for reference.
 type PhoneGroupCallStreamRtmpURL struct {
-	// RTMP URL
+	// URL field of PhoneGroupCallStreamRtmpURL.
 	URL string
-	// Stream key
+	// Key field of PhoneGroupCallStreamRtmpURL.
 	Key string
 }
 
@@ -74,15 +71,6 @@ func (g *PhoneGroupCallStreamRtmpURL) String() string {
 	}
 	type Alias PhoneGroupCallStreamRtmpURL
 	return fmt.Sprintf("PhoneGroupCallStreamRtmpURL%+v", Alias(*g))
-}
-
-// FillFrom fills PhoneGroupCallStreamRtmpURL from given interface.
-func (g *PhoneGroupCallStreamRtmpURL) FillFrom(from interface {
-	GetURL() (value string)
-	GetKey() (value string)
-}) {
-	g.URL = from.GetURL()
-	g.Key = from.GetKey()
 }
 
 // TypeID returns type id in TL schema.

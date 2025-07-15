@@ -32,19 +32,10 @@ var (
 )
 
 // ExportedContactToken represents TL type `exportedContactToken#41bf109b`.
-// Describes a temporary profile link¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/links#temporary-profile-links
-//
-// See https://core.telegram.org/constructor/exportedContactToken for reference.
 type ExportedContactToken struct {
-	// The temporary profile link¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/links#temporary-profile-links
+	// URL field of ExportedContactToken.
 	URL string
-	// Its expiration date
+	// Expires field of ExportedContactToken.
 	Expires int
 }
 
@@ -80,15 +71,6 @@ func (e *ExportedContactToken) String() string {
 	}
 	type Alias ExportedContactToken
 	return fmt.Sprintf("ExportedContactToken%+v", Alias(*e))
-}
-
-// FillFrom fills ExportedContactToken from given interface.
-func (e *ExportedContactToken) FillFrom(from interface {
-	GetURL() (value string)
-	GetExpires() (value int)
-}) {
-	e.URL = from.GetURL()
-	e.Expires = from.GetExpires()
 }
 
 // TypeID returns type id in TL schema.

@@ -32,25 +32,16 @@ var (
 )
 
 // StoriesSendReactionRequest represents TL type `stories.sendReaction#7fd736b2`.
-// React to a story.
-//
-// See https://core.telegram.org/method/stories.sendReaction for reference.
 type StoriesSendReactionRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of StoriesSendReactionRequest.
 	Flags bin.Fields
-	// Whether to add this reaction to the recent reactions list »¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/reactions#recent-reactions
+	// AddToRecent field of StoriesSendReactionRequest.
 	AddToRecent bool
-	// The peer that sent the story
+	// Peer field of StoriesSendReactionRequest.
 	Peer InputPeerClass
-	// ID of the story to react to
+	// StoryID field of StoriesSendReactionRequest.
 	StoryID int
-	// Reaction
+	// Reaction field of StoriesSendReactionRequest.
 	Reaction ReactionClass
 }
 
@@ -95,19 +86,6 @@ func (s *StoriesSendReactionRequest) String() string {
 	}
 	type Alias StoriesSendReactionRequest
 	return fmt.Sprintf("StoriesSendReactionRequest%+v", Alias(*s))
-}
-
-// FillFrom fills StoriesSendReactionRequest from given interface.
-func (s *StoriesSendReactionRequest) FillFrom(from interface {
-	GetAddToRecent() (value bool)
-	GetPeer() (value InputPeerClass)
-	GetStoryID() (value int)
-	GetReaction() (value ReactionClass)
-}) {
-	s.AddToRecent = from.GetAddToRecent()
-	s.Peer = from.GetPeer()
-	s.StoryID = from.GetStoryID()
-	s.Reaction = from.GetReaction()
 }
 
 // TypeID returns type id in TL schema.
@@ -285,16 +263,6 @@ func (s *StoriesSendReactionRequest) GetReaction() (value ReactionClass) {
 }
 
 // StoriesSendReaction invokes method stories.sendReaction#7fd736b2 returning error if any.
-// React to a story.
-//
-// Possible errors:
-//
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//	400 REACTION_INVALID: The specified reaction is invalid.
-//	400 STORY_ID_EMPTY: You specified no story IDs.
-//	400 STORY_ID_INVALID: The specified story ID is invalid.
-//
-// See https://core.telegram.org/method/stories.sendReaction for reference.
 func (c *Client) StoriesSendReaction(ctx context.Context, request *StoriesSendReactionRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

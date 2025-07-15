@@ -32,11 +32,8 @@ var (
 )
 
 // StatsURL represents TL type `statsURL#47a971e0`.
-// URL with chat statistics
-//
-// See https://core.telegram.org/constructor/statsURL for reference.
 type StatsURL struct {
-	// Chat statistics
+	// URL field of StatsURL.
 	URL string
 }
 
@@ -69,13 +66,6 @@ func (s *StatsURL) String() string {
 	}
 	type Alias StatsURL
 	return fmt.Sprintf("StatsURL%+v", Alias(*s))
-}
-
-// FillFrom fills StatsURL from given interface.
-func (s *StatsURL) FillFrom(from interface {
-	GetURL() (value string)
-}) {
-	s.URL = from.GetURL()
 }
 
 // TypeID returns type id in TL schema.

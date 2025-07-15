@@ -32,16 +32,10 @@ var (
 )
 
 // AccountConnectedBots represents TL type `account.connectedBots#17d7f87b`.
-// Info about currently connected business bots¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/business#connected-bots
-//
-// See https://core.telegram.org/constructor/account.connectedBots for reference.
 type AccountConnectedBots struct {
-	// Info about the connected bots
+	// ConnectedBots field of AccountConnectedBots.
 	ConnectedBots []ConnectedBot
-	// Bot information
+	// Users field of AccountConnectedBots.
 	Users []UserClass
 }
 
@@ -77,15 +71,6 @@ func (c *AccountConnectedBots) String() string {
 	}
 	type Alias AccountConnectedBots
 	return fmt.Sprintf("AccountConnectedBots%+v", Alias(*c))
-}
-
-// FillFrom fills AccountConnectedBots from given interface.
-func (c *AccountConnectedBots) FillFrom(from interface {
-	GetConnectedBots() (value []ConnectedBot)
-	GetUsers() (value []UserClass)
-}) {
-	c.ConnectedBots = from.GetConnectedBots()
-	c.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -222,9 +207,4 @@ func (c *AccountConnectedBots) GetUsers() (value []UserClass) {
 		return
 	}
 	return c.Users
-}
-
-// MapUsers returns field Users wrapped in UserClassArray helper.
-func (c *AccountConnectedBots) MapUsers() (value UserClassArray) {
-	return UserClassArray(c.Users)
 }

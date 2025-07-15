@@ -32,69 +32,28 @@ var (
 )
 
 // MessagesRequestAppWebViewRequest represents TL type `messages.requestAppWebView#53618bce`.
-// Open a bot mini app¹ from a direct Mini App deep link², sending over user
-// information after user confirmation.
-// After calling this method, until the user closes the webview, messages
-// prolongWebView¹ must be called every 60 seconds.
-//
-// Links:
-//  1. https://core.telegram.org/bots/webapps
-//  2. https://core.telegram.org/api/links#direct-mini-app-links
-//  3. https://core.telegram.org/method/messages.prolongWebView
-//
-// See https://core.telegram.org/method/messages.requestAppWebView for reference.
 type MessagesRequestAppWebViewRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessagesRequestAppWebViewRequest.
 	Flags bin.Fields
-	// Set this flag if the bot is asking permission to send messages to the user as
-	// specified in the direct Mini App deep link¹ docs, and the user agreed.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/links#direct-mini-app-links
+	// WriteAllowed field of MessagesRequestAppWebViewRequest.
 	WriteAllowed bool
-	// If set, requests to open the mini app in compact mode (as opposed to normal or
-	// fullscreen mode). Must be set if the mode parameter of the direct Mini App deep link¹
-	// is equal to compact.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/links#direct-mini-app-links
+	// Compact field of MessagesRequestAppWebViewRequest.
 	Compact bool
-	// If set, requests to open the mini app in fullscreen mode (as opposed to compact or
-	// normal mode). Must be set if the mode parameter of the direct Mini App deep link¹ is
-	// equal to fullscreen.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/links#direct-mini-app-links
+	// Fullscreen field of MessagesRequestAppWebViewRequest.
 	Fullscreen bool
-	// If the client has clicked on the link in a Telegram chat, pass the chat's peer
-	// information; otherwise pass the bot's peer information, instead.
+	// Peer field of MessagesRequestAppWebViewRequest.
 	Peer InputPeerClass
-	// The app obtained by invoking messages.getBotApp¹ as specified in the direct Mini App
-	// deep link² docs.
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/messages.getBotApp
-	//  2) https://core.telegram.org/api/links#direct-mini-app-links
+	// App field of MessagesRequestAppWebViewRequest.
 	App InputBotAppClass
-	// If the startapp query string parameter is present in the direct Mini App deep link¹,
-	// pass it to start_param.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/links#direct-mini-app-links
+	// StartParam field of MessagesRequestAppWebViewRequest.
 	//
 	// Use SetStartParam and GetStartParam helpers.
 	StartParam string
-	// Theme parameters »¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/bots/webapps#theme-parameters
+	// ThemeParams field of MessagesRequestAppWebViewRequest.
 	//
 	// Use SetThemeParams and GetThemeParams helpers.
 	ThemeParams DataJSON
-	// Short name of the application; 0-64 English letters, digits, and underscores
+	// Platform field of MessagesRequestAppWebViewRequest.
 	Platform string
 }
 
@@ -151,33 +110,6 @@ func (r *MessagesRequestAppWebViewRequest) String() string {
 	}
 	type Alias MessagesRequestAppWebViewRequest
 	return fmt.Sprintf("MessagesRequestAppWebViewRequest%+v", Alias(*r))
-}
-
-// FillFrom fills MessagesRequestAppWebViewRequest from given interface.
-func (r *MessagesRequestAppWebViewRequest) FillFrom(from interface {
-	GetWriteAllowed() (value bool)
-	GetCompact() (value bool)
-	GetFullscreen() (value bool)
-	GetPeer() (value InputPeerClass)
-	GetApp() (value InputBotAppClass)
-	GetStartParam() (value string, ok bool)
-	GetThemeParams() (value DataJSON, ok bool)
-	GetPlatform() (value string)
-}) {
-	r.WriteAllowed = from.GetWriteAllowed()
-	r.Compact = from.GetCompact()
-	r.Fullscreen = from.GetFullscreen()
-	r.Peer = from.GetPeer()
-	r.App = from.GetApp()
-	if val, ok := from.GetStartParam(); ok {
-		r.StartParam = val
-	}
-
-	if val, ok := from.GetThemeParams(); ok {
-		r.ThemeParams = val
-	}
-
-	r.Platform = from.GetPlatform()
 }
 
 // TypeID returns type id in TL schema.
@@ -483,23 +415,6 @@ func (r *MessagesRequestAppWebViewRequest) GetPlatform() (value string) {
 }
 
 // MessagesRequestAppWebView invokes method messages.requestAppWebView#53618bce returning error if any.
-// Open a bot mini app¹ from a direct Mini App deep link², sending over user
-// information after user confirmation.
-// After calling this method, until the user closes the webview, messages
-// prolongWebView¹ must be called every 60 seconds.
-//
-// Links:
-//  1. https://core.telegram.org/bots/webapps
-//  2. https://core.telegram.org/api/links#direct-mini-app-links
-//  3. https://core.telegram.org/method/messages.prolongWebView
-//
-// Possible errors:
-//
-//	400 BOT_APP_BOT_INVALID: The bot_id passed in the inputBotAppShortName constructor is invalid.
-//	400 BOT_APP_INVALID: The specified bot app is invalid.
-//	400 BOT_APP_SHORTNAME_INVALID: The specified bot app short name is invalid.
-//
-// See https://core.telegram.org/method/messages.requestAppWebView for reference.
 func (c *Client) MessagesRequestAppWebView(ctx context.Context, request *MessagesRequestAppWebViewRequest) (*WebViewResultURL, error) {
 	var result WebViewResultURL
 

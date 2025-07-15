@@ -32,17 +32,8 @@ var (
 )
 
 // MessagesGetEmojiStickersRequest represents TL type `messages.getEmojiStickers#fbfca18f`.
-// Gets the list of currently installed custom emoji stickersets¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/custom-emoji
-//
-// See https://core.telegram.org/method/messages.getEmojiStickers for reference.
 type MessagesGetEmojiStickersRequest struct {
-	// Hash used for caching, for more info click here¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets#hash-generation
+	// Hash field of MessagesGetEmojiStickersRequest.
 	Hash int64
 }
 
@@ -75,13 +66,6 @@ func (g *MessagesGetEmojiStickersRequest) String() string {
 	}
 	type Alias MessagesGetEmojiStickersRequest
 	return fmt.Sprintf("MessagesGetEmojiStickersRequest%+v", Alias(*g))
-}
-
-// FillFrom fills MessagesGetEmojiStickersRequest from given interface.
-func (g *MessagesGetEmojiStickersRequest) FillFrom(from interface {
-	GetHash() (value int64)
-}) {
-	g.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -168,12 +152,6 @@ func (g *MessagesGetEmojiStickersRequest) GetHash() (value int64) {
 }
 
 // MessagesGetEmojiStickers invokes method messages.getEmojiStickers#fbfca18f returning error if any.
-// Gets the list of currently installed custom emoji stickersets¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/custom-emoji
-//
-// See https://core.telegram.org/method/messages.getEmojiStickers for reference.
 func (c *Client) MessagesGetEmojiStickers(ctx context.Context, hash int64) (MessagesAllStickersClass, error) {
 	var result MessagesAllStickersBox
 

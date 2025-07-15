@@ -32,21 +32,10 @@ var (
 )
 
 // PollAnswer represents TL type `pollAnswer#ff16e2ca`.
-// A possible answer of a poll
-//
-// See https://core.telegram.org/constructor/pollAnswer for reference.
 type PollAnswer struct {
-	// Textual representation of the answer (only Premium¹ users can use custom emoji
-	// entities² here).
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/premium
-	//  2) https://core.telegram.org/api/custom-emoji
+	// Text field of PollAnswer.
 	Text TextWithEntities
-	// The param that has to be passed to messages.sendVote¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/messages.sendVote
+	// Option field of PollAnswer.
 	Option []byte
 }
 
@@ -82,15 +71,6 @@ func (p *PollAnswer) String() string {
 	}
 	type Alias PollAnswer
 	return fmt.Sprintf("PollAnswer%+v", Alias(*p))
-}
-
-// FillFrom fills PollAnswer from given interface.
-func (p *PollAnswer) FillFrom(from interface {
-	GetText() (value TextWithEntities)
-	GetOption() (value []byte)
-}) {
-	p.Text = from.GetText()
-	p.Option = from.GetOption()
 }
 
 // TypeID returns type id in TL schema.

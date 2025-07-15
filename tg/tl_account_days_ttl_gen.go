@@ -32,11 +32,8 @@ var (
 )
 
 // AccountDaysTTL represents TL type `accountDaysTTL#b8d0afdf`.
-// Time to live in days of the current account
-//
-// See https://core.telegram.org/constructor/accountDaysTTL for reference.
 type AccountDaysTTL struct {
-	// This account will self-destruct in the specified number of days
+	// Days field of AccountDaysTTL.
 	Days int
 }
 
@@ -69,13 +66,6 @@ func (a *AccountDaysTTL) String() string {
 	}
 	type Alias AccountDaysTTL
 	return fmt.Sprintf("AccountDaysTTL%+v", Alias(*a))
-}
-
-// FillFrom fills AccountDaysTTL from given interface.
-func (a *AccountDaysTTL) FillFrom(from interface {
-	GetDays() (value int)
-}) {
-	a.Days = from.GetDays()
 }
 
 // TypeID returns type id in TL schema.

@@ -32,49 +32,28 @@ var (
 )
 
 // MessageReplies represents TL type `messageReplies#83d60fc2`.
-// Info about the comment section of a channel post, or a simple message thread¹
-//
-// Links:
-//  1. https://core.telegram.org/api/threads
-//
-// See https://core.telegram.org/constructor/messageReplies for reference.
 type MessageReplies struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessageReplies.
 	Flags bin.Fields
-	// Whether this constructor contains information about the comment section of a channel
-	// post, or a simple message thread¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/threads
+	// Comments field of MessageReplies.
 	Comments bool
-	// Contains the total number of replies in this thread or comment section.
+	// Replies field of MessageReplies.
 	Replies int
-	// PTS¹ of the message that started this thread.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/updates
+	// RepliesPts field of MessageReplies.
 	RepliesPts int
-	// For channel post comments, contains information about the last few comment posters for
-	// a specific thread, to show a small list of commenter profile pictures in client
-	// previews.
+	// RecentRepliers field of MessageReplies.
 	//
 	// Use SetRecentRepliers and GetRecentRepliers helpers.
 	RecentRepliers []PeerClass
-	// For channel post comments, contains the ID of the associated discussion supergroup¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/discussion
+	// ChannelID field of MessageReplies.
 	//
 	// Use SetChannelID and GetChannelID helpers.
 	ChannelID int64
-	// ID of the latest message in this thread or comment section.
+	// MaxID field of MessageReplies.
 	//
 	// Use SetMaxID and GetMaxID helpers.
 	MaxID int
-	// Contains the ID of the latest read message in this thread or comment section.
+	// ReadMaxID field of MessageReplies.
 	//
 	// Use SetReadMaxID and GetReadMaxID helpers.
 	ReadMaxID int
@@ -130,37 +109,6 @@ func (m *MessageReplies) String() string {
 	}
 	type Alias MessageReplies
 	return fmt.Sprintf("MessageReplies%+v", Alias(*m))
-}
-
-// FillFrom fills MessageReplies from given interface.
-func (m *MessageReplies) FillFrom(from interface {
-	GetComments() (value bool)
-	GetReplies() (value int)
-	GetRepliesPts() (value int)
-	GetRecentRepliers() (value []PeerClass, ok bool)
-	GetChannelID() (value int64, ok bool)
-	GetMaxID() (value int, ok bool)
-	GetReadMaxID() (value int, ok bool)
-}) {
-	m.Comments = from.GetComments()
-	m.Replies = from.GetReplies()
-	m.RepliesPts = from.GetRepliesPts()
-	if val, ok := from.GetRecentRepliers(); ok {
-		m.RecentRepliers = val
-	}
-
-	if val, ok := from.GetChannelID(); ok {
-		m.ChannelID = val
-	}
-
-	if val, ok := from.GetMaxID(); ok {
-		m.MaxID = val
-	}
-
-	if val, ok := from.GetReadMaxID(); ok {
-		m.ReadMaxID = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -467,12 +415,4 @@ func (m *MessageReplies) GetReadMaxID() (value int, ok bool) {
 		return value, false
 	}
 	return m.ReadMaxID, true
-}
-
-// MapRecentRepliers returns field RecentRepliers wrapped in PeerClassArray helper.
-func (m *MessageReplies) MapRecentRepliers() (value PeerClassArray, ok bool) {
-	if !m.Flags.Has(1) {
-		return value, false
-	}
-	return PeerClassArray(m.RecentRepliers), true
 }

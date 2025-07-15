@@ -32,21 +32,12 @@ var (
 )
 
 // MessagesTogglePeerTranslationsRequest represents TL type `messages.togglePeerTranslations#e47cb579`.
-// Show or hide the real-time chat translation popup¹ for a certain chat
-//
-// Links:
-//  1. https://core.telegram.org/api/translation
-//
-// See https://core.telegram.org/method/messages.togglePeerTranslations for reference.
 type MessagesTogglePeerTranslationsRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessagesTogglePeerTranslationsRequest.
 	Flags bin.Fields
-	// Whether to disable or enable the real-time chat translation popup
+	// Disabled field of MessagesTogglePeerTranslationsRequest.
 	Disabled bool
-	// The peer
+	// Peer field of MessagesTogglePeerTranslationsRequest.
 	Peer InputPeerClass
 }
 
@@ -85,15 +76,6 @@ func (t *MessagesTogglePeerTranslationsRequest) String() string {
 	}
 	type Alias MessagesTogglePeerTranslationsRequest
 	return fmt.Sprintf("MessagesTogglePeerTranslationsRequest%+v", Alias(*t))
-}
-
-// FillFrom fills MessagesTogglePeerTranslationsRequest from given interface.
-func (t *MessagesTogglePeerTranslationsRequest) FillFrom(from interface {
-	GetDisabled() (value bool)
-	GetPeer() (value InputPeerClass)
-}) {
-	t.Disabled = from.GetDisabled()
-	t.Peer = from.GetPeer()
 }
 
 // TypeID returns type id in TL schema.
@@ -226,16 +208,6 @@ func (t *MessagesTogglePeerTranslationsRequest) GetPeer() (value InputPeerClass)
 }
 
 // MessagesTogglePeerTranslations invokes method messages.togglePeerTranslations#e47cb579 returning error if any.
-// Show or hide the real-time chat translation popup¹ for a certain chat
-//
-// Links:
-//  1. https://core.telegram.org/api/translation
-//
-// Possible errors:
-//
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//
-// See https://core.telegram.org/method/messages.togglePeerTranslations for reference.
 func (c *Client) MessagesTogglePeerTranslations(ctx context.Context, request *MessagesTogglePeerTranslationsRequest) (bool, error) {
 	var result BoolBox
 

@@ -32,71 +32,38 @@ var (
 )
 
 // WallPaperSettings represents TL type `wallPaperSettings#372efcd0`.
-// Wallpaper¹ rendering information.
-//
-// Links:
-//  1. https://core.telegram.org/api/wallpapers
-//
-// See https://core.telegram.org/constructor/wallPaperSettings for reference.
 type WallPaperSettings struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of WallPaperSettings.
 	Flags bin.Fields
-	// For image wallpapers »¹: if set, the JPEG must be downscaled to fit in 450x450
-	// square and then box-blurred with radius 12.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/wallpapers#image-wallpapers
+	// Blur field of WallPaperSettings.
 	Blur bool
-	// If set, the background needs to be slightly moved when the device is rotated.
+	// Motion field of WallPaperSettings.
 	Motion bool
-	// Used for solid »¹, gradient »² and freeform gradient »³ fills.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/wallpapers#solid-fill
-	//  2) https://core.telegram.org/api/wallpapers#gradient-fill
-	//  3) https://core.telegram.org/api/wallpapers#freeform-gradient-fill
+	// BackgroundColor field of WallPaperSettings.
 	//
 	// Use SetBackgroundColor and GetBackgroundColor helpers.
 	BackgroundColor int
-	// Used for gradient »¹ and freeform gradient »² fills.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/wallpapers#gradient-fill
-	//  2) https://core.telegram.org/api/wallpapers#freeform-gradient-fill
+	// SecondBackgroundColor field of WallPaperSettings.
 	//
 	// Use SetSecondBackgroundColor and GetSecondBackgroundColor helpers.
 	SecondBackgroundColor int
-	// Used for freeform gradient »¹ fills.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/wallpapers#freeform-gradient-fill
+	// ThirdBackgroundColor field of WallPaperSettings.
 	//
 	// Use SetThirdBackgroundColor and GetThirdBackgroundColor helpers.
 	ThirdBackgroundColor int
-	// Used for freeform gradient »¹ fills.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/wallpapers#freeform-gradient-fill
+	// FourthBackgroundColor field of WallPaperSettings.
 	//
 	// Use SetFourthBackgroundColor and GetFourthBackgroundColor helpers.
 	FourthBackgroundColor int
-	// Used for pattern wallpapers »¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/wallpapers#pattern-wallpapers
+	// Intensity field of WallPaperSettings.
 	//
 	// Use SetIntensity and GetIntensity helpers.
 	Intensity int
-	// Clockwise rotation angle of the gradient, in degrees; 0-359. Should be always
-	// divisible by 45.
+	// Rotation field of WallPaperSettings.
 	//
 	// Use SetRotation and GetRotation helpers.
 	Rotation int
-	// If set, this wallpaper can be used as a channel wallpaper and is represented by the
-	// specified UTF-8 emoji.
+	// Emoticon field of WallPaperSettings.
 	//
 	// Use SetEmoticon and GetEmoticon helpers.
 	Emoticon string
@@ -158,50 +125,6 @@ func (w *WallPaperSettings) String() string {
 	}
 	type Alias WallPaperSettings
 	return fmt.Sprintf("WallPaperSettings%+v", Alias(*w))
-}
-
-// FillFrom fills WallPaperSettings from given interface.
-func (w *WallPaperSettings) FillFrom(from interface {
-	GetBlur() (value bool)
-	GetMotion() (value bool)
-	GetBackgroundColor() (value int, ok bool)
-	GetSecondBackgroundColor() (value int, ok bool)
-	GetThirdBackgroundColor() (value int, ok bool)
-	GetFourthBackgroundColor() (value int, ok bool)
-	GetIntensity() (value int, ok bool)
-	GetRotation() (value int, ok bool)
-	GetEmoticon() (value string, ok bool)
-}) {
-	w.Blur = from.GetBlur()
-	w.Motion = from.GetMotion()
-	if val, ok := from.GetBackgroundColor(); ok {
-		w.BackgroundColor = val
-	}
-
-	if val, ok := from.GetSecondBackgroundColor(); ok {
-		w.SecondBackgroundColor = val
-	}
-
-	if val, ok := from.GetThirdBackgroundColor(); ok {
-		w.ThirdBackgroundColor = val
-	}
-
-	if val, ok := from.GetFourthBackgroundColor(); ok {
-		w.FourthBackgroundColor = val
-	}
-
-	if val, ok := from.GetIntensity(); ok {
-		w.Intensity = val
-	}
-
-	if val, ok := from.GetRotation(); ok {
-		w.Rotation = val
-	}
-
-	if val, ok := from.GetEmoticon(); ok {
-		w.Emoticon = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.

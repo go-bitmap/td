@@ -32,11 +32,8 @@ var (
 )
 
 // InputDialogPeer represents TL type `inputDialogPeer#fcaafeb7`.
-// A peer
-//
-// See https://core.telegram.org/constructor/inputDialogPeer for reference.
 type InputDialogPeer struct {
-	// Peer
+	// Peer field of InputDialogPeer.
 	Peer InputPeerClass
 }
 
@@ -74,13 +71,6 @@ func (i *InputDialogPeer) String() string {
 	}
 	type Alias InputDialogPeer
 	return fmt.Sprintf("InputDialogPeer%+v", Alias(*i))
-}
-
-// FillFrom fills InputDialogPeer from given interface.
-func (i *InputDialogPeer) FillFrom(from interface {
-	GetPeer() (value InputPeerClass)
-}) {
-	i.Peer = from.GetPeer()
 }
 
 // TypeID returns type id in TL schema.
@@ -172,17 +162,8 @@ func (i *InputDialogPeer) GetPeer() (value InputPeerClass) {
 }
 
 // InputDialogPeerFolder represents TL type `inputDialogPeerFolder#64600527`.
-// All peers in a peer folder¹
-//
-// Links:
-//  1. https://core.telegram.org/api/folders#peer-folders
-//
-// See https://core.telegram.org/constructor/inputDialogPeerFolder for reference.
 type InputDialogPeerFolder struct {
-	// Peer folder ID, for more info click here¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/folders#peer-folders
+	// FolderID field of InputDialogPeerFolder.
 	FolderID int
 }
 
@@ -220,13 +201,6 @@ func (i *InputDialogPeerFolder) String() string {
 	}
 	type Alias InputDialogPeerFolder
 	return fmt.Sprintf("InputDialogPeerFolder%+v", Alias(*i))
-}
-
-// FillFrom fills InputDialogPeerFolder from given interface.
-func (i *InputDialogPeerFolder) FillFrom(from interface {
-	GetFolderID() (value int)
-}) {
-	i.FolderID = from.GetFolderID()
 }
 
 // TypeID returns type id in TL schema.
@@ -316,8 +290,6 @@ func (i *InputDialogPeerFolder) GetFolderID() (value int) {
 const InputDialogPeerClassName = "InputDialogPeer"
 
 // InputDialogPeerClass represents InputDialogPeer generic type.
-//
-// See https://core.telegram.org/type/InputDialogPeer for reference.
 //
 // Constructors:
 //   - [InputDialogPeer]

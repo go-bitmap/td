@@ -32,17 +32,10 @@ var (
 )
 
 // MessagesSetChatThemeRequest represents TL type `messages.setChatTheme#e63be13f`.
-// Change the chat theme of a certain chat
-//
-// See https://core.telegram.org/method/messages.setChatTheme for reference.
 type MessagesSetChatThemeRequest struct {
-	// Private chat where to change theme
+	// Peer field of MessagesSetChatThemeRequest.
 	Peer InputPeerClass
-	// Emoji, identifying a specific chat theme; a list of chat themes can be fetched using
-	// account.getChatThemes¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/account.getChatThemes
+	// Emoticon field of MessagesSetChatThemeRequest.
 	Emoticon string
 }
 
@@ -78,15 +71,6 @@ func (s *MessagesSetChatThemeRequest) String() string {
 	}
 	type Alias MessagesSetChatThemeRequest
 	return fmt.Sprintf("MessagesSetChatThemeRequest%+v", Alias(*s))
-}
-
-// FillFrom fills MessagesSetChatThemeRequest from given interface.
-func (s *MessagesSetChatThemeRequest) FillFrom(from interface {
-	GetPeer() (value InputPeerClass)
-	GetEmoticon() (value string)
-}) {
-	s.Peer = from.GetPeer()
-	s.Emoticon = from.GetEmoticon()
 }
 
 // TypeID returns type id in TL schema.
@@ -198,15 +182,6 @@ func (s *MessagesSetChatThemeRequest) GetEmoticon() (value string) {
 }
 
 // MessagesSetChatTheme invokes method messages.setChatTheme#e63be13f returning error if any.
-// Change the chat theme of a certain chat
-//
-// Possible errors:
-//
-//	400 EMOJI_INVALID: The specified theme emoji is valid.
-//	400 EMOJI_NOT_MODIFIED: The theme wasn't changed.
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//
-// See https://core.telegram.org/method/messages.setChatTheme for reference.
 func (c *Client) MessagesSetChatTheme(ctx context.Context, request *MessagesSetChatThemeRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

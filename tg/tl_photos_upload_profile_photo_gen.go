@@ -32,47 +32,28 @@ var (
 )
 
 // PhotosUploadProfilePhotoRequest represents TL type `photos.uploadProfilePhoto#388a3b5`.
-// Updates current user profile photo.
-// The file, video and video_emoji_markup flags are mutually exclusive.
-//
-// See https://core.telegram.org/method/photos.uploadProfilePhoto for reference.
 type PhotosUploadProfilePhotoRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of PhotosUploadProfilePhotoRequest.
 	Flags bin.Fields
-	// If set, the chosen profile photo will be shown to users that can't display your main
-	// profile photo due to your privacy settings.
+	// Fallback field of PhotosUploadProfilePhotoRequest.
 	Fallback bool
-	// Can contain info of a bot we own, to change the profile photo of that bot, instead of
-	// the current user.
+	// Bot field of PhotosUploadProfilePhotoRequest.
 	//
 	// Use SetBot and GetBot helpers.
 	Bot InputUserClass
-	// Profile photo
+	// File field of PhotosUploadProfilePhotoRequest.
 	//
 	// Use SetFile and GetFile helpers.
 	File InputFileClass
-	// Animated profile picture¹ video
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/files#animated-profile-pictures
+	// Video field of PhotosUploadProfilePhotoRequest.
 	//
 	// Use SetVideo and GetVideo helpers.
 	Video InputFileClass
-	// Floating point UNIX timestamp in seconds, indicating the frame of the video/sticker
-	// that should be used as static preview; can only be used if video or video_emoji_markup
-	// is set.
+	// VideoStartTs field of PhotosUploadProfilePhotoRequest.
 	//
 	// Use SetVideoStartTs and GetVideoStartTs helpers.
 	VideoStartTs float64
-	// Animated sticker profile picture, must contain either a videoSizeEmojiMarkup¹ or a
-	// videoSizeStickerMarkup² constructor.
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/videoSizeEmojiMarkup
-	//  2) https://core.telegram.org/constructor/videoSizeStickerMarkup
+	// VideoEmojiMarkup field of PhotosUploadProfilePhotoRequest.
 	//
 	// Use SetVideoEmojiMarkup and GetVideoEmojiMarkup helpers.
 	VideoEmojiMarkup VideoSizeClass
@@ -125,38 +106,6 @@ func (u *PhotosUploadProfilePhotoRequest) String() string {
 	}
 	type Alias PhotosUploadProfilePhotoRequest
 	return fmt.Sprintf("PhotosUploadProfilePhotoRequest%+v", Alias(*u))
-}
-
-// FillFrom fills PhotosUploadProfilePhotoRequest from given interface.
-func (u *PhotosUploadProfilePhotoRequest) FillFrom(from interface {
-	GetFallback() (value bool)
-	GetBot() (value InputUserClass, ok bool)
-	GetFile() (value InputFileClass, ok bool)
-	GetVideo() (value InputFileClass, ok bool)
-	GetVideoStartTs() (value float64, ok bool)
-	GetVideoEmojiMarkup() (value VideoSizeClass, ok bool)
-}) {
-	u.Fallback = from.GetFallback()
-	if val, ok := from.GetBot(); ok {
-		u.Bot = val
-	}
-
-	if val, ok := from.GetFile(); ok {
-		u.File = val
-	}
-
-	if val, ok := from.GetVideo(); ok {
-		u.Video = val
-	}
-
-	if val, ok := from.GetVideoStartTs(); ok {
-		u.VideoStartTs = val
-	}
-
-	if val, ok := from.GetVideoEmojiMarkup(); ok {
-		u.VideoEmojiMarkup = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -464,26 +413,6 @@ func (u *PhotosUploadProfilePhotoRequest) GetVideoEmojiMarkup() (value VideoSize
 }
 
 // PhotosUploadProfilePhoto invokes method photos.uploadProfilePhoto#388a3b5 returning error if any.
-// Updates current user profile photo.
-// The file, video and video_emoji_markup flags are mutually exclusive.
-//
-// Possible errors:
-//
-//	400 ALBUM_PHOTOS_TOO_MANY: You have uploaded too many profile photos, delete some before retrying.
-//	400 BOT_INVALID: This is not a valid bot.
-//	400 EMOJI_MARKUP_INVALID: The specified video_emoji_markup was invalid.
-//	400 FILE_PARTS_INVALID: The number of file parts is invalid.
-//	400 IMAGE_PROCESS_FAILED: Failure while processing image.
-//	400 PHOTO_CROP_FILE_MISSING: Photo crop file missing.
-//	400 PHOTO_CROP_SIZE_SMALL: Photo is too small.
-//	400 PHOTO_EXT_INVALID: The extension of the photo is invalid.
-//	400 PHOTO_FILE_MISSING: Profile photo file missing.
-//	400 PHOTO_INVALID: Photo invalid.
-//	400 STICKER_MIME_INVALID: The specified sticker MIME type is invalid.
-//	400 VIDEO_FILE_INVALID: The specified video file is invalid.
-//
-// See https://core.telegram.org/method/photos.uploadProfilePhoto for reference.
-// Can be used by bots.
 func (c *Client) PhotosUploadProfilePhoto(ctx context.Context, request *PhotosUploadProfilePhotoRequest) (*PhotosPhoto, error) {
 	var result PhotosPhoto
 

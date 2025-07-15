@@ -32,16 +32,10 @@ var (
 )
 
 // UploadGetCDNFileHashesRequest represents TL type `upload.getCdnFileHashes#91dc3f31`.
-// Get SHA256 hashes for verifying downloaded CDN¹ files
-//
-// Links:
-//  1. https://core.telegram.org/cdn
-//
-// See https://core.telegram.org/method/upload.getCdnFileHashes for reference.
 type UploadGetCDNFileHashesRequest struct {
-	// File
+	// FileToken field of UploadGetCDNFileHashesRequest.
 	FileToken []byte
-	// Offset from which to start getting hashes
+	// Offset field of UploadGetCDNFileHashesRequest.
 	Offset int64
 }
 
@@ -77,15 +71,6 @@ func (g *UploadGetCDNFileHashesRequest) String() string {
 	}
 	type Alias UploadGetCDNFileHashesRequest
 	return fmt.Sprintf("UploadGetCDNFileHashesRequest%+v", Alias(*g))
-}
-
-// FillFrom fills UploadGetCDNFileHashesRequest from given interface.
-func (g *UploadGetCDNFileHashesRequest) FillFrom(from interface {
-	GetFileToken() (value []byte)
-	GetOffset() (value int64)
-}) {
-	g.FileToken = from.GetFileToken()
-	g.Offset = from.GetOffset()
 }
 
 // TypeID returns type id in TL schema.
@@ -192,19 +177,6 @@ func (g *UploadGetCDNFileHashesRequest) GetOffset() (value int64) {
 }
 
 // UploadGetCDNFileHashes invokes method upload.getCdnFileHashes#91dc3f31 returning error if any.
-// Get SHA256 hashes for verifying downloaded CDN¹ files
-//
-// Links:
-//  1. https://core.telegram.org/cdn
-//
-// Possible errors:
-//
-//	400 CDN_METHOD_INVALID: You can't call this method in a CDN DC.
-//	400 FILE_TOKEN_INVALID: The master DC did not accept the file_token (e.g., the token has expired). Continue downloading the file from the master DC using upload.getFile.
-//	400 RSA_DECRYPT_FAILED: Internal RSA decryption failed.
-//
-// See https://core.telegram.org/method/upload.getCdnFileHashes for reference.
-// Can be used by bots.
 func (c *Client) UploadGetCDNFileHashes(ctx context.Context, request *UploadGetCDNFileHashesRequest) ([]FileHash, error) {
 	var result FileHashVector
 

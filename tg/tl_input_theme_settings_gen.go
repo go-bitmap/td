@@ -32,49 +32,28 @@ var (
 )
 
 // InputThemeSettings represents TL type `inputThemeSettings#8fde504f`.
-// Theme settings
-//
-// See https://core.telegram.org/constructor/inputThemeSettings for reference.
 type InputThemeSettings struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of InputThemeSettings.
 	Flags bin.Fields
-	// If set, the freeform gradient fill needs to be animated on every sent message
+	// MessageColorsAnimated field of InputThemeSettings.
 	MessageColorsAnimated bool
-	// Default theme on which this theme is based
+	// BaseTheme field of InputThemeSettings.
 	BaseTheme BaseThemeClass
-	// Accent color, ARGB format
+	// AccentColor field of InputThemeSettings.
 	AccentColor int
-	// Accent color of outgoing messages in ARGB format
+	// OutboxAccentColor field of InputThemeSettings.
 	//
 	// Use SetOutboxAccentColor and GetOutboxAccentColor helpers.
 	OutboxAccentColor int
-	// The fill to be used as a background for outgoing messages, in RGB24 format. If just
-	// one or two equal colors are provided, describes a solid fill of a background. If two
-	// different colors are provided, describes the top and bottom colors of a 0-degree
-	// gradient.If three or four colors are provided, describes a freeform gradient fill of a
-	// background.
+	// MessageColors field of InputThemeSettings.
 	//
 	// Use SetMessageColors and GetMessageColors helpers.
 	MessageColors []int
-	// inputWallPaper¹ or inputWallPaperSlug² when passing wallpaper files for image³ or
-	// pattern⁴ wallpapers, inputWallPaperNoFile⁵ with id=0 otherwise.
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/inputWallPaper
-	//  2) https://core.telegram.org/constructor/inputWallPaper
-	//  3) https://core.telegram.org/api/wallpapers#image-wallpapers
-	//  4) https://core.telegram.org/api/wallpapers#pattern-wallpapers
-	//  5) https://core.telegram.org/constructor/inputWallPaperNoFile
+	// Wallpaper field of InputThemeSettings.
 	//
 	// Use SetWallpaper and GetWallpaper helpers.
 	Wallpaper InputWallPaperClass
-	// Wallpaper¹ settings.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/wallpapers
+	// WallpaperSettings field of InputThemeSettings.
 	//
 	// Use SetWallpaperSettings and GetWallpaperSettings helpers.
 	WallpaperSettings WallPaperSettings
@@ -130,37 +109,6 @@ func (i *InputThemeSettings) String() string {
 	}
 	type Alias InputThemeSettings
 	return fmt.Sprintf("InputThemeSettings%+v", Alias(*i))
-}
-
-// FillFrom fills InputThemeSettings from given interface.
-func (i *InputThemeSettings) FillFrom(from interface {
-	GetMessageColorsAnimated() (value bool)
-	GetBaseTheme() (value BaseThemeClass)
-	GetAccentColor() (value int)
-	GetOutboxAccentColor() (value int, ok bool)
-	GetMessageColors() (value []int, ok bool)
-	GetWallpaper() (value InputWallPaperClass, ok bool)
-	GetWallpaperSettings() (value WallPaperSettings, ok bool)
-}) {
-	i.MessageColorsAnimated = from.GetMessageColorsAnimated()
-	i.BaseTheme = from.GetBaseTheme()
-	i.AccentColor = from.GetAccentColor()
-	if val, ok := from.GetOutboxAccentColor(); ok {
-		i.OutboxAccentColor = val
-	}
-
-	if val, ok := from.GetMessageColors(); ok {
-		i.MessageColors = val
-	}
-
-	if val, ok := from.GetWallpaper(); ok {
-		i.Wallpaper = val
-	}
-
-	if val, ok := from.GetWallpaperSettings(); ok {
-		i.WallpaperSettings = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.

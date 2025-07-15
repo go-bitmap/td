@@ -32,15 +32,12 @@ var (
 )
 
 // ChannelsChannelParticipant represents TL type `channels.channelParticipant#dfb80317`.
-// Represents a channel participant
-//
-// See https://core.telegram.org/constructor/channels.channelParticipant for reference.
 type ChannelsChannelParticipant struct {
-	// The channel participant
+	// Participant field of ChannelsChannelParticipant.
 	Participant ChannelParticipantClass
-	// Mentioned chats
+	// Chats field of ChannelsChannelParticipant.
 	Chats []ChatClass
-	// Users
+	// Users field of ChannelsChannelParticipant.
 	Users []UserClass
 }
 
@@ -79,17 +76,6 @@ func (c *ChannelsChannelParticipant) String() string {
 	}
 	type Alias ChannelsChannelParticipant
 	return fmt.Sprintf("ChannelsChannelParticipant%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelsChannelParticipant from given interface.
-func (c *ChannelsChannelParticipant) FillFrom(from interface {
-	GetParticipant() (value ChannelParticipantClass)
-	GetChats() (value []ChatClass)
-	GetUsers() (value []UserClass)
-}) {
-	c.Participant = from.GetParticipant()
-	c.Chats = from.GetChats()
-	c.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -254,14 +240,4 @@ func (c *ChannelsChannelParticipant) GetUsers() (value []UserClass) {
 		return
 	}
 	return c.Users
-}
-
-// MapChats returns field Chats wrapped in ChatClassArray helper.
-func (c *ChannelsChannelParticipant) MapChats() (value ChatClassArray) {
-	return ChatClassArray(c.Chats)
-}
-
-// MapUsers returns field Users wrapped in UserClassArray helper.
-func (c *ChannelsChannelParticipant) MapUsers() (value UserClassArray) {
-	return UserClassArray(c.Users)
 }

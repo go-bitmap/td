@@ -32,73 +32,56 @@ var (
 )
 
 // GroupCallParticipant represents TL type `groupCallParticipant#eba636fe`.
-// Info about a group call participant
-//
-// See https://core.telegram.org/constructor/groupCallParticipant for reference.
 type GroupCallParticipant struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of GroupCallParticipant.
 	Flags bin.Fields
-	// Whether the participant is muted
+	// Muted field of GroupCallParticipant.
 	Muted bool
-	// Whether the participant has left
+	// Left field of GroupCallParticipant.
 	Left bool
-	// Whether the participant can unmute themselves
+	// CanSelfUnmute field of GroupCallParticipant.
 	CanSelfUnmute bool
-	// Whether the participant has just joined
+	// JustJoined field of GroupCallParticipant.
 	JustJoined bool
-	// If set, and updateGroupCallParticipants¹.version < locally stored call.version, info
-	// about this participant should be ignored. If (...), and updateGroupCallParticipants²
-	// version > call.version+1, the participant list should be refetched using phone
-	// getGroupParticipants³.
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/updateGroupCallParticipants
-	//  2) https://core.telegram.org/constructor/updateGroupCallParticipants
-	//  3) https://core.telegram.org/method/phone.getGroupParticipants
+	// Versioned field of GroupCallParticipant.
 	Versioned bool
-	// If not set, the volume and muted_by_you fields can be safely used to overwrite locally
-	// cached information; otherwise, volume will contain valid information only if
-	// volume_by_admin is set both in the cache and in the received constructor.
+	// Min field of GroupCallParticipant.
 	Min bool
-	// Whether this participant was muted by the current user
+	// MutedByYou field of GroupCallParticipant.
 	MutedByYou bool
-	// Whether our volume can only changed by an admin
+	// VolumeByAdmin field of GroupCallParticipant.
 	VolumeByAdmin bool
-	// Whether this participant is the current user
+	// Self field of GroupCallParticipant.
 	Self bool
-	// Whether this participant is currently broadcasting video
+	// VideoJoined field of GroupCallParticipant.
 	VideoJoined bool
-	// Peer information
+	// Peer field of GroupCallParticipant.
 	Peer PeerClass
-	// When did this participant join the group call
+	// Date field of GroupCallParticipant.
 	Date int
-	// When was this participant last active in the group call
+	// ActiveDate field of GroupCallParticipant.
 	//
 	// Use SetActiveDate and GetActiveDate helpers.
 	ActiveDate int
-	// Source ID
+	// Source field of GroupCallParticipant.
 	Source int
-	// Volume, if not set the volume is set to 100%.
+	// Volume field of GroupCallParticipant.
 	//
 	// Use SetVolume and GetVolume helpers.
 	Volume int
-	// Info about this participant
+	// About field of GroupCallParticipant.
 	//
 	// Use SetAbout and GetAbout helpers.
 	About string
-	// Specifies the UI visualization order of peers with raised hands: peers with a higher
-	// rating should be showed first in the list.
+	// RaiseHandRating field of GroupCallParticipant.
 	//
 	// Use SetRaiseHandRating and GetRaiseHandRating helpers.
 	RaiseHandRating int64
-	// Info about the video stream the participant is currently broadcasting
+	// Video field of GroupCallParticipant.
 	//
 	// Use SetVideo and GetVideo helpers.
 	Video GroupCallParticipantVideo
-	// Info about the screen sharing stream the participant is currently broadcasting
+	// Presentation field of GroupCallParticipant.
 	//
 	// Use SetPresentation and GetPresentation helpers.
 	Presentation GroupCallParticipantVideo
@@ -190,67 +173,6 @@ func (g *GroupCallParticipant) String() string {
 	}
 	type Alias GroupCallParticipant
 	return fmt.Sprintf("GroupCallParticipant%+v", Alias(*g))
-}
-
-// FillFrom fills GroupCallParticipant from given interface.
-func (g *GroupCallParticipant) FillFrom(from interface {
-	GetMuted() (value bool)
-	GetLeft() (value bool)
-	GetCanSelfUnmute() (value bool)
-	GetJustJoined() (value bool)
-	GetVersioned() (value bool)
-	GetMin() (value bool)
-	GetMutedByYou() (value bool)
-	GetVolumeByAdmin() (value bool)
-	GetSelf() (value bool)
-	GetVideoJoined() (value bool)
-	GetPeer() (value PeerClass)
-	GetDate() (value int)
-	GetActiveDate() (value int, ok bool)
-	GetSource() (value int)
-	GetVolume() (value int, ok bool)
-	GetAbout() (value string, ok bool)
-	GetRaiseHandRating() (value int64, ok bool)
-	GetVideo() (value GroupCallParticipantVideo, ok bool)
-	GetPresentation() (value GroupCallParticipantVideo, ok bool)
-}) {
-	g.Muted = from.GetMuted()
-	g.Left = from.GetLeft()
-	g.CanSelfUnmute = from.GetCanSelfUnmute()
-	g.JustJoined = from.GetJustJoined()
-	g.Versioned = from.GetVersioned()
-	g.Min = from.GetMin()
-	g.MutedByYou = from.GetMutedByYou()
-	g.VolumeByAdmin = from.GetVolumeByAdmin()
-	g.Self = from.GetSelf()
-	g.VideoJoined = from.GetVideoJoined()
-	g.Peer = from.GetPeer()
-	g.Date = from.GetDate()
-	if val, ok := from.GetActiveDate(); ok {
-		g.ActiveDate = val
-	}
-
-	g.Source = from.GetSource()
-	if val, ok := from.GetVolume(); ok {
-		g.Volume = val
-	}
-
-	if val, ok := from.GetAbout(); ok {
-		g.About = val
-	}
-
-	if val, ok := from.GetRaiseHandRating(); ok {
-		g.RaiseHandRating = val
-	}
-
-	if val, ok := from.GetVideo(); ok {
-		g.Video = val
-	}
-
-	if val, ok := from.GetPresentation(); ok {
-		g.Presentation = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.

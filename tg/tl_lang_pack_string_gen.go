@@ -32,13 +32,10 @@ var (
 )
 
 // LangPackString represents TL type `langPackString#cad181f6`.
-// Translated localization string
-//
-// See https://core.telegram.org/constructor/langPackString for reference.
 type LangPackString struct {
-	// Language key
+	// Key field of LangPackString.
 	Key string
-	// Value
+	// Value field of LangPackString.
 	Value string
 }
 
@@ -79,15 +76,6 @@ func (l *LangPackString) String() string {
 	}
 	type Alias LangPackString
 	return fmt.Sprintf("LangPackString%+v", Alias(*l))
-}
-
-// FillFrom fills LangPackString from given interface.
-func (l *LangPackString) FillFrom(from interface {
-	GetKey() (value string)
-	GetValue() (value string)
-}) {
-	l.Key = from.GetKey()
-	l.Value = from.GetValue()
 }
 
 // TypeID returns type id in TL schema.
@@ -194,43 +182,32 @@ func (l *LangPackString) GetValue() (value string) {
 }
 
 // LangPackStringPluralized represents TL type `langPackStringPluralized#6c47ac9f`.
-// A language pack string which has different forms based on the number of some object it
-// mentions. See https://www.unicode
-// org/cldr/charts/latest/supplemental/language_plural_rules.html¹ for more info
-//
-// Links:
-//  1. https://www.unicode.org/cldr/charts/latest/supplemental/language_plural_rules.html
-//
-// See https://core.telegram.org/constructor/langPackStringPluralized for reference.
 type LangPackStringPluralized struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of LangPackStringPluralized.
 	Flags bin.Fields
-	// Localization key
+	// Key field of LangPackStringPluralized.
 	Key string
-	// Value for zero objects
+	// ZeroValue field of LangPackStringPluralized.
 	//
 	// Use SetZeroValue and GetZeroValue helpers.
 	ZeroValue string
-	// Value for one object
+	// OneValue field of LangPackStringPluralized.
 	//
 	// Use SetOneValue and GetOneValue helpers.
 	OneValue string
-	// Value for two objects
+	// TwoValue field of LangPackStringPluralized.
 	//
 	// Use SetTwoValue and GetTwoValue helpers.
 	TwoValue string
-	// Value for a few objects
+	// FewValue field of LangPackStringPluralized.
 	//
 	// Use SetFewValue and GetFewValue helpers.
 	FewValue string
-	// Value for many objects
+	// ManyValue field of LangPackStringPluralized.
 	//
 	// Use SetManyValue and GetManyValue helpers.
 	ManyValue string
-	// Default value
+	// OtherValue field of LangPackStringPluralized.
 	OtherValue string
 }
 
@@ -289,40 +266,6 @@ func (l *LangPackStringPluralized) String() string {
 	}
 	type Alias LangPackStringPluralized
 	return fmt.Sprintf("LangPackStringPluralized%+v", Alias(*l))
-}
-
-// FillFrom fills LangPackStringPluralized from given interface.
-func (l *LangPackStringPluralized) FillFrom(from interface {
-	GetKey() (value string)
-	GetZeroValue() (value string, ok bool)
-	GetOneValue() (value string, ok bool)
-	GetTwoValue() (value string, ok bool)
-	GetFewValue() (value string, ok bool)
-	GetManyValue() (value string, ok bool)
-	GetOtherValue() (value string)
-}) {
-	l.Key = from.GetKey()
-	if val, ok := from.GetZeroValue(); ok {
-		l.ZeroValue = val
-	}
-
-	if val, ok := from.GetOneValue(); ok {
-		l.OneValue = val
-	}
-
-	if val, ok := from.GetTwoValue(); ok {
-		l.TwoValue = val
-	}
-
-	if val, ok := from.GetFewValue(); ok {
-		l.FewValue = val
-	}
-
-	if val, ok := from.GetManyValue(); ok {
-		l.ManyValue = val
-	}
-
-	l.OtherValue = from.GetOtherValue()
 }
 
 // TypeID returns type id in TL schema.
@@ -622,11 +565,8 @@ func (l *LangPackStringPluralized) GetOtherValue() (value string) {
 }
 
 // LangPackStringDeleted represents TL type `langPackStringDeleted#2979eeb2`.
-// Deleted localization string
-//
-// See https://core.telegram.org/constructor/langPackStringDeleted for reference.
 type LangPackStringDeleted struct {
-	// Localization key
+	// Key field of LangPackStringDeleted.
 	Key string
 }
 
@@ -664,13 +604,6 @@ func (l *LangPackStringDeleted) String() string {
 	}
 	type Alias LangPackStringDeleted
 	return fmt.Sprintf("LangPackStringDeleted%+v", Alias(*l))
-}
-
-// FillFrom fills LangPackStringDeleted from given interface.
-func (l *LangPackStringDeleted) FillFrom(from interface {
-	GetKey() (value string)
-}) {
-	l.Key = from.GetKey()
 }
 
 // TypeID returns type id in TL schema.
@@ -761,8 +694,6 @@ const LangPackStringClassName = "LangPackString"
 
 // LangPackStringClass represents LangPackString generic type.
 //
-// See https://core.telegram.org/type/LangPackString for reference.
-//
 // Constructors:
 //   - [LangPackString]
 //   - [LangPackStringPluralized]
@@ -798,7 +729,7 @@ type LangPackStringClass interface {
 	// Zero returns true if current object has a zero value.
 	Zero() bool
 
-	// Language key
+	// Key field of LangPackString.
 	GetKey() (value string)
 }
 

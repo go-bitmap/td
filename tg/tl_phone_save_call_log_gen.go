@@ -32,13 +32,10 @@ var (
 )
 
 // PhoneSaveCallLogRequest represents TL type `phone.saveCallLog#41248786`.
-// Save phone call debug information
-//
-// See https://core.telegram.org/method/phone.saveCallLog for reference.
 type PhoneSaveCallLogRequest struct {
-	// Phone call
+	// Peer field of PhoneSaveCallLogRequest.
 	Peer InputPhoneCall
-	// Logs
+	// File field of PhoneSaveCallLogRequest.
 	File InputFileClass
 }
 
@@ -74,15 +71,6 @@ func (s *PhoneSaveCallLogRequest) String() string {
 	}
 	type Alias PhoneSaveCallLogRequest
 	return fmt.Sprintf("PhoneSaveCallLogRequest%+v", Alias(*s))
-}
-
-// FillFrom fills PhoneSaveCallLogRequest from given interface.
-func (s *PhoneSaveCallLogRequest) FillFrom(from interface {
-	GetPeer() (value InputPhoneCall)
-	GetFile() (value InputFileClass)
-}) {
-	s.Peer = from.GetPeer()
-	s.File = from.GetFile()
 }
 
 // TypeID returns type id in TL schema.
@@ -194,13 +182,6 @@ func (s *PhoneSaveCallLogRequest) GetFile() (value InputFileClass) {
 }
 
 // PhoneSaveCallLog invokes method phone.saveCallLog#41248786 returning error if any.
-// Save phone call debug information
-//
-// Possible errors:
-//
-//	400 CALL_PEER_INVALID: The provided call peer object is invalid.
-//
-// See https://core.telegram.org/method/phone.saveCallLog for reference.
 func (c *Client) PhoneSaveCallLog(ctx context.Context, request *PhoneSaveCallLogRequest) (bool, error) {
 	var result BoolBox
 

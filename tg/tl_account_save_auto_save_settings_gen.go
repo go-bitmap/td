@@ -32,29 +32,20 @@ var (
 )
 
 // AccountSaveAutoSaveSettingsRequest represents TL type `account.saveAutoSaveSettings#d69b8361`.
-// Modify autosave settings
-//
-// See https://core.telegram.org/method/account.saveAutoSaveSettings for reference.
 type AccountSaveAutoSaveSettingsRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of AccountSaveAutoSaveSettingsRequest.
 	Flags bin.Fields
-	// Whether the new settings should affect all private chats
+	// Users field of AccountSaveAutoSaveSettingsRequest.
 	Users bool
-	// Whether the new settings should affect all groups
+	// Chats field of AccountSaveAutoSaveSettingsRequest.
 	Chats bool
-	// Whether the new settings should affect all channels¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/channel
+	// Broadcasts field of AccountSaveAutoSaveSettingsRequest.
 	Broadcasts bool
-	// Whether the new settings should affect a specific peer
+	// Peer field of AccountSaveAutoSaveSettingsRequest.
 	//
 	// Use SetPeer and GetPeer helpers.
 	Peer InputPeerClass
-	// The new autosave settings
+	// Settings field of AccountSaveAutoSaveSettingsRequest.
 	Settings AutoSaveSettings
 }
 
@@ -102,24 +93,6 @@ func (s *AccountSaveAutoSaveSettingsRequest) String() string {
 	}
 	type Alias AccountSaveAutoSaveSettingsRequest
 	return fmt.Sprintf("AccountSaveAutoSaveSettingsRequest%+v", Alias(*s))
-}
-
-// FillFrom fills AccountSaveAutoSaveSettingsRequest from given interface.
-func (s *AccountSaveAutoSaveSettingsRequest) FillFrom(from interface {
-	GetUsers() (value bool)
-	GetChats() (value bool)
-	GetBroadcasts() (value bool)
-	GetPeer() (value InputPeerClass, ok bool)
-	GetSettings() (value AutoSaveSettings)
-}) {
-	s.Users = from.GetUsers()
-	s.Chats = from.GetChats()
-	s.Broadcasts = from.GetBroadcasts()
-	if val, ok := from.GetPeer(); ok {
-		s.Peer = val
-	}
-
-	s.Settings = from.GetSettings()
 }
 
 // TypeID returns type id in TL schema.
@@ -344,13 +317,6 @@ func (s *AccountSaveAutoSaveSettingsRequest) GetSettings() (value AutoSaveSettin
 }
 
 // AccountSaveAutoSaveSettings invokes method account.saveAutoSaveSettings#d69b8361 returning error if any.
-// Modify autosave settings
-//
-// Possible errors:
-//
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//
-// See https://core.telegram.org/method/account.saveAutoSaveSettings for reference.
 func (c *Client) AccountSaveAutoSaveSettings(ctx context.Context, request *AccountSaveAutoSaveSettingsRequest) (bool, error) {
 	var result BoolBox
 

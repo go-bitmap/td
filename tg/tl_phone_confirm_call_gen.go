@@ -32,23 +32,14 @@ var (
 )
 
 // PhoneConfirmCallRequest represents TL type `phone.confirmCall#2efe1722`.
-// Complete phone call E2E encryption key exchange »¹
-//
-// Links:
-//  1. https://core.telegram.org/api/end-to-end/voice-calls
-//
-// See https://core.telegram.org/method/phone.confirmCall for reference.
 type PhoneConfirmCallRequest struct {
-	// The phone call
+	// Peer field of PhoneConfirmCallRequest.
 	Peer InputPhoneCall
-	// Parameter for E2E encryption key exchange »¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/end-to-end/voice-calls
+	// GA field of PhoneConfirmCallRequest.
 	GA []byte
-	// Key fingerprint
+	// KeyFingerprint field of PhoneConfirmCallRequest.
 	KeyFingerprint int64
-	// Phone call settings
+	// Protocol field of PhoneConfirmCallRequest.
 	Protocol PhoneCallProtocol
 }
 
@@ -90,19 +81,6 @@ func (c *PhoneConfirmCallRequest) String() string {
 	}
 	type Alias PhoneConfirmCallRequest
 	return fmt.Sprintf("PhoneConfirmCallRequest%+v", Alias(*c))
-}
-
-// FillFrom fills PhoneConfirmCallRequest from given interface.
-func (c *PhoneConfirmCallRequest) FillFrom(from interface {
-	GetPeer() (value InputPhoneCall)
-	GetGA() (value []byte)
-	GetKeyFingerprint() (value int64)
-	GetProtocol() (value PhoneCallProtocol)
-}) {
-	c.Peer = from.GetPeer()
-	c.GA = from.GetGA()
-	c.KeyFingerprint = from.GetKeyFingerprint()
-	c.Protocol = from.GetProtocol()
 }
 
 // TypeID returns type id in TL schema.
@@ -249,17 +227,6 @@ func (c *PhoneConfirmCallRequest) GetProtocol() (value PhoneCallProtocol) {
 }
 
 // PhoneConfirmCall invokes method phone.confirmCall#2efe1722 returning error if any.
-// Complete phone call E2E encryption key exchange »¹
-//
-// Links:
-//  1. https://core.telegram.org/api/end-to-end/voice-calls
-//
-// Possible errors:
-//
-//	400 CALL_ALREADY_DECLINED: The call was already declined.
-//	400 CALL_PEER_INVALID: The provided call peer object is invalid.
-//
-// See https://core.telegram.org/method/phone.confirmCall for reference.
 func (c *Client) PhoneConfirmCall(ctx context.Context, request *PhoneConfirmCallRequest) (*PhonePhoneCall, error) {
 	var result PhonePhoneCall
 

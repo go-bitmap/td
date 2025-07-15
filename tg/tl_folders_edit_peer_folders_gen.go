@@ -32,14 +32,8 @@ var (
 )
 
 // FoldersEditPeerFoldersRequest represents TL type `folders.editPeerFolders#6847d0ab`.
-// Edit peers in peer folder¹
-//
-// Links:
-//  1. https://core.telegram.org/api/folders#peer-folders
-//
-// See https://core.telegram.org/method/folders.editPeerFolders for reference.
 type FoldersEditPeerFoldersRequest struct {
-	// New peer list
+	// FolderPeers field of FoldersEditPeerFoldersRequest.
 	FolderPeers []InputFolderPeer
 }
 
@@ -72,13 +66,6 @@ func (e *FoldersEditPeerFoldersRequest) String() string {
 	}
 	type Alias FoldersEditPeerFoldersRequest
 	return fmt.Sprintf("FoldersEditPeerFoldersRequest%+v", Alias(*e))
-}
-
-// FillFrom fills FoldersEditPeerFoldersRequest from given interface.
-func (e *FoldersEditPeerFoldersRequest) FillFrom(from interface {
-	GetFolderPeers() (value []InputFolderPeer)
-}) {
-	e.FolderPeers = from.GetFolderPeers()
 }
 
 // TypeID returns type id in TL schema.
@@ -180,18 +167,6 @@ func (e *FoldersEditPeerFoldersRequest) GetFolderPeers() (value []InputFolderPee
 }
 
 // FoldersEditPeerFolders invokes method folders.editPeerFolders#6847d0ab returning error if any.
-// Edit peers in peer folder¹
-//
-// Links:
-//  1. https://core.telegram.org/api/folders#peer-folders
-//
-// Possible errors:
-//
-//	400 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
-//	400 CHAT_ID_INVALID: The provided chat id is invalid.
-//	400 FOLDER_ID_INVALID: Invalid folder ID.
-//
-// See https://core.telegram.org/method/folders.editPeerFolders for reference.
 func (c *Client) FoldersEditPeerFolders(ctx context.Context, folderpeers []InputFolderPeer) (UpdatesClass, error) {
 	var result UpdatesBox
 

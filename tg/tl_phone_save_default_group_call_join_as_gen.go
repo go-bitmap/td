@@ -32,14 +32,10 @@ var (
 )
 
 // PhoneSaveDefaultGroupCallJoinAsRequest represents TL type `phone.saveDefaultGroupCallJoinAs#575e1f8c`.
-// Set the default peer that will be used to join a group call in a specific dialog.
-//
-// See https://core.telegram.org/method/phone.saveDefaultGroupCallJoinAs for reference.
 type PhoneSaveDefaultGroupCallJoinAsRequest struct {
-	// The dialog
+	// Peer field of PhoneSaveDefaultGroupCallJoinAsRequest.
 	Peer InputPeerClass
-	// The default peer that will be used to join group calls in this dialog, presenting
-	// yourself as a specific user/channel.
+	// JoinAs field of PhoneSaveDefaultGroupCallJoinAsRequest.
 	JoinAs InputPeerClass
 }
 
@@ -75,15 +71,6 @@ func (s *PhoneSaveDefaultGroupCallJoinAsRequest) String() string {
 	}
 	type Alias PhoneSaveDefaultGroupCallJoinAsRequest
 	return fmt.Sprintf("PhoneSaveDefaultGroupCallJoinAsRequest%+v", Alias(*s))
-}
-
-// FillFrom fills PhoneSaveDefaultGroupCallJoinAsRequest from given interface.
-func (s *PhoneSaveDefaultGroupCallJoinAsRequest) FillFrom(from interface {
-	GetPeer() (value InputPeerClass)
-	GetJoinAs() (value InputPeerClass)
-}) {
-	s.Peer = from.GetPeer()
-	s.JoinAs = from.GetJoinAs()
 }
 
 // TypeID returns type id in TL schema.
@@ -200,14 +187,6 @@ func (s *PhoneSaveDefaultGroupCallJoinAsRequest) GetJoinAs() (value InputPeerCla
 }
 
 // PhoneSaveDefaultGroupCallJoinAs invokes method phone.saveDefaultGroupCallJoinAs#575e1f8c returning error if any.
-// Set the default peer that will be used to join a group call in a specific dialog.
-//
-// Possible errors:
-//
-//	400 JOIN_AS_PEER_INVALID: The specified peer cannot be used to join a group call.
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//
-// See https://core.telegram.org/method/phone.saveDefaultGroupCallJoinAs for reference.
 func (c *Client) PhoneSaveDefaultGroupCallJoinAs(ctx context.Context, request *PhoneSaveDefaultGroupCallJoinAsRequest) (bool, error) {
 	var result BoolBox
 

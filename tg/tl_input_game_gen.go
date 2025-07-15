@@ -32,19 +32,10 @@ var (
 )
 
 // InputGameID represents TL type `inputGameID#32c3e77`.
-// Indicates an already sent game
-//
-// See https://core.telegram.org/constructor/inputGameID for reference.
 type InputGameID struct {
-	// game ID from Game¹ constructor
-	//
-	// Links:
-	//  1) https://core.telegram.org/type/Game
+	// ID field of InputGameID.
 	ID int64
-	// access hash from Game¹ constructor
-	//
-	// Links:
-	//  1) https://core.telegram.org/type/Game
+	// AccessHash field of InputGameID.
 	AccessHash int64
 }
 
@@ -85,15 +76,6 @@ func (i *InputGameID) String() string {
 	}
 	type Alias InputGameID
 	return fmt.Sprintf("InputGameID%+v", Alias(*i))
-}
-
-// FillFrom fills InputGameID from given interface.
-func (i *InputGameID) FillFrom(from interface {
-	GetID() (value int64)
-	GetAccessHash() (value int64)
-}) {
-	i.ID = from.GetID()
-	i.AccessHash = from.GetAccessHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -200,16 +182,10 @@ func (i *InputGameID) GetAccessHash() (value int64) {
 }
 
 // InputGameShortName represents TL type `inputGameShortName#c331e80a`.
-// Game by short name
-//
-// See https://core.telegram.org/constructor/inputGameShortName for reference.
 type InputGameShortName struct {
-	// The bot that provides the game
+	// BotID field of InputGameShortName.
 	BotID InputUserClass
-	// The game's short name, usually obtained from a game link »¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/links#game-links
+	// ShortName field of InputGameShortName.
 	ShortName string
 }
 
@@ -250,15 +226,6 @@ func (i *InputGameShortName) String() string {
 	}
 	type Alias InputGameShortName
 	return fmt.Sprintf("InputGameShortName%+v", Alias(*i))
-}
-
-// FillFrom fills InputGameShortName from given interface.
-func (i *InputGameShortName) FillFrom(from interface {
-	GetBotID() (value InputUserClass)
-	GetShortName() (value string)
-}) {
-	i.BotID = from.GetBotID()
-	i.ShortName = from.GetShortName()
 }
 
 // TypeID returns type id in TL schema.
@@ -373,8 +340,6 @@ func (i *InputGameShortName) GetShortName() (value string) {
 const InputGameClassName = "InputGame"
 
 // InputGameClass represents InputGame generic type.
-//
-// See https://core.telegram.org/type/InputGame for reference.
 //
 // Constructors:
 //   - [InputGameID]

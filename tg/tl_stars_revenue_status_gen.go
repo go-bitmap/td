@@ -32,31 +32,18 @@ var (
 )
 
 // StarsRevenueStatus represents TL type `starsRevenueStatus#febe5491`.
-// Describes Telegram Star revenue balances »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/stars
-//
-// See https://core.telegram.org/constructor/starsRevenueStatus for reference.
 type StarsRevenueStatus struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of StarsRevenueStatus.
 	Flags bin.Fields
-	// If set, the user may withdraw¹ up to available_balance stars.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/stars#withdrawing-stars
+	// WithdrawalEnabled field of StarsRevenueStatus.
 	WithdrawalEnabled bool
-	// Amount of not-yet-withdrawn Telegram Stars.
+	// CurrentBalance field of StarsRevenueStatus.
 	CurrentBalance StarsAmount
-	// Amount of withdrawable Telegram Stars.
+	// AvailableBalance field of StarsRevenueStatus.
 	AvailableBalance StarsAmount
-	// Total amount of earned Telegram Stars.
+	// OverallRevenue field of StarsRevenueStatus.
 	OverallRevenue StarsAmount
-	// Unixtime indicating when will withdrawal be available to the user. If not set,
-	// withdrawal can be started now.
+	// NextWithdrawalAt field of StarsRevenueStatus.
 	//
 	// Use SetNextWithdrawalAt and GetNextWithdrawalAt helpers.
 	NextWithdrawalAt int
@@ -106,24 +93,6 @@ func (s *StarsRevenueStatus) String() string {
 	}
 	type Alias StarsRevenueStatus
 	return fmt.Sprintf("StarsRevenueStatus%+v", Alias(*s))
-}
-
-// FillFrom fills StarsRevenueStatus from given interface.
-func (s *StarsRevenueStatus) FillFrom(from interface {
-	GetWithdrawalEnabled() (value bool)
-	GetCurrentBalance() (value StarsAmount)
-	GetAvailableBalance() (value StarsAmount)
-	GetOverallRevenue() (value StarsAmount)
-	GetNextWithdrawalAt() (value int, ok bool)
-}) {
-	s.WithdrawalEnabled = from.GetWithdrawalEnabled()
-	s.CurrentBalance = from.GetCurrentBalance()
-	s.AvailableBalance = from.GetAvailableBalance()
-	s.OverallRevenue = from.GetOverallRevenue()
-	if val, ok := from.GetNextWithdrawalAt(); ok {
-		s.NextWithdrawalAt = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.

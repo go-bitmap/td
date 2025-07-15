@@ -32,12 +32,8 @@ var (
 )
 
 // StickersRemoveStickerFromSetRequest represents TL type `stickers.removeStickerFromSet#f7760f51`.
-// Remove a sticker from the set where it belongs. The sticker set must have been created
-// by the current user/bot.
-//
-// See https://core.telegram.org/method/stickers.removeStickerFromSet for reference.
 type StickersRemoveStickerFromSetRequest struct {
-	// The sticker to remove
+	// Sticker field of StickersRemoveStickerFromSetRequest.
 	Sticker InputDocumentClass
 }
 
@@ -70,13 +66,6 @@ func (r *StickersRemoveStickerFromSetRequest) String() string {
 	}
 	type Alias StickersRemoveStickerFromSetRequest
 	return fmt.Sprintf("StickersRemoveStickerFromSetRequest%+v", Alias(*r))
-}
-
-// FillFrom fills StickersRemoveStickerFromSetRequest from given interface.
-func (r *StickersRemoveStickerFromSetRequest) FillFrom(from interface {
-	GetSticker() (value InputDocumentClass)
-}) {
-	r.Sticker = from.GetSticker()
 }
 
 // TypeID returns type id in TL schema.
@@ -167,21 +156,7 @@ func (r *StickersRemoveStickerFromSetRequest) GetSticker() (value InputDocumentC
 	return r.Sticker
 }
 
-// GetStickerAsNotEmpty returns mapped value of Sticker field.
-func (r *StickersRemoveStickerFromSetRequest) GetStickerAsNotEmpty() (*InputDocument, bool) {
-	return r.Sticker.AsNotEmpty()
-}
-
 // StickersRemoveStickerFromSet invokes method stickers.removeStickerFromSet#f7760f51 returning error if any.
-// Remove a sticker from the set where it belongs. The sticker set must have been created
-// by the current user/bot.
-//
-// Possible errors:
-//
-//	400 STICKER_INVALID: The provided sticker is invalid.
-//
-// See https://core.telegram.org/method/stickers.removeStickerFromSet for reference.
-// Can be used by bots.
 func (c *Client) StickersRemoveStickerFromSet(ctx context.Context, sticker InputDocumentClass) (MessagesStickerSetClass, error) {
 	var result MessagesStickerSetBox
 

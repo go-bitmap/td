@@ -32,40 +32,24 @@ var (
 )
 
 // Page represents TL type `page#98657f0d`.
-// Instant view¹ page
-//
-// Links:
-//  1. https://instantview.telegram.org
-//
-// See https://core.telegram.org/constructor/page for reference.
 type Page struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of Page.
 	Flags bin.Fields
-	// Indicates that not full page preview is available to the client and it will need to
-	// fetch full Instant View from the server using messages.getWebPagePreview¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/messages.getWebPagePreview
+	// Part field of Page.
 	Part bool
-	// Whether the page contains RTL text
+	// Rtl field of Page.
 	Rtl bool
-	// Whether this is an IV v2¹ page
-	//
-	// Links:
-	//  1) https://instantview.telegram.org/docs#what-39s-new-in-2-0
+	// V2 field of Page.
 	V2 bool
-	// Original page HTTP URL
+	// URL field of Page.
 	URL string
-	// Page elements (like with HTML elements, only as TL constructors)
+	// Blocks field of Page.
 	Blocks []PageBlockClass
-	// Photos in page
+	// Photos field of Page.
 	Photos []PhotoClass
-	// Media in page
+	// Documents field of Page.
 	Documents []DocumentClass
-	// View count
+	// Views field of Page.
 	//
 	// Use SetViews and GetViews helpers.
 	Views int
@@ -124,30 +108,6 @@ func (p *Page) String() string {
 	}
 	type Alias Page
 	return fmt.Sprintf("Page%+v", Alias(*p))
-}
-
-// FillFrom fills Page from given interface.
-func (p *Page) FillFrom(from interface {
-	GetPart() (value bool)
-	GetRtl() (value bool)
-	GetV2() (value bool)
-	GetURL() (value string)
-	GetBlocks() (value []PageBlockClass)
-	GetPhotos() (value []PhotoClass)
-	GetDocuments() (value []DocumentClass)
-	GetViews() (value int, ok bool)
-}) {
-	p.Part = from.GetPart()
-	p.Rtl = from.GetRtl()
-	p.V2 = from.GetV2()
-	p.URL = from.GetURL()
-	p.Blocks = from.GetBlocks()
-	p.Photos = from.GetPhotos()
-	p.Documents = from.GetDocuments()
-	if val, ok := from.GetViews(); ok {
-		p.Views = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -478,19 +438,4 @@ func (p *Page) GetViews() (value int, ok bool) {
 		return value, false
 	}
 	return p.Views, true
-}
-
-// MapBlocks returns field Blocks wrapped in PageBlockClassArray helper.
-func (p *Page) MapBlocks() (value PageBlockClassArray) {
-	return PageBlockClassArray(p.Blocks)
-}
-
-// MapPhotos returns field Photos wrapped in PhotoClassArray helper.
-func (p *Page) MapPhotos() (value PhotoClassArray) {
-	return PhotoClassArray(p.Photos)
-}
-
-// MapDocuments returns field Documents wrapped in DocumentClassArray helper.
-func (p *Page) MapDocuments() (value DocumentClassArray) {
-	return DocumentClassArray(p.Documents)
 }

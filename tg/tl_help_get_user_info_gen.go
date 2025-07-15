@@ -32,11 +32,8 @@ var (
 )
 
 // HelpGetUserInfoRequest represents TL type `help.getUserInfo#38a08d3`.
-// Can only be used by TSF members to obtain internal information.
-//
-// See https://core.telegram.org/method/help.getUserInfo for reference.
 type HelpGetUserInfoRequest struct {
-	// User ID
+	// UserID field of HelpGetUserInfoRequest.
 	UserID InputUserClass
 }
 
@@ -69,13 +66,6 @@ func (g *HelpGetUserInfoRequest) String() string {
 	}
 	type Alias HelpGetUserInfoRequest
 	return fmt.Sprintf("HelpGetUserInfoRequest%+v", Alias(*g))
-}
-
-// FillFrom fills HelpGetUserInfoRequest from given interface.
-func (g *HelpGetUserInfoRequest) FillFrom(from interface {
-	GetUserID() (value InputUserClass)
-}) {
-	g.UserID = from.GetUserID()
 }
 
 // TypeID returns type id in TL schema.
@@ -167,13 +157,6 @@ func (g *HelpGetUserInfoRequest) GetUserID() (value InputUserClass) {
 }
 
 // HelpGetUserInfo invokes method help.getUserInfo#38a08d3 returning error if any.
-// Can only be used by TSF members to obtain internal information.
-//
-// Possible errors:
-//
-//	403 USER_INVALID: Invalid user provided.
-//
-// See https://core.telegram.org/method/help.getUserInfo for reference.
 func (c *Client) HelpGetUserInfo(ctx context.Context, userid InputUserClass) (HelpUserInfoClass, error) {
 	var result HelpUserInfoBox
 

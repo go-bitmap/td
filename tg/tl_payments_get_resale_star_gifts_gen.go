@@ -32,8 +32,6 @@ var (
 )
 
 // PaymentsGetResaleStarGiftsRequest represents TL type `payments.getResaleStarGifts#7a5fa236`.
-//
-// See https://core.telegram.org/method/payments.getResaleStarGifts for reference.
 type PaymentsGetResaleStarGiftsRequest struct {
 	// Flags field of PaymentsGetResaleStarGiftsRequest.
 	Flags bin.Fields
@@ -107,31 +105,6 @@ func (g *PaymentsGetResaleStarGiftsRequest) String() string {
 	}
 	type Alias PaymentsGetResaleStarGiftsRequest
 	return fmt.Sprintf("PaymentsGetResaleStarGiftsRequest%+v", Alias(*g))
-}
-
-// FillFrom fills PaymentsGetResaleStarGiftsRequest from given interface.
-func (g *PaymentsGetResaleStarGiftsRequest) FillFrom(from interface {
-	GetSortByPrice() (value bool)
-	GetSortByNum() (value bool)
-	GetAttributesHash() (value int64, ok bool)
-	GetGiftID() (value int64)
-	GetAttributes() (value []StarGiftAttributeIDClass, ok bool)
-	GetOffset() (value string)
-	GetLimit() (value int)
-}) {
-	g.SortByPrice = from.GetSortByPrice()
-	g.SortByNum = from.GetSortByNum()
-	if val, ok := from.GetAttributesHash(); ok {
-		g.AttributesHash = val
-	}
-
-	g.GiftID = from.GetGiftID()
-	if val, ok := from.GetAttributes(); ok {
-		g.Attributes = val
-	}
-
-	g.Offset = from.GetOffset()
-	g.Limit = from.GetLimit()
 }
 
 // TypeID returns type id in TL schema.
@@ -416,17 +389,7 @@ func (g *PaymentsGetResaleStarGiftsRequest) GetLimit() (value int) {
 	return g.Limit
 }
 
-// MapAttributes returns field Attributes wrapped in StarGiftAttributeIDClassArray helper.
-func (g *PaymentsGetResaleStarGiftsRequest) MapAttributes() (value StarGiftAttributeIDClassArray, ok bool) {
-	if !g.Flags.Has(3) {
-		return value, false
-	}
-	return StarGiftAttributeIDClassArray(g.Attributes), true
-}
-
 // PaymentsGetResaleStarGifts invokes method payments.getResaleStarGifts#7a5fa236 returning error if any.
-//
-// See https://core.telegram.org/method/payments.getResaleStarGifts for reference.
 func (c *Client) PaymentsGetResaleStarGifts(ctx context.Context, request *PaymentsGetResaleStarGiftsRequest) (*PaymentsResaleStarGifts, error) {
 	var result PaymentsResaleStarGifts
 

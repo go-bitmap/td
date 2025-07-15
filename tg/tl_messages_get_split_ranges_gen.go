@@ -32,9 +32,6 @@ var (
 )
 
 // MessagesGetSplitRangesRequest represents TL type `messages.getSplitRanges#1cff7e08`.
-// Get message ranges for saving the user's chat history
-//
-// See https://core.telegram.org/method/messages.getSplitRanges for reference.
 type MessagesGetSplitRangesRequest struct {
 }
 
@@ -129,9 +126,6 @@ func (g *MessagesGetSplitRangesRequest) DecodeBare(b *bin.Buffer) error {
 }
 
 // MessagesGetSplitRanges invokes method messages.getSplitRanges#1cff7e08 returning error if any.
-// Get message ranges for saving the user's chat history
-//
-// See https://core.telegram.org/method/messages.getSplitRanges for reference.
 func (c *Client) MessagesGetSplitRanges(ctx context.Context) ([]MessageRange, error) {
 	var result MessageRangeVector
 

@@ -32,22 +32,10 @@ var (
 )
 
 // AccountConfirmPhoneRequest represents TL type `account.confirmPhone#5f2178c3`.
-// Confirm a phone number to cancel account deletion, for more info click here »¹
-//
-// Links:
-//  1. https://core.telegram.org/api/account-deletion
-//
-// See https://core.telegram.org/method/account.confirmPhone for reference.
 type AccountConfirmPhoneRequest struct {
-	// Phone code hash, for more info click here »¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/account-deletion
+	// PhoneCodeHash field of AccountConfirmPhoneRequest.
 	PhoneCodeHash string
-	// SMS code, for more info click here »¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/account-deletion
+	// PhoneCode field of AccountConfirmPhoneRequest.
 	PhoneCode string
 }
 
@@ -83,15 +71,6 @@ func (c *AccountConfirmPhoneRequest) String() string {
 	}
 	type Alias AccountConfirmPhoneRequest
 	return fmt.Sprintf("AccountConfirmPhoneRequest%+v", Alias(*c))
-}
-
-// FillFrom fills AccountConfirmPhoneRequest from given interface.
-func (c *AccountConfirmPhoneRequest) FillFrom(from interface {
-	GetPhoneCodeHash() (value string)
-	GetPhoneCode() (value string)
-}) {
-	c.PhoneCodeHash = from.GetPhoneCodeHash()
-	c.PhoneCode = from.GetPhoneCode()
 }
 
 // TypeID returns type id in TL schema.
@@ -198,17 +177,6 @@ func (c *AccountConfirmPhoneRequest) GetPhoneCode() (value string) {
 }
 
 // AccountConfirmPhone invokes method account.confirmPhone#5f2178c3 returning error if any.
-// Confirm a phone number to cancel account deletion, for more info click here »¹
-//
-// Links:
-//  1. https://core.telegram.org/api/account-deletion
-//
-// Possible errors:
-//
-//	400 CODE_HASH_INVALID: Code hash invalid.
-//	400 PHONE_CODE_EMPTY: phone_code is missing.
-//
-// See https://core.telegram.org/method/account.confirmPhone for reference.
 func (c *Client) AccountConfirmPhone(ctx context.Context, request *AccountConfirmPhoneRequest) (bool, error) {
 	var result BoolBox
 

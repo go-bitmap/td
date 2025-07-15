@@ -32,64 +32,30 @@ var (
 )
 
 // ChannelsCreateChannelRequest represents TL type `channels.createChannel#91006707`.
-// Create a supergroup/channel¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/channel
-//
-// See https://core.telegram.org/method/channels.createChannel for reference.
 type ChannelsCreateChannelRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of ChannelsCreateChannelRequest.
 	Flags bin.Fields
-	// Whether to create a channel¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/channel
+	// Broadcast field of ChannelsCreateChannelRequest.
 	Broadcast bool
-	// Whether to create a supergroup¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/channel
+	// Megagroup field of ChannelsCreateChannelRequest.
 	Megagroup bool
-	// Whether the supergroup is being created to import messages from a foreign chat service
-	// using messages.initHistoryImport¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/messages.initHistoryImport
+	// ForImport field of ChannelsCreateChannelRequest.
 	ForImport bool
-	// Whether to create a forum¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/forum
+	// Forum field of ChannelsCreateChannelRequest.
 	Forum bool
-	// Channel title
+	// Title field of ChannelsCreateChannelRequest.
 	Title string
-	// Channel description
+	// About field of ChannelsCreateChannelRequest.
 	About string
-	// Geogroup location, see here »¹ for more info on geogroups.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/nearby
+	// GeoPoint field of ChannelsCreateChannelRequest.
 	//
 	// Use SetGeoPoint and GetGeoPoint helpers.
 	GeoPoint InputGeoPointClass
-	// Geogroup address, see here »¹ for more info on geogroups.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/nearby
+	// Address field of ChannelsCreateChannelRequest.
 	//
 	// Use SetAddress and GetAddress helpers.
 	Address string
-	// Time-to-live of all messages that will be sent in the supergroup: once message
-	// date+message.ttl_period === time(), the message will be deleted on the server, and
-	// must be deleted locally as well. You can use messages.setDefaultHistoryTTL¹ to edit
-	// this value later.
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/messages.setDefaultHistoryTTL
+	// TTLPeriod field of ChannelsCreateChannelRequest.
 	//
 	// Use SetTTLPeriod and GetTTLPeriod helpers.
 	TTLPeriod int
@@ -151,38 +117,6 @@ func (c *ChannelsCreateChannelRequest) String() string {
 	}
 	type Alias ChannelsCreateChannelRequest
 	return fmt.Sprintf("ChannelsCreateChannelRequest%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelsCreateChannelRequest from given interface.
-func (c *ChannelsCreateChannelRequest) FillFrom(from interface {
-	GetBroadcast() (value bool)
-	GetMegagroup() (value bool)
-	GetForImport() (value bool)
-	GetForum() (value bool)
-	GetTitle() (value string)
-	GetAbout() (value string)
-	GetGeoPoint() (value InputGeoPointClass, ok bool)
-	GetAddress() (value string, ok bool)
-	GetTTLPeriod() (value int, ok bool)
-}) {
-	c.Broadcast = from.GetBroadcast()
-	c.Megagroup = from.GetMegagroup()
-	c.ForImport = from.GetForImport()
-	c.Forum = from.GetForum()
-	c.Title = from.GetTitle()
-	c.About = from.GetAbout()
-	if val, ok := from.GetGeoPoint(); ok {
-		c.GeoPoint = val
-	}
-
-	if val, ok := from.GetAddress(); ok {
-		c.Address = val
-	}
-
-	if val, ok := from.GetTTLPeriod(); ok {
-		c.TTLPeriod = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -526,33 +460,7 @@ func (c *ChannelsCreateChannelRequest) GetTTLPeriod() (value int, ok bool) {
 	return c.TTLPeriod, true
 }
 
-// GetGeoPointAsNotEmpty returns mapped value of GeoPoint conditional field and
-// boolean which is true if field was set.
-func (c *ChannelsCreateChannelRequest) GetGeoPointAsNotEmpty() (*InputGeoPoint, bool) {
-	if value, ok := c.GetGeoPoint(); ok {
-		return value.AsNotEmpty()
-	}
-	return nil, false
-}
-
 // ChannelsCreateChannel invokes method channels.createChannel#91006707 returning error if any.
-// Create a supergroup/channel¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/channel
-//
-// Possible errors:
-//
-//	400 ADDRESS_INVALID: The specified geopoint address is invalid.
-//	400 CHANNELS_ADMIN_LOCATED_TOO_MUCH: The user has reached the limit of public geogroups.
-//	400 CHANNELS_TOO_MUCH: You have joined too many channels/supergroups.
-//	400 CHAT_ABOUT_TOO_LONG: Chat about too long.
-//	500 CHAT_INVALID: Invalid chat.
-//	400 CHAT_TITLE_EMPTY: No chat title provided.
-//	400 TTL_PERIOD_INVALID: The specified TTL period is invalid.
-//	406 USER_RESTRICTED: You're spamreported, you can't create channels or chats.
-//
-// See https://core.telegram.org/method/channels.createChannel for reference.
 func (c *Client) ChannelsCreateChannel(ctx context.Context, request *ChannelsCreateChannelRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

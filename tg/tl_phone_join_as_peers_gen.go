@@ -32,16 +32,12 @@ var (
 )
 
 // PhoneJoinAsPeers represents TL type `phone.joinAsPeers#afe5623f`.
-// A list of peers that can be used to join a group call, presenting yourself as a
-// specific user/channel.
-//
-// See https://core.telegram.org/constructor/phone.joinAsPeers for reference.
 type PhoneJoinAsPeers struct {
-	// Peers
+	// Peers field of PhoneJoinAsPeers.
 	Peers []PeerClass
-	// Chats mentioned in the peers vector
+	// Chats field of PhoneJoinAsPeers.
 	Chats []ChatClass
-	// Users mentioned in the peers vector
+	// Users field of PhoneJoinAsPeers.
 	Users []UserClass
 }
 
@@ -80,17 +76,6 @@ func (j *PhoneJoinAsPeers) String() string {
 	}
 	type Alias PhoneJoinAsPeers
 	return fmt.Sprintf("PhoneJoinAsPeers%+v", Alias(*j))
-}
-
-// FillFrom fills PhoneJoinAsPeers from given interface.
-func (j *PhoneJoinAsPeers) FillFrom(from interface {
-	GetPeers() (value []PeerClass)
-	GetChats() (value []ChatClass)
-	GetUsers() (value []UserClass)
-}) {
-	j.Peers = from.GetPeers()
-	j.Chats = from.GetChats()
-	j.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -268,19 +253,4 @@ func (j *PhoneJoinAsPeers) GetUsers() (value []UserClass) {
 		return
 	}
 	return j.Users
-}
-
-// MapPeers returns field Peers wrapped in PeerClassArray helper.
-func (j *PhoneJoinAsPeers) MapPeers() (value PeerClassArray) {
-	return PeerClassArray(j.Peers)
-}
-
-// MapChats returns field Chats wrapped in ChatClassArray helper.
-func (j *PhoneJoinAsPeers) MapChats() (value ChatClassArray) {
-	return ChatClassArray(j.Chats)
-}
-
-// MapUsers returns field Users wrapped in UserClassArray helper.
-func (j *PhoneJoinAsPeers) MapUsers() (value UserClassArray) {
-	return UserClassArray(j.Users)
 }

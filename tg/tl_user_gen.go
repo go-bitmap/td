@@ -32,11 +32,8 @@ var (
 )
 
 // UserEmpty represents TL type `userEmpty#d3bc4b7a`.
-// Empty constructor, non-existent user.
-//
-// See https://core.telegram.org/constructor/userEmpty for reference.
 type UserEmpty struct {
-	// User identifier or 0
+	// ID field of UserEmpty.
 	ID int64
 }
 
@@ -74,13 +71,6 @@ func (u *UserEmpty) String() string {
 	}
 	type Alias UserEmpty
 	return fmt.Sprintf("UserEmpty%+v", Alias(*u))
-}
-
-// FillFrom fills UserEmpty from given interface.
-func (u *UserEmpty) FillFrom(from interface {
-	GetID() (value int64)
-}) {
-	u.ID = from.GetID()
 }
 
 // TypeID returns type id in TL schema.
@@ -167,318 +157,128 @@ func (u *UserEmpty) GetID() (value int64) {
 }
 
 // User represents TL type `user#20b1422`.
-// Indicates info about a certain user.
-// Unless specified otherwise, when updating the local peer database¹, all fields from
-// the newly received constructor take priority over the old constructor cached locally
-// (including by removing fields that aren't set in the new constructor).
-// See here »¹ for an implementation of the logic to use when updating the local user
-// peer database².
-//
-// Links:
-//  1. https://core.telegram.org/api/peers
-//  2. https://github.com/tdlib/td/blob/cb164927417f22811c74cd8678ed4a5ab7cb80ba/td/telegram/UserManager.cpp#L2267
-//  3. https://core.telegram.org/api/peers
-//
-// See https://core.telegram.org/constructor/user for reference.
 type User struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of User.
 	Flags bin.Fields
-	// Whether this user indicates the currently logged in user
+	// Self field of User.
 	Self bool
-	// Whether this user is a contact When updating the local peer database¹, do not apply
-	// changes to this field if the min flag is set.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/peers
+	// Contact field of User.
 	Contact bool
-	// Whether this user is a mutual contact. When updating the local peer database¹, do not
-	// apply changes to this field if the min flag is set.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/peers
+	// MutualContact field of User.
 	MutualContact bool
-	// Whether the account of this user was deleted. Changes to this flag should invalidate
-	// the local userFull¹ cache for this user ID, see here »² for more info.
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/userFull
-	//  2) https://core.telegram.org/api/peers#full-info-database
+	// Deleted field of User.
 	Deleted bool
-	// Is this user a bot? Changes to this flag should invalidate the local userFull¹ cache
-	// for this user ID, see here »² for more info.
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/userFull
-	//  2) https://core.telegram.org/api/peers#full-info-database
+	// Bot field of User.
 	Bot bool
-	// Can the bot see all messages in groups?
+	// BotChatHistory field of User.
 	BotChatHistory bool
-	// Can the bot be added to groups?
+	// BotNochats field of User.
 	BotNochats bool
-	// Whether this user is verified
+	// Verified field of User.
 	Verified bool
-	// Access to this user must be restricted for the reason specified in restriction_reason
+	// Restricted field of User.
 	Restricted bool
-	// See min¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/min
+	// Min field of User.
 	Min bool
-	// Whether the bot can request our geolocation in inline mode
+	// BotInlineGeo field of User.
 	BotInlineGeo bool
-	// Whether this is an official support user
+	// Support field of User.
 	Support bool
-	// This may be a scam user
+	// Scam field of User.
 	Scam bool
-	// If set and min is set, the value of photo can be used to update the local database,
-	// see the documentation of that flag for more info.
+	// ApplyMinPhoto field of User.
 	ApplyMinPhoto bool
-	// If set, this user was reported by many users as a fake or scam user: be careful when
-	// interacting with them.
+	// Fake field of User.
 	Fake bool
-	// Whether this bot offers an attachment menu web app¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/bots/attach
+	// BotAttachMenu field of User.
 	BotAttachMenu bool
-	// Whether this user is a Telegram Premium user Changes to this flag should invalidate
-	// the local userFull¹ cache for this user ID, see here »² for more info. Changes to
-	// this flag if the self flag is set should also trigger the following calls, to refresh
-	// the respective caches: - The help.getConfig³ cache - The messages.getTopReactions⁴
-	// cache if the bot flag is not set
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/userFull
-	//  2) https://core.telegram.org/api/peers#full-info-database
-	//  3) https://core.telegram.org/method/help.getConfig
-	//  4) https://core.telegram.org/method/messages.getTopReactions
+	// Premium field of User.
 	Premium bool
-	// Whether we installed the attachment menu web app¹ offered by this bot. When updating
-	// the local peer database², do not apply changes to this field if the min flag is set.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/bots/attach
-	//  2) https://core.telegram.org/api/peers
+	// AttachMenuEnabled field of User.
 	AttachMenuEnabled bool
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags2 field of User.
 	Flags2 bin.Fields
-	// Whether we can edit the profile picture, name, about text and description of this bot
-	// because we own it. When updating the local peer database¹, do not apply changes to
-	// this field if the min flag is set. Changes to this flag (if min is not set) should
-	// invalidate the local userFull² cache for this user ID.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/peers
-	//  2) https://core.telegram.org/constructor/userFull
+	// BotCanEdit field of User.
 	BotCanEdit bool
-	// Whether we marked this user as a close friend, see here » for more info¹. When
-	// updating the local peer database², do not apply changes to this field if the min flag
-	// is set.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/privacy
-	//  2) https://core.telegram.org/api/peers
+	// CloseFriend field of User.
 	CloseFriend bool
-	// Whether we have hidden »¹ all active stories of this user. When updating the local
-	// peer database², do not apply changes to this field if the min flag is set.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/stories#hiding-stories-of-other-users
-	//  2) https://core.telegram.org/api/peers
+	// StoriesHidden field of User.
 	StoriesHidden bool
-	// No stories from this user are visible.
+	// StoriesUnavailable field of User.
 	StoriesUnavailable bool
-	// If set, we can only write to this user if they have already sent some messages to us,
-	// if we are subscribed to Telegram Premium¹, or if they're a mutual contact (user²
-	// mutual_contact).  All the secondary conditions listed above must be checked separately
-	// to verify whether we can still write to the user, even if this flag is set (i.e. a
-	// mutual contact will have this flag set even if we can still write to them, and so on..
-	// ); to avoid doing these extra checks if we haven't yet cached all the required
-	// information (for example while displaying the chat list in the sharing UI) the users
-	// getIsPremiumRequiredToContact³ method may be invoked instead, passing the list of
-	// users currently visible in the UI, returning a list of booleans that directly specify
-	// whether we can or cannot write to each user; alternatively, the userFull⁴
-	// contact_require_premium flag contains the same (fully checked, i.e. it's not just a
-	// copy of this flag) info returned by users.getIsPremiumRequiredToContact⁵. To set
-	// this flag for ourselves invoke account.setGlobalPrivacySettings⁶, setting the
-	// settings.new_noncontact_peers_require_premium flag.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/premium
-	//  2) https://core.telegram.org/constructor/user
-	//  3) https://core.telegram.org/method/users.getIsPremiumRequiredToContact
-	//  4) https://core.telegram.org/constructor/userFull
-	//  5) https://core.telegram.org/method/users.getIsPremiumRequiredToContact
-	//  6) https://core.telegram.org/method/account.setGlobalPrivacySettings
+	// ContactRequirePremium field of User.
 	ContactRequirePremium bool
-	// Whether this bot can be connected to a user as specified here »¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/business#connected-bots
+	// BotBusiness field of User.
 	BotBusiness bool
-	// If set, this bot has configured a Main Mini App »¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/bots/webapps#main-mini-apps
+	// BotHasMainApp field of User.
 	BotHasMainApp bool
-	// ID of the user, see here »¹ for more info.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/peers#peer-id
+	// ID field of User.
 	ID int64
-	// Access hash of the user, see here »¹ for more info. If this flag is set, when
-	// updating the local peer database², generate a virtual flag called min_access_hash,
-	// which is: - Set to true if min is set AND -- The phone flag is not set OR -- The phone
-	// flag is set and the associated phone number string is non-empty - Set to false
-	// otherwise. Then, apply both access_hash and min_access_hash to the local database if:
-	// - min_access_hash is false OR - min_access_hash is true AND -- There is no locally
-	// cached object for this user OR -- There is no access_hash in the local cache OR -- The
-	// cached object's min_access_hash is also true If the final merged object stored to the
-	// database has the min_access_hash field set to true, the related access_hash is only
-	// suitable to use in inputPeerPhotoFileLocation »³, to directly download the profile
-	// pictures⁴ of users, everywhere else a inputPeer*FromMessage constructor will have to
-	// be generated as specified here »⁵. Bots can also use min access hashes in some
-	// conditions, by passing 0 instead of the min access hash.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/peers#access-hash
-	//  2) https://core.telegram.org/api/peers
-	//  3) https://core.telegram.org/constructor/inputPeerPhotoFileLocation
-	//  4) https://core.telegram.org/api/files
-	//  5) https://core.telegram.org/api/min
+	// AccessHash field of User.
 	//
 	// Use SetAccessHash and GetAccessHash helpers.
 	AccessHash int64
-	// First name. When updating the local peer database¹, apply changes to this field only
-	// if: - The min flag is not set OR - The min flag is set AND -- The min flag of the
-	// locally cached user entry is set.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/peers
+	// FirstName field of User.
 	//
 	// Use SetFirstName and GetFirstName helpers.
 	FirstName string
-	// Last name. When updating the local peer database¹, apply changes to this field only
-	// if: - The min flag is not set OR - The min flag is set AND -- The min flag of the
-	// locally cached user entry is set.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/peers
+	// LastName field of User.
 	//
 	// Use SetLastName and GetLastName helpers.
 	LastName string
-	// Main active username. When updating the local peer database¹, apply changes to this
-	// field only if: - The min flag is not set OR - The min flag is set AND -- The min flag
-	// of the locally cached user entry is set. Changes to this flag should invalidate the
-	// local userFull² cache for this user ID if the above conditions are respected and the
-	// bot_can_edit flag is also set.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/peers
-	//  2) https://core.telegram.org/constructor/userFull
+	// Username field of User.
 	//
 	// Use SetUsername and GetUsername helpers.
 	Username string
-	// Phone number. When updating the local peer database¹, apply changes to this field
-	// only if: - The min flag is not set OR - The min flag is set AND -- The min flag of the
-	// locally cached user entry is set.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/peers
+	// Phone field of User.
 	//
 	// Use SetPhone and GetPhone helpers.
 	Phone string
-	// Profile picture of user. When updating the local peer database¹, apply changes to
-	// this field only if: - The min flag is not set OR - The min flag is set AND -- The
-	// apply_min_photo flag is set OR -- The min flag of the locally cached user entry is set.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/peers
+	// Photo field of User.
 	//
 	// Use SetPhoto and GetPhoto helpers.
 	Photo UserProfilePhotoClass
-	// Online status of user. When updating the local peer database¹, apply changes to this
-	// field only if: - The min flag is not set OR - The min flag is set AND -- The min flag
-	// of the locally cached user entry is set OR -- The locally cached user entry is equal
-	// to userStatusEmpty².
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/peers
-	//  2) https://core.telegram.org/constructor/userStatusEmpty
+	// Status field of User.
 	//
 	// Use SetStatus and GetStatus helpers.
 	Status UserStatusClass
-	// Version of the bot_info field in userFull¹, incremented every time it changes.
-	// Changes to this flag should invalidate the local userFull² cache for this user ID,
-	// see here »³ for more info.
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/userFull
-	//  2) https://core.telegram.org/constructor/userFull
-	//  3) https://core.telegram.org/api/peers#full-info-database
+	// BotInfoVersion field of User.
 	//
 	// Use SetBotInfoVersion and GetBotInfoVersion helpers.
 	BotInfoVersion int
-	// Contains the reason why access to this user must be restricted.
+	// RestrictionReason field of User.
 	//
 	// Use SetRestrictionReason and GetRestrictionReason helpers.
 	RestrictionReason []RestrictionReason
-	// Inline placeholder for this inline bot
+	// BotInlinePlaceholder field of User.
 	//
 	// Use SetBotInlinePlaceholder and GetBotInlinePlaceholder helpers.
 	BotInlinePlaceholder string
-	// Language code of the user
+	// LangCode field of User.
 	//
 	// Use SetLangCode and GetLangCode helpers.
 	LangCode string
-	// Emoji status¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/emoji-status
+	// EmojiStatus field of User.
 	//
 	// Use SetEmojiStatus and GetEmojiStatus helpers.
 	EmojiStatus EmojiStatusClass
-	// Additional usernames. When updating the local peer database¹, apply changes to this
-	// field only if: - The min flag is not set OR - The min flag is set AND -- The min flag
-	// of the locally cached user entry is set. Changes to this flag (if the above conditions
-	// are respected) should invalidate the local userFull² cache for this user ID.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/peers
-	//  2) https://core.telegram.org/constructor/userFull
+	// Usernames field of User.
 	//
 	// Use SetUsernames and GetUsernames helpers.
 	Usernames []Username
-	// ID of the maximum read story¹.  When updating the local peer database², do not apply
-	// changes to this field if the min flag of the incoming constructor is set.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/stories
-	//  2) https://core.telegram.org/api/peers
+	// StoriesMaxID field of User.
 	//
 	// Use SetStoriesMaxID and GetStoriesMaxID helpers.
 	StoriesMaxID int
-	// The user's accent color¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/colors
+	// Color field of User.
 	//
 	// Use SetColor and GetColor helpers.
 	Color PeerColor
-	// The user's profile color¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/colors
+	// ProfileColor field of User.
 	//
 	// Use SetProfileColor and GetProfileColor helpers.
 	ProfileColor PeerColor
-	// Monthly Active Users (MAU) of this bot (may be absent for small bots).
+	// BotActiveUsers field of User.
 	//
 	// Use SetBotActiveUsers and GetBotActiveUsers helpers.
 	BotActiveUsers int
@@ -664,158 +464,6 @@ func (u *User) String() string {
 	}
 	type Alias User
 	return fmt.Sprintf("User%+v", Alias(*u))
-}
-
-// FillFrom fills User from given interface.
-func (u *User) FillFrom(from interface {
-	GetSelf() (value bool)
-	GetContact() (value bool)
-	GetMutualContact() (value bool)
-	GetDeleted() (value bool)
-	GetBot() (value bool)
-	GetBotChatHistory() (value bool)
-	GetBotNochats() (value bool)
-	GetVerified() (value bool)
-	GetRestricted() (value bool)
-	GetMin() (value bool)
-	GetBotInlineGeo() (value bool)
-	GetSupport() (value bool)
-	GetScam() (value bool)
-	GetApplyMinPhoto() (value bool)
-	GetFake() (value bool)
-	GetBotAttachMenu() (value bool)
-	GetPremium() (value bool)
-	GetAttachMenuEnabled() (value bool)
-	GetBotCanEdit() (value bool)
-	GetCloseFriend() (value bool)
-	GetStoriesHidden() (value bool)
-	GetStoriesUnavailable() (value bool)
-	GetContactRequirePremium() (value bool)
-	GetBotBusiness() (value bool)
-	GetBotHasMainApp() (value bool)
-	GetID() (value int64)
-	GetAccessHash() (value int64, ok bool)
-	GetFirstName() (value string, ok bool)
-	GetLastName() (value string, ok bool)
-	GetUsername() (value string, ok bool)
-	GetPhone() (value string, ok bool)
-	GetPhoto() (value UserProfilePhotoClass, ok bool)
-	GetStatus() (value UserStatusClass, ok bool)
-	GetBotInfoVersion() (value int, ok bool)
-	GetRestrictionReason() (value []RestrictionReason, ok bool)
-	GetBotInlinePlaceholder() (value string, ok bool)
-	GetLangCode() (value string, ok bool)
-	GetEmojiStatus() (value EmojiStatusClass, ok bool)
-	GetUsernames() (value []Username, ok bool)
-	GetStoriesMaxID() (value int, ok bool)
-	GetColor() (value PeerColor, ok bool)
-	GetProfileColor() (value PeerColor, ok bool)
-	GetBotActiveUsers() (value int, ok bool)
-	GetBotVerificationIcon() (value int64, ok bool)
-	GetSendPaidMessagesStars() (value int64, ok bool)
-}) {
-	u.Self = from.GetSelf()
-	u.Contact = from.GetContact()
-	u.MutualContact = from.GetMutualContact()
-	u.Deleted = from.GetDeleted()
-	u.Bot = from.GetBot()
-	u.BotChatHistory = from.GetBotChatHistory()
-	u.BotNochats = from.GetBotNochats()
-	u.Verified = from.GetVerified()
-	u.Restricted = from.GetRestricted()
-	u.Min = from.GetMin()
-	u.BotInlineGeo = from.GetBotInlineGeo()
-	u.Support = from.GetSupport()
-	u.Scam = from.GetScam()
-	u.ApplyMinPhoto = from.GetApplyMinPhoto()
-	u.Fake = from.GetFake()
-	u.BotAttachMenu = from.GetBotAttachMenu()
-	u.Premium = from.GetPremium()
-	u.AttachMenuEnabled = from.GetAttachMenuEnabled()
-	u.BotCanEdit = from.GetBotCanEdit()
-	u.CloseFriend = from.GetCloseFriend()
-	u.StoriesHidden = from.GetStoriesHidden()
-	u.StoriesUnavailable = from.GetStoriesUnavailable()
-	u.ContactRequirePremium = from.GetContactRequirePremium()
-	u.BotBusiness = from.GetBotBusiness()
-	u.BotHasMainApp = from.GetBotHasMainApp()
-	u.ID = from.GetID()
-	if val, ok := from.GetAccessHash(); ok {
-		u.AccessHash = val
-	}
-
-	if val, ok := from.GetFirstName(); ok {
-		u.FirstName = val
-	}
-
-	if val, ok := from.GetLastName(); ok {
-		u.LastName = val
-	}
-
-	if val, ok := from.GetUsername(); ok {
-		u.Username = val
-	}
-
-	if val, ok := from.GetPhone(); ok {
-		u.Phone = val
-	}
-
-	if val, ok := from.GetPhoto(); ok {
-		u.Photo = val
-	}
-
-	if val, ok := from.GetStatus(); ok {
-		u.Status = val
-	}
-
-	if val, ok := from.GetBotInfoVersion(); ok {
-		u.BotInfoVersion = val
-	}
-
-	if val, ok := from.GetRestrictionReason(); ok {
-		u.RestrictionReason = val
-	}
-
-	if val, ok := from.GetBotInlinePlaceholder(); ok {
-		u.BotInlinePlaceholder = val
-	}
-
-	if val, ok := from.GetLangCode(); ok {
-		u.LangCode = val
-	}
-
-	if val, ok := from.GetEmojiStatus(); ok {
-		u.EmojiStatus = val
-	}
-
-	if val, ok := from.GetUsernames(); ok {
-		u.Usernames = val
-	}
-
-	if val, ok := from.GetStoriesMaxID(); ok {
-		u.StoriesMaxID = val
-	}
-
-	if val, ok := from.GetColor(); ok {
-		u.Color = val
-	}
-
-	if val, ok := from.GetProfileColor(); ok {
-		u.ProfileColor = val
-	}
-
-	if val, ok := from.GetBotActiveUsers(); ok {
-		u.BotActiveUsers = val
-	}
-
-	if val, ok := from.GetBotVerificationIcon(); ok {
-		u.BotVerificationIcon = val
-	}
-
-	if val, ok := from.GetSendPaidMessagesStars(); ok {
-		u.SendPaidMessagesStars = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -2356,8 +2004,6 @@ const UserClassName = "User"
 
 // UserClass represents User generic type.
 //
-// See https://core.telegram.org/type/User for reference.
-//
 // Constructors:
 //   - [UserEmpty]
 //   - [User]
@@ -2391,53 +2037,8 @@ type UserClass interface {
 	// Zero returns true if current object has a zero value.
 	Zero() bool
 
-	// User identifier or 0
+	// ID field of UserEmpty.
 	GetID() (value int64)
-
-	// AsNotEmpty tries to map UserClass to User.
-	AsNotEmpty() (*User, bool)
-}
-
-// AsInputPeer tries to map User to InputPeerUser.
-func (u *User) AsInputPeer() *InputPeerUser {
-	value := new(InputPeerUser)
-	value.UserID = u.GetID()
-	if fieldValue, ok := u.GetAccessHash(); ok {
-		value.AccessHash = fieldValue
-	}
-
-	return value
-}
-
-// AsInput tries to map User to InputUser.
-func (u *User) AsInput() *InputUser {
-	value := new(InputUser)
-	value.UserID = u.GetID()
-	if fieldValue, ok := u.GetAccessHash(); ok {
-		value.AccessHash = fieldValue
-	}
-
-	return value
-}
-
-// AsInputCollectibleUsername tries to map User to InputCollectibleUsername.
-func (u *User) AsInputCollectibleUsername() *InputCollectibleUsername {
-	value := new(InputCollectibleUsername)
-	if fieldValue, ok := u.GetUsername(); ok {
-		value.Username = fieldValue
-	}
-
-	return value
-}
-
-// AsNotEmpty tries to map UserEmpty to User.
-func (u *UserEmpty) AsNotEmpty() (*User, bool) {
-	return nil, false
-}
-
-// AsNotEmpty tries to map User to User.
-func (u *User) AsNotEmpty() (*User, bool) {
-	return u, true
 }
 
 // DecodeUser implements binary de-serialization for UserClass.

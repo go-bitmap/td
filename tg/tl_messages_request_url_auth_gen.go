@@ -32,35 +32,22 @@ var (
 )
 
 // MessagesRequestURLAuthRequest represents TL type `messages.requestUrlAuth#198fb446`.
-// Get more info about a Seamless Telegram Login authorization request, for more info
-// click here »¹
-//
-// Links:
-//  1. https://core.telegram.org/api/url-authorization
-//
-// See https://core.telegram.org/method/messages.requestUrlAuth for reference.
 type MessagesRequestURLAuthRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessagesRequestURLAuthRequest.
 	Flags bin.Fields
-	// Peer where the message is located
+	// Peer field of MessagesRequestURLAuthRequest.
 	//
 	// Use SetPeer and GetPeer helpers.
 	Peer InputPeerClass
-	// The message
+	// MsgID field of MessagesRequestURLAuthRequest.
 	//
 	// Use SetMsgID and GetMsgID helpers.
 	MsgID int
-	// The ID of the button with the authorization request
+	// ButtonID field of MessagesRequestURLAuthRequest.
 	//
 	// Use SetButtonID and GetButtonID helpers.
 	ButtonID int
-	// URL used for link URL authorization, click here for more info »¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/url-authorization#link-url-authorization
+	// URL field of MessagesRequestURLAuthRequest.
 	//
 	// Use SetURL and GetURL helpers.
 	URL string
@@ -107,31 +94,6 @@ func (r *MessagesRequestURLAuthRequest) String() string {
 	}
 	type Alias MessagesRequestURLAuthRequest
 	return fmt.Sprintf("MessagesRequestURLAuthRequest%+v", Alias(*r))
-}
-
-// FillFrom fills MessagesRequestURLAuthRequest from given interface.
-func (r *MessagesRequestURLAuthRequest) FillFrom(from interface {
-	GetPeer() (value InputPeerClass, ok bool)
-	GetMsgID() (value int, ok bool)
-	GetButtonID() (value int, ok bool)
-	GetURL() (value string, ok bool)
-}) {
-	if val, ok := from.GetPeer(); ok {
-		r.Peer = val
-	}
-
-	if val, ok := from.GetMsgID(); ok {
-		r.MsgID = val
-	}
-
-	if val, ok := from.GetButtonID(); ok {
-		r.ButtonID = val
-	}
-
-	if val, ok := from.GetURL(); ok {
-		r.URL = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -360,13 +322,6 @@ func (r *MessagesRequestURLAuthRequest) GetURL() (value string, ok bool) {
 }
 
 // MessagesRequestURLAuth invokes method messages.requestUrlAuth#198fb446 returning error if any.
-// Get more info about a Seamless Telegram Login authorization request, for more info
-// click here »¹
-//
-// Links:
-//  1. https://core.telegram.org/api/url-authorization
-//
-// See https://core.telegram.org/method/messages.requestUrlAuth for reference.
 func (c *Client) MessagesRequestURLAuth(ctx context.Context, request *MessagesRequestURLAuthRequest) (URLAuthResultClass, error) {
 	var result URLAuthResultBox
 

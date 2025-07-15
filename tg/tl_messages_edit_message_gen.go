@@ -32,54 +32,38 @@ var (
 )
 
 // MessagesEditMessageRequest represents TL type `messages.editMessage#dfd14005`.
-// Edit message
-//
-// See https://core.telegram.org/method/messages.editMessage for reference.
 type MessagesEditMessageRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessagesEditMessageRequest.
 	Flags bin.Fields
-	// Disable webpage preview
+	// NoWebpage field of MessagesEditMessageRequest.
 	NoWebpage bool
-	// If set, any eventual webpage preview will be shown on top of the message instead of at
-	// the bottom.
+	// InvertMedia field of MessagesEditMessageRequest.
 	InvertMedia bool
-	// Where was the message sent
+	// Peer field of MessagesEditMessageRequest.
 	Peer InputPeerClass
-	// ID of the message to edit
+	// ID field of MessagesEditMessageRequest.
 	ID int
-	// New message
+	// Message field of MessagesEditMessageRequest.
 	//
 	// Use SetMessage and GetMessage helpers.
 	Message string
-	// New attached media
+	// Media field of MessagesEditMessageRequest.
 	//
 	// Use SetMedia and GetMedia helpers.
 	Media InputMediaClass
-	// Reply markup for inline keyboards
+	// ReplyMarkup field of MessagesEditMessageRequest.
 	//
 	// Use SetReplyMarkup and GetReplyMarkup helpers.
 	ReplyMarkup ReplyMarkupClass
-	// Message entities for styled text¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/entities
+	// Entities field of MessagesEditMessageRequest.
 	//
 	// Use SetEntities and GetEntities helpers.
 	Entities []MessageEntityClass
-	// Scheduled message date for scheduled messages¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/scheduled-messages
+	// ScheduleDate field of MessagesEditMessageRequest.
 	//
 	// Use SetScheduleDate and GetScheduleDate helpers.
 	ScheduleDate int
-	// If specified, edits a quick reply shortcut message, instead »¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/business#quick-reply-shortcuts
+	// QuickReplyShortcutID field of MessagesEditMessageRequest.
 	//
 	// Use SetQuickReplyShortcutID and GetQuickReplyShortcutID helpers.
 	QuickReplyShortcutID int
@@ -144,49 +128,6 @@ func (e *MessagesEditMessageRequest) String() string {
 	}
 	type Alias MessagesEditMessageRequest
 	return fmt.Sprintf("MessagesEditMessageRequest%+v", Alias(*e))
-}
-
-// FillFrom fills MessagesEditMessageRequest from given interface.
-func (e *MessagesEditMessageRequest) FillFrom(from interface {
-	GetNoWebpage() (value bool)
-	GetInvertMedia() (value bool)
-	GetPeer() (value InputPeerClass)
-	GetID() (value int)
-	GetMessage() (value string, ok bool)
-	GetMedia() (value InputMediaClass, ok bool)
-	GetReplyMarkup() (value ReplyMarkupClass, ok bool)
-	GetEntities() (value []MessageEntityClass, ok bool)
-	GetScheduleDate() (value int, ok bool)
-	GetQuickReplyShortcutID() (value int, ok bool)
-}) {
-	e.NoWebpage = from.GetNoWebpage()
-	e.InvertMedia = from.GetInvertMedia()
-	e.Peer = from.GetPeer()
-	e.ID = from.GetID()
-	if val, ok := from.GetMessage(); ok {
-		e.Message = val
-	}
-
-	if val, ok := from.GetMedia(); ok {
-		e.Media = val
-	}
-
-	if val, ok := from.GetReplyMarkup(); ok {
-		e.ReplyMarkup = val
-	}
-
-	if val, ok := from.GetEntities(); ok {
-		e.Entities = val
-	}
-
-	if val, ok := from.GetScheduleDate(); ok {
-		e.ScheduleDate = val
-	}
-
-	if val, ok := from.GetQuickReplyShortcutID(); ok {
-		e.QuickReplyShortcutID = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -610,63 +551,7 @@ func (e *MessagesEditMessageRequest) GetQuickReplyShortcutID() (value int, ok bo
 	return e.QuickReplyShortcutID, true
 }
 
-// MapEntities returns field Entities wrapped in MessageEntityClassArray helper.
-func (e *MessagesEditMessageRequest) MapEntities() (value MessageEntityClassArray, ok bool) {
-	if !e.Flags.Has(3) {
-		return value, false
-	}
-	return MessageEntityClassArray(e.Entities), true
-}
-
 // MessagesEditMessage invokes method messages.editMessage#dfd14005 returning error if any.
-// Edit message
-//
-// Possible errors:
-//
-//	400 BOT_DOMAIN_INVALID: Bot domain invalid.
-//	400 BOT_INVALID: This is not a valid bot.
-//	400 BUTTON_COPY_TEXT_INVALID: The specified keyboardButtonCopy.copy_text is invalid.
-//	400 BUTTON_DATA_INVALID: The data of one or more of the buttons you provided is invalid.
-//	400 BUTTON_TYPE_INVALID: The type of one or more of the buttons you provided is invalid.
-//	400 BUTTON_URL_INVALID: Button URL invalid.
-//	400 CHANNEL_INVALID: The provided channel is invalid.
-//	406 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
-//	403 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
-//	400 CHAT_FORWARDS_RESTRICTED: You can't forward messages from a protected chat.
-//	403 CHAT_SEND_GIFS_FORBIDDEN: You can't send gifs in this chat.
-//	403 CHAT_WRITE_FORBIDDEN: You can't write in this chat.
-//	400 DOCUMENT_INVALID: The specified document is invalid.
-//	400 ENTITIES_TOO_LONG: You provided too many styled message entities.
-//	400 ENTITY_BOUNDS_INVALID: A specified entity offset or length is invalid, see here » for info on how to properly compute the entity offset/length.
-//	400 FILE_PARTS_INVALID: The number of file parts is invalid.
-//	400 IMAGE_PROCESS_FAILED: Failure while processing image.
-//	403 INLINE_BOT_REQUIRED: Only the inline bot can edit message.
-//	400 INPUT_USER_DEACTIVATED: The specified user was deleted.
-//	400 MEDIA_CAPTION_TOO_LONG: The caption is too long.
-//	400 MEDIA_EMPTY: The provided media object is invalid.
-//	400 MEDIA_GROUPED_INVALID: You tried to send media of different types in an album.
-//	400 MEDIA_INVALID: Media invalid.
-//	400 MEDIA_NEW_INVALID: The new media is invalid.
-//	400 MEDIA_PREV_INVALID: Previous media invalid.
-//	400 MEDIA_TTL_INVALID: The specified media TTL is invalid.
-//	403 MESSAGE_AUTHOR_REQUIRED: Message author required.
-//	400 MESSAGE_EDIT_TIME_EXPIRED: You can't edit this message anymore, too much time has passed since its creation.
-//	400 MESSAGE_EMPTY: The provided message is empty.
-//	400 MESSAGE_ID_INVALID: The provided message id is invalid.
-//	400 MESSAGE_NOT_MODIFIED: The provided message data is identical to the previous message data, the message wasn't modified.
-//	400 MESSAGE_TOO_LONG: The provided message is too long.
-//	400 MSG_ID_INVALID: Invalid message ID provided.
-//	500 MSG_WAIT_FAILED: A waiting call returned an error.
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//	400 PEER_TYPES_INVALID: The passed keyboardButtonSwitchInline.peer_types field is invalid.
-//	400 REPLY_MARKUP_INVALID: The provided reply markup is invalid.
-//	400 REPLY_MARKUP_TOO_LONG: The specified reply_markup is too long.
-//	400 SCHEDULE_DATE_INVALID: Invalid schedule date provided.
-//	400 USER_BANNED_IN_CHANNEL: You're banned from sending messages in supergroups/channels.
-//	400 WEBPAGE_NOT_FOUND: A preview for the specified webpage url could not be generated.
-//
-// See https://core.telegram.org/method/messages.editMessage for reference.
-// Can be used by bots.
 func (c *Client) MessagesEditMessage(ctx context.Context, request *MessagesEditMessageRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

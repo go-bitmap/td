@@ -32,45 +32,28 @@ var (
 )
 
 // Poll represents TL type `poll#58747131`.
-// Poll
-//
-// See https://core.telegram.org/constructor/poll for reference.
 type Poll struct {
-	// ID of the poll
+	// ID field of Poll.
 	ID int64
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of Poll.
 	Flags bin.Fields
-	// Whether the poll is closed and doesn't accept any more answers
+	// Closed field of Poll.
 	Closed bool
-	// Whether cast votes are publicly visible to all users (non-anonymous poll)
+	// PublicVoters field of Poll.
 	PublicVoters bool
-	// Whether multiple options can be chosen as answer
+	// MultipleChoice field of Poll.
 	MultipleChoice bool
-	// Whether this is a quiz (with wrong and correct answers, results shown in the return
-	// type)
+	// Quiz field of Poll.
 	Quiz bool
-	// The question of the poll (only Premium¹ users can use custom emoji entities² here).
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/premium
-	//  2) https://core.telegram.org/api/custom-emoji
+	// Question field of Poll.
 	Question TextWithEntities
-	// The possible answers, vote using messages.sendVote¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/messages.sendVote
+	// Answers field of Poll.
 	Answers []PollAnswer
-	// Amount of time in seconds the poll will be active after creation, 5-600. Can't be used
-	// together with close_date.
+	// ClosePeriod field of Poll.
 	//
 	// Use SetClosePeriod and GetClosePeriod helpers.
 	ClosePeriod int
-	// Point in time (Unix timestamp) when the poll will be automatically closed. Must be at
-	// least 5 and no more than 600 seconds in the future; can't be used together with
-	// close_period.
+	// CloseDate field of Poll.
 	//
 	// Use SetCloseDate and GetCloseDate helpers.
 	CloseDate int
@@ -132,35 +115,6 @@ func (p *Poll) String() string {
 	}
 	type Alias Poll
 	return fmt.Sprintf("Poll%+v", Alias(*p))
-}
-
-// FillFrom fills Poll from given interface.
-func (p *Poll) FillFrom(from interface {
-	GetID() (value int64)
-	GetClosed() (value bool)
-	GetPublicVoters() (value bool)
-	GetMultipleChoice() (value bool)
-	GetQuiz() (value bool)
-	GetQuestion() (value TextWithEntities)
-	GetAnswers() (value []PollAnswer)
-	GetClosePeriod() (value int, ok bool)
-	GetCloseDate() (value int, ok bool)
-}) {
-	p.ID = from.GetID()
-	p.Closed = from.GetClosed()
-	p.PublicVoters = from.GetPublicVoters()
-	p.MultipleChoice = from.GetMultipleChoice()
-	p.Quiz = from.GetQuiz()
-	p.Question = from.GetQuestion()
-	p.Answers = from.GetAnswers()
-	if val, ok := from.GetClosePeriod(); ok {
-		p.ClosePeriod = val
-	}
-
-	if val, ok := from.GetCloseDate(); ok {
-		p.CloseDate = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.

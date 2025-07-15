@@ -32,26 +32,20 @@ var (
 )
 
 // MessagesGetInlineBotResultsRequest represents TL type `messages.getInlineBotResults#514e999d`.
-// Query an inline bot
-//
-// See https://core.telegram.org/method/messages.getInlineBotResults for reference.
 type MessagesGetInlineBotResultsRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessagesGetInlineBotResultsRequest.
 	Flags bin.Fields
-	// The bot to query
+	// Bot field of MessagesGetInlineBotResultsRequest.
 	Bot InputUserClass
-	// The currently opened chat
+	// Peer field of MessagesGetInlineBotResultsRequest.
 	Peer InputPeerClass
-	// The geolocation, if requested
+	// GeoPoint field of MessagesGetInlineBotResultsRequest.
 	//
 	// Use SetGeoPoint and GetGeoPoint helpers.
 	GeoPoint InputGeoPointClass
-	// The query
+	// Query field of MessagesGetInlineBotResultsRequest.
 	Query string
-	// The offset within the results, will be passed directly as-is to the bot.
+	// Offset field of MessagesGetInlineBotResultsRequest.
 	Offset string
 }
 
@@ -99,24 +93,6 @@ func (g *MessagesGetInlineBotResultsRequest) String() string {
 	}
 	type Alias MessagesGetInlineBotResultsRequest
 	return fmt.Sprintf("MessagesGetInlineBotResultsRequest%+v", Alias(*g))
-}
-
-// FillFrom fills MessagesGetInlineBotResultsRequest from given interface.
-func (g *MessagesGetInlineBotResultsRequest) FillFrom(from interface {
-	GetBot() (value InputUserClass)
-	GetPeer() (value InputPeerClass)
-	GetGeoPoint() (value InputGeoPointClass, ok bool)
-	GetQuery() (value string)
-	GetOffset() (value string)
-}) {
-	g.Bot = from.GetBot()
-	g.Peer = from.GetPeer()
-	if val, ok := from.GetGeoPoint(); ok {
-		g.GeoPoint = val
-	}
-
-	g.Query = from.GetQuery()
-	g.Offset = from.GetOffset()
 }
 
 // TypeID returns type id in TL schema.
@@ -326,30 +302,7 @@ func (g *MessagesGetInlineBotResultsRequest) GetOffset() (value string) {
 	return g.Offset
 }
 
-// GetGeoPointAsNotEmpty returns mapped value of GeoPoint conditional field and
-// boolean which is true if field was set.
-func (g *MessagesGetInlineBotResultsRequest) GetGeoPointAsNotEmpty() (*InputGeoPoint, bool) {
-	if value, ok := g.GetGeoPoint(); ok {
-		return value.AsNotEmpty()
-	}
-	return nil, false
-}
-
 // MessagesGetInlineBotResults invokes method messages.getInlineBotResults#514e999d returning error if any.
-// Query an inline bot
-//
-// Possible errors:
-//
-//	400 BOT_INLINE_DISABLED: This bot can't be used in inline mode.
-//	400 BOT_INVALID: This is not a valid bot.
-//	400 BOT_RESPONSE_TIMEOUT: A timeout occurred while fetching data from the bot.
-//	400 CHANNEL_INVALID: The provided channel is invalid.
-//	406 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
-//	400 INPUT_USER_DEACTIVATED: The specified user was deleted.
-//	400 MSG_ID_INVALID: Invalid message ID provided.
-//	-503 Timeout: Timeout while fetching data.
-//
-// See https://core.telegram.org/method/messages.getInlineBotResults for reference.
 func (c *Client) MessagesGetInlineBotResults(ctx context.Context, request *MessagesGetInlineBotResultsRequest) (*MessagesBotResults, error) {
 	var result MessagesBotResults
 

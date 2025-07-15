@@ -32,21 +32,12 @@ var (
 )
 
 // MessagesGetCommonChatsRequest represents TL type `messages.getCommonChats#e40ca104`.
-// Get chats in common with a user
-//
-// See https://core.telegram.org/method/messages.getCommonChats for reference.
 type MessagesGetCommonChatsRequest struct {
-	// User ID
+	// UserID field of MessagesGetCommonChatsRequest.
 	UserID InputUserClass
-	// Maximum ID of chat to return (see pagination¹)
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets
+	// MaxID field of MessagesGetCommonChatsRequest.
 	MaxID int64
-	// Maximum number of results to return, see pagination¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets
+	// Limit field of MessagesGetCommonChatsRequest.
 	Limit int
 }
 
@@ -85,17 +76,6 @@ func (g *MessagesGetCommonChatsRequest) String() string {
 	}
 	type Alias MessagesGetCommonChatsRequest
 	return fmt.Sprintf("MessagesGetCommonChatsRequest%+v", Alias(*g))
-}
-
-// FillFrom fills MessagesGetCommonChatsRequest from given interface.
-func (g *MessagesGetCommonChatsRequest) FillFrom(from interface {
-	GetUserID() (value InputUserClass)
-	GetMaxID() (value int64)
-	GetLimit() (value int)
-}) {
-	g.UserID = from.GetUserID()
-	g.MaxID = from.GetMaxID()
-	g.Limit = from.GetLimit()
 }
 
 // TypeID returns type id in TL schema.
@@ -227,14 +207,6 @@ func (g *MessagesGetCommonChatsRequest) GetLimit() (value int) {
 }
 
 // MessagesGetCommonChats invokes method messages.getCommonChats#e40ca104 returning error if any.
-// Get chats in common with a user
-//
-// Possible errors:
-//
-//	400 MSG_ID_INVALID: Invalid message ID provided.
-//	400 USER_ID_INVALID: The provided user ID is invalid.
-//
-// See https://core.telegram.org/method/messages.getCommonChats for reference.
 func (c *Client) MessagesGetCommonChats(ctx context.Context, request *MessagesGetCommonChatsRequest) (MessagesChatsClass, error) {
 	var result MessagesChatsBox
 

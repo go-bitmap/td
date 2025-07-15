@@ -32,29 +32,22 @@ var (
 )
 
 // MessagesDeleteHistoryRequest represents TL type `messages.deleteHistory#b08f922a`.
-// Deletes communication history.
-//
-// See https://core.telegram.org/method/messages.deleteHistory for reference.
 type MessagesDeleteHistoryRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessagesDeleteHistoryRequest.
 	Flags bin.Fields
-	// Just clear history for the current user, without actually removing messages for every
-	// chat user
+	// JustClear field of MessagesDeleteHistoryRequest.
 	JustClear bool
-	// Whether to delete the message history for all chat participants
+	// Revoke field of MessagesDeleteHistoryRequest.
 	Revoke bool
-	// User or chat, communication history of which will be deleted
+	// Peer field of MessagesDeleteHistoryRequest.
 	Peer InputPeerClass
-	// Maximum ID of message to delete
+	// MaxID field of MessagesDeleteHistoryRequest.
 	MaxID int
-	// Delete all messages newer than this UNIX timestamp
+	// MinDate field of MessagesDeleteHistoryRequest.
 	//
 	// Use SetMinDate and GetMinDate helpers.
 	MinDate int
-	// Delete all messages older than this UNIX timestamp
+	// MaxDate field of MessagesDeleteHistoryRequest.
 	//
 	// Use SetMaxDate and GetMaxDate helpers.
 	MaxDate int
@@ -107,29 +100,6 @@ func (d *MessagesDeleteHistoryRequest) String() string {
 	}
 	type Alias MessagesDeleteHistoryRequest
 	return fmt.Sprintf("MessagesDeleteHistoryRequest%+v", Alias(*d))
-}
-
-// FillFrom fills MessagesDeleteHistoryRequest from given interface.
-func (d *MessagesDeleteHistoryRequest) FillFrom(from interface {
-	GetJustClear() (value bool)
-	GetRevoke() (value bool)
-	GetPeer() (value InputPeerClass)
-	GetMaxID() (value int)
-	GetMinDate() (value int, ok bool)
-	GetMaxDate() (value int, ok bool)
-}) {
-	d.JustClear = from.GetJustClear()
-	d.Revoke = from.GetRevoke()
-	d.Peer = from.GetPeer()
-	d.MaxID = from.GetMaxID()
-	if val, ok := from.GetMinDate(); ok {
-		d.MinDate = val
-	}
-
-	if val, ok := from.GetMaxDate(); ok {
-		d.MaxDate = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -382,21 +352,6 @@ func (d *MessagesDeleteHistoryRequest) GetMaxDate() (value int, ok bool) {
 }
 
 // MessagesDeleteHistory invokes method messages.deleteHistory#b08f922a returning error if any.
-// Deletes communication history.
-//
-// Possible errors:
-//
-//	400 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
-//	400 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
-//	400 CHAT_ID_INVALID: The provided chat id is invalid.
-//	400 CHAT_REVOKE_DATE_UNSUPPORTED: min_date and max_date are not available for using with non-user peers.
-//	400 MAX_DATE_INVALID: The specified maximum date is invalid.
-//	400 MESSAGE_ID_INVALID: The provided message id is invalid.
-//	400 MIN_DATE_INVALID: The specified minimum date is invalid.
-//	400 MSG_ID_INVALID: Invalid message ID provided.
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//
-// See https://core.telegram.org/method/messages.deleteHistory for reference.
 func (c *Client) MessagesDeleteHistory(ctx context.Context, request *MessagesDeleteHistoryRequest) (*MessagesAffectedHistory, error) {
 	var result MessagesAffectedHistory
 

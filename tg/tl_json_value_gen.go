@@ -32,9 +32,6 @@ var (
 )
 
 // JSONNull represents TL type `jsonNull#3f6d7b68`.
-// null JSON value
-//
-// See https://core.telegram.org/constructor/jsonNull for reference.
 type JSONNull struct {
 }
 
@@ -134,11 +131,8 @@ func (j *JSONNull) DecodeBare(b *bin.Buffer) error {
 }
 
 // JSONBool represents TL type `jsonBool#c7345e6a`.
-// JSON boolean value
-//
-// See https://core.telegram.org/constructor/jsonBool for reference.
 type JSONBool struct {
-	// Value
+	// Value field of JSONBool.
 	Value bool
 }
 
@@ -176,13 +170,6 @@ func (j *JSONBool) String() string {
 	}
 	type Alias JSONBool
 	return fmt.Sprintf("JSONBool%+v", Alias(*j))
-}
-
-// FillFrom fills JSONBool from given interface.
-func (j *JSONBool) FillFrom(from interface {
-	GetValue() (value bool)
-}) {
-	j.Value = from.GetValue()
 }
 
 // TypeID returns type id in TL schema.
@@ -269,11 +256,8 @@ func (j *JSONBool) GetValue() (value bool) {
 }
 
 // JSONNumber represents TL type `jsonNumber#2be0dfa4`.
-// JSON numeric value
-//
-// See https://core.telegram.org/constructor/jsonNumber for reference.
 type JSONNumber struct {
-	// Value
+	// Value field of JSONNumber.
 	Value float64
 }
 
@@ -311,13 +295,6 @@ func (j *JSONNumber) String() string {
 	}
 	type Alias JSONNumber
 	return fmt.Sprintf("JSONNumber%+v", Alias(*j))
-}
-
-// FillFrom fills JSONNumber from given interface.
-func (j *JSONNumber) FillFrom(from interface {
-	GetValue() (value float64)
-}) {
-	j.Value = from.GetValue()
 }
 
 // TypeID returns type id in TL schema.
@@ -404,11 +381,8 @@ func (j *JSONNumber) GetValue() (value float64) {
 }
 
 // JSONString represents TL type `jsonString#b71e767a`.
-// JSON string
-//
-// See https://core.telegram.org/constructor/jsonString for reference.
 type JSONString struct {
-	// Value
+	// Value field of JSONString.
 	Value string
 }
 
@@ -446,13 +420,6 @@ func (j *JSONString) String() string {
 	}
 	type Alias JSONString
 	return fmt.Sprintf("JSONString%+v", Alias(*j))
-}
-
-// FillFrom fills JSONString from given interface.
-func (j *JSONString) FillFrom(from interface {
-	GetValue() (value string)
-}) {
-	j.Value = from.GetValue()
 }
 
 // TypeID returns type id in TL schema.
@@ -539,11 +506,8 @@ func (j *JSONString) GetValue() (value string) {
 }
 
 // JSONArray represents TL type `jsonArray#f7444763`.
-// JSON array
-//
-// See https://core.telegram.org/constructor/jsonArray for reference.
 type JSONArray struct {
-	// JSON values
+	// Value field of JSONArray.
 	Value []JSONValueClass
 }
 
@@ -581,13 +545,6 @@ func (j *JSONArray) String() string {
 	}
 	type Alias JSONArray
 	return fmt.Sprintf("JSONArray%+v", Alias(*j))
-}
-
-// FillFrom fills JSONArray from given interface.
-func (j *JSONArray) FillFrom(from interface {
-	GetValue() (value []JSONValueClass)
-}) {
-	j.Value = from.GetValue()
 }
 
 // TypeID returns type id in TL schema.
@@ -691,17 +648,9 @@ func (j *JSONArray) GetValue() (value []JSONValueClass) {
 	return j.Value
 }
 
-// MapValue returns field Value wrapped in JSONValueClassArray helper.
-func (j *JSONArray) MapValue() (value JSONValueClassArray) {
-	return JSONValueClassArray(j.Value)
-}
-
 // JSONObject represents TL type `jsonObject#99c1d49d`.
-// JSON object value
-//
-// See https://core.telegram.org/constructor/jsonObject for reference.
 type JSONObject struct {
-	// Values
+	// Value field of JSONObject.
 	Value []JSONObjectValue
 }
 
@@ -739,13 +688,6 @@ func (j *JSONObject) String() string {
 	}
 	type Alias JSONObject
 	return fmt.Sprintf("JSONObject%+v", Alias(*j))
-}
-
-// FillFrom fills JSONObject from given interface.
-func (j *JSONObject) FillFrom(from interface {
-	GetValue() (value []JSONObjectValue)
-}) {
-	j.Value = from.GetValue()
 }
 
 // TypeID returns type id in TL schema.
@@ -850,8 +792,6 @@ func (j *JSONObject) GetValue() (value []JSONObjectValue) {
 const JSONValueClassName = "JSONValue"
 
 // JSONValueClass represents JSONValue generic type.
-//
-// See https://core.telegram.org/type/JSONValue for reference.
 //
 // Constructors:
 //   - [JSONNull]

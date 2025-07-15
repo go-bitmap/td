@@ -32,20 +32,14 @@ var (
 )
 
 // AutoSaveSettings represents TL type `autoSaveSettings#c84834ce`.
-// Media autosave settings
-//
-// See https://core.telegram.org/constructor/autoSaveSettings for reference.
 type AutoSaveSettings struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of AutoSaveSettings.
 	Flags bin.Fields
-	// Whether photos should be autosaved to the gallery.
+	// Photos field of AutoSaveSettings.
 	Photos bool
-	// Whether videos should be autosaved to the gallery.
+	// Videos field of AutoSaveSettings.
 	Videos bool
-	// If set, specifies a size limit for autosavable videos
+	// VideoMaxSize field of AutoSaveSettings.
 	//
 	// Use SetVideoMaxSize and GetVideoMaxSize helpers.
 	VideoMaxSize int64
@@ -89,20 +83,6 @@ func (a *AutoSaveSettings) String() string {
 	}
 	type Alias AutoSaveSettings
 	return fmt.Sprintf("AutoSaveSettings%+v", Alias(*a))
-}
-
-// FillFrom fills AutoSaveSettings from given interface.
-func (a *AutoSaveSettings) FillFrom(from interface {
-	GetPhotos() (value bool)
-	GetVideos() (value bool)
-	GetVideoMaxSize() (value int64, ok bool)
-}) {
-	a.Photos = from.GetPhotos()
-	a.Videos = from.GetVideos()
-	if val, ok := from.GetVideoMaxSize(); ok {
-		a.VideoMaxSize = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.

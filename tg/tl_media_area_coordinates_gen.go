@@ -32,26 +32,20 @@ var (
 )
 
 // MediaAreaCoordinates represents TL type `mediaAreaCoordinates#cfc9e002`.
-// Coordinates and size of a clicable rectangular area on top of a story.
-//
-// See https://core.telegram.org/constructor/mediaAreaCoordinates for reference.
 type MediaAreaCoordinates struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MediaAreaCoordinates.
 	Flags bin.Fields
-	// The abscissa of the rectangle's center, as a percentage of the media width (0-100).
+	// X field of MediaAreaCoordinates.
 	X float64
-	// The ordinate of the rectangle's center, as a percentage of the media height (0-100).
+	// Y field of MediaAreaCoordinates.
 	Y float64
-	// The width of the rectangle, as a percentage of the media width (0-100).
+	// W field of MediaAreaCoordinates.
 	W float64
-	// The height of the rectangle, as a percentage of the media height (0-100).
+	// H field of MediaAreaCoordinates.
 	H float64
-	// Clockwise rotation angle of the rectangle, in degrees (0-360).
+	// Rotation field of MediaAreaCoordinates.
 	Rotation float64
-	// The radius of the rectangle corner rounding, as a percentage of the media width.
+	// Radius field of MediaAreaCoordinates.
 	//
 	// Use SetRadius and GetRadius helpers.
 	Radius float64
@@ -104,26 +98,6 @@ func (m *MediaAreaCoordinates) String() string {
 	}
 	type Alias MediaAreaCoordinates
 	return fmt.Sprintf("MediaAreaCoordinates%+v", Alias(*m))
-}
-
-// FillFrom fills MediaAreaCoordinates from given interface.
-func (m *MediaAreaCoordinates) FillFrom(from interface {
-	GetX() (value float64)
-	GetY() (value float64)
-	GetW() (value float64)
-	GetH() (value float64)
-	GetRotation() (value float64)
-	GetRadius() (value float64, ok bool)
-}) {
-	m.X = from.GetX()
-	m.Y = from.GetY()
-	m.W = from.GetW()
-	m.H = from.GetH()
-	m.Rotation = from.GetRotation()
-	if val, ok := from.GetRadius(); ok {
-		m.Radius = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.

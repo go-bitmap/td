@@ -32,31 +32,18 @@ var (
 )
 
 // AuthSentCode represents TL type `auth.sentCode#5e002502`.
-// Contains info about a sent verification code.
-//
-// See https://core.telegram.org/constructor/auth.sentCode for reference.
 type AuthSentCode struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of AuthSentCode.
 	Flags bin.Fields
-	// Phone code type
+	// Type field of AuthSentCode.
 	Type AuthSentCodeTypeClass
-	// Phone code hash, to be stored and later re-used with auth.signIn¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/auth.signIn
+	// PhoneCodeHash field of AuthSentCode.
 	PhoneCodeHash string
-	// Phone code type that will be sent next, if the phone code is not received within
-	// timeout seconds: to send it use auth.resendCode¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/auth.resendCode
+	// NextType field of AuthSentCode.
 	//
 	// Use SetNextType and GetNextType helpers.
 	NextType AuthCodeTypeClass
-	// Timeout for reception of the phone code
+	// Timeout field of AuthSentCode.
 	//
 	// Use SetTimeout and GetTimeout helpers.
 	Timeout int
@@ -108,25 +95,6 @@ func (s *AuthSentCode) String() string {
 	}
 	type Alias AuthSentCode
 	return fmt.Sprintf("AuthSentCode%+v", Alias(*s))
-}
-
-// FillFrom fills AuthSentCode from given interface.
-func (s *AuthSentCode) FillFrom(from interface {
-	GetType() (value AuthSentCodeTypeClass)
-	GetPhoneCodeHash() (value string)
-	GetNextType() (value AuthCodeTypeClass, ok bool)
-	GetTimeout() (value int, ok bool)
-}) {
-	s.Type = from.GetType()
-	s.PhoneCodeHash = from.GetPhoneCodeHash()
-	if val, ok := from.GetNextType(); ok {
-		s.NextType = val
-	}
-
-	if val, ok := from.GetTimeout(); ok {
-		s.Timeout = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -328,14 +296,8 @@ func (s *AuthSentCode) GetTimeout() (value int, ok bool) {
 }
 
 // AuthSentCodeSuccess represents TL type `auth.sentCodeSuccess#2390fe44`.
-// The user successfully authorized using future auth tokens¹
-//
-// Links:
-//  1. https://core.telegram.org/api/auth#future-auth-tokens
-//
-// See https://core.telegram.org/constructor/auth.sentCodeSuccess for reference.
 type AuthSentCodeSuccess struct {
-	// Authorization info
+	// Authorization field of AuthSentCodeSuccess.
 	Authorization AuthAuthorizationClass
 }
 
@@ -373,13 +335,6 @@ func (s *AuthSentCodeSuccess) String() string {
 	}
 	type Alias AuthSentCodeSuccess
 	return fmt.Sprintf("AuthSentCodeSuccess%+v", Alias(*s))
-}
-
-// FillFrom fills AuthSentCodeSuccess from given interface.
-func (s *AuthSentCodeSuccess) FillFrom(from interface {
-	GetAuthorization() (value AuthAuthorizationClass)
-}) {
-	s.Authorization = from.GetAuthorization()
 }
 
 // TypeID returns type id in TL schema.
@@ -471,8 +426,6 @@ func (s *AuthSentCodeSuccess) GetAuthorization() (value AuthAuthorizationClass) 
 }
 
 // AuthSentCodePaymentRequired represents TL type `auth.sentCodePaymentRequired#d7cef980`.
-//
-// See https://core.telegram.org/constructor/auth.sentCodePaymentRequired for reference.
 type AuthSentCodePaymentRequired struct {
 	// StoreProduct field of AuthSentCodePaymentRequired.
 	StoreProduct string
@@ -517,15 +470,6 @@ func (s *AuthSentCodePaymentRequired) String() string {
 	}
 	type Alias AuthSentCodePaymentRequired
 	return fmt.Sprintf("AuthSentCodePaymentRequired%+v", Alias(*s))
-}
-
-// FillFrom fills AuthSentCodePaymentRequired from given interface.
-func (s *AuthSentCodePaymentRequired) FillFrom(from interface {
-	GetStoreProduct() (value string)
-	GetPhoneCodeHash() (value string)
-}) {
-	s.StoreProduct = from.GetStoreProduct()
-	s.PhoneCodeHash = from.GetPhoneCodeHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -635,8 +579,6 @@ func (s *AuthSentCodePaymentRequired) GetPhoneCodeHash() (value string) {
 const AuthSentCodeClassName = "auth.SentCode"
 
 // AuthSentCodeClass represents auth.SentCode generic type.
-//
-// See https://core.telegram.org/type/auth.SentCode for reference.
 //
 // Constructors:
 //   - [AuthSentCode]

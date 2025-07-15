@@ -32,8 +32,6 @@ var (
 )
 
 // PaymentsUniqueStarGift represents TL type `payments.uniqueStarGift#caa2f60b`.
-//
-// See https://core.telegram.org/constructor/payments.uniqueStarGift for reference.
 type PaymentsUniqueStarGift struct {
 	// Gift field of PaymentsUniqueStarGift.
 	Gift StarGiftClass
@@ -73,15 +71,6 @@ func (u *PaymentsUniqueStarGift) String() string {
 	}
 	type Alias PaymentsUniqueStarGift
 	return fmt.Sprintf("PaymentsUniqueStarGift%+v", Alias(*u))
-}
-
-// FillFrom fills PaymentsUniqueStarGift from given interface.
-func (u *PaymentsUniqueStarGift) FillFrom(from interface {
-	GetGift() (value StarGiftClass)
-	GetUsers() (value []UserClass)
-}) {
-	u.Gift = from.GetGift()
-	u.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -208,9 +197,4 @@ func (u *PaymentsUniqueStarGift) GetUsers() (value []UserClass) {
 		return
 	}
 	return u.Users
-}
-
-// MapUsers returns field Users wrapped in UserClassArray helper.
-func (u *PaymentsUniqueStarGift) MapUsers() (value UserClassArray) {
-	return UserClassArray(u.Users)
 }

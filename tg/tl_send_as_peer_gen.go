@@ -32,18 +32,12 @@ var (
 )
 
 // SendAsPeer represents TL type `sendAsPeer#b81c7034`.
-// Indicates a peer that can be used to send messages
-//
-// See https://core.telegram.org/constructor/sendAsPeer for reference.
 type SendAsPeer struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of SendAsPeer.
 	Flags bin.Fields
-	// Whether a Telegram Premium account is required to send messages as this peer
+	// PremiumRequired field of SendAsPeer.
 	PremiumRequired bool
-	// Peer
+	// Peer field of SendAsPeer.
 	Peer PeerClass
 }
 
@@ -82,15 +76,6 @@ func (s *SendAsPeer) String() string {
 	}
 	type Alias SendAsPeer
 	return fmt.Sprintf("SendAsPeer%+v", Alias(*s))
-}
-
-// FillFrom fills SendAsPeer from given interface.
-func (s *SendAsPeer) FillFrom(from interface {
-	GetPremiumRequired() (value bool)
-	GetPeer() (value PeerClass)
-}) {
-	s.PremiumRequired = from.GetPremiumRequired()
-	s.Peer = from.GetPeer()
 }
 
 // TypeID returns type id in TL schema.

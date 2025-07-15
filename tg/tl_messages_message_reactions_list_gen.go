@@ -32,28 +32,18 @@ var (
 )
 
 // MessagesMessageReactionsList represents TL type `messages.messageReactionsList#31bd492d`.
-// List of peers that reacted to a specific message
-//
-// See https://core.telegram.org/constructor/messages.messageReactionsList for reference.
 type MessagesMessageReactionsList struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessagesMessageReactionsList.
 	Flags bin.Fields
-	// Total number of reactions matching query
+	// Count field of MessagesMessageReactionsList.
 	Count int
-	// List of peers that reacted to a specific message
+	// Reactions field of MessagesMessageReactionsList.
 	Reactions []MessagePeerReaction
-	// Mentioned chats
+	// Chats field of MessagesMessageReactionsList.
 	Chats []ChatClass
-	// Mentioned users
+	// Users field of MessagesMessageReactionsList.
 	Users []UserClass
-	// If set, indicates the next offset to use to load more results by invoking messages
-	// getMessageReactionsList¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/messages.getMessageReactionsList
+	// NextOffset field of MessagesMessageReactionsList.
 	//
 	// Use SetNextOffset and GetNextOffset helpers.
 	NextOffset string
@@ -103,24 +93,6 @@ func (m *MessagesMessageReactionsList) String() string {
 	}
 	type Alias MessagesMessageReactionsList
 	return fmt.Sprintf("MessagesMessageReactionsList%+v", Alias(*m))
-}
-
-// FillFrom fills MessagesMessageReactionsList from given interface.
-func (m *MessagesMessageReactionsList) FillFrom(from interface {
-	GetCount() (value int)
-	GetReactions() (value []MessagePeerReaction)
-	GetChats() (value []ChatClass)
-	GetUsers() (value []UserClass)
-	GetNextOffset() (value string, ok bool)
-}) {
-	m.Count = from.GetCount()
-	m.Reactions = from.GetReactions()
-	m.Chats = from.GetChats()
-	m.Users = from.GetUsers()
-	if val, ok := from.GetNextOffset(); ok {
-		m.NextOffset = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -364,14 +336,4 @@ func (m *MessagesMessageReactionsList) GetNextOffset() (value string, ok bool) {
 		return value, false
 	}
 	return m.NextOffset, true
-}
-
-// MapChats returns field Chats wrapped in ChatClassArray helper.
-func (m *MessagesMessageReactionsList) MapChats() (value ChatClassArray) {
-	return ChatClassArray(m.Chats)
-}
-
-// MapUsers returns field Users wrapped in UserClassArray helper.
-func (m *MessagesMessageReactionsList) MapUsers() (value UserClassArray) {
-	return UserClassArray(m.Users)
 }

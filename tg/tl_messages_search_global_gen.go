@@ -32,61 +32,34 @@ var (
 )
 
 // MessagesSearchGlobalRequest represents TL type `messages.searchGlobal#4bc6589a`.
-// Search for messages and peers globally
-//
-// See https://core.telegram.org/method/messages.searchGlobal for reference.
 type MessagesSearchGlobalRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessagesSearchGlobalRequest.
 	Flags bin.Fields
-	// If set, only returns results from channels (used in the global channel search tab
-	// »¹).
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/search#global-search
+	// BroadcastsOnly field of MessagesSearchGlobalRequest.
 	BroadcastsOnly bool
-	// Whether to search only in groups
+	// GroupsOnly field of MessagesSearchGlobalRequest.
 	GroupsOnly bool
-	// Whether to search only in private chats
+	// UsersOnly field of MessagesSearchGlobalRequest.
 	UsersOnly bool
-	// Peer folder ID, for more info click here¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/folders#peer-folders
+	// FolderID field of MessagesSearchGlobalRequest.
 	//
 	// Use SetFolderID and GetFolderID helpers.
 	FolderID int
-	// Query
+	// Q field of MessagesSearchGlobalRequest.
 	Q string
-	// Global search filter
+	// Filter field of MessagesSearchGlobalRequest.
 	Filter MessagesFilterClass
-	// If a positive value was specified, the method will return only messages with date
-	// bigger than min_date
+	// MinDate field of MessagesSearchGlobalRequest.
 	MinDate int
-	// If a positive value was transferred, the method will return only messages with date
-	// smaller than max_date
+	// MaxDate field of MessagesSearchGlobalRequest.
 	MaxDate int
-	// Initially 0, then set to the next_rate parameter of messages.messagesSlice¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/messages.messagesSlice
+	// OffsetRate field of MessagesSearchGlobalRequest.
 	OffsetRate int
-	// Offsets for pagination, for more info click here¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets
+	// OffsetPeer field of MessagesSearchGlobalRequest.
 	OffsetPeer InputPeerClass
-	// Offsets for pagination, for more info click here¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets
+	// OffsetID field of MessagesSearchGlobalRequest.
 	OffsetID int
-	// Offsets for pagination, for more info click here¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets
+	// Limit field of MessagesSearchGlobalRequest.
 	Limit int
 }
 
@@ -155,38 +128,6 @@ func (s *MessagesSearchGlobalRequest) String() string {
 	}
 	type Alias MessagesSearchGlobalRequest
 	return fmt.Sprintf("MessagesSearchGlobalRequest%+v", Alias(*s))
-}
-
-// FillFrom fills MessagesSearchGlobalRequest from given interface.
-func (s *MessagesSearchGlobalRequest) FillFrom(from interface {
-	GetBroadcastsOnly() (value bool)
-	GetGroupsOnly() (value bool)
-	GetUsersOnly() (value bool)
-	GetFolderID() (value int, ok bool)
-	GetQ() (value string)
-	GetFilter() (value MessagesFilterClass)
-	GetMinDate() (value int)
-	GetMaxDate() (value int)
-	GetOffsetRate() (value int)
-	GetOffsetPeer() (value InputPeerClass)
-	GetOffsetID() (value int)
-	GetLimit() (value int)
-}) {
-	s.BroadcastsOnly = from.GetBroadcastsOnly()
-	s.GroupsOnly = from.GetGroupsOnly()
-	s.UsersOnly = from.GetUsersOnly()
-	if val, ok := from.GetFolderID(); ok {
-		s.FolderID = val
-	}
-
-	s.Q = from.GetQ()
-	s.Filter = from.GetFilter()
-	s.MinDate = from.GetMinDate()
-	s.MaxDate = from.GetMaxDate()
-	s.OffsetRate = from.GetOffsetRate()
-	s.OffsetPeer = from.GetOffsetPeer()
-	s.OffsetID = from.GetOffsetID()
-	s.Limit = from.GetLimit()
 }
 
 // TypeID returns type id in TL schema.
@@ -556,15 +497,6 @@ func (s *MessagesSearchGlobalRequest) GetLimit() (value int) {
 }
 
 // MessagesSearchGlobal invokes method messages.searchGlobal#4bc6589a returning error if any.
-// Search for messages and peers globally
-//
-// Possible errors:
-//
-//	400 FOLDER_ID_INVALID: Invalid folder ID.
-//	400 INPUT_FILTER_INVALID: The specified filter is invalid.
-//	400 SEARCH_QUERY_EMPTY: The search query is empty.
-//
-// See https://core.telegram.org/method/messages.searchGlobal for reference.
 func (c *Client) MessagesSearchGlobal(ctx context.Context, request *MessagesSearchGlobalRequest) (MessagesMessagesClass, error) {
 	var result MessagesMessagesBox
 

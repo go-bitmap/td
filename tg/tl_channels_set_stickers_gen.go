@@ -32,13 +32,10 @@ var (
 )
 
 // ChannelsSetStickersRequest represents TL type `channels.setStickers#ea8ca4f9`.
-// Associate a stickerset to the supergroup
-//
-// See https://core.telegram.org/method/channels.setStickers for reference.
 type ChannelsSetStickersRequest struct {
-	// Supergroup
+	// Channel field of ChannelsSetStickersRequest.
 	Channel InputChannelClass
-	// The stickerset to associate
+	// Stickerset field of ChannelsSetStickersRequest.
 	Stickerset InputStickerSetClass
 }
 
@@ -74,15 +71,6 @@ func (s *ChannelsSetStickersRequest) String() string {
 	}
 	type Alias ChannelsSetStickersRequest
 	return fmt.Sprintf("ChannelsSetStickersRequest%+v", Alias(*s))
-}
-
-// FillFrom fills ChannelsSetStickersRequest from given interface.
-func (s *ChannelsSetStickersRequest) FillFrom(from interface {
-	GetChannel() (value InputChannelClass)
-	GetStickerset() (value InputStickerSetClass)
-}) {
-	s.Channel = from.GetChannel()
-	s.Stickerset = from.GetStickerset()
 }
 
 // TypeID returns type id in TL schema.
@@ -198,23 +186,7 @@ func (s *ChannelsSetStickersRequest) GetStickerset() (value InputStickerSetClass
 	return s.Stickerset
 }
 
-// GetChannelAsNotEmpty returns mapped value of Channel field.
-func (s *ChannelsSetStickersRequest) GetChannelAsNotEmpty() (NotEmptyInputChannel, bool) {
-	return s.Channel.AsNotEmpty()
-}
-
 // ChannelsSetStickers invokes method channels.setStickers#ea8ca4f9 returning error if any.
-// Associate a stickerset to the supergroup
-//
-// Possible errors:
-//
-//	400 CHANNEL_INVALID: The provided channel is invalid.
-//	400 CHAT_ID_INVALID: The provided chat id is invalid.
-//	400 PARTICIPANTS_TOO_FEW: Not enough participants.
-//	406 STICKERSET_OWNER_ANONYMOUS: Provided stickerset can't be installed as group stickerset to prevent admin deanonymization.
-//
-// See https://core.telegram.org/method/channels.setStickers for reference.
-// Can be used by bots.
 func (c *Client) ChannelsSetStickers(ctx context.Context, request *ChannelsSetStickersRequest) (bool, error) {
 	var result BoolBox
 

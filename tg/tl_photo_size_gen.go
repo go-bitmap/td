@@ -32,14 +32,8 @@ var (
 )
 
 // PhotoSizeEmpty represents TL type `photoSizeEmpty#e17e23c`.
-// Empty constructor. Image with this thumbnail is unavailable.
-//
-// See https://core.telegram.org/constructor/photoSizeEmpty for reference.
 type PhotoSizeEmpty struct {
-	// Thumbnail type »¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/files#image-thumbnail-types
+	// Type field of PhotoSizeEmpty.
 	Type string
 }
 
@@ -77,13 +71,6 @@ func (p *PhotoSizeEmpty) String() string {
 	}
 	type Alias PhotoSizeEmpty
 	return fmt.Sprintf("PhotoSizeEmpty%+v", Alias(*p))
-}
-
-// FillFrom fills PhotoSizeEmpty from given interface.
-func (p *PhotoSizeEmpty) FillFrom(from interface {
-	GetType() (value string)
-}) {
-	p.Type = from.GetType()
 }
 
 // TypeID returns type id in TL schema.
@@ -170,20 +157,14 @@ func (p *PhotoSizeEmpty) GetType() (value string) {
 }
 
 // PhotoSize represents TL type `photoSize#75c78e60`.
-// Image description.
-//
-// See https://core.telegram.org/constructor/photoSize for reference.
 type PhotoSize struct {
-	// Thumbnail type »¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/files#image-thumbnail-types
+	// Type field of PhotoSize.
 	Type string
-	// Image width
+	// W field of PhotoSize.
 	W int
-	// Image height
+	// H field of PhotoSize.
 	H int
-	// File size
+	// Size field of PhotoSize.
 	Size int
 }
 
@@ -230,19 +211,6 @@ func (p *PhotoSize) String() string {
 	}
 	type Alias PhotoSize
 	return fmt.Sprintf("PhotoSize%+v", Alias(*p))
-}
-
-// FillFrom fills PhotoSize from given interface.
-func (p *PhotoSize) FillFrom(from interface {
-	GetType() (value string)
-	GetW() (value int)
-	GetH() (value int)
-	GetSize() (value int)
-}) {
-	p.Type = from.GetType()
-	p.W = from.GetW()
-	p.H = from.GetH()
-	p.Size = from.GetSize()
 }
 
 // TypeID returns type id in TL schema.
@@ -389,17 +357,14 @@ func (p *PhotoSize) GetSize() (value int) {
 }
 
 // PhotoCachedSize represents TL type `photoCachedSize#21e1ad6`.
-// Description of an image and its content.
-//
-// See https://core.telegram.org/constructor/photoCachedSize for reference.
 type PhotoCachedSize struct {
-	// Thumbnail type
+	// Type field of PhotoCachedSize.
 	Type string
-	// Image width
+	// W field of PhotoCachedSize.
 	W int
-	// Image height
+	// H field of PhotoCachedSize.
 	H int
-	// Binary data, file content
+	// Bytes field of PhotoCachedSize.
 	Bytes []byte
 }
 
@@ -446,19 +411,6 @@ func (p *PhotoCachedSize) String() string {
 	}
 	type Alias PhotoCachedSize
 	return fmt.Sprintf("PhotoCachedSize%+v", Alias(*p))
-}
-
-// FillFrom fills PhotoCachedSize from given interface.
-func (p *PhotoCachedSize) FillFrom(from interface {
-	GetType() (value string)
-	GetW() (value int)
-	GetH() (value int)
-	GetBytes() (value []byte)
-}) {
-	p.Type = from.GetType()
-	p.W = from.GetW()
-	p.H = from.GetH()
-	p.Bytes = from.GetBytes()
 }
 
 // TypeID returns type id in TL schema.
@@ -605,16 +557,10 @@ func (p *PhotoCachedSize) GetBytes() (value []byte) {
 }
 
 // PhotoStrippedSize represents TL type `photoStrippedSize#e0b0bc2e`.
-// A low-resolution compressed JPG payload
-//
-// See https://core.telegram.org/constructor/photoStrippedSize for reference.
 type PhotoStrippedSize struct {
-	// Thumbnail type
+	// Type field of PhotoStrippedSize.
 	Type string
-	// Thumbnail data, see here for more info on decompression »¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/files#stripped-thumbnails
+	// Bytes field of PhotoStrippedSize.
 	Bytes []byte
 }
 
@@ -655,15 +601,6 @@ func (p *PhotoStrippedSize) String() string {
 	}
 	type Alias PhotoStrippedSize
 	return fmt.Sprintf("PhotoStrippedSize%+v", Alias(*p))
-}
-
-// FillFrom fills PhotoStrippedSize from given interface.
-func (p *PhotoStrippedSize) FillFrom(from interface {
-	GetType() (value string)
-	GetBytes() (value []byte)
-}) {
-	p.Type = from.GetType()
-	p.Bytes = from.GetBytes()
 }
 
 // TypeID returns type id in TL schema.
@@ -770,21 +707,14 @@ func (p *PhotoStrippedSize) GetBytes() (value []byte) {
 }
 
 // PhotoSizeProgressive represents TL type `photoSizeProgressive#fa3efb95`.
-// Progressively encoded photosize
-//
-// See https://core.telegram.org/constructor/photoSizeProgressive for reference.
 type PhotoSizeProgressive struct {
-	// Photosize type »¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/files#image-thumbnail-types
+	// Type field of PhotoSizeProgressive.
 	Type string
-	// Photo width
+	// W field of PhotoSizeProgressive.
 	W int
-	// Photo height
+	// H field of PhotoSizeProgressive.
 	H int
-	// Sizes of progressive JPEG file prefixes, which can be used to preliminarily show the
-	// image.
+	// Sizes field of PhotoSizeProgressive.
 	Sizes []int
 }
 
@@ -831,19 +761,6 @@ func (p *PhotoSizeProgressive) String() string {
 	}
 	type Alias PhotoSizeProgressive
 	return fmt.Sprintf("PhotoSizeProgressive%+v", Alias(*p))
-}
-
-// FillFrom fills PhotoSizeProgressive from given interface.
-func (p *PhotoSizeProgressive) FillFrom(from interface {
-	GetType() (value string)
-	GetW() (value int)
-	GetH() (value int)
-	GetSizes() (value []int)
-}) {
-	p.Type = from.GetType()
-	p.W = from.GetW()
-	p.H = from.GetH()
-	p.Sizes = from.GetSizes()
 }
 
 // TypeID returns type id in TL schema.
@@ -1003,17 +920,10 @@ func (p *PhotoSizeProgressive) GetSizes() (value []int) {
 }
 
 // PhotoPathSize represents TL type `photoPathSize#d8214d41`.
-// Messages with animated stickers can have a compressed svg (< 300 bytes) to show the
-// outline of the sticker before fetching the actual lottie animation.
-//
-// See https://core.telegram.org/constructor/photoPathSize for reference.
 type PhotoPathSize struct {
-	// Always j
+	// Type field of PhotoPathSize.
 	Type string
-	// Compressed SVG path payload, see here for decompression instructions¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/files#vector-thumbnails
+	// Bytes field of PhotoPathSize.
 	Bytes []byte
 }
 
@@ -1054,15 +964,6 @@ func (p *PhotoPathSize) String() string {
 	}
 	type Alias PhotoPathSize
 	return fmt.Sprintf("PhotoPathSize%+v", Alias(*p))
-}
-
-// FillFrom fills PhotoPathSize from given interface.
-func (p *PhotoPathSize) FillFrom(from interface {
-	GetType() (value string)
-	GetBytes() (value []byte)
-}) {
-	p.Type = from.GetType()
-	p.Bytes = from.GetBytes()
 }
 
 // TypeID returns type id in TL schema.
@@ -1173,8 +1074,6 @@ const PhotoSizeClassName = "PhotoSize"
 
 // PhotoSizeClass represents PhotoSize generic type.
 //
-// See https://core.telegram.org/type/PhotoSize for reference.
-//
 // Constructors:
 //   - [PhotoSizeEmpty]
 //   - [PhotoSize]
@@ -1216,76 +1115,8 @@ type PhotoSizeClass interface {
 	// Zero returns true if current object has a zero value.
 	Zero() bool
 
-	// Thumbnail type »¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/files#image-thumbnail-types
+	// Type field of PhotoSizeEmpty.
 	GetType() (value string)
-
-	// AsNotEmpty tries to map PhotoSizeClass to NotEmptyPhotoSize.
-	AsNotEmpty() (NotEmptyPhotoSize, bool)
-}
-
-// NotEmptyPhotoSize represents NotEmpty subset of PhotoSizeClass.
-type NotEmptyPhotoSize interface {
-	bin.Encoder
-	bin.Decoder
-	bin.BareEncoder
-	bin.BareDecoder
-	construct() PhotoSizeClass
-
-	// TypeID returns type id in TL schema.
-	//
-	// See https://core.telegram.org/mtproto/TL-tl#remarks.
-	TypeID() uint32
-	// TypeName returns name of type in TL schema.
-	TypeName() string
-	// String implements fmt.Stringer.
-	String() string
-	// Zero returns true if current object has a zero value.
-	Zero() bool
-
-	// Thumbnail type »¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/files#image-thumbnail-types
-	GetType() (value string)
-}
-
-// AsNotEmpty tries to map PhotoSizeEmpty to NotEmptyPhotoSize.
-func (p *PhotoSizeEmpty) AsNotEmpty() (NotEmptyPhotoSize, bool) {
-	value, ok := (PhotoSizeClass(p)).(NotEmptyPhotoSize)
-	return value, ok
-}
-
-// AsNotEmpty tries to map PhotoSize to NotEmptyPhotoSize.
-func (p *PhotoSize) AsNotEmpty() (NotEmptyPhotoSize, bool) {
-	value, ok := (PhotoSizeClass(p)).(NotEmptyPhotoSize)
-	return value, ok
-}
-
-// AsNotEmpty tries to map PhotoCachedSize to NotEmptyPhotoSize.
-func (p *PhotoCachedSize) AsNotEmpty() (NotEmptyPhotoSize, bool) {
-	value, ok := (PhotoSizeClass(p)).(NotEmptyPhotoSize)
-	return value, ok
-}
-
-// AsNotEmpty tries to map PhotoStrippedSize to NotEmptyPhotoSize.
-func (p *PhotoStrippedSize) AsNotEmpty() (NotEmptyPhotoSize, bool) {
-	value, ok := (PhotoSizeClass(p)).(NotEmptyPhotoSize)
-	return value, ok
-}
-
-// AsNotEmpty tries to map PhotoSizeProgressive to NotEmptyPhotoSize.
-func (p *PhotoSizeProgressive) AsNotEmpty() (NotEmptyPhotoSize, bool) {
-	value, ok := (PhotoSizeClass(p)).(NotEmptyPhotoSize)
-	return value, ok
-}
-
-// AsNotEmpty tries to map PhotoPathSize to NotEmptyPhotoSize.
-func (p *PhotoPathSize) AsNotEmpty() (NotEmptyPhotoSize, bool) {
-	value, ok := (PhotoSizeClass(p)).(NotEmptyPhotoSize)
-	return value, ok
 }
 
 // DecodePhotoSize implements binary de-serialization for PhotoSizeClass.

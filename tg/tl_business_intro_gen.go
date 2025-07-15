@@ -32,32 +32,14 @@ var (
 )
 
 // BusinessIntro represents TL type `businessIntro#5a0a066d`.
-// Telegram Business introduction »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/business#business-introduction
-//
-// See https://core.telegram.org/constructor/businessIntro for reference.
 type BusinessIntro struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of BusinessIntro.
 	Flags bin.Fields
-	// Title of the introduction message (max intro_title_length_limit »¹ UTF-8 characters).
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/config#intro-title-length-limit
+	// Title field of BusinessIntro.
 	Title string
-	// Profile introduction (max intro_description_length_limit »¹ UTF-8 characters).
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/config#intro-description-length-limit
+	// Description field of BusinessIntro.
 	Description string
-	// Optional introduction sticker¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/stickers
+	// Sticker field of BusinessIntro.
 	//
 	// Use SetSticker and GetSticker helpers.
 	Sticker DocumentClass
@@ -101,20 +83,6 @@ func (b *BusinessIntro) String() string {
 	}
 	type Alias BusinessIntro
 	return fmt.Sprintf("BusinessIntro%+v", Alias(*b))
-}
-
-// FillFrom fills BusinessIntro from given interface.
-func (b *BusinessIntro) FillFrom(from interface {
-	GetTitle() (value string)
-	GetDescription() (value string)
-	GetSticker() (value DocumentClass, ok bool)
-}) {
-	b.Title = from.GetTitle()
-	b.Description = from.GetDescription()
-	if val, ok := from.GetSticker(); ok {
-		b.Sticker = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -272,13 +240,4 @@ func (b *BusinessIntro) GetSticker() (value DocumentClass, ok bool) {
 		return value, false
 	}
 	return b.Sticker, true
-}
-
-// GetStickerAsNotEmpty returns mapped value of Sticker conditional field and
-// boolean which is true if field was set.
-func (b *BusinessIntro) GetStickerAsNotEmpty() (*Document, bool) {
-	if value, ok := b.GetSticker(); ok {
-		return value.AsNotEmpty()
-	}
-	return nil, false
 }

@@ -32,9 +32,6 @@ var (
 )
 
 // HelpUserInfoEmpty represents TL type `help.userInfoEmpty#f3ae2eed`.
-// Internal use
-//
-// See https://core.telegram.org/constructor/help.userInfoEmpty for reference.
 type HelpUserInfoEmpty struct {
 }
 
@@ -134,20 +131,14 @@ func (u *HelpUserInfoEmpty) DecodeBare(b *bin.Buffer) error {
 }
 
 // HelpUserInfo represents TL type `help.userInfo#1eb3758`.
-// Internal use
-//
-// See https://core.telegram.org/constructor/help.userInfo for reference.
 type HelpUserInfo struct {
-	// Info
+	// Message field of HelpUserInfo.
 	Message string
-	// Message entities for styled text¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/entities
+	// Entities field of HelpUserInfo.
 	Entities []MessageEntityClass
-	// Author
+	// Author field of HelpUserInfo.
 	Author string
-	// Date
+	// Date field of HelpUserInfo.
 	Date int
 }
 
@@ -194,19 +185,6 @@ func (u *HelpUserInfo) String() string {
 	}
 	type Alias HelpUserInfo
 	return fmt.Sprintf("HelpUserInfo%+v", Alias(*u))
-}
-
-// FillFrom fills HelpUserInfo from given interface.
-func (u *HelpUserInfo) FillFrom(from interface {
-	GetMessage() (value string)
-	GetEntities() (value []MessageEntityClass)
-	GetAuthor() (value string)
-	GetDate() (value int)
-}) {
-	u.Message = from.GetMessage()
-	u.Entities = from.GetEntities()
-	u.Author = from.GetAuthor()
-	u.Date = from.GetDate()
 }
 
 // TypeID returns type id in TL schema.
@@ -370,17 +348,10 @@ func (u *HelpUserInfo) GetDate() (value int) {
 	return u.Date
 }
 
-// MapEntities returns field Entities wrapped in MessageEntityClassArray helper.
-func (u *HelpUserInfo) MapEntities() (value MessageEntityClassArray) {
-	return MessageEntityClassArray(u.Entities)
-}
-
 // HelpUserInfoClassName is schema name of HelpUserInfoClass.
 const HelpUserInfoClassName = "help.UserInfo"
 
 // HelpUserInfoClass represents help.UserInfo generic type.
-//
-// See https://core.telegram.org/type/help.UserInfo for reference.
 //
 // Constructors:
 //   - [HelpUserInfoEmpty]
@@ -414,19 +385,6 @@ type HelpUserInfoClass interface {
 	String() string
 	// Zero returns true if current object has a zero value.
 	Zero() bool
-
-	// AsNotEmpty tries to map HelpUserInfoClass to HelpUserInfo.
-	AsNotEmpty() (*HelpUserInfo, bool)
-}
-
-// AsNotEmpty tries to map HelpUserInfoEmpty to HelpUserInfo.
-func (u *HelpUserInfoEmpty) AsNotEmpty() (*HelpUserInfo, bool) {
-	return nil, false
-}
-
-// AsNotEmpty tries to map HelpUserInfo to HelpUserInfo.
-func (u *HelpUserInfo) AsNotEmpty() (*HelpUserInfo, bool) {
-	return u, true
 }
 
 // DecodeHelpUserInfo implements binary de-serialization for HelpUserInfoClass.

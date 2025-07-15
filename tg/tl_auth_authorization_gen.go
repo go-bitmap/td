@@ -32,38 +32,24 @@ var (
 )
 
 // AuthAuthorization represents TL type `auth.authorization#2ea2c0d4`.
-// Contains user authorization info.
-//
-// See https://core.telegram.org/constructor/auth.authorization for reference.
 type AuthAuthorization struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of AuthAuthorization.
 	Flags bin.Fields
-	// Suggests the user to set up a 2-step verification password to be able to log in again
+	// SetupPasswordRequired field of AuthAuthorization.
 	SetupPasswordRequired bool
-	// Iff setup_password_required is set and the user declines to set a 2-step verification
-	// password, they will be able to log into their account via SMS again only after this
-	// many days pass.
+	// OtherwiseReloginDays field of AuthAuthorization.
 	//
 	// Use SetOtherwiseReloginDays and GetOtherwiseReloginDays helpers.
 	OtherwiseReloginDays int
-	// Temporary passport¹ sessions
-	//
-	// Links:
-	//  1) https://core.telegram.org/passport
+	// TmpSessions field of AuthAuthorization.
 	//
 	// Use SetTmpSessions and GetTmpSessions helpers.
 	TmpSessions int
-	// A future auth token¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/auth#future-auth-tokens
+	// FutureAuthToken field of AuthAuthorization.
 	//
 	// Use SetFutureAuthToken and GetFutureAuthToken helpers.
 	FutureAuthToken []byte
-	// Info on authorized user
+	// User field of AuthAuthorization.
 	User UserClass
 }
 
@@ -116,30 +102,6 @@ func (a *AuthAuthorization) String() string {
 	}
 	type Alias AuthAuthorization
 	return fmt.Sprintf("AuthAuthorization%+v", Alias(*a))
-}
-
-// FillFrom fills AuthAuthorization from given interface.
-func (a *AuthAuthorization) FillFrom(from interface {
-	GetSetupPasswordRequired() (value bool)
-	GetOtherwiseReloginDays() (value int, ok bool)
-	GetTmpSessions() (value int, ok bool)
-	GetFutureAuthToken() (value []byte, ok bool)
-	GetUser() (value UserClass)
-}) {
-	a.SetupPasswordRequired = from.GetSetupPasswordRequired()
-	if val, ok := from.GetOtherwiseReloginDays(); ok {
-		a.OtherwiseReloginDays = val
-	}
-
-	if val, ok := from.GetTmpSessions(); ok {
-		a.TmpSessions = val
-	}
-
-	if val, ok := from.GetFutureAuthToken(); ok {
-		a.FutureAuthToken = val
-	}
-
-	a.User = from.GetUser()
 }
 
 // TypeID returns type id in TL schema.
@@ -380,21 +342,10 @@ func (a *AuthAuthorization) GetUser() (value UserClass) {
 }
 
 // AuthAuthorizationSignUpRequired represents TL type `auth.authorizationSignUpRequired#44747e9a`.
-// An account with this phone number doesn't exist on telegram: the user has to enter
-// basic information and sign up¹
-//
-// Links:
-//  1. https://core.telegram.org/api/auth
-//
-// See https://core.telegram.org/constructor/auth.authorizationSignUpRequired for reference.
 type AuthAuthorizationSignUpRequired struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of AuthAuthorizationSignUpRequired.
 	Flags bin.Fields
-	// Telegram's terms of service: the user must read and accept the terms of service before
-	// signing up to telegram
+	// TermsOfService field of AuthAuthorizationSignUpRequired.
 	//
 	// Use SetTermsOfService and GetTermsOfService helpers.
 	TermsOfService HelpTermsOfService
@@ -437,16 +388,6 @@ func (a *AuthAuthorizationSignUpRequired) String() string {
 	}
 	type Alias AuthAuthorizationSignUpRequired
 	return fmt.Sprintf("AuthAuthorizationSignUpRequired%+v", Alias(*a))
-}
-
-// FillFrom fills AuthAuthorizationSignUpRequired from given interface.
-func (a *AuthAuthorizationSignUpRequired) FillFrom(from interface {
-	GetTermsOfService() (value HelpTermsOfService, ok bool)
-}) {
-	if val, ok := from.GetTermsOfService(); ok {
-		a.TermsOfService = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -565,8 +506,6 @@ func (a *AuthAuthorizationSignUpRequired) GetTermsOfService() (value HelpTermsOf
 const AuthAuthorizationClassName = "auth.Authorization"
 
 // AuthAuthorizationClass represents auth.Authorization generic type.
-//
-// See https://core.telegram.org/type/auth.Authorization for reference.
 //
 // Constructors:
 //   - [AuthAuthorization]

@@ -32,97 +32,52 @@ var (
 )
 
 // MessageFwdHeader represents TL type `messageFwdHeader#4e4df4bb`.
-// Info about a forwarded message
-//
-// See https://core.telegram.org/constructor/messageFwdHeader for reference.
 type MessageFwdHeader struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessageFwdHeader.
 	Flags bin.Fields
-	// Whether this message was imported from a foreign chat service, click here for more
-	// info »¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/import
+	// Imported field of MessageFwdHeader.
 	Imported bool
-	// Only for messages forwarded to saved messages »¹, set if the original message was
-	// outgoing (though the message may have been originally outgoing even if this flag is
-	// not set, if from_id points to the current user).
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/saved-messages
+	// SavedOut field of MessageFwdHeader.
 	SavedOut bool
-	// The ID of the user that originally sent the message
+	// FromID field of MessageFwdHeader.
 	//
 	// Use SetFromID and GetFromID helpers.
 	FromID PeerClass
-	// The name of the user that originally sent the message
+	// FromName field of MessageFwdHeader.
 	//
 	// Use SetFromName and GetFromName helpers.
 	FromName string
-	// When was the message originally sent
+	// Date field of MessageFwdHeader.
 	Date int
-	// ID of the channel message that was forwarded
+	// ChannelPost field of MessageFwdHeader.
 	//
 	// Use SetChannelPost and GetChannelPost helpers.
 	ChannelPost int
-	// For channels and if signatures are enabled, author of the channel message
+	// PostAuthor field of MessageFwdHeader.
 	//
 	// Use SetPostAuthor and GetPostAuthor helpers.
 	PostAuthor string
-	// Only for messages forwarded to saved messages »¹, contains the dialog where the
-	// message was originally sent.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/saved-messages
+	// SavedFromPeer field of MessageFwdHeader.
 	//
 	// Use SetSavedFromPeer and GetSavedFromPeer helpers.
 	SavedFromPeer PeerClass
-	// Only for messages forwarded to saved messages »¹, contains the original ID of the
-	// message in saved_from_peer.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/saved-messages
+	// SavedFromMsgID field of MessageFwdHeader.
 	//
 	// Use SetSavedFromMsgID and GetSavedFromMsgID helpers.
 	SavedFromMsgID int
-	// Only for forwarded messages reforwarded to saved messages »¹, contains the sender of
-	// the original message (i.e. if user A sends a message, then user B forwards it
-	// somewhere, then user C saves it to saved messages, this field will contain the ID of
-	// user B and from_id will contain the ID of user A).
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/saved-messages
+	// SavedFromID field of MessageFwdHeader.
 	//
 	// Use SetSavedFromID and GetSavedFromID helpers.
 	SavedFromID PeerClass
-	// Only for forwarded messages from users with forward privacy enabled, sent by users
-	// with forward privacy enabled, reforwarded to saved messages »¹, contains the sender
-	// of the original message (i.e. if user A (fwd privacy enabled) sends a message, then
-	// user B (fwd privacy enabled) forwards it somewhere, then user C saves it to saved
-	// messages, this field will contain the name of user B and from_name will contain the
-	// name of user A).
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/saved-messages
+	// SavedFromName field of MessageFwdHeader.
 	//
 	// Use SetSavedFromName and GetSavedFromName helpers.
 	SavedFromName string
-	// Only for forwarded messages reforwarded to saved messages »¹, indicates when was the
-	// original message sent (i.e. if user A sends a message @ unixtime 1, then user B
-	// forwards it somewhere @ unixtime 2, then user C saves it to saved messages @ unixtime
-	// 3, this field will contain 2, date will contain 1 and the date of the containing
-	// message² will contain 3).
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/saved-messages
-	//  2) https://core.telegram.org/constructor/message
+	// SavedDate field of MessageFwdHeader.
 	//
 	// Use SetSavedDate and GetSavedDate helpers.
 	SavedDate int
-	// PSA type
+	// PsaType field of MessageFwdHeader.
 	//
 	// Use SetPsaType and GetPsaType helpers.
 	PsaType string
@@ -196,67 +151,6 @@ func (m *MessageFwdHeader) String() string {
 	}
 	type Alias MessageFwdHeader
 	return fmt.Sprintf("MessageFwdHeader%+v", Alias(*m))
-}
-
-// FillFrom fills MessageFwdHeader from given interface.
-func (m *MessageFwdHeader) FillFrom(from interface {
-	GetImported() (value bool)
-	GetSavedOut() (value bool)
-	GetFromID() (value PeerClass, ok bool)
-	GetFromName() (value string, ok bool)
-	GetDate() (value int)
-	GetChannelPost() (value int, ok bool)
-	GetPostAuthor() (value string, ok bool)
-	GetSavedFromPeer() (value PeerClass, ok bool)
-	GetSavedFromMsgID() (value int, ok bool)
-	GetSavedFromID() (value PeerClass, ok bool)
-	GetSavedFromName() (value string, ok bool)
-	GetSavedDate() (value int, ok bool)
-	GetPsaType() (value string, ok bool)
-}) {
-	m.Imported = from.GetImported()
-	m.SavedOut = from.GetSavedOut()
-	if val, ok := from.GetFromID(); ok {
-		m.FromID = val
-	}
-
-	if val, ok := from.GetFromName(); ok {
-		m.FromName = val
-	}
-
-	m.Date = from.GetDate()
-	if val, ok := from.GetChannelPost(); ok {
-		m.ChannelPost = val
-	}
-
-	if val, ok := from.GetPostAuthor(); ok {
-		m.PostAuthor = val
-	}
-
-	if val, ok := from.GetSavedFromPeer(); ok {
-		m.SavedFromPeer = val
-	}
-
-	if val, ok := from.GetSavedFromMsgID(); ok {
-		m.SavedFromMsgID = val
-	}
-
-	if val, ok := from.GetSavedFromID(); ok {
-		m.SavedFromID = val
-	}
-
-	if val, ok := from.GetSavedFromName(); ok {
-		m.SavedFromName = val
-	}
-
-	if val, ok := from.GetSavedDate(); ok {
-		m.SavedDate = val
-	}
-
-	if val, ok := from.GetPsaType(); ok {
-		m.PsaType = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.

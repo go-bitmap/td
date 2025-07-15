@@ -32,16 +32,10 @@ var (
 )
 
 // PaymentsGetConnectedStarRefBotRequest represents TL type `payments.getConnectedStarRefBot#b7d998f0`.
-// Fetch info about a specific bot affiliation »¹
-//
-// Links:
-//  1. https://core.telegram.org/api/bots/referrals
-//
-// See https://core.telegram.org/method/payments.getConnectedStarRefBot for reference.
 type PaymentsGetConnectedStarRefBotRequest struct {
-	// The affiliated peer
+	// Peer field of PaymentsGetConnectedStarRefBotRequest.
 	Peer InputPeerClass
-	// The bot that offers the affiliate program
+	// Bot field of PaymentsGetConnectedStarRefBotRequest.
 	Bot InputUserClass
 }
 
@@ -77,15 +71,6 @@ func (g *PaymentsGetConnectedStarRefBotRequest) String() string {
 	}
 	type Alias PaymentsGetConnectedStarRefBotRequest
 	return fmt.Sprintf("PaymentsGetConnectedStarRefBotRequest%+v", Alias(*g))
-}
-
-// FillFrom fills PaymentsGetConnectedStarRefBotRequest from given interface.
-func (g *PaymentsGetConnectedStarRefBotRequest) FillFrom(from interface {
-	GetPeer() (value InputPeerClass)
-	GetBot() (value InputUserClass)
-}) {
-	g.Peer = from.GetPeer()
-	g.Bot = from.GetBot()
 }
 
 // TypeID returns type id in TL schema.
@@ -202,16 +187,6 @@ func (g *PaymentsGetConnectedStarRefBotRequest) GetBot() (value InputUserClass) 
 }
 
 // PaymentsGetConnectedStarRefBot invokes method payments.getConnectedStarRefBot#b7d998f0 returning error if any.
-// Fetch info about a specific bot affiliation »¹
-//
-// Links:
-//  1. https://core.telegram.org/api/bots/referrals
-//
-// Possible errors:
-//
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//
-// See https://core.telegram.org/method/payments.getConnectedStarRefBot for reference.
 func (c *Client) PaymentsGetConnectedStarRefBot(ctx context.Context, request *PaymentsGetConnectedStarRefBotRequest) (*PaymentsConnectedStarRefBots, error) {
 	var result PaymentsConnectedStarRefBots
 

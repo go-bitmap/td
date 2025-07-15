@@ -32,8 +32,6 @@ var (
 )
 
 // PaymentsCanPurchaseStoreRequest represents TL type `payments.canPurchaseStore#4fdc5ea7`.
-//
-// See https://core.telegram.org/method/payments.canPurchaseStore for reference.
 type PaymentsCanPurchaseStoreRequest struct {
 	// Purpose field of PaymentsCanPurchaseStoreRequest.
 	Purpose InputStorePaymentPurposeClass
@@ -68,13 +66,6 @@ func (c *PaymentsCanPurchaseStoreRequest) String() string {
 	}
 	type Alias PaymentsCanPurchaseStoreRequest
 	return fmt.Sprintf("PaymentsCanPurchaseStoreRequest%+v", Alias(*c))
-}
-
-// FillFrom fills PaymentsCanPurchaseStoreRequest from given interface.
-func (c *PaymentsCanPurchaseStoreRequest) FillFrom(from interface {
-	GetPurpose() (value InputStorePaymentPurposeClass)
-}) {
-	c.Purpose = from.GetPurpose()
 }
 
 // TypeID returns type id in TL schema.
@@ -166,8 +157,6 @@ func (c *PaymentsCanPurchaseStoreRequest) GetPurpose() (value InputStorePaymentP
 }
 
 // PaymentsCanPurchaseStore invokes method payments.canPurchaseStore#4fdc5ea7 returning error if any.
-//
-// See https://core.telegram.org/method/payments.canPurchaseStore for reference.
 func (c *Client) PaymentsCanPurchaseStore(ctx context.Context, purpose InputStorePaymentPurposeClass) (bool, error) {
 	var result BoolBox
 

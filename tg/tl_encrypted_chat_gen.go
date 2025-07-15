@@ -32,11 +32,8 @@ var (
 )
 
 // EncryptedChatEmpty represents TL type `encryptedChatEmpty#ab7ec0a0`.
-// Empty constructor.
-//
-// See https://core.telegram.org/constructor/encryptedChatEmpty for reference.
 type EncryptedChatEmpty struct {
-	// Chat ID
+	// ID field of EncryptedChatEmpty.
 	ID int
 }
 
@@ -74,13 +71,6 @@ func (e *EncryptedChatEmpty) String() string {
 	}
 	type Alias EncryptedChatEmpty
 	return fmt.Sprintf("EncryptedChatEmpty%+v", Alias(*e))
-}
-
-// FillFrom fills EncryptedChatEmpty from given interface.
-func (e *EncryptedChatEmpty) FillFrom(from interface {
-	GetID() (value int)
-}) {
-	e.ID = from.GetID()
 }
 
 // TypeID returns type id in TL schema.
@@ -167,19 +157,16 @@ func (e *EncryptedChatEmpty) GetID() (value int) {
 }
 
 // EncryptedChatWaiting represents TL type `encryptedChatWaiting#66b25953`.
-// Chat waiting for approval of second participant.
-//
-// See https://core.telegram.org/constructor/encryptedChatWaiting for reference.
 type EncryptedChatWaiting struct {
-	// Chat ID
+	// ID field of EncryptedChatWaiting.
 	ID int
-	// Checking sum depending on user ID
+	// AccessHash field of EncryptedChatWaiting.
 	AccessHash int64
-	// Date of chat creation
+	// Date field of EncryptedChatWaiting.
 	Date int
-	// Chat creator ID
+	// AdminID field of EncryptedChatWaiting.
 	AdminID int64
-	// ID of second chat participant
+	// ParticipantID field of EncryptedChatWaiting.
 	ParticipantID int64
 }
 
@@ -229,21 +216,6 @@ func (e *EncryptedChatWaiting) String() string {
 	}
 	type Alias EncryptedChatWaiting
 	return fmt.Sprintf("EncryptedChatWaiting%+v", Alias(*e))
-}
-
-// FillFrom fills EncryptedChatWaiting from given interface.
-func (e *EncryptedChatWaiting) FillFrom(from interface {
-	GetID() (value int)
-	GetAccessHash() (value int64)
-	GetDate() (value int)
-	GetAdminID() (value int64)
-	GetParticipantID() (value int64)
-}) {
-	e.ID = from.GetID()
-	e.AccessHash = from.GetAccessHash()
-	e.Date = from.GetDate()
-	e.AdminID = from.GetAdminID()
-	e.ParticipantID = from.GetParticipantID()
 }
 
 // TypeID returns type id in TL schema.
@@ -410,36 +382,24 @@ func (e *EncryptedChatWaiting) GetParticipantID() (value int64) {
 }
 
 // EncryptedChatRequested represents TL type `encryptedChatRequested#48f1d94c`.
-// Request to create an encrypted chat.
-//
-// See https://core.telegram.org/constructor/encryptedChatRequested for reference.
 type EncryptedChatRequested struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of EncryptedChatRequested.
 	Flags bin.Fields
-	// Peer folder ID, for more info click here¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/folders#peer-folders
+	// FolderID field of EncryptedChatRequested.
 	//
 	// Use SetFolderID and GetFolderID helpers.
 	FolderID int
-	// Chat ID
+	// ID field of EncryptedChatRequested.
 	ID int
-	// Check sum depending on user ID
+	// AccessHash field of EncryptedChatRequested.
 	AccessHash int64
-	// Chat creation date
+	// Date field of EncryptedChatRequested.
 	Date int
-	// Chat creator ID
+	// AdminID field of EncryptedChatRequested.
 	AdminID int64
-	// ID of second chat participant
+	// ParticipantID field of EncryptedChatRequested.
 	ParticipantID int64
-	// A = g ^ a mod p, see Wikipedia¹
-	//
-	// Links:
-	//  1) https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange
+	// GA field of EncryptedChatRequested.
 	GA []byte
 }
 
@@ -498,28 +458,6 @@ func (e *EncryptedChatRequested) String() string {
 	}
 	type Alias EncryptedChatRequested
 	return fmt.Sprintf("EncryptedChatRequested%+v", Alias(*e))
-}
-
-// FillFrom fills EncryptedChatRequested from given interface.
-func (e *EncryptedChatRequested) FillFrom(from interface {
-	GetFolderID() (value int, ok bool)
-	GetID() (value int)
-	GetAccessHash() (value int64)
-	GetDate() (value int)
-	GetAdminID() (value int64)
-	GetParticipantID() (value int64)
-	GetGA() (value []byte)
-}) {
-	if val, ok := from.GetFolderID(); ok {
-		e.FolderID = val
-	}
-
-	e.ID = from.GetID()
-	e.AccessHash = from.GetAccessHash()
-	e.Date = from.GetDate()
-	e.AdminID = from.GetAdminID()
-	e.ParticipantID = from.GetParticipantID()
-	e.GA = from.GetGA()
 }
 
 // TypeID returns type id in TL schema.
@@ -755,27 +693,20 @@ func (e *EncryptedChatRequested) GetGA() (value []byte) {
 }
 
 // EncryptedChat represents TL type `encryptedChat#61f0d4c7`.
-// Encrypted chat
-//
-// See https://core.telegram.org/constructor/encryptedChat for reference.
 type EncryptedChat struct {
-	// Chat ID
+	// ID field of EncryptedChat.
 	ID int
-	// Check sum dependent on the user ID
+	// AccessHash field of EncryptedChat.
 	AccessHash int64
-	// Date chat was created
+	// Date field of EncryptedChat.
 	Date int
-	// Chat creator ID
+	// AdminID field of EncryptedChat.
 	AdminID int64
-	// ID of the second chat participant
+	// ParticipantID field of EncryptedChat.
 	ParticipantID int64
-	// B = g ^ b mod p, if the currently authorized user is the chat's creator,or A = g ^ a
-	// mod p otherwiseSee Wikipedia¹ for more info
-	//
-	// Links:
-	//  1) https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange
+	// GAOrB field of EncryptedChat.
 	GAOrB []byte
-	// 64-bit fingerprint of received key
+	// KeyFingerprint field of EncryptedChat.
 	KeyFingerprint int64
 }
 
@@ -831,25 +762,6 @@ func (e *EncryptedChat) String() string {
 	}
 	type Alias EncryptedChat
 	return fmt.Sprintf("EncryptedChat%+v", Alias(*e))
-}
-
-// FillFrom fills EncryptedChat from given interface.
-func (e *EncryptedChat) FillFrom(from interface {
-	GetID() (value int)
-	GetAccessHash() (value int64)
-	GetDate() (value int)
-	GetAdminID() (value int64)
-	GetParticipantID() (value int64)
-	GetGAOrB() (value []byte)
-	GetKeyFingerprint() (value int64)
-}) {
-	e.ID = from.GetID()
-	e.AccessHash = from.GetAccessHash()
-	e.Date = from.GetDate()
-	e.AdminID = from.GetAdminID()
-	e.ParticipantID = from.GetParticipantID()
-	e.GAOrB = from.GetGAOrB()
-	e.KeyFingerprint = from.GetKeyFingerprint()
 }
 
 // TypeID returns type id in TL schema.
@@ -1056,18 +968,12 @@ func (e *EncryptedChat) GetKeyFingerprint() (value int64) {
 }
 
 // EncryptedChatDiscarded represents TL type `encryptedChatDiscarded#1e1c7c45`.
-// Discarded or deleted chat.
-//
-// See https://core.telegram.org/constructor/encryptedChatDiscarded for reference.
 type EncryptedChatDiscarded struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of EncryptedChatDiscarded.
 	Flags bin.Fields
-	// Whether both users of this secret chat should also remove all of its messages
+	// HistoryDeleted field of EncryptedChatDiscarded.
 	HistoryDeleted bool
-	// Chat ID
+	// ID field of EncryptedChatDiscarded.
 	ID int
 }
 
@@ -1111,15 +1017,6 @@ func (e *EncryptedChatDiscarded) String() string {
 	}
 	type Alias EncryptedChatDiscarded
 	return fmt.Sprintf("EncryptedChatDiscarded%+v", Alias(*e))
-}
-
-// FillFrom fills EncryptedChatDiscarded from given interface.
-func (e *EncryptedChatDiscarded) FillFrom(from interface {
-	GetHistoryDeleted() (value bool)
-	GetID() (value int)
-}) {
-	e.HistoryDeleted = from.GetHistoryDeleted()
-	e.ID = from.GetID()
 }
 
 // TypeID returns type id in TL schema.
@@ -1251,8 +1148,6 @@ const EncryptedChatClassName = "EncryptedChat"
 
 // EncryptedChatClass represents EncryptedChat generic type.
 //
-// See https://core.telegram.org/type/EncryptedChat for reference.
-//
 // Constructors:
 //   - [EncryptedChatEmpty]
 //   - [EncryptedChatWaiting]
@@ -1292,73 +1187,8 @@ type EncryptedChatClass interface {
 	// Zero returns true if current object has a zero value.
 	Zero() bool
 
-	// Chat ID
+	// ID field of EncryptedChatEmpty.
 	GetID() (value int)
-
-	// AsNotEmpty tries to map EncryptedChatClass to NotEmptyEncryptedChat.
-	AsNotEmpty() (NotEmptyEncryptedChat, bool)
-}
-
-// AsInput tries to map EncryptedChat to InputEncryptedChat.
-func (e *EncryptedChat) AsInput() *InputEncryptedChat {
-	value := new(InputEncryptedChat)
-	value.ChatID = e.GetID()
-	value.AccessHash = e.GetAccessHash()
-
-	return value
-}
-
-// NotEmptyEncryptedChat represents NotEmpty subset of EncryptedChatClass.
-type NotEmptyEncryptedChat interface {
-	bin.Encoder
-	bin.Decoder
-	bin.BareEncoder
-	bin.BareDecoder
-	construct() EncryptedChatClass
-
-	// TypeID returns type id in TL schema.
-	//
-	// See https://core.telegram.org/mtproto/TL-tl#remarks.
-	TypeID() uint32
-	// TypeName returns name of type in TL schema.
-	TypeName() string
-	// String implements fmt.Stringer.
-	String() string
-	// Zero returns true if current object has a zero value.
-	Zero() bool
-
-	// Chat ID
-	GetID() (value int)
-}
-
-// AsNotEmpty tries to map EncryptedChatEmpty to NotEmptyEncryptedChat.
-func (e *EncryptedChatEmpty) AsNotEmpty() (NotEmptyEncryptedChat, bool) {
-	value, ok := (EncryptedChatClass(e)).(NotEmptyEncryptedChat)
-	return value, ok
-}
-
-// AsNotEmpty tries to map EncryptedChatWaiting to NotEmptyEncryptedChat.
-func (e *EncryptedChatWaiting) AsNotEmpty() (NotEmptyEncryptedChat, bool) {
-	value, ok := (EncryptedChatClass(e)).(NotEmptyEncryptedChat)
-	return value, ok
-}
-
-// AsNotEmpty tries to map EncryptedChatRequested to NotEmptyEncryptedChat.
-func (e *EncryptedChatRequested) AsNotEmpty() (NotEmptyEncryptedChat, bool) {
-	value, ok := (EncryptedChatClass(e)).(NotEmptyEncryptedChat)
-	return value, ok
-}
-
-// AsNotEmpty tries to map EncryptedChat to NotEmptyEncryptedChat.
-func (e *EncryptedChat) AsNotEmpty() (NotEmptyEncryptedChat, bool) {
-	value, ok := (EncryptedChatClass(e)).(NotEmptyEncryptedChat)
-	return value, ok
-}
-
-// AsNotEmpty tries to map EncryptedChatDiscarded to NotEmptyEncryptedChat.
-func (e *EncryptedChatDiscarded) AsNotEmpty() (NotEmptyEncryptedChat, bool) {
-	value, ok := (EncryptedChatClass(e)).(NotEmptyEncryptedChat)
-	return value, ok
 }
 
 // DecodeEncryptedChat implements binary de-serialization for EncryptedChatClass.

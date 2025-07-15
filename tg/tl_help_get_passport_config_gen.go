@@ -32,17 +32,8 @@ var (
 )
 
 // HelpGetPassportConfigRequest represents TL type `help.getPassportConfig#c661ad08`.
-// Get passport¹ configuration
-//
-// Links:
-//  1. https://core.telegram.org/passport
-//
-// See https://core.telegram.org/method/help.getPassportConfig for reference.
 type HelpGetPassportConfigRequest struct {
-	// Hash used for caching, for more info click here¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets#hash-generation
+	// Hash field of HelpGetPassportConfigRequest.
 	Hash int
 }
 
@@ -75,13 +66,6 @@ func (g *HelpGetPassportConfigRequest) String() string {
 	}
 	type Alias HelpGetPassportConfigRequest
 	return fmt.Sprintf("HelpGetPassportConfigRequest%+v", Alias(*g))
-}
-
-// FillFrom fills HelpGetPassportConfigRequest from given interface.
-func (g *HelpGetPassportConfigRequest) FillFrom(from interface {
-	GetHash() (value int)
-}) {
-	g.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -168,12 +152,6 @@ func (g *HelpGetPassportConfigRequest) GetHash() (value int) {
 }
 
 // HelpGetPassportConfig invokes method help.getPassportConfig#c661ad08 returning error if any.
-// Get passport¹ configuration
-//
-// Links:
-//  1. https://core.telegram.org/passport
-//
-// See https://core.telegram.org/method/help.getPassportConfig for reference.
 func (c *Client) HelpGetPassportConfig(ctx context.Context, hash int) (HelpPassportConfigClass, error) {
 	var result HelpPassportConfigBox
 

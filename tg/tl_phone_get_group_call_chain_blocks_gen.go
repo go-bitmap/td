@@ -32,8 +32,6 @@ var (
 )
 
 // PhoneGetGroupCallChainBlocksRequest represents TL type `phone.getGroupCallChainBlocks#ee9f88a6`.
-//
-// See https://core.telegram.org/method/phone.getGroupCallChainBlocks for reference.
 type PhoneGetGroupCallChainBlocksRequest struct {
 	// Call field of PhoneGetGroupCallChainBlocksRequest.
 	Call InputGroupCallClass
@@ -83,19 +81,6 @@ func (g *PhoneGetGroupCallChainBlocksRequest) String() string {
 	}
 	type Alias PhoneGetGroupCallChainBlocksRequest
 	return fmt.Sprintf("PhoneGetGroupCallChainBlocksRequest%+v", Alias(*g))
-}
-
-// FillFrom fills PhoneGetGroupCallChainBlocksRequest from given interface.
-func (g *PhoneGetGroupCallChainBlocksRequest) FillFrom(from interface {
-	GetCall() (value InputGroupCallClass)
-	GetSubChainID() (value int)
-	GetOffset() (value int)
-	GetLimit() (value int)
-}) {
-	g.Call = from.GetCall()
-	g.SubChainID = from.GetSubChainID()
-	g.Offset = from.GetOffset()
-	g.Limit = from.GetLimit()
 }
 
 // TypeID returns type id in TL schema.
@@ -247,8 +232,6 @@ func (g *PhoneGetGroupCallChainBlocksRequest) GetLimit() (value int) {
 }
 
 // PhoneGetGroupCallChainBlocks invokes method phone.getGroupCallChainBlocks#ee9f88a6 returning error if any.
-//
-// See https://core.telegram.org/method/phone.getGroupCallChainBlocks for reference.
 func (c *Client) PhoneGetGroupCallChainBlocks(ctx context.Context, request *PhoneGetGroupCallChainBlocksRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

@@ -32,12 +32,8 @@ var (
 )
 
 // PhoneGetGroupCallJoinAsRequest represents TL type `phone.getGroupCallJoinAs#ef7c213a`.
-// Get a list of peers that can be used to join a group call, presenting yourself as a
-// specific user/channel.
-//
-// See https://core.telegram.org/method/phone.getGroupCallJoinAs for reference.
 type PhoneGetGroupCallJoinAsRequest struct {
-	// The dialog whose group call or livestream we're trying to join
+	// Peer field of PhoneGetGroupCallJoinAsRequest.
 	Peer InputPeerClass
 }
 
@@ -70,13 +66,6 @@ func (g *PhoneGetGroupCallJoinAsRequest) String() string {
 	}
 	type Alias PhoneGetGroupCallJoinAsRequest
 	return fmt.Sprintf("PhoneGetGroupCallJoinAsRequest%+v", Alias(*g))
-}
-
-// FillFrom fills PhoneGetGroupCallJoinAsRequest from given interface.
-func (g *PhoneGetGroupCallJoinAsRequest) FillFrom(from interface {
-	GetPeer() (value InputPeerClass)
-}) {
-	g.Peer = from.GetPeer()
 }
 
 // TypeID returns type id in TL schema.
@@ -168,14 +157,6 @@ func (g *PhoneGetGroupCallJoinAsRequest) GetPeer() (value InputPeerClass) {
 }
 
 // PhoneGetGroupCallJoinAs invokes method phone.getGroupCallJoinAs#ef7c213a returning error if any.
-// Get a list of peers that can be used to join a group call, presenting yourself as a
-// specific user/channel.
-//
-// Possible errors:
-//
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//
-// See https://core.telegram.org/method/phone.getGroupCallJoinAs for reference.
 func (c *Client) PhoneGetGroupCallJoinAs(ctx context.Context, peer InputPeerClass) (*PhoneJoinAsPeers, error) {
 	var result PhoneJoinAsPeers
 

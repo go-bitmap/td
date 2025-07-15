@@ -32,24 +32,18 @@ var (
 )
 
 // PhoneDiscardCallRequest represents TL type `phone.discardCall#b2cbc1c0`.
-// Refuse or end running call
-//
-// See https://core.telegram.org/method/phone.discardCall for reference.
 type PhoneDiscardCallRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of PhoneDiscardCallRequest.
 	Flags bin.Fields
-	// Whether this is a video call
+	// Video field of PhoneDiscardCallRequest.
 	Video bool
-	// The phone call
+	// Peer field of PhoneDiscardCallRequest.
 	Peer InputPhoneCall
-	// Call duration
+	// Duration field of PhoneDiscardCallRequest.
 	Duration int
-	// Why was the call discarded
+	// Reason field of PhoneDiscardCallRequest.
 	Reason PhoneCallDiscardReasonClass
-	// Preferred libtgvoip relay ID
+	// ConnectionID field of PhoneDiscardCallRequest.
 	ConnectionID int64
 }
 
@@ -97,21 +91,6 @@ func (d *PhoneDiscardCallRequest) String() string {
 	}
 	type Alias PhoneDiscardCallRequest
 	return fmt.Sprintf("PhoneDiscardCallRequest%+v", Alias(*d))
-}
-
-// FillFrom fills PhoneDiscardCallRequest from given interface.
-func (d *PhoneDiscardCallRequest) FillFrom(from interface {
-	GetVideo() (value bool)
-	GetPeer() (value InputPhoneCall)
-	GetDuration() (value int)
-	GetReason() (value PhoneCallDiscardReasonClass)
-	GetConnectionID() (value int64)
-}) {
-	d.Video = from.GetVideo()
-	d.Peer = from.GetPeer()
-	d.Duration = from.GetDuration()
-	d.Reason = from.GetReason()
-	d.ConnectionID = from.GetConnectionID()
 }
 
 // TypeID returns type id in TL schema.
@@ -304,15 +283,6 @@ func (d *PhoneDiscardCallRequest) GetConnectionID() (value int64) {
 }
 
 // PhoneDiscardCall invokes method phone.discardCall#b2cbc1c0 returning error if any.
-// Refuse or end running call
-//
-// Possible errors:
-//
-//	400 CALL_ALREADY_ACCEPTED: The call was already accepted.
-//	500 CALL_OCCUPY_FAILED: The call failed because the user is already making another call.
-//	400 CALL_PEER_INVALID: The provided call peer object is invalid.
-//
-// See https://core.telegram.org/method/phone.discardCall for reference.
 func (c *Client) PhoneDiscardCall(ctx context.Context, request *PhoneDiscardCallRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

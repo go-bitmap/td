@@ -32,19 +32,12 @@ var (
 )
 
 // LangpackGetDifferenceRequest represents TL type `langpack.getDifference#cd984aa5`.
-// Get new strings in language pack
-//
-// See https://core.telegram.org/method/langpack.getDifference for reference.
 type LangpackGetDifferenceRequest struct {
-	// Platform identifier (i.e. android, tdesktop, etc).
+	// LangPack field of LangpackGetDifferenceRequest.
 	LangPack string
-	// Either an ISO 639-1 language code or a language pack name obtained from a language
-	// pack link¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/links#language-pack-links
+	// LangCode field of LangpackGetDifferenceRequest.
 	LangCode string
-	// Previous localization pack version
+	// FromVersion field of LangpackGetDifferenceRequest.
 	FromVersion int
 }
 
@@ -83,17 +76,6 @@ func (g *LangpackGetDifferenceRequest) String() string {
 	}
 	type Alias LangpackGetDifferenceRequest
 	return fmt.Sprintf("LangpackGetDifferenceRequest%+v", Alias(*g))
-}
-
-// FillFrom fills LangpackGetDifferenceRequest from given interface.
-func (g *LangpackGetDifferenceRequest) FillFrom(from interface {
-	GetLangPack() (value string)
-	GetLangCode() (value string)
-	GetFromVersion() (value int)
-}) {
-	g.LangPack = from.GetLangPack()
-	g.LangCode = from.GetLangCode()
-	g.FromVersion = from.GetFromVersion()
 }
 
 // TypeID returns type id in TL schema.
@@ -220,13 +202,6 @@ func (g *LangpackGetDifferenceRequest) GetFromVersion() (value int) {
 }
 
 // LangpackGetDifference invokes method langpack.getDifference#cd984aa5 returning error if any.
-// Get new strings in language pack
-//
-// Possible errors:
-//
-//	400 LANG_PACK_INVALID: The provided language pack is invalid.
-//
-// See https://core.telegram.org/method/langpack.getDifference for reference.
 func (c *Client) LangpackGetDifference(ctx context.Context, request *LangpackGetDifferenceRequest) (*LangPackDifference, error) {
 	var result LangPackDifference
 

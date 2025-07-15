@@ -32,13 +32,10 @@ var (
 )
 
 // InputWebFileLocation represents TL type `inputWebFileLocation#c239d686`.
-// Location of a remote HTTP(s) file
-//
-// See https://core.telegram.org/constructor/inputWebFileLocation for reference.
 type InputWebFileLocation struct {
-	// HTTP URL of file
+	// URL field of InputWebFileLocation.
 	URL string
-	// Access hash
+	// AccessHash field of InputWebFileLocation.
 	AccessHash int64
 }
 
@@ -79,15 +76,6 @@ func (i *InputWebFileLocation) String() string {
 	}
 	type Alias InputWebFileLocation
 	return fmt.Sprintf("InputWebFileLocation%+v", Alias(*i))
-}
-
-// FillFrom fills InputWebFileLocation from given interface.
-func (i *InputWebFileLocation) FillFrom(from interface {
-	GetURL() (value string)
-	GetAccessHash() (value int64)
-}) {
-	i.URL = from.GetURL()
-	i.AccessHash = from.GetAccessHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -194,32 +182,18 @@ func (i *InputWebFileLocation) GetAccessHash() (value int64) {
 }
 
 // InputWebFileGeoPointLocation represents TL type `inputWebFileGeoPointLocation#9f2221c9`.
-// Used to download a server-generated image with the map preview from a geoPoint¹, see
-// the webfile docs for more info »².
-//
-// Links:
-//  1. https://core.telegram.org/constructor/geoPoint
-//  2. https://core.telegram.org/api/files#downloading-webfiles
-//
-// See https://core.telegram.org/constructor/inputWebFileGeoPointLocation for reference.
 type InputWebFileGeoPointLocation struct {
-	// Generated from the lat, long and accuracy_radius parameters of the geoPoint¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/geoPoint
+	// GeoPoint field of InputWebFileGeoPointLocation.
 	GeoPoint InputGeoPointClass
-	// Access hash of the geoPoint¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/geoPoint
+	// AccessHash field of InputWebFileGeoPointLocation.
 	AccessHash int64
-	// Map width in pixels before applying scale; 16-1024
+	// W field of InputWebFileGeoPointLocation.
 	W int
-	// Map height in pixels before applying scale; 16-1024
+	// H field of InputWebFileGeoPointLocation.
 	H int
-	// Map zoom level; 13-20
+	// Zoom field of InputWebFileGeoPointLocation.
 	Zoom int
-	// Map scale; 1-3
+	// Scale field of InputWebFileGeoPointLocation.
 	Scale int
 }
 
@@ -272,23 +246,6 @@ func (i *InputWebFileGeoPointLocation) String() string {
 	}
 	type Alias InputWebFileGeoPointLocation
 	return fmt.Sprintf("InputWebFileGeoPointLocation%+v", Alias(*i))
-}
-
-// FillFrom fills InputWebFileGeoPointLocation from given interface.
-func (i *InputWebFileGeoPointLocation) FillFrom(from interface {
-	GetGeoPoint() (value InputGeoPointClass)
-	GetAccessHash() (value int64)
-	GetW() (value int)
-	GetH() (value int)
-	GetZoom() (value int)
-	GetScale() (value int)
-}) {
-	i.GeoPoint = from.GetGeoPoint()
-	i.AccessHash = from.GetAccessHash()
-	i.W = from.GetW()
-	i.H = from.GetH()
-	i.Zoom = from.GetZoom()
-	i.Scale = from.GetScale()
 }
 
 // TypeID returns type id in TL schema.
@@ -480,34 +437,20 @@ func (i *InputWebFileGeoPointLocation) GetScale() (value int) {
 }
 
 // InputWebFileAudioAlbumThumbLocation represents TL type `inputWebFileAudioAlbumThumbLocation#f46fe924`.
-// Used to download an album cover for any music file using upload.getWebFile¹, see the
-// webfile docs for more info »².
-//
-// Links:
-//  1. https://core.telegram.org/method/upload.getWebFile
-//  2. https://core.telegram.org/api/files#downloading-webfiles
-//
-// See https://core.telegram.org/constructor/inputWebFileAudioAlbumThumbLocation for reference.
 type InputWebFileAudioAlbumThumbLocation struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of InputWebFileAudioAlbumThumbLocation.
 	Flags bin.Fields
-	// Used to return a thumbnail with 100x100 resolution (instead of the default 600x600)
+	// Small field of InputWebFileAudioAlbumThumbLocation.
 	Small bool
-	// The audio file in question: must NOT be provided in secret chats, provide the title
-	// and performer fields instead.
+	// Document field of InputWebFileAudioAlbumThumbLocation.
 	//
 	// Use SetDocument and GetDocument helpers.
 	Document InputDocumentClass
-	// Song title: should only be used in secret chats, in normal chats provide document
-	// instead, as it has more lax rate limits.
+	// Title field of InputWebFileAudioAlbumThumbLocation.
 	//
 	// Use SetTitle and GetTitle helpers.
 	Title string
-	// Song performer: should only be used in secret chats, in normal chats provide document
-	// instead, as it has more lax rate limits.
+	// Performer field of InputWebFileAudioAlbumThumbLocation.
 	//
 	// Use SetPerformer and GetPerformer helpers.
 	Performer string
@@ -559,28 +502,6 @@ func (i *InputWebFileAudioAlbumThumbLocation) String() string {
 	}
 	type Alias InputWebFileAudioAlbumThumbLocation
 	return fmt.Sprintf("InputWebFileAudioAlbumThumbLocation%+v", Alias(*i))
-}
-
-// FillFrom fills InputWebFileAudioAlbumThumbLocation from given interface.
-func (i *InputWebFileAudioAlbumThumbLocation) FillFrom(from interface {
-	GetSmall() (value bool)
-	GetDocument() (value InputDocumentClass, ok bool)
-	GetTitle() (value string, ok bool)
-	GetPerformer() (value string, ok bool)
-}) {
-	i.Small = from.GetSmall()
-	if val, ok := from.GetDocument(); ok {
-		i.Document = val
-	}
-
-	if val, ok := from.GetTitle(); ok {
-		i.Title = val
-	}
-
-	if val, ok := from.GetPerformer(); ok {
-		i.Performer = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -804,8 +725,6 @@ func (i *InputWebFileAudioAlbumThumbLocation) GetPerformer() (value string, ok b
 const InputWebFileLocationClassName = "InputWebFileLocation"
 
 // InputWebFileLocationClass represents InputWebFileLocation generic type.
-//
-// See https://core.telegram.org/type/InputWebFileLocation for reference.
 //
 // Constructors:
 //   - [InputWebFileLocation]

@@ -32,11 +32,8 @@ var (
 )
 
 // PhoneCallEmpty represents TL type `phoneCallEmpty#5366c915`.
-// Empty constructor
-//
-// See https://core.telegram.org/constructor/phoneCallEmpty for reference.
 type PhoneCallEmpty struct {
-	// Call ID
+	// ID field of PhoneCallEmpty.
 	ID int64
 }
 
@@ -74,13 +71,6 @@ func (p *PhoneCallEmpty) String() string {
 	}
 	type Alias PhoneCallEmpty
 	return fmt.Sprintf("PhoneCallEmpty%+v", Alias(*p))
-}
-
-// FillFrom fills PhoneCallEmpty from given interface.
-func (p *PhoneCallEmpty) FillFrom(from interface {
-	GetID() (value int64)
-}) {
-	p.ID = from.GetID()
 }
 
 // TypeID returns type id in TL schema.
@@ -167,30 +157,24 @@ func (p *PhoneCallEmpty) GetID() (value int64) {
 }
 
 // PhoneCallWaiting represents TL type `phoneCallWaiting#c5226f17`.
-// Incoming phone call
-//
-// See https://core.telegram.org/constructor/phoneCallWaiting for reference.
 type PhoneCallWaiting struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of PhoneCallWaiting.
 	Flags bin.Fields
-	// Is this a video call
+	// Video field of PhoneCallWaiting.
 	Video bool
-	// Call ID
+	// ID field of PhoneCallWaiting.
 	ID int64
-	// Access hash
+	// AccessHash field of PhoneCallWaiting.
 	AccessHash int64
-	// Date
+	// Date field of PhoneCallWaiting.
 	Date int
-	// Admin ID
+	// AdminID field of PhoneCallWaiting.
 	AdminID int64
-	// Participant ID
+	// ParticipantID field of PhoneCallWaiting.
 	ParticipantID int64
-	// Phone call protocol info
+	// Protocol field of PhoneCallWaiting.
 	Protocol PhoneCallProtocol
-	// When was the phone call received
+	// ReceiveDate field of PhoneCallWaiting.
 	//
 	// Use SetReceiveDate and GetReceiveDate helpers.
 	ReceiveDate int
@@ -254,30 +238,6 @@ func (p *PhoneCallWaiting) String() string {
 	}
 	type Alias PhoneCallWaiting
 	return fmt.Sprintf("PhoneCallWaiting%+v", Alias(*p))
-}
-
-// FillFrom fills PhoneCallWaiting from given interface.
-func (p *PhoneCallWaiting) FillFrom(from interface {
-	GetVideo() (value bool)
-	GetID() (value int64)
-	GetAccessHash() (value int64)
-	GetDate() (value int)
-	GetAdminID() (value int64)
-	GetParticipantID() (value int64)
-	GetProtocol() (value PhoneCallProtocol)
-	GetReceiveDate() (value int, ok bool)
-}) {
-	p.Video = from.GetVideo()
-	p.ID = from.GetID()
-	p.AccessHash = from.GetAccessHash()
-	p.Date = from.GetDate()
-	p.AdminID = from.GetAdminID()
-	p.ParticipantID = from.GetParticipantID()
-	p.Protocol = from.GetProtocol()
-	if val, ok := from.GetReceiveDate(); ok {
-		p.ReceiveDate = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -541,33 +501,24 @@ func (p *PhoneCallWaiting) GetReceiveDate() (value int, ok bool) {
 }
 
 // PhoneCallRequested represents TL type `phoneCallRequested#14b0ed0c`.
-// Requested phone call
-//
-// See https://core.telegram.org/constructor/phoneCallRequested for reference.
 type PhoneCallRequested struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of PhoneCallRequested.
 	Flags bin.Fields
-	// Whether this is a video call
+	// Video field of PhoneCallRequested.
 	Video bool
-	// Phone call ID
+	// ID field of PhoneCallRequested.
 	ID int64
-	// Access hash
+	// AccessHash field of PhoneCallRequested.
 	AccessHash int64
-	// When was the phone call created
+	// Date field of PhoneCallRequested.
 	Date int
-	// ID of the creator of the phone call
+	// AdminID field of PhoneCallRequested.
 	AdminID int64
-	// ID of the other participant of the phone call
+	// ParticipantID field of PhoneCallRequested.
 	ParticipantID int64
-	// Parameter for key exchange¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/end-to-end/voice-calls
+	// GAHash field of PhoneCallRequested.
 	GAHash []byte
-	// Call protocol info to be passed to libtgvoip
+	// Protocol field of PhoneCallRequested.
 	Protocol PhoneCallProtocol
 }
 
@@ -629,27 +580,6 @@ func (p *PhoneCallRequested) String() string {
 	}
 	type Alias PhoneCallRequested
 	return fmt.Sprintf("PhoneCallRequested%+v", Alias(*p))
-}
-
-// FillFrom fills PhoneCallRequested from given interface.
-func (p *PhoneCallRequested) FillFrom(from interface {
-	GetVideo() (value bool)
-	GetID() (value int64)
-	GetAccessHash() (value int64)
-	GetDate() (value int)
-	GetAdminID() (value int64)
-	GetParticipantID() (value int64)
-	GetGAHash() (value []byte)
-	GetProtocol() (value PhoneCallProtocol)
-}) {
-	p.Video = from.GetVideo()
-	p.ID = from.GetID()
-	p.AccessHash = from.GetAccessHash()
-	p.Date = from.GetDate()
-	p.AdminID = from.GetAdminID()
-	p.ParticipantID = from.GetParticipantID()
-	p.GAHash = from.GetGAHash()
-	p.Protocol = from.GetProtocol()
 }
 
 // TypeID returns type id in TL schema.
@@ -897,33 +827,24 @@ func (p *PhoneCallRequested) GetProtocol() (value PhoneCallProtocol) {
 }
 
 // PhoneCallAccepted represents TL type `phoneCallAccepted#3660c311`.
-// An accepted phone call
-//
-// See https://core.telegram.org/constructor/phoneCallAccepted for reference.
 type PhoneCallAccepted struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of PhoneCallAccepted.
 	Flags bin.Fields
-	// Whether this is a video call
+	// Video field of PhoneCallAccepted.
 	Video bool
-	// ID of accepted phone call
+	// ID field of PhoneCallAccepted.
 	ID int64
-	// Access hash of phone call
+	// AccessHash field of PhoneCallAccepted.
 	AccessHash int64
-	// When was the call accepted
+	// Date field of PhoneCallAccepted.
 	Date int
-	// ID of the call creator
+	// AdminID field of PhoneCallAccepted.
 	AdminID int64
-	// ID of the other user in the call
+	// ParticipantID field of PhoneCallAccepted.
 	ParticipantID int64
-	// B parameter for secure E2E phone call key exchange¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/end-to-end/voice-calls
+	// GB field of PhoneCallAccepted.
 	GB []byte
-	// Protocol to use for phone call
+	// Protocol field of PhoneCallAccepted.
 	Protocol PhoneCallProtocol
 }
 
@@ -985,27 +906,6 @@ func (p *PhoneCallAccepted) String() string {
 	}
 	type Alias PhoneCallAccepted
 	return fmt.Sprintf("PhoneCallAccepted%+v", Alias(*p))
-}
-
-// FillFrom fills PhoneCallAccepted from given interface.
-func (p *PhoneCallAccepted) FillFrom(from interface {
-	GetVideo() (value bool)
-	GetID() (value int64)
-	GetAccessHash() (value int64)
-	GetDate() (value int)
-	GetAdminID() (value int64)
-	GetParticipantID() (value int64)
-	GetGB() (value []byte)
-	GetProtocol() (value PhoneCallProtocol)
-}) {
-	p.Video = from.GetVideo()
-	p.ID = from.GetID()
-	p.AccessHash = from.GetAccessHash()
-	p.Date = from.GetDate()
-	p.AdminID = from.GetAdminID()
-	p.ParticipantID = from.GetParticipantID()
-	p.GB = from.GetGB()
-	p.Protocol = from.GetProtocol()
 }
 
 // TypeID returns type id in TL schema.
@@ -1253,48 +1153,36 @@ func (p *PhoneCallAccepted) GetProtocol() (value PhoneCallProtocol) {
 }
 
 // PhoneCall represents TL type `phoneCall#30535af5`.
-// Phone call
-//
-// See https://core.telegram.org/constructor/phoneCall for reference.
 type PhoneCall struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of PhoneCall.
 	Flags bin.Fields
-	// Whether P2P connection to the other peer is allowed
+	// P2PAllowed field of PhoneCall.
 	P2PAllowed bool
-	// Whether this is a video call
+	// Video field of PhoneCall.
 	Video bool
 	// ConferenceSupported field of PhoneCall.
 	ConferenceSupported bool
-	// Call ID
+	// ID field of PhoneCall.
 	ID int64
-	// Access hash
+	// AccessHash field of PhoneCall.
 	AccessHash int64
-	// Date of creation of the call
+	// Date field of PhoneCall.
 	Date int
-	// User ID of the creator of the call
+	// AdminID field of PhoneCall.
 	AdminID int64
-	// User ID of the other participant in the call
+	// ParticipantID field of PhoneCall.
 	ParticipantID int64
-	// Parameter for key exchange¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/end-to-end/voice-calls
+	// GAOrB field of PhoneCall.
 	GAOrB []byte
-	// Key fingerprint¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/end-to-end/voice-calls
+	// KeyFingerprint field of PhoneCall.
 	KeyFingerprint int64
-	// Call protocol info to be passed to libtgvoip
+	// Protocol field of PhoneCall.
 	Protocol PhoneCallProtocol
-	// List of endpoints the user can connect to exchange call data
+	// Connections field of PhoneCall.
 	Connections []PhoneConnectionClass
-	// When was the call actually started
+	// StartDate field of PhoneCall.
 	StartDate int
-	// Custom JSON-encoded call parameters to be passed to tgcalls.
+	// CustomParameters field of PhoneCall.
 	//
 	// Use SetCustomParameters and GetCustomParameters helpers.
 	CustomParameters DataJSON
@@ -1376,42 +1264,6 @@ func (p *PhoneCall) String() string {
 	}
 	type Alias PhoneCall
 	return fmt.Sprintf("PhoneCall%+v", Alias(*p))
-}
-
-// FillFrom fills PhoneCall from given interface.
-func (p *PhoneCall) FillFrom(from interface {
-	GetP2PAllowed() (value bool)
-	GetVideo() (value bool)
-	GetConferenceSupported() (value bool)
-	GetID() (value int64)
-	GetAccessHash() (value int64)
-	GetDate() (value int)
-	GetAdminID() (value int64)
-	GetParticipantID() (value int64)
-	GetGAOrB() (value []byte)
-	GetKeyFingerprint() (value int64)
-	GetProtocol() (value PhoneCallProtocol)
-	GetConnections() (value []PhoneConnectionClass)
-	GetStartDate() (value int)
-	GetCustomParameters() (value DataJSON, ok bool)
-}) {
-	p.P2PAllowed = from.GetP2PAllowed()
-	p.Video = from.GetVideo()
-	p.ConferenceSupported = from.GetConferenceSupported()
-	p.ID = from.GetID()
-	p.AccessHash = from.GetAccessHash()
-	p.Date = from.GetDate()
-	p.AdminID = from.GetAdminID()
-	p.ParticipantID = from.GetParticipantID()
-	p.GAOrB = from.GetGAOrB()
-	p.KeyFingerprint = from.GetKeyFingerprint()
-	p.Protocol = from.GetProtocol()
-	p.Connections = from.GetConnections()
-	p.StartDate = from.GetStartDate()
-	if val, ok := from.GetCustomParameters(); ok {
-		p.CustomParameters = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -1828,40 +1680,23 @@ func (p *PhoneCall) GetCustomParameters() (value DataJSON, ok bool) {
 	return p.CustomParameters, true
 }
 
-// MapConnections returns field Connections wrapped in PhoneConnectionClassArray helper.
-func (p *PhoneCall) MapConnections() (value PhoneConnectionClassArray) {
-	return PhoneConnectionClassArray(p.Connections)
-}
-
 // PhoneCallDiscarded represents TL type `phoneCallDiscarded#50ca4de1`.
-// Indicates a discarded phone call
-//
-// See https://core.telegram.org/constructor/phoneCallDiscarded for reference.
 type PhoneCallDiscarded struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of PhoneCallDiscarded.
 	Flags bin.Fields
-	// Whether the server required the user to rate¹ the call
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/phone.setCallRating
+	// NeedRating field of PhoneCallDiscarded.
 	NeedRating bool
-	// Whether the server required the client to send¹ the libtgvoip call debug data
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/phone.saveCallDebug
+	// NeedDebug field of PhoneCallDiscarded.
 	NeedDebug bool
-	// Whether the call was a video call
+	// Video field of PhoneCallDiscarded.
 	Video bool
-	// Call ID
+	// ID field of PhoneCallDiscarded.
 	ID int64
-	// Why was the phone call discarded
+	// Reason field of PhoneCallDiscarded.
 	//
 	// Use SetReason and GetReason helpers.
 	Reason PhoneCallDiscardReasonClass
-	// Duration of the phone call in seconds
+	// Duration field of PhoneCallDiscarded.
 	//
 	// Use SetDuration and GetDuration helpers.
 	Duration int
@@ -1919,29 +1754,6 @@ func (p *PhoneCallDiscarded) String() string {
 	}
 	type Alias PhoneCallDiscarded
 	return fmt.Sprintf("PhoneCallDiscarded%+v", Alias(*p))
-}
-
-// FillFrom fills PhoneCallDiscarded from given interface.
-func (p *PhoneCallDiscarded) FillFrom(from interface {
-	GetNeedRating() (value bool)
-	GetNeedDebug() (value bool)
-	GetVideo() (value bool)
-	GetID() (value int64)
-	GetReason() (value PhoneCallDiscardReasonClass, ok bool)
-	GetDuration() (value int, ok bool)
-}) {
-	p.NeedRating = from.GetNeedRating()
-	p.NeedDebug = from.GetNeedDebug()
-	p.Video = from.GetVideo()
-	p.ID = from.GetID()
-	if val, ok := from.GetReason(); ok {
-		p.Reason = val
-	}
-
-	if val, ok := from.GetDuration(); ok {
-		p.Duration = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -2206,8 +2018,6 @@ const PhoneCallClassName = "PhoneCall"
 
 // PhoneCallClass represents PhoneCall generic type.
 //
-// See https://core.telegram.org/type/PhoneCall for reference.
-//
 // Constructors:
 //   - [PhoneCallEmpty]
 //   - [PhoneCallWaiting]
@@ -2249,82 +2059,8 @@ type PhoneCallClass interface {
 	// Zero returns true if current object has a zero value.
 	Zero() bool
 
-	// Call ID
+	// ID field of PhoneCallEmpty.
 	GetID() (value int64)
-
-	// AsNotEmpty tries to map PhoneCallClass to NotEmptyPhoneCall.
-	AsNotEmpty() (NotEmptyPhoneCall, bool)
-}
-
-// AsInput tries to map PhoneCall to InputPhoneCall.
-func (p *PhoneCall) AsInput() *InputPhoneCall {
-	value := new(InputPhoneCall)
-	value.ID = p.GetID()
-	value.AccessHash = p.GetAccessHash()
-
-	return value
-}
-
-// NotEmptyPhoneCall represents NotEmpty subset of PhoneCallClass.
-type NotEmptyPhoneCall interface {
-	bin.Encoder
-	bin.Decoder
-	bin.BareEncoder
-	bin.BareDecoder
-	construct() PhoneCallClass
-
-	// TypeID returns type id in TL schema.
-	//
-	// See https://core.telegram.org/mtproto/TL-tl#remarks.
-	TypeID() uint32
-	// TypeName returns name of type in TL schema.
-	TypeName() string
-	// String implements fmt.Stringer.
-	String() string
-	// Zero returns true if current object has a zero value.
-	Zero() bool
-
-	// Is this a video call
-	GetVideo() (value bool)
-
-	// Call ID
-	GetID() (value int64)
-}
-
-// AsNotEmpty tries to map PhoneCallEmpty to NotEmptyPhoneCall.
-func (p *PhoneCallEmpty) AsNotEmpty() (NotEmptyPhoneCall, bool) {
-	value, ok := (PhoneCallClass(p)).(NotEmptyPhoneCall)
-	return value, ok
-}
-
-// AsNotEmpty tries to map PhoneCallWaiting to NotEmptyPhoneCall.
-func (p *PhoneCallWaiting) AsNotEmpty() (NotEmptyPhoneCall, bool) {
-	value, ok := (PhoneCallClass(p)).(NotEmptyPhoneCall)
-	return value, ok
-}
-
-// AsNotEmpty tries to map PhoneCallRequested to NotEmptyPhoneCall.
-func (p *PhoneCallRequested) AsNotEmpty() (NotEmptyPhoneCall, bool) {
-	value, ok := (PhoneCallClass(p)).(NotEmptyPhoneCall)
-	return value, ok
-}
-
-// AsNotEmpty tries to map PhoneCallAccepted to NotEmptyPhoneCall.
-func (p *PhoneCallAccepted) AsNotEmpty() (NotEmptyPhoneCall, bool) {
-	value, ok := (PhoneCallClass(p)).(NotEmptyPhoneCall)
-	return value, ok
-}
-
-// AsNotEmpty tries to map PhoneCall to NotEmptyPhoneCall.
-func (p *PhoneCall) AsNotEmpty() (NotEmptyPhoneCall, bool) {
-	value, ok := (PhoneCallClass(p)).(NotEmptyPhoneCall)
-	return value, ok
-}
-
-// AsNotEmpty tries to map PhoneCallDiscarded to NotEmptyPhoneCall.
-func (p *PhoneCallDiscarded) AsNotEmpty() (NotEmptyPhoneCall, bool) {
-	value, ok := (PhoneCallClass(p)).(NotEmptyPhoneCall)
-	return value, ok
 }
 
 // DecodePhoneCall implements binary de-serialization for PhoneCallClass.

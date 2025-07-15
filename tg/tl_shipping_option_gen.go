@@ -32,15 +32,12 @@ var (
 )
 
 // ShippingOption represents TL type `shippingOption#b6213cdf`.
-// Shipping option
-//
-// See https://core.telegram.org/constructor/shippingOption for reference.
 type ShippingOption struct {
-	// Option ID
+	// ID field of ShippingOption.
 	ID string
-	// Title
+	// Title field of ShippingOption.
 	Title string
-	// List of price portions
+	// Prices field of ShippingOption.
 	Prices []LabeledPrice
 }
 
@@ -79,17 +76,6 @@ func (s *ShippingOption) String() string {
 	}
 	type Alias ShippingOption
 	return fmt.Sprintf("ShippingOption%+v", Alias(*s))
-}
-
-// FillFrom fills ShippingOption from given interface.
-func (s *ShippingOption) FillFrom(from interface {
-	GetID() (value string)
-	GetTitle() (value string)
-	GetPrices() (value []LabeledPrice)
-}) {
-	s.ID = from.GetID()
-	s.Title = from.GetTitle()
-	s.Prices = from.GetPrices()
 }
 
 // TypeID returns type id in TL schema.

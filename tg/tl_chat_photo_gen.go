@@ -32,9 +32,6 @@ var (
 )
 
 // ChatPhotoEmpty represents TL type `chatPhotoEmpty#37c1011c`.
-// Group photo is not set.
-//
-// See https://core.telegram.org/constructor/chatPhotoEmpty for reference.
 type ChatPhotoEmpty struct {
 }
 
@@ -134,27 +131,18 @@ func (c *ChatPhotoEmpty) DecodeBare(b *bin.Buffer) error {
 }
 
 // ChatPhoto represents TL type `chatPhoto#1c6e1c11`.
-// Group profile photo.
-//
-// See https://core.telegram.org/constructor/chatPhoto for reference.
 type ChatPhoto struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of ChatPhoto.
 	Flags bin.Fields
-	// Whether the user has an animated profile picture
+	// HasVideo field of ChatPhoto.
 	HasVideo bool
-	// Photo ID
+	// PhotoID field of ChatPhoto.
 	PhotoID int64
-	// Stripped thumbnail¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/files#stripped-thumbnails
+	// StrippedThumb field of ChatPhoto.
 	//
 	// Use SetStrippedThumb and GetStrippedThumb helpers.
 	StrippedThumb []byte
-	// DC where this photo is stored
+	// DCID field of ChatPhoto.
 	DCID int
 }
 
@@ -204,22 +192,6 @@ func (c *ChatPhoto) String() string {
 	}
 	type Alias ChatPhoto
 	return fmt.Sprintf("ChatPhoto%+v", Alias(*c))
-}
-
-// FillFrom fills ChatPhoto from given interface.
-func (c *ChatPhoto) FillFrom(from interface {
-	GetHasVideo() (value bool)
-	GetPhotoID() (value int64)
-	GetStrippedThumb() (value []byte, ok bool)
-	GetDCID() (value int)
-}) {
-	c.HasVideo = from.GetHasVideo()
-	c.PhotoID = from.GetPhotoID()
-	if val, ok := from.GetStrippedThumb(); ok {
-		c.StrippedThumb = val
-	}
-
-	c.DCID = from.GetDCID()
 }
 
 // TypeID returns type id in TL schema.
@@ -407,8 +379,6 @@ const ChatPhotoClassName = "ChatPhoto"
 
 // ChatPhotoClass represents ChatPhoto generic type.
 //
-// See https://core.telegram.org/type/ChatPhoto for reference.
-//
 // Constructors:
 //   - [ChatPhotoEmpty]
 //   - [ChatPhoto]
@@ -441,19 +411,6 @@ type ChatPhotoClass interface {
 	String() string
 	// Zero returns true if current object has a zero value.
 	Zero() bool
-
-	// AsNotEmpty tries to map ChatPhotoClass to ChatPhoto.
-	AsNotEmpty() (*ChatPhoto, bool)
-}
-
-// AsNotEmpty tries to map ChatPhotoEmpty to ChatPhoto.
-func (c *ChatPhotoEmpty) AsNotEmpty() (*ChatPhoto, bool) {
-	return nil, false
-}
-
-// AsNotEmpty tries to map ChatPhoto to ChatPhoto.
-func (c *ChatPhoto) AsNotEmpty() (*ChatPhoto, bool) {
-	return c, true
 }
 
 // DecodeChatPhoto implements binary de-serialization for ChatPhotoClass.

@@ -32,13 +32,10 @@ var (
 )
 
 // MessagesSetHistoryTTLRequest represents TL type `messages.setHistoryTTL#b80e5fe4`.
-// Set maximum Time-To-Live of all messages in the specified chat
-//
-// See https://core.telegram.org/method/messages.setHistoryTTL for reference.
 type MessagesSetHistoryTTLRequest struct {
-	// The dialog
+	// Peer field of MessagesSetHistoryTTLRequest.
 	Peer InputPeerClass
-	// Automatically delete all messages sent in the chat after this many seconds
+	// Period field of MessagesSetHistoryTTLRequest.
 	Period int
 }
 
@@ -74,15 +71,6 @@ func (s *MessagesSetHistoryTTLRequest) String() string {
 	}
 	type Alias MessagesSetHistoryTTLRequest
 	return fmt.Sprintf("MessagesSetHistoryTTLRequest%+v", Alias(*s))
-}
-
-// FillFrom fills MessagesSetHistoryTTLRequest from given interface.
-func (s *MessagesSetHistoryTTLRequest) FillFrom(from interface {
-	GetPeer() (value InputPeerClass)
-	GetPeriod() (value int)
-}) {
-	s.Peer = from.GetPeer()
-	s.Period = from.GetPeriod()
 }
 
 // TypeID returns type id in TL schema.
@@ -194,15 +182,6 @@ func (s *MessagesSetHistoryTTLRequest) GetPeriod() (value int) {
 }
 
 // MessagesSetHistoryTTL invokes method messages.setHistoryTTL#b80e5fe4 returning error if any.
-// Set maximum Time-To-Live of all messages in the specified chat
-//
-// Possible errors:
-//
-//	400 CHAT_NOT_MODIFIED: No changes were made to chat information because the new information you passed is identical to the current information.
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//	400 TTL_PERIOD_INVALID: The specified TTL period is invalid.
-//
-// See https://core.telegram.org/method/messages.setHistoryTTL for reference.
 func (c *Client) MessagesSetHistoryTTL(ctx context.Context, request *MessagesSetHistoryTTLRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

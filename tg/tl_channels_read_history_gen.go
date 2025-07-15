@@ -32,19 +32,10 @@ var (
 )
 
 // ChannelsReadHistoryRequest represents TL type `channels.readHistory#cc104937`.
-// Mark channel/supergroup¹ history as read
-//
-// Links:
-//  1. https://core.telegram.org/api/channel
-//
-// See https://core.telegram.org/method/channels.readHistory for reference.
 type ChannelsReadHistoryRequest struct {
-	// Channel/supergroup¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/channel
+	// Channel field of ChannelsReadHistoryRequest.
 	Channel InputChannelClass
-	// ID of message up to which messages should be marked as read
+	// MaxID field of ChannelsReadHistoryRequest.
 	MaxID int
 }
 
@@ -80,15 +71,6 @@ func (r *ChannelsReadHistoryRequest) String() string {
 	}
 	type Alias ChannelsReadHistoryRequest
 	return fmt.Sprintf("ChannelsReadHistoryRequest%+v", Alias(*r))
-}
-
-// FillFrom fills ChannelsReadHistoryRequest from given interface.
-func (r *ChannelsReadHistoryRequest) FillFrom(from interface {
-	GetChannel() (value InputChannelClass)
-	GetMaxID() (value int)
-}) {
-	r.Channel = from.GetChannel()
-	r.MaxID = from.GetMaxID()
 }
 
 // TypeID returns type id in TL schema.
@@ -199,24 +181,7 @@ func (r *ChannelsReadHistoryRequest) GetMaxID() (value int) {
 	return r.MaxID
 }
 
-// GetChannelAsNotEmpty returns mapped value of Channel field.
-func (r *ChannelsReadHistoryRequest) GetChannelAsNotEmpty() (NotEmptyInputChannel, bool) {
-	return r.Channel.AsNotEmpty()
-}
-
 // ChannelsReadHistory invokes method channels.readHistory#cc104937 returning error if any.
-// Mark channel/supergroup¹ history as read
-//
-// Links:
-//  1. https://core.telegram.org/api/channel
-//
-// Possible errors:
-//
-//	400 CHANNEL_INVALID: The provided channel is invalid.
-//	406 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
-//	400 MSG_ID_INVALID: Invalid message ID provided.
-//
-// See https://core.telegram.org/method/channels.readHistory for reference.
 func (c *Client) ChannelsReadHistory(ctx context.Context, request *ChannelsReadHistoryRequest) (bool, error) {
 	var result BoolBox
 

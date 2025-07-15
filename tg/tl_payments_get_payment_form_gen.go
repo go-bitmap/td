@@ -32,21 +32,12 @@ var (
 )
 
 // PaymentsGetPaymentFormRequest represents TL type `payments.getPaymentForm#37148dbb`.
-// Get a payment form
-//
-// See https://core.telegram.org/method/payments.getPaymentForm for reference.
 type PaymentsGetPaymentFormRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of PaymentsGetPaymentFormRequest.
 	Flags bin.Fields
-	// Invoice
+	// Invoice field of PaymentsGetPaymentFormRequest.
 	Invoice InputInvoiceClass
-	// Theme parameters »¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/bots/webapps#theme-parameters
+	// ThemeParams field of PaymentsGetPaymentFormRequest.
 	//
 	// Use SetThemeParams and GetThemeParams helpers.
 	ThemeParams DataJSON
@@ -87,18 +78,6 @@ func (g *PaymentsGetPaymentFormRequest) String() string {
 	}
 	type Alias PaymentsGetPaymentFormRequest
 	return fmt.Sprintf("PaymentsGetPaymentFormRequest%+v", Alias(*g))
-}
-
-// FillFrom fills PaymentsGetPaymentFormRequest from given interface.
-func (g *PaymentsGetPaymentFormRequest) FillFrom(from interface {
-	GetInvoice() (value InputInvoiceClass)
-	GetThemeParams() (value DataJSON, ok bool)
-}) {
-	g.Invoice = from.GetInvoice()
-	if val, ok := from.GetThemeParams(); ok {
-		g.ThemeParams = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -239,19 +218,6 @@ func (g *PaymentsGetPaymentFormRequest) GetThemeParams() (value DataJSON, ok boo
 }
 
 // PaymentsGetPaymentForm invokes method payments.getPaymentForm#37148dbb returning error if any.
-// Get a payment form
-//
-// Possible errors:
-//
-//	400 BOOST_PEER_INVALID: The specified boost_peer is invalid.
-//	400 BOT_INVOICE_INVALID: The specified invoice is invalid.
-//	400 MESSAGE_ID_INVALID: The provided message id is invalid.
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//	400 SLUG_INVALID: The specified invoice slug is invalid.
-//	400 STARGIFT_INVALID: The passed inputInvoiceStarGift is invalid.
-//	400 UNTIL_DATE_INVALID: Invalid until date provided.
-//
-// See https://core.telegram.org/method/payments.getPaymentForm for reference.
 func (c *Client) PaymentsGetPaymentForm(ctx context.Context, request *PaymentsGetPaymentFormRequest) (PaymentsPaymentFormClass, error) {
 	var result PaymentsPaymentFormBox
 

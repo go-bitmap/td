@@ -32,12 +32,8 @@ var (
 )
 
 // AccountResetPasswordFailedWait represents TL type `account.resetPasswordFailedWait#e3779861`.
-// You recently requested a password reset that was canceled, please wait until the
-// specified date before requesting another reset.
-//
-// See https://core.telegram.org/constructor/account.resetPasswordFailedWait for reference.
 type AccountResetPasswordFailedWait struct {
-	// Wait until this date before requesting another reset.
+	// RetryDate field of AccountResetPasswordFailedWait.
 	RetryDate int
 }
 
@@ -75,13 +71,6 @@ func (r *AccountResetPasswordFailedWait) String() string {
 	}
 	type Alias AccountResetPasswordFailedWait
 	return fmt.Sprintf("AccountResetPasswordFailedWait%+v", Alias(*r))
-}
-
-// FillFrom fills AccountResetPasswordFailedWait from given interface.
-func (r *AccountResetPasswordFailedWait) FillFrom(from interface {
-	GetRetryDate() (value int)
-}) {
-	r.RetryDate = from.GetRetryDate()
 }
 
 // TypeID returns type id in TL schema.
@@ -168,12 +157,8 @@ func (r *AccountResetPasswordFailedWait) GetRetryDate() (value int) {
 }
 
 // AccountResetPasswordRequestedWait represents TL type `account.resetPasswordRequestedWait#e9effc7d`.
-// You successfully requested a password reset, please wait until the specified date
-// before finalizing the reset.
-//
-// See https://core.telegram.org/constructor/account.resetPasswordRequestedWait for reference.
 type AccountResetPasswordRequestedWait struct {
-	// Wait until this date before finalizing the reset.
+	// UntilDate field of AccountResetPasswordRequestedWait.
 	UntilDate int
 }
 
@@ -211,13 +196,6 @@ func (r *AccountResetPasswordRequestedWait) String() string {
 	}
 	type Alias AccountResetPasswordRequestedWait
 	return fmt.Sprintf("AccountResetPasswordRequestedWait%+v", Alias(*r))
-}
-
-// FillFrom fills AccountResetPasswordRequestedWait from given interface.
-func (r *AccountResetPasswordRequestedWait) FillFrom(from interface {
-	GetUntilDate() (value int)
-}) {
-	r.UntilDate = from.GetUntilDate()
 }
 
 // TypeID returns type id in TL schema.
@@ -304,9 +282,6 @@ func (r *AccountResetPasswordRequestedWait) GetUntilDate() (value int) {
 }
 
 // AccountResetPasswordOk represents TL type `account.resetPasswordOk#e926d63e`.
-// The 2FA password was reset successfully.
-//
-// See https://core.telegram.org/constructor/account.resetPasswordOk for reference.
 type AccountResetPasswordOk struct {
 }
 
@@ -409,8 +384,6 @@ func (r *AccountResetPasswordOk) DecodeBare(b *bin.Buffer) error {
 const AccountResetPasswordResultClassName = "account.ResetPasswordResult"
 
 // AccountResetPasswordResultClass represents account.ResetPasswordResult generic type.
-//
-// See https://core.telegram.org/type/account.ResetPasswordResult for reference.
 //
 // Constructors:
 //   - [AccountResetPasswordFailedWait]

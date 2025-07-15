@@ -32,14 +32,10 @@ var (
 )
 
 // HelpSetBotUpdatesStatusRequest represents TL type `help.setBotUpdatesStatus#ec22cfcd`.
-// Informs the server about the number of pending bot updates if they haven't been
-// processed for a long time; for bots only
-//
-// See https://core.telegram.org/method/help.setBotUpdatesStatus for reference.
 type HelpSetBotUpdatesStatusRequest struct {
-	// Number of pending updates
+	// PendingUpdatesCount field of HelpSetBotUpdatesStatusRequest.
 	PendingUpdatesCount int
-	// Error message, if present
+	// Message field of HelpSetBotUpdatesStatusRequest.
 	Message string
 }
 
@@ -75,15 +71,6 @@ func (s *HelpSetBotUpdatesStatusRequest) String() string {
 	}
 	type Alias HelpSetBotUpdatesStatusRequest
 	return fmt.Sprintf("HelpSetBotUpdatesStatusRequest%+v", Alias(*s))
-}
-
-// FillFrom fills HelpSetBotUpdatesStatusRequest from given interface.
-func (s *HelpSetBotUpdatesStatusRequest) FillFrom(from interface {
-	GetPendingUpdatesCount() (value int)
-	GetMessage() (value string)
-}) {
-	s.PendingUpdatesCount = from.GetPendingUpdatesCount()
-	s.Message = from.GetMessage()
 }
 
 // TypeID returns type id in TL schema.
@@ -190,15 +177,6 @@ func (s *HelpSetBotUpdatesStatusRequest) GetMessage() (value string) {
 }
 
 // HelpSetBotUpdatesStatus invokes method help.setBotUpdatesStatus#ec22cfcd returning error if any.
-// Informs the server about the number of pending bot updates if they haven't been
-// processed for a long time; for bots only
-//
-// Possible errors:
-//
-//	400 USER_BOT_REQUIRED: This method can only be called by a bot.
-//
-// See https://core.telegram.org/method/help.setBotUpdatesStatus for reference.
-// Can be used by bots.
 func (c *Client) HelpSetBotUpdatesStatus(ctx context.Context, request *HelpSetBotUpdatesStatusRequest) (bool, error) {
 	var result BoolBox
 

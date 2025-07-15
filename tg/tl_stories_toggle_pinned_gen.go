@@ -32,15 +32,12 @@ var (
 )
 
 // StoriesTogglePinnedRequest represents TL type `stories.togglePinned#9a75a1ef`.
-// Pin or unpin one or more stories
-//
-// See https://core.telegram.org/method/stories.togglePinned for reference.
 type StoriesTogglePinnedRequest struct {
-	// Peer where to pin or unpin stories
+	// Peer field of StoriesTogglePinnedRequest.
 	Peer InputPeerClass
-	// IDs of stories to pin or unpin
+	// ID field of StoriesTogglePinnedRequest.
 	ID []int
-	// Whether to pin or unpin the stories
+	// Pinned field of StoriesTogglePinnedRequest.
 	Pinned bool
 }
 
@@ -79,17 +76,6 @@ func (t *StoriesTogglePinnedRequest) String() string {
 	}
 	type Alias StoriesTogglePinnedRequest
 	return fmt.Sprintf("StoriesTogglePinnedRequest%+v", Alias(*t))
-}
-
-// FillFrom fills StoriesTogglePinnedRequest from given interface.
-func (t *StoriesTogglePinnedRequest) FillFrom(from interface {
-	GetPeer() (value InputPeerClass)
-	GetID() (value []int)
-	GetPinned() (value bool)
-}) {
-	t.Peer = from.GetPeer()
-	t.ID = from.GetID()
-	t.Pinned = from.GetPinned()
 }
 
 // TypeID returns type id in TL schema.
@@ -234,13 +220,6 @@ func (t *StoriesTogglePinnedRequest) GetPinned() (value bool) {
 }
 
 // StoriesTogglePinned invokes method stories.togglePinned#9a75a1ef returning error if any.
-// Pin or unpin one or more stories
-//
-// Possible errors:
-//
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//
-// See https://core.telegram.org/method/stories.togglePinned for reference.
 func (c *Client) StoriesTogglePinned(ctx context.Context, request *StoriesTogglePinnedRequest) ([]int, error) {
 	var result IntVector
 

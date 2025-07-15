@@ -32,17 +32,8 @@ var (
 )
 
 // AccountResolveBusinessChatLinkRequest represents TL type `account.resolveBusinessChatLink#5492e5ee`.
-// Resolve a business chat deep link »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/business#business-chat-links
-//
-// See https://core.telegram.org/method/account.resolveBusinessChatLink for reference.
 type AccountResolveBusinessChatLinkRequest struct {
-	// Slug of the link, obtained as specified here »¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/links#business-chat-links
+	// Slug field of AccountResolveBusinessChatLinkRequest.
 	Slug string
 }
 
@@ -75,13 +66,6 @@ func (r *AccountResolveBusinessChatLinkRequest) String() string {
 	}
 	type Alias AccountResolveBusinessChatLinkRequest
 	return fmt.Sprintf("AccountResolveBusinessChatLinkRequest%+v", Alias(*r))
-}
-
-// FillFrom fills AccountResolveBusinessChatLinkRequest from given interface.
-func (r *AccountResolveBusinessChatLinkRequest) FillFrom(from interface {
-	GetSlug() (value string)
-}) {
-	r.Slug = from.GetSlug()
 }
 
 // TypeID returns type id in TL schema.
@@ -168,17 +152,6 @@ func (r *AccountResolveBusinessChatLinkRequest) GetSlug() (value string) {
 }
 
 // AccountResolveBusinessChatLink invokes method account.resolveBusinessChatLink#5492e5ee returning error if any.
-// Resolve a business chat deep link »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/business#business-chat-links
-//
-// Possible errors:
-//
-//	400 CHATLINK_SLUG_EMPTY: The specified slug is empty.
-//	400 CHATLINK_SLUG_EXPIRED: The specified business chat link has expired.
-//
-// See https://core.telegram.org/method/account.resolveBusinessChatLink for reference.
 func (c *Client) AccountResolveBusinessChatLink(ctx context.Context, slug string) (*AccountResolvedBusinessChatLinks, error) {
 	var result AccountResolvedBusinessChatLinks
 

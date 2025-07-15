@@ -32,15 +32,12 @@ var (
 )
 
 // InvokeWithApnsSecretRequest represents TL type `invokeWithApnsSecret#dae54f8`.
-// Official clients only, invoke with Apple push verification.
-//
-// See https://core.telegram.org/constructor/invokeWithApnsSecret for reference.
 type InvokeWithApnsSecretRequest struct {
-	// Nonce.
+	// Nonce field of InvokeWithApnsSecretRequest.
 	Nonce string
-	// Secret.
+	// Secret field of InvokeWithApnsSecretRequest.
 	Secret string
-	// Query.
+	// Query field of InvokeWithApnsSecretRequest.
 	Query bin.Object
 }
 
@@ -79,17 +76,6 @@ func (i *InvokeWithApnsSecretRequest) String() string {
 	}
 	type Alias InvokeWithApnsSecretRequest
 	return fmt.Sprintf("InvokeWithApnsSecretRequest%+v", Alias(*i))
-}
-
-// FillFrom fills InvokeWithApnsSecretRequest from given interface.
-func (i *InvokeWithApnsSecretRequest) FillFrom(from interface {
-	GetNonce() (value string)
-	GetSecret() (value string)
-	GetQuery() (value bin.Object)
-}) {
-	i.Nonce = from.GetNonce()
-	i.Secret = from.GetSecret()
-	i.Query = from.GetQuery()
 }
 
 // TypeID returns type id in TL schema.

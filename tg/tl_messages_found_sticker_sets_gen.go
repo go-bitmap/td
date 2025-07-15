@@ -32,9 +32,6 @@ var (
 )
 
 // MessagesFoundStickerSetsNotModified represents TL type `messages.foundStickerSetsNotModified#d54b65d`.
-// No further results were found
-//
-// See https://core.telegram.org/constructor/messages.foundStickerSetsNotModified for reference.
 type MessagesFoundStickerSetsNotModified struct {
 }
 
@@ -134,16 +131,10 @@ func (f *MessagesFoundStickerSetsNotModified) DecodeBare(b *bin.Buffer) error {
 }
 
 // MessagesFoundStickerSets represents TL type `messages.foundStickerSets#8af09dd2`.
-// Found stickersets
-//
-// See https://core.telegram.org/constructor/messages.foundStickerSets for reference.
 type MessagesFoundStickerSets struct {
-	// Hash used for caching, for more info click here¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets#hash-generation
+	// Hash field of MessagesFoundStickerSets.
 	Hash int64
-	// Found stickersets
+	// Sets field of MessagesFoundStickerSets.
 	Sets []StickerSetCoveredClass
 }
 
@@ -184,15 +175,6 @@ func (f *MessagesFoundStickerSets) String() string {
 	}
 	type Alias MessagesFoundStickerSets
 	return fmt.Sprintf("MessagesFoundStickerSets%+v", Alias(*f))
-}
-
-// FillFrom fills MessagesFoundStickerSets from given interface.
-func (f *MessagesFoundStickerSets) FillFrom(from interface {
-	GetHash() (value int64)
-	GetSets() (value []StickerSetCoveredClass)
-}) {
-	f.Hash = from.GetHash()
-	f.Sets = from.GetSets()
 }
 
 // TypeID returns type id in TL schema.
@@ -316,17 +298,10 @@ func (f *MessagesFoundStickerSets) GetSets() (value []StickerSetCoveredClass) {
 	return f.Sets
 }
 
-// MapSets returns field Sets wrapped in StickerSetCoveredClassArray helper.
-func (f *MessagesFoundStickerSets) MapSets() (value StickerSetCoveredClassArray) {
-	return StickerSetCoveredClassArray(f.Sets)
-}
-
 // MessagesFoundStickerSetsClassName is schema name of MessagesFoundStickerSetsClass.
 const MessagesFoundStickerSetsClassName = "messages.FoundStickerSets"
 
 // MessagesFoundStickerSetsClass represents messages.FoundStickerSets generic type.
-//
-// See https://core.telegram.org/type/messages.FoundStickerSets for reference.
 //
 // Constructors:
 //   - [MessagesFoundStickerSetsNotModified]
@@ -360,19 +335,6 @@ type MessagesFoundStickerSetsClass interface {
 	String() string
 	// Zero returns true if current object has a zero value.
 	Zero() bool
-
-	// AsModified tries to map MessagesFoundStickerSetsClass to MessagesFoundStickerSets.
-	AsModified() (*MessagesFoundStickerSets, bool)
-}
-
-// AsModified tries to map MessagesFoundStickerSetsNotModified to MessagesFoundStickerSets.
-func (f *MessagesFoundStickerSetsNotModified) AsModified() (*MessagesFoundStickerSets, bool) {
-	return nil, false
-}
-
-// AsModified tries to map MessagesFoundStickerSets to MessagesFoundStickerSets.
-func (f *MessagesFoundStickerSets) AsModified() (*MessagesFoundStickerSets, bool) {
-	return f, true
 }
 
 // DecodeMessagesFoundStickerSets implements binary de-serialization for MessagesFoundStickerSetsClass.

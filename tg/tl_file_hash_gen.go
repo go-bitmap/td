@@ -32,8 +32,6 @@ var (
 )
 
 // FileHash represents TL type `fileHash#f39b035c`.
-//
-// See https://core.telegram.org/constructor/fileHash for reference.
 type FileHash struct {
 	// Offset field of FileHash.
 	Offset int64
@@ -78,17 +76,6 @@ func (f *FileHash) String() string {
 	}
 	type Alias FileHash
 	return fmt.Sprintf("FileHash%+v", Alias(*f))
-}
-
-// FillFrom fills FileHash from given interface.
-func (f *FileHash) FillFrom(from interface {
-	GetOffset() (value int64)
-	GetLimit() (value int)
-	GetHash() (value []byte)
-}) {
-	f.Offset = from.GetOffset()
-	f.Limit = from.GetLimit()
-	f.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.

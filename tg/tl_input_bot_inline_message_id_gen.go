@@ -32,16 +32,12 @@ var (
 )
 
 // InputBotInlineMessageID represents TL type `inputBotInlineMessageID#890c3d89`.
-// Represents a sent inline message from the perspective of a bot (legacy constructor)
-//
-// See https://core.telegram.org/constructor/inputBotInlineMessageID for reference.
 type InputBotInlineMessageID struct {
-	// DC ID to use when working with this inline message
+	// DCID field of InputBotInlineMessageID.
 	DCID int
-	// ID of message, contains both the (32-bit, legacy) owner ID and the message ID, used
-	// only for Bot API backwards compatibility with 32-bit user ID.
+	// ID field of InputBotInlineMessageID.
 	ID int64
-	// Access hash of message
+	// AccessHash field of InputBotInlineMessageID.
 	AccessHash int64
 }
 
@@ -85,17 +81,6 @@ func (i *InputBotInlineMessageID) String() string {
 	}
 	type Alias InputBotInlineMessageID
 	return fmt.Sprintf("InputBotInlineMessageID%+v", Alias(*i))
-}
-
-// FillFrom fills InputBotInlineMessageID from given interface.
-func (i *InputBotInlineMessageID) FillFrom(from interface {
-	GetDCID() (value int)
-	GetID() (value int64)
-	GetAccessHash() (value int64)
-}) {
-	i.DCID = from.GetDCID()
-	i.ID = from.GetID()
-	i.AccessHash = from.GetAccessHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -222,17 +207,14 @@ func (i *InputBotInlineMessageID) GetAccessHash() (value int64) {
 }
 
 // InputBotInlineMessageID64 represents TL type `inputBotInlineMessageID64#b6d915d7`.
-// Represents a sent inline message from the perspective of a bot
-//
-// See https://core.telegram.org/constructor/inputBotInlineMessageID64 for reference.
 type InputBotInlineMessageID64 struct {
-	// DC ID to use when working with this inline message
+	// DCID field of InputBotInlineMessageID64.
 	DCID int
-	// ID of the owner of this message
+	// OwnerID field of InputBotInlineMessageID64.
 	OwnerID int64
-	// ID of message
+	// ID field of InputBotInlineMessageID64.
 	ID int
-	// Access hash of message
+	// AccessHash field of InputBotInlineMessageID64.
 	AccessHash int64
 }
 
@@ -279,19 +261,6 @@ func (i *InputBotInlineMessageID64) String() string {
 	}
 	type Alias InputBotInlineMessageID64
 	return fmt.Sprintf("InputBotInlineMessageID64%+v", Alias(*i))
-}
-
-// FillFrom fills InputBotInlineMessageID64 from given interface.
-func (i *InputBotInlineMessageID64) FillFrom(from interface {
-	GetDCID() (value int)
-	GetOwnerID() (value int64)
-	GetID() (value int)
-	GetAccessHash() (value int64)
-}) {
-	i.DCID = from.GetDCID()
-	i.OwnerID = from.GetOwnerID()
-	i.ID = from.GetID()
-	i.AccessHash = from.GetAccessHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -442,8 +411,6 @@ const InputBotInlineMessageIDClassName = "InputBotInlineMessageID"
 
 // InputBotInlineMessageIDClass represents InputBotInlineMessageID generic type.
 //
-// See https://core.telegram.org/type/InputBotInlineMessageID for reference.
-//
 // Constructors:
 //   - [InputBotInlineMessageID]
 //   - [InputBotInlineMessageID64]
@@ -477,10 +444,9 @@ type InputBotInlineMessageIDClass interface {
 	// Zero returns true if current object has a zero value.
 	Zero() bool
 
-	// DC ID to use when working with this inline message
+	// DCID field of InputBotInlineMessageID.
 	GetDCID() (value int)
-
-	// Access hash of message
+	// AccessHash field of InputBotInlineMessageID.
 	GetAccessHash() (value int64)
 }
 

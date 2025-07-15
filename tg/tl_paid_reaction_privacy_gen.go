@@ -32,8 +32,6 @@ var (
 )
 
 // PaidReactionPrivacyDefault represents TL type `paidReactionPrivacyDefault#206ad49e`.
-//
-// See https://core.telegram.org/constructor/paidReactionPrivacyDefault for reference.
 type PaidReactionPrivacyDefault struct {
 }
 
@@ -133,8 +131,6 @@ func (p *PaidReactionPrivacyDefault) DecodeBare(b *bin.Buffer) error {
 }
 
 // PaidReactionPrivacyAnonymous represents TL type `paidReactionPrivacyAnonymous#1f0c1ad9`.
-//
-// See https://core.telegram.org/constructor/paidReactionPrivacyAnonymous for reference.
 type PaidReactionPrivacyAnonymous struct {
 }
 
@@ -234,8 +230,6 @@ func (p *PaidReactionPrivacyAnonymous) DecodeBare(b *bin.Buffer) error {
 }
 
 // PaidReactionPrivacyPeer represents TL type `paidReactionPrivacyPeer#dc6cfcf0`.
-//
-// See https://core.telegram.org/constructor/paidReactionPrivacyPeer for reference.
 type PaidReactionPrivacyPeer struct {
 	// Peer field of PaidReactionPrivacyPeer.
 	Peer InputPeerClass
@@ -275,13 +269,6 @@ func (p *PaidReactionPrivacyPeer) String() string {
 	}
 	type Alias PaidReactionPrivacyPeer
 	return fmt.Sprintf("PaidReactionPrivacyPeer%+v", Alias(*p))
-}
-
-// FillFrom fills PaidReactionPrivacyPeer from given interface.
-func (p *PaidReactionPrivacyPeer) FillFrom(from interface {
-	GetPeer() (value InputPeerClass)
-}) {
-	p.Peer = from.GetPeer()
 }
 
 // TypeID returns type id in TL schema.
@@ -376,8 +363,6 @@ func (p *PaidReactionPrivacyPeer) GetPeer() (value InputPeerClass) {
 const PaidReactionPrivacyClassName = "PaidReactionPrivacy"
 
 // PaidReactionPrivacyClass represents PaidReactionPrivacy generic type.
-//
-// See https://core.telegram.org/type/PaidReactionPrivacy for reference.
 //
 // Constructors:
 //   - [PaidReactionPrivacyDefault]

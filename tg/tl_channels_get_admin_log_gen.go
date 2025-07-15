@@ -32,44 +32,26 @@ var (
 )
 
 // ChannelsGetAdminLogRequest represents TL type `channels.getAdminLog#33ddf480`.
-// Get the admin log of a channel/supergroup¹
-//
-// Links:
-//  1. https://core.telegram.org/api/channel
-//
-// See https://core.telegram.org/method/channels.getAdminLog for reference.
 type ChannelsGetAdminLogRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of ChannelsGetAdminLogRequest.
 	Flags bin.Fields
-	// Channel
+	// Channel field of ChannelsGetAdminLogRequest.
 	Channel InputChannelClass
-	// Search query, can be empty
+	// Q field of ChannelsGetAdminLogRequest.
 	Q string
-	// Event filter
+	// EventsFilter field of ChannelsGetAdminLogRequest.
 	//
 	// Use SetEventsFilter and GetEventsFilter helpers.
 	EventsFilter ChannelAdminLogEventsFilter
-	// Only show events from these admins
+	// Admins field of ChannelsGetAdminLogRequest.
 	//
 	// Use SetAdmins and GetAdmins helpers.
 	Admins []InputUserClass
-	// Maximum ID of message to return (see pagination¹)
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets
+	// MaxID field of ChannelsGetAdminLogRequest.
 	MaxID int64
-	// Minimum ID of message to return (see pagination¹)
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets
+	// MinID field of ChannelsGetAdminLogRequest.
 	MinID int64
-	// Maximum number of results to return, see pagination¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets
+	// Limit field of ChannelsGetAdminLogRequest.
 	Limit int
 }
 
@@ -123,31 +105,6 @@ func (g *ChannelsGetAdminLogRequest) String() string {
 	}
 	type Alias ChannelsGetAdminLogRequest
 	return fmt.Sprintf("ChannelsGetAdminLogRequest%+v", Alias(*g))
-}
-
-// FillFrom fills ChannelsGetAdminLogRequest from given interface.
-func (g *ChannelsGetAdminLogRequest) FillFrom(from interface {
-	GetChannel() (value InputChannelClass)
-	GetQ() (value string)
-	GetEventsFilter() (value ChannelAdminLogEventsFilter, ok bool)
-	GetAdmins() (value []InputUserClass, ok bool)
-	GetMaxID() (value int64)
-	GetMinID() (value int64)
-	GetLimit() (value int)
-}) {
-	g.Channel = from.GetChannel()
-	g.Q = from.GetQ()
-	if val, ok := from.GetEventsFilter(); ok {
-		g.EventsFilter = val
-	}
-
-	if val, ok := from.GetAdmins(); ok {
-		g.Admins = val
-	}
-
-	g.MaxID = from.GetMaxID()
-	g.MinID = from.GetMinID()
-	g.Limit = from.GetLimit()
 }
 
 // TypeID returns type id in TL schema.
@@ -421,34 +378,7 @@ func (g *ChannelsGetAdminLogRequest) GetLimit() (value int) {
 	return g.Limit
 }
 
-// GetChannelAsNotEmpty returns mapped value of Channel field.
-func (g *ChannelsGetAdminLogRequest) GetChannelAsNotEmpty() (NotEmptyInputChannel, bool) {
-	return g.Channel.AsNotEmpty()
-}
-
-// MapAdmins returns field Admins wrapped in InputUserClassArray helper.
-func (g *ChannelsGetAdminLogRequest) MapAdmins() (value InputUserClassArray, ok bool) {
-	if !g.Flags.Has(1) {
-		return value, false
-	}
-	return InputUserClassArray(g.Admins), true
-}
-
 // ChannelsGetAdminLog invokes method channels.getAdminLog#33ddf480 returning error if any.
-// Get the admin log of a channel/supergroup¹
-//
-// Links:
-//  1. https://core.telegram.org/api/channel
-//
-// Possible errors:
-//
-//	400 CHANNEL_INVALID: The provided channel is invalid.
-//	406 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
-//	403 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
-//	403 CHAT_WRITE_FORBIDDEN: You can't write in this chat.
-//	400 MSG_ID_INVALID: Invalid message ID provided.
-//
-// See https://core.telegram.org/method/channels.getAdminLog for reference.
 func (c *Client) ChannelsGetAdminLog(ctx context.Context, request *ChannelsGetAdminLogRequest) (*ChannelsAdminLogResults, error) {
 	var result ChannelsAdminLogResults
 

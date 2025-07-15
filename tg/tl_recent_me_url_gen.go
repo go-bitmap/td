@@ -32,11 +32,8 @@ var (
 )
 
 // RecentMeURLUnknown represents TL type `recentMeUrlUnknown#46e1d13d`.
-// Unknown t.me url
-//
-// See https://core.telegram.org/constructor/recentMeUrlUnknown for reference.
 type RecentMeURLUnknown struct {
-	// URL
+	// URL field of RecentMeURLUnknown.
 	URL string
 }
 
@@ -74,13 +71,6 @@ func (r *RecentMeURLUnknown) String() string {
 	}
 	type Alias RecentMeURLUnknown
 	return fmt.Sprintf("RecentMeURLUnknown%+v", Alias(*r))
-}
-
-// FillFrom fills RecentMeURLUnknown from given interface.
-func (r *RecentMeURLUnknown) FillFrom(from interface {
-	GetURL() (value string)
-}) {
-	r.URL = from.GetURL()
 }
 
 // TypeID returns type id in TL schema.
@@ -167,13 +157,10 @@ func (r *RecentMeURLUnknown) GetURL() (value string) {
 }
 
 // RecentMeURLUser represents TL type `recentMeUrlUser#b92c09e2`.
-// Recent t.me link to a user
-//
-// See https://core.telegram.org/constructor/recentMeUrlUser for reference.
 type RecentMeURLUser struct {
-	// URL
+	// URL field of RecentMeURLUser.
 	URL string
-	// User ID
+	// UserID field of RecentMeURLUser.
 	UserID int64
 }
 
@@ -214,15 +201,6 @@ func (r *RecentMeURLUser) String() string {
 	}
 	type Alias RecentMeURLUser
 	return fmt.Sprintf("RecentMeURLUser%+v", Alias(*r))
-}
-
-// FillFrom fills RecentMeURLUser from given interface.
-func (r *RecentMeURLUser) FillFrom(from interface {
-	GetURL() (value string)
-	GetUserID() (value int64)
-}) {
-	r.URL = from.GetURL()
-	r.UserID = from.GetUserID()
 }
 
 // TypeID returns type id in TL schema.
@@ -329,13 +307,10 @@ func (r *RecentMeURLUser) GetUserID() (value int64) {
 }
 
 // RecentMeURLChat represents TL type `recentMeUrlChat#b2da71d2`.
-// Recent t.me link to a chat
-//
-// See https://core.telegram.org/constructor/recentMeUrlChat for reference.
 type RecentMeURLChat struct {
-	// t.me URL
+	// URL field of RecentMeURLChat.
 	URL string
-	// Chat ID
+	// ChatID field of RecentMeURLChat.
 	ChatID int64
 }
 
@@ -376,15 +351,6 @@ func (r *RecentMeURLChat) String() string {
 	}
 	type Alias RecentMeURLChat
 	return fmt.Sprintf("RecentMeURLChat%+v", Alias(*r))
-}
-
-// FillFrom fills RecentMeURLChat from given interface.
-func (r *RecentMeURLChat) FillFrom(from interface {
-	GetURL() (value string)
-	GetChatID() (value int64)
-}) {
-	r.URL = from.GetURL()
-	r.ChatID = from.GetChatID()
 }
 
 // TypeID returns type id in TL schema.
@@ -491,13 +457,10 @@ func (r *RecentMeURLChat) GetChatID() (value int64) {
 }
 
 // RecentMeURLChatInvite represents TL type `recentMeUrlChatInvite#eb49081d`.
-// Recent t.me invite link to a chat
-//
-// See https://core.telegram.org/constructor/recentMeUrlChatInvite for reference.
 type RecentMeURLChatInvite struct {
-	// t.me URL
+	// URL field of RecentMeURLChatInvite.
 	URL string
-	// Chat invitation
+	// ChatInvite field of RecentMeURLChatInvite.
 	ChatInvite ChatInviteClass
 }
 
@@ -538,15 +501,6 @@ func (r *RecentMeURLChatInvite) String() string {
 	}
 	type Alias RecentMeURLChatInvite
 	return fmt.Sprintf("RecentMeURLChatInvite%+v", Alias(*r))
-}
-
-// FillFrom fills RecentMeURLChatInvite from given interface.
-func (r *RecentMeURLChatInvite) FillFrom(from interface {
-	GetURL() (value string)
-	GetChatInvite() (value ChatInviteClass)
-}) {
-	r.URL = from.GetURL()
-	r.ChatInvite = from.GetChatInvite()
 }
 
 // TypeID returns type id in TL schema.
@@ -658,13 +612,10 @@ func (r *RecentMeURLChatInvite) GetChatInvite() (value ChatInviteClass) {
 }
 
 // RecentMeURLStickerSet represents TL type `recentMeUrlStickerSet#bc0a57dc`.
-// Recent t.me stickerset installation URL
-//
-// See https://core.telegram.org/constructor/recentMeUrlStickerSet for reference.
 type RecentMeURLStickerSet struct {
-	// t.me URL
+	// URL field of RecentMeURLStickerSet.
 	URL string
-	// Stickerset
+	// Set field of RecentMeURLStickerSet.
 	Set StickerSetCoveredClass
 }
 
@@ -705,15 +656,6 @@ func (r *RecentMeURLStickerSet) String() string {
 	}
 	type Alias RecentMeURLStickerSet
 	return fmt.Sprintf("RecentMeURLStickerSet%+v", Alias(*r))
-}
-
-// FillFrom fills RecentMeURLStickerSet from given interface.
-func (r *RecentMeURLStickerSet) FillFrom(from interface {
-	GetURL() (value string)
-	GetSet() (value StickerSetCoveredClass)
-}) {
-	r.URL = from.GetURL()
-	r.Set = from.GetSet()
 }
 
 // TypeID returns type id in TL schema.
@@ -829,8 +771,6 @@ const RecentMeURLClassName = "RecentMeUrl"
 
 // RecentMeURLClass represents RecentMeUrl generic type.
 //
-// See https://core.telegram.org/type/RecentMeUrl for reference.
-//
 // Constructors:
 //   - [RecentMeURLUnknown]
 //   - [RecentMeURLUser]
@@ -870,7 +810,7 @@ type RecentMeURLClass interface {
 	// Zero returns true if current object has a zero value.
 	Zero() bool
 
-	// URL
+	// URL field of RecentMeURLUnknown.
 	GetURL() (value string)
 }
 

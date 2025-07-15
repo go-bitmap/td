@@ -32,21 +32,12 @@ var (
 )
 
 // ContactsResolveUsernameRequest represents TL type `contacts.resolveUsername#725afbbc`.
-// Resolve a @username to get peer info
-//
-// See https://core.telegram.org/method/contacts.resolveUsername for reference.
 type ContactsResolveUsernameRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of ContactsResolveUsernameRequest.
 	Flags bin.Fields
-	// @username to resolve
+	// Username field of ContactsResolveUsernameRequest.
 	Username string
-	// Referrer ID from referral links »¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/links#referral-links
+	// Referer field of ContactsResolveUsernameRequest.
 	//
 	// Use SetReferer and GetReferer helpers.
 	Referer string
@@ -87,18 +78,6 @@ func (r *ContactsResolveUsernameRequest) String() string {
 	}
 	type Alias ContactsResolveUsernameRequest
 	return fmt.Sprintf("ContactsResolveUsernameRequest%+v", Alias(*r))
-}
-
-// FillFrom fills ContactsResolveUsernameRequest from given interface.
-func (r *ContactsResolveUsernameRequest) FillFrom(from interface {
-	GetUsername() (value string)
-	GetReferer() (value string, ok bool)
-}) {
-	r.Username = from.GetUsername()
-	if val, ok := from.GetReferer(); ok {
-		r.Referer = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -234,16 +213,6 @@ func (r *ContactsResolveUsernameRequest) GetReferer() (value string, ok bool) {
 }
 
 // ContactsResolveUsername invokes method contacts.resolveUsername#725afbbc returning error if any.
-// Resolve a @username to get peer info
-//
-// Possible errors:
-//
-//	400 CONNECTION_LAYER_INVALID: Layer invalid.
-//	400 USERNAME_INVALID: The provided username is not valid.
-//	400 USERNAME_NOT_OCCUPIED: The provided username is not occupied.
-//
-// See https://core.telegram.org/method/contacts.resolveUsername for reference.
-// Can be used by bots.
 func (c *Client) ContactsResolveUsername(ctx context.Context, request *ContactsResolveUsernameRequest) (*ContactsResolvedPeer, error) {
 	var result ContactsResolvedPeer
 

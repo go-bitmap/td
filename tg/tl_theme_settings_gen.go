@@ -32,37 +32,24 @@ var (
 )
 
 // ThemeSettings represents TL type `themeSettings#fa58b6d4`.
-// Theme settings
-//
-// See https://core.telegram.org/constructor/themeSettings for reference.
 type ThemeSettings struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of ThemeSettings.
 	Flags bin.Fields
-	// If set, the freeform gradient fill needs to be animated on every sent message.
+	// MessageColorsAnimated field of ThemeSettings.
 	MessageColorsAnimated bool
-	// Base theme
+	// BaseTheme field of ThemeSettings.
 	BaseTheme BaseThemeClass
-	// Accent color, ARGB format
+	// AccentColor field of ThemeSettings.
 	AccentColor int
-	// Accent color of outgoing messages in ARGB format
+	// OutboxAccentColor field of ThemeSettings.
 	//
 	// Use SetOutboxAccentColor and GetOutboxAccentColor helpers.
 	OutboxAccentColor int
-	// The fill to be used as a background for outgoing messages, in RGB24 format. If just
-	// one or two equal colors are provided, describes a solid fill of a background. If two
-	// different colors are provided, describes the top and bottom colors of a 0-degree
-	// gradient.If three or four colors are provided, describes a freeform gradient fill of a
-	// background.
+	// MessageColors field of ThemeSettings.
 	//
 	// Use SetMessageColors and GetMessageColors helpers.
 	MessageColors []int
-	// Wallpaper¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/wallpapers
+	// Wallpaper field of ThemeSettings.
 	//
 	// Use SetWallpaper and GetWallpaper helpers.
 	Wallpaper WallPaperClass
@@ -115,32 +102,6 @@ func (t *ThemeSettings) String() string {
 	}
 	type Alias ThemeSettings
 	return fmt.Sprintf("ThemeSettings%+v", Alias(*t))
-}
-
-// FillFrom fills ThemeSettings from given interface.
-func (t *ThemeSettings) FillFrom(from interface {
-	GetMessageColorsAnimated() (value bool)
-	GetBaseTheme() (value BaseThemeClass)
-	GetAccentColor() (value int)
-	GetOutboxAccentColor() (value int, ok bool)
-	GetMessageColors() (value []int, ok bool)
-	GetWallpaper() (value WallPaperClass, ok bool)
-}) {
-	t.MessageColorsAnimated = from.GetMessageColorsAnimated()
-	t.BaseTheme = from.GetBaseTheme()
-	t.AccentColor = from.GetAccentColor()
-	if val, ok := from.GetOutboxAccentColor(); ok {
-		t.OutboxAccentColor = val
-	}
-
-	if val, ok := from.GetMessageColors(); ok {
-		t.MessageColors = val
-	}
-
-	if val, ok := from.GetWallpaper(); ok {
-		t.Wallpaper = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.

@@ -32,24 +32,10 @@ var (
 )
 
 // ChatlistsJoinChatlistInviteRequest represents TL type `chatlists.joinChatlistInvite#a6b1e39a`.
-// Import a chat folder deep link »¹, joining some or all the chats in the folder.
-//
-// Links:
-//  1. https://core.telegram.org/api/links#chat-folder-links
-//
-// See https://core.telegram.org/method/chatlists.joinChatlistInvite for reference.
 type ChatlistsJoinChatlistInviteRequest struct {
-	// slug obtained from a chat folder deep link »¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/links#chat-folder-links
+	// Slug field of ChatlistsJoinChatlistInviteRequest.
 	Slug string
-	// List of new chats to join, fetched using chatlists.checkChatlistInvite¹ and filtered
-	// as specified in the documentation »².
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/chatlists.checkChatlistInvite
-	//  2) https://core.telegram.org/api/folders#shared-folders
+	// Peers field of ChatlistsJoinChatlistInviteRequest.
 	Peers []InputPeerClass
 }
 
@@ -85,15 +71,6 @@ func (j *ChatlistsJoinChatlistInviteRequest) String() string {
 	}
 	type Alias ChatlistsJoinChatlistInviteRequest
 	return fmt.Sprintf("ChatlistsJoinChatlistInviteRequest%+v", Alias(*j))
-}
-
-// FillFrom fills ChatlistsJoinChatlistInviteRequest from given interface.
-func (j *ChatlistsJoinChatlistInviteRequest) FillFrom(from interface {
-	GetSlug() (value string)
-	GetPeers() (value []InputPeerClass)
-}) {
-	j.Slug = from.GetSlug()
-	j.Peers = from.GetPeers()
 }
 
 // TypeID returns type id in TL schema.
@@ -217,24 +194,7 @@ func (j *ChatlistsJoinChatlistInviteRequest) GetPeers() (value []InputPeerClass)
 	return j.Peers
 }
 
-// MapPeers returns field Peers wrapped in InputPeerClassArray helper.
-func (j *ChatlistsJoinChatlistInviteRequest) MapPeers() (value InputPeerClassArray) {
-	return InputPeerClassArray(j.Peers)
-}
-
 // ChatlistsJoinChatlistInvite invokes method chatlists.joinChatlistInvite#a6b1e39a returning error if any.
-// Import a chat folder deep link »¹, joining some or all the chats in the folder.
-//
-// Links:
-//  1. https://core.telegram.org/api/links#chat-folder-links
-//
-// Possible errors:
-//
-//	400 FILTER_INCLUDE_EMPTY: The include_peers vector of the filter is empty.
-//	400 INVITE_SLUG_EMPTY: The specified invite slug is empty.
-//	400 INVITE_SLUG_EXPIRED: The specified chat folder link has expired.
-//
-// See https://core.telegram.org/method/chatlists.joinChatlistInvite for reference.
 func (c *Client) ChatlistsJoinChatlistInvite(ctx context.Context, request *ChatlistsJoinChatlistInviteRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

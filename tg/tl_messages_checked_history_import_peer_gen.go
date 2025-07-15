@@ -32,18 +32,8 @@ var (
 )
 
 // MessagesCheckedHistoryImportPeer represents TL type `messages.checkedHistoryImportPeer#a24de717`.
-// Contains a confirmation text to be shown to the user, upon importing chat history,
-// click here for more info »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/import
-//
-// See https://core.telegram.org/constructor/messages.checkedHistoryImportPeer for reference.
 type MessagesCheckedHistoryImportPeer struct {
-	// A confirmation text to be shown to the user, upon importing chat history »¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/import
+	// ConfirmText field of MessagesCheckedHistoryImportPeer.
 	ConfirmText string
 }
 
@@ -76,13 +66,6 @@ func (c *MessagesCheckedHistoryImportPeer) String() string {
 	}
 	type Alias MessagesCheckedHistoryImportPeer
 	return fmt.Sprintf("MessagesCheckedHistoryImportPeer%+v", Alias(*c))
-}
-
-// FillFrom fills MessagesCheckedHistoryImportPeer from given interface.
-func (c *MessagesCheckedHistoryImportPeer) FillFrom(from interface {
-	GetConfirmText() (value string)
-}) {
-	c.ConfirmText = from.GetConfirmText()
 }
 
 // TypeID returns type id in TL schema.

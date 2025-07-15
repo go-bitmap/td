@@ -32,13 +32,10 @@ var (
 )
 
 // InputPhoneCall represents TL type `inputPhoneCall#1e36fded`.
-// Phone call
-//
-// See https://core.telegram.org/constructor/inputPhoneCall for reference.
 type InputPhoneCall struct {
-	// Call ID
+	// ID field of InputPhoneCall.
 	ID int64
-	// Access hash
+	// AccessHash field of InputPhoneCall.
 	AccessHash int64
 }
 
@@ -74,15 +71,6 @@ func (i *InputPhoneCall) String() string {
 	}
 	type Alias InputPhoneCall
 	return fmt.Sprintf("InputPhoneCall%+v", Alias(*i))
-}
-
-// FillFrom fills InputPhoneCall from given interface.
-func (i *InputPhoneCall) FillFrom(from interface {
-	GetID() (value int64)
-	GetAccessHash() (value int64)
-}) {
-	i.ID = from.GetID()
-	i.AccessHash = from.GetAccessHash()
 }
 
 // TypeID returns type id in TL schema.

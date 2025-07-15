@@ -32,29 +32,20 @@ var (
 )
 
 // StoriesStories represents TL type `stories.stories#63c3dd0a`.
-// List of stories¹
-//
-// Links:
-//  1. https://core.telegram.org/api/stories#pinned-or-archived-stories
-//
-// See https://core.telegram.org/constructor/stories.stories for reference.
 type StoriesStories struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of StoriesStories.
 	Flags bin.Fields
-	// Total number of stories that can be fetched
+	// Count field of StoriesStories.
 	Count int
-	// Stories
+	// Stories field of StoriesStories.
 	Stories []StoryItemClass
-	// IDs of pinned stories.
+	// PinnedToTop field of StoriesStories.
 	//
 	// Use SetPinnedToTop and GetPinnedToTop helpers.
 	PinnedToTop []int
-	// Mentioned chats
+	// Chats field of StoriesStories.
 	Chats []ChatClass
-	// Mentioned users
+	// Users field of StoriesStories.
 	Users []UserClass
 }
 
@@ -102,24 +93,6 @@ func (s *StoriesStories) String() string {
 	}
 	type Alias StoriesStories
 	return fmt.Sprintf("StoriesStories%+v", Alias(*s))
-}
-
-// FillFrom fills StoriesStories from given interface.
-func (s *StoriesStories) FillFrom(from interface {
-	GetCount() (value int)
-	GetStories() (value []StoryItemClass)
-	GetPinnedToTop() (value []int, ok bool)
-	GetChats() (value []ChatClass)
-	GetUsers() (value []UserClass)
-}) {
-	s.Count = from.GetCount()
-	s.Stories = from.GetStories()
-	if val, ok := from.GetPinnedToTop(); ok {
-		s.PinnedToTop = val
-	}
-
-	s.Chats = from.GetChats()
-	s.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -379,19 +352,4 @@ func (s *StoriesStories) GetUsers() (value []UserClass) {
 		return
 	}
 	return s.Users
-}
-
-// MapStories returns field Stories wrapped in StoryItemClassArray helper.
-func (s *StoriesStories) MapStories() (value StoryItemClassArray) {
-	return StoryItemClassArray(s.Stories)
-}
-
-// MapChats returns field Chats wrapped in ChatClassArray helper.
-func (s *StoriesStories) MapChats() (value ChatClassArray) {
-	return ChatClassArray(s.Chats)
-}
-
-// MapUsers returns field Users wrapped in UserClassArray helper.
-func (s *StoriesStories) MapUsers() (value UserClassArray) {
-	return UserClassArray(s.Users)
 }

@@ -32,9 +32,6 @@ var (
 )
 
 // InputGeoPointEmpty represents TL type `inputGeoPointEmpty#e4c123d6`.
-// Empty GeoPoint constructor.
-//
-// See https://core.telegram.org/constructor/inputGeoPointEmpty for reference.
 type InputGeoPointEmpty struct {
 }
 
@@ -134,20 +131,14 @@ func (i *InputGeoPointEmpty) DecodeBare(b *bin.Buffer) error {
 }
 
 // InputGeoPoint represents TL type `inputGeoPoint#48222faf`.
-// Defines a GeoPoint by its coordinates.
-//
-// See https://core.telegram.org/constructor/inputGeoPoint for reference.
 type InputGeoPoint struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of InputGeoPoint.
 	Flags bin.Fields
-	// Latitude
+	// Lat field of InputGeoPoint.
 	Lat float64
-	// Longitude
+	// Long field of InputGeoPoint.
 	Long float64
-	// The estimated horizontal accuracy of the location, in meters; as defined by the sender.
+	// AccuracyRadius field of InputGeoPoint.
 	//
 	// Use SetAccuracyRadius and GetAccuracyRadius helpers.
 	AccuracyRadius int
@@ -196,20 +187,6 @@ func (i *InputGeoPoint) String() string {
 	}
 	type Alias InputGeoPoint
 	return fmt.Sprintf("InputGeoPoint%+v", Alias(*i))
-}
-
-// FillFrom fills InputGeoPoint from given interface.
-func (i *InputGeoPoint) FillFrom(from interface {
-	GetLat() (value float64)
-	GetLong() (value float64)
-	GetAccuracyRadius() (value int, ok bool)
-}) {
-	i.Lat = from.GetLat()
-	i.Long = from.GetLong()
-	if val, ok := from.GetAccuracyRadius(); ok {
-		i.AccuracyRadius = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -369,8 +346,6 @@ const InputGeoPointClassName = "InputGeoPoint"
 
 // InputGeoPointClass represents InputGeoPoint generic type.
 //
-// See https://core.telegram.org/type/InputGeoPoint for reference.
-//
 // Constructors:
 //   - [InputGeoPointEmpty]
 //   - [InputGeoPoint]
@@ -403,19 +378,6 @@ type InputGeoPointClass interface {
 	String() string
 	// Zero returns true if current object has a zero value.
 	Zero() bool
-
-	// AsNotEmpty tries to map InputGeoPointClass to InputGeoPoint.
-	AsNotEmpty() (*InputGeoPoint, bool)
-}
-
-// AsNotEmpty tries to map InputGeoPointEmpty to InputGeoPoint.
-func (i *InputGeoPointEmpty) AsNotEmpty() (*InputGeoPoint, bool) {
-	return nil, false
-}
-
-// AsNotEmpty tries to map InputGeoPoint to InputGeoPoint.
-func (i *InputGeoPoint) AsNotEmpty() (*InputGeoPoint, bool) {
-	return i, true
 }
 
 // DecodeInputGeoPoint implements binary de-serialization for InputGeoPointClass.

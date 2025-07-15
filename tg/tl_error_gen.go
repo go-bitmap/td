@@ -32,13 +32,10 @@ var (
 )
 
 // Error represents TL type `error#c4b9f9bb`.
-// Error.
-//
-// See https://core.telegram.org/constructor/error for reference.
 type Error struct {
-	// Error code
+	// Code field of Error.
 	Code int
-	// Message
+	// Text field of Error.
 	Text string
 }
 
@@ -74,15 +71,6 @@ func (e *Error) String() string {
 	}
 	type Alias Error
 	return fmt.Sprintf("Error%+v", Alias(*e))
-}
-
-// FillFrom fills Error from given interface.
-func (e *Error) FillFrom(from interface {
-	GetCode() (value int)
-	GetText() (value string)
-}) {
-	e.Code = from.GetCode()
-	e.Text = from.GetText()
 }
 
 // TypeID returns type id in TL schema.

@@ -32,14 +32,8 @@ var (
 )
 
 // InputCollectibleUsername represents TL type `inputCollectibleUsername#e39460a9`.
-// Represents a username fragment collectible¹
-//
-// Links:
-//  1. https://core.telegram.org/api/fragment
-//
-// See https://core.telegram.org/constructor/inputCollectibleUsername for reference.
 type InputCollectibleUsername struct {
-	// Username
+	// Username field of InputCollectibleUsername.
 	Username string
 }
 
@@ -77,13 +71,6 @@ func (i *InputCollectibleUsername) String() string {
 	}
 	type Alias InputCollectibleUsername
 	return fmt.Sprintf("InputCollectibleUsername%+v", Alias(*i))
-}
-
-// FillFrom fills InputCollectibleUsername from given interface.
-func (i *InputCollectibleUsername) FillFrom(from interface {
-	GetUsername() (value string)
-}) {
-	i.Username = from.GetUsername()
 }
 
 // TypeID returns type id in TL schema.
@@ -170,14 +157,8 @@ func (i *InputCollectibleUsername) GetUsername() (value string) {
 }
 
 // InputCollectiblePhone represents TL type `inputCollectiblePhone#a2e214a4`.
-// Represents a phone number fragment collectible¹
-//
-// Links:
-//  1. https://core.telegram.org/api/fragment
-//
-// See https://core.telegram.org/constructor/inputCollectiblePhone for reference.
 type InputCollectiblePhone struct {
-	// Phone number
+	// Phone field of InputCollectiblePhone.
 	Phone string
 }
 
@@ -215,13 +196,6 @@ func (i *InputCollectiblePhone) String() string {
 	}
 	type Alias InputCollectiblePhone
 	return fmt.Sprintf("InputCollectiblePhone%+v", Alias(*i))
-}
-
-// FillFrom fills InputCollectiblePhone from given interface.
-func (i *InputCollectiblePhone) FillFrom(from interface {
-	GetPhone() (value string)
-}) {
-	i.Phone = from.GetPhone()
 }
 
 // TypeID returns type id in TL schema.
@@ -311,8 +285,6 @@ func (i *InputCollectiblePhone) GetPhone() (value string) {
 const InputCollectibleClassName = "InputCollectible"
 
 // InputCollectibleClass represents InputCollectible generic type.
-//
-// See https://core.telegram.org/type/InputCollectible for reference.
 //
 // Constructors:
 //   - [InputCollectibleUsername]

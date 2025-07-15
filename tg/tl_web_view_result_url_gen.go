@@ -32,30 +32,18 @@ var (
 )
 
 // WebViewResultURL represents TL type `webViewResultUrl#4d22ff98`.
-// Contains the webview URL with appropriate theme and user info parameters added
-//
-// See https://core.telegram.org/constructor/webViewResultUrl for reference.
 type WebViewResultURL struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of WebViewResultURL.
 	Flags bin.Fields
-	// If set, the app must be opened in fullsize mode instead of compact mode.
+	// Fullsize field of WebViewResultURL.
 	Fullsize bool
-	// If set, the app must be opened in fullscreen
+	// Fullscreen field of WebViewResultURL.
 	Fullscreen bool
-	// Webview session ID (only returned by inline button mini apps¹, menu button mini
-	// apps², attachment menu mini apps³).
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/bots/webapps#inline-button-mini-apps
-	//  2) https://core.telegram.org/api/bots/webapps#menu-button-mini-apps
-	//  3) https://core.telegram.org/api/bots/webapps#attachment-menu-mini-apps
+	// QueryID field of WebViewResultURL.
 	//
 	// Use SetQueryID and GetQueryID helpers.
 	QueryID int64
-	// Webview URL to open
+	// URL field of WebViewResultURL.
 	URL string
 }
 
@@ -100,22 +88,6 @@ func (w *WebViewResultURL) String() string {
 	}
 	type Alias WebViewResultURL
 	return fmt.Sprintf("WebViewResultURL%+v", Alias(*w))
-}
-
-// FillFrom fills WebViewResultURL from given interface.
-func (w *WebViewResultURL) FillFrom(from interface {
-	GetFullsize() (value bool)
-	GetFullscreen() (value bool)
-	GetQueryID() (value int64, ok bool)
-	GetURL() (value string)
-}) {
-	w.Fullsize = from.GetFullsize()
-	w.Fullscreen = from.GetFullscreen()
-	if val, ok := from.GetQueryID(); ok {
-		w.QueryID = val
-	}
-
-	w.URL = from.GetURL()
 }
 
 // TypeID returns type id in TL schema.

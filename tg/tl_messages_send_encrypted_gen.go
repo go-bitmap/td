@@ -32,26 +32,16 @@ var (
 )
 
 // MessagesSendEncryptedRequest represents TL type `messages.sendEncrypted#44fa7a15`.
-// Sends a text message to a secret chat.
-//
-// See https://core.telegram.org/method/messages.sendEncrypted for reference.
 type MessagesSendEncryptedRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessagesSendEncryptedRequest.
 	Flags bin.Fields
-	// Send encrypted message without a notification
+	// Silent field of MessagesSendEncryptedRequest.
 	Silent bool
-	// Secret chat ID
+	// Peer field of MessagesSendEncryptedRequest.
 	Peer InputEncryptedChat
-	// Unique client message ID, necessary to avoid message resending
+	// RandomID field of MessagesSendEncryptedRequest.
 	RandomID int64
-	// TL-serialization of DecryptedMessage¹ type, encrypted with a key that was created
-	// during chat initialization
-	//
-	// Links:
-	//  1) https://core.telegram.org/type/DecryptedMessage
+	// Data field of MessagesSendEncryptedRequest.
 	Data []byte
 }
 
@@ -96,19 +86,6 @@ func (s *MessagesSendEncryptedRequest) String() string {
 	}
 	type Alias MessagesSendEncryptedRequest
 	return fmt.Sprintf("MessagesSendEncryptedRequest%+v", Alias(*s))
-}
-
-// FillFrom fills MessagesSendEncryptedRequest from given interface.
-func (s *MessagesSendEncryptedRequest) FillFrom(from interface {
-	GetSilent() (value bool)
-	GetPeer() (value InputEncryptedChat)
-	GetRandomID() (value int64)
-	GetData() (value []byte)
-}) {
-	s.Silent = from.GetSilent()
-	s.Peer = from.GetPeer()
-	s.RandomID = from.GetRandomID()
-	s.Data = from.GetData()
 }
 
 // TypeID returns type id in TL schema.
@@ -276,18 +253,6 @@ func (s *MessagesSendEncryptedRequest) GetData() (value []byte) {
 }
 
 // MessagesSendEncrypted invokes method messages.sendEncrypted#44fa7a15 returning error if any.
-// Sends a text message to a secret chat.
-//
-// Possible errors:
-//
-//	400 CHAT_ID_INVALID: The provided chat id is invalid.
-//	400 DATA_INVALID: Encrypted data invalid.
-//	400 DATA_TOO_LONG: Data too long.
-//	400 ENCRYPTION_DECLINED: The secret chat was declined.
-//	500 MSG_WAIT_FAILED: A waiting call returned an error.
-//	403 USER_IS_BLOCKED: You were blocked by this user.
-//
-// See https://core.telegram.org/method/messages.sendEncrypted for reference.
 func (c *Client) MessagesSendEncrypted(ctx context.Context, request *MessagesSendEncryptedRequest) (MessagesSentEncryptedMessageClass, error) {
 	var result MessagesSentEncryptedMessageBox
 

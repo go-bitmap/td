@@ -32,9 +32,6 @@ var (
 )
 
 // TextEmpty represents TL type `textEmpty#dc3d824f`.
-// Empty rich text element
-//
-// See https://core.telegram.org/constructor/textEmpty for reference.
 type TextEmpty struct {
 }
 
@@ -134,11 +131,8 @@ func (t *TextEmpty) DecodeBare(b *bin.Buffer) error {
 }
 
 // TextPlain represents TL type `textPlain#744694e0`.
-// Plain text
-//
-// See https://core.telegram.org/constructor/textPlain for reference.
 type TextPlain struct {
-	// Text
+	// Text field of TextPlain.
 	Text string
 }
 
@@ -176,13 +170,6 @@ func (t *TextPlain) String() string {
 	}
 	type Alias TextPlain
 	return fmt.Sprintf("TextPlain%+v", Alias(*t))
-}
-
-// FillFrom fills TextPlain from given interface.
-func (t *TextPlain) FillFrom(from interface {
-	GetText() (value string)
-}) {
-	t.Text = from.GetText()
 }
 
 // TypeID returns type id in TL schema.
@@ -269,11 +256,8 @@ func (t *TextPlain) GetText() (value string) {
 }
 
 // TextBold represents TL type `textBold#6724abc4`.
-// Bold text
-//
-// See https://core.telegram.org/constructor/textBold for reference.
 type TextBold struct {
-	// Text
+	// Text field of TextBold.
 	Text RichTextClass
 }
 
@@ -311,13 +295,6 @@ func (t *TextBold) String() string {
 	}
 	type Alias TextBold
 	return fmt.Sprintf("TextBold%+v", Alias(*t))
-}
-
-// FillFrom fills TextBold from given interface.
-func (t *TextBold) FillFrom(from interface {
-	GetText() (value RichTextClass)
-}) {
-	t.Text = from.GetText()
 }
 
 // TypeID returns type id in TL schema.
@@ -409,11 +386,8 @@ func (t *TextBold) GetText() (value RichTextClass) {
 }
 
 // TextItalic represents TL type `textItalic#d912a59c`.
-// Italic text
-//
-// See https://core.telegram.org/constructor/textItalic for reference.
 type TextItalic struct {
-	// Text
+	// Text field of TextItalic.
 	Text RichTextClass
 }
 
@@ -451,13 +425,6 @@ func (t *TextItalic) String() string {
 	}
 	type Alias TextItalic
 	return fmt.Sprintf("TextItalic%+v", Alias(*t))
-}
-
-// FillFrom fills TextItalic from given interface.
-func (t *TextItalic) FillFrom(from interface {
-	GetText() (value RichTextClass)
-}) {
-	t.Text = from.GetText()
 }
 
 // TypeID returns type id in TL schema.
@@ -549,11 +516,8 @@ func (t *TextItalic) GetText() (value RichTextClass) {
 }
 
 // TextUnderline represents TL type `textUnderline#c12622c4`.
-// Underlined text
-//
-// See https://core.telegram.org/constructor/textUnderline for reference.
 type TextUnderline struct {
-	// Text
+	// Text field of TextUnderline.
 	Text RichTextClass
 }
 
@@ -591,13 +555,6 @@ func (t *TextUnderline) String() string {
 	}
 	type Alias TextUnderline
 	return fmt.Sprintf("TextUnderline%+v", Alias(*t))
-}
-
-// FillFrom fills TextUnderline from given interface.
-func (t *TextUnderline) FillFrom(from interface {
-	GetText() (value RichTextClass)
-}) {
-	t.Text = from.GetText()
 }
 
 // TypeID returns type id in TL schema.
@@ -689,11 +646,8 @@ func (t *TextUnderline) GetText() (value RichTextClass) {
 }
 
 // TextStrike represents TL type `textStrike#9bf8bb95`.
-// Strikethrough text
-//
-// See https://core.telegram.org/constructor/textStrike for reference.
 type TextStrike struct {
-	// Text
+	// Text field of TextStrike.
 	Text RichTextClass
 }
 
@@ -731,13 +685,6 @@ func (t *TextStrike) String() string {
 	}
 	type Alias TextStrike
 	return fmt.Sprintf("TextStrike%+v", Alias(*t))
-}
-
-// FillFrom fills TextStrike from given interface.
-func (t *TextStrike) FillFrom(from interface {
-	GetText() (value RichTextClass)
-}) {
-	t.Text = from.GetText()
 }
 
 // TypeID returns type id in TL schema.
@@ -829,11 +776,8 @@ func (t *TextStrike) GetText() (value RichTextClass) {
 }
 
 // TextFixed represents TL type `textFixed#6c3f19b9`.
-// fixed-width rich text
-//
-// See https://core.telegram.org/constructor/textFixed for reference.
 type TextFixed struct {
-	// Text
+	// Text field of TextFixed.
 	Text RichTextClass
 }
 
@@ -871,13 +815,6 @@ func (t *TextFixed) String() string {
 	}
 	type Alias TextFixed
 	return fmt.Sprintf("TextFixed%+v", Alias(*t))
-}
-
-// FillFrom fills TextFixed from given interface.
-func (t *TextFixed) FillFrom(from interface {
-	GetText() (value RichTextClass)
-}) {
-	t.Text = from.GetText()
 }
 
 // TypeID returns type id in TL schema.
@@ -969,15 +906,12 @@ func (t *TextFixed) GetText() (value RichTextClass) {
 }
 
 // TextURL represents TL type `textUrl#3c2884c1`.
-// Link
-//
-// See https://core.telegram.org/constructor/textUrl for reference.
 type TextURL struct {
-	// Text of link
+	// Text field of TextURL.
 	Text RichTextClass
-	// Webpage HTTP URL
+	// URL field of TextURL.
 	URL string
-	// If a preview was already generated for the page, the page ID
+	// WebpageID field of TextURL.
 	WebpageID int64
 }
 
@@ -1021,17 +955,6 @@ func (t *TextURL) String() string {
 	}
 	type Alias TextURL
 	return fmt.Sprintf("TextURL%+v", Alias(*t))
-}
-
-// FillFrom fills TextURL from given interface.
-func (t *TextURL) FillFrom(from interface {
-	GetText() (value RichTextClass)
-	GetURL() (value string)
-	GetWebpageID() (value int64)
-}) {
-	t.Text = from.GetText()
-	t.URL = from.GetURL()
-	t.WebpageID = from.GetWebpageID()
 }
 
 // TypeID returns type id in TL schema.
@@ -1163,13 +1086,10 @@ func (t *TextURL) GetWebpageID() (value int64) {
 }
 
 // TextEmail represents TL type `textEmail#de5a0dd6`.
-// Rich text email link
-//
-// See https://core.telegram.org/constructor/textEmail for reference.
 type TextEmail struct {
-	// Link text
+	// Text field of TextEmail.
 	Text RichTextClass
-	// Email address
+	// Email field of TextEmail.
 	Email string
 }
 
@@ -1210,15 +1130,6 @@ func (t *TextEmail) String() string {
 	}
 	type Alias TextEmail
 	return fmt.Sprintf("TextEmail%+v", Alias(*t))
-}
-
-// FillFrom fills TextEmail from given interface.
-func (t *TextEmail) FillFrom(from interface {
-	GetText() (value RichTextClass)
-	GetEmail() (value string)
-}) {
-	t.Text = from.GetText()
-	t.Email = from.GetEmail()
 }
 
 // TypeID returns type id in TL schema.
@@ -1330,11 +1241,8 @@ func (t *TextEmail) GetEmail() (value string) {
 }
 
 // TextConcat represents TL type `textConcat#7e6260d7`.
-// Concatenation of rich texts
-//
-// See https://core.telegram.org/constructor/textConcat for reference.
 type TextConcat struct {
-	// Concatenated rich texts
+	// Texts field of TextConcat.
 	Texts []RichTextClass
 }
 
@@ -1372,13 +1280,6 @@ func (t *TextConcat) String() string {
 	}
 	type Alias TextConcat
 	return fmt.Sprintf("TextConcat%+v", Alias(*t))
-}
-
-// FillFrom fills TextConcat from given interface.
-func (t *TextConcat) FillFrom(from interface {
-	GetTexts() (value []RichTextClass)
-}) {
-	t.Texts = from.GetTexts()
 }
 
 // TypeID returns type id in TL schema.
@@ -1482,17 +1383,9 @@ func (t *TextConcat) GetTexts() (value []RichTextClass) {
 	return t.Texts
 }
 
-// MapTexts returns field Texts wrapped in RichTextClassArray helper.
-func (t *TextConcat) MapTexts() (value RichTextClassArray) {
-	return RichTextClassArray(t.Texts)
-}
-
 // TextSubscript represents TL type `textSubscript#ed6a8504`.
-// Subscript text
-//
-// See https://core.telegram.org/constructor/textSubscript for reference.
 type TextSubscript struct {
-	// Text
+	// Text field of TextSubscript.
 	Text RichTextClass
 }
 
@@ -1530,13 +1423,6 @@ func (t *TextSubscript) String() string {
 	}
 	type Alias TextSubscript
 	return fmt.Sprintf("TextSubscript%+v", Alias(*t))
-}
-
-// FillFrom fills TextSubscript from given interface.
-func (t *TextSubscript) FillFrom(from interface {
-	GetText() (value RichTextClass)
-}) {
-	t.Text = from.GetText()
 }
 
 // TypeID returns type id in TL schema.
@@ -1628,11 +1514,8 @@ func (t *TextSubscript) GetText() (value RichTextClass) {
 }
 
 // TextSuperscript represents TL type `textSuperscript#c7fb5e01`.
-// Superscript text
-//
-// See https://core.telegram.org/constructor/textSuperscript for reference.
 type TextSuperscript struct {
-	// Text
+	// Text field of TextSuperscript.
 	Text RichTextClass
 }
 
@@ -1670,13 +1553,6 @@ func (t *TextSuperscript) String() string {
 	}
 	type Alias TextSuperscript
 	return fmt.Sprintf("TextSuperscript%+v", Alias(*t))
-}
-
-// FillFrom fills TextSuperscript from given interface.
-func (t *TextSuperscript) FillFrom(from interface {
-	GetText() (value RichTextClass)
-}) {
-	t.Text = from.GetText()
 }
 
 // TypeID returns type id in TL schema.
@@ -1768,11 +1644,8 @@ func (t *TextSuperscript) GetText() (value RichTextClass) {
 }
 
 // TextMarked represents TL type `textMarked#34b8621`.
-// Highlighted text
-//
-// See https://core.telegram.org/constructor/textMarked for reference.
 type TextMarked struct {
-	// Text
+	// Text field of TextMarked.
 	Text RichTextClass
 }
 
@@ -1810,13 +1683,6 @@ func (t *TextMarked) String() string {
 	}
 	type Alias TextMarked
 	return fmt.Sprintf("TextMarked%+v", Alias(*t))
-}
-
-// FillFrom fills TextMarked from given interface.
-func (t *TextMarked) FillFrom(from interface {
-	GetText() (value RichTextClass)
-}) {
-	t.Text = from.GetText()
 }
 
 // TypeID returns type id in TL schema.
@@ -1908,13 +1774,10 @@ func (t *TextMarked) GetText() (value RichTextClass) {
 }
 
 // TextPhone represents TL type `textPhone#1ccb966a`.
-// Rich text linked to a phone number
-//
-// See https://core.telegram.org/constructor/textPhone for reference.
 type TextPhone struct {
-	// Text
+	// Text field of TextPhone.
 	Text RichTextClass
-	// Phone number
+	// Phone field of TextPhone.
 	Phone string
 }
 
@@ -1955,15 +1818,6 @@ func (t *TextPhone) String() string {
 	}
 	type Alias TextPhone
 	return fmt.Sprintf("TextPhone%+v", Alias(*t))
-}
-
-// FillFrom fills TextPhone from given interface.
-func (t *TextPhone) FillFrom(from interface {
-	GetText() (value RichTextClass)
-	GetPhone() (value string)
-}) {
-	t.Text = from.GetText()
-	t.Phone = from.GetPhone()
 }
 
 // TypeID returns type id in TL schema.
@@ -2075,15 +1929,12 @@ func (t *TextPhone) GetPhone() (value string) {
 }
 
 // TextImage represents TL type `textImage#81ccf4f`.
-// Inline image
-//
-// See https://core.telegram.org/constructor/textImage for reference.
 type TextImage struct {
-	// Document ID
+	// DocumentID field of TextImage.
 	DocumentID int64
-	// Width
+	// W field of TextImage.
 	W int
-	// Height
+	// H field of TextImage.
 	H int
 }
 
@@ -2127,17 +1978,6 @@ func (t *TextImage) String() string {
 	}
 	type Alias TextImage
 	return fmt.Sprintf("TextImage%+v", Alias(*t))
-}
-
-// FillFrom fills TextImage from given interface.
-func (t *TextImage) FillFrom(from interface {
-	GetDocumentID() (value int64)
-	GetW() (value int)
-	GetH() (value int)
-}) {
-	t.DocumentID = from.GetDocumentID()
-	t.W = from.GetW()
-	t.H = from.GetH()
 }
 
 // TypeID returns type id in TL schema.
@@ -2264,13 +2104,10 @@ func (t *TextImage) GetH() (value int) {
 }
 
 // TextAnchor represents TL type `textAnchor#35553762`.
-// Text linking to another section of the page
-//
-// See https://core.telegram.org/constructor/textAnchor for reference.
 type TextAnchor struct {
-	// Text
+	// Text field of TextAnchor.
 	Text RichTextClass
-	// Section name
+	// Name field of TextAnchor.
 	Name string
 }
 
@@ -2311,15 +2148,6 @@ func (t *TextAnchor) String() string {
 	}
 	type Alias TextAnchor
 	return fmt.Sprintf("TextAnchor%+v", Alias(*t))
-}
-
-// FillFrom fills TextAnchor from given interface.
-func (t *TextAnchor) FillFrom(from interface {
-	GetText() (value RichTextClass)
-	GetName() (value string)
-}) {
-	t.Text = from.GetText()
-	t.Name = from.GetName()
 }
 
 // TypeID returns type id in TL schema.
@@ -2434,8 +2262,6 @@ func (t *TextAnchor) GetName() (value string) {
 const RichTextClassName = "RichText"
 
 // RichTextClass represents RichText generic type.
-//
-// See https://core.telegram.org/type/RichText for reference.
 //
 // Constructors:
 //   - [TextEmpty]

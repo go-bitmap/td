@@ -32,19 +32,10 @@ var (
 )
 
 // PaymentsFulfillStarsSubscriptionRequest represents TL type `payments.fulfillStarsSubscription#cc5bebb3`.
-// Re-join a private channel associated to an active Telegram Star subscription »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/invites#paid-invite-links
-//
-// See https://core.telegram.org/method/payments.fulfillStarsSubscription for reference.
 type PaymentsFulfillStarsSubscriptionRequest struct {
-	// Always pass inputPeerSelf¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/inputPeerSelf
+	// Peer field of PaymentsFulfillStarsSubscriptionRequest.
 	Peer InputPeerClass
-	// ID of the subscription.
+	// SubscriptionID field of PaymentsFulfillStarsSubscriptionRequest.
 	SubscriptionID string
 }
 
@@ -80,15 +71,6 @@ func (f *PaymentsFulfillStarsSubscriptionRequest) String() string {
 	}
 	type Alias PaymentsFulfillStarsSubscriptionRequest
 	return fmt.Sprintf("PaymentsFulfillStarsSubscriptionRequest%+v", Alias(*f))
-}
-
-// FillFrom fills PaymentsFulfillStarsSubscriptionRequest from given interface.
-func (f *PaymentsFulfillStarsSubscriptionRequest) FillFrom(from interface {
-	GetPeer() (value InputPeerClass)
-	GetSubscriptionID() (value string)
-}) {
-	f.Peer = from.GetPeer()
-	f.SubscriptionID = from.GetSubscriptionID()
 }
 
 // TypeID returns type id in TL schema.
@@ -200,16 +182,6 @@ func (f *PaymentsFulfillStarsSubscriptionRequest) GetSubscriptionID() (value str
 }
 
 // PaymentsFulfillStarsSubscription invokes method payments.fulfillStarsSubscription#cc5bebb3 returning error if any.
-// Re-join a private channel associated to an active Telegram Star subscription »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/invites#paid-invite-links
-//
-// Possible errors:
-//
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//
-// See https://core.telegram.org/method/payments.fulfillStarsSubscription for reference.
 func (c *Client) PaymentsFulfillStarsSubscription(ctx context.Context, request *PaymentsFulfillStarsSubscriptionRequest) (bool, error) {
 	var result BoolBox
 

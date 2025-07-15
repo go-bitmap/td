@@ -32,19 +32,10 @@ var (
 )
 
 // ChatlistsExportedChatlistInvite represents TL type `chatlists.exportedChatlistInvite#10e6e3a6`.
-// Info about an exported chat folder deep link »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/links#chat-folder-links
-//
-// See https://core.telegram.org/constructor/chatlists.exportedChatlistInvite for reference.
 type ChatlistsExportedChatlistInvite struct {
-	// Folder ID
+	// Filter field of ChatlistsExportedChatlistInvite.
 	Filter DialogFilterClass
-	// The exported chat folder deep link »¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/links#chat-folder-links
+	// Invite field of ChatlistsExportedChatlistInvite.
 	Invite ExportedChatlistInvite
 }
 
@@ -80,15 +71,6 @@ func (e *ChatlistsExportedChatlistInvite) String() string {
 	}
 	type Alias ChatlistsExportedChatlistInvite
 	return fmt.Sprintf("ChatlistsExportedChatlistInvite%+v", Alias(*e))
-}
-
-// FillFrom fills ChatlistsExportedChatlistInvite from given interface.
-func (e *ChatlistsExportedChatlistInvite) FillFrom(from interface {
-	GetFilter() (value DialogFilterClass)
-	GetInvite() (value ExportedChatlistInvite)
-}) {
-	e.Filter = from.GetFilter()
-	e.Invite = from.GetInvite()
 }
 
 // TypeID returns type id in TL schema.

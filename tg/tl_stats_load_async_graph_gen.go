@@ -32,24 +32,12 @@ var (
 )
 
 // StatsLoadAsyncGraphRequest represents TL type `stats.loadAsyncGraph#621d5fa0`.
-// Load channel statistics graph¹ asynchronously
-//
-// Links:
-//  1. https://core.telegram.org/api/stats
-//
-// See https://core.telegram.org/method/stats.loadAsyncGraph for reference.
 type StatsLoadAsyncGraphRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of StatsLoadAsyncGraphRequest.
 	Flags bin.Fields
-	// Graph token from statsGraphAsync¹ constructor
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/statsGraphAsync
+	// Token field of StatsLoadAsyncGraphRequest.
 	Token string
-	// Zoom value, if required
+	// X field of StatsLoadAsyncGraphRequest.
 	//
 	// Use SetX and GetX helpers.
 	X int64
@@ -90,18 +78,6 @@ func (l *StatsLoadAsyncGraphRequest) String() string {
 	}
 	type Alias StatsLoadAsyncGraphRequest
 	return fmt.Sprintf("StatsLoadAsyncGraphRequest%+v", Alias(*l))
-}
-
-// FillFrom fills StatsLoadAsyncGraphRequest from given interface.
-func (l *StatsLoadAsyncGraphRequest) FillFrom(from interface {
-	GetToken() (value string)
-	GetX() (value int64, ok bool)
-}) {
-	l.Token = from.GetToken()
-	if val, ok := from.GetX(); ok {
-		l.X = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -237,18 +213,6 @@ func (l *StatsLoadAsyncGraphRequest) GetX() (value int64, ok bool) {
 }
 
 // StatsLoadAsyncGraph invokes method stats.loadAsyncGraph#621d5fa0 returning error if any.
-// Load channel statistics graph¹ asynchronously
-//
-// Links:
-//  1. https://core.telegram.org/api/stats
-//
-// Possible errors:
-//
-//	400 GRAPH_EXPIRED_RELOAD: This graph has expired, please obtain a new graph token.
-//	400 GRAPH_INVALID_RELOAD: Invalid graph token provided, please reload the stats and provide the updated token.
-//	400 GRAPH_OUTDATED_RELOAD: The graph is outdated, please get a new async token using stats.getBroadcastStats.
-//
-// See https://core.telegram.org/method/stats.loadAsyncGraph for reference.
 func (c *Client) StatsLoadAsyncGraph(ctx context.Context, request *StatsLoadAsyncGraphRequest) (StatsGraphClass, error) {
 	var result StatsGraphBox
 

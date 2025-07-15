@@ -32,17 +32,10 @@ var (
 )
 
 // ChannelsToggleJoinToSendRequest represents TL type `channels.toggleJoinToSend#e4cb9580`.
-// Set whether all users should join a discussion group in order to comment on a post
-// »¹
-//
-// Links:
-//  1. https://core.telegram.org/api/discussion#requiring-users-to-join-the-group
-//
-// See https://core.telegram.org/method/channels.toggleJoinToSend for reference.
 type ChannelsToggleJoinToSendRequest struct {
-	// Discussion group
+	// Channel field of ChannelsToggleJoinToSendRequest.
 	Channel InputChannelClass
-	// Toggle
+	// Enabled field of ChannelsToggleJoinToSendRequest.
 	Enabled bool
 }
 
@@ -78,15 +71,6 @@ func (t *ChannelsToggleJoinToSendRequest) String() string {
 	}
 	type Alias ChannelsToggleJoinToSendRequest
 	return fmt.Sprintf("ChannelsToggleJoinToSendRequest%+v", Alias(*t))
-}
-
-// FillFrom fills ChannelsToggleJoinToSendRequest from given interface.
-func (t *ChannelsToggleJoinToSendRequest) FillFrom(from interface {
-	GetChannel() (value InputChannelClass)
-	GetEnabled() (value bool)
-}) {
-	t.Channel = from.GetChannel()
-	t.Enabled = from.GetEnabled()
 }
 
 // TypeID returns type id in TL schema.
@@ -197,26 +181,7 @@ func (t *ChannelsToggleJoinToSendRequest) GetEnabled() (value bool) {
 	return t.Enabled
 }
 
-// GetChannelAsNotEmpty returns mapped value of Channel field.
-func (t *ChannelsToggleJoinToSendRequest) GetChannelAsNotEmpty() (NotEmptyInputChannel, bool) {
-	return t.Channel.AsNotEmpty()
-}
-
 // ChannelsToggleJoinToSend invokes method channels.toggleJoinToSend#e4cb9580 returning error if any.
-// Set whether all users should join a discussion group in order to comment on a post
-// »¹
-//
-// Links:
-//  1. https://core.telegram.org/api/discussion#requiring-users-to-join-the-group
-//
-// Possible errors:
-//
-//	400 CHANNEL_INVALID: The provided channel is invalid.
-//	400 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
-//	400 CHAT_ID_INVALID: The provided chat id is invalid.
-//	400 CHAT_NOT_MODIFIED: No changes were made to chat information because the new information you passed is identical to the current information.
-//
-// See https://core.telegram.org/method/channels.toggleJoinToSend for reference.
 func (c *Client) ChannelsToggleJoinToSend(ctx context.Context, request *ChannelsToggleJoinToSendRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

@@ -32,18 +32,10 @@ var (
 )
 
 // MessagesGetScheduledHistoryRequest represents TL type `messages.getScheduledHistory#f516760b`.
-// Get scheduled messages
-//
-// See https://core.telegram.org/method/messages.getScheduledHistory for reference.
 type MessagesGetScheduledHistoryRequest struct {
-	// Peer
+	// Peer field of MessagesGetScheduledHistoryRequest.
 	Peer InputPeerClass
-	// Hash used for caching, for more info click here¹. To generate the hash, populate the
-	// ids array with the id, date and edit_date (in this order) of the previously returned
-	// messages (in order, i.e. ids = [id1, date1, edit_date1, id2, date2, edit_date2, ...]).
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets#hash-generation
+	// Hash field of MessagesGetScheduledHistoryRequest.
 	Hash int64
 }
 
@@ -79,15 +71,6 @@ func (g *MessagesGetScheduledHistoryRequest) String() string {
 	}
 	type Alias MessagesGetScheduledHistoryRequest
 	return fmt.Sprintf("MessagesGetScheduledHistoryRequest%+v", Alias(*g))
-}
-
-// FillFrom fills MessagesGetScheduledHistoryRequest from given interface.
-func (g *MessagesGetScheduledHistoryRequest) FillFrom(from interface {
-	GetPeer() (value InputPeerClass)
-	GetHash() (value int64)
-}) {
-	g.Peer = from.GetPeer()
-	g.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -199,14 +182,6 @@ func (g *MessagesGetScheduledHistoryRequest) GetHash() (value int64) {
 }
 
 // MessagesGetScheduledHistory invokes method messages.getScheduledHistory#f516760b returning error if any.
-// Get scheduled messages
-//
-// Possible errors:
-//
-//	400 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//
-// See https://core.telegram.org/method/messages.getScheduledHistory for reference.
 func (c *Client) MessagesGetScheduledHistory(ctx context.Context, request *MessagesGetScheduledHistoryRequest) (MessagesMessagesClass, error) {
 	var result MessagesMessagesBox
 

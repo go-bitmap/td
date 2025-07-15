@@ -32,17 +32,8 @@ var (
 )
 
 // AccountGetWallPapersRequest represents TL type `account.getWallPapers#7967d36`.
-// Returns a list of available wallpapers¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/wallpapers
-//
-// See https://core.telegram.org/method/account.getWallPapers for reference.
 type AccountGetWallPapersRequest struct {
-	// Hash used for caching, for more info click here¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets#hash-generation
+	// Hash field of AccountGetWallPapersRequest.
 	Hash int64
 }
 
@@ -75,13 +66,6 @@ func (g *AccountGetWallPapersRequest) String() string {
 	}
 	type Alias AccountGetWallPapersRequest
 	return fmt.Sprintf("AccountGetWallPapersRequest%+v", Alias(*g))
-}
-
-// FillFrom fills AccountGetWallPapersRequest from given interface.
-func (g *AccountGetWallPapersRequest) FillFrom(from interface {
-	GetHash() (value int64)
-}) {
-	g.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -168,12 +152,6 @@ func (g *AccountGetWallPapersRequest) GetHash() (value int64) {
 }
 
 // AccountGetWallPapers invokes method account.getWallPapers#7967d36 returning error if any.
-// Returns a list of available wallpapers¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/wallpapers
-//
-// See https://core.telegram.org/method/account.getWallPapers for reference.
 func (c *Client) AccountGetWallPapers(ctx context.Context, hash int64) (AccountWallPapersClass, error) {
 	var result AccountWallPapersBox
 

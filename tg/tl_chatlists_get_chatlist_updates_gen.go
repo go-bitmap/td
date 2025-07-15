@@ -32,17 +32,8 @@ var (
 )
 
 // ChatlistsGetChatlistUpdatesRequest represents TL type `chatlists.getChatlistUpdates#89419521`.
-// Fetch new chats associated with an imported chat folder deep link »¹. Must be
-// invoked at most every chatlist_update_period seconds (as per the related client
-// configuration parameter »²).
-//
-// Links:
-//  1. https://core.telegram.org/api/links#chat-folder-links
-//  2. https://core.telegram.org/api/config#chatlist-update-period
-//
-// See https://core.telegram.org/method/chatlists.getChatlistUpdates for reference.
 type ChatlistsGetChatlistUpdatesRequest struct {
-	// The folder
+	// Chatlist field of ChatlistsGetChatlistUpdatesRequest.
 	Chatlist InputChatlistDialogFilter
 }
 
@@ -75,13 +66,6 @@ func (g *ChatlistsGetChatlistUpdatesRequest) String() string {
 	}
 	type Alias ChatlistsGetChatlistUpdatesRequest
 	return fmt.Sprintf("ChatlistsGetChatlistUpdatesRequest%+v", Alias(*g))
-}
-
-// FillFrom fills ChatlistsGetChatlistUpdatesRequest from given interface.
-func (g *ChatlistsGetChatlistUpdatesRequest) FillFrom(from interface {
-	GetChatlist() (value InputChatlistDialogFilter)
-}) {
-	g.Chatlist = from.GetChatlist()
 }
 
 // TypeID returns type id in TL schema.
@@ -168,21 +152,6 @@ func (g *ChatlistsGetChatlistUpdatesRequest) GetChatlist() (value InputChatlistD
 }
 
 // ChatlistsGetChatlistUpdates invokes method chatlists.getChatlistUpdates#89419521 returning error if any.
-// Fetch new chats associated with an imported chat folder deep link »¹. Must be
-// invoked at most every chatlist_update_period seconds (as per the related client
-// configuration parameter »²).
-//
-// Links:
-//  1. https://core.telegram.org/api/links#chat-folder-links
-//  2. https://core.telegram.org/api/config#chatlist-update-period
-//
-// Possible errors:
-//
-//	400 FILTER_ID_INVALID: The specified filter ID is invalid.
-//	400 FILTER_NOT_SUPPORTED: The specified filter cannot be used in this context.
-//	400 INPUT_CHATLIST_INVALID: The specified folder is invalid.
-//
-// See https://core.telegram.org/method/chatlists.getChatlistUpdates for reference.
 func (c *Client) ChatlistsGetChatlistUpdates(ctx context.Context, chatlist InputChatlistDialogFilter) (*ChatlistsChatlistUpdates, error) {
 	var result ChatlistsChatlistUpdates
 

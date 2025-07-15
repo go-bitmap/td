@@ -32,9 +32,6 @@ var (
 )
 
 // PageBlockUnsupported represents TL type `pageBlockUnsupported#13567e8a`.
-// Unsupported IV element
-//
-// See https://core.telegram.org/constructor/pageBlockUnsupported for reference.
 type PageBlockUnsupported struct {
 }
 
@@ -134,11 +131,8 @@ func (p *PageBlockUnsupported) DecodeBare(b *bin.Buffer) error {
 }
 
 // PageBlockTitle represents TL type `pageBlockTitle#70abc3fd`.
-// Title
-//
-// See https://core.telegram.org/constructor/pageBlockTitle for reference.
 type PageBlockTitle struct {
-	// Title
+	// Text field of PageBlockTitle.
 	Text RichTextClass
 }
 
@@ -176,13 +170,6 @@ func (p *PageBlockTitle) String() string {
 	}
 	type Alias PageBlockTitle
 	return fmt.Sprintf("PageBlockTitle%+v", Alias(*p))
-}
-
-// FillFrom fills PageBlockTitle from given interface.
-func (p *PageBlockTitle) FillFrom(from interface {
-	GetText() (value RichTextClass)
-}) {
-	p.Text = from.GetText()
 }
 
 // TypeID returns type id in TL schema.
@@ -274,11 +261,8 @@ func (p *PageBlockTitle) GetText() (value RichTextClass) {
 }
 
 // PageBlockSubtitle represents TL type `pageBlockSubtitle#8ffa9a1f`.
-// Subtitle
-//
-// See https://core.telegram.org/constructor/pageBlockSubtitle for reference.
 type PageBlockSubtitle struct {
-	// Text
+	// Text field of PageBlockSubtitle.
 	Text RichTextClass
 }
 
@@ -316,13 +300,6 @@ func (p *PageBlockSubtitle) String() string {
 	}
 	type Alias PageBlockSubtitle
 	return fmt.Sprintf("PageBlockSubtitle%+v", Alias(*p))
-}
-
-// FillFrom fills PageBlockSubtitle from given interface.
-func (p *PageBlockSubtitle) FillFrom(from interface {
-	GetText() (value RichTextClass)
-}) {
-	p.Text = from.GetText()
 }
 
 // TypeID returns type id in TL schema.
@@ -414,13 +391,10 @@ func (p *PageBlockSubtitle) GetText() (value RichTextClass) {
 }
 
 // PageBlockAuthorDate represents TL type `pageBlockAuthorDate#baafe5e0`.
-// Author and date of creation of article
-//
-// See https://core.telegram.org/constructor/pageBlockAuthorDate for reference.
 type PageBlockAuthorDate struct {
-	// Author name
+	// Author field of PageBlockAuthorDate.
 	Author RichTextClass
-	// Date of publication
+	// PublishedDate field of PageBlockAuthorDate.
 	PublishedDate int
 }
 
@@ -461,15 +435,6 @@ func (p *PageBlockAuthorDate) String() string {
 	}
 	type Alias PageBlockAuthorDate
 	return fmt.Sprintf("PageBlockAuthorDate%+v", Alias(*p))
-}
-
-// FillFrom fills PageBlockAuthorDate from given interface.
-func (p *PageBlockAuthorDate) FillFrom(from interface {
-	GetAuthor() (value RichTextClass)
-	GetPublishedDate() (value int)
-}) {
-	p.Author = from.GetAuthor()
-	p.PublishedDate = from.GetPublishedDate()
 }
 
 // TypeID returns type id in TL schema.
@@ -581,11 +546,8 @@ func (p *PageBlockAuthorDate) GetPublishedDate() (value int) {
 }
 
 // PageBlockHeader represents TL type `pageBlockHeader#bfd064ec`.
-// Page header
-//
-// See https://core.telegram.org/constructor/pageBlockHeader for reference.
 type PageBlockHeader struct {
-	// Contents
+	// Text field of PageBlockHeader.
 	Text RichTextClass
 }
 
@@ -623,13 +585,6 @@ func (p *PageBlockHeader) String() string {
 	}
 	type Alias PageBlockHeader
 	return fmt.Sprintf("PageBlockHeader%+v", Alias(*p))
-}
-
-// FillFrom fills PageBlockHeader from given interface.
-func (p *PageBlockHeader) FillFrom(from interface {
-	GetText() (value RichTextClass)
-}) {
-	p.Text = from.GetText()
 }
 
 // TypeID returns type id in TL schema.
@@ -721,11 +676,8 @@ func (p *PageBlockHeader) GetText() (value RichTextClass) {
 }
 
 // PageBlockSubheader represents TL type `pageBlockSubheader#f12bb6e1`.
-// Subheader
-//
-// See https://core.telegram.org/constructor/pageBlockSubheader for reference.
 type PageBlockSubheader struct {
-	// Subheader
+	// Text field of PageBlockSubheader.
 	Text RichTextClass
 }
 
@@ -763,13 +715,6 @@ func (p *PageBlockSubheader) String() string {
 	}
 	type Alias PageBlockSubheader
 	return fmt.Sprintf("PageBlockSubheader%+v", Alias(*p))
-}
-
-// FillFrom fills PageBlockSubheader from given interface.
-func (p *PageBlockSubheader) FillFrom(from interface {
-	GetText() (value RichTextClass)
-}) {
-	p.Text = from.GetText()
 }
 
 // TypeID returns type id in TL schema.
@@ -861,11 +806,8 @@ func (p *PageBlockSubheader) GetText() (value RichTextClass) {
 }
 
 // PageBlockParagraph represents TL type `pageBlockParagraph#467a0766`.
-// A paragraph
-//
-// See https://core.telegram.org/constructor/pageBlockParagraph for reference.
 type PageBlockParagraph struct {
-	// Text
+	// Text field of PageBlockParagraph.
 	Text RichTextClass
 }
 
@@ -903,13 +845,6 @@ func (p *PageBlockParagraph) String() string {
 	}
 	type Alias PageBlockParagraph
 	return fmt.Sprintf("PageBlockParagraph%+v", Alias(*p))
-}
-
-// FillFrom fills PageBlockParagraph from given interface.
-func (p *PageBlockParagraph) FillFrom(from interface {
-	GetText() (value RichTextClass)
-}) {
-	p.Text = from.GetText()
 }
 
 // TypeID returns type id in TL schema.
@@ -1001,13 +936,10 @@ func (p *PageBlockParagraph) GetText() (value RichTextClass) {
 }
 
 // PageBlockPreformatted represents TL type `pageBlockPreformatted#c070d93e`.
-// Preformatted (<pre> text)
-//
-// See https://core.telegram.org/constructor/pageBlockPreformatted for reference.
 type PageBlockPreformatted struct {
-	// Text
+	// Text field of PageBlockPreformatted.
 	Text RichTextClass
-	// Programming language of preformatted text
+	// Language field of PageBlockPreformatted.
 	Language string
 }
 
@@ -1048,15 +980,6 @@ func (p *PageBlockPreformatted) String() string {
 	}
 	type Alias PageBlockPreformatted
 	return fmt.Sprintf("PageBlockPreformatted%+v", Alias(*p))
-}
-
-// FillFrom fills PageBlockPreformatted from given interface.
-func (p *PageBlockPreformatted) FillFrom(from interface {
-	GetText() (value RichTextClass)
-	GetLanguage() (value string)
-}) {
-	p.Text = from.GetText()
-	p.Language = from.GetLanguage()
 }
 
 // TypeID returns type id in TL schema.
@@ -1168,11 +1091,8 @@ func (p *PageBlockPreformatted) GetLanguage() (value string) {
 }
 
 // PageBlockFooter represents TL type `pageBlockFooter#48870999`.
-// Page footer
-//
-// See https://core.telegram.org/constructor/pageBlockFooter for reference.
 type PageBlockFooter struct {
-	// Contents
+	// Text field of PageBlockFooter.
 	Text RichTextClass
 }
 
@@ -1210,13 +1130,6 @@ func (p *PageBlockFooter) String() string {
 	}
 	type Alias PageBlockFooter
 	return fmt.Sprintf("PageBlockFooter%+v", Alias(*p))
-}
-
-// FillFrom fills PageBlockFooter from given interface.
-func (p *PageBlockFooter) FillFrom(from interface {
-	GetText() (value RichTextClass)
-}) {
-	p.Text = from.GetText()
 }
 
 // TypeID returns type id in TL schema.
@@ -1308,9 +1221,6 @@ func (p *PageBlockFooter) GetText() (value RichTextClass) {
 }
 
 // PageBlockDivider represents TL type `pageBlockDivider#db20b188`.
-// An empty block separating a page
-//
-// See https://core.telegram.org/constructor/pageBlockDivider for reference.
 type PageBlockDivider struct {
 }
 
@@ -1410,11 +1320,8 @@ func (p *PageBlockDivider) DecodeBare(b *bin.Buffer) error {
 }
 
 // PageBlockAnchor represents TL type `pageBlockAnchor#ce0d37b0`.
-// Link to section within the page itself (like <a href="#target">anchor</a>)
-//
-// See https://core.telegram.org/constructor/pageBlockAnchor for reference.
 type PageBlockAnchor struct {
-	// Name of target section
+	// Name field of PageBlockAnchor.
 	Name string
 }
 
@@ -1452,13 +1359,6 @@ func (p *PageBlockAnchor) String() string {
 	}
 	type Alias PageBlockAnchor
 	return fmt.Sprintf("PageBlockAnchor%+v", Alias(*p))
-}
-
-// FillFrom fills PageBlockAnchor from given interface.
-func (p *PageBlockAnchor) FillFrom(from interface {
-	GetName() (value string)
-}) {
-	p.Name = from.GetName()
 }
 
 // TypeID returns type id in TL schema.
@@ -1545,11 +1445,8 @@ func (p *PageBlockAnchor) GetName() (value string) {
 }
 
 // PageBlockList represents TL type `pageBlockList#e4e88011`.
-// Unordered list of IV blocks
-//
-// See https://core.telegram.org/constructor/pageBlockList for reference.
 type PageBlockList struct {
-	// List of blocks in an IV page
+	// Items field of PageBlockList.
 	Items []PageListItemClass
 }
 
@@ -1587,13 +1484,6 @@ func (p *PageBlockList) String() string {
 	}
 	type Alias PageBlockList
 	return fmt.Sprintf("PageBlockList%+v", Alias(*p))
-}
-
-// FillFrom fills PageBlockList from given interface.
-func (p *PageBlockList) FillFrom(from interface {
-	GetItems() (value []PageListItemClass)
-}) {
-	p.Items = from.GetItems()
 }
 
 // TypeID returns type id in TL schema.
@@ -1697,19 +1587,11 @@ func (p *PageBlockList) GetItems() (value []PageListItemClass) {
 	return p.Items
 }
 
-// MapItems returns field Items wrapped in PageListItemClassArray helper.
-func (p *PageBlockList) MapItems() (value PageListItemClassArray) {
-	return PageListItemClassArray(p.Items)
-}
-
 // PageBlockBlockquote represents TL type `pageBlockBlockquote#263d7c26`.
-// Quote (equivalent to the HTML <blockquote>)
-//
-// See https://core.telegram.org/constructor/pageBlockBlockquote for reference.
 type PageBlockBlockquote struct {
-	// Quote contents
+	// Text field of PageBlockBlockquote.
 	Text RichTextClass
-	// Caption
+	// Caption field of PageBlockBlockquote.
 	Caption RichTextClass
 }
 
@@ -1750,15 +1632,6 @@ func (p *PageBlockBlockquote) String() string {
 	}
 	type Alias PageBlockBlockquote
 	return fmt.Sprintf("PageBlockBlockquote%+v", Alias(*p))
-}
-
-// FillFrom fills PageBlockBlockquote from given interface.
-func (p *PageBlockBlockquote) FillFrom(from interface {
-	GetText() (value RichTextClass)
-	GetCaption() (value RichTextClass)
-}) {
-	p.Text = from.GetText()
-	p.Caption = from.GetCaption()
 }
 
 // TypeID returns type id in TL schema.
@@ -1875,13 +1748,10 @@ func (p *PageBlockBlockquote) GetCaption() (value RichTextClass) {
 }
 
 // PageBlockPullquote represents TL type `pageBlockPullquote#4f4456d3`.
-// Pullquote
-//
-// See https://core.telegram.org/constructor/pageBlockPullquote for reference.
 type PageBlockPullquote struct {
-	// Text
+	// Text field of PageBlockPullquote.
 	Text RichTextClass
-	// Caption
+	// Caption field of PageBlockPullquote.
 	Caption RichTextClass
 }
 
@@ -1922,15 +1792,6 @@ func (p *PageBlockPullquote) String() string {
 	}
 	type Alias PageBlockPullquote
 	return fmt.Sprintf("PageBlockPullquote%+v", Alias(*p))
-}
-
-// FillFrom fills PageBlockPullquote from given interface.
-func (p *PageBlockPullquote) FillFrom(from interface {
-	GetText() (value RichTextClass)
-	GetCaption() (value RichTextClass)
-}) {
-	p.Text = from.GetText()
-	p.Caption = from.GetCaption()
 }
 
 // TypeID returns type id in TL schema.
@@ -2047,24 +1908,18 @@ func (p *PageBlockPullquote) GetCaption() (value RichTextClass) {
 }
 
 // PageBlockPhoto represents TL type `pageBlockPhoto#1759c560`.
-// A photo
-//
-// See https://core.telegram.org/constructor/pageBlockPhoto for reference.
 type PageBlockPhoto struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of PageBlockPhoto.
 	Flags bin.Fields
-	// Photo ID
+	// PhotoID field of PageBlockPhoto.
 	PhotoID int64
-	// Caption
+	// Caption field of PageBlockPhoto.
 	Caption PageCaption
-	// HTTP URL of page the photo leads to when clicked
+	// URL field of PageBlockPhoto.
 	//
 	// Use SetURL and GetURL helpers.
 	URL string
-	// ID of preview of the page the photo leads to when clicked
+	// WebpageID field of PageBlockPhoto.
 	//
 	// Use SetWebpageID and GetWebpageID helpers.
 	WebpageID int64
@@ -2116,25 +1971,6 @@ func (p *PageBlockPhoto) String() string {
 	}
 	type Alias PageBlockPhoto
 	return fmt.Sprintf("PageBlockPhoto%+v", Alias(*p))
-}
-
-// FillFrom fills PageBlockPhoto from given interface.
-func (p *PageBlockPhoto) FillFrom(from interface {
-	GetPhotoID() (value int64)
-	GetCaption() (value PageCaption)
-	GetURL() (value string, ok bool)
-	GetWebpageID() (value int64, ok bool)
-}) {
-	p.PhotoID = from.GetPhotoID()
-	p.Caption = from.GetCaption()
-	if val, ok := from.GetURL(); ok {
-		p.URL = val
-	}
-
-	if val, ok := from.GetWebpageID(); ok {
-		p.WebpageID = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -2326,22 +2162,16 @@ func (p *PageBlockPhoto) GetWebpageID() (value int64, ok bool) {
 }
 
 // PageBlockVideo represents TL type `pageBlockVideo#7c8fe7b6`.
-// Video
-//
-// See https://core.telegram.org/constructor/pageBlockVideo for reference.
 type PageBlockVideo struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of PageBlockVideo.
 	Flags bin.Fields
-	// Whether the video is set to autoplay
+	// Autoplay field of PageBlockVideo.
 	Autoplay bool
-	// Whether the video is set to loop
+	// Loop field of PageBlockVideo.
 	Loop bool
-	// Video ID
+	// VideoID field of PageBlockVideo.
 	VideoID int64
-	// Caption
+	// Caption field of PageBlockVideo.
 	Caption PageCaption
 }
 
@@ -2391,19 +2221,6 @@ func (p *PageBlockVideo) String() string {
 	}
 	type Alias PageBlockVideo
 	return fmt.Sprintf("PageBlockVideo%+v", Alias(*p))
-}
-
-// FillFrom fills PageBlockVideo from given interface.
-func (p *PageBlockVideo) FillFrom(from interface {
-	GetAutoplay() (value bool)
-	GetLoop() (value bool)
-	GetVideoID() (value int64)
-	GetCaption() (value PageCaption)
-}) {
-	p.Autoplay = from.GetAutoplay()
-	p.Loop = from.GetLoop()
-	p.VideoID = from.GetVideoID()
-	p.Caption = from.GetCaption()
 }
 
 // TypeID returns type id in TL schema.
@@ -2579,11 +2396,8 @@ func (p *PageBlockVideo) GetCaption() (value PageCaption) {
 }
 
 // PageBlockCover represents TL type `pageBlockCover#39f23300`.
-// A page cover
-//
-// See https://core.telegram.org/constructor/pageBlockCover for reference.
 type PageBlockCover struct {
-	// Cover
+	// Cover field of PageBlockCover.
 	Cover PageBlockClass
 }
 
@@ -2621,13 +2435,6 @@ func (p *PageBlockCover) String() string {
 	}
 	type Alias PageBlockCover
 	return fmt.Sprintf("PageBlockCover%+v", Alias(*p))
-}
-
-// FillFrom fills PageBlockCover from given interface.
-func (p *PageBlockCover) FillFrom(from interface {
-	GetCover() (value PageBlockClass)
-}) {
-	p.Cover = from.GetCover()
 }
 
 // TypeID returns type id in TL schema.
@@ -2719,40 +2526,34 @@ func (p *PageBlockCover) GetCover() (value PageBlockClass) {
 }
 
 // PageBlockEmbed represents TL type `pageBlockEmbed#a8718dc5`.
-// An embedded webpage
-//
-// See https://core.telegram.org/constructor/pageBlockEmbed for reference.
 type PageBlockEmbed struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of PageBlockEmbed.
 	Flags bin.Fields
-	// Whether the block should be full width
+	// FullWidth field of PageBlockEmbed.
 	FullWidth bool
-	// Whether scrolling should be allowed
+	// AllowScrolling field of PageBlockEmbed.
 	AllowScrolling bool
-	// Web page URL, if available
+	// URL field of PageBlockEmbed.
 	//
 	// Use SetURL and GetURL helpers.
 	URL string
-	// HTML-markup of the embedded page
+	// HTML field of PageBlockEmbed.
 	//
 	// Use SetHTML and GetHTML helpers.
 	HTML string
-	// Poster photo, if available
+	// PosterPhotoID field of PageBlockEmbed.
 	//
 	// Use SetPosterPhotoID and GetPosterPhotoID helpers.
 	PosterPhotoID int64
-	// Block width, if known
+	// W field of PageBlockEmbed.
 	//
 	// Use SetW and GetW helpers.
 	W int
-	// Block height, if known
+	// H field of PageBlockEmbed.
 	//
 	// Use SetH and GetH helpers.
 	H int
-	// Caption
+	// Caption field of PageBlockEmbed.
 	Caption PageCaption
 }
 
@@ -2814,42 +2615,6 @@ func (p *PageBlockEmbed) String() string {
 	}
 	type Alias PageBlockEmbed
 	return fmt.Sprintf("PageBlockEmbed%+v", Alias(*p))
-}
-
-// FillFrom fills PageBlockEmbed from given interface.
-func (p *PageBlockEmbed) FillFrom(from interface {
-	GetFullWidth() (value bool)
-	GetAllowScrolling() (value bool)
-	GetURL() (value string, ok bool)
-	GetHTML() (value string, ok bool)
-	GetPosterPhotoID() (value int64, ok bool)
-	GetW() (value int, ok bool)
-	GetH() (value int, ok bool)
-	GetCaption() (value PageCaption)
-}) {
-	p.FullWidth = from.GetFullWidth()
-	p.AllowScrolling = from.GetAllowScrolling()
-	if val, ok := from.GetURL(); ok {
-		p.URL = val
-	}
-
-	if val, ok := from.GetHTML(); ok {
-		p.HTML = val
-	}
-
-	if val, ok := from.GetPosterPhotoID(); ok {
-		p.PosterPhotoID = val
-	}
-
-	if val, ok := from.GetW(); ok {
-		p.W = val
-	}
-
-	if val, ok := from.GetH(); ok {
-		p.H = val
-	}
-
-	p.Caption = from.GetCaption()
 }
 
 // TypeID returns type id in TL schema.
@@ -3185,23 +2950,20 @@ func (p *PageBlockEmbed) GetCaption() (value PageCaption) {
 }
 
 // PageBlockEmbedPost represents TL type `pageBlockEmbedPost#f259a80b`.
-// An embedded post
-//
-// See https://core.telegram.org/constructor/pageBlockEmbedPost for reference.
 type PageBlockEmbedPost struct {
-	// Web page URL
+	// URL field of PageBlockEmbedPost.
 	URL string
-	// ID of generated webpage preview
+	// WebpageID field of PageBlockEmbedPost.
 	WebpageID int64
-	// ID of the author's photo
+	// AuthorPhotoID field of PageBlockEmbedPost.
 	AuthorPhotoID int64
-	// Author name
+	// Author field of PageBlockEmbedPost.
 	Author string
-	// Creation date
+	// Date field of PageBlockEmbedPost.
 	Date int
-	// Post contents
+	// Blocks field of PageBlockEmbedPost.
 	Blocks []PageBlockClass
-	// Caption
+	// Caption field of PageBlockEmbedPost.
 	Caption PageCaption
 }
 
@@ -3257,25 +3019,6 @@ func (p *PageBlockEmbedPost) String() string {
 	}
 	type Alias PageBlockEmbedPost
 	return fmt.Sprintf("PageBlockEmbedPost%+v", Alias(*p))
-}
-
-// FillFrom fills PageBlockEmbedPost from given interface.
-func (p *PageBlockEmbedPost) FillFrom(from interface {
-	GetURL() (value string)
-	GetWebpageID() (value int64)
-	GetAuthorPhotoID() (value int64)
-	GetAuthor() (value string)
-	GetDate() (value int)
-	GetBlocks() (value []PageBlockClass)
-	GetCaption() (value PageCaption)
-}) {
-	p.URL = from.GetURL()
-	p.WebpageID = from.GetWebpageID()
-	p.AuthorPhotoID = from.GetAuthorPhotoID()
-	p.Author = from.GetAuthor()
-	p.Date = from.GetDate()
-	p.Blocks = from.GetBlocks()
-	p.Caption = from.GetCaption()
 }
 
 // TypeID returns type id in TL schema.
@@ -3499,19 +3242,11 @@ func (p *PageBlockEmbedPost) GetCaption() (value PageCaption) {
 	return p.Caption
 }
 
-// MapBlocks returns field Blocks wrapped in PageBlockClassArray helper.
-func (p *PageBlockEmbedPost) MapBlocks() (value PageBlockClassArray) {
-	return PageBlockClassArray(p.Blocks)
-}
-
 // PageBlockCollage represents TL type `pageBlockCollage#65a0fa4d`.
-// Collage of media
-//
-// See https://core.telegram.org/constructor/pageBlockCollage for reference.
 type PageBlockCollage struct {
-	// Media elements
+	// Items field of PageBlockCollage.
 	Items []PageBlockClass
-	// Caption
+	// Caption field of PageBlockCollage.
 	Caption PageCaption
 }
 
@@ -3552,15 +3287,6 @@ func (p *PageBlockCollage) String() string {
 	}
 	type Alias PageBlockCollage
 	return fmt.Sprintf("PageBlockCollage%+v", Alias(*p))
-}
-
-// FillFrom fills PageBlockCollage from given interface.
-func (p *PageBlockCollage) FillFrom(from interface {
-	GetItems() (value []PageBlockClass)
-	GetCaption() (value PageCaption)
-}) {
-	p.Items = from.GetItems()
-	p.Caption = from.GetCaption()
 }
 
 // TypeID returns type id in TL schema.
@@ -3684,19 +3410,11 @@ func (p *PageBlockCollage) GetCaption() (value PageCaption) {
 	return p.Caption
 }
 
-// MapItems returns field Items wrapped in PageBlockClassArray helper.
-func (p *PageBlockCollage) MapItems() (value PageBlockClassArray) {
-	return PageBlockClassArray(p.Items)
-}
-
 // PageBlockSlideshow represents TL type `pageBlockSlideshow#31f9590`.
-// Slideshow
-//
-// See https://core.telegram.org/constructor/pageBlockSlideshow for reference.
 type PageBlockSlideshow struct {
-	// Slideshow items
+	// Items field of PageBlockSlideshow.
 	Items []PageBlockClass
-	// Caption
+	// Caption field of PageBlockSlideshow.
 	Caption PageCaption
 }
 
@@ -3737,15 +3455,6 @@ func (p *PageBlockSlideshow) String() string {
 	}
 	type Alias PageBlockSlideshow
 	return fmt.Sprintf("PageBlockSlideshow%+v", Alias(*p))
-}
-
-// FillFrom fills PageBlockSlideshow from given interface.
-func (p *PageBlockSlideshow) FillFrom(from interface {
-	GetItems() (value []PageBlockClass)
-	GetCaption() (value PageCaption)
-}) {
-	p.Items = from.GetItems()
-	p.Caption = from.GetCaption()
 }
 
 // TypeID returns type id in TL schema.
@@ -3869,17 +3578,9 @@ func (p *PageBlockSlideshow) GetCaption() (value PageCaption) {
 	return p.Caption
 }
 
-// MapItems returns field Items wrapped in PageBlockClassArray helper.
-func (p *PageBlockSlideshow) MapItems() (value PageBlockClassArray) {
-	return PageBlockClassArray(p.Items)
-}
-
 // PageBlockChannel represents TL type `pageBlockChannel#ef1751b5`.
-// Reference to a telegram channel
-//
-// See https://core.telegram.org/constructor/pageBlockChannel for reference.
 type PageBlockChannel struct {
-	// The channel/supergroup/chat
+	// Channel field of PageBlockChannel.
 	Channel ChatClass
 }
 
@@ -3917,13 +3618,6 @@ func (p *PageBlockChannel) String() string {
 	}
 	type Alias PageBlockChannel
 	return fmt.Sprintf("PageBlockChannel%+v", Alias(*p))
-}
-
-// FillFrom fills PageBlockChannel from given interface.
-func (p *PageBlockChannel) FillFrom(from interface {
-	GetChannel() (value ChatClass)
-}) {
-	p.Channel = from.GetChannel()
 }
 
 // TypeID returns type id in TL schema.
@@ -4015,16 +3709,10 @@ func (p *PageBlockChannel) GetChannel() (value ChatClass) {
 }
 
 // PageBlockAudio represents TL type `pageBlockAudio#804361ea`.
-// Audio
-//
-// See https://core.telegram.org/constructor/pageBlockAudio for reference.
 type PageBlockAudio struct {
-	// Audio ID (to be fetched from the container page¹ constructor
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/page
+	// AudioID field of PageBlockAudio.
 	AudioID int64
-	// Audio caption
+	// Caption field of PageBlockAudio.
 	Caption PageCaption
 }
 
@@ -4065,15 +3753,6 @@ func (p *PageBlockAudio) String() string {
 	}
 	type Alias PageBlockAudio
 	return fmt.Sprintf("PageBlockAudio%+v", Alias(*p))
-}
-
-// FillFrom fills PageBlockAudio from given interface.
-func (p *PageBlockAudio) FillFrom(from interface {
-	GetAudioID() (value int64)
-	GetCaption() (value PageCaption)
-}) {
-	p.AudioID = from.GetAudioID()
-	p.Caption = from.GetCaption()
 }
 
 // TypeID returns type id in TL schema.
@@ -4180,11 +3859,8 @@ func (p *PageBlockAudio) GetCaption() (value PageCaption) {
 }
 
 // PageBlockKicker represents TL type `pageBlockKicker#1e148390`.
-// Kicker
-//
-// See https://core.telegram.org/constructor/pageBlockKicker for reference.
 type PageBlockKicker struct {
-	// Contents
+	// Text field of PageBlockKicker.
 	Text RichTextClass
 }
 
@@ -4222,13 +3898,6 @@ func (p *PageBlockKicker) String() string {
 	}
 	type Alias PageBlockKicker
 	return fmt.Sprintf("PageBlockKicker%+v", Alias(*p))
-}
-
-// FillFrom fills PageBlockKicker from given interface.
-func (p *PageBlockKicker) FillFrom(from interface {
-	GetText() (value RichTextClass)
-}) {
-	p.Text = from.GetText()
 }
 
 // TypeID returns type id in TL schema.
@@ -4320,22 +3989,16 @@ func (p *PageBlockKicker) GetText() (value RichTextClass) {
 }
 
 // PageBlockTable represents TL type `pageBlockTable#bf4dea82`.
-// Table
-//
-// See https://core.telegram.org/constructor/pageBlockTable for reference.
 type PageBlockTable struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of PageBlockTable.
 	Flags bin.Fields
-	// Does the table have a visible border?
+	// Bordered field of PageBlockTable.
 	Bordered bool
-	// Is the table striped?
+	// Striped field of PageBlockTable.
 	Striped bool
-	// Title
+	// Title field of PageBlockTable.
 	Title RichTextClass
-	// Table rows
+	// Rows field of PageBlockTable.
 	Rows []PageTableRow
 }
 
@@ -4385,19 +4048,6 @@ func (p *PageBlockTable) String() string {
 	}
 	type Alias PageBlockTable
 	return fmt.Sprintf("PageBlockTable%+v", Alias(*p))
-}
-
-// FillFrom fills PageBlockTable from given interface.
-func (p *PageBlockTable) FillFrom(from interface {
-	GetBordered() (value bool)
-	GetStriped() (value bool)
-	GetTitle() (value RichTextClass)
-	GetRows() (value []PageTableRow)
-}) {
-	p.Bordered = from.GetBordered()
-	p.Striped = from.GetStriped()
-	p.Title = from.GetTitle()
-	p.Rows = from.GetRows()
 }
 
 // TypeID returns type id in TL schema.
@@ -4593,11 +4243,8 @@ func (p *PageBlockTable) GetRows() (value []PageTableRow) {
 }
 
 // PageBlockOrderedList represents TL type `pageBlockOrderedList#9a8ae1e1`.
-// Ordered list of IV blocks
-//
-// See https://core.telegram.org/constructor/pageBlockOrderedList for reference.
 type PageBlockOrderedList struct {
-	// List items
+	// Items field of PageBlockOrderedList.
 	Items []PageListOrderedItemClass
 }
 
@@ -4635,13 +4282,6 @@ func (p *PageBlockOrderedList) String() string {
 	}
 	type Alias PageBlockOrderedList
 	return fmt.Sprintf("PageBlockOrderedList%+v", Alias(*p))
-}
-
-// FillFrom fills PageBlockOrderedList from given interface.
-func (p *PageBlockOrderedList) FillFrom(from interface {
-	GetItems() (value []PageListOrderedItemClass)
-}) {
-	p.Items = from.GetItems()
 }
 
 // TypeID returns type id in TL schema.
@@ -4745,26 +4385,15 @@ func (p *PageBlockOrderedList) GetItems() (value []PageListOrderedItemClass) {
 	return p.Items
 }
 
-// MapItems returns field Items wrapped in PageListOrderedItemClassArray helper.
-func (p *PageBlockOrderedList) MapItems() (value PageListOrderedItemClassArray) {
-	return PageListOrderedItemClassArray(p.Items)
-}
-
 // PageBlockDetails represents TL type `pageBlockDetails#76768bed`.
-// A collapsible details block
-//
-// See https://core.telegram.org/constructor/pageBlockDetails for reference.
 type PageBlockDetails struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of PageBlockDetails.
 	Flags bin.Fields
-	// Whether the block is open by default
+	// Open field of PageBlockDetails.
 	Open bool
-	// Block contents
+	// Blocks field of PageBlockDetails.
 	Blocks []PageBlockClass
-	// Always visible heading for the block
+	// Title field of PageBlockDetails.
 	Title RichTextClass
 }
 
@@ -4811,17 +4440,6 @@ func (p *PageBlockDetails) String() string {
 	}
 	type Alias PageBlockDetails
 	return fmt.Sprintf("PageBlockDetails%+v", Alias(*p))
-}
-
-// FillFrom fills PageBlockDetails from given interface.
-func (p *PageBlockDetails) FillFrom(from interface {
-	GetOpen() (value bool)
-	GetBlocks() (value []PageBlockClass)
-	GetTitle() (value RichTextClass)
-}) {
-	p.Open = from.GetOpen()
-	p.Blocks = from.GetBlocks()
-	p.Title = from.GetTitle()
 }
 
 // TypeID returns type id in TL schema.
@@ -4991,19 +4609,11 @@ func (p *PageBlockDetails) GetTitle() (value RichTextClass) {
 	return p.Title
 }
 
-// MapBlocks returns field Blocks wrapped in PageBlockClassArray helper.
-func (p *PageBlockDetails) MapBlocks() (value PageBlockClassArray) {
-	return PageBlockClassArray(p.Blocks)
-}
-
 // PageBlockRelatedArticles represents TL type `pageBlockRelatedArticles#16115a96`.
-// Related articles
-//
-// See https://core.telegram.org/constructor/pageBlockRelatedArticles for reference.
 type PageBlockRelatedArticles struct {
-	// Title
+	// Title field of PageBlockRelatedArticles.
 	Title RichTextClass
-	// Related articles
+	// Articles field of PageBlockRelatedArticles.
 	Articles []PageRelatedArticle
 }
 
@@ -5044,15 +4654,6 @@ func (p *PageBlockRelatedArticles) String() string {
 	}
 	type Alias PageBlockRelatedArticles
 	return fmt.Sprintf("PageBlockRelatedArticles%+v", Alias(*p))
-}
-
-// FillFrom fills PageBlockRelatedArticles from given interface.
-func (p *PageBlockRelatedArticles) FillFrom(from interface {
-	GetTitle() (value RichTextClass)
-	GetArticles() (value []PageRelatedArticle)
-}) {
-	p.Title = from.GetTitle()
-	p.Articles = from.GetArticles()
 }
 
 // TypeID returns type id in TL schema.
@@ -5179,19 +4780,16 @@ func (p *PageBlockRelatedArticles) GetArticles() (value []PageRelatedArticle) {
 }
 
 // PageBlockMap represents TL type `pageBlockMap#a44f3ef6`.
-// A map
-//
-// See https://core.telegram.org/constructor/pageBlockMap for reference.
 type PageBlockMap struct {
-	// Location of the map center
+	// Geo field of PageBlockMap.
 	Geo GeoPointClass
-	// Map zoom level; 13-20
+	// Zoom field of PageBlockMap.
 	Zoom int
-	// Map width in pixels before applying scale; 16-102
+	// W field of PageBlockMap.
 	W int
-	// Map height in pixels before applying scale; 16-1024
+	// H field of PageBlockMap.
 	H int
-	// Caption
+	// Caption field of PageBlockMap.
 	Caption PageCaption
 }
 
@@ -5241,21 +4839,6 @@ func (p *PageBlockMap) String() string {
 	}
 	type Alias PageBlockMap
 	return fmt.Sprintf("PageBlockMap%+v", Alias(*p))
-}
-
-// FillFrom fills PageBlockMap from given interface.
-func (p *PageBlockMap) FillFrom(from interface {
-	GetGeo() (value GeoPointClass)
-	GetZoom() (value int)
-	GetW() (value int)
-	GetH() (value int)
-	GetCaption() (value PageCaption)
-}) {
-	p.Geo = from.GetGeo()
-	p.Zoom = from.GetZoom()
-	p.W = from.GetW()
-	p.H = from.GetH()
-	p.Caption = from.GetCaption()
 }
 
 // TypeID returns type id in TL schema.
@@ -5430,8 +5013,6 @@ func (p *PageBlockMap) GetCaption() (value PageCaption) {
 const PageBlockClassName = "PageBlock"
 
 // PageBlockClass represents PageBlock generic type.
-//
-// See https://core.telegram.org/type/PageBlock for reference.
 //
 // Constructors:
 //   - [PageBlockUnsupported]

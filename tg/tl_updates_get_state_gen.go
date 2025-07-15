@@ -32,9 +32,6 @@ var (
 )
 
 // UpdatesGetStateRequest represents TL type `updates.getState#edd4882a`.
-// Returns a current state of updates.
-//
-// See https://core.telegram.org/method/updates.getState for reference.
 type UpdatesGetStateRequest struct {
 }
 
@@ -129,10 +126,6 @@ func (g *UpdatesGetStateRequest) DecodeBare(b *bin.Buffer) error {
 }
 
 // UpdatesGetState invokes method updates.getState#edd4882a returning error if any.
-// Returns a current state of updates.
-//
-// See https://core.telegram.org/method/updates.getState for reference.
-// Can be used by bots.
 func (c *Client) UpdatesGetState(ctx context.Context) (*UpdatesState, error) {
 	var result UpdatesState
 

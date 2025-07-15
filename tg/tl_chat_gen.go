@@ -32,11 +32,8 @@ var (
 )
 
 // ChatEmpty represents TL type `chatEmpty#29562865`.
-// Empty constructor, group doesn't exist
-//
-// See https://core.telegram.org/constructor/chatEmpty for reference.
 type ChatEmpty struct {
-	// Group identifier
+	// ID field of ChatEmpty.
 	ID int64
 }
 
@@ -74,13 +71,6 @@ func (c *ChatEmpty) String() string {
 	}
 	type Alias ChatEmpty
 	return fmt.Sprintf("ChatEmpty%+v", Alias(*c))
-}
-
-// FillFrom fills ChatEmpty from given interface.
-func (c *ChatEmpty) FillFrom(from interface {
-	GetID() (value int64)
-}) {
-	c.ID = from.GetID()
 }
 
 // TypeID returns type id in TL schema.
@@ -167,76 +157,42 @@ func (c *ChatEmpty) GetID() (value int64) {
 }
 
 // Chat represents TL type `chat#41cbf256`.
-// Info about a group.
-// When updating the local peer database¹, all fields from the newly received
-// constructor take priority over the old constructor cached locally (including by
-// removing fields that aren't set in the new constructor).
-// See here »¹ for an implementation of the logic to use when updating the local user
-// peer database².
-//
-// Links:
-//  1. https://core.telegram.org/api/peers
-//  2. https://github.com/tdlib/td/blob/a24af0992245f838f2b4b418a0a2d5fa9caa27b5/td/telegram/ChatManager.cpp#L5152
-//  3. https://core.telegram.org/api/peers
-//
-// See https://core.telegram.org/constructor/chat for reference.
 type Chat struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of Chat.
 	Flags bin.Fields
-	// Whether the current user is the creator of the group
+	// Creator field of Chat.
 	Creator bool
-	// Whether the current user has left the group
+	// Left field of Chat.
 	Left bool
-	// Whether the group was migrated¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/channel
+	// Deactivated field of Chat.
 	Deactivated bool
-	// Whether a group call is currently active
+	// CallActive field of Chat.
 	CallActive bool
-	// Whether there's anyone in the group call
+	// CallNotEmpty field of Chat.
 	CallNotEmpty bool
-	// Whether this group is protected¹, thus does not allow forwarding messages from it
-	//
-	// Links:
-	//  1) https://telegram.org/blog/protected-content-delete-by-date-and-more
+	// Noforwards field of Chat.
 	Noforwards bool
-	// ID of the group, see here »¹ for more info
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/peers#peer-id
+	// ID field of Chat.
 	ID int64
-	// Title
+	// Title field of Chat.
 	Title string
-	// Chat photo
+	// Photo field of Chat.
 	Photo ChatPhotoClass
-	// Participant count
+	// ParticipantsCount field of Chat.
 	ParticipantsCount int
-	// Date of creation of the group
+	// Date field of Chat.
 	Date int
-	// Used in basic groups to reorder updates and make sure that all of them were received.
+	// Version field of Chat.
 	Version int
-	// Means this chat was upgraded¹ to a supergroup
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/channel
+	// MigratedTo field of Chat.
 	//
 	// Use SetMigratedTo and GetMigratedTo helpers.
 	MigratedTo InputChannelClass
-	// Admin rights¹ of the user in the group
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/rights
+	// AdminRights field of Chat.
 	//
 	// Use SetAdminRights and GetAdminRights helpers.
 	AdminRights ChatAdminRights
-	// Default banned rights¹ of all users in the group
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/rights
+	// DefaultBannedRights field of Chat.
 	//
 	// Use SetDefaultBannedRights and GetDefaultBannedRights helpers.
 	DefaultBannedRights ChatBannedRights
@@ -321,50 +277,6 @@ func (c *Chat) String() string {
 	}
 	type Alias Chat
 	return fmt.Sprintf("Chat%+v", Alias(*c))
-}
-
-// FillFrom fills Chat from given interface.
-func (c *Chat) FillFrom(from interface {
-	GetCreator() (value bool)
-	GetLeft() (value bool)
-	GetDeactivated() (value bool)
-	GetCallActive() (value bool)
-	GetCallNotEmpty() (value bool)
-	GetNoforwards() (value bool)
-	GetID() (value int64)
-	GetTitle() (value string)
-	GetPhoto() (value ChatPhotoClass)
-	GetParticipantsCount() (value int)
-	GetDate() (value int)
-	GetVersion() (value int)
-	GetMigratedTo() (value InputChannelClass, ok bool)
-	GetAdminRights() (value ChatAdminRights, ok bool)
-	GetDefaultBannedRights() (value ChatBannedRights, ok bool)
-}) {
-	c.Creator = from.GetCreator()
-	c.Left = from.GetLeft()
-	c.Deactivated = from.GetDeactivated()
-	c.CallActive = from.GetCallActive()
-	c.CallNotEmpty = from.GetCallNotEmpty()
-	c.Noforwards = from.GetNoforwards()
-	c.ID = from.GetID()
-	c.Title = from.GetTitle()
-	c.Photo = from.GetPhoto()
-	c.ParticipantsCount = from.GetParticipantsCount()
-	c.Date = from.GetDate()
-	c.Version = from.GetVersion()
-	if val, ok := from.GetMigratedTo(); ok {
-		c.MigratedTo = val
-	}
-
-	if val, ok := from.GetAdminRights(); ok {
-		c.AdminRights = val
-	}
-
-	if val, ok := from.GetDefaultBannedRights(); ok {
-		c.DefaultBannedRights = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -850,14 +762,10 @@ func (c *Chat) GetDefaultBannedRights() (value ChatBannedRights, ok bool) {
 }
 
 // ChatForbidden represents TL type `chatForbidden#6592a1a7`.
-// A group to which the user has no access. E.g., because the user was kicked from the
-// group.
-//
-// See https://core.telegram.org/constructor/chatForbidden for reference.
 type ChatForbidden struct {
-	// User identifier
+	// ID field of ChatForbidden.
 	ID int64
-	// Group name
+	// Title field of ChatForbidden.
 	Title string
 }
 
@@ -898,15 +806,6 @@ func (c *ChatForbidden) String() string {
 	}
 	type Alias ChatForbidden
 	return fmt.Sprintf("ChatForbidden%+v", Alias(*c))
-}
-
-// FillFrom fills ChatForbidden from given interface.
-func (c *ChatForbidden) FillFrom(from interface {
-	GetID() (value int64)
-	GetTitle() (value string)
-}) {
-	c.ID = from.GetID()
-	c.Title = from.GetTitle()
 }
 
 // TypeID returns type id in TL schema.
@@ -1013,156 +912,58 @@ func (c *ChatForbidden) GetTitle() (value string) {
 }
 
 // Channel represents TL type `channel#fe685355`.
-// Channel/supergroup info
-// When updating the local peer database¹, all fields from the newly received
-// constructor take priority over the old constructor cached locally (including by
-// removing fields that aren't set in the new constructor).
-// The only exception to the above rule is when the min flag is set, in which case only
-// the following fields must be applied over any locally stored version:
-// See here »¹ for an implementation of the logic to use when updating the local user
-// peer database².
-//
-// Links:
-//  1. https://core.telegram.org/api/peers
-//  2. https://github.com/tdlib/td/blob/a24af0992245f838f2b4b418a0a2d5fa9caa27b5/td/telegram/ChatManager.cpp#L8329
-//  3. https://core.telegram.org/api/peers
-//
-// See https://core.telegram.org/constructor/channel for reference.
 type Channel struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of Channel.
 	Flags bin.Fields
-	// Whether the current user is the creator of this channel
+	// Creator field of Channel.
 	Creator bool
-	// Whether the current user has left or is not a member of this channel
+	// Left field of Channel.
 	Left bool
-	// Is this a channel?
+	// Broadcast field of Channel.
 	Broadcast bool
-	// Is this channel verified by telegram?
+	// Verified field of Channel.
 	Verified bool
-	// Is this a supergroup? Changes to this flag should invalidate the local channelFull¹
-	// cache for this channel/supergroup ID, see here »² for more info.
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/channelFull
-	//  2) https://core.telegram.org/api/peers#full-info-database
+	// Megagroup field of Channel.
 	Megagroup bool
-	// Whether viewing/writing in this channel for a reason (see restriction_reason)
+	// Restricted field of Channel.
 	Restricted bool
-	// Whether signatures are enabled (channels)
+	// Signatures field of Channel.
 	Signatures bool
-	// See min¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/min
+	// Min field of Channel.
 	Min bool
-	// This channel/supergroup is probably a scam Changes to this flag should invalidate the
-	// local channelFull¹ cache for this channel/supergroup ID, see here »² for more info.
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/channelFull
-	//  2) https://core.telegram.org/api/peers#full-info-database
+	// Scam field of Channel.
 	Scam bool
-	// Whether this channel has a linked discussion group »¹ (or this supergroup is a
-	// channel's discussion group). The actual ID of the linked channel/supergroup is
-	// contained in channelFull².linked_chat_id. Changes to this flag should invalidate the
-	// local channelFull³ cache for this channel/supergroup ID, see here »⁴ for more info.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/discussion
-	//  2) https://core.telegram.org/constructor/channelFull
-	//  3) https://core.telegram.org/constructor/channelFull
-	//  4) https://core.telegram.org/api/peers#full-info-database
+	// HasLink field of Channel.
 	HasLink bool
-	// Whether this chanel has a geoposition
+	// HasGeo field of Channel.
 	HasGeo bool
-	// Whether slow mode is enabled for groups to prevent flood in chat. Changes to this flag
-	// should invalidate the local channelFull¹ cache for this channel/supergroup ID, see
-	// here »² for more info.
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/channelFull
-	//  2) https://core.telegram.org/api/peers#full-info-database
+	// SlowmodeEnabled field of Channel.
 	SlowmodeEnabled bool
-	// Whether a group call or livestream is currently active
+	// CallActive field of Channel.
 	CallActive bool
-	// Whether there's anyone in the group call or livestream
+	// CallNotEmpty field of Channel.
 	CallNotEmpty bool
-	// If set, this supergroup/channel¹ was reported by many users as a fake or scam: be
-	// careful when interacting with it. Changes to this flag should invalidate the local
-	// channelFull² cache for this channel/supergroup ID, see here »³ for more info.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/channel
-	//  2) https://core.telegram.org/constructor/channelFull
-	//  3) https://core.telegram.org/api/peers#full-info-database
+	// Fake field of Channel.
 	Fake bool
-	// Whether this supergroup¹ is a gigagroupChanges to this flag should invalidate the
-	// local channelFull² cache for this channel/supergroup ID, see here »³ for more info.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/channel
-	//  2) https://core.telegram.org/constructor/channelFull
-	//  3) https://core.telegram.org/api/peers#full-info-database
+	// Gigagroup field of Channel.
 	Gigagroup bool
-	// Whether this channel or group is protected¹, thus does not allow forwarding messages
-	// from it
-	//
-	// Links:
-	//  1) https://telegram.org/blog/protected-content-delete-by-date-and-more
+	// Noforwards field of Channel.
 	Noforwards bool
-	// Whether a user needs to join the supergroup before they can send messages: can be
-	// false only for discussion groups »¹, toggle using channels.toggleJoinToSend²Changes
-	// to this flag should invalidate the local channelFull³ cache for this
-	// channel/supergroup ID, see here »⁴ for more info.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/discussion
-	//  2) https://core.telegram.org/method/channels.toggleJoinToSend
-	//  3) https://core.telegram.org/constructor/channelFull
-	//  4) https://core.telegram.org/api/peers#full-info-database
+	// JoinToSend field of Channel.
 	JoinToSend bool
-	// Whether a user's join request will have to be approved by administrators¹, toggle
-	// using channels.toggleJoinToSend²Changes to this flag should invalidate the local
-	// channelFull³ cache for this channel/supergroup ID, see here »⁴ for more info.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/invites#join-requests
-	//  2) https://core.telegram.org/method/channels.toggleJoinRequest
-	//  3) https://core.telegram.org/constructor/channelFull
-	//  4) https://core.telegram.org/api/peers#full-info-database
+	// JoinRequest field of Channel.
 	JoinRequest bool
-	// Whether this supergroup is a forum¹. Changes to this flag should invalidate the local
-	// channelFull² cache for this channel/supergroup ID, see here »³ for more info.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/forum
-	//  2) https://core.telegram.org/constructor/channelFull
-	//  3) https://core.telegram.org/api/peers#full-info-database
+	// Forum field of Channel.
 	Forum bool
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags2 field of Channel.
 	Flags2 bin.Fields
-	// Whether we have hidden all stories posted by this channel »¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/stories#hiding-stories-of-other-users
+	// StoriesHidden field of Channel.
 	StoriesHidden bool
-	// If set, indicates that the stories_hidden flag was not populated, and its value must
-	// cannot be relied on; use the previously cached value, or re-fetch the constructor
-	// using channels.getChannels¹ to obtain the latest value of the stories_hidden flag.
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/channels.getChannels
+	// StoriesHiddenMin field of Channel.
 	StoriesHiddenMin bool
-	// No stories from the channel are visible.
+	// StoriesUnavailable field of Channel.
 	StoriesUnavailable bool
-	// If set, messages sent by admins to this channel will link to the admin's profile (just
-	// like with groups).
+	// SignatureProfiles field of Channel.
 	SignatureProfiles bool
 	// Autotranslation field of Channel.
 	Autotranslation bool
@@ -1172,111 +973,67 @@ type Channel struct {
 	Monoforum bool
 	// ForumTabs field of Channel.
 	ForumTabs bool
-	// ID of the channel, see here »¹ for more info
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/peers#peer-id
+	// ID field of Channel.
 	ID int64
-	// Access hash, see here »¹ for more info
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/peers#access-hash
+	// AccessHash field of Channel.
 	//
 	// Use SetAccessHash and GetAccessHash helpers.
 	AccessHash int64
-	// Title
+	// Title field of Channel.
 	Title string
-	// Main active username.
+	// Username field of Channel.
 	//
 	// Use SetUsername and GetUsername helpers.
 	Username string
-	// Profile photo
+	// Photo field of Channel.
 	Photo ChatPhotoClass
-	// Date when the user joined the supergroup/channel, or if the user isn't a member, its
-	// creation date
+	// Date field of Channel.
 	Date int
-	// Contains the reason why access to this channel must be restricted. Changes to this
-	// flag should invalidate the local channelFull¹ cache for this channel/supergroup ID,
-	// see here »² for more info.
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/channelFull
-	//  2) https://core.telegram.org/api/peers#full-info-database
+	// RestrictionReason field of Channel.
 	//
 	// Use SetRestrictionReason and GetRestrictionReason helpers.
 	RestrictionReason []RestrictionReason
-	// Admin rights of the user in this channel (see rights¹)
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/rights
+	// AdminRights field of Channel.
 	//
 	// Use SetAdminRights and GetAdminRights helpers.
 	AdminRights ChatAdminRights
-	// Banned rights of the user in this channel (see rights¹)
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/rights
+	// BannedRights field of Channel.
 	//
 	// Use SetBannedRights and GetBannedRights helpers.
 	BannedRights ChatBannedRights
-	// Default chat rights (see rights¹)
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/rights
+	// DefaultBannedRights field of Channel.
 	//
 	// Use SetDefaultBannedRights and GetDefaultBannedRights helpers.
 	DefaultBannedRights ChatBannedRights
-	// Participant count
+	// ParticipantsCount field of Channel.
 	//
 	// Use SetParticipantsCount and GetParticipantsCount helpers.
 	ParticipantsCount int
-	// Additional usernames
+	// Usernames field of Channel.
 	//
 	// Use SetUsernames and GetUsernames helpers.
 	Usernames []Username
-	// ID of the maximum read story¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/stories
+	// StoriesMaxID field of Channel.
 	//
 	// Use SetStoriesMaxID and GetStoriesMaxID helpers.
 	StoriesMaxID int
-	// The channel's accent color¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/colors
+	// Color field of Channel.
 	//
 	// Use SetColor and GetColor helpers.
 	Color PeerColor
-	// The channel's profile color¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/colors
+	// ProfileColor field of Channel.
 	//
 	// Use SetProfileColor and GetProfileColor helpers.
 	ProfileColor PeerColor
-	// Emoji status¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/emoji-status
+	// EmojiStatus field of Channel.
 	//
 	// Use SetEmojiStatus and GetEmojiStatus helpers.
 	EmojiStatus EmojiStatusClass
-	// Boost level¹. Changes to this flag should invalidate the local channelFull² cache
-	// for this channel/supergroup ID, see here »³ for more info.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/boost
-	//  2) https://core.telegram.org/constructor/channelFull
-	//  3) https://core.telegram.org/api/peers#full-info-database
+	// Level field of Channel.
 	//
 	// Use SetLevel and GetLevel helpers.
 	Level int
-	// Expiration date of the Telegram Star subscription »¹ the current user has bought to
-	// gain access to this channel.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/stars#star-subscriptions
+	// SubscriptionUntilDate field of Channel.
 	//
 	// Use SetSubscriptionUntilDate and GetSubscriptionUntilDate helpers.
 	SubscriptionUntilDate int
@@ -1478,160 +1235,6 @@ func (c *Channel) String() string {
 	}
 	type Alias Channel
 	return fmt.Sprintf("Channel%+v", Alias(*c))
-}
-
-// FillFrom fills Channel from given interface.
-func (c *Channel) FillFrom(from interface {
-	GetCreator() (value bool)
-	GetLeft() (value bool)
-	GetBroadcast() (value bool)
-	GetVerified() (value bool)
-	GetMegagroup() (value bool)
-	GetRestricted() (value bool)
-	GetSignatures() (value bool)
-	GetMin() (value bool)
-	GetScam() (value bool)
-	GetHasLink() (value bool)
-	GetHasGeo() (value bool)
-	GetSlowmodeEnabled() (value bool)
-	GetCallActive() (value bool)
-	GetCallNotEmpty() (value bool)
-	GetFake() (value bool)
-	GetGigagroup() (value bool)
-	GetNoforwards() (value bool)
-	GetJoinToSend() (value bool)
-	GetJoinRequest() (value bool)
-	GetForum() (value bool)
-	GetStoriesHidden() (value bool)
-	GetStoriesHiddenMin() (value bool)
-	GetStoriesUnavailable() (value bool)
-	GetSignatureProfiles() (value bool)
-	GetAutotranslation() (value bool)
-	GetBroadcastMessagesAllowed() (value bool)
-	GetMonoforum() (value bool)
-	GetForumTabs() (value bool)
-	GetID() (value int64)
-	GetAccessHash() (value int64, ok bool)
-	GetTitle() (value string)
-	GetUsername() (value string, ok bool)
-	GetPhoto() (value ChatPhotoClass)
-	GetDate() (value int)
-	GetRestrictionReason() (value []RestrictionReason, ok bool)
-	GetAdminRights() (value ChatAdminRights, ok bool)
-	GetBannedRights() (value ChatBannedRights, ok bool)
-	GetDefaultBannedRights() (value ChatBannedRights, ok bool)
-	GetParticipantsCount() (value int, ok bool)
-	GetUsernames() (value []Username, ok bool)
-	GetStoriesMaxID() (value int, ok bool)
-	GetColor() (value PeerColor, ok bool)
-	GetProfileColor() (value PeerColor, ok bool)
-	GetEmojiStatus() (value EmojiStatusClass, ok bool)
-	GetLevel() (value int, ok bool)
-	GetSubscriptionUntilDate() (value int, ok bool)
-	GetBotVerificationIcon() (value int64, ok bool)
-	GetSendPaidMessagesStars() (value int64, ok bool)
-	GetLinkedMonoforumID() (value int64, ok bool)
-}) {
-	c.Creator = from.GetCreator()
-	c.Left = from.GetLeft()
-	c.Broadcast = from.GetBroadcast()
-	c.Verified = from.GetVerified()
-	c.Megagroup = from.GetMegagroup()
-	c.Restricted = from.GetRestricted()
-	c.Signatures = from.GetSignatures()
-	c.Min = from.GetMin()
-	c.Scam = from.GetScam()
-	c.HasLink = from.GetHasLink()
-	c.HasGeo = from.GetHasGeo()
-	c.SlowmodeEnabled = from.GetSlowmodeEnabled()
-	c.CallActive = from.GetCallActive()
-	c.CallNotEmpty = from.GetCallNotEmpty()
-	c.Fake = from.GetFake()
-	c.Gigagroup = from.GetGigagroup()
-	c.Noforwards = from.GetNoforwards()
-	c.JoinToSend = from.GetJoinToSend()
-	c.JoinRequest = from.GetJoinRequest()
-	c.Forum = from.GetForum()
-	c.StoriesHidden = from.GetStoriesHidden()
-	c.StoriesHiddenMin = from.GetStoriesHiddenMin()
-	c.StoriesUnavailable = from.GetStoriesUnavailable()
-	c.SignatureProfiles = from.GetSignatureProfiles()
-	c.Autotranslation = from.GetAutotranslation()
-	c.BroadcastMessagesAllowed = from.GetBroadcastMessagesAllowed()
-	c.Monoforum = from.GetMonoforum()
-	c.ForumTabs = from.GetForumTabs()
-	c.ID = from.GetID()
-	if val, ok := from.GetAccessHash(); ok {
-		c.AccessHash = val
-	}
-
-	c.Title = from.GetTitle()
-	if val, ok := from.GetUsername(); ok {
-		c.Username = val
-	}
-
-	c.Photo = from.GetPhoto()
-	c.Date = from.GetDate()
-	if val, ok := from.GetRestrictionReason(); ok {
-		c.RestrictionReason = val
-	}
-
-	if val, ok := from.GetAdminRights(); ok {
-		c.AdminRights = val
-	}
-
-	if val, ok := from.GetBannedRights(); ok {
-		c.BannedRights = val
-	}
-
-	if val, ok := from.GetDefaultBannedRights(); ok {
-		c.DefaultBannedRights = val
-	}
-
-	if val, ok := from.GetParticipantsCount(); ok {
-		c.ParticipantsCount = val
-	}
-
-	if val, ok := from.GetUsernames(); ok {
-		c.Usernames = val
-	}
-
-	if val, ok := from.GetStoriesMaxID(); ok {
-		c.StoriesMaxID = val
-	}
-
-	if val, ok := from.GetColor(); ok {
-		c.Color = val
-	}
-
-	if val, ok := from.GetProfileColor(); ok {
-		c.ProfileColor = val
-	}
-
-	if val, ok := from.GetEmojiStatus(); ok {
-		c.EmojiStatus = val
-	}
-
-	if val, ok := from.GetLevel(); ok {
-		c.Level = val
-	}
-
-	if val, ok := from.GetSubscriptionUntilDate(); ok {
-		c.SubscriptionUntilDate = val
-	}
-
-	if val, ok := from.GetBotVerificationIcon(); ok {
-		c.BotVerificationIcon = val
-	}
-
-	if val, ok := from.GetSendPaidMessagesStars(); ok {
-		c.SendPaidMessagesStars = val
-	}
-
-	if val, ok := from.GetLinkedMonoforumID(); ok {
-		c.LinkedMonoforumID = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -3235,27 +2838,20 @@ func (c *Channel) GetLinkedMonoforumID() (value int64, ok bool) {
 }
 
 // ChannelForbidden represents TL type `channelForbidden#17d493d5`.
-// Indicates a channel/supergroup we can't access because we were banned, or for some
-// other reason.
-//
-// See https://core.telegram.org/constructor/channelForbidden for reference.
 type ChannelForbidden struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of ChannelForbidden.
 	Flags bin.Fields
-	// Is this a channel
+	// Broadcast field of ChannelForbidden.
 	Broadcast bool
-	// Is this a supergroup
+	// Megagroup field of ChannelForbidden.
 	Megagroup bool
-	// Channel ID
+	// ID field of ChannelForbidden.
 	ID int64
-	// Access hash
+	// AccessHash field of ChannelForbidden.
 	AccessHash int64
-	// Title
+	// Title field of ChannelForbidden.
 	Title string
-	// The ban is valid until the specified date
+	// UntilDate field of ChannelForbidden.
 	//
 	// Use SetUntilDate and GetUntilDate helpers.
 	UntilDate int
@@ -3313,26 +2909,6 @@ func (c *ChannelForbidden) String() string {
 	}
 	type Alias ChannelForbidden
 	return fmt.Sprintf("ChannelForbidden%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelForbidden from given interface.
-func (c *ChannelForbidden) FillFrom(from interface {
-	GetBroadcast() (value bool)
-	GetMegagroup() (value bool)
-	GetID() (value int64)
-	GetAccessHash() (value int64)
-	GetTitle() (value string)
-	GetUntilDate() (value int, ok bool)
-}) {
-	c.Broadcast = from.GetBroadcast()
-	c.Megagroup = from.GetMegagroup()
-	c.ID = from.GetID()
-	c.AccessHash = from.GetAccessHash()
-	c.Title = from.GetTitle()
-	if val, ok := from.GetUntilDate(); ok {
-		c.UntilDate = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -3568,8 +3144,6 @@ const ChatClassName = "Chat"
 
 // ChatClass represents Chat generic type.
 //
-// See https://core.telegram.org/type/Chat for reference.
-//
 // Constructors:
 //   - [ChatEmpty]
 //   - [Chat]
@@ -3609,252 +3183,8 @@ type ChatClass interface {
 	// Zero returns true if current object has a zero value.
 	Zero() bool
 
-	// Group identifier
+	// ID field of ChatEmpty.
 	GetID() (value int64)
-
-	// AsNotEmpty tries to map ChatClass to NotEmptyChat.
-	AsNotEmpty() (NotEmptyChat, bool)
-	// AsNotForbidden tries to map ChatClass to NotForbiddenChat.
-	AsNotForbidden() (NotForbiddenChat, bool)
-	// AsFull tries to map ChatClass to FullChat.
-	AsFull() (FullChat, bool)
-}
-
-// AsInputPeer tries to map Chat to InputPeerChat.
-func (c *Chat) AsInputPeer() *InputPeerChat {
-	value := new(InputPeerChat)
-	value.ChatID = c.GetID()
-
-	return value
-}
-
-// AsInputPeer tries to map Channel to InputPeerChannel.
-func (c *Channel) AsInputPeer() *InputPeerChannel {
-	value := new(InputPeerChannel)
-	value.ChannelID = c.GetID()
-	if fieldValue, ok := c.GetAccessHash(); ok {
-		value.AccessHash = fieldValue
-	}
-
-	return value
-}
-
-// AsInput tries to map Channel to InputChannel.
-func (c *Channel) AsInput() *InputChannel {
-	value := new(InputChannel)
-	value.ChannelID = c.GetID()
-	if fieldValue, ok := c.GetAccessHash(); ok {
-		value.AccessHash = fieldValue
-	}
-
-	return value
-}
-
-// NotEmptyChat represents NotEmpty subset of ChatClass.
-type NotEmptyChat interface {
-	bin.Encoder
-	bin.Decoder
-	bin.BareEncoder
-	bin.BareDecoder
-	construct() ChatClass
-
-	// TypeID returns type id in TL schema.
-	//
-	// See https://core.telegram.org/mtproto/TL-tl#remarks.
-	TypeID() uint32
-	// TypeName returns name of type in TL schema.
-	TypeName() string
-	// String implements fmt.Stringer.
-	String() string
-	// Zero returns true if current object has a zero value.
-	Zero() bool
-
-	// ID of the group, see here »¹ for more info
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/peers#peer-id
-	GetID() (value int64)
-
-	// Title
-	GetTitle() (value string)
-}
-
-// AsNotEmpty tries to map ChatEmpty to NotEmptyChat.
-func (c *ChatEmpty) AsNotEmpty() (NotEmptyChat, bool) {
-	value, ok := (ChatClass(c)).(NotEmptyChat)
-	return value, ok
-}
-
-// AsNotEmpty tries to map Chat to NotEmptyChat.
-func (c *Chat) AsNotEmpty() (NotEmptyChat, bool) {
-	value, ok := (ChatClass(c)).(NotEmptyChat)
-	return value, ok
-}
-
-// AsNotEmpty tries to map ChatForbidden to NotEmptyChat.
-func (c *ChatForbidden) AsNotEmpty() (NotEmptyChat, bool) {
-	value, ok := (ChatClass(c)).(NotEmptyChat)
-	return value, ok
-}
-
-// AsNotEmpty tries to map Channel to NotEmptyChat.
-func (c *Channel) AsNotEmpty() (NotEmptyChat, bool) {
-	value, ok := (ChatClass(c)).(NotEmptyChat)
-	return value, ok
-}
-
-// AsNotEmpty tries to map ChannelForbidden to NotEmptyChat.
-func (c *ChannelForbidden) AsNotEmpty() (NotEmptyChat, bool) {
-	value, ok := (ChatClass(c)).(NotEmptyChat)
-	return value, ok
-}
-
-// NotForbiddenChat represents NotForbidden subset of ChatClass.
-type NotForbiddenChat interface {
-	bin.Encoder
-	bin.Decoder
-	bin.BareEncoder
-	bin.BareDecoder
-	construct() ChatClass
-
-	// TypeID returns type id in TL schema.
-	//
-	// See https://core.telegram.org/mtproto/TL-tl#remarks.
-	TypeID() uint32
-	// TypeName returns name of type in TL schema.
-	TypeName() string
-	// String implements fmt.Stringer.
-	String() string
-	// Zero returns true if current object has a zero value.
-	Zero() bool
-
-	// Group identifier
-	GetID() (value int64)
-}
-
-// AsNotForbidden tries to map ChatEmpty to NotForbiddenChat.
-func (c *ChatEmpty) AsNotForbidden() (NotForbiddenChat, bool) {
-	value, ok := (ChatClass(c)).(NotForbiddenChat)
-	return value, ok
-}
-
-// AsNotForbidden tries to map Chat to NotForbiddenChat.
-func (c *Chat) AsNotForbidden() (NotForbiddenChat, bool) {
-	value, ok := (ChatClass(c)).(NotForbiddenChat)
-	return value, ok
-}
-
-// AsNotForbidden tries to map ChatForbidden to NotForbiddenChat.
-func (c *ChatForbidden) AsNotForbidden() (NotForbiddenChat, bool) {
-	value, ok := (ChatClass(c)).(NotForbiddenChat)
-	return value, ok
-}
-
-// AsNotForbidden tries to map Channel to NotForbiddenChat.
-func (c *Channel) AsNotForbidden() (NotForbiddenChat, bool) {
-	value, ok := (ChatClass(c)).(NotForbiddenChat)
-	return value, ok
-}
-
-// AsNotForbidden tries to map ChannelForbidden to NotForbiddenChat.
-func (c *ChannelForbidden) AsNotForbidden() (NotForbiddenChat, bool) {
-	value, ok := (ChatClass(c)).(NotForbiddenChat)
-	return value, ok
-}
-
-// FullChat represents Full subset of ChatClass.
-type FullChat interface {
-	bin.Encoder
-	bin.Decoder
-	bin.BareEncoder
-	bin.BareDecoder
-	construct() ChatClass
-
-	// TypeID returns type id in TL schema.
-	//
-	// See https://core.telegram.org/mtproto/TL-tl#remarks.
-	TypeID() uint32
-	// TypeName returns name of type in TL schema.
-	TypeName() string
-	// String implements fmt.Stringer.
-	String() string
-	// Zero returns true if current object has a zero value.
-	Zero() bool
-
-	// Whether the current user is the creator of the group
-	GetCreator() (value bool)
-
-	// Whether the current user has left the group
-	GetLeft() (value bool)
-
-	// Whether a group call is currently active
-	GetCallActive() (value bool)
-
-	// Whether there's anyone in the group call
-	GetCallNotEmpty() (value bool)
-
-	// Whether this group is protected¹, thus does not allow forwarding messages from it
-	//
-	// Links:
-	//  1) https://telegram.org/blog/protected-content-delete-by-date-and-more
-	GetNoforwards() (value bool)
-
-	// ID of the group, see here »¹ for more info
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/peers#peer-id
-	GetID() (value int64)
-
-	// Title
-	GetTitle() (value string)
-
-	// Chat photo
-	GetPhoto() (value ChatPhotoClass)
-
-	// Date of creation of the group
-	GetDate() (value int)
-
-	// Admin rights¹ of the user in the group
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/rights
-	GetAdminRights() (value ChatAdminRights, ok bool)
-
-	// Default banned rights¹ of all users in the group
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/rights
-	GetDefaultBannedRights() (value ChatBannedRights, ok bool)
-}
-
-// AsFull tries to map ChatEmpty to FullChat.
-func (c *ChatEmpty) AsFull() (FullChat, bool) {
-	value, ok := (ChatClass(c)).(FullChat)
-	return value, ok
-}
-
-// AsFull tries to map Chat to FullChat.
-func (c *Chat) AsFull() (FullChat, bool) {
-	value, ok := (ChatClass(c)).(FullChat)
-	return value, ok
-}
-
-// AsFull tries to map ChatForbidden to FullChat.
-func (c *ChatForbidden) AsFull() (FullChat, bool) {
-	value, ok := (ChatClass(c)).(FullChat)
-	return value, ok
-}
-
-// AsFull tries to map Channel to FullChat.
-func (c *Channel) AsFull() (FullChat, bool) {
-	value, ok := (ChatClass(c)).(FullChat)
-	return value, ok
-}
-
-// AsFull tries to map ChannelForbidden to FullChat.
-func (c *ChannelForbidden) AsFull() (FullChat, bool) {
-	value, ok := (ChatClass(c)).(FullChat)
-	return value, ok
 }
 
 // DecodeChat implements binary de-serialization for ChatClass.

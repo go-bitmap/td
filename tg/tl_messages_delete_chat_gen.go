@@ -32,14 +32,8 @@ var (
 )
 
 // MessagesDeleteChatRequest represents TL type `messages.deleteChat#5bd0ee50`.
-// Delete a chat¹
-//
-// Links:
-//  1. https://core.telegram.org/api/channel
-//
-// See https://core.telegram.org/method/messages.deleteChat for reference.
 type MessagesDeleteChatRequest struct {
-	// Chat ID
+	// ChatID field of MessagesDeleteChatRequest.
 	ChatID int64
 }
 
@@ -72,13 +66,6 @@ func (d *MessagesDeleteChatRequest) String() string {
 	}
 	type Alias MessagesDeleteChatRequest
 	return fmt.Sprintf("MessagesDeleteChatRequest%+v", Alias(*d))
-}
-
-// FillFrom fills MessagesDeleteChatRequest from given interface.
-func (d *MessagesDeleteChatRequest) FillFrom(from interface {
-	GetChatID() (value int64)
-}) {
-	d.ChatID = from.GetChatID()
 }
 
 // TypeID returns type id in TL schema.
@@ -165,18 +152,6 @@ func (d *MessagesDeleteChatRequest) GetChatID() (value int64) {
 }
 
 // MessagesDeleteChat invokes method messages.deleteChat#5bd0ee50 returning error if any.
-// Delete a chat¹
-//
-// Links:
-//  1. https://core.telegram.org/api/channel
-//
-// Possible errors:
-//
-//	400 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
-//	400 CHAT_ID_INVALID: The provided chat id is invalid.
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//
-// See https://core.telegram.org/method/messages.deleteChat for reference.
 func (c *Client) MessagesDeleteChat(ctx context.Context, chatid int64) (bool, error) {
 	var result BoolBox
 

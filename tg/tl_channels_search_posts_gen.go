@@ -32,35 +32,16 @@ var (
 )
 
 // ChannelsSearchPostsRequest represents TL type `channels.searchPosts#d19f987b`.
-// Globally search for posts from public channels »¹ (including those we aren't a
-// member of) containing a specific hashtag.
-//
-// Links:
-//  1. https://core.telegram.org/api/channel
-//
-// See https://core.telegram.org/method/channels.searchPosts for reference.
 type ChannelsSearchPostsRequest struct {
-	// The hashtag to search, without the # character.
+	// Hashtag field of ChannelsSearchPostsRequest.
 	Hashtag string
-	// Initially 0, then set to the next_rate parameter of messages.messagesSlice¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/messages.messagesSlice
+	// OffsetRate field of ChannelsSearchPostsRequest.
 	OffsetRate int
-	// Offsets for pagination, for more info click here¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets
+	// OffsetPeer field of ChannelsSearchPostsRequest.
 	OffsetPeer InputPeerClass
-	// Offsets for pagination, for more info click here¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets
+	// OffsetID field of ChannelsSearchPostsRequest.
 	OffsetID int
-	// Maximum number of results to return, see pagination¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets
+	// Limit field of ChannelsSearchPostsRequest.
 	Limit int
 }
 
@@ -105,21 +86,6 @@ func (s *ChannelsSearchPostsRequest) String() string {
 	}
 	type Alias ChannelsSearchPostsRequest
 	return fmt.Sprintf("ChannelsSearchPostsRequest%+v", Alias(*s))
-}
-
-// FillFrom fills ChannelsSearchPostsRequest from given interface.
-func (s *ChannelsSearchPostsRequest) FillFrom(from interface {
-	GetHashtag() (value string)
-	GetOffsetRate() (value int)
-	GetOffsetPeer() (value InputPeerClass)
-	GetOffsetID() (value int)
-	GetLimit() (value int)
-}) {
-	s.Hashtag = from.GetHashtag()
-	s.OffsetRate = from.GetOffsetRate()
-	s.OffsetPeer = from.GetOffsetPeer()
-	s.OffsetID = from.GetOffsetID()
-	s.Limit = from.GetLimit()
 }
 
 // TypeID returns type id in TL schema.
@@ -291,13 +257,6 @@ func (s *ChannelsSearchPostsRequest) GetLimit() (value int) {
 }
 
 // ChannelsSearchPosts invokes method channels.searchPosts#d19f987b returning error if any.
-// Globally search for posts from public channels »¹ (including those we aren't a
-// member of) containing a specific hashtag.
-//
-// Links:
-//  1. https://core.telegram.org/api/channel
-//
-// See https://core.telegram.org/method/channels.searchPosts for reference.
 func (c *Client) ChannelsSearchPosts(ctx context.Context, request *ChannelsSearchPostsRequest) (MessagesMessagesClass, error) {
 	var result MessagesMessagesBox
 

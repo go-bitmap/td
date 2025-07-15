@@ -32,16 +32,10 @@ var (
 )
 
 // PhoneGetGroupCallRequest represents TL type `phone.getGroupCall#41845db`.
-// Get info about a group call
-//
-// See https://core.telegram.org/method/phone.getGroupCall for reference.
 type PhoneGetGroupCallRequest struct {
-	// The group call
+	// Call field of PhoneGetGroupCallRequest.
 	Call InputGroupCallClass
-	// Maximum number of results to return, see pagination¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets
+	// Limit field of PhoneGetGroupCallRequest.
 	Limit int
 }
 
@@ -77,15 +71,6 @@ func (g *PhoneGetGroupCallRequest) String() string {
 	}
 	type Alias PhoneGetGroupCallRequest
 	return fmt.Sprintf("PhoneGetGroupCallRequest%+v", Alias(*g))
-}
-
-// FillFrom fills PhoneGetGroupCallRequest from given interface.
-func (g *PhoneGetGroupCallRequest) FillFrom(from interface {
-	GetCall() (value InputGroupCallClass)
-	GetLimit() (value int)
-}) {
-	g.Call = from.GetCall()
-	g.Limit = from.GetLimit()
 }
 
 // TypeID returns type id in TL schema.
@@ -197,14 +182,6 @@ func (g *PhoneGetGroupCallRequest) GetLimit() (value int) {
 }
 
 // PhoneGetGroupCall invokes method phone.getGroupCall#41845db returning error if any.
-// Get info about a group call
-//
-// Possible errors:
-//
-//	403 GROUPCALL_FORBIDDEN: The group call has already ended.
-//	400 GROUPCALL_INVALID: The specified group call is invalid.
-//
-// See https://core.telegram.org/method/phone.getGroupCall for reference.
 func (c *Client) PhoneGetGroupCall(ctx context.Context, request *PhoneGetGroupCallRequest) (*PhoneGroupCall, error) {
 	var result PhoneGroupCall
 

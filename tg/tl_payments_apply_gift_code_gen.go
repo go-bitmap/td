@@ -32,14 +32,8 @@ var (
 )
 
 // PaymentsApplyGiftCodeRequest represents TL type `payments.applyGiftCode#f6e26854`.
-// Apply a Telegram Premium giftcode »¹
-//
-// Links:
-//  1. https://core.telegram.org/api/giveaways
-//
-// See https://core.telegram.org/method/payments.applyGiftCode for reference.
 type PaymentsApplyGiftCodeRequest struct {
-	// The code to apply
+	// Slug field of PaymentsApplyGiftCodeRequest.
 	Slug string
 }
 
@@ -72,13 +66,6 @@ func (a *PaymentsApplyGiftCodeRequest) String() string {
 	}
 	type Alias PaymentsApplyGiftCodeRequest
 	return fmt.Sprintf("PaymentsApplyGiftCodeRequest%+v", Alias(*a))
-}
-
-// FillFrom fills PaymentsApplyGiftCodeRequest from given interface.
-func (a *PaymentsApplyGiftCodeRequest) FillFrom(from interface {
-	GetSlug() (value string)
-}) {
-	a.Slug = from.GetSlug()
 }
 
 // TypeID returns type id in TL schema.
@@ -165,18 +152,6 @@ func (a *PaymentsApplyGiftCodeRequest) GetSlug() (value string) {
 }
 
 // PaymentsApplyGiftCode invokes method payments.applyGiftCode#f6e26854 returning error if any.
-// Apply a Telegram Premium giftcode »¹
-//
-// Links:
-//  1. https://core.telegram.org/api/giveaways
-//
-// Possible errors:
-//
-//	400 GIFT_SLUG_EXPIRED: The specified gift slug has expired.
-//	400 GIFT_SLUG_INVALID: The specified slug is invalid.
-//	420 PREMIUM_SUB_ACTIVE_UNTIL_%d: You already have a premium subscription active until unixtime %d .
-//
-// See https://core.telegram.org/method/payments.applyGiftCode for reference.
 func (c *Client) PaymentsApplyGiftCode(ctx context.Context, slug string) (UpdatesClass, error) {
 	var result UpdatesBox
 

@@ -32,19 +32,8 @@ var (
 )
 
 // ChannelsConvertToGigagroupRequest represents TL type `channels.convertToGigagroup#b290c69`.
-// Convert a supergroup¹ to a gigagroup², when requested by channel suggestions³.
-//
-// Links:
-//  1. https://core.telegram.org/api/channel
-//  2. https://core.telegram.org/api/channel
-//  3. https://core.telegram.org/api/config#channel-suggestions
-//
-// See https://core.telegram.org/method/channels.convertToGigagroup for reference.
 type ChannelsConvertToGigagroupRequest struct {
-	// The supergroup¹ to convert
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/channel
+	// Channel field of ChannelsConvertToGigagroupRequest.
 	Channel InputChannelClass
 }
 
@@ -77,13 +66,6 @@ func (c *ChannelsConvertToGigagroupRequest) String() string {
 	}
 	type Alias ChannelsConvertToGigagroupRequest
 	return fmt.Sprintf("ChannelsConvertToGigagroupRequest%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelsConvertToGigagroupRequest from given interface.
-func (c *ChannelsConvertToGigagroupRequest) FillFrom(from interface {
-	GetChannel() (value InputChannelClass)
-}) {
-	c.Channel = from.GetChannel()
 }
 
 // TypeID returns type id in TL schema.
@@ -174,29 +156,7 @@ func (c *ChannelsConvertToGigagroupRequest) GetChannel() (value InputChannelClas
 	return c.Channel
 }
 
-// GetChannelAsNotEmpty returns mapped value of Channel field.
-func (c *ChannelsConvertToGigagroupRequest) GetChannelAsNotEmpty() (NotEmptyInputChannel, bool) {
-	return c.Channel.AsNotEmpty()
-}
-
 // ChannelsConvertToGigagroup invokes method channels.convertToGigagroup#b290c69 returning error if any.
-// Convert a supergroup¹ to a gigagroup², when requested by channel suggestions³.
-//
-// Links:
-//  1. https://core.telegram.org/api/channel
-//  2. https://core.telegram.org/api/channel
-//  3. https://core.telegram.org/api/config#channel-suggestions
-//
-// Possible errors:
-//
-//	400 CHANNEL_ID_INVALID: The specified supergroup ID is invalid.
-//	400 CHANNEL_INVALID: The provided channel is invalid.
-//	400 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
-//	403 CHAT_WRITE_FORBIDDEN: You can't write in this chat.
-//	400 FORUM_ENABLED: You can't execute the specified action because the group is a forum, disable forum functionality to continue.
-//	400 PARTICIPANTS_TOO_FEW: Not enough participants.
-//
-// See https://core.telegram.org/method/channels.convertToGigagroup for reference.
 func (c *Client) ChannelsConvertToGigagroup(ctx context.Context, channel InputChannelClass) (UpdatesClass, error) {
 	var result UpdatesBox
 

@@ -32,12 +32,8 @@ var (
 )
 
 // AccountUpdateUsernameRequest represents TL type `account.updateUsername#3e0bdd7c`.
-// Changes username for the current user.
-//
-// See https://core.telegram.org/method/account.updateUsername for reference.
 type AccountUpdateUsernameRequest struct {
-	// username or empty string if username is to be removedAccepted characters: a-z
-	// (case-insensitive), 0-9 and underscores.Length: 5-32 characters.
+	// Username field of AccountUpdateUsernameRequest.
 	Username string
 }
 
@@ -70,13 +66,6 @@ func (u *AccountUpdateUsernameRequest) String() string {
 	}
 	type Alias AccountUpdateUsernameRequest
 	return fmt.Sprintf("AccountUpdateUsernameRequest%+v", Alias(*u))
-}
-
-// FillFrom fills AccountUpdateUsernameRequest from given interface.
-func (u *AccountUpdateUsernameRequest) FillFrom(from interface {
-	GetUsername() (value string)
-}) {
-	u.Username = from.GetUsername()
 }
 
 // TypeID returns type id in TL schema.
@@ -163,16 +152,6 @@ func (u *AccountUpdateUsernameRequest) GetUsername() (value string) {
 }
 
 // AccountUpdateUsername invokes method account.updateUsername#3e0bdd7c returning error if any.
-// Changes username for the current user.
-//
-// Possible errors:
-//
-//	400 USERNAME_INVALID: The provided username is not valid.
-//	400 USERNAME_NOT_MODIFIED: The username was not modified.
-//	400 USERNAME_OCCUPIED: The provided username is already occupied.
-//	400 USERNAME_PURCHASE_AVAILABLE: The specified username can be purchased on https://fragment.com.
-//
-// See https://core.telegram.org/method/account.updateUsername for reference.
 func (c *Client) AccountUpdateUsername(ctx context.Context, username string) (UserClass, error) {
 	var result UserBox
 

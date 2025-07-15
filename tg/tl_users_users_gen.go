@@ -32,8 +32,6 @@ var (
 )
 
 // UsersUsers represents TL type `users.users#62d706b8`.
-//
-// See https://core.telegram.org/constructor/users.users for reference.
 type UsersUsers struct {
 	// Users field of UsersUsers.
 	Users []UserClass
@@ -73,13 +71,6 @@ func (u *UsersUsers) String() string {
 	}
 	type Alias UsersUsers
 	return fmt.Sprintf("UsersUsers%+v", Alias(*u))
-}
-
-// FillFrom fills UsersUsers from given interface.
-func (u *UsersUsers) FillFrom(from interface {
-	GetUsers() (value []UserClass)
-}) {
-	u.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -183,14 +174,7 @@ func (u *UsersUsers) GetUsers() (value []UserClass) {
 	return u.Users
 }
 
-// MapUsers returns field Users wrapped in UserClassArray helper.
-func (u *UsersUsers) MapUsers() (value UserClassArray) {
-	return UserClassArray(u.Users)
-}
-
 // UsersUsersSlice represents TL type `users.usersSlice#315a4974`.
-//
-// See https://core.telegram.org/constructor/users.usersSlice for reference.
 type UsersUsersSlice struct {
 	// Count field of UsersUsersSlice.
 	Count int
@@ -235,15 +219,6 @@ func (u *UsersUsersSlice) String() string {
 	}
 	type Alias UsersUsersSlice
 	return fmt.Sprintf("UsersUsersSlice%+v", Alias(*u))
-}
-
-// FillFrom fills UsersUsersSlice from given interface.
-func (u *UsersUsersSlice) FillFrom(from interface {
-	GetCount() (value int)
-	GetUsers() (value []UserClass)
-}) {
-	u.Count = from.GetCount()
-	u.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -367,17 +342,10 @@ func (u *UsersUsersSlice) GetUsers() (value []UserClass) {
 	return u.Users
 }
 
-// MapUsers returns field Users wrapped in UserClassArray helper.
-func (u *UsersUsersSlice) MapUsers() (value UserClassArray) {
-	return UserClassArray(u.Users)
-}
-
 // UsersUsersClassName is schema name of UsersUsersClass.
 const UsersUsersClassName = "users.Users"
 
 // UsersUsersClass represents users.Users generic type.
-//
-// See https://core.telegram.org/type/users.Users for reference.
 //
 // Constructors:
 //   - [UsersUsers]
@@ -414,8 +382,6 @@ type UsersUsersClass interface {
 
 	// Users field of UsersUsers.
 	GetUsers() (value []UserClass)
-	// Users field of UsersUsers.
-	MapUsers() (value UserClassArray)
 }
 
 // DecodeUsersUsers implements binary de-serialization for UsersUsersClass.

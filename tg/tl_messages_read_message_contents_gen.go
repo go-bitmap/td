@@ -32,12 +32,8 @@ var (
 )
 
 // MessagesReadMessageContentsRequest represents TL type `messages.readMessageContents#36a73f77`.
-// Notifies the sender about the recipient having listened a voice message or watched a
-// video.
-//
-// See https://core.telegram.org/method/messages.readMessageContents for reference.
 type MessagesReadMessageContentsRequest struct {
-	// Message ID list
+	// ID field of MessagesReadMessageContentsRequest.
 	ID []int
 }
 
@@ -70,13 +66,6 @@ func (r *MessagesReadMessageContentsRequest) String() string {
 	}
 	type Alias MessagesReadMessageContentsRequest
 	return fmt.Sprintf("MessagesReadMessageContentsRequest%+v", Alias(*r))
-}
-
-// FillFrom fills MessagesReadMessageContentsRequest from given interface.
-func (r *MessagesReadMessageContentsRequest) FillFrom(from interface {
-	GetID() (value []int)
-}) {
-	r.ID = from.GetID()
 }
 
 // TypeID returns type id in TL schema.
@@ -176,10 +165,6 @@ func (r *MessagesReadMessageContentsRequest) GetID() (value []int) {
 }
 
 // MessagesReadMessageContents invokes method messages.readMessageContents#36a73f77 returning error if any.
-// Notifies the sender about the recipient having listened a voice message or watched a
-// video.
-//
-// See https://core.telegram.org/method/messages.readMessageContents for reference.
 func (c *Client) MessagesReadMessageContents(ctx context.Context, id []int) (*MessagesAffectedMessages, error) {
 	var result MessagesAffectedMessages
 

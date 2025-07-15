@@ -32,17 +32,8 @@ var (
 )
 
 // HelpGetPeerProfileColorsRequest represents TL type `help.getPeerProfileColors#abcfa9fd`.
-// Get the set of accent color palettes »¹ that can be used in profile page backgrounds.
-//
-// Links:
-//  1. https://core.telegram.org/api/colors
-//
-// See https://core.telegram.org/method/help.getPeerProfileColors for reference.
 type HelpGetPeerProfileColorsRequest struct {
-	// Hash used for caching, for more info click here¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets#hash-generation
+	// Hash field of HelpGetPeerProfileColorsRequest.
 	Hash int
 }
 
@@ -75,13 +66,6 @@ func (g *HelpGetPeerProfileColorsRequest) String() string {
 	}
 	type Alias HelpGetPeerProfileColorsRequest
 	return fmt.Sprintf("HelpGetPeerProfileColorsRequest%+v", Alias(*g))
-}
-
-// FillFrom fills HelpGetPeerProfileColorsRequest from given interface.
-func (g *HelpGetPeerProfileColorsRequest) FillFrom(from interface {
-	GetHash() (value int)
-}) {
-	g.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -168,12 +152,6 @@ func (g *HelpGetPeerProfileColorsRequest) GetHash() (value int) {
 }
 
 // HelpGetPeerProfileColors invokes method help.getPeerProfileColors#abcfa9fd returning error if any.
-// Get the set of accent color palettes »¹ that can be used in profile page backgrounds.
-//
-// Links:
-//  1. https://core.telegram.org/api/colors
-//
-// See https://core.telegram.org/method/help.getPeerProfileColors for reference.
 func (c *Client) HelpGetPeerProfileColors(ctx context.Context, hash int) (HelpPeerColorsClass, error) {
 	var result HelpPeerColorsBox
 

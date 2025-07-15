@@ -32,11 +32,8 @@ var (
 )
 
 // StickersSuggestShortNameRequest represents TL type `stickers.suggestShortName#4dafc503`.
-// Suggests a short name for a given stickerpack name
-//
-// See https://core.telegram.org/method/stickers.suggestShortName for reference.
 type StickersSuggestShortNameRequest struct {
-	// Sticker pack name
+	// Title field of StickersSuggestShortNameRequest.
 	Title string
 }
 
@@ -69,13 +66,6 @@ func (s *StickersSuggestShortNameRequest) String() string {
 	}
 	type Alias StickersSuggestShortNameRequest
 	return fmt.Sprintf("StickersSuggestShortNameRequest%+v", Alias(*s))
-}
-
-// FillFrom fills StickersSuggestShortNameRequest from given interface.
-func (s *StickersSuggestShortNameRequest) FillFrom(from interface {
-	GetTitle() (value string)
-}) {
-	s.Title = from.GetTitle()
 }
 
 // TypeID returns type id in TL schema.
@@ -162,13 +152,6 @@ func (s *StickersSuggestShortNameRequest) GetTitle() (value string) {
 }
 
 // StickersSuggestShortName invokes method stickers.suggestShortName#4dafc503 returning error if any.
-// Suggests a short name for a given stickerpack name
-//
-// Possible errors:
-//
-//	400 TITLE_INVALID: The specified stickerpack title is invalid.
-//
-// See https://core.telegram.org/method/stickers.suggestShortName for reference.
 func (c *Client) StickersSuggestShortName(ctx context.Context, title string) (*StickersSuggestedShortName, error) {
 	var result StickersSuggestedShortName
 

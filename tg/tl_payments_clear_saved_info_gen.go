@@ -32,18 +32,12 @@ var (
 )
 
 // PaymentsClearSavedInfoRequest represents TL type `payments.clearSavedInfo#d83d70c1`.
-// Clear saved payment information
-//
-// See https://core.telegram.org/method/payments.clearSavedInfo for reference.
 type PaymentsClearSavedInfoRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of PaymentsClearSavedInfoRequest.
 	Flags bin.Fields
-	// Remove saved payment credentials
+	// Credentials field of PaymentsClearSavedInfoRequest.
 	Credentials bool
-	// Clear the last order settings saved by the user
+	// Info field of PaymentsClearSavedInfoRequest.
 	Info bool
 }
 
@@ -82,15 +76,6 @@ func (c *PaymentsClearSavedInfoRequest) String() string {
 	}
 	type Alias PaymentsClearSavedInfoRequest
 	return fmt.Sprintf("PaymentsClearSavedInfoRequest%+v", Alias(*c))
-}
-
-// FillFrom fills PaymentsClearSavedInfoRequest from given interface.
-func (c *PaymentsClearSavedInfoRequest) FillFrom(from interface {
-	GetCredentials() (value bool)
-	GetInfo() (value bool)
-}) {
-	c.Credentials = from.GetCredentials()
-	c.Info = from.GetInfo()
 }
 
 // TypeID returns type id in TL schema.
@@ -226,9 +211,6 @@ func (c *PaymentsClearSavedInfoRequest) GetInfo() (value bool) {
 }
 
 // PaymentsClearSavedInfo invokes method payments.clearSavedInfo#d83d70c1 returning error if any.
-// Clear saved payment information
-//
-// See https://core.telegram.org/method/payments.clearSavedInfo for reference.
 func (c *Client) PaymentsClearSavedInfo(ctx context.Context, request *PaymentsClearSavedInfoRequest) (bool, error) {
 	var result BoolBox
 

@@ -32,11 +32,8 @@ var (
 )
 
 // DataJSON represents TL type `dataJSON#7d748d04`.
-// Represents a json-encoded object
-//
-// See https://core.telegram.org/constructor/dataJSON for reference.
 type DataJSON struct {
-	// JSON-encoded object
+	// Data field of DataJSON.
 	Data string
 }
 
@@ -69,13 +66,6 @@ func (d *DataJSON) String() string {
 	}
 	type Alias DataJSON
 	return fmt.Sprintf("DataJSON%+v", Alias(*d))
-}
-
-// FillFrom fills DataJSON from given interface.
-func (d *DataJSON) FillFrom(from interface {
-	GetData() (value string)
-}) {
-	d.Data = from.GetData()
 }
 
 // TypeID returns type id in TL schema.

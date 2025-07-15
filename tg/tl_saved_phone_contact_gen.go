@@ -32,17 +32,14 @@ var (
 )
 
 // SavedPhoneContact represents TL type `savedPhoneContact#1142bd56`.
-// Saved contact
-//
-// See https://core.telegram.org/constructor/savedPhoneContact for reference.
 type SavedPhoneContact struct {
-	// Phone number
+	// Phone field of SavedPhoneContact.
 	Phone string
-	// First name
+	// FirstName field of SavedPhoneContact.
 	FirstName string
-	// Last name
+	// LastName field of SavedPhoneContact.
 	LastName string
-	// Date added
+	// Date field of SavedPhoneContact.
 	Date int
 }
 
@@ -84,19 +81,6 @@ func (s *SavedPhoneContact) String() string {
 	}
 	type Alias SavedPhoneContact
 	return fmt.Sprintf("SavedPhoneContact%+v", Alias(*s))
-}
-
-// FillFrom fills SavedPhoneContact from given interface.
-func (s *SavedPhoneContact) FillFrom(from interface {
-	GetPhone() (value string)
-	GetFirstName() (value string)
-	GetLastName() (value string)
-	GetDate() (value int)
-}) {
-	s.Phone = from.GetPhone()
-	s.FirstName = from.GetFirstName()
-	s.LastName = from.GetLastName()
-	s.Date = from.GetDate()
 }
 
 // TypeID returns type id in TL schema.

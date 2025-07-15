@@ -32,15 +32,12 @@ var (
 )
 
 // SMSJob represents TL type `smsJob#e6a1eeb8`.
-// Info about an SMS job.
-//
-// See https://core.telegram.org/constructor/smsJob for reference.
 type SMSJob struct {
-	// Job ID
+	// JobID field of SMSJob.
 	JobID string
-	// Destination phone number
+	// PhoneNumber field of SMSJob.
 	PhoneNumber string
-	// Text
+	// Text field of SMSJob.
 	Text string
 }
 
@@ -79,17 +76,6 @@ func (s *SMSJob) String() string {
 	}
 	type Alias SMSJob
 	return fmt.Sprintf("SMSJob%+v", Alias(*s))
-}
-
-// FillFrom fills SMSJob from given interface.
-func (s *SMSJob) FillFrom(from interface {
-	GetJobID() (value string)
-	GetPhoneNumber() (value string)
-	GetText() (value string)
-}) {
-	s.JobID = from.GetJobID()
-	s.PhoneNumber = from.GetPhoneNumber()
-	s.Text = from.GetText()
 }
 
 // TypeID returns type id in TL schema.

@@ -32,33 +32,16 @@ var (
 )
 
 // PremiumGetBoostsListRequest represents TL type `premium.getBoostsList#60f67660`.
-// Obtains info about the boosts that were applied to a certain channel or supergroup
-// (admins only)
-//
-// See https://core.telegram.org/method/premium.getBoostsList for reference.
 type PremiumGetBoostsListRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of PremiumGetBoostsListRequest.
 	Flags bin.Fields
-	// Whether to return only info about boosts received from gift codes and giveaways
-	// created by the channel/supergroup »¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/giveaways
+	// Gifts field of PremiumGetBoostsListRequest.
 	Gifts bool
-	// The channel/supergroup
+	// Peer field of PremiumGetBoostsListRequest.
 	Peer InputPeerClass
-	// Offset for pagination, obtained from premium.boostsList¹.next_offset
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/premium.boostsList
+	// Offset field of PremiumGetBoostsListRequest.
 	Offset string
-	// Maximum number of results to return, see pagination¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets
+	// Limit field of PremiumGetBoostsListRequest.
 	Limit int
 }
 
@@ -103,19 +86,6 @@ func (g *PremiumGetBoostsListRequest) String() string {
 	}
 	type Alias PremiumGetBoostsListRequest
 	return fmt.Sprintf("PremiumGetBoostsListRequest%+v", Alias(*g))
-}
-
-// FillFrom fills PremiumGetBoostsListRequest from given interface.
-func (g *PremiumGetBoostsListRequest) FillFrom(from interface {
-	GetGifts() (value bool)
-	GetPeer() (value InputPeerClass)
-	GetOffset() (value string)
-	GetLimit() (value int)
-}) {
-	g.Gifts = from.GetGifts()
-	g.Peer = from.GetPeer()
-	g.Offset = from.GetOffset()
-	g.Limit = from.GetLimit()
 }
 
 // TypeID returns type id in TL schema.
@@ -288,15 +258,6 @@ func (g *PremiumGetBoostsListRequest) GetLimit() (value int) {
 }
 
 // PremiumGetBoostsList invokes method premium.getBoostsList#60f67660 returning error if any.
-// Obtains info about the boosts that were applied to a certain channel or supergroup
-// (admins only)
-//
-// Possible errors:
-//
-//	400 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//
-// See https://core.telegram.org/method/premium.getBoostsList for reference.
 func (c *Client) PremiumGetBoostsList(ctx context.Context, request *PremiumGetBoostsListRequest) (*PremiumBoostsList, error) {
 	var result PremiumBoostsList
 

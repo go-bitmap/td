@@ -32,43 +32,34 @@ var (
 )
 
 // InputBotInlineResult represents TL type `inputBotInlineResult#88bf9319`.
-// An inline bot result
-//
-// See https://core.telegram.org/constructor/inputBotInlineResult for reference.
 type InputBotInlineResult struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of InputBotInlineResult.
 	Flags bin.Fields
-	// ID of result
+	// ID field of InputBotInlineResult.
 	ID string
-	// Result type (see bot API docs¹)
-	//
-	// Links:
-	//  1) https://core.telegram.org/bots/api#inlinequeryresult
+	// Type field of InputBotInlineResult.
 	Type string
-	// Result title
+	// Title field of InputBotInlineResult.
 	//
 	// Use SetTitle and GetTitle helpers.
 	Title string
-	// Result description
+	// Description field of InputBotInlineResult.
 	//
 	// Use SetDescription and GetDescription helpers.
 	Description string
-	// URL of result
+	// URL field of InputBotInlineResult.
 	//
 	// Use SetURL and GetURL helpers.
 	URL string
-	// Thumbnail for result
+	// Thumb field of InputBotInlineResult.
 	//
 	// Use SetThumb and GetThumb helpers.
 	Thumb InputWebDocument
-	// Result contents
+	// Content field of InputBotInlineResult.
 	//
 	// Use SetContent and GetContent helpers.
 	Content InputWebDocument
-	// Message to send when the result is selected
+	// SendMessage field of InputBotInlineResult.
 	SendMessage InputBotInlineMessageClass
 }
 
@@ -130,42 +121,6 @@ func (i *InputBotInlineResult) String() string {
 	}
 	type Alias InputBotInlineResult
 	return fmt.Sprintf("InputBotInlineResult%+v", Alias(*i))
-}
-
-// FillFrom fills InputBotInlineResult from given interface.
-func (i *InputBotInlineResult) FillFrom(from interface {
-	GetID() (value string)
-	GetType() (value string)
-	GetTitle() (value string, ok bool)
-	GetDescription() (value string, ok bool)
-	GetURL() (value string, ok bool)
-	GetThumb() (value InputWebDocument, ok bool)
-	GetContent() (value InputWebDocument, ok bool)
-	GetSendMessage() (value InputBotInlineMessageClass)
-}) {
-	i.ID = from.GetID()
-	i.Type = from.GetType()
-	if val, ok := from.GetTitle(); ok {
-		i.Title = val
-	}
-
-	if val, ok := from.GetDescription(); ok {
-		i.Description = val
-	}
-
-	if val, ok := from.GetURL(); ok {
-		i.URL = val
-	}
-
-	if val, ok := from.GetThumb(); ok {
-		i.Thumb = val
-	}
-
-	if val, ok := from.GetContent(); ok {
-		i.Content = val
-	}
-
-	i.SendMessage = from.GetSendMessage()
 }
 
 // TypeID returns type id in TL schema.
@@ -490,20 +445,14 @@ func (i *InputBotInlineResult) GetSendMessage() (value InputBotInlineMessageClas
 }
 
 // InputBotInlineResultPhoto represents TL type `inputBotInlineResultPhoto#a8d864a7`.
-// Photo
-//
-// See https://core.telegram.org/constructor/inputBotInlineResultPhoto for reference.
 type InputBotInlineResultPhoto struct {
-	// Result ID
+	// ID field of InputBotInlineResultPhoto.
 	ID string
-	// Result type (see bot API docs¹)
-	//
-	// Links:
-	//  1) https://core.telegram.org/bots/api#inlinequeryresult
+	// Type field of InputBotInlineResultPhoto.
 	Type string
-	// Photo to send
+	// Photo field of InputBotInlineResultPhoto.
 	Photo InputPhotoClass
-	// Message to send when the result is selected
+	// SendMessage field of InputBotInlineResultPhoto.
 	SendMessage InputBotInlineMessageClass
 }
 
@@ -550,19 +499,6 @@ func (i *InputBotInlineResultPhoto) String() string {
 	}
 	type Alias InputBotInlineResultPhoto
 	return fmt.Sprintf("InputBotInlineResultPhoto%+v", Alias(*i))
-}
-
-// FillFrom fills InputBotInlineResultPhoto from given interface.
-func (i *InputBotInlineResultPhoto) FillFrom(from interface {
-	GetID() (value string)
-	GetType() (value string)
-	GetPhoto() (value InputPhotoClass)
-	GetSendMessage() (value InputBotInlineMessageClass)
-}) {
-	i.ID = from.GetID()
-	i.Type = from.GetType()
-	i.Photo = from.GetPhoto()
-	i.SendMessage = from.GetSendMessage()
 }
 
 // TypeID returns type id in TL schema.
@@ -719,33 +655,24 @@ func (i *InputBotInlineResultPhoto) GetSendMessage() (value InputBotInlineMessag
 }
 
 // InputBotInlineResultDocument represents TL type `inputBotInlineResultDocument#fff8fdc4`.
-// Document (media of any type except for photos)
-//
-// See https://core.telegram.org/constructor/inputBotInlineResultDocument for reference.
 type InputBotInlineResultDocument struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of InputBotInlineResultDocument.
 	Flags bin.Fields
-	// Result ID
+	// ID field of InputBotInlineResultDocument.
 	ID string
-	// Result type (see bot API docs¹)
-	//
-	// Links:
-	//  1) https://core.telegram.org/bots/api#inlinequeryresult
+	// Type field of InputBotInlineResultDocument.
 	Type string
-	// Result title
+	// Title field of InputBotInlineResultDocument.
 	//
 	// Use SetTitle and GetTitle helpers.
 	Title string
-	// Result description
+	// Description field of InputBotInlineResultDocument.
 	//
 	// Use SetDescription and GetDescription helpers.
 	Description string
-	// Document to send
+	// Document field of InputBotInlineResultDocument.
 	Document InputDocumentClass
-	// Message to send when the result is selected
+	// SendMessage field of InputBotInlineResultDocument.
 	SendMessage InputBotInlineMessageClass
 }
 
@@ -801,29 +728,6 @@ func (i *InputBotInlineResultDocument) String() string {
 	}
 	type Alias InputBotInlineResultDocument
 	return fmt.Sprintf("InputBotInlineResultDocument%+v", Alias(*i))
-}
-
-// FillFrom fills InputBotInlineResultDocument from given interface.
-func (i *InputBotInlineResultDocument) FillFrom(from interface {
-	GetID() (value string)
-	GetType() (value string)
-	GetTitle() (value string, ok bool)
-	GetDescription() (value string, ok bool)
-	GetDocument() (value InputDocumentClass)
-	GetSendMessage() (value InputBotInlineMessageClass)
-}) {
-	i.ID = from.GetID()
-	i.Type = from.GetType()
-	if val, ok := from.GetTitle(); ok {
-		i.Title = val
-	}
-
-	if val, ok := from.GetDescription(); ok {
-		i.Description = val
-	}
-
-	i.Document = from.GetDocument()
-	i.SendMessage = from.GetSendMessage()
 }
 
 // TypeID returns type id in TL schema.
@@ -1065,15 +969,12 @@ func (i *InputBotInlineResultDocument) GetSendMessage() (value InputBotInlineMes
 }
 
 // InputBotInlineResultGame represents TL type `inputBotInlineResultGame#4fa417f2`.
-// Game
-//
-// See https://core.telegram.org/constructor/inputBotInlineResultGame for reference.
 type InputBotInlineResultGame struct {
-	// Result ID
+	// ID field of InputBotInlineResultGame.
 	ID string
-	// Game short name
+	// ShortName field of InputBotInlineResultGame.
 	ShortName string
-	// Message to send when the result is selected
+	// SendMessage field of InputBotInlineResultGame.
 	SendMessage InputBotInlineMessageClass
 }
 
@@ -1117,17 +1018,6 @@ func (i *InputBotInlineResultGame) String() string {
 	}
 	type Alias InputBotInlineResultGame
 	return fmt.Sprintf("InputBotInlineResultGame%+v", Alias(*i))
-}
-
-// FillFrom fills InputBotInlineResultGame from given interface.
-func (i *InputBotInlineResultGame) FillFrom(from interface {
-	GetID() (value string)
-	GetShortName() (value string)
-	GetSendMessage() (value InputBotInlineMessageClass)
-}) {
-	i.ID = from.GetID()
-	i.ShortName = from.GetShortName()
-	i.SendMessage = from.GetSendMessage()
 }
 
 // TypeID returns type id in TL schema.
@@ -1263,8 +1153,6 @@ const InputBotInlineResultClassName = "InputBotInlineResult"
 
 // InputBotInlineResultClass represents InputBotInlineResult generic type.
 //
-// See https://core.telegram.org/type/InputBotInlineResult for reference.
-//
 // Constructors:
 //   - [InputBotInlineResult]
 //   - [InputBotInlineResultPhoto]
@@ -1302,10 +1190,9 @@ type InputBotInlineResultClass interface {
 	// Zero returns true if current object has a zero value.
 	Zero() bool
 
-	// ID of result
+	// ID field of InputBotInlineResult.
 	GetID() (value string)
-
-	// Message to send when the result is selected
+	// SendMessage field of InputBotInlineResult.
 	GetSendMessage() (value InputBotInlineMessageClass)
 }
 

@@ -32,17 +32,14 @@ var (
 )
 
 // ChannelsChannelParticipants represents TL type `channels.channelParticipants#9ab0feaf`.
-// Represents multiple channel participants
-//
-// See https://core.telegram.org/constructor/channels.channelParticipants for reference.
 type ChannelsChannelParticipants struct {
-	// Total number of participants that correspond to the given query
+	// Count field of ChannelsChannelParticipants.
 	Count int
-	// Participants
+	// Participants field of ChannelsChannelParticipants.
 	Participants []ChannelParticipantClass
-	// Mentioned chats
+	// Chats field of ChannelsChannelParticipants.
 	Chats []ChatClass
-	// Users mentioned in participant info
+	// Users field of ChannelsChannelParticipants.
 	Users []UserClass
 }
 
@@ -89,19 +86,6 @@ func (c *ChannelsChannelParticipants) String() string {
 	}
 	type Alias ChannelsChannelParticipants
 	return fmt.Sprintf("ChannelsChannelParticipants%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelsChannelParticipants from given interface.
-func (c *ChannelsChannelParticipants) FillFrom(from interface {
-	GetCount() (value int)
-	GetParticipants() (value []ChannelParticipantClass)
-	GetChats() (value []ChatClass)
-	GetUsers() (value []UserClass)
-}) {
-	c.Count = from.GetCount()
-	c.Participants = from.GetParticipants()
-	c.Chats = from.GetChats()
-	c.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -301,25 +285,7 @@ func (c *ChannelsChannelParticipants) GetUsers() (value []UserClass) {
 	return c.Users
 }
 
-// MapParticipants returns field Participants wrapped in ChannelParticipantClassArray helper.
-func (c *ChannelsChannelParticipants) MapParticipants() (value ChannelParticipantClassArray) {
-	return ChannelParticipantClassArray(c.Participants)
-}
-
-// MapChats returns field Chats wrapped in ChatClassArray helper.
-func (c *ChannelsChannelParticipants) MapChats() (value ChatClassArray) {
-	return ChatClassArray(c.Chats)
-}
-
-// MapUsers returns field Users wrapped in UserClassArray helper.
-func (c *ChannelsChannelParticipants) MapUsers() (value UserClassArray) {
-	return UserClassArray(c.Users)
-}
-
 // ChannelsChannelParticipantsNotModified represents TL type `channels.channelParticipantsNotModified#f0173fe9`.
-// No new participant info could be found
-//
-// See https://core.telegram.org/constructor/channels.channelParticipantsNotModified for reference.
 type ChannelsChannelParticipantsNotModified struct {
 }
 
@@ -425,8 +391,6 @@ const ChannelsChannelParticipantsClassName = "channels.ChannelParticipants"
 
 // ChannelsChannelParticipantsClass represents channels.ChannelParticipants generic type.
 //
-// See https://core.telegram.org/type/channels.ChannelParticipants for reference.
-//
 // Constructors:
 //   - [ChannelsChannelParticipants]
 //   - [ChannelsChannelParticipantsNotModified]
@@ -459,19 +423,6 @@ type ChannelsChannelParticipantsClass interface {
 	String() string
 	// Zero returns true if current object has a zero value.
 	Zero() bool
-
-	// AsModified tries to map ChannelsChannelParticipantsClass to ChannelsChannelParticipants.
-	AsModified() (*ChannelsChannelParticipants, bool)
-}
-
-// AsModified tries to map ChannelsChannelParticipants to ChannelsChannelParticipants.
-func (c *ChannelsChannelParticipants) AsModified() (*ChannelsChannelParticipants, bool) {
-	return c, true
-}
-
-// AsModified tries to map ChannelsChannelParticipantsNotModified to ChannelsChannelParticipants.
-func (c *ChannelsChannelParticipantsNotModified) AsModified() (*ChannelsChannelParticipants, bool) {
-	return nil, false
 }
 
 // DecodeChannelsChannelParticipants implements binary de-serialization for ChannelsChannelParticipantsClass.

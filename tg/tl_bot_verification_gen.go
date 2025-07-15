@@ -32,8 +32,6 @@ var (
 )
 
 // BotVerification represents TL type `botVerification#f93cd45c`.
-//
-// See https://core.telegram.org/constructor/botVerification for reference.
 type BotVerification struct {
 	// BotID field of BotVerification.
 	BotID int64
@@ -78,17 +76,6 @@ func (b *BotVerification) String() string {
 	}
 	type Alias BotVerification
 	return fmt.Sprintf("BotVerification%+v", Alias(*b))
-}
-
-// FillFrom fills BotVerification from given interface.
-func (b *BotVerification) FillFrom(from interface {
-	GetBotID() (value int64)
-	GetIcon() (value int64)
-	GetDescription() (value string)
-}) {
-	b.BotID = from.GetBotID()
-	b.Icon = from.GetIcon()
-	b.Description = from.GetDescription()
 }
 
 // TypeID returns type id in TL schema.

@@ -32,25 +32,12 @@ var (
 )
 
 // MessagesUpdateSavedReactionTagRequest represents TL type `messages.updateSavedReactionTag#60297dec`.
-// Update the description of a saved message tag »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/saved-messages#tags
-//
-// See https://core.telegram.org/method/messages.updateSavedReactionTag for reference.
 type MessagesUpdateSavedReactionTagRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessagesUpdateSavedReactionTagRequest.
 	Flags bin.Fields
-	// Reaction¹ associated to the tag
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/reactions
+	// Reaction field of MessagesUpdateSavedReactionTagRequest.
 	Reaction ReactionClass
-	// Tag description, max 12 UTF-8 characters; to remove the description call the method
-	// without setting this flag.
+	// Title field of MessagesUpdateSavedReactionTagRequest.
 	//
 	// Use SetTitle and GetTitle helpers.
 	Title string
@@ -91,18 +78,6 @@ func (u *MessagesUpdateSavedReactionTagRequest) String() string {
 	}
 	type Alias MessagesUpdateSavedReactionTagRequest
 	return fmt.Sprintf("MessagesUpdateSavedReactionTagRequest%+v", Alias(*u))
-}
-
-// FillFrom fills MessagesUpdateSavedReactionTagRequest from given interface.
-func (u *MessagesUpdateSavedReactionTagRequest) FillFrom(from interface {
-	GetReaction() (value ReactionClass)
-	GetTitle() (value string, ok bool)
-}) {
-	u.Reaction = from.GetReaction()
-	if val, ok := from.GetTitle(); ok {
-		u.Title = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -243,17 +218,6 @@ func (u *MessagesUpdateSavedReactionTagRequest) GetTitle() (value string, ok boo
 }
 
 // MessagesUpdateSavedReactionTag invokes method messages.updateSavedReactionTag#60297dec returning error if any.
-// Update the description of a saved message tag »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/saved-messages#tags
-//
-// Possible errors:
-//
-//	403 PREMIUM_ACCOUNT_REQUIRED: A premium account is required to execute this action.
-//	400 REACTION_INVALID: The specified reaction is invalid.
-//
-// See https://core.telegram.org/method/messages.updateSavedReactionTag for reference.
 func (c *Client) MessagesUpdateSavedReactionTag(ctx context.Context, request *MessagesUpdateSavedReactionTagRequest) (bool, error) {
 	var result BoolBox
 

@@ -32,34 +32,18 @@ var (
 )
 
 // HelpPremiumPromo represents TL type `help.premiumPromo#5334759c`.
-// Telegram Premium promotion information
-// Note that the video_sections+videos fields are a list of videos, and the corresponding
-// premium feature identifiers.
-// They're equivalent to a section => video dictionary, with keys from video_section and
-// values from videos.
-// The keys in video_sections correspond to a specific feature identifier, and the
-// associated promotional video should be shown when the associated feature row is
-// clicked.
-//
-// See https://core.telegram.org/constructor/help.premiumPromo for reference.
 type HelpPremiumPromo struct {
-	// Description of the current state of the user's Telegram Premium subscription
+	// StatusText field of HelpPremiumPromo.
 	StatusText string
-	// Message entities for styled text¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/entities
+	// StatusEntities field of HelpPremiumPromo.
 	StatusEntities []MessageEntityClass
-	// A list of premium feature identifiers »¹, associated to each video
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/premium
+	// VideoSections field of HelpPremiumPromo.
 	VideoSections []string
-	// A list of videos
+	// Videos field of HelpPremiumPromo.
 	Videos []DocumentClass
-	// Telegram Premium subscription options
+	// PeriodOptions field of HelpPremiumPromo.
 	PeriodOptions []PremiumSubscriptionOption
-	// Related user information
+	// Users field of HelpPremiumPromo.
 	Users []UserClass
 }
 
@@ -107,23 +91,6 @@ func (p *HelpPremiumPromo) String() string {
 	}
 	type Alias HelpPremiumPromo
 	return fmt.Sprintf("HelpPremiumPromo%+v", Alias(*p))
-}
-
-// FillFrom fills HelpPremiumPromo from given interface.
-func (p *HelpPremiumPromo) FillFrom(from interface {
-	GetStatusText() (value string)
-	GetStatusEntities() (value []MessageEntityClass)
-	GetVideoSections() (value []string)
-	GetVideos() (value []DocumentClass)
-	GetPeriodOptions() (value []PremiumSubscriptionOption)
-	GetUsers() (value []UserClass)
-}) {
-	p.StatusText = from.GetStatusText()
-	p.StatusEntities = from.GetStatusEntities()
-	p.VideoSections = from.GetVideoSections()
-	p.Videos = from.GetVideos()
-	p.PeriodOptions = from.GetPeriodOptions()
-	p.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -389,19 +356,4 @@ func (p *HelpPremiumPromo) GetUsers() (value []UserClass) {
 		return
 	}
 	return p.Users
-}
-
-// MapStatusEntities returns field StatusEntities wrapped in MessageEntityClassArray helper.
-func (p *HelpPremiumPromo) MapStatusEntities() (value MessageEntityClassArray) {
-	return MessageEntityClassArray(p.StatusEntities)
-}
-
-// MapVideos returns field Videos wrapped in DocumentClassArray helper.
-func (p *HelpPremiumPromo) MapVideos() (value DocumentClassArray) {
-	return DocumentClassArray(p.Videos)
-}
-
-// MapUsers returns field Users wrapped in UserClassArray helper.
-func (p *HelpPremiumPromo) MapUsers() (value UserClassArray) {
-	return UserClassArray(p.Users)
 }

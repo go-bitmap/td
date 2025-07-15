@@ -32,15 +32,12 @@ var (
 )
 
 // SearchResultPosition represents TL type `searchResultPosition#7f648b67`.
-// Information about a message in a specific position
-//
-// See https://core.telegram.org/constructor/searchResultPosition for reference.
 type SearchResultPosition struct {
-	// Message ID
+	// MsgID field of SearchResultPosition.
 	MsgID int
-	// When was the message sent
+	// Date field of SearchResultPosition.
 	Date int
-	// 0-based message position in the full list of suitable messages
+	// Offset field of SearchResultPosition.
 	Offset int
 }
 
@@ -79,17 +76,6 @@ func (s *SearchResultPosition) String() string {
 	}
 	type Alias SearchResultPosition
 	return fmt.Sprintf("SearchResultPosition%+v", Alias(*s))
-}
-
-// FillFrom fills SearchResultPosition from given interface.
-func (s *SearchResultPosition) FillFrom(from interface {
-	GetMsgID() (value int)
-	GetDate() (value int)
-	GetOffset() (value int)
-}) {
-	s.MsgID = from.GetMsgID()
-	s.Date = from.GetDate()
-	s.Offset = from.GetOffset()
 }
 
 // TypeID returns type id in TL schema.

@@ -32,32 +32,26 @@ var (
 )
 
 // SMSJobsStatus represents TL type `smsjobs.status#2aee9191`.
-// Status
-//
-// See https://core.telegram.org/constructor/smsjobs.status for reference.
 type SMSJobsStatus struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of SMSJobsStatus.
 	Flags bin.Fields
-	// Allow international numbers
+	// AllowInternational field of SMSJobsStatus.
 	AllowInternational bool
-	// Recently sent
+	// RecentSent field of SMSJobsStatus.
 	RecentSent int
-	// Since
+	// RecentSince field of SMSJobsStatus.
 	RecentSince int
-	// Remaining
+	// RecentRemains field of SMSJobsStatus.
 	RecentRemains int
-	// Total sent
+	// TotalSent field of SMSJobsStatus.
 	TotalSent int
-	// Total since
+	// TotalSince field of SMSJobsStatus.
 	TotalSince int
-	// Last gift deep link
+	// LastGiftSlug field of SMSJobsStatus.
 	//
 	// Use SetLastGiftSlug and GetLastGiftSlug helpers.
 	LastGiftSlug string
-	// Terms of service URL
+	// TermsURL field of SMSJobsStatus.
 	TermsURL string
 }
 
@@ -114,30 +108,6 @@ func (s *SMSJobsStatus) String() string {
 	}
 	type Alias SMSJobsStatus
 	return fmt.Sprintf("SMSJobsStatus%+v", Alias(*s))
-}
-
-// FillFrom fills SMSJobsStatus from given interface.
-func (s *SMSJobsStatus) FillFrom(from interface {
-	GetAllowInternational() (value bool)
-	GetRecentSent() (value int)
-	GetRecentSince() (value int)
-	GetRecentRemains() (value int)
-	GetTotalSent() (value int)
-	GetTotalSince() (value int)
-	GetLastGiftSlug() (value string, ok bool)
-	GetTermsURL() (value string)
-}) {
-	s.AllowInternational = from.GetAllowInternational()
-	s.RecentSent = from.GetRecentSent()
-	s.RecentSince = from.GetRecentSince()
-	s.RecentRemains = from.GetRecentRemains()
-	s.TotalSent = from.GetTotalSent()
-	s.TotalSince = from.GetTotalSince()
-	if val, ok := from.GetLastGiftSlug(); ok {
-		s.LastGiftSlug = val
-	}
-
-	s.TermsURL = from.GetTermsURL()
 }
 
 // TypeID returns type id in TL schema.

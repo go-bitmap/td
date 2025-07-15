@@ -32,27 +32,18 @@ var (
 )
 
 // VideoSize represents TL type `videoSize#de33b094`.
-// An animated profile picture¹ in MPEG4 format
-//
-// Links:
-//  1. https://core.telegram.org/api/files#animated-profile-pictures
-//
-// See https://core.telegram.org/constructor/videoSize for reference.
 type VideoSize struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of VideoSize.
 	Flags bin.Fields
-	// u for animated profile pictures, and v for trimmed and downscaled video previews
+	// Type field of VideoSize.
 	Type string
-	// Video width
+	// W field of VideoSize.
 	W int
-	// Video height
+	// H field of VideoSize.
 	H int
-	// File size
+	// Size field of VideoSize.
 	Size int
-	// Timestamp that should be shown as static preview to the user (seconds)
+	// VideoStartTs field of VideoSize.
 	//
 	// Use SetVideoStartTs and GetVideoStartTs helpers.
 	VideoStartTs float64
@@ -107,24 +98,6 @@ func (v *VideoSize) String() string {
 	}
 	type Alias VideoSize
 	return fmt.Sprintf("VideoSize%+v", Alias(*v))
-}
-
-// FillFrom fills VideoSize from given interface.
-func (v *VideoSize) FillFrom(from interface {
-	GetType() (value string)
-	GetW() (value int)
-	GetH() (value int)
-	GetSize() (value int)
-	GetVideoStartTs() (value float64, ok bool)
-}) {
-	v.Type = from.GetType()
-	v.W = from.GetW()
-	v.H = from.GetH()
-	v.Size = from.GetSize()
-	if val, ok := from.GetVideoStartTs(); ok {
-		v.VideoStartTs = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -320,26 +293,10 @@ func (v *VideoSize) GetVideoStartTs() (value float64, ok bool) {
 }
 
 // VideoSizeEmojiMarkup represents TL type `videoSizeEmojiMarkup#f85c413c`.
-// An animated profile picture¹ based on a custom emoji sticker².
-//
-// Links:
-//  1. https://core.telegram.org/api/files#animated-profile-pictures
-//  2. https://core.telegram.org/api/custom-emoji
-//
-// See https://core.telegram.org/constructor/videoSizeEmojiMarkup for reference.
 type VideoSizeEmojiMarkup struct {
-	// Custom emoji ID¹: the custom emoji sticker is shown at the center of the profile
-	// picture and occupies at most 67% of it.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/custom-emoji
+	// EmojiID field of VideoSizeEmojiMarkup.
 	EmojiID int64
-	// 1, 2, 3 or 4 RBG-24 colors used to generate a solid (1), gradient (2) or freeform
-	// gradient (3, 4) background, similar to how fill wallpapers¹ are generated. The
-	// rotation angle for gradient backgrounds is 0.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/wallpapers#fill-types
+	// BackgroundColors field of VideoSizeEmojiMarkup.
 	BackgroundColors []int
 }
 
@@ -380,15 +337,6 @@ func (v *VideoSizeEmojiMarkup) String() string {
 	}
 	type Alias VideoSizeEmojiMarkup
 	return fmt.Sprintf("VideoSizeEmojiMarkup%+v", Alias(*v))
-}
-
-// FillFrom fills VideoSizeEmojiMarkup from given interface.
-func (v *VideoSizeEmojiMarkup) FillFrom(from interface {
-	GetEmojiID() (value int64)
-	GetBackgroundColors() (value []int)
-}) {
-	v.EmojiID = from.GetEmojiID()
-	v.BackgroundColors = from.GetBackgroundColors()
 }
 
 // TypeID returns type id in TL schema.
@@ -508,24 +456,12 @@ func (v *VideoSizeEmojiMarkup) GetBackgroundColors() (value []int) {
 }
 
 // VideoSizeStickerMarkup represents TL type `videoSizeStickerMarkup#da082fe`.
-// An animated profile picture¹ based on a sticker².
-//
-// Links:
-//  1. https://core.telegram.org/api/files#animated-profile-pictures
-//  2. https://core.telegram.org/api/stickers
-//
-// See https://core.telegram.org/constructor/videoSizeStickerMarkup for reference.
 type VideoSizeStickerMarkup struct {
-	// Stickerset
+	// Stickerset field of VideoSizeStickerMarkup.
 	Stickerset InputStickerSetClass
-	// Sticker ID
+	// StickerID field of VideoSizeStickerMarkup.
 	StickerID int64
-	// 1, 2, 3 or 4 RBG-24 colors used to generate a solid (1), gradient (2) or freeform
-	// gradient (3, 4) background, similar to how fill wallpapers¹ are generated. The
-	// rotation angle for gradient backgrounds is 0.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/wallpapers#fill-types
+	// BackgroundColors field of VideoSizeStickerMarkup.
 	BackgroundColors []int
 }
 
@@ -569,17 +505,6 @@ func (v *VideoSizeStickerMarkup) String() string {
 	}
 	type Alias VideoSizeStickerMarkup
 	return fmt.Sprintf("VideoSizeStickerMarkup%+v", Alias(*v))
-}
-
-// FillFrom fills VideoSizeStickerMarkup from given interface.
-func (v *VideoSizeStickerMarkup) FillFrom(from interface {
-	GetStickerset() (value InputStickerSetClass)
-	GetStickerID() (value int64)
-	GetBackgroundColors() (value []int)
-}) {
-	v.Stickerset = from.GetStickerset()
-	v.StickerID = from.GetStickerID()
-	v.BackgroundColors = from.GetBackgroundColors()
 }
 
 // TypeID returns type id in TL schema.
@@ -727,8 +652,6 @@ func (v *VideoSizeStickerMarkup) GetBackgroundColors() (value []int) {
 const VideoSizeClassName = "VideoSize"
 
 // VideoSizeClass represents VideoSize generic type.
-//
-// See https://core.telegram.org/type/VideoSize for reference.
 //
 // Constructors:
 //   - [VideoSize]

@@ -32,24 +32,12 @@ var (
 )
 
 // MessagesUnpinAllMessagesRequest represents TL type `messages.unpinAllMessages#62dd747`.
-// Unpin¹ all pinned messages
-//
-// Links:
-//  1. https://core.telegram.org/api/pin
-//
-// See https://core.telegram.org/method/messages.unpinAllMessages for reference.
 type MessagesUnpinAllMessagesRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessagesUnpinAllMessagesRequest.
 	Flags bin.Fields
-	// Chat where to unpin
+	// Peer field of MessagesUnpinAllMessagesRequest.
 	Peer InputPeerClass
-	// Forum topic¹ where to unpin
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/forum#forum-topics
+	// TopMsgID field of MessagesUnpinAllMessagesRequest.
 	//
 	// Use SetTopMsgID and GetTopMsgID helpers.
 	TopMsgID int
@@ -97,23 +85,6 @@ func (u *MessagesUnpinAllMessagesRequest) String() string {
 	}
 	type Alias MessagesUnpinAllMessagesRequest
 	return fmt.Sprintf("MessagesUnpinAllMessagesRequest%+v", Alias(*u))
-}
-
-// FillFrom fills MessagesUnpinAllMessagesRequest from given interface.
-func (u *MessagesUnpinAllMessagesRequest) FillFrom(from interface {
-	GetPeer() (value InputPeerClass)
-	GetTopMsgID() (value int, ok bool)
-	GetSavedPeerID() (value InputPeerClass, ok bool)
-}) {
-	u.Peer = from.GetPeer()
-	if val, ok := from.GetTopMsgID(); ok {
-		u.TopMsgID = val
-	}
-
-	if val, ok := from.GetSavedPeerID(); ok {
-		u.SavedPeerID = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -295,19 +266,6 @@ func (u *MessagesUnpinAllMessagesRequest) GetSavedPeerID() (value InputPeerClass
 }
 
 // MessagesUnpinAllMessages invokes method messages.unpinAllMessages#62dd747 returning error if any.
-// Unpin¹ all pinned messages
-//
-// Links:
-//  1. https://core.telegram.org/api/pin
-//
-// Possible errors:
-//
-//	400 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
-//	400 CHAT_NOT_MODIFIED: No changes were made to chat information because the new information you passed is identical to the current information.
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//
-// See https://core.telegram.org/method/messages.unpinAllMessages for reference.
-// Can be used by bots.
 func (c *Client) MessagesUnpinAllMessages(ctx context.Context, request *MessagesUnpinAllMessagesRequest) (*MessagesAffectedHistory, error) {
 	var result MessagesAffectedHistory
 

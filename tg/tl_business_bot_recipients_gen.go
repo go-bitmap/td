@@ -32,37 +32,24 @@ var (
 )
 
 // BusinessBotRecipients represents TL type `businessBotRecipients#b88cf373`.
-// Specifies the private chats that a connected business bot »¹ may receive messages
-// and interact with.
-//
-// Links:
-//  1. https://core.telegram.org/api/business#connected-bots
-//
-// See https://core.telegram.org/constructor/businessBotRecipients for reference.
 type BusinessBotRecipients struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of BusinessBotRecipients.
 	Flags bin.Fields
-	// Selects all existing private chats.
+	// ExistingChats field of BusinessBotRecipients.
 	ExistingChats bool
-	// Selects all new private chats.
+	// NewChats field of BusinessBotRecipients.
 	NewChats bool
-	// Selects all private chats with contacts.
+	// Contacts field of BusinessBotRecipients.
 	Contacts bool
-	// Selects all private chats with non-contacts.
+	// NonContacts field of BusinessBotRecipients.
 	NonContacts bool
-	// If set, then all private chats except the ones selected by existing_chats, new_chats,
-	// contacts, non_contacts and users are chosen. Note that if this flag is set, any values
-	// passed in exclude_users will be merged and moved into users by the server, thus
-	// exclude_users will always be empty.
+	// ExcludeSelected field of BusinessBotRecipients.
 	ExcludeSelected bool
-	// Explicitly selected private chats.
+	// Users field of BusinessBotRecipients.
 	//
 	// Use SetUsers and GetUsers helpers.
 	Users []int64
-	// Identifiers of private chats that are always excluded.
+	// ExcludeUsers field of BusinessBotRecipients.
 	//
 	// Use SetExcludeUsers and GetExcludeUsers helpers.
 	ExcludeUsers []int64
@@ -118,31 +105,6 @@ func (b *BusinessBotRecipients) String() string {
 	}
 	type Alias BusinessBotRecipients
 	return fmt.Sprintf("BusinessBotRecipients%+v", Alias(*b))
-}
-
-// FillFrom fills BusinessBotRecipients from given interface.
-func (b *BusinessBotRecipients) FillFrom(from interface {
-	GetExistingChats() (value bool)
-	GetNewChats() (value bool)
-	GetContacts() (value bool)
-	GetNonContacts() (value bool)
-	GetExcludeSelected() (value bool)
-	GetUsers() (value []int64, ok bool)
-	GetExcludeUsers() (value []int64, ok bool)
-}) {
-	b.ExistingChats = from.GetExistingChats()
-	b.NewChats = from.GetNewChats()
-	b.Contacts = from.GetContacts()
-	b.NonContacts = from.GetNonContacts()
-	b.ExcludeSelected = from.GetExcludeSelected()
-	if val, ok := from.GetUsers(); ok {
-		b.Users = val
-	}
-
-	if val, ok := from.GetExcludeUsers(); ok {
-		b.ExcludeUsers = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.

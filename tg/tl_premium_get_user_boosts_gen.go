@@ -32,14 +32,10 @@ var (
 )
 
 // PremiumGetUserBoostsRequest represents TL type `premium.getUserBoosts#39854d1f`.
-// Returns the lists of boost that were applied to a channel/supergroup by a specific
-// user (admins only)
-//
-// See https://core.telegram.org/method/premium.getUserBoosts for reference.
 type PremiumGetUserBoostsRequest struct {
-	// The channel/supergroup
+	// Peer field of PremiumGetUserBoostsRequest.
 	Peer InputPeerClass
-	// The user
+	// UserID field of PremiumGetUserBoostsRequest.
 	UserID InputUserClass
 }
 
@@ -75,15 +71,6 @@ func (g *PremiumGetUserBoostsRequest) String() string {
 	}
 	type Alias PremiumGetUserBoostsRequest
 	return fmt.Sprintf("PremiumGetUserBoostsRequest%+v", Alias(*g))
-}
-
-// FillFrom fills PremiumGetUserBoostsRequest from given interface.
-func (g *PremiumGetUserBoostsRequest) FillFrom(from interface {
-	GetPeer() (value InputPeerClass)
-	GetUserID() (value InputUserClass)
-}) {
-	g.Peer = from.GetPeer()
-	g.UserID = from.GetUserID()
 }
 
 // TypeID returns type id in TL schema.
@@ -200,15 +187,6 @@ func (g *PremiumGetUserBoostsRequest) GetUserID() (value InputUserClass) {
 }
 
 // PremiumGetUserBoosts invokes method premium.getUserBoosts#39854d1f returning error if any.
-// Returns the lists of boost that were applied to a channel/supergroup by a specific
-// user (admins only)
-//
-// Possible errors:
-//
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//
-// See https://core.telegram.org/method/premium.getUserBoosts for reference.
-// Can be used by bots.
 func (c *Client) PremiumGetUserBoosts(ctx context.Context, request *PremiumGetUserBoostsRequest) (*PremiumBoostsList, error) {
 	var result PremiumBoostsList
 

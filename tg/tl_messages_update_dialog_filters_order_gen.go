@@ -32,17 +32,8 @@ var (
 )
 
 // MessagesUpdateDialogFiltersOrderRequest represents TL type `messages.updateDialogFiltersOrder#c563c1e4`.
-// Reorder folders¹
-//
-// Links:
-//  1. https://core.telegram.org/api/folders
-//
-// See https://core.telegram.org/method/messages.updateDialogFiltersOrder for reference.
 type MessagesUpdateDialogFiltersOrderRequest struct {
-	// New folder¹ order
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/folders
+	// Order field of MessagesUpdateDialogFiltersOrderRequest.
 	Order []int
 }
 
@@ -75,13 +66,6 @@ func (u *MessagesUpdateDialogFiltersOrderRequest) String() string {
 	}
 	type Alias MessagesUpdateDialogFiltersOrderRequest
 	return fmt.Sprintf("MessagesUpdateDialogFiltersOrderRequest%+v", Alias(*u))
-}
-
-// FillFrom fills MessagesUpdateDialogFiltersOrderRequest from given interface.
-func (u *MessagesUpdateDialogFiltersOrderRequest) FillFrom(from interface {
-	GetOrder() (value []int)
-}) {
-	u.Order = from.GetOrder()
 }
 
 // TypeID returns type id in TL schema.
@@ -181,12 +165,6 @@ func (u *MessagesUpdateDialogFiltersOrderRequest) GetOrder() (value []int) {
 }
 
 // MessagesUpdateDialogFiltersOrder invokes method messages.updateDialogFiltersOrder#c563c1e4 returning error if any.
-// Reorder folders¹
-//
-// Links:
-//  1. https://core.telegram.org/api/folders
-//
-// See https://core.telegram.org/method/messages.updateDialogFiltersOrder for reference.
 func (c *Client) MessagesUpdateDialogFiltersOrder(ctx context.Context, order []int) (bool, error) {
 	var result BoolBox
 

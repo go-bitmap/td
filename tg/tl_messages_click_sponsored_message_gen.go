@@ -32,24 +32,14 @@ var (
 )
 
 // MessagesClickSponsoredMessageRequest represents TL type `messages.clickSponsoredMessage#8235057e`.
-// Informs the server that the user has interacted with a sponsored message in one of the
-// ways listed here »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/sponsored-messages#clicking-on-sponsored-messages
-//
-// See https://core.telegram.org/method/messages.clickSponsoredMessage for reference.
 type MessagesClickSponsoredMessageRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessagesClickSponsoredMessageRequest.
 	Flags bin.Fields
-	// The user clicked on the media
+	// Media field of MessagesClickSponsoredMessageRequest.
 	Media bool
-	// The user expanded the video to full screen, and then clicked on it.
+	// Fullscreen field of MessagesClickSponsoredMessageRequest.
 	Fullscreen bool
-	// The ad's unique ID.
+	// RandomID field of MessagesClickSponsoredMessageRequest.
 	RandomID []byte
 }
 
@@ -91,17 +81,6 @@ func (c *MessagesClickSponsoredMessageRequest) String() string {
 	}
 	type Alias MessagesClickSponsoredMessageRequest
 	return fmt.Sprintf("MessagesClickSponsoredMessageRequest%+v", Alias(*c))
-}
-
-// FillFrom fills MessagesClickSponsoredMessageRequest from given interface.
-func (c *MessagesClickSponsoredMessageRequest) FillFrom(from interface {
-	GetMedia() (value bool)
-	GetFullscreen() (value bool)
-	GetRandomID() (value []byte)
-}) {
-	c.Media = from.GetMedia()
-	c.Fullscreen = from.GetFullscreen()
-	c.RandomID = from.GetRandomID()
 }
 
 // TypeID returns type id in TL schema.
@@ -257,13 +236,6 @@ func (c *MessagesClickSponsoredMessageRequest) GetRandomID() (value []byte) {
 }
 
 // MessagesClickSponsoredMessage invokes method messages.clickSponsoredMessage#8235057e returning error if any.
-// Informs the server that the user has interacted with a sponsored message in one of the
-// ways listed here »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/sponsored-messages#clicking-on-sponsored-messages
-//
-// See https://core.telegram.org/method/messages.clickSponsoredMessage for reference.
 func (c *Client) MessagesClickSponsoredMessage(ctx context.Context, request *MessagesClickSponsoredMessageRequest) (bool, error) {
 	var result BoolBox
 

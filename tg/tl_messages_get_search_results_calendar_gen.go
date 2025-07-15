@@ -32,43 +32,20 @@ var (
 )
 
 // MessagesGetSearchResultsCalendarRequest represents TL type `messages.getSearchResultsCalendar#6aa3f6bd`.
-// Returns information about the next messages of the specified type in the chat split by
-// days.
-// Returns the results in reverse chronological order.
-// Can return partial results for the last returned day.
-//
-// See https://core.telegram.org/method/messages.getSearchResultsCalendar for reference.
 type MessagesGetSearchResultsCalendarRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessagesGetSearchResultsCalendarRequest.
 	Flags bin.Fields
-	// Peer where to search
+	// Peer field of MessagesGetSearchResultsCalendarRequest.
 	Peer InputPeerClass
-	// Search within the saved message dialog »¹ with this ID.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/saved-messages
+	// SavedPeerID field of MessagesGetSearchResultsCalendarRequest.
 	//
 	// Use SetSavedPeerID and GetSavedPeerID helpers.
 	SavedPeerID InputPeerClass
-	// Message filter, inputMessagesFilterEmpty¹, inputMessagesFilterMyMentions² filters
-	// are not supported by this method.
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/inputMessagesFilterEmpty
-	//  2) https://core.telegram.org/constructor/inputMessagesFilterMyMentions
+	// Filter field of MessagesGetSearchResultsCalendarRequest.
 	Filter MessagesFilterClass
-	// Offsets for pagination, for more info click here¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets
+	// OffsetID field of MessagesGetSearchResultsCalendarRequest.
 	OffsetID int
-	// Offsets for pagination, for more info click here¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets
+	// OffsetDate field of MessagesGetSearchResultsCalendarRequest.
 	OffsetDate int
 }
 
@@ -116,24 +93,6 @@ func (g *MessagesGetSearchResultsCalendarRequest) String() string {
 	}
 	type Alias MessagesGetSearchResultsCalendarRequest
 	return fmt.Sprintf("MessagesGetSearchResultsCalendarRequest%+v", Alias(*g))
-}
-
-// FillFrom fills MessagesGetSearchResultsCalendarRequest from given interface.
-func (g *MessagesGetSearchResultsCalendarRequest) FillFrom(from interface {
-	GetPeer() (value InputPeerClass)
-	GetSavedPeerID() (value InputPeerClass, ok bool)
-	GetFilter() (value MessagesFilterClass)
-	GetOffsetID() (value int)
-	GetOffsetDate() (value int)
-}) {
-	g.Peer = from.GetPeer()
-	if val, ok := from.GetSavedPeerID(); ok {
-		g.SavedPeerID = val
-	}
-
-	g.Filter = from.GetFilter()
-	g.OffsetID = from.GetOffsetID()
-	g.OffsetDate = from.GetOffsetDate()
 }
 
 // TypeID returns type id in TL schema.
@@ -344,17 +303,6 @@ func (g *MessagesGetSearchResultsCalendarRequest) GetOffsetDate() (value int) {
 }
 
 // MessagesGetSearchResultsCalendar invokes method messages.getSearchResultsCalendar#6aa3f6bd returning error if any.
-// Returns information about the next messages of the specified type in the chat split by
-// days.
-// Returns the results in reverse chronological order.
-// Can return partial results for the last returned day.
-//
-// Possible errors:
-//
-//	400 FILTER_NOT_SUPPORTED: The specified filter cannot be used in this context.
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//
-// See https://core.telegram.org/method/messages.getSearchResultsCalendar for reference.
 func (c *Client) MessagesGetSearchResultsCalendar(ctx context.Context, request *MessagesGetSearchResultsCalendarRequest) (*MessagesSearchResultsCalendar, error) {
 	var result MessagesSearchResultsCalendar
 

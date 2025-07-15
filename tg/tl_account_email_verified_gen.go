@@ -32,11 +32,8 @@ var (
 )
 
 // AccountEmailVerified represents TL type `account.emailVerified#2b96cd1b`.
-// The email was verified correctly.
-//
-// See https://core.telegram.org/constructor/account.emailVerified for reference.
 type AccountEmailVerified struct {
-	// The verified email address.
+	// Email field of AccountEmailVerified.
 	Email string
 }
 
@@ -74,13 +71,6 @@ func (e *AccountEmailVerified) String() string {
 	}
 	type Alias AccountEmailVerified
 	return fmt.Sprintf("AccountEmailVerified%+v", Alias(*e))
-}
-
-// FillFrom fills AccountEmailVerified from given interface.
-func (e *AccountEmailVerified) FillFrom(from interface {
-	GetEmail() (value string)
-}) {
-	e.Email = from.GetEmail()
 }
 
 // TypeID returns type id in TL schema.
@@ -167,16 +157,10 @@ func (e *AccountEmailVerified) GetEmail() (value string) {
 }
 
 // AccountEmailVerifiedLogin represents TL type `account.emailVerifiedLogin#e1bb0d61`.
-// The email was verified correctly, and a login code was just sent to it.
-//
-// See https://core.telegram.org/constructor/account.emailVerifiedLogin for reference.
 type AccountEmailVerifiedLogin struct {
-	// The verified email address.
+	// Email field of AccountEmailVerifiedLogin.
 	Email string
-	// Info about the sent login code¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/auth
+	// SentCode field of AccountEmailVerifiedLogin.
 	SentCode AuthSentCodeClass
 }
 
@@ -217,15 +201,6 @@ func (e *AccountEmailVerifiedLogin) String() string {
 	}
 	type Alias AccountEmailVerifiedLogin
 	return fmt.Sprintf("AccountEmailVerifiedLogin%+v", Alias(*e))
-}
-
-// FillFrom fills AccountEmailVerifiedLogin from given interface.
-func (e *AccountEmailVerifiedLogin) FillFrom(from interface {
-	GetEmail() (value string)
-	GetSentCode() (value AuthSentCodeClass)
-}) {
-	e.Email = from.GetEmail()
-	e.SentCode = from.GetSentCode()
 }
 
 // TypeID returns type id in TL schema.
@@ -341,8 +316,6 @@ const AccountEmailVerifiedClassName = "account.EmailVerified"
 
 // AccountEmailVerifiedClass represents account.EmailVerified generic type.
 //
-// See https://core.telegram.org/type/account.EmailVerified for reference.
-//
 // Constructors:
 //   - [AccountEmailVerified]
 //   - [AccountEmailVerifiedLogin]
@@ -376,7 +349,7 @@ type AccountEmailVerifiedClass interface {
 	// Zero returns true if current object has a zero value.
 	Zero() bool
 
-	// The verified email address.
+	// Email field of AccountEmailVerified.
 	GetEmail() (value string)
 }
 

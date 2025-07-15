@@ -32,19 +32,10 @@ var (
 )
 
 // AttachMenuBotIconColor represents TL type `attachMenuBotIconColor#4576f3f0`.
-// Represents an attachment menu icon color for bot mini apps »¹
-//
-// Links:
-//  1. https://core.telegram.org/api/bots/attach
-//
-// See https://core.telegram.org/constructor/attachMenuBotIconColor for reference.
 type AttachMenuBotIconColor struct {
-	// One of the following values: light_icon - Color of the attachment menu icon (light
-	// mode) light_text - Color of the attachment menu label, once selected (light mode)
-	// dark_icon - Color of the attachment menu icon (dark mode) dark_text - Color of the
-	// attachment menu label, once selected (dark mode)
+	// Name field of AttachMenuBotIconColor.
 	Name string
-	// Color in RGB24 format
+	// Color field of AttachMenuBotIconColor.
 	Color int
 }
 
@@ -80,15 +71,6 @@ func (a *AttachMenuBotIconColor) String() string {
 	}
 	type Alias AttachMenuBotIconColor
 	return fmt.Sprintf("AttachMenuBotIconColor%+v", Alias(*a))
-}
-
-// FillFrom fills AttachMenuBotIconColor from given interface.
-func (a *AttachMenuBotIconColor) FillFrom(from interface {
-	GetName() (value string)
-	GetColor() (value int)
-}) {
-	a.Name = from.GetName()
-	a.Color = from.GetColor()
 }
 
 // TypeID returns type id in TL schema.

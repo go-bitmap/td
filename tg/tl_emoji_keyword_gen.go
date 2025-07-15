@@ -32,13 +32,10 @@ var (
 )
 
 // EmojiKeyword represents TL type `emojiKeyword#d5b3b9f9`.
-// Emoji keyword
-//
-// See https://core.telegram.org/constructor/emojiKeyword for reference.
 type EmojiKeyword struct {
-	// Keyword
+	// Keyword field of EmojiKeyword.
 	Keyword string
-	// Emojis associated to keyword
+	// Emoticons field of EmojiKeyword.
 	Emoticons []string
 }
 
@@ -79,15 +76,6 @@ func (e *EmojiKeyword) String() string {
 	}
 	type Alias EmojiKeyword
 	return fmt.Sprintf("EmojiKeyword%+v", Alias(*e))
-}
-
-// FillFrom fills EmojiKeyword from given interface.
-func (e *EmojiKeyword) FillFrom(from interface {
-	GetKeyword() (value string)
-	GetEmoticons() (value []string)
-}) {
-	e.Keyword = from.GetKeyword()
-	e.Emoticons = from.GetEmoticons()
 }
 
 // TypeID returns type id in TL schema.
@@ -207,13 +195,10 @@ func (e *EmojiKeyword) GetEmoticons() (value []string) {
 }
 
 // EmojiKeywordDeleted represents TL type `emojiKeywordDeleted#236df622`.
-// Deleted emoji keyword
-//
-// See https://core.telegram.org/constructor/emojiKeywordDeleted for reference.
 type EmojiKeywordDeleted struct {
-	// Keyword
+	// Keyword field of EmojiKeywordDeleted.
 	Keyword string
-	// Emojis that were associated to keyword
+	// Emoticons field of EmojiKeywordDeleted.
 	Emoticons []string
 }
 
@@ -254,15 +239,6 @@ func (e *EmojiKeywordDeleted) String() string {
 	}
 	type Alias EmojiKeywordDeleted
 	return fmt.Sprintf("EmojiKeywordDeleted%+v", Alias(*e))
-}
-
-// FillFrom fills EmojiKeywordDeleted from given interface.
-func (e *EmojiKeywordDeleted) FillFrom(from interface {
-	GetKeyword() (value string)
-	GetEmoticons() (value []string)
-}) {
-	e.Keyword = from.GetKeyword()
-	e.Emoticons = from.GetEmoticons()
 }
 
 // TypeID returns type id in TL schema.
@@ -386,8 +362,6 @@ const EmojiKeywordClassName = "EmojiKeyword"
 
 // EmojiKeywordClass represents EmojiKeyword generic type.
 //
-// See https://core.telegram.org/type/EmojiKeyword for reference.
-//
 // Constructors:
 //   - [EmojiKeyword]
 //   - [EmojiKeywordDeleted]
@@ -421,10 +395,9 @@ type EmojiKeywordClass interface {
 	// Zero returns true if current object has a zero value.
 	Zero() bool
 
-	// Keyword
+	// Keyword field of EmojiKeyword.
 	GetKeyword() (value string)
-
-	// Emojis associated to keyword
+	// Emoticons field of EmojiKeyword.
 	GetEmoticons() (value []string)
 }
 

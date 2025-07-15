@@ -32,9 +32,6 @@ var (
 )
 
 // InputPhotoEmpty represents TL type `inputPhotoEmpty#1cd7bf0d`.
-// Empty constructor.
-//
-// See https://core.telegram.org/constructor/inputPhotoEmpty for reference.
 type InputPhotoEmpty struct {
 }
 
@@ -134,21 +131,12 @@ func (i *InputPhotoEmpty) DecodeBare(b *bin.Buffer) error {
 }
 
 // InputPhoto represents TL type `inputPhoto#3bb3b94a`.
-// Defines a photo for further interaction.
-//
-// See https://core.telegram.org/constructor/inputPhoto for reference.
 type InputPhoto struct {
-	// Photo identifier
+	// ID field of InputPhoto.
 	ID int64
-	// access_hash value from the photo¹ constructor
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/photo
+	// AccessHash field of InputPhoto.
 	AccessHash int64
-	// File reference¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/file_reference
+	// FileReference field of InputPhoto.
 	FileReference []byte
 }
 
@@ -192,17 +180,6 @@ func (i *InputPhoto) String() string {
 	}
 	type Alias InputPhoto
 	return fmt.Sprintf("InputPhoto%+v", Alias(*i))
-}
-
-// FillFrom fills InputPhoto from given interface.
-func (i *InputPhoto) FillFrom(from interface {
-	GetID() (value int64)
-	GetAccessHash() (value int64)
-	GetFileReference() (value []byte)
-}) {
-	i.ID = from.GetID()
-	i.AccessHash = from.GetAccessHash()
-	i.FileReference = from.GetFileReference()
 }
 
 // TypeID returns type id in TL schema.
@@ -333,8 +310,6 @@ const InputPhotoClassName = "InputPhoto"
 
 // InputPhotoClass represents InputPhoto generic type.
 //
-// See https://core.telegram.org/type/InputPhoto for reference.
-//
 // Constructors:
 //   - [InputPhotoEmpty]
 //   - [InputPhoto]
@@ -367,19 +342,6 @@ type InputPhotoClass interface {
 	String() string
 	// Zero returns true if current object has a zero value.
 	Zero() bool
-
-	// AsNotEmpty tries to map InputPhotoClass to InputPhoto.
-	AsNotEmpty() (*InputPhoto, bool)
-}
-
-// AsNotEmpty tries to map InputPhotoEmpty to InputPhoto.
-func (i *InputPhotoEmpty) AsNotEmpty() (*InputPhoto, bool) {
-	return nil, false
-}
-
-// AsNotEmpty tries to map InputPhoto to InputPhoto.
-func (i *InputPhoto) AsNotEmpty() (*InputPhoto, bool) {
-	return i, true
 }
 
 // DecodeInputPhoto implements binary de-serialization for InputPhotoClass.

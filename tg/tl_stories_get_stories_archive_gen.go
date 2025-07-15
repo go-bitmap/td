@@ -32,24 +32,12 @@ var (
 )
 
 // StoriesGetStoriesArchiveRequest represents TL type `stories.getStoriesArchive#b4352016`.
-// Fetch the story archive »¹ of a peer we control.
-//
-// Links:
-//  1. https://core.telegram.org/api/stories#pinned-or-archived-stories
-//
-// See https://core.telegram.org/method/stories.getStoriesArchive for reference.
 type StoriesGetStoriesArchiveRequest struct {
-	// Peer whose archived stories should be fetched
+	// Peer field of StoriesGetStoriesArchiveRequest.
 	Peer InputPeerClass
-	// Offsets for pagination, for more info click here¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets
+	// OffsetID field of StoriesGetStoriesArchiveRequest.
 	OffsetID int
-	// Maximum number of results to return, see pagination¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets
+	// Limit field of StoriesGetStoriesArchiveRequest.
 	Limit int
 }
 
@@ -88,17 +76,6 @@ func (g *StoriesGetStoriesArchiveRequest) String() string {
 	}
 	type Alias StoriesGetStoriesArchiveRequest
 	return fmt.Sprintf("StoriesGetStoriesArchiveRequest%+v", Alias(*g))
-}
-
-// FillFrom fills StoriesGetStoriesArchiveRequest from given interface.
-func (g *StoriesGetStoriesArchiveRequest) FillFrom(from interface {
-	GetPeer() (value InputPeerClass)
-	GetOffsetID() (value int)
-	GetLimit() (value int)
-}) {
-	g.Peer = from.GetPeer()
-	g.OffsetID = from.GetOffsetID()
-	g.Limit = from.GetLimit()
 }
 
 // TypeID returns type id in TL schema.
@@ -230,17 +207,6 @@ func (g *StoriesGetStoriesArchiveRequest) GetLimit() (value int) {
 }
 
 // StoriesGetStoriesArchive invokes method stories.getStoriesArchive#b4352016 returning error if any.
-// Fetch the story archive »¹ of a peer we control.
-//
-// Links:
-//  1. https://core.telegram.org/api/stories#pinned-or-archived-stories
-//
-// Possible errors:
-//
-//	400 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//
-// See https://core.telegram.org/method/stories.getStoriesArchive for reference.
 func (c *Client) StoriesGetStoriesArchive(ctx context.Context, request *StoriesGetStoriesArchiveRequest) (*StoriesStories, error) {
 	var result StoriesStories
 

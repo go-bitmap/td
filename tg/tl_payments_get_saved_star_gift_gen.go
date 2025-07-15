@@ -32,8 +32,6 @@ var (
 )
 
 // PaymentsGetSavedStarGiftRequest represents TL type `payments.getSavedStarGift#b455a106`.
-//
-// See https://core.telegram.org/method/payments.getSavedStarGift for reference.
 type PaymentsGetSavedStarGiftRequest struct {
 	// Stargift field of PaymentsGetSavedStarGiftRequest.
 	Stargift []InputSavedStarGiftClass
@@ -68,13 +66,6 @@ func (g *PaymentsGetSavedStarGiftRequest) String() string {
 	}
 	type Alias PaymentsGetSavedStarGiftRequest
 	return fmt.Sprintf("PaymentsGetSavedStarGiftRequest%+v", Alias(*g))
-}
-
-// FillFrom fills PaymentsGetSavedStarGiftRequest from given interface.
-func (g *PaymentsGetSavedStarGiftRequest) FillFrom(from interface {
-	GetStargift() (value []InputSavedStarGiftClass)
-}) {
-	g.Stargift = from.GetStargift()
 }
 
 // TypeID returns type id in TL schema.
@@ -178,14 +169,7 @@ func (g *PaymentsGetSavedStarGiftRequest) GetStargift() (value []InputSavedStarG
 	return g.Stargift
 }
 
-// MapStargift returns field Stargift wrapped in InputSavedStarGiftClassArray helper.
-func (g *PaymentsGetSavedStarGiftRequest) MapStargift() (value InputSavedStarGiftClassArray) {
-	return InputSavedStarGiftClassArray(g.Stargift)
-}
-
 // PaymentsGetSavedStarGift invokes method payments.getSavedStarGift#b455a106 returning error if any.
-//
-// See https://core.telegram.org/method/payments.getSavedStarGift for reference.
 func (c *Client) PaymentsGetSavedStarGift(ctx context.Context, stargift []InputSavedStarGiftClass) (*PaymentsSavedStarGifts, error) {
 	var result PaymentsSavedStarGifts
 

@@ -32,17 +32,8 @@ var (
 )
 
 // MessagesTranslateResult represents TL type `messages.translateResult#33db32f8`.
-// Translated text with entities¹
-//
-// Links:
-//  1. https://core.telegram.org/api/entities
-//
-// See https://core.telegram.org/constructor/messages.translateResult for reference.
 type MessagesTranslateResult struct {
-	// Text+entities¹, for each input message.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/entities
+	// Result field of MessagesTranslateResult.
 	Result []TextWithEntities
 }
 
@@ -75,13 +66,6 @@ func (t *MessagesTranslateResult) String() string {
 	}
 	type Alias MessagesTranslateResult
 	return fmt.Sprintf("MessagesTranslateResult%+v", Alias(*t))
-}
-
-// FillFrom fills MessagesTranslateResult from given interface.
-func (t *MessagesTranslateResult) FillFrom(from interface {
-	GetResult() (value []TextWithEntities)
-}) {
-	t.Result = from.GetResult()
 }
 
 // TypeID returns type id in TL schema.

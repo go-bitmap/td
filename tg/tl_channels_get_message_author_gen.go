@@ -32,8 +32,6 @@ var (
 )
 
 // ChannelsGetMessageAuthorRequest represents TL type `channels.getMessageAuthor#ece2a0e6`.
-//
-// See https://core.telegram.org/method/channels.getMessageAuthor for reference.
 type ChannelsGetMessageAuthorRequest struct {
 	// Channel field of ChannelsGetMessageAuthorRequest.
 	Channel InputChannelClass
@@ -73,15 +71,6 @@ func (g *ChannelsGetMessageAuthorRequest) String() string {
 	}
 	type Alias ChannelsGetMessageAuthorRequest
 	return fmt.Sprintf("ChannelsGetMessageAuthorRequest%+v", Alias(*g))
-}
-
-// FillFrom fills ChannelsGetMessageAuthorRequest from given interface.
-func (g *ChannelsGetMessageAuthorRequest) FillFrom(from interface {
-	GetChannel() (value InputChannelClass)
-	GetID() (value int)
-}) {
-	g.Channel = from.GetChannel()
-	g.ID = from.GetID()
 }
 
 // TypeID returns type id in TL schema.
@@ -192,14 +181,7 @@ func (g *ChannelsGetMessageAuthorRequest) GetID() (value int) {
 	return g.ID
 }
 
-// GetChannelAsNotEmpty returns mapped value of Channel field.
-func (g *ChannelsGetMessageAuthorRequest) GetChannelAsNotEmpty() (NotEmptyInputChannel, bool) {
-	return g.Channel.AsNotEmpty()
-}
-
 // ChannelsGetMessageAuthor invokes method channels.getMessageAuthor#ece2a0e6 returning error if any.
-//
-// See https://core.telegram.org/method/channels.getMessageAuthor for reference.
 func (c *Client) ChannelsGetMessageAuthor(ctx context.Context, request *ChannelsGetMessageAuthorRequest) (UserClass, error) {
 	var result UserBox
 

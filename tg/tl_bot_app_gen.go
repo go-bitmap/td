@@ -32,9 +32,6 @@ var (
 )
 
 // BotAppNotModified represents TL type `botAppNotModified#5da674b7`.
-// Bot app info hasn't changed.
-//
-// See https://core.telegram.org/constructor/botAppNotModified for reference.
 type BotAppNotModified struct {
 }
 
@@ -134,42 +131,26 @@ func (b *BotAppNotModified) DecodeBare(buf *bin.Buffer) error {
 }
 
 // BotApp represents TL type `botApp#95fcd1d6`.
-// Contains information about a direct link Mini App¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/bots/webapps#direct-link-mini-apps
-//
-// See https://core.telegram.org/constructor/botApp for reference.
 type BotApp struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of BotApp.
 	Flags bin.Fields
-	// bot mini app ID
+	// ID field of BotApp.
 	ID int64
-	// bot mini app access hash
+	// AccessHash field of BotApp.
 	AccessHash int64
-	// bot mini app short name, used to generate Direct Mini App deep links¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/links#direct-mini-app-links
+	// ShortName field of BotApp.
 	ShortName string
-	// bot mini app title.
+	// Title field of BotApp.
 	Title string
-	// bot mini app description.
+	// Description field of BotApp.
 	Description string
-	// bot mini app photo.
+	// Photo field of BotApp.
 	Photo PhotoClass
-	// bot mini app animation.
+	// Document field of BotApp.
 	//
 	// Use SetDocument and GetDocument helpers.
 	Document DocumentClass
-	// Hash to pass to messages.getBotApp¹, to avoid refetching bot app info if it hasn't
-	// changed.
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/messages.getBotApp
+	// Hash field of BotApp.
 	Hash int64
 }
 
@@ -231,30 +212,6 @@ func (b *BotApp) String() string {
 	}
 	type Alias BotApp
 	return fmt.Sprintf("BotApp%+v", Alias(*b))
-}
-
-// FillFrom fills BotApp from given interface.
-func (b *BotApp) FillFrom(from interface {
-	GetID() (value int64)
-	GetAccessHash() (value int64)
-	GetShortName() (value string)
-	GetTitle() (value string)
-	GetDescription() (value string)
-	GetPhoto() (value PhotoClass)
-	GetDocument() (value DocumentClass, ok bool)
-	GetHash() (value int64)
-}) {
-	b.ID = from.GetID()
-	b.AccessHash = from.GetAccessHash()
-	b.ShortName = from.GetShortName()
-	b.Title = from.GetTitle()
-	b.Description = from.GetDescription()
-	b.Photo = from.GetPhoto()
-	if val, ok := from.GetDocument(); ok {
-		b.Document = val
-	}
-
-	b.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -524,8 +481,6 @@ const BotAppClassName = "BotApp"
 
 // BotAppClass represents BotApp generic type.
 //
-// See https://core.telegram.org/type/BotApp for reference.
-//
 // Constructors:
 //   - [BotAppNotModified]
 //   - [BotApp]
@@ -558,29 +513,6 @@ type BotAppClass interface {
 	String() string
 	// Zero returns true if current object has a zero value.
 	Zero() bool
-
-	// AsModified tries to map BotAppClass to BotApp.
-	AsModified() (*BotApp, bool)
-}
-
-// AsInputBotAppID tries to map BotApp to InputBotAppID.
-func (b *BotApp) AsInputBotAppID() *InputBotAppID {
-	value := new(InputBotAppID)
-	value.ID = b.GetID()
-	value.AccessHash = b.GetAccessHash()
-	value.AccessHash = b.GetHash()
-
-	return value
-}
-
-// AsModified tries to map BotAppNotModified to BotApp.
-func (b *BotAppNotModified) AsModified() (*BotApp, bool) {
-	return nil, false
-}
-
-// AsModified tries to map BotApp to BotApp.
-func (b *BotApp) AsModified() (*BotApp, bool) {
-	return b, true
 }
 
 // DecodeBotApp implements binary de-serialization for BotAppClass.

@@ -32,18 +32,12 @@ var (
 )
 
 // PhoneAcceptCallRequest represents TL type `phone.acceptCall#3bd2b4a0`.
-// Accept incoming call
-//
-// See https://core.telegram.org/method/phone.acceptCall for reference.
 type PhoneAcceptCallRequest struct {
-	// The call to accept
+	// Peer field of PhoneAcceptCallRequest.
 	Peer InputPhoneCall
-	// Parameter for E2E encryption key exchange »¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/end-to-end/voice-calls
+	// GB field of PhoneAcceptCallRequest.
 	GB []byte
-	// Phone call settings
+	// Protocol field of PhoneAcceptCallRequest.
 	Protocol PhoneCallProtocol
 }
 
@@ -82,17 +76,6 @@ func (a *PhoneAcceptCallRequest) String() string {
 	}
 	type Alias PhoneAcceptCallRequest
 	return fmt.Sprintf("PhoneAcceptCallRequest%+v", Alias(*a))
-}
-
-// FillFrom fills PhoneAcceptCallRequest from given interface.
-func (a *PhoneAcceptCallRequest) FillFrom(from interface {
-	GetPeer() (value InputPhoneCall)
-	GetGB() (value []byte)
-	GetProtocol() (value PhoneCallProtocol)
-}) {
-	a.Peer = from.GetPeer()
-	a.GB = from.GetGB()
-	a.Protocol = from.GetProtocol()
 }
 
 // TypeID returns type id in TL schema.
@@ -219,18 +202,6 @@ func (a *PhoneAcceptCallRequest) GetProtocol() (value PhoneCallProtocol) {
 }
 
 // PhoneAcceptCall invokes method phone.acceptCall#3bd2b4a0 returning error if any.
-// Accept incoming call
-//
-// Possible errors:
-//
-//	400 CALL_ALREADY_ACCEPTED: The call was already accepted.
-//	400 CALL_ALREADY_DECLINED: The call was already declined.
-//	500 CALL_OCCUPY_FAILED: The call failed because the user is already making another call.
-//	400 CALL_PEER_INVALID: The provided call peer object is invalid.
-//	406 CALL_PROTOCOL_COMPAT_LAYER_INVALID: The other side of the call does not support any of the VoIP protocols supported by the local client, as specified by the protocol.layer and protocol.library_versions fields.
-//	400 CALL_PROTOCOL_FLAGS_INVALID: Call protocol flags invalid.
-//
-// See https://core.telegram.org/method/phone.acceptCall for reference.
 func (c *Client) PhoneAcceptCall(ctx context.Context, request *PhoneAcceptCallRequest) (*PhonePhoneCall, error) {
 	var result PhonePhoneCall
 

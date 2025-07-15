@@ -32,13 +32,10 @@ var (
 )
 
 // BotsSendCustomRequestRequest represents TL type `bots.sendCustomRequest#aa2769ed`.
-// Sends a custom request; for bots only
-//
-// See https://core.telegram.org/method/bots.sendCustomRequest for reference.
 type BotsSendCustomRequestRequest struct {
-	// The method name
+	// CustomMethod field of BotsSendCustomRequestRequest.
 	CustomMethod string
-	// JSON-serialized method parameters
+	// Params field of BotsSendCustomRequestRequest.
 	Params DataJSON
 }
 
@@ -74,15 +71,6 @@ func (s *BotsSendCustomRequestRequest) String() string {
 	}
 	type Alias BotsSendCustomRequestRequest
 	return fmt.Sprintf("BotsSendCustomRequestRequest%+v", Alias(*s))
-}
-
-// FillFrom fills BotsSendCustomRequestRequest from given interface.
-func (s *BotsSendCustomRequestRequest) FillFrom(from interface {
-	GetCustomMethod() (value string)
-	GetParams() (value DataJSON)
-}) {
-	s.CustomMethod = from.GetCustomMethod()
-	s.Params = from.GetParams()
 }
 
 // TypeID returns type id in TL schema.
@@ -189,17 +177,6 @@ func (s *BotsSendCustomRequestRequest) GetParams() (value DataJSON) {
 }
 
 // BotsSendCustomRequest invokes method bots.sendCustomRequest#aa2769ed returning error if any.
-// Sends a custom request; for bots only
-//
-// Possible errors:
-//
-//	400 DATA_JSON_INVALID: The provided JSON data is invalid.
-//	400 METHOD_INVALID: The specified method is invalid.
-//	403 USER_BOT_INVALID: User accounts must provide the bot method parameter when calling this method. If there is no such method parameter, this method can only be invoked by bot accounts.
-//	400 USER_BOT_REQUIRED: This method can only be called by a bot.
-//
-// See https://core.telegram.org/method/bots.sendCustomRequest for reference.
-// Can be used by bots.
 func (c *Client) BotsSendCustomRequest(ctx context.Context, request *BotsSendCustomRequestRequest) (*DataJSON, error) {
 	var result DataJSON
 

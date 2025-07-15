@@ -32,23 +32,14 @@ var (
 )
 
 // SavedDialog represents TL type `savedDialog#bd87cb6c`.
-// Represents a saved dialog »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/saved-messages
-//
-// See https://core.telegram.org/constructor/savedDialog for reference.
 type SavedDialog struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of SavedDialog.
 	Flags bin.Fields
-	// Is the dialog pinned
+	// Pinned field of SavedDialog.
 	Pinned bool
-	// The dialog
+	// Peer field of SavedDialog.
 	Peer PeerClass
-	// The latest message ID
+	// TopMessage field of SavedDialog.
 	TopMessage int
 }
 
@@ -95,17 +86,6 @@ func (s *SavedDialog) String() string {
 	}
 	type Alias SavedDialog
 	return fmt.Sprintf("SavedDialog%+v", Alias(*s))
-}
-
-// FillFrom fills SavedDialog from given interface.
-func (s *SavedDialog) FillFrom(from interface {
-	GetPinned() (value bool)
-	GetPeer() (value PeerClass)
-	GetTopMessage() (value int)
-}) {
-	s.Pinned = from.GetPinned()
-	s.Peer = from.GetPeer()
-	s.TopMessage = from.GetTopMessage()
 }
 
 // TypeID returns type id in TL schema.
@@ -258,13 +238,13 @@ func (s *SavedDialog) GetTopMessage() (value int) {
 }
 
 // MonoForumDialog represents TL type `monoForumDialog#64407ea7`.
-//
-// See https://core.telegram.org/constructor/monoForumDialog for reference.
 type MonoForumDialog struct {
 	// Flags field of MonoForumDialog.
 	Flags bin.Fields
 	// UnreadMark field of MonoForumDialog.
 	UnreadMark bool
+	// NopaidMessagesException field of MonoForumDialog.
+	NopaidMessagesException bool
 	// Peer field of MonoForumDialog.
 	Peer PeerClass
 	// TopMessage field of MonoForumDialog.
@@ -309,6 +289,9 @@ func (m *MonoForumDialog) Zero() bool {
 	if !(m.UnreadMark == false) {
 		return false
 	}
+	if !(m.NopaidMessagesException == false) {
+		return false
+	}
 	if !(m.Peer == nil) {
 		return false
 	}
@@ -343,30 +326,6 @@ func (m *MonoForumDialog) String() string {
 	return fmt.Sprintf("MonoForumDialog%+v", Alias(*m))
 }
 
-// FillFrom fills MonoForumDialog from given interface.
-func (m *MonoForumDialog) FillFrom(from interface {
-	GetUnreadMark() (value bool)
-	GetPeer() (value PeerClass)
-	GetTopMessage() (value int)
-	GetReadInboxMaxID() (value int)
-	GetReadOutboxMaxID() (value int)
-	GetUnreadCount() (value int)
-	GetUnreadReactionsCount() (value int)
-	GetDraft() (value DraftMessageClass, ok bool)
-}) {
-	m.UnreadMark = from.GetUnreadMark()
-	m.Peer = from.GetPeer()
-	m.TopMessage = from.GetTopMessage()
-	m.ReadInboxMaxID = from.GetReadInboxMaxID()
-	m.ReadOutboxMaxID = from.GetReadOutboxMaxID()
-	m.UnreadCount = from.GetUnreadCount()
-	m.UnreadReactionsCount = from.GetUnreadReactionsCount()
-	if val, ok := from.GetDraft(); ok {
-		m.Draft = val
-	}
-
-}
-
 // TypeID returns type id in TL schema.
 //
 // See https://core.telegram.org/mtproto/TL-tl#remarks.
@@ -394,6 +353,11 @@ func (m *MonoForumDialog) TypeInfo() tdp.Type {
 			Name:       "UnreadMark",
 			SchemaName: "unread_mark",
 			Null:       !m.Flags.Has(3),
+		},
+		{
+			Name:       "NopaidMessagesException",
+			SchemaName: "nopaid_messages_exception",
+			Null:       !m.Flags.Has(4),
 		},
 		{
 			Name:       "Peer",
@@ -432,6 +396,9 @@ func (m *MonoForumDialog) TypeInfo() tdp.Type {
 func (m *MonoForumDialog) SetFlags() {
 	if !(m.UnreadMark == false) {
 		m.Flags.Set(3)
+	}
+	if !(m.NopaidMessagesException == false) {
+		m.Flags.Set(4)
 	}
 	if !(m.Draft == nil) {
 		m.Flags.Set(1)
@@ -500,6 +467,7 @@ func (m *MonoForumDialog) DecodeBare(b *bin.Buffer) error {
 		}
 	}
 	m.UnreadMark = m.Flags.Has(3)
+	m.NopaidMessagesException = m.Flags.Has(4)
 	{
 		value, err := DecodePeer(b)
 		if err != nil {
@@ -569,6 +537,25 @@ func (m *MonoForumDialog) GetUnreadMark() (value bool) {
 		return
 	}
 	return m.Flags.Has(3)
+}
+
+// SetNopaidMessagesException sets value of NopaidMessagesException conditional field.
+func (m *MonoForumDialog) SetNopaidMessagesException(value bool) {
+	if value {
+		m.Flags.Set(4)
+		m.NopaidMessagesException = true
+	} else {
+		m.Flags.Unset(4)
+		m.NopaidMessagesException = false
+	}
+}
+
+// GetNopaidMessagesException returns value of NopaidMessagesException conditional field.
+func (m *MonoForumDialog) GetNopaidMessagesException() (value bool) {
+	if m == nil {
+		return
+	}
+	return m.Flags.Has(4)
 }
 
 // GetPeer returns value of Peer field.
@@ -642,8 +629,6 @@ const SavedDialogClassName = "SavedDialog"
 
 // SavedDialogClass represents SavedDialog generic type.
 //
-// See https://core.telegram.org/type/SavedDialog for reference.
-//
 // Constructors:
 //   - [SavedDialog]
 //   - [MonoForumDialog]
@@ -677,10 +662,9 @@ type SavedDialogClass interface {
 	// Zero returns true if current object has a zero value.
 	Zero() bool
 
-	// The dialog
+	// Peer field of SavedDialog.
 	GetPeer() (value PeerClass)
-
-	// The latest message ID
+	// TopMessage field of SavedDialog.
 	GetTopMessage() (value int)
 }
 

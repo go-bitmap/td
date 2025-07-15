@@ -32,23 +32,14 @@ var (
 )
 
 // StatsGetMessageStatsRequest represents TL type `stats.getMessageStats#b6e0a3f5`.
-// Get message statistics¹
-//
-// Links:
-//  1. https://core.telegram.org/api/stats
-//
-// See https://core.telegram.org/method/stats.getMessageStats for reference.
 type StatsGetMessageStatsRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of StatsGetMessageStatsRequest.
 	Flags bin.Fields
-	// Whether to enable dark theme for graph colors
+	// Dark field of StatsGetMessageStatsRequest.
 	Dark bool
-	// Channel ID
+	// Channel field of StatsGetMessageStatsRequest.
 	Channel InputChannelClass
-	// Message ID
+	// MsgID field of StatsGetMessageStatsRequest.
 	MsgID int
 }
 
@@ -90,17 +81,6 @@ func (g *StatsGetMessageStatsRequest) String() string {
 	}
 	type Alias StatsGetMessageStatsRequest
 	return fmt.Sprintf("StatsGetMessageStatsRequest%+v", Alias(*g))
-}
-
-// FillFrom fills StatsGetMessageStatsRequest from given interface.
-func (g *StatsGetMessageStatsRequest) FillFrom(from interface {
-	GetDark() (value bool)
-	GetChannel() (value InputChannelClass)
-	GetMsgID() (value int)
-}) {
-	g.Dark = from.GetDark()
-	g.Channel = from.GetChannel()
-	g.MsgID = from.GetMsgID()
 }
 
 // TypeID returns type id in TL schema.
@@ -252,25 +232,7 @@ func (g *StatsGetMessageStatsRequest) GetMsgID() (value int) {
 	return g.MsgID
 }
 
-// GetChannelAsNotEmpty returns mapped value of Channel field.
-func (g *StatsGetMessageStatsRequest) GetChannelAsNotEmpty() (NotEmptyInputChannel, bool) {
-	return g.Channel.AsNotEmpty()
-}
-
 // StatsGetMessageStats invokes method stats.getMessageStats#b6e0a3f5 returning error if any.
-// Get message statistics¹
-//
-// Links:
-//  1. https://core.telegram.org/api/stats
-//
-// Possible errors:
-//
-//	400 CHANNEL_INVALID: The provided channel is invalid.
-//	400 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
-//	400 MESSAGE_ID_INVALID: The provided message id is invalid.
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//
-// See https://core.telegram.org/method/stats.getMessageStats for reference.
 func (c *Client) StatsGetMessageStats(ctx context.Context, request *StatsGetMessageStatsRequest) (*StatsMessageStats, error) {
 	var result StatsMessageStats
 

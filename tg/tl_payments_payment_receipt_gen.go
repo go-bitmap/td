@@ -32,59 +32,44 @@ var (
 )
 
 // PaymentsPaymentReceipt represents TL type `payments.paymentReceipt#70c4fe03`.
-// Receipt
-//
-// See https://core.telegram.org/constructor/payments.paymentReceipt for reference.
 type PaymentsPaymentReceipt struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of PaymentsPaymentReceipt.
 	Flags bin.Fields
-	// Date of generation
+	// Date field of PaymentsPaymentReceipt.
 	Date int
-	// Bot ID
+	// BotID field of PaymentsPaymentReceipt.
 	BotID int64
-	// Provider ID
+	// ProviderID field of PaymentsPaymentReceipt.
 	ProviderID int64
-	// Title
+	// Title field of PaymentsPaymentReceipt.
 	Title string
-	// Description
+	// Description field of PaymentsPaymentReceipt.
 	Description string
-	// Photo
+	// Photo field of PaymentsPaymentReceipt.
 	//
 	// Use SetPhoto and GetPhoto helpers.
 	Photo WebDocumentClass
-	// Invoice
+	// Invoice field of PaymentsPaymentReceipt.
 	Invoice Invoice
-	// Info
+	// Info field of PaymentsPaymentReceipt.
 	//
 	// Use SetInfo and GetInfo helpers.
 	Info PaymentRequestedInfo
-	// Selected shipping option
+	// Shipping field of PaymentsPaymentReceipt.
 	//
 	// Use SetShipping and GetShipping helpers.
 	Shipping ShippingOption
-	// Tipped amount
+	// TipAmount field of PaymentsPaymentReceipt.
 	//
 	// Use SetTipAmount and GetTipAmount helpers.
 	TipAmount int64
-	// Three-letter ISO 4217 currency¹ code
-	//
-	// Links:
-	//  1) https://core.telegram.org/bots/payments#supported-currencies
+	// Currency field of PaymentsPaymentReceipt.
 	Currency string
-	// Total amount in the smallest units of the currency (integer, not float/double). For
-	// example, for a price of US$ 1.45 pass amount = 145. See the exp parameter in
-	// currencies.json¹, it shows the number of digits past the decimal point for each
-	// currency (2 for the majority of currencies).
-	//
-	// Links:
-	//  1) https://core.telegram.org/bots/payments/currencies.json
+	// TotalAmount field of PaymentsPaymentReceipt.
 	TotalAmount int64
-	// Payment credential name
+	// CredentialsTitle field of PaymentsPaymentReceipt.
 	CredentialsTitle string
-	// Users
+	// Users field of PaymentsPaymentReceipt.
 	Users []UserClass
 }
 
@@ -164,51 +149,6 @@ func (p *PaymentsPaymentReceipt) String() string {
 	}
 	type Alias PaymentsPaymentReceipt
 	return fmt.Sprintf("PaymentsPaymentReceipt%+v", Alias(*p))
-}
-
-// FillFrom fills PaymentsPaymentReceipt from given interface.
-func (p *PaymentsPaymentReceipt) FillFrom(from interface {
-	GetDate() (value int)
-	GetBotID() (value int64)
-	GetProviderID() (value int64)
-	GetTitle() (value string)
-	GetDescription() (value string)
-	GetPhoto() (value WebDocumentClass, ok bool)
-	GetInvoice() (value Invoice)
-	GetInfo() (value PaymentRequestedInfo, ok bool)
-	GetShipping() (value ShippingOption, ok bool)
-	GetTipAmount() (value int64, ok bool)
-	GetCurrency() (value string)
-	GetTotalAmount() (value int64)
-	GetCredentialsTitle() (value string)
-	GetUsers() (value []UserClass)
-}) {
-	p.Date = from.GetDate()
-	p.BotID = from.GetBotID()
-	p.ProviderID = from.GetProviderID()
-	p.Title = from.GetTitle()
-	p.Description = from.GetDescription()
-	if val, ok := from.GetPhoto(); ok {
-		p.Photo = val
-	}
-
-	p.Invoice = from.GetInvoice()
-	if val, ok := from.GetInfo(); ok {
-		p.Info = val
-	}
-
-	if val, ok := from.GetShipping(); ok {
-		p.Shipping = val
-	}
-
-	if val, ok := from.GetTipAmount(); ok {
-		p.TipAmount = val
-	}
-
-	p.Currency = from.GetCurrency()
-	p.TotalAmount = from.GetTotalAmount()
-	p.CredentialsTitle = from.GetCredentialsTitle()
-	p.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -654,48 +594,31 @@ func (p *PaymentsPaymentReceipt) GetUsers() (value []UserClass) {
 	return p.Users
 }
 
-// MapUsers returns field Users wrapped in UserClassArray helper.
-func (p *PaymentsPaymentReceipt) MapUsers() (value UserClassArray) {
-	return UserClassArray(p.Users)
-}
-
 // PaymentsPaymentReceiptStars represents TL type `payments.paymentReceiptStars#dabbf83a`.
-// Receipt for payment made using Telegram Stars¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/stars
-//
-// See https://core.telegram.org/constructor/payments.paymentReceiptStars for reference.
 type PaymentsPaymentReceiptStars struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of PaymentsPaymentReceiptStars.
 	Flags bin.Fields
-	// Date of generation
+	// Date field of PaymentsPaymentReceiptStars.
 	Date int
-	// Bot ID
+	// BotID field of PaymentsPaymentReceiptStars.
 	BotID int64
-	// Title
+	// Title field of PaymentsPaymentReceiptStars.
 	Title string
-	// Description
+	// Description field of PaymentsPaymentReceiptStars.
 	Description string
-	// Product photo
+	// Photo field of PaymentsPaymentReceiptStars.
 	//
 	// Use SetPhoto and GetPhoto helpers.
 	Photo WebDocumentClass
-	// Invoice
+	// Invoice field of PaymentsPaymentReceiptStars.
 	Invoice Invoice
-	// Currency, always XTR.
+	// Currency field of PaymentsPaymentReceiptStars.
 	Currency string
-	// Amount of Telegram Stars¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/stars
+	// TotalAmount field of PaymentsPaymentReceiptStars.
 	TotalAmount int64
-	// Transaction ID
+	// TransactionID field of PaymentsPaymentReceiptStars.
 	TransactionID string
-	// Info about users mentioned in the other fields.
+	// Users field of PaymentsPaymentReceiptStars.
 	Users []UserClass
 }
 
@@ -763,34 +686,6 @@ func (p *PaymentsPaymentReceiptStars) String() string {
 	}
 	type Alias PaymentsPaymentReceiptStars
 	return fmt.Sprintf("PaymentsPaymentReceiptStars%+v", Alias(*p))
-}
-
-// FillFrom fills PaymentsPaymentReceiptStars from given interface.
-func (p *PaymentsPaymentReceiptStars) FillFrom(from interface {
-	GetDate() (value int)
-	GetBotID() (value int64)
-	GetTitle() (value string)
-	GetDescription() (value string)
-	GetPhoto() (value WebDocumentClass, ok bool)
-	GetInvoice() (value Invoice)
-	GetCurrency() (value string)
-	GetTotalAmount() (value int64)
-	GetTransactionID() (value string)
-	GetUsers() (value []UserClass)
-}) {
-	p.Date = from.GetDate()
-	p.BotID = from.GetBotID()
-	p.Title = from.GetTitle()
-	p.Description = from.GetDescription()
-	if val, ok := from.GetPhoto(); ok {
-		p.Photo = val
-	}
-
-	p.Invoice = from.GetInvoice()
-	p.Currency = from.GetCurrency()
-	p.TotalAmount = from.GetTotalAmount()
-	p.TransactionID = from.GetTransactionID()
-	p.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -1108,17 +1003,10 @@ func (p *PaymentsPaymentReceiptStars) GetUsers() (value []UserClass) {
 	return p.Users
 }
 
-// MapUsers returns field Users wrapped in UserClassArray helper.
-func (p *PaymentsPaymentReceiptStars) MapUsers() (value UserClassArray) {
-	return UserClassArray(p.Users)
-}
-
 // PaymentsPaymentReceiptClassName is schema name of PaymentsPaymentReceiptClass.
 const PaymentsPaymentReceiptClassName = "payments.PaymentReceipt"
 
 // PaymentsPaymentReceiptClass represents payments.PaymentReceipt generic type.
-//
-// See https://core.telegram.org/type/payments.PaymentReceipt for reference.
 //
 // Constructors:
 //   - [PaymentsPaymentReceipt]
@@ -1153,43 +1041,24 @@ type PaymentsPaymentReceiptClass interface {
 	// Zero returns true if current object has a zero value.
 	Zero() bool
 
-	// Date of generation
+	// Date field of PaymentsPaymentReceipt.
 	GetDate() (value int)
-
-	// Bot ID
+	// BotID field of PaymentsPaymentReceipt.
 	GetBotID() (value int64)
-
-	// Title
+	// Title field of PaymentsPaymentReceipt.
 	GetTitle() (value string)
-
-	// Description
+	// Description field of PaymentsPaymentReceipt.
 	GetDescription() (value string)
-
-	// Photo
+	// Photo field of PaymentsPaymentReceipt.
 	GetPhoto() (value WebDocumentClass, ok bool)
-
-	// Invoice
+	// Invoice field of PaymentsPaymentReceipt.
 	GetInvoice() (value Invoice)
-
-	// Three-letter ISO 4217 currency¹ code
-	//
-	// Links:
-	//  1) https://core.telegram.org/bots/payments#supported-currencies
+	// Currency field of PaymentsPaymentReceipt.
 	GetCurrency() (value string)
-
-	// Total amount in the smallest units of the currency (integer, not float/double). For
-	// example, for a price of US$ 1.45 pass amount = 145. See the exp parameter in
-	// currencies.json¹, it shows the number of digits past the decimal point for each
-	// currency (2 for the majority of currencies).
-	//
-	// Links:
-	//  1) https://core.telegram.org/bots/payments/currencies.json
+	// TotalAmount field of PaymentsPaymentReceipt.
 	GetTotalAmount() (value int64)
-
-	// Users
+	// Users field of PaymentsPaymentReceipt.
 	GetUsers() (value []UserClass)
-	// Users
-	MapUsers() (value UserClassArray)
 }
 
 // DecodePaymentsPaymentReceipt implements binary de-serialization for PaymentsPaymentReceiptClass.

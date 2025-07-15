@@ -32,121 +32,50 @@ var (
 )
 
 // ChatBannedRights represents TL type `chatBannedRights#9f120418`.
-// Represents the rights of a normal user in a supergroup/channel/chat¹. In this case,
-// the flags are inverted: if set, a flag does not allow a user to do X.
-//
-// Links:
-//  1. https://core.telegram.org/api/channel
-//
-// See https://core.telegram.org/constructor/chatBannedRights for reference.
 type ChatBannedRights struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of ChatBannedRights.
 	Flags bin.Fields
-	// If set, does not allow a user to view messages in a supergroup/channel/chat¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/channel
+	// ViewMessages field of ChatBannedRights.
 	ViewMessages bool
-	// If set, does not allow a user to send messages in a supergroup/chat¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/channel
+	// SendMessages field of ChatBannedRights.
 	SendMessages bool
-	// If set, does not allow a user to send any media in a supergroup/chat¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/channel
+	// SendMedia field of ChatBannedRights.
 	SendMedia bool
-	// If set, does not allow a user to send stickers in a supergroup/chat¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/channel
+	// SendStickers field of ChatBannedRights.
 	SendStickers bool
-	// If set, does not allow a user to send gifs in a supergroup/chat¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/channel
+	// SendGifs field of ChatBannedRights.
 	SendGifs bool
-	// If set, does not allow a user to send games in a supergroup/chat¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/channel
+	// SendGames field of ChatBannedRights.
 	SendGames bool
-	// If set, does not allow a user to use inline bots in a supergroup/chat¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/channel
+	// SendInline field of ChatBannedRights.
 	SendInline bool
-	// If set, does not allow a user to embed links in the messages of a supergroup/chat¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/channel
+	// EmbedLinks field of ChatBannedRights.
 	EmbedLinks bool
-	// If set, does not allow a user to send polls in a supergroup/chat¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/channel
+	// SendPolls field of ChatBannedRights.
 	SendPolls bool
-	// If set, does not allow any user to change the description of a supergroup/chat¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/channel
+	// ChangeInfo field of ChatBannedRights.
 	ChangeInfo bool
-	// If set, does not allow any user to invite users in a supergroup/chat¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/channel
+	// InviteUsers field of ChatBannedRights.
 	InviteUsers bool
-	// If set, does not allow any user to pin messages in a supergroup/chat¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/channel
+	// PinMessages field of ChatBannedRights.
 	PinMessages bool
-	// If set, does not allow any user to create, delete or modify forum topics »¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/forum#forum-topics
+	// ManageTopics field of ChatBannedRights.
 	ManageTopics bool
-	// If set, does not allow a user to send photos in a supergroup/chat¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/channel
+	// SendPhotos field of ChatBannedRights.
 	SendPhotos bool
-	// If set, does not allow a user to send videos in a supergroup/chat¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/channel
+	// SendVideos field of ChatBannedRights.
 	SendVideos bool
-	// If set, does not allow a user to send round videos in a supergroup/chat¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/channel
+	// SendRoundvideos field of ChatBannedRights.
 	SendRoundvideos bool
-	// If set, does not allow a user to send audio files in a supergroup/chat¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/channel
+	// SendAudios field of ChatBannedRights.
 	SendAudios bool
-	// If set, does not allow a user to send voice messages in a supergroup/chat¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/channel
+	// SendVoices field of ChatBannedRights.
 	SendVoices bool
-	// If set, does not allow a user to send documents in a supergroup/chat¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/channel
+	// SendDocs field of ChatBannedRights.
 	SendDocs bool
-	// If set, does not allow a user to send text messages in a supergroup/chat¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/channel
+	// SendPlain field of ChatBannedRights.
 	SendPlain bool
-	// Validity of said permissions (it is considered forever any value less then 30 seconds
-	// or more then 366 days).
+	// UntilDate field of ChatBannedRights.
 	UntilDate int
 }
 
@@ -242,53 +171,6 @@ func (c *ChatBannedRights) String() string {
 	}
 	type Alias ChatBannedRights
 	return fmt.Sprintf("ChatBannedRights%+v", Alias(*c))
-}
-
-// FillFrom fills ChatBannedRights from given interface.
-func (c *ChatBannedRights) FillFrom(from interface {
-	GetViewMessages() (value bool)
-	GetSendMessages() (value bool)
-	GetSendMedia() (value bool)
-	GetSendStickers() (value bool)
-	GetSendGifs() (value bool)
-	GetSendGames() (value bool)
-	GetSendInline() (value bool)
-	GetEmbedLinks() (value bool)
-	GetSendPolls() (value bool)
-	GetChangeInfo() (value bool)
-	GetInviteUsers() (value bool)
-	GetPinMessages() (value bool)
-	GetManageTopics() (value bool)
-	GetSendPhotos() (value bool)
-	GetSendVideos() (value bool)
-	GetSendRoundvideos() (value bool)
-	GetSendAudios() (value bool)
-	GetSendVoices() (value bool)
-	GetSendDocs() (value bool)
-	GetSendPlain() (value bool)
-	GetUntilDate() (value int)
-}) {
-	c.ViewMessages = from.GetViewMessages()
-	c.SendMessages = from.GetSendMessages()
-	c.SendMedia = from.GetSendMedia()
-	c.SendStickers = from.GetSendStickers()
-	c.SendGifs = from.GetSendGifs()
-	c.SendGames = from.GetSendGames()
-	c.SendInline = from.GetSendInline()
-	c.EmbedLinks = from.GetEmbedLinks()
-	c.SendPolls = from.GetSendPolls()
-	c.ChangeInfo = from.GetChangeInfo()
-	c.InviteUsers = from.GetInviteUsers()
-	c.PinMessages = from.GetPinMessages()
-	c.ManageTopics = from.GetManageTopics()
-	c.SendPhotos = from.GetSendPhotos()
-	c.SendVideos = from.GetSendVideos()
-	c.SendRoundvideos = from.GetSendRoundvideos()
-	c.SendAudios = from.GetSendAudios()
-	c.SendVoices = from.GetSendVoices()
-	c.SendDocs = from.GetSendDocs()
-	c.SendPlain = from.GetSendPlain()
-	c.UntilDate = from.GetUntilDate()
 }
 
 // TypeID returns type id in TL schema.

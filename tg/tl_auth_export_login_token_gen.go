@@ -32,29 +32,12 @@ var (
 )
 
 // AuthExportLoginTokenRequest represents TL type `auth.exportLoginToken#b7e085fe`.
-// Generate a login token, for login via QR code¹.
-// The generated login token should be encoded using base64url, then shown as a
-// tg://login?token=base64encodedtoken deep link »² in the QR code.
-// For more info, see login via QR code¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/qr-login
-//  2. https://core.telegram.org/api/links#qr-code-login-links
-//  3. https://core.telegram.org/api/qr-login
-//
-// See https://core.telegram.org/method/auth.exportLoginToken for reference.
 type AuthExportLoginTokenRequest struct {
-	// Application identifier (see. App configuration¹)
-	//
-	// Links:
-	//  1) https://core.telegram.org/myapp
+	// APIID field of AuthExportLoginTokenRequest.
 	APIID int
-	// Application identifier hash (see. App configuration¹)
-	//
-	// Links:
-	//  1) https://core.telegram.org/myapp
+	// APIHash field of AuthExportLoginTokenRequest.
 	APIHash string
-	// List of already logged-in user IDs, to prevent logging in twice with the same user
+	// ExceptIDs field of AuthExportLoginTokenRequest.
 	ExceptIDs []int64
 }
 
@@ -93,17 +76,6 @@ func (e *AuthExportLoginTokenRequest) String() string {
 	}
 	type Alias AuthExportLoginTokenRequest
 	return fmt.Sprintf("AuthExportLoginTokenRequest%+v", Alias(*e))
-}
-
-// FillFrom fills AuthExportLoginTokenRequest from given interface.
-func (e *AuthExportLoginTokenRequest) FillFrom(from interface {
-	GetAPIID() (value int)
-	GetAPIHash() (value string)
-	GetExceptIDs() (value []int64)
-}) {
-	e.APIID = from.GetAPIID()
-	e.APIHash = from.GetAPIHash()
-	e.ExceptIDs = from.GetExceptIDs()
 }
 
 // TypeID returns type id in TL schema.
@@ -243,22 +215,6 @@ func (e *AuthExportLoginTokenRequest) GetExceptIDs() (value []int64) {
 }
 
 // AuthExportLoginToken invokes method auth.exportLoginToken#b7e085fe returning error if any.
-// Generate a login token, for login via QR code¹.
-// The generated login token should be encoded using base64url, then shown as a
-// tg://login?token=base64encodedtoken deep link »² in the QR code.
-// For more info, see login via QR code¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/qr-login
-//  2. https://core.telegram.org/api/links#qr-code-login-links
-//  3. https://core.telegram.org/api/qr-login
-//
-// Possible errors:
-//
-//	400 API_ID_INVALID: API ID invalid.
-//	400 API_ID_PUBLISHED_FLOOD: This API id was published somewhere, you can't use it now.
-//
-// See https://core.telegram.org/method/auth.exportLoginToken for reference.
 func (c *Client) AuthExportLoginToken(ctx context.Context, request *AuthExportLoginTokenRequest) (AuthLoginTokenClass, error) {
 	var result AuthLoginTokenBox
 

@@ -32,8 +32,6 @@ var (
 )
 
 // UploadGetWebFileRequest represents TL type `upload.getWebFile#24e6818d`.
-//
-// See https://core.telegram.org/method/upload.getWebFile for reference.
 type UploadGetWebFileRequest struct {
 	// Location field of UploadGetWebFileRequest.
 	Location InputWebFileLocationClass
@@ -78,17 +76,6 @@ func (g *UploadGetWebFileRequest) String() string {
 	}
 	type Alias UploadGetWebFileRequest
 	return fmt.Sprintf("UploadGetWebFileRequest%+v", Alias(*g))
-}
-
-// FillFrom fills UploadGetWebFileRequest from given interface.
-func (g *UploadGetWebFileRequest) FillFrom(from interface {
-	GetLocation() (value InputWebFileLocationClass)
-	GetOffset() (value int)
-	GetLimit() (value int)
-}) {
-	g.Location = from.GetLocation()
-	g.Offset = from.GetOffset()
-	g.Limit = from.GetLimit()
 }
 
 // TypeID returns type id in TL schema.
@@ -220,8 +207,6 @@ func (g *UploadGetWebFileRequest) GetLimit() (value int) {
 }
 
 // UploadGetWebFile invokes method upload.getWebFile#24e6818d returning error if any.
-//
-// See https://core.telegram.org/method/upload.getWebFile for reference.
 func (c *Client) UploadGetWebFile(ctx context.Context, request *UploadGetWebFileRequest) (*UploadWebFile, error) {
 	var result UploadWebFile
 

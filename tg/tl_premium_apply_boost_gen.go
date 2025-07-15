@@ -32,26 +32,14 @@ var (
 )
 
 // PremiumApplyBoostRequest represents TL type `premium.applyBoost#6b7da746`.
-// Apply one or more boosts »¹ to a peer.
-//
-// Links:
-//  1. https://core.telegram.org/api/boost
-//
-// See https://core.telegram.org/method/premium.applyBoost for reference.
 type PremiumApplyBoostRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of PremiumApplyBoostRequest.
 	Flags bin.Fields
-	// Which boost slots¹ to assign to this peer.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/boost
+	// Slots field of PremiumApplyBoostRequest.
 	//
 	// Use SetSlots and GetSlots helpers.
 	Slots []int
-	// The peer to boost.
+	// Peer field of PremiumApplyBoostRequest.
 	Peer InputPeerClass
 }
 
@@ -90,18 +78,6 @@ func (a *PremiumApplyBoostRequest) String() string {
 	}
 	type Alias PremiumApplyBoostRequest
 	return fmt.Sprintf("PremiumApplyBoostRequest%+v", Alias(*a))
-}
-
-// FillFrom fills PremiumApplyBoostRequest from given interface.
-func (a *PremiumApplyBoostRequest) FillFrom(from interface {
-	GetSlots() (value []int, ok bool)
-	GetPeer() (value InputPeerClass)
-}) {
-	if val, ok := from.GetSlots(); ok {
-		a.Slots = val
-	}
-
-	a.Peer = from.GetPeer()
 }
 
 // TypeID returns type id in TL schema.
@@ -255,18 +231,6 @@ func (a *PremiumApplyBoostRequest) GetPeer() (value InputPeerClass) {
 }
 
 // PremiumApplyBoost invokes method premium.applyBoost#6b7da746 returning error if any.
-// Apply one or more boosts »¹ to a peer.
-//
-// Links:
-//  1. https://core.telegram.org/api/boost
-//
-// Possible errors:
-//
-//	400 BOOSTS_EMPTY: No boost slots were specified.
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//	400 SLOTS_EMPTY: The specified slot list is empty.
-//
-// See https://core.telegram.org/method/premium.applyBoost for reference.
 func (c *Client) PremiumApplyBoost(ctx context.Context, request *PremiumApplyBoostRequest) (*PremiumMyBoosts, error) {
 	var result PremiumMyBoosts
 

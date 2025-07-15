@@ -32,45 +32,34 @@ var (
 )
 
 // PhoneEditGroupCallParticipantRequest represents TL type `phone.editGroupCallParticipant#a5273abf`.
-// Edit information about a given group call participant
-// Note: flags¹.N?Bool² parameters can have three possible values:
-//
-// Links:
-//  1. https://core.telegram.org/mtproto/TL-combinators#conditional-fields
-//  2. https://core.telegram.org/type/Bool
-//
-// See https://core.telegram.org/method/phone.editGroupCallParticipant for reference.
 type PhoneEditGroupCallParticipantRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of PhoneEditGroupCallParticipantRequest.
 	Flags bin.Fields
-	// The group call
+	// Call field of PhoneEditGroupCallParticipantRequest.
 	Call InputGroupCallClass
-	// The group call participant (can also be the user itself)
+	// Participant field of PhoneEditGroupCallParticipantRequest.
 	Participant InputPeerClass
-	// Whether to mute or unmute the specified participant
+	// Muted field of PhoneEditGroupCallParticipantRequest.
 	//
 	// Use SetMuted and GetMuted helpers.
 	Muted bool
-	// New volume
+	// Volume field of PhoneEditGroupCallParticipantRequest.
 	//
 	// Use SetVolume and GetVolume helpers.
 	Volume int
-	// Raise or lower hand
+	// RaiseHand field of PhoneEditGroupCallParticipantRequest.
 	//
 	// Use SetRaiseHand and GetRaiseHand helpers.
 	RaiseHand bool
-	// Start or stop the video stream
+	// VideoStopped field of PhoneEditGroupCallParticipantRequest.
 	//
 	// Use SetVideoStopped and GetVideoStopped helpers.
 	VideoStopped bool
-	// Pause or resume the video stream
+	// VideoPaused field of PhoneEditGroupCallParticipantRequest.
 	//
 	// Use SetVideoPaused and GetVideoPaused helpers.
 	VideoPaused bool
-	// Pause or resume the screen sharing stream
+	// PresentationPaused field of PhoneEditGroupCallParticipantRequest.
 	//
 	// Use SetPresentationPaused and GetPresentationPaused helpers.
 	PresentationPaused bool
@@ -129,45 +118,6 @@ func (e *PhoneEditGroupCallParticipantRequest) String() string {
 	}
 	type Alias PhoneEditGroupCallParticipantRequest
 	return fmt.Sprintf("PhoneEditGroupCallParticipantRequest%+v", Alias(*e))
-}
-
-// FillFrom fills PhoneEditGroupCallParticipantRequest from given interface.
-func (e *PhoneEditGroupCallParticipantRequest) FillFrom(from interface {
-	GetCall() (value InputGroupCallClass)
-	GetParticipant() (value InputPeerClass)
-	GetMuted() (value bool, ok bool)
-	GetVolume() (value int, ok bool)
-	GetRaiseHand() (value bool, ok bool)
-	GetVideoStopped() (value bool, ok bool)
-	GetVideoPaused() (value bool, ok bool)
-	GetPresentationPaused() (value bool, ok bool)
-}) {
-	e.Call = from.GetCall()
-	e.Participant = from.GetParticipant()
-	if val, ok := from.GetMuted(); ok {
-		e.Muted = val
-	}
-
-	if val, ok := from.GetVolume(); ok {
-		e.Volume = val
-	}
-
-	if val, ok := from.GetRaiseHand(); ok {
-		e.RaiseHand = val
-	}
-
-	if val, ok := from.GetVideoStopped(); ok {
-		e.VideoStopped = val
-	}
-
-	if val, ok := from.GetVideoPaused(); ok {
-		e.VideoPaused = val
-	}
-
-	if val, ok := from.GetPresentationPaused(); ok {
-		e.PresentationPaused = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -513,24 +463,6 @@ func (e *PhoneEditGroupCallParticipantRequest) GetPresentationPaused() (value bo
 }
 
 // PhoneEditGroupCallParticipant invokes method phone.editGroupCallParticipant#a5273abf returning error if any.
-// Edit information about a given group call participant
-// Note: flags¹.N?Bool² parameters can have three possible values:
-//
-// Links:
-//  1. https://core.telegram.org/mtproto/TL-combinators#conditional-fields
-//  2. https://core.telegram.org/type/Bool
-//
-// Possible errors:
-//
-//	403 GROUPCALL_FORBIDDEN: The group call has already ended.
-//	400 GROUPCALL_INVALID: The specified group call is invalid.
-//	400 PARTICIPANT_JOIN_MISSING: Trying to enable a presentation, when the user hasn't joined the Video Chat with phone.joinGroupCall.
-//	400 RAISE_HAND_FORBIDDEN: You cannot raise your hand.
-//	400 USER_VOLUME_INVALID: The specified user volume is invalid.
-//	400 VIDEO_PAUSE_FORBIDDEN: You cannot pause the video stream.
-//	400 VIDEO_STOP_FORBIDDEN: You cannot stop the video stream.
-//
-// See https://core.telegram.org/method/phone.editGroupCallParticipant for reference.
 func (c *Client) PhoneEditGroupCallParticipant(ctx context.Context, request *PhoneEditGroupCallParticipantRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

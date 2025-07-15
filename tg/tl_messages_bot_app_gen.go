@@ -32,30 +32,16 @@ var (
 )
 
 // MessagesBotApp represents TL type `messages.botApp#eb50adf5`.
-// Contains information about a direct link Mini App¹
-//
-// Links:
-//  1. https://core.telegram.org/api/bots/webapps#direct-link-mini-apps
-//
-// See https://core.telegram.org/constructor/messages.botApp for reference.
 type MessagesBotApp struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessagesBotApp.
 	Flags bin.Fields
-	// Whether the web app was never used by the user, and confirmation must be asked from
-	// the user before opening it.
+	// Inactive field of MessagesBotApp.
 	Inactive bool
-	// The bot is asking permission to send messages to the user: if the user agrees, set the
-	// write_allowed flag when invoking messages.requestAppWebView¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/messages.requestAppWebView
+	// RequestWriteAccess field of MessagesBotApp.
 	RequestWriteAccess bool
-	// Deprecated flag, can be ignored.
+	// HasSettings field of MessagesBotApp.
 	HasSettings bool
-	// Bot app information
+	// App field of MessagesBotApp.
 	App BotAppClass
 }
 
@@ -100,19 +86,6 @@ func (b *MessagesBotApp) String() string {
 	}
 	type Alias MessagesBotApp
 	return fmt.Sprintf("MessagesBotApp%+v", Alias(*b))
-}
-
-// FillFrom fills MessagesBotApp from given interface.
-func (b *MessagesBotApp) FillFrom(from interface {
-	GetInactive() (value bool)
-	GetRequestWriteAccess() (value bool)
-	GetHasSettings() (value bool)
-	GetApp() (value BotAppClass)
-}) {
-	b.Inactive = from.GetInactive()
-	b.RequestWriteAccess = from.GetRequestWriteAccess()
-	b.HasSettings = from.GetHasSettings()
-	b.App = from.GetApp()
 }
 
 // TypeID returns type id in TL schema.
@@ -298,9 +271,4 @@ func (b *MessagesBotApp) GetApp() (value BotAppClass) {
 		return
 	}
 	return b.App
-}
-
-// GetAppAsModified returns mapped value of App field.
-func (b *MessagesBotApp) GetAppAsModified() (*BotApp, bool) {
-	return b.App.AsModified()
 }

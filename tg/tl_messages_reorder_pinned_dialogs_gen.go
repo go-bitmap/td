@@ -32,23 +32,14 @@ var (
 )
 
 // MessagesReorderPinnedDialogsRequest represents TL type `messages.reorderPinnedDialogs#3b1adf37`.
-// Reorder pinned dialogs
-//
-// See https://core.telegram.org/method/messages.reorderPinnedDialogs for reference.
 type MessagesReorderPinnedDialogsRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessagesReorderPinnedDialogsRequest.
 	Flags bin.Fields
-	// If set, dialogs pinned server-side but not present in the order field will be unpinned.
+	// Force field of MessagesReorderPinnedDialogsRequest.
 	Force bool
-	// Peer folder ID, for more info click here¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/folders#peer-folders
+	// FolderID field of MessagesReorderPinnedDialogsRequest.
 	FolderID int
-	// New dialog order
+	// Order field of MessagesReorderPinnedDialogsRequest.
 	Order []InputDialogPeerClass
 }
 
@@ -90,17 +81,6 @@ func (r *MessagesReorderPinnedDialogsRequest) String() string {
 	}
 	type Alias MessagesReorderPinnedDialogsRequest
 	return fmt.Sprintf("MessagesReorderPinnedDialogsRequest%+v", Alias(*r))
-}
-
-// FillFrom fills MessagesReorderPinnedDialogsRequest from given interface.
-func (r *MessagesReorderPinnedDialogsRequest) FillFrom(from interface {
-	GetForce() (value bool)
-	GetFolderID() (value int)
-	GetOrder() (value []InputDialogPeerClass)
-}) {
-	r.Force = from.GetForce()
-	r.FolderID = from.GetFolderID()
-	r.Order = from.GetOrder()
 }
 
 // TypeID returns type id in TL schema.
@@ -265,19 +245,7 @@ func (r *MessagesReorderPinnedDialogsRequest) GetOrder() (value []InputDialogPee
 	return r.Order
 }
 
-// MapOrder returns field Order wrapped in InputDialogPeerClassArray helper.
-func (r *MessagesReorderPinnedDialogsRequest) MapOrder() (value InputDialogPeerClassArray) {
-	return InputDialogPeerClassArray(r.Order)
-}
-
 // MessagesReorderPinnedDialogs invokes method messages.reorderPinnedDialogs#3b1adf37 returning error if any.
-// Reorder pinned dialogs
-//
-// Possible errors:
-//
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//
-// See https://core.telegram.org/method/messages.reorderPinnedDialogs for reference.
 func (c *Client) MessagesReorderPinnedDialogs(ctx context.Context, request *MessagesReorderPinnedDialogsRequest) (bool, error) {
 	var result BoolBox
 

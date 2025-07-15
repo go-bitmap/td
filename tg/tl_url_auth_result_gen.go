@@ -32,28 +32,14 @@ var (
 )
 
 // URLAuthResultRequest represents TL type `urlAuthResultRequest#92d33a0e`.
-// Details about the authorization request, for more info click here »¹
-//
-// Links:
-//  1. https://core.telegram.org/api/url-authorization
-//
-// See https://core.telegram.org/constructor/urlAuthResultRequest for reference.
 type URLAuthResultRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of URLAuthResultRequest.
 	Flags bin.Fields
-	// Whether the bot would like to send messages to the user
+	// RequestWriteAccess field of URLAuthResultRequest.
 	RequestWriteAccess bool
-	// Username of a bot, which will be used for user authorization. If not specified, the
-	// current bot's username will be assumed. The url's domain must be the same as the
-	// domain linked with the bot. See Linking your domain to the bot¹ for more details.
-	//
-	// Links:
-	//  1) https://core.telegram.org/widgets/login#linking-your-domain-to-the-bot
+	// Bot field of URLAuthResultRequest.
 	Bot UserClass
-	// The domain name of the website on which the user will log in.
+	// Domain field of URLAuthResultRequest.
 	Domain string
 }
 
@@ -100,17 +86,6 @@ func (u *URLAuthResultRequest) String() string {
 	}
 	type Alias URLAuthResultRequest
 	return fmt.Sprintf("URLAuthResultRequest%+v", Alias(*u))
-}
-
-// FillFrom fills URLAuthResultRequest from given interface.
-func (u *URLAuthResultRequest) FillFrom(from interface {
-	GetRequestWriteAccess() (value bool)
-	GetBot() (value UserClass)
-	GetDomain() (value string)
-}) {
-	u.RequestWriteAccess = from.GetRequestWriteAccess()
-	u.Bot = from.GetBot()
-	u.Domain = from.GetDomain()
 }
 
 // TypeID returns type id in TL schema.
@@ -263,14 +238,8 @@ func (u *URLAuthResultRequest) GetDomain() (value string) {
 }
 
 // URLAuthResultAccepted represents TL type `urlAuthResultAccepted#8f8c0e4e`.
-// Details about an accepted authorization request, for more info click here »¹
-//
-// Links:
-//  1. https://core.telegram.org/api/url-authorization
-//
-// See https://core.telegram.org/constructor/urlAuthResultAccepted for reference.
 type URLAuthResultAccepted struct {
-	// The URL name of the website on which the user has logged in.
+	// URL field of URLAuthResultAccepted.
 	URL string
 }
 
@@ -308,13 +277,6 @@ func (u *URLAuthResultAccepted) String() string {
 	}
 	type Alias URLAuthResultAccepted
 	return fmt.Sprintf("URLAuthResultAccepted%+v", Alias(*u))
-}
-
-// FillFrom fills URLAuthResultAccepted from given interface.
-func (u *URLAuthResultAccepted) FillFrom(from interface {
-	GetURL() (value string)
-}) {
-	u.URL = from.GetURL()
 }
 
 // TypeID returns type id in TL schema.
@@ -401,12 +363,6 @@ func (u *URLAuthResultAccepted) GetURL() (value string) {
 }
 
 // URLAuthResultDefault represents TL type `urlAuthResultDefault#a9d6db1f`.
-// Details about an accepted authorization request, for more info click here »¹
-//
-// Links:
-//  1. https://core.telegram.org/api/url-authorization
-//
-// See https://core.telegram.org/constructor/urlAuthResultDefault for reference.
 type URLAuthResultDefault struct {
 }
 
@@ -509,8 +465,6 @@ func (u *URLAuthResultDefault) DecodeBare(b *bin.Buffer) error {
 const URLAuthResultClassName = "UrlAuthResult"
 
 // URLAuthResultClass represents UrlAuthResult generic type.
-//
-// See https://core.telegram.org/type/UrlAuthResult for reference.
 //
 // Constructors:
 //   - [URLAuthResultRequest]

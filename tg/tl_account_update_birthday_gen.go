@@ -32,19 +32,10 @@ var (
 )
 
 // AccountUpdateBirthdayRequest represents TL type `account.updateBirthday#cc6e0c11`.
-// Update our birthday, see here »¹ for more info.
-//
-// Links:
-//  1. https://core.telegram.org/api/profile#birthday
-//
-// See https://core.telegram.org/method/account.updateBirthday for reference.
 type AccountUpdateBirthdayRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of AccountUpdateBirthdayRequest.
 	Flags bin.Fields
-	// Birthday.
+	// Birthday field of AccountUpdateBirthdayRequest.
 	//
 	// Use SetBirthday and GetBirthday helpers.
 	Birthday Birthday
@@ -82,16 +73,6 @@ func (u *AccountUpdateBirthdayRequest) String() string {
 	}
 	type Alias AccountUpdateBirthdayRequest
 	return fmt.Sprintf("AccountUpdateBirthdayRequest%+v", Alias(*u))
-}
-
-// FillFrom fills AccountUpdateBirthdayRequest from given interface.
-func (u *AccountUpdateBirthdayRequest) FillFrom(from interface {
-	GetBirthday() (value Birthday, ok bool)
-}) {
-	if val, ok := from.GetBirthday(); ok {
-		u.Birthday = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -207,16 +188,6 @@ func (u *AccountUpdateBirthdayRequest) GetBirthday() (value Birthday, ok bool) {
 }
 
 // AccountUpdateBirthday invokes method account.updateBirthday#cc6e0c11 returning error if any.
-// Update our birthday, see here »¹ for more info.
-//
-// Links:
-//  1. https://core.telegram.org/api/profile#birthday
-//
-// Possible errors:
-//
-//	400 BIRTHDAY_INVALID: An invalid age was specified, must be between 0 and 150 years.
-//
-// See https://core.telegram.org/method/account.updateBirthday for reference.
 func (c *Client) AccountUpdateBirthday(ctx context.Context, request *AccountUpdateBirthdayRequest) (bool, error) {
 	var result BoolBox
 

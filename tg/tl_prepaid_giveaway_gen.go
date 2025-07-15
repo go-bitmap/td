@@ -32,26 +32,14 @@ var (
 )
 
 // PrepaidGiveaway represents TL type `prepaidGiveaway#b2539d54`.
-// Contains info about a prepaid giveaway »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/giveaways
-//
-// See https://core.telegram.org/constructor/prepaidGiveaway for reference.
 type PrepaidGiveaway struct {
-	// Prepaid giveaway ID.
+	// ID field of PrepaidGiveaway.
 	ID int64
-	// Duration in months of each gifted Telegram Premium¹ subscription.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/premium
+	// Months field of PrepaidGiveaway.
 	Months int
-	// Number of given away Telegram Premium¹ subscriptions.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/premium
+	// Quantity field of PrepaidGiveaway.
 	Quantity int
-	// Payment date.
+	// Date field of PrepaidGiveaway.
 	Date int
 }
 
@@ -98,19 +86,6 @@ func (p *PrepaidGiveaway) String() string {
 	}
 	type Alias PrepaidGiveaway
 	return fmt.Sprintf("PrepaidGiveaway%+v", Alias(*p))
-}
-
-// FillFrom fills PrepaidGiveaway from given interface.
-func (p *PrepaidGiveaway) FillFrom(from interface {
-	GetID() (value int64)
-	GetMonths() (value int)
-	GetQuantity() (value int)
-	GetDate() (value int)
-}) {
-	p.ID = from.GetID()
-	p.Months = from.GetMonths()
-	p.Quantity = from.GetQuantity()
-	p.Date = from.GetDate()
 }
 
 // TypeID returns type id in TL schema.
@@ -257,25 +232,16 @@ func (p *PrepaidGiveaway) GetDate() (value int) {
 }
 
 // PrepaidStarsGiveaway represents TL type `prepaidStarsGiveaway#9a9d77e0`.
-// Contains info about a prepaid Telegram Star giveaway »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/giveaways#star-giveaways
-//
-// See https://core.telegram.org/constructor/prepaidStarsGiveaway for reference.
 type PrepaidStarsGiveaway struct {
-	// Prepaid giveaway ID.
+	// ID field of PrepaidStarsGiveaway.
 	ID int64
-	// Number of given away Telegram Stars »¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/stars
+	// Stars field of PrepaidStarsGiveaway.
 	Stars int64
-	// Number of giveaway winners
+	// Quantity field of PrepaidStarsGiveaway.
 	Quantity int
-	// Number of boosts the channel will gain by launching the giveaway.
+	// Boosts field of PrepaidStarsGiveaway.
 	Boosts int
-	// When was the giveaway paid for
+	// Date field of PrepaidStarsGiveaway.
 	Date int
 }
 
@@ -325,21 +291,6 @@ func (p *PrepaidStarsGiveaway) String() string {
 	}
 	type Alias PrepaidStarsGiveaway
 	return fmt.Sprintf("PrepaidStarsGiveaway%+v", Alias(*p))
-}
-
-// FillFrom fills PrepaidStarsGiveaway from given interface.
-func (p *PrepaidStarsGiveaway) FillFrom(from interface {
-	GetID() (value int64)
-	GetStars() (value int64)
-	GetQuantity() (value int)
-	GetBoosts() (value int)
-	GetDate() (value int)
-}) {
-	p.ID = from.GetID()
-	p.Stars = from.GetStars()
-	p.Quantity = from.GetQuantity()
-	p.Boosts = from.GetBoosts()
-	p.Date = from.GetDate()
 }
 
 // TypeID returns type id in TL schema.
@@ -510,8 +461,6 @@ const PrepaidGiveawayClassName = "PrepaidGiveaway"
 
 // PrepaidGiveawayClass represents PrepaidGiveaway generic type.
 //
-// See https://core.telegram.org/type/PrepaidGiveaway for reference.
-//
 // Constructors:
 //   - [PrepaidGiveaway]
 //   - [PrepaidStarsGiveaway]
@@ -545,16 +494,11 @@ type PrepaidGiveawayClass interface {
 	// Zero returns true if current object has a zero value.
 	Zero() bool
 
-	// Prepaid giveaway ID.
+	// ID field of PrepaidGiveaway.
 	GetID() (value int64)
-
-	// Number of given away Telegram Premium¹ subscriptions.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/premium
+	// Quantity field of PrepaidGiveaway.
 	GetQuantity() (value int)
-
-	// Payment date.
+	// Date field of PrepaidGiveaway.
 	GetDate() (value int)
 }
 

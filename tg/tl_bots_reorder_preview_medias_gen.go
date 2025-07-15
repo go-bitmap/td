@@ -32,21 +32,12 @@ var (
 )
 
 // BotsReorderPreviewMediasRequest represents TL type `bots.reorderPreviewMedias#b627f3aa`.
-// Reorder a main mini app previews, see here »¹ for more info.
-// Only owners of bots with a configured Main Mini App can use this method, see see here
-// »¹ for more info on how to check if you can invoke this method.
-//
-// Links:
-//  1. https://core.telegram.org/api/bots/webapps#main-mini-app-previews
-//  2. https://core.telegram.org/api/bots/webapps#main-mini-app-previews
-//
-// See https://core.telegram.org/method/bots.reorderPreviewMedias for reference.
 type BotsReorderPreviewMediasRequest struct {
-	// The bot that owns the Main Mini App.
+	// Bot field of BotsReorderPreviewMediasRequest.
 	Bot InputUserClass
-	// ISO 639-1 language code, indicating the localization of the previews to reorder.
+	// LangCode field of BotsReorderPreviewMediasRequest.
 	LangCode string
-	// New order of the previews.
+	// Order field of BotsReorderPreviewMediasRequest.
 	Order []InputMediaClass
 }
 
@@ -85,17 +76,6 @@ func (r *BotsReorderPreviewMediasRequest) String() string {
 	}
 	type Alias BotsReorderPreviewMediasRequest
 	return fmt.Sprintf("BotsReorderPreviewMediasRequest%+v", Alias(*r))
-}
-
-// FillFrom fills BotsReorderPreviewMediasRequest from given interface.
-func (r *BotsReorderPreviewMediasRequest) FillFrom(from interface {
-	GetBot() (value InputUserClass)
-	GetLangCode() (value string)
-	GetOrder() (value []InputMediaClass)
-}) {
-	r.Bot = from.GetBot()
-	r.LangCode = from.GetLangCode()
-	r.Order = from.GetOrder()
 }
 
 // TypeID returns type id in TL schema.
@@ -244,25 +224,7 @@ func (r *BotsReorderPreviewMediasRequest) GetOrder() (value []InputMediaClass) {
 	return r.Order
 }
 
-// MapOrder returns field Order wrapped in InputMediaClassArray helper.
-func (r *BotsReorderPreviewMediasRequest) MapOrder() (value InputMediaClassArray) {
-	return InputMediaClassArray(r.Order)
-}
-
 // BotsReorderPreviewMedias invokes method bots.reorderPreviewMedias#b627f3aa returning error if any.
-// Reorder a main mini app previews, see here »¹ for more info.
-// Only owners of bots with a configured Main Mini App can use this method, see see here
-// »¹ for more info on how to check if you can invoke this method.
-//
-// Links:
-//  1. https://core.telegram.org/api/bots/webapps#main-mini-app-previews
-//  2. https://core.telegram.org/api/bots/webapps#main-mini-app-previews
-//
-// Possible errors:
-//
-//	400 BOT_INVALID: This is not a valid bot.
-//
-// See https://core.telegram.org/method/bots.reorderPreviewMedias for reference.
 func (c *Client) BotsReorderPreviewMedias(ctx context.Context, request *BotsReorderPreviewMediasRequest) (bool, error) {
 	var result BoolBox
 

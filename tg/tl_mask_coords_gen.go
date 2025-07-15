@@ -32,25 +32,14 @@ var (
 )
 
 // MaskCoords represents TL type `maskCoords#aed6dbb2`.
-// Position on a photo where a mask should be placed when attaching stickers to media
-// »¹
-// The n position indicates where the mask should be placed:
-//
-// Links:
-//  1. https://core.telegram.org/api/stickers#attached-stickers
-//
-// See https://core.telegram.org/constructor/maskCoords for reference.
 type MaskCoords struct {
-	// Part of the face, relative to which the mask should be placed
+	// N field of MaskCoords.
 	N int
-	// Shift by X-axis measured in widths of the mask scaled to the face size, from left to
-	// right. (For example, -1.0 will place the mask just to the left of the default mask
-	// position)
+	// X field of MaskCoords.
 	X float64
-	// Shift by Y-axis measured in widths of the mask scaled to the face size, from left to
-	// right. (For example, -1.0 will place the mask just below the default mask position)
+	// Y field of MaskCoords.
 	Y float64
-	// Mask scaling coefficient. (For example, 2.0 means a doubled size)
+	// Zoom field of MaskCoords.
 	Zoom float64
 }
 
@@ -92,19 +81,6 @@ func (m *MaskCoords) String() string {
 	}
 	type Alias MaskCoords
 	return fmt.Sprintf("MaskCoords%+v", Alias(*m))
-}
-
-// FillFrom fills MaskCoords from given interface.
-func (m *MaskCoords) FillFrom(from interface {
-	GetN() (value int)
-	GetX() (value float64)
-	GetY() (value float64)
-	GetZoom() (value float64)
-}) {
-	m.N = from.GetN()
-	m.X = from.GetX()
-	m.Y = from.GetY()
-	m.Zoom = from.GetZoom()
 }
 
 // TypeID returns type id in TL schema.

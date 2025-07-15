@@ -32,24 +32,14 @@ var (
 )
 
 // InputPhoneContact represents TL type `inputPhoneContact#f392b7f4`.
-// Phone contact.
-//
-// See https://core.telegram.org/constructor/inputPhoneContact for reference.
 type InputPhoneContact struct {
-	// An arbitrary 64-bit integer: it should be set, for example, to an incremental number
-	// when using contacts.importContacts¹, in order to retry importing only the contacts
-	// that weren't imported successfully, according to the client_ids returned in contacts
-	// importedContacts².retry_contacts.
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/contacts.importContacts
-	//  2) https://core.telegram.org/constructor/contacts.importedContacts
+	// ClientID field of InputPhoneContact.
 	ClientID int64
-	// Phone number
+	// Phone field of InputPhoneContact.
 	Phone string
-	// Contact's first name
+	// FirstName field of InputPhoneContact.
 	FirstName string
-	// Contact's last name
+	// LastName field of InputPhoneContact.
 	LastName string
 }
 
@@ -91,19 +81,6 @@ func (i *InputPhoneContact) String() string {
 	}
 	type Alias InputPhoneContact
 	return fmt.Sprintf("InputPhoneContact%+v", Alias(*i))
-}
-
-// FillFrom fills InputPhoneContact from given interface.
-func (i *InputPhoneContact) FillFrom(from interface {
-	GetClientID() (value int64)
-	GetPhone() (value string)
-	GetFirstName() (value string)
-	GetLastName() (value string)
-}) {
-	i.ClientID = from.GetClientID()
-	i.Phone = from.GetPhone()
-	i.FirstName = from.GetFirstName()
-	i.LastName = from.GetLastName()
 }
 
 // TypeID returns type id in TL schema.

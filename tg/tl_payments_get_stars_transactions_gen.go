@@ -32,48 +32,24 @@ var (
 )
 
 // PaymentsGetStarsTransactionsRequest represents TL type `payments.getStarsTransactions#69da4557`.
-// Fetch Telegram Stars transactions¹.
-// The inbound and outbound flags are mutually exclusive: if none of the two are set,
-// both incoming and outgoing transactions are fetched.
-//
-// Links:
-//  1. https://core.telegram.org/api/stars#balance-and-transaction-history
-//
-// See https://core.telegram.org/method/payments.getStarsTransactions for reference.
 type PaymentsGetStarsTransactionsRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of PaymentsGetStarsTransactionsRequest.
 	Flags bin.Fields
-	// If set, fetches only incoming transactions.
+	// Inbound field of PaymentsGetStarsTransactionsRequest.
 	Inbound bool
-	// If set, fetches only outgoing transactions.
+	// Outbound field of PaymentsGetStarsTransactionsRequest.
 	Outbound bool
-	// Return transactions in ascending order by date (instead of descending order by date).
+	// Ascending field of PaymentsGetStarsTransactionsRequest.
 	Ascending bool
-	// If set, fetches only transactions for the specified Telegram Star subscription »¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/stars#star-subscriptions
+	// SubscriptionID field of PaymentsGetStarsTransactionsRequest.
 	//
 	// Use SetSubscriptionID and GetSubscriptionID helpers.
 	SubscriptionID string
-	// Fetch the transaction history of the peer (inputPeerSelf¹ or a bot we own).
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/inputPeerSelf
+	// Peer field of PaymentsGetStarsTransactionsRequest.
 	Peer InputPeerClass
-	// Offset for pagination, obtained from the returned next_offset, initially an empty
-	// string »¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets
+	// Offset field of PaymentsGetStarsTransactionsRequest.
 	Offset string
-	// Maximum number of results to return, see pagination¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets
+	// Limit field of PaymentsGetStarsTransactionsRequest.
 	Limit int
 }
 
@@ -127,28 +103,6 @@ func (g *PaymentsGetStarsTransactionsRequest) String() string {
 	}
 	type Alias PaymentsGetStarsTransactionsRequest
 	return fmt.Sprintf("PaymentsGetStarsTransactionsRequest%+v", Alias(*g))
-}
-
-// FillFrom fills PaymentsGetStarsTransactionsRequest from given interface.
-func (g *PaymentsGetStarsTransactionsRequest) FillFrom(from interface {
-	GetInbound() (value bool)
-	GetOutbound() (value bool)
-	GetAscending() (value bool)
-	GetSubscriptionID() (value string, ok bool)
-	GetPeer() (value InputPeerClass)
-	GetOffset() (value string)
-	GetLimit() (value int)
-}) {
-	g.Inbound = from.GetInbound()
-	g.Outbound = from.GetOutbound()
-	g.Ascending = from.GetAscending()
-	if val, ok := from.GetSubscriptionID(); ok {
-		g.SubscriptionID = val
-	}
-
-	g.Peer = from.GetPeer()
-	g.Offset = from.GetOffset()
-	g.Limit = from.GetLimit()
 }
 
 // TypeID returns type id in TL schema.
@@ -413,20 +367,6 @@ func (g *PaymentsGetStarsTransactionsRequest) GetLimit() (value int) {
 }
 
 // PaymentsGetStarsTransactions invokes method payments.getStarsTransactions#69da4557 returning error if any.
-// Fetch Telegram Stars transactions¹.
-// The inbound and outbound flags are mutually exclusive: if none of the two are set,
-// both incoming and outgoing transactions are fetched.
-//
-// Links:
-//  1. https://core.telegram.org/api/stars#balance-and-transaction-history
-//
-// Possible errors:
-//
-//	400 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//
-// See https://core.telegram.org/method/payments.getStarsTransactions for reference.
-// Can be used by bots.
 func (c *Client) PaymentsGetStarsTransactions(ctx context.Context, request *PaymentsGetStarsTransactionsRequest) (*PaymentsStarsStatus, error) {
 	var result PaymentsStarsStatus
 

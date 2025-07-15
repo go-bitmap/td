@@ -32,23 +32,12 @@ var (
 )
 
 // ChatlistsExportChatlistInviteRequest represents TL type `chatlists.exportChatlistInvite#8472478e`.
-// Export a folder »¹, creating a chat folder deep link »².
-//
-// Links:
-//  1. https://core.telegram.org/api/folders
-//  2. https://core.telegram.org/api/links#chat-folder-links
-//
-// See https://core.telegram.org/method/chatlists.exportChatlistInvite for reference.
 type ChatlistsExportChatlistInviteRequest struct {
-	// The folder to export
+	// Chatlist field of ChatlistsExportChatlistInviteRequest.
 	Chatlist InputChatlistDialogFilter
-	// An optional name for the link
+	// Title field of ChatlistsExportChatlistInviteRequest.
 	Title string
-	// The list of channels, group and supergroups to share with the link. Basic groups will
-	// automatically be converted to supergroups¹ when invoking the method.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/channel#migration
+	// Peers field of ChatlistsExportChatlistInviteRequest.
 	Peers []InputPeerClass
 }
 
@@ -87,17 +76,6 @@ func (e *ChatlistsExportChatlistInviteRequest) String() string {
 	}
 	type Alias ChatlistsExportChatlistInviteRequest
 	return fmt.Sprintf("ChatlistsExportChatlistInviteRequest%+v", Alias(*e))
-}
-
-// FillFrom fills ChatlistsExportChatlistInviteRequest from given interface.
-func (e *ChatlistsExportChatlistInviteRequest) FillFrom(from interface {
-	GetChatlist() (value InputChatlistDialogFilter)
-	GetTitle() (value string)
-	GetPeers() (value []InputPeerClass)
-}) {
-	e.Chatlist = from.GetChatlist()
-	e.Title = from.GetTitle()
-	e.Peers = from.GetPeers()
 }
 
 // TypeID returns type id in TL schema.
@@ -241,30 +219,7 @@ func (e *ChatlistsExportChatlistInviteRequest) GetPeers() (value []InputPeerClas
 	return e.Peers
 }
 
-// MapPeers returns field Peers wrapped in InputPeerClassArray helper.
-func (e *ChatlistsExportChatlistInviteRequest) MapPeers() (value InputPeerClassArray) {
-	return InputPeerClassArray(e.Peers)
-}
-
 // ChatlistsExportChatlistInvite invokes method chatlists.exportChatlistInvite#8472478e returning error if any.
-// Export a folder »¹, creating a chat folder deep link »².
-//
-// Links:
-//  1. https://core.telegram.org/api/folders
-//  2. https://core.telegram.org/api/links#chat-folder-links
-//
-// Possible errors:
-//
-//	400 CHANNEL_INVALID: The provided channel is invalid.
-//	400 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
-//	400 CHATLISTS_TOO_MUCH: You have created too many folder links, hitting the chatlist_invites_limit_default/chatlist_invites_limit_premium limits ».
-//	400 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
-//	400 FILTER_ID_INVALID: The specified filter ID is invalid.
-//	400 FILTER_NOT_SUPPORTED: The specified filter cannot be used in this context.
-//	400 INVITES_TOO_MUCH: The maximum number of per-folder invites specified by the chatlist_invites_limit_default/chatlist_invites_limit_premium client configuration parameters » was reached.
-//	400 PEERS_LIST_EMPTY: The specified list of peers is empty.
-//
-// See https://core.telegram.org/method/chatlists.exportChatlistInvite for reference.
 func (c *Client) ChatlistsExportChatlistInvite(ctx context.Context, request *ChatlistsExportChatlistInviteRequest) (*ChatlistsExportedChatlistInvite, error) {
 	var result ChatlistsExportedChatlistInvite
 

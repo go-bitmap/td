@@ -32,17 +32,8 @@ var (
 )
 
 // AccountToggleSponsoredMessagesRequest represents TL type `account.toggleSponsoredMessages#b9d9a38d`.
-// Disable or re-enable Telegram ads for the current Premium¹ account.
-// Useful for business owners that may want to launch and view their own Telegram ads via
-// the Telegram ad platform »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/premium
-//  2. https://ads.telegram.org
-//
-// See https://core.telegram.org/method/account.toggleSponsoredMessages for reference.
 type AccountToggleSponsoredMessagesRequest struct {
-	// Enable or disable ads.
+	// Enabled field of AccountToggleSponsoredMessagesRequest.
 	Enabled bool
 }
 
@@ -75,13 +66,6 @@ func (t *AccountToggleSponsoredMessagesRequest) String() string {
 	}
 	type Alias AccountToggleSponsoredMessagesRequest
 	return fmt.Sprintf("AccountToggleSponsoredMessagesRequest%+v", Alias(*t))
-}
-
-// FillFrom fills AccountToggleSponsoredMessagesRequest from given interface.
-func (t *AccountToggleSponsoredMessagesRequest) FillFrom(from interface {
-	GetEnabled() (value bool)
-}) {
-	t.Enabled = from.GetEnabled()
 }
 
 // TypeID returns type id in TL schema.
@@ -168,15 +152,6 @@ func (t *AccountToggleSponsoredMessagesRequest) GetEnabled() (value bool) {
 }
 
 // AccountToggleSponsoredMessages invokes method account.toggleSponsoredMessages#b9d9a38d returning error if any.
-// Disable or re-enable Telegram ads for the current Premium¹ account.
-// Useful for business owners that may want to launch and view their own Telegram ads via
-// the Telegram ad platform »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/premium
-//  2. https://ads.telegram.org
-//
-// See https://core.telegram.org/method/account.toggleSponsoredMessages for reference.
 func (c *Client) AccountToggleSponsoredMessages(ctx context.Context, enabled bool) (bool, error) {
 	var result BoolBox
 

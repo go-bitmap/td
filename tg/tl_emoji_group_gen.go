@@ -32,18 +32,12 @@ var (
 )
 
 // EmojiGroup represents TL type `emojiGroup#7a9abda9`.
-// Represents an emoji category¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/emoji-categories
-//
-// See https://core.telegram.org/constructor/emojiGroup for reference.
 type EmojiGroup struct {
-	// Category name, i.e. "Animals", "Flags", "Faces" and so on...
+	// Title field of EmojiGroup.
 	Title string
-	// A single custom emoji used as preview for the category.
+	// IconEmojiID field of EmojiGroup.
 	IconEmojiID int64
-	// A list of UTF-8 emojis, matching the category.
+	// Emoticons field of EmojiGroup.
 	Emoticons []string
 }
 
@@ -87,17 +81,6 @@ func (e *EmojiGroup) String() string {
 	}
 	type Alias EmojiGroup
 	return fmt.Sprintf("EmojiGroup%+v", Alias(*e))
-}
-
-// FillFrom fills EmojiGroup from given interface.
-func (e *EmojiGroup) FillFrom(from interface {
-	GetTitle() (value string)
-	GetIconEmojiID() (value int64)
-	GetEmoticons() (value []string)
-}) {
-	e.Title = from.GetTitle()
-	e.IconEmojiID = from.GetIconEmojiID()
-	e.Emoticons = from.GetEmoticons()
 }
 
 // TypeID returns type id in TL schema.
@@ -237,20 +220,12 @@ func (e *EmojiGroup) GetEmoticons() (value []string) {
 }
 
 // EmojiGroupGreeting represents TL type `emojiGroupGreeting#80d26cc7`.
-// Represents an emoji category¹, that should be moved to the top of the list when
-// choosing a sticker for a business introduction²
-//
-// Links:
-//  1. https://core.telegram.org/api/emoji-categories
-//  2. https://core.telegram.org/api/business#business-introduction
-//
-// See https://core.telegram.org/constructor/emojiGroupGreeting for reference.
 type EmojiGroupGreeting struct {
-	// Category name, i.e. "Animals", "Flags", "Faces" and so on...
+	// Title field of EmojiGroupGreeting.
 	Title string
-	// A single custom emoji used as preview for the category.
+	// IconEmojiID field of EmojiGroupGreeting.
 	IconEmojiID int64
-	// A list of UTF-8 emojis, matching the category.
+	// Emoticons field of EmojiGroupGreeting.
 	Emoticons []string
 }
 
@@ -294,17 +269,6 @@ func (e *EmojiGroupGreeting) String() string {
 	}
 	type Alias EmojiGroupGreeting
 	return fmt.Sprintf("EmojiGroupGreeting%+v", Alias(*e))
-}
-
-// FillFrom fills EmojiGroupGreeting from given interface.
-func (e *EmojiGroupGreeting) FillFrom(from interface {
-	GetTitle() (value string)
-	GetIconEmojiID() (value int64)
-	GetEmoticons() (value []string)
-}) {
-	e.Title = from.GetTitle()
-	e.IconEmojiID = from.GetIconEmojiID()
-	e.Emoticons = from.GetEmoticons()
 }
 
 // TypeID returns type id in TL schema.
@@ -444,23 +408,10 @@ func (e *EmojiGroupGreeting) GetEmoticons() (value []string) {
 }
 
 // EmojiGroupPremium represents TL type `emojiGroupPremium#93bcf34`.
-// An emoji category¹, used to select all Premium²-only stickers (i.e. those with a
-// Premium effect »³)/Premium⁴-only custom emojis⁵ (i.e. those where the
-// documentAttributeCustomEmoji⁶.free flag is not set)
-//
-// Links:
-//  1. https://core.telegram.org/api/emoji-categories
-//  2. https://core.telegram.org/api/premium
-//  3. https://core.telegram.org/api/stickers#premium-animated-sticker-effects
-//  4. https://core.telegram.org/api/premium
-//  5. https://core.telegram.org/api/custom-emoji
-//  6. https://core.telegram.org/constructor/documentAttributeCustomEmoji
-//
-// See https://core.telegram.org/constructor/emojiGroupPremium for reference.
 type EmojiGroupPremium struct {
-	// Category name, i.e. "Animals", "Flags", "Faces" and so on...
+	// Title field of EmojiGroupPremium.
 	Title string
-	// A single custom emoji used as preview for the category.
+	// IconEmojiID field of EmojiGroupPremium.
 	IconEmojiID int64
 }
 
@@ -501,15 +452,6 @@ func (e *EmojiGroupPremium) String() string {
 	}
 	type Alias EmojiGroupPremium
 	return fmt.Sprintf("EmojiGroupPremium%+v", Alias(*e))
-}
-
-// FillFrom fills EmojiGroupPremium from given interface.
-func (e *EmojiGroupPremium) FillFrom(from interface {
-	GetTitle() (value string)
-	GetIconEmojiID() (value int64)
-}) {
-	e.Title = from.GetTitle()
-	e.IconEmojiID = from.GetIconEmojiID()
 }
 
 // TypeID returns type id in TL schema.
@@ -620,8 +562,6 @@ const EmojiGroupClassName = "EmojiGroup"
 
 // EmojiGroupClass represents EmojiGroup generic type.
 //
-// See https://core.telegram.org/type/EmojiGroup for reference.
-//
 // Constructors:
 //   - [EmojiGroup]
 //   - [EmojiGroupGreeting]
@@ -657,10 +597,9 @@ type EmojiGroupClass interface {
 	// Zero returns true if current object has a zero value.
 	Zero() bool
 
-	// Category name, i.e. "Animals", "Flags", "Faces" and so on...
+	// Title field of EmojiGroup.
 	GetTitle() (value string)
-
-	// A single custom emoji used as preview for the category.
+	// IconEmojiID field of EmojiGroup.
 	GetIconEmojiID() (value int64)
 }
 

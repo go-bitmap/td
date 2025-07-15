@@ -32,17 +32,14 @@ var (
 )
 
 // LangPackDifference represents TL type `langPackDifference#f385c1f6`.
-// Changes to the app's localization pack
-//
-// See https://core.telegram.org/constructor/langPackDifference for reference.
 type LangPackDifference struct {
-	// Language code
+	// LangCode field of LangPackDifference.
 	LangCode string
-	// Previous version number
+	// FromVersion field of LangPackDifference.
 	FromVersion int
-	// New version number
+	// Version field of LangPackDifference.
 	Version int
-	// Localized strings
+	// Strings field of LangPackDifference.
 	Strings []LangPackStringClass
 }
 
@@ -84,19 +81,6 @@ func (l *LangPackDifference) String() string {
 	}
 	type Alias LangPackDifference
 	return fmt.Sprintf("LangPackDifference%+v", Alias(*l))
-}
-
-// FillFrom fills LangPackDifference from given interface.
-func (l *LangPackDifference) FillFrom(from interface {
-	GetLangCode() (value string)
-	GetFromVersion() (value int)
-	GetVersion() (value int)
-	GetStrings() (value []LangPackStringClass)
-}) {
-	l.LangCode = from.GetLangCode()
-	l.FromVersion = from.GetFromVersion()
-	l.Version = from.GetVersion()
-	l.Strings = from.GetStrings()
 }
 
 // TypeID returns type id in TL schema.
@@ -258,9 +242,4 @@ func (l *LangPackDifference) GetStrings() (value []LangPackStringClass) {
 		return
 	}
 	return l.Strings
-}
-
-// MapStrings returns field Strings wrapped in LangPackStringClassArray helper.
-func (l *LangPackDifference) MapStrings() (value LangPackStringClassArray) {
-	return LangPackStringClassArray(l.Strings)
 }

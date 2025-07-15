@@ -32,18 +32,12 @@ var (
 )
 
 // MessagesDeleteMessagesRequest represents TL type `messages.deleteMessages#e58e95d2`.
-// Deletes messages by their identifiers.
-//
-// See https://core.telegram.org/method/messages.deleteMessages for reference.
 type MessagesDeleteMessagesRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessagesDeleteMessagesRequest.
 	Flags bin.Fields
-	// Whether to delete messages for all participants of the chat
+	// Revoke field of MessagesDeleteMessagesRequest.
 	Revoke bool
-	// Message ID list
+	// ID field of MessagesDeleteMessagesRequest.
 	ID []int
 }
 
@@ -82,15 +76,6 @@ func (d *MessagesDeleteMessagesRequest) String() string {
 	}
 	type Alias MessagesDeleteMessagesRequest
 	return fmt.Sprintf("MessagesDeleteMessagesRequest%+v", Alias(*d))
-}
-
-// FillFrom fills MessagesDeleteMessagesRequest from given interface.
-func (d *MessagesDeleteMessagesRequest) FillFrom(from interface {
-	GetRevoke() (value bool)
-	GetID() (value []int)
-}) {
-	d.Revoke = from.GetRevoke()
-	d.ID = from.GetID()
 }
 
 // TypeID returns type id in TL schema.
@@ -231,15 +216,6 @@ func (d *MessagesDeleteMessagesRequest) GetID() (value []int) {
 }
 
 // MessagesDeleteMessages invokes method messages.deleteMessages#e58e95d2 returning error if any.
-// Deletes messages by their identifiers.
-//
-// Possible errors:
-//
-//	403 MESSAGE_DELETE_FORBIDDEN: You can't delete one of the messages you tried to delete, most likely because it is a service message.
-//	400 MESSAGE_ID_INVALID: The provided message id is invalid.
-//
-// See https://core.telegram.org/method/messages.deleteMessages for reference.
-// Can be used by bots.
 func (c *Client) MessagesDeleteMessages(ctx context.Context, request *MessagesDeleteMessagesRequest) (*MessagesAffectedMessages, error) {
 	var result MessagesAffectedMessages
 

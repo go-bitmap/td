@@ -32,16 +32,10 @@ var (
 )
 
 // MessagesGetStickersRequest represents TL type `messages.getStickers#d5a5d3a1`.
-// Get stickers by emoji
-//
-// See https://core.telegram.org/method/messages.getStickers for reference.
 type MessagesGetStickersRequest struct {
-	// The emoji
+	// Emoticon field of MessagesGetStickersRequest.
 	Emoticon string
-	// Hash used for caching, for more info click here¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets#hash-generation
+	// Hash field of MessagesGetStickersRequest.
 	Hash int64
 }
 
@@ -77,15 +71,6 @@ func (g *MessagesGetStickersRequest) String() string {
 	}
 	type Alias MessagesGetStickersRequest
 	return fmt.Sprintf("MessagesGetStickersRequest%+v", Alias(*g))
-}
-
-// FillFrom fills MessagesGetStickersRequest from given interface.
-func (g *MessagesGetStickersRequest) FillFrom(from interface {
-	GetEmoticon() (value string)
-	GetHash() (value int64)
-}) {
-	g.Emoticon = from.GetEmoticon()
-	g.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -192,13 +177,6 @@ func (g *MessagesGetStickersRequest) GetHash() (value int64) {
 }
 
 // MessagesGetStickers invokes method messages.getStickers#d5a5d3a1 returning error if any.
-// Get stickers by emoji
-//
-// Possible errors:
-//
-//	400 EMOTICON_EMPTY: The emoji is empty.
-//
-// See https://core.telegram.org/method/messages.getStickers for reference.
 func (c *Client) MessagesGetStickers(ctx context.Context, request *MessagesGetStickersRequest) (MessagesStickersClass, error) {
 	var result MessagesStickersBox
 

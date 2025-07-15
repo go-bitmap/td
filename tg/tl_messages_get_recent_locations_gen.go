@@ -32,21 +32,12 @@ var (
 )
 
 // MessagesGetRecentLocationsRequest represents TL type `messages.getRecentLocations#702a40e0`.
-// Get live location history of a certain user
-//
-// See https://core.telegram.org/method/messages.getRecentLocations for reference.
 type MessagesGetRecentLocationsRequest struct {
-	// User
+	// Peer field of MessagesGetRecentLocationsRequest.
 	Peer InputPeerClass
-	// Maximum number of results to return, see pagination¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets
+	// Limit field of MessagesGetRecentLocationsRequest.
 	Limit int
-	// Hash used for caching, for more info click here¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets#hash-generation
+	// Hash field of MessagesGetRecentLocationsRequest.
 	Hash int64
 }
 
@@ -85,17 +76,6 @@ func (g *MessagesGetRecentLocationsRequest) String() string {
 	}
 	type Alias MessagesGetRecentLocationsRequest
 	return fmt.Sprintf("MessagesGetRecentLocationsRequest%+v", Alias(*g))
-}
-
-// FillFrom fills MessagesGetRecentLocationsRequest from given interface.
-func (g *MessagesGetRecentLocationsRequest) FillFrom(from interface {
-	GetPeer() (value InputPeerClass)
-	GetLimit() (value int)
-	GetHash() (value int64)
-}) {
-	g.Peer = from.GetPeer()
-	g.Limit = from.GetLimit()
-	g.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -227,9 +207,6 @@ func (g *MessagesGetRecentLocationsRequest) GetHash() (value int64) {
 }
 
 // MessagesGetRecentLocations invokes method messages.getRecentLocations#702a40e0 returning error if any.
-// Get live location history of a certain user
-//
-// See https://core.telegram.org/method/messages.getRecentLocations for reference.
 func (c *Client) MessagesGetRecentLocations(ctx context.Context, request *MessagesGetRecentLocationsRequest) (MessagesMessagesClass, error) {
 	var result MessagesMessagesBox
 

@@ -32,9 +32,6 @@ var (
 )
 
 // AccountGetAutoSaveSettingsRequest represents TL type `account.getAutoSaveSettings#adcbbcda`.
-// Get autosave settings
-//
-// See https://core.telegram.org/method/account.getAutoSaveSettings for reference.
 type AccountGetAutoSaveSettingsRequest struct {
 }
 
@@ -129,9 +126,6 @@ func (g *AccountGetAutoSaveSettingsRequest) DecodeBare(b *bin.Buffer) error {
 }
 
 // AccountGetAutoSaveSettings invokes method account.getAutoSaveSettings#adcbbcda returning error if any.
-// Get autosave settings
-//
-// See https://core.telegram.org/method/account.getAutoSaveSettings for reference.
 func (c *Client) AccountGetAutoSaveSettings(ctx context.Context) (*AccountAutoSaveSettings, error) {
 	var result AccountAutoSaveSettings
 

@@ -32,8 +32,6 @@ var (
 )
 
 // StoriesCanSendStoryCount represents TL type `stories.canSendStoryCount#c387c04e`.
-//
-// See https://core.telegram.org/constructor/stories.canSendStoryCount for reference.
 type StoriesCanSendStoryCount struct {
 	// CountRemains field of StoriesCanSendStoryCount.
 	CountRemains int
@@ -68,13 +66,6 @@ func (c *StoriesCanSendStoryCount) String() string {
 	}
 	type Alias StoriesCanSendStoryCount
 	return fmt.Sprintf("StoriesCanSendStoryCount%+v", Alias(*c))
-}
-
-// FillFrom fills StoriesCanSendStoryCount from given interface.
-func (c *StoriesCanSendStoryCount) FillFrom(from interface {
-	GetCountRemains() (value int)
-}) {
-	c.CountRemains = from.GetCountRemains()
 }
 
 // TypeID returns type id in TL schema.

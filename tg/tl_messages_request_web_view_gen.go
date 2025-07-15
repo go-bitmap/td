@@ -32,93 +32,40 @@ var (
 )
 
 // MessagesRequestWebViewRequest represents TL type `messages.requestWebView#269dc2c1`.
-// Open a bot mini app¹, sending over user information after user confirmation.
-// After calling this method, until the user closes the webview, messages
-// prolongWebView¹ must be called every 60 seconds.
-//
-// Links:
-//  1. https://core.telegram.org/bots/webapps
-//  2. https://core.telegram.org/method/messages.prolongWebView
-//
-// See https://core.telegram.org/method/messages.requestWebView for reference.
 type MessagesRequestWebViewRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessagesRequestWebViewRequest.
 	Flags bin.Fields
-	// Whether the webview was opened by clicking on the bot's menu button »¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/bots/menu
+	// FromBotMenu field of MessagesRequestWebViewRequest.
 	FromBotMenu bool
-	// Whether the inline message that will be sent by the bot on behalf of the user once the
-	// web app interaction is terminated¹ should be sent silently (no notifications for the
-	// receivers).
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/messages.sendWebViewResultMessage
+	// Silent field of MessagesRequestWebViewRequest.
 	Silent bool
-	// If set, requests to open the mini app in compact mode (as opposed to normal or
-	// fullscreen mode). Must be set if the mode parameter of the attachment menu deep link¹
-	// is equal to compact.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/links#bot-attachment-or-side-menu-links
+	// Compact field of MessagesRequestWebViewRequest.
 	Compact bool
-	// If set, requests to open the mini app in fullscreen mode (as opposed to normal or
-	// compact mode). Must be set if the mode parameter of the attachment menu deep link¹ is
-	// equal to fullscreen.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/links#bot-attachment-or-side-menu-links
+	// Fullscreen field of MessagesRequestWebViewRequest.
 	Fullscreen bool
-	// Dialog where the web app is being opened, and where the resulting message will be sent
-	// (see the docs for more info »¹).
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/bots/webapps
+	// Peer field of MessagesRequestWebViewRequest.
 	Peer InputPeerClass
-	// Bot that owns the web app¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/bots/webapps
+	// Bot field of MessagesRequestWebViewRequest.
 	Bot InputUserClass
-	// Web app URL¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/bots/webapps
+	// URL field of MessagesRequestWebViewRequest.
 	//
 	// Use SetURL and GetURL helpers.
 	URL string
-	// If the web app was opened from the attachment menu using a attachment menu deep link¹
-	// start_param should contain the data from the startattach parameter.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/links#bot-attachment-or-side-menu-links
+	// StartParam field of MessagesRequestWebViewRequest.
 	//
 	// Use SetStartParam and GetStartParam helpers.
 	StartParam string
-	// Theme parameters »¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/bots/webapps#theme-parameters
+	// ThemeParams field of MessagesRequestWebViewRequest.
 	//
 	// Use SetThemeParams and GetThemeParams helpers.
 	ThemeParams DataJSON
-	// Short name of the application; 0-64 English letters, digits, and underscores
+	// Platform field of MessagesRequestWebViewRequest.
 	Platform string
-	// If set, indicates that the inline message that will be sent by the bot on behalf of
-	// the user once the web app interaction is terminated¹ should be sent in reply to the
-	// specified message or story.
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/messages.sendWebViewResultMessage
+	// ReplyTo field of MessagesRequestWebViewRequest.
 	//
 	// Use SetReplyTo and GetReplyTo helpers.
 	ReplyTo InputReplyToClass
-	// Open the web app as the specified peer, sending the resulting the message as the
-	// specified peer.
+	// SendAs field of MessagesRequestWebViewRequest.
 	//
 	// Use SetSendAs and GetSendAs helpers.
 	SendAs InputPeerClass
@@ -189,50 +136,6 @@ func (r *MessagesRequestWebViewRequest) String() string {
 	}
 	type Alias MessagesRequestWebViewRequest
 	return fmt.Sprintf("MessagesRequestWebViewRequest%+v", Alias(*r))
-}
-
-// FillFrom fills MessagesRequestWebViewRequest from given interface.
-func (r *MessagesRequestWebViewRequest) FillFrom(from interface {
-	GetFromBotMenu() (value bool)
-	GetSilent() (value bool)
-	GetCompact() (value bool)
-	GetFullscreen() (value bool)
-	GetPeer() (value InputPeerClass)
-	GetBot() (value InputUserClass)
-	GetURL() (value string, ok bool)
-	GetStartParam() (value string, ok bool)
-	GetThemeParams() (value DataJSON, ok bool)
-	GetPlatform() (value string)
-	GetReplyTo() (value InputReplyToClass, ok bool)
-	GetSendAs() (value InputPeerClass, ok bool)
-}) {
-	r.FromBotMenu = from.GetFromBotMenu()
-	r.Silent = from.GetSilent()
-	r.Compact = from.GetCompact()
-	r.Fullscreen = from.GetFullscreen()
-	r.Peer = from.GetPeer()
-	r.Bot = from.GetBot()
-	if val, ok := from.GetURL(); ok {
-		r.URL = val
-	}
-
-	if val, ok := from.GetStartParam(); ok {
-		r.StartParam = val
-	}
-
-	if val, ok := from.GetThemeParams(); ok {
-		r.ThemeParams = val
-	}
-
-	r.Platform = from.GetPlatform()
-	if val, ok := from.GetReplyTo(); ok {
-		r.ReplyTo = val
-	}
-
-	if val, ok := from.GetSendAs(); ok {
-		r.SendAs = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -684,28 +587,6 @@ func (r *MessagesRequestWebViewRequest) GetSendAs() (value InputPeerClass, ok bo
 }
 
 // MessagesRequestWebView invokes method messages.requestWebView#269dc2c1 returning error if any.
-// Open a bot mini app¹, sending over user information after user confirmation.
-// After calling this method, until the user closes the webview, messages
-// prolongWebView¹ must be called every 60 seconds.
-//
-// Links:
-//  1. https://core.telegram.org/bots/webapps
-//  2. https://core.telegram.org/method/messages.prolongWebView
-//
-// Possible errors:
-//
-//	400 BOT_INVALID: This is not a valid bot.
-//	400 BOT_WEBVIEW_DISABLED: A webview cannot be opened in the specified conditions: emitted for example if from_bot_menu or url are set and peer is not the chat with the bot.
-//	400 INPUT_USER_DEACTIVATED: The specified user was deleted.
-//	400 MSG_ID_INVALID: Invalid message ID provided.
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//	403 PRIVACY_PREMIUM_REQUIRED: You need a Telegram Premium subscription to send a message to this user.
-//	400 SEND_AS_PEER_INVALID: You can't send messages as the specified peer.
-//	400 THEME_PARAMS_INVALID: The specified theme_params field is invalid.
-//	400 URL_INVALID: Invalid URL provided.
-//	400 YOU_BLOCKED_USER: You blocked this user.
-//
-// See https://core.telegram.org/method/messages.requestWebView for reference.
 func (c *Client) MessagesRequestWebView(ctx context.Context, request *MessagesRequestWebViewRequest) (*WebViewResultURL, error) {
 	var result WebViewResultURL
 

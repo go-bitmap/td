@@ -32,17 +32,8 @@ var (
 )
 
 // ContactsImportContactTokenRequest represents TL type `contacts.importContactToken#13005788`.
-// Obtain user info from a temporary profile link¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/links#temporary-profile-links
-//
-// See https://core.telegram.org/method/contacts.importContactToken for reference.
 type ContactsImportContactTokenRequest struct {
-	// The token extracted from the temporary profile link¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/links#temporary-profile-links
+	// Token field of ContactsImportContactTokenRequest.
 	Token string
 }
 
@@ -75,13 +66,6 @@ func (i *ContactsImportContactTokenRequest) String() string {
 	}
 	type Alias ContactsImportContactTokenRequest
 	return fmt.Sprintf("ContactsImportContactTokenRequest%+v", Alias(*i))
-}
-
-// FillFrom fills ContactsImportContactTokenRequest from given interface.
-func (i *ContactsImportContactTokenRequest) FillFrom(from interface {
-	GetToken() (value string)
-}) {
-	i.Token = from.GetToken()
 }
 
 // TypeID returns type id in TL schema.
@@ -168,16 +152,6 @@ func (i *ContactsImportContactTokenRequest) GetToken() (value string) {
 }
 
 // ContactsImportContactToken invokes method contacts.importContactToken#13005788 returning error if any.
-// Obtain user info from a temporary profile link¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/links#temporary-profile-links
-//
-// Possible errors:
-//
-//	400 IMPORT_TOKEN_INVALID: The specified token is invalid.
-//
-// See https://core.telegram.org/method/contacts.importContactToken for reference.
 func (c *Client) ContactsImportContactToken(ctx context.Context, token string) (UserClass, error) {
 	var result UserBox
 

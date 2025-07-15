@@ -32,111 +32,72 @@ var (
 )
 
 // ChatFull represents TL type `chatFull#2633421b`.
-// Full info about a basic group¹.
-// When updating the local peer database »¹, all fields from the newly received
-// constructor take priority over the old constructor cached locally (including by
-// removing fields that aren't set in the new constructor).
-//
-// Links:
-//  1. https://core.telegram.org/api/channel#basic-groups
-//  2. https://core.telegram.org/api/peers
-//
-// See https://core.telegram.org/constructor/chatFull for reference.
 type ChatFull struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of ChatFull.
 	Flags bin.Fields
-	// Can we change the username of this chat
+	// CanSetUsername field of ChatFull.
 	CanSetUsername bool
-	// Whether scheduled messages¹ are available
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/scheduled-messages
+	// HasScheduled field of ChatFull.
 	HasScheduled bool
-	// Whether the real-time chat translation popup¹ should be hidden.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/translation
+	// TranslationsDisabled field of ChatFull.
 	TranslationsDisabled bool
-	// ID of the chat
+	// ID field of ChatFull.
 	ID int64
-	// About string for this chat
+	// About field of ChatFull.
 	About string
-	// Participant list
+	// Participants field of ChatFull.
 	Participants ChatParticipantsClass
-	// Chat photo
+	// ChatPhoto field of ChatFull.
 	//
 	// Use SetChatPhoto and GetChatPhoto helpers.
 	ChatPhoto PhotoClass
-	// Notification settings
+	// NotifySettings field of ChatFull.
 	NotifySettings PeerNotifySettings
-	// Chat invite
+	// ExportedInvite field of ChatFull.
 	//
 	// Use SetExportedInvite and GetExportedInvite helpers.
 	ExportedInvite ExportedChatInviteClass
-	// Info about bots that are in this chat
+	// BotInfo field of ChatFull.
 	//
 	// Use SetBotInfo and GetBotInfo helpers.
 	BotInfo []BotInfo
-	// Message ID of the last pinned message¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/pin
+	// PinnedMsgID field of ChatFull.
 	//
 	// Use SetPinnedMsgID and GetPinnedMsgID helpers.
 	PinnedMsgID int
-	// Peer folder ID, for more info click here¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/folders#peer-folders
+	// FolderID field of ChatFull.
 	//
 	// Use SetFolderID and GetFolderID helpers.
 	FolderID int
-	// Group call information
+	// Call field of ChatFull.
 	//
 	// Use SetCall and GetCall helpers.
 	Call InputGroupCallClass
-	// Time-To-Live of messages sent by the current user to this chat
+	// TTLPeriod field of ChatFull.
 	//
 	// Use SetTTLPeriod and GetTTLPeriod helpers.
 	TTLPeriod int
-	// When using phone.getGroupCallJoinAs¹ to get a list of peers that can be used to join
-	// a group call, this field indicates the peer that should be selected by default.
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/phone.getGroupCallJoinAs
+	// GroupcallDefaultJoinAs field of ChatFull.
 	//
 	// Use SetGroupcallDefaultJoinAs and GetGroupcallDefaultJoinAs helpers.
 	GroupcallDefaultJoinAs PeerClass
-	// Emoji representing a specific chat theme
+	// ThemeEmoticon field of ChatFull.
 	//
 	// Use SetThemeEmoticon and GetThemeEmoticon helpers.
 	ThemeEmoticon string
-	// Pending join requests »¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/invites#join-requests
+	// RequestsPending field of ChatFull.
 	//
 	// Use SetRequestsPending and GetRequestsPending helpers.
 	RequestsPending int
-	// IDs of users who requested to join recently
+	// RecentRequesters field of ChatFull.
 	//
 	// Use SetRecentRequesters and GetRecentRequesters helpers.
 	RecentRequesters []int64
-	// Allowed message reactions »¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/reactions
+	// AvailableReactions field of ChatFull.
 	//
 	// Use SetAvailableReactions and GetAvailableReactions helpers.
 	AvailableReactions ChatReactionsClass
-	// This flag may be used to impose a custom limit of unique reactions (i.e. a
-	// customizable version of appConfig.reactions_uniq_max¹).
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/config#reactions-uniq-max
+	// ReactionsLimit field of ChatFull.
 	//
 	// Use SetReactionsLimit and GetReactionsLimit helpers.
 	ReactionsLimit int
@@ -236,90 +197,6 @@ func (c *ChatFull) String() string {
 	}
 	type Alias ChatFull
 	return fmt.Sprintf("ChatFull%+v", Alias(*c))
-}
-
-// FillFrom fills ChatFull from given interface.
-func (c *ChatFull) FillFrom(from interface {
-	GetCanSetUsername() (value bool)
-	GetHasScheduled() (value bool)
-	GetTranslationsDisabled() (value bool)
-	GetID() (value int64)
-	GetAbout() (value string)
-	GetParticipants() (value ChatParticipantsClass)
-	GetChatPhoto() (value PhotoClass, ok bool)
-	GetNotifySettings() (value PeerNotifySettings)
-	GetExportedInvite() (value ExportedChatInviteClass, ok bool)
-	GetBotInfo() (value []BotInfo, ok bool)
-	GetPinnedMsgID() (value int, ok bool)
-	GetFolderID() (value int, ok bool)
-	GetCall() (value InputGroupCallClass, ok bool)
-	GetTTLPeriod() (value int, ok bool)
-	GetGroupcallDefaultJoinAs() (value PeerClass, ok bool)
-	GetThemeEmoticon() (value string, ok bool)
-	GetRequestsPending() (value int, ok bool)
-	GetRecentRequesters() (value []int64, ok bool)
-	GetAvailableReactions() (value ChatReactionsClass, ok bool)
-	GetReactionsLimit() (value int, ok bool)
-}) {
-	c.CanSetUsername = from.GetCanSetUsername()
-	c.HasScheduled = from.GetHasScheduled()
-	c.TranslationsDisabled = from.GetTranslationsDisabled()
-	c.ID = from.GetID()
-	c.About = from.GetAbout()
-	c.Participants = from.GetParticipants()
-	if val, ok := from.GetChatPhoto(); ok {
-		c.ChatPhoto = val
-	}
-
-	c.NotifySettings = from.GetNotifySettings()
-	if val, ok := from.GetExportedInvite(); ok {
-		c.ExportedInvite = val
-	}
-
-	if val, ok := from.GetBotInfo(); ok {
-		c.BotInfo = val
-	}
-
-	if val, ok := from.GetPinnedMsgID(); ok {
-		c.PinnedMsgID = val
-	}
-
-	if val, ok := from.GetFolderID(); ok {
-		c.FolderID = val
-	}
-
-	if val, ok := from.GetCall(); ok {
-		c.Call = val
-	}
-
-	if val, ok := from.GetTTLPeriod(); ok {
-		c.TTLPeriod = val
-	}
-
-	if val, ok := from.GetGroupcallDefaultJoinAs(); ok {
-		c.GroupcallDefaultJoinAs = val
-	}
-
-	if val, ok := from.GetThemeEmoticon(); ok {
-		c.ThemeEmoticon = val
-	}
-
-	if val, ok := from.GetRequestsPending(); ok {
-		c.RequestsPending = val
-	}
-
-	if val, ok := from.GetRecentRequesters(); ok {
-		c.RecentRequesters = val
-	}
-
-	if val, ok := from.GetAvailableReactions(); ok {
-		c.AvailableReactions = val
-	}
-
-	if val, ok := from.GetReactionsLimit(); ok {
-		c.ReactionsLimit = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -1088,324 +965,197 @@ func (c *ChatFull) GetReactionsLimit() (value int, ok bool) {
 	return c.ReactionsLimit, true
 }
 
-// ChannelFull represents TL type `channelFull#52d6806b`.
-// Full info about a channel¹, supergroup² or gigagroup³.
-// When updating the local peer database »¹, all fields from the newly received
-// constructor take priority over the old constructor cached locally (including by
-// removing fields that aren't set in the new constructor).
-//
-// Links:
-//  1. https://core.telegram.org/api/channel#channels
-//  2. https://core.telegram.org/api/channel#supergroups
-//  3. https://core.telegram.org/api/channel#gigagroups
-//  4. https://core.telegram.org/api/peers
-//
-// See https://core.telegram.org/constructor/channelFull for reference.
+// ChannelFull represents TL type `channelFull#e07429de`.
 type ChannelFull struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of ChannelFull.
 	Flags bin.Fields
-	// Can we view the participant list?
+	// CanViewParticipants field of ChannelFull.
 	CanViewParticipants bool
-	// Can we set the channel's username?
+	// CanSetUsername field of ChannelFull.
 	CanSetUsername bool
-	// Can we associate¹ a stickerpack to the supergroup?
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/channels.setStickers
+	// CanSetStickers field of ChannelFull.
 	CanSetStickers bool
-	// Is the history before we joined hidden to us?
+	// HiddenPrehistory field of ChannelFull.
 	HiddenPrehistory bool
-	// Can we set the geolocation of this group (for geogroups)
+	// CanSetLocation field of ChannelFull.
 	CanSetLocation bool
-	// Whether scheduled messages are available
+	// HasScheduled field of ChannelFull.
 	HasScheduled bool
-	// Can the user view channel/supergroup statistics¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/stats
+	// CanViewStats field of ChannelFull.
 	CanViewStats bool
-	// Whether any anonymous admin of this supergroup was blocked: if set, you won't receive
-	// messages from anonymous group admins in discussion replies via @replies¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/discussion
+	// Blocked field of ChannelFull.
 	Blocked bool
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags2 field of ChannelFull.
 	Flags2 bin.Fields
-	// Can we delete this channel?
+	// CanDeleteChannel field of ChannelFull.
 	CanDeleteChannel bool
-	// Whether native antispam¹ functionality is enabled in this supergroup.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/antispam
+	// Antispam field of ChannelFull.
 	Antispam bool
-	// Whether the participant list is hidden.
+	// ParticipantsHidden field of ChannelFull.
 	ParticipantsHidden bool
-	// Whether the real-time chat translation popup¹ should be hidden.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/translation
+	// TranslationsDisabled field of ChannelFull.
 	TranslationsDisabled bool
-	// Whether this user has some pinned stories¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/stories#pinned-or-archived-stories
+	// StoriesPinnedAvailable field of ChannelFull.
 	StoriesPinnedAvailable bool
-	// Users may also choose to display messages from all topics of a forum¹ as if they were
-	// sent to a normal group, using a "View as messages" setting in the local client.  This
-	// setting only affects the current account, and is synced to other logged in sessions
-	// using the channels.toggleViewForumAsMessages² method; invoking this method will
-	// update the value of this flag.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/forum
-	//  2) https://core.telegram.org/method/channels.toggleViewForumAsMessages
+	// ViewForumAsMessages field of ChannelFull.
 	ViewForumAsMessages bool
-	// Whether ads on this channel were disabled as specified here »¹ (this flag is only
-	// visible to the owner of the channel).
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/boost#disable-ads-on-the-channel
+	// RestrictedSponsored field of ChannelFull.
 	RestrictedSponsored bool
-	// If set, this user can view ad revenue statistics »¹ for this channel.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/revenue#revenue-statistics
+	// CanViewRevenue field of ChannelFull.
 	CanViewRevenue bool
-	// Whether the current user can send or forward paid media »¹ to this channel.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/paid-media
+	// PaidMediaAllowed field of ChannelFull.
 	PaidMediaAllowed bool
-	// If set, this user can view Telegram Star revenue statistics »¹ for this channel.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/stars#revenue-statistics
+	// CanViewStarsRevenue field of ChannelFull.
 	CanViewStarsRevenue bool
-	// If set, users may send paid Telegram Star reactions »¹ to messages of this channel.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/reactions#paid-reactions
+	// PaidReactionsAvailable field of ChannelFull.
 	PaidReactionsAvailable bool
 	// StargiftsAvailable field of ChannelFull.
 	StargiftsAvailable bool
 	// PaidMessagesAvailable field of ChannelFull.
 	PaidMessagesAvailable bool
-	// ID of the channel
+	// ID field of ChannelFull.
 	ID int64
-	// Info about the channel
+	// About field of ChannelFull.
 	About string
-	// Number of participants of the channel
+	// ParticipantsCount field of ChannelFull.
 	//
 	// Use SetParticipantsCount and GetParticipantsCount helpers.
 	ParticipantsCount int
-	// Number of channel admins
+	// AdminsCount field of ChannelFull.
 	//
 	// Use SetAdminsCount and GetAdminsCount helpers.
 	AdminsCount int
-	// Number of users kicked¹ from the channel
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/rights
+	// KickedCount field of ChannelFull.
 	//
 	// Use SetKickedCount and GetKickedCount helpers.
 	KickedCount int
-	// Number of users banned¹ from the channel
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/rights
+	// BannedCount field of ChannelFull.
 	//
 	// Use SetBannedCount and GetBannedCount helpers.
 	BannedCount int
-	// Number of users currently online
+	// OnlineCount field of ChannelFull.
 	//
 	// Use SetOnlineCount and GetOnlineCount helpers.
 	OnlineCount int
-	// Position up to which all incoming messages are read.
+	// ReadInboxMaxID field of ChannelFull.
 	ReadInboxMaxID int
-	// Position up to which all outgoing messages are read.
+	// ReadOutboxMaxID field of ChannelFull.
 	ReadOutboxMaxID int
-	// Count of unread messages
+	// UnreadCount field of ChannelFull.
 	UnreadCount int
-	// Channel picture
+	// ChatPhoto field of ChannelFull.
 	ChatPhoto PhotoClass
-	// Notification settings
+	// NotifySettings field of ChannelFull.
 	NotifySettings PeerNotifySettings
-	// Invite link
+	// ExportedInvite field of ChannelFull.
 	//
 	// Use SetExportedInvite and GetExportedInvite helpers.
 	ExportedInvite ExportedChatInviteClass
-	// Info about bots in the channel/supergroup
+	// BotInfo field of ChannelFull.
 	BotInfo []BotInfo
-	// The chat ID from which this group was migrated¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/channel
+	// MigratedFromChatID field of ChannelFull.
 	//
 	// Use SetMigratedFromChatID and GetMigratedFromChatID helpers.
 	MigratedFromChatID int64
-	// The message ID in the original chat at which this group was migrated¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/channel
+	// MigratedFromMaxID field of ChannelFull.
 	//
 	// Use SetMigratedFromMaxID and GetMigratedFromMaxID helpers.
 	MigratedFromMaxID int
-	// Message ID of the last pinned message¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/pin
+	// PinnedMsgID field of ChannelFull.
 	//
 	// Use SetPinnedMsgID and GetPinnedMsgID helpers.
 	PinnedMsgID int
-	// Associated stickerset
+	// Stickerset field of ChannelFull.
 	//
 	// Use SetStickerset and GetStickerset helpers.
 	Stickerset StickerSet
-	// Identifier of a maximum unavailable message in a channel due to hidden history.
+	// AvailableMinID field of ChannelFull.
 	//
 	// Use SetAvailableMinID and GetAvailableMinID helpers.
 	AvailableMinID int
-	// Peer folder ID, for more info click here¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/folders#peer-folders
+	// FolderID field of ChannelFull.
 	//
 	// Use SetFolderID and GetFolderID helpers.
 	FolderID int
-	// ID of the linked discussion chat¹ for channels (and vice versa, the ID of the linked
-	// channel for discussion chats).
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/discussion
+	// LinkedChatID field of ChannelFull.
 	//
 	// Use SetLinkedChatID and GetLinkedChatID helpers.
 	LinkedChatID int64
-	// Location of the geogroup
+	// Location field of ChannelFull.
 	//
 	// Use SetLocation and GetLocation helpers.
 	Location ChannelLocationClass
-	// If specified, users in supergroups will only be able to send one message every
-	// slowmode_seconds seconds
+	// SlowmodeSeconds field of ChannelFull.
 	//
 	// Use SetSlowmodeSeconds and GetSlowmodeSeconds helpers.
 	SlowmodeSeconds int
-	// Indicates when the user will be allowed to send another message in the supergroup
-	// (unixtime)
+	// SlowmodeNextSendDate field of ChannelFull.
 	//
 	// Use SetSlowmodeNextSendDate and GetSlowmodeNextSendDate helpers.
 	SlowmodeNextSendDate int
-	// If set, specifies the DC to use for fetching channel statistics
+	// StatsDC field of ChannelFull.
 	//
 	// Use SetStatsDC and GetStatsDC helpers.
 	StatsDC int
-	// Latest PTS¹ for this channel
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/updates
+	// Pts field of ChannelFull.
 	Pts int
-	// Livestream or group call information
+	// Call field of ChannelFull.
 	//
 	// Use SetCall and GetCall helpers.
 	Call InputGroupCallClass
-	// Time-To-Live of messages in this channel or supergroup
+	// TTLPeriod field of ChannelFull.
 	//
 	// Use SetTTLPeriod and GetTTLPeriod helpers.
 	TTLPeriod int
-	// A list of suggested actions¹ for the supergroup admin, see here for more info »².
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/config#suggestions
-	//  2) https://core.telegram.org/api/config#suggestions
+	// PendingSuggestions field of ChannelFull.
 	//
 	// Use SetPendingSuggestions and GetPendingSuggestions helpers.
 	PendingSuggestions []string
-	// When using phone.getGroupCallJoinAs¹ to get a list of peers that can be used to join
-	// a group call, this field indicates the peer that should be selected by default.
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/phone.getGroupCallJoinAs
+	// GroupcallDefaultJoinAs field of ChannelFull.
 	//
 	// Use SetGroupcallDefaultJoinAs and GetGroupcallDefaultJoinAs helpers.
 	GroupcallDefaultJoinAs PeerClass
-	// Emoji representing a specific chat theme
+	// ThemeEmoticon field of ChannelFull.
 	//
 	// Use SetThemeEmoticon and GetThemeEmoticon helpers.
 	ThemeEmoticon string
-	// Pending join requests »¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/invites#join-requests
+	// RequestsPending field of ChannelFull.
 	//
 	// Use SetRequestsPending and GetRequestsPending helpers.
 	RequestsPending int
-	// IDs of users who requested to join recently
+	// RecentRequesters field of ChannelFull.
 	//
 	// Use SetRecentRequesters and GetRecentRequesters helpers.
 	RecentRequesters []int64
-	// Default peer used for sending messages to this channel
+	// DefaultSendAs field of ChannelFull.
 	//
 	// Use SetDefaultSendAs and GetDefaultSendAs helpers.
 	DefaultSendAs PeerClass
-	// Allowed message reactions »¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/reactions
+	// AvailableReactions field of ChannelFull.
 	//
 	// Use SetAvailableReactions and GetAvailableReactions helpers.
 	AvailableReactions ChatReactionsClass
-	// This flag may be used to impose a custom limit of unique reactions (i.e. a
-	// customizable version of appConfig.reactions_uniq_max¹).
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/config#reactions-uniq-max
+	// ReactionsLimit field of ChannelFull.
 	//
 	// Use SetReactionsLimit and GetReactionsLimit helpers.
 	ReactionsLimit int
-	// Channel stories¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/stories
+	// Stories field of ChannelFull.
 	//
 	// Use SetStories and GetStories helpers.
 	Stories PeerStories
-	// Wallpaper¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/wallpapers
+	// Wallpaper field of ChannelFull.
 	//
 	// Use SetWallpaper and GetWallpaper helpers.
 	Wallpaper WallPaperClass
-	// The number of boosts¹ the current user has applied to the current supergroup.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/boost
+	// BoostsApplied field of ChannelFull.
 	//
 	// Use SetBoostsApplied and GetBoostsApplied helpers.
 	BoostsApplied int
-	// The number of boosts¹ this supergroup requires to bypass slowmode and other
-	// restrictions, see here »² for more info.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/boost
-	//  2) https://core.telegram.org/api/boost#bypass-slowmode-and-chat-restrictions
+	// BoostsUnrestrict field of ChannelFull.
 	//
 	// Use SetBoostsUnrestrict and GetBoostsUnrestrict helpers.
 	BoostsUnrestrict int
-	// Custom emoji stickerset¹ associated to the current supergroup, set using channels
-	// setEmojiStickers² after reaching the appropriate boost level, see here »³ for more
-	// info.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/custom-emoji
-	//  2) https://core.telegram.org/method/channels.setEmojiStickers
-	//  3) https://core.telegram.org/api/boost#setting-a-custom-emoji-stickerset-for-supergroups
+	// Emojiset field of ChannelFull.
 	//
 	// Use SetEmojiset and GetEmojiset helpers.
 	Emojiset StickerSet
@@ -1417,10 +1167,14 @@ type ChannelFull struct {
 	//
 	// Use SetStargiftsCount and GetStargiftsCount helpers.
 	StargiftsCount int
+	// SendPaidMessagesStars field of ChannelFull.
+	//
+	// Use SetSendPaidMessagesStars and GetSendPaidMessagesStars helpers.
+	SendPaidMessagesStars int64
 }
 
 // ChannelFullTypeID is TL type id of ChannelFull.
-const ChannelFullTypeID = 0x52d6806b
+const ChannelFullTypeID = 0xe07429de
 
 // construct implements constructor of ChatFullClass.
 func (c ChannelFull) construct() ChatFullClass { return &c }
@@ -1637,6 +1391,9 @@ func (c *ChannelFull) Zero() bool {
 	if !(c.StargiftsCount == 0) {
 		return false
 	}
+	if !(c.SendPaidMessagesStars == 0) {
+		return false
+	}
 
 	return true
 }
@@ -1648,241 +1405,6 @@ func (c *ChannelFull) String() string {
 	}
 	type Alias ChannelFull
 	return fmt.Sprintf("ChannelFull%+v", Alias(*c))
-}
-
-// FillFrom fills ChannelFull from given interface.
-func (c *ChannelFull) FillFrom(from interface {
-	GetCanViewParticipants() (value bool)
-	GetCanSetUsername() (value bool)
-	GetCanSetStickers() (value bool)
-	GetHiddenPrehistory() (value bool)
-	GetCanSetLocation() (value bool)
-	GetHasScheduled() (value bool)
-	GetCanViewStats() (value bool)
-	GetBlocked() (value bool)
-	GetCanDeleteChannel() (value bool)
-	GetAntispam() (value bool)
-	GetParticipantsHidden() (value bool)
-	GetTranslationsDisabled() (value bool)
-	GetStoriesPinnedAvailable() (value bool)
-	GetViewForumAsMessages() (value bool)
-	GetRestrictedSponsored() (value bool)
-	GetCanViewRevenue() (value bool)
-	GetPaidMediaAllowed() (value bool)
-	GetCanViewStarsRevenue() (value bool)
-	GetPaidReactionsAvailable() (value bool)
-	GetStargiftsAvailable() (value bool)
-	GetPaidMessagesAvailable() (value bool)
-	GetID() (value int64)
-	GetAbout() (value string)
-	GetParticipantsCount() (value int, ok bool)
-	GetAdminsCount() (value int, ok bool)
-	GetKickedCount() (value int, ok bool)
-	GetBannedCount() (value int, ok bool)
-	GetOnlineCount() (value int, ok bool)
-	GetReadInboxMaxID() (value int)
-	GetReadOutboxMaxID() (value int)
-	GetUnreadCount() (value int)
-	GetChatPhoto() (value PhotoClass)
-	GetNotifySettings() (value PeerNotifySettings)
-	GetExportedInvite() (value ExportedChatInviteClass, ok bool)
-	GetBotInfo() (value []BotInfo)
-	GetMigratedFromChatID() (value int64, ok bool)
-	GetMigratedFromMaxID() (value int, ok bool)
-	GetPinnedMsgID() (value int, ok bool)
-	GetStickerset() (value StickerSet, ok bool)
-	GetAvailableMinID() (value int, ok bool)
-	GetFolderID() (value int, ok bool)
-	GetLinkedChatID() (value int64, ok bool)
-	GetLocation() (value ChannelLocationClass, ok bool)
-	GetSlowmodeSeconds() (value int, ok bool)
-	GetSlowmodeNextSendDate() (value int, ok bool)
-	GetStatsDC() (value int, ok bool)
-	GetPts() (value int)
-	GetCall() (value InputGroupCallClass, ok bool)
-	GetTTLPeriod() (value int, ok bool)
-	GetPendingSuggestions() (value []string, ok bool)
-	GetGroupcallDefaultJoinAs() (value PeerClass, ok bool)
-	GetThemeEmoticon() (value string, ok bool)
-	GetRequestsPending() (value int, ok bool)
-	GetRecentRequesters() (value []int64, ok bool)
-	GetDefaultSendAs() (value PeerClass, ok bool)
-	GetAvailableReactions() (value ChatReactionsClass, ok bool)
-	GetReactionsLimit() (value int, ok bool)
-	GetStories() (value PeerStories, ok bool)
-	GetWallpaper() (value WallPaperClass, ok bool)
-	GetBoostsApplied() (value int, ok bool)
-	GetBoostsUnrestrict() (value int, ok bool)
-	GetEmojiset() (value StickerSet, ok bool)
-	GetBotVerification() (value BotVerification, ok bool)
-	GetStargiftsCount() (value int, ok bool)
-}) {
-	c.CanViewParticipants = from.GetCanViewParticipants()
-	c.CanSetUsername = from.GetCanSetUsername()
-	c.CanSetStickers = from.GetCanSetStickers()
-	c.HiddenPrehistory = from.GetHiddenPrehistory()
-	c.CanSetLocation = from.GetCanSetLocation()
-	c.HasScheduled = from.GetHasScheduled()
-	c.CanViewStats = from.GetCanViewStats()
-	c.Blocked = from.GetBlocked()
-	c.CanDeleteChannel = from.GetCanDeleteChannel()
-	c.Antispam = from.GetAntispam()
-	c.ParticipantsHidden = from.GetParticipantsHidden()
-	c.TranslationsDisabled = from.GetTranslationsDisabled()
-	c.StoriesPinnedAvailable = from.GetStoriesPinnedAvailable()
-	c.ViewForumAsMessages = from.GetViewForumAsMessages()
-	c.RestrictedSponsored = from.GetRestrictedSponsored()
-	c.CanViewRevenue = from.GetCanViewRevenue()
-	c.PaidMediaAllowed = from.GetPaidMediaAllowed()
-	c.CanViewStarsRevenue = from.GetCanViewStarsRevenue()
-	c.PaidReactionsAvailable = from.GetPaidReactionsAvailable()
-	c.StargiftsAvailable = from.GetStargiftsAvailable()
-	c.PaidMessagesAvailable = from.GetPaidMessagesAvailable()
-	c.ID = from.GetID()
-	c.About = from.GetAbout()
-	if val, ok := from.GetParticipantsCount(); ok {
-		c.ParticipantsCount = val
-	}
-
-	if val, ok := from.GetAdminsCount(); ok {
-		c.AdminsCount = val
-	}
-
-	if val, ok := from.GetKickedCount(); ok {
-		c.KickedCount = val
-	}
-
-	if val, ok := from.GetBannedCount(); ok {
-		c.BannedCount = val
-	}
-
-	if val, ok := from.GetOnlineCount(); ok {
-		c.OnlineCount = val
-	}
-
-	c.ReadInboxMaxID = from.GetReadInboxMaxID()
-	c.ReadOutboxMaxID = from.GetReadOutboxMaxID()
-	c.UnreadCount = from.GetUnreadCount()
-	c.ChatPhoto = from.GetChatPhoto()
-	c.NotifySettings = from.GetNotifySettings()
-	if val, ok := from.GetExportedInvite(); ok {
-		c.ExportedInvite = val
-	}
-
-	c.BotInfo = from.GetBotInfo()
-	if val, ok := from.GetMigratedFromChatID(); ok {
-		c.MigratedFromChatID = val
-	}
-
-	if val, ok := from.GetMigratedFromMaxID(); ok {
-		c.MigratedFromMaxID = val
-	}
-
-	if val, ok := from.GetPinnedMsgID(); ok {
-		c.PinnedMsgID = val
-	}
-
-	if val, ok := from.GetStickerset(); ok {
-		c.Stickerset = val
-	}
-
-	if val, ok := from.GetAvailableMinID(); ok {
-		c.AvailableMinID = val
-	}
-
-	if val, ok := from.GetFolderID(); ok {
-		c.FolderID = val
-	}
-
-	if val, ok := from.GetLinkedChatID(); ok {
-		c.LinkedChatID = val
-	}
-
-	if val, ok := from.GetLocation(); ok {
-		c.Location = val
-	}
-
-	if val, ok := from.GetSlowmodeSeconds(); ok {
-		c.SlowmodeSeconds = val
-	}
-
-	if val, ok := from.GetSlowmodeNextSendDate(); ok {
-		c.SlowmodeNextSendDate = val
-	}
-
-	if val, ok := from.GetStatsDC(); ok {
-		c.StatsDC = val
-	}
-
-	c.Pts = from.GetPts()
-	if val, ok := from.GetCall(); ok {
-		c.Call = val
-	}
-
-	if val, ok := from.GetTTLPeriod(); ok {
-		c.TTLPeriod = val
-	}
-
-	if val, ok := from.GetPendingSuggestions(); ok {
-		c.PendingSuggestions = val
-	}
-
-	if val, ok := from.GetGroupcallDefaultJoinAs(); ok {
-		c.GroupcallDefaultJoinAs = val
-	}
-
-	if val, ok := from.GetThemeEmoticon(); ok {
-		c.ThemeEmoticon = val
-	}
-
-	if val, ok := from.GetRequestsPending(); ok {
-		c.RequestsPending = val
-	}
-
-	if val, ok := from.GetRecentRequesters(); ok {
-		c.RecentRequesters = val
-	}
-
-	if val, ok := from.GetDefaultSendAs(); ok {
-		c.DefaultSendAs = val
-	}
-
-	if val, ok := from.GetAvailableReactions(); ok {
-		c.AvailableReactions = val
-	}
-
-	if val, ok := from.GetReactionsLimit(); ok {
-		c.ReactionsLimit = val
-	}
-
-	if val, ok := from.GetStories(); ok {
-		c.Stories = val
-	}
-
-	if val, ok := from.GetWallpaper(); ok {
-		c.Wallpaper = val
-	}
-
-	if val, ok := from.GetBoostsApplied(); ok {
-		c.BoostsApplied = val
-	}
-
-	if val, ok := from.GetBoostsUnrestrict(); ok {
-		c.BoostsUnrestrict = val
-	}
-
-	if val, ok := from.GetEmojiset(); ok {
-		c.Emojiset = val
-	}
-
-	if val, ok := from.GetBotVerification(); ok {
-		c.BotVerification = val
-	}
-
-	if val, ok := from.GetStargiftsCount(); ok {
-		c.StargiftsCount = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -2219,6 +1741,11 @@ func (c *ChannelFull) TypeInfo() tdp.Type {
 			SchemaName: "stargifts_count",
 			Null:       !c.Flags2.Has(18),
 		},
+		{
+			Name:       "SendPaidMessagesStars",
+			SchemaName: "send_paid_messages_stars",
+			Null:       !c.Flags2.Has(21),
+		},
 	}
 	return typ
 }
@@ -2390,12 +1917,15 @@ func (c *ChannelFull) SetFlags() {
 	if !(c.StargiftsCount == 0) {
 		c.Flags2.Set(18)
 	}
+	if !(c.SendPaidMessagesStars == 0) {
+		c.Flags2.Set(21)
+	}
 }
 
 // Encode implements bin.Encoder.
 func (c *ChannelFull) Encode(b *bin.Buffer) error {
 	if c == nil {
-		return fmt.Errorf("can't encode channelFull#52d6806b as nil")
+		return fmt.Errorf("can't encode channelFull#e07429de as nil")
 	}
 	b.PutID(ChannelFullTypeID)
 	return c.EncodeBare(b)
@@ -2404,14 +1934,14 @@ func (c *ChannelFull) Encode(b *bin.Buffer) error {
 // EncodeBare implements bin.BareEncoder.
 func (c *ChannelFull) EncodeBare(b *bin.Buffer) error {
 	if c == nil {
-		return fmt.Errorf("can't encode channelFull#52d6806b as nil")
+		return fmt.Errorf("can't encode channelFull#e07429de as nil")
 	}
 	c.SetFlags()
 	if err := c.Flags.Encode(b); err != nil {
-		return fmt.Errorf("unable to encode channelFull#52d6806b: field flags: %w", err)
+		return fmt.Errorf("unable to encode channelFull#e07429de: field flags: %w", err)
 	}
 	if err := c.Flags2.Encode(b); err != nil {
-		return fmt.Errorf("unable to encode channelFull#52d6806b: field flags2: %w", err)
+		return fmt.Errorf("unable to encode channelFull#e07429de: field flags2: %w", err)
 	}
 	b.PutLong(c.ID)
 	b.PutString(c.About)
@@ -2434,26 +1964,26 @@ func (c *ChannelFull) EncodeBare(b *bin.Buffer) error {
 	b.PutInt(c.ReadOutboxMaxID)
 	b.PutInt(c.UnreadCount)
 	if c.ChatPhoto == nil {
-		return fmt.Errorf("unable to encode channelFull#52d6806b: field chat_photo is nil")
+		return fmt.Errorf("unable to encode channelFull#e07429de: field chat_photo is nil")
 	}
 	if err := c.ChatPhoto.Encode(b); err != nil {
-		return fmt.Errorf("unable to encode channelFull#52d6806b: field chat_photo: %w", err)
+		return fmt.Errorf("unable to encode channelFull#e07429de: field chat_photo: %w", err)
 	}
 	if err := c.NotifySettings.Encode(b); err != nil {
-		return fmt.Errorf("unable to encode channelFull#52d6806b: field notify_settings: %w", err)
+		return fmt.Errorf("unable to encode channelFull#e07429de: field notify_settings: %w", err)
 	}
 	if c.Flags.Has(23) {
 		if c.ExportedInvite == nil {
-			return fmt.Errorf("unable to encode channelFull#52d6806b: field exported_invite is nil")
+			return fmt.Errorf("unable to encode channelFull#e07429de: field exported_invite is nil")
 		}
 		if err := c.ExportedInvite.Encode(b); err != nil {
-			return fmt.Errorf("unable to encode channelFull#52d6806b: field exported_invite: %w", err)
+			return fmt.Errorf("unable to encode channelFull#e07429de: field exported_invite: %w", err)
 		}
 	}
 	b.PutVectorHeader(len(c.BotInfo))
 	for idx, v := range c.BotInfo {
 		if err := v.Encode(b); err != nil {
-			return fmt.Errorf("unable to encode channelFull#52d6806b: field bot_info element with index %d: %w", idx, err)
+			return fmt.Errorf("unable to encode channelFull#e07429de: field bot_info element with index %d: %w", idx, err)
 		}
 	}
 	if c.Flags.Has(4) {
@@ -2467,7 +1997,7 @@ func (c *ChannelFull) EncodeBare(b *bin.Buffer) error {
 	}
 	if c.Flags.Has(8) {
 		if err := c.Stickerset.Encode(b); err != nil {
-			return fmt.Errorf("unable to encode channelFull#52d6806b: field stickerset: %w", err)
+			return fmt.Errorf("unable to encode channelFull#e07429de: field stickerset: %w", err)
 		}
 	}
 	if c.Flags.Has(9) {
@@ -2481,10 +2011,10 @@ func (c *ChannelFull) EncodeBare(b *bin.Buffer) error {
 	}
 	if c.Flags.Has(15) {
 		if c.Location == nil {
-			return fmt.Errorf("unable to encode channelFull#52d6806b: field location is nil")
+			return fmt.Errorf("unable to encode channelFull#e07429de: field location is nil")
 		}
 		if err := c.Location.Encode(b); err != nil {
-			return fmt.Errorf("unable to encode channelFull#52d6806b: field location: %w", err)
+			return fmt.Errorf("unable to encode channelFull#e07429de: field location: %w", err)
 		}
 	}
 	if c.Flags.Has(17) {
@@ -2499,10 +2029,10 @@ func (c *ChannelFull) EncodeBare(b *bin.Buffer) error {
 	b.PutInt(c.Pts)
 	if c.Flags.Has(21) {
 		if c.Call == nil {
-			return fmt.Errorf("unable to encode channelFull#52d6806b: field call is nil")
+			return fmt.Errorf("unable to encode channelFull#e07429de: field call is nil")
 		}
 		if err := c.Call.Encode(b); err != nil {
-			return fmt.Errorf("unable to encode channelFull#52d6806b: field call: %w", err)
+			return fmt.Errorf("unable to encode channelFull#e07429de: field call: %w", err)
 		}
 	}
 	if c.Flags.Has(24) {
@@ -2516,10 +2046,10 @@ func (c *ChannelFull) EncodeBare(b *bin.Buffer) error {
 	}
 	if c.Flags.Has(26) {
 		if c.GroupcallDefaultJoinAs == nil {
-			return fmt.Errorf("unable to encode channelFull#52d6806b: field groupcall_default_join_as is nil")
+			return fmt.Errorf("unable to encode channelFull#e07429de: field groupcall_default_join_as is nil")
 		}
 		if err := c.GroupcallDefaultJoinAs.Encode(b); err != nil {
-			return fmt.Errorf("unable to encode channelFull#52d6806b: field groupcall_default_join_as: %w", err)
+			return fmt.Errorf("unable to encode channelFull#e07429de: field groupcall_default_join_as: %w", err)
 		}
 	}
 	if c.Flags.Has(27) {
@@ -2536,18 +2066,18 @@ func (c *ChannelFull) EncodeBare(b *bin.Buffer) error {
 	}
 	if c.Flags.Has(29) {
 		if c.DefaultSendAs == nil {
-			return fmt.Errorf("unable to encode channelFull#52d6806b: field default_send_as is nil")
+			return fmt.Errorf("unable to encode channelFull#e07429de: field default_send_as is nil")
 		}
 		if err := c.DefaultSendAs.Encode(b); err != nil {
-			return fmt.Errorf("unable to encode channelFull#52d6806b: field default_send_as: %w", err)
+			return fmt.Errorf("unable to encode channelFull#e07429de: field default_send_as: %w", err)
 		}
 	}
 	if c.Flags.Has(30) {
 		if c.AvailableReactions == nil {
-			return fmt.Errorf("unable to encode channelFull#52d6806b: field available_reactions is nil")
+			return fmt.Errorf("unable to encode channelFull#e07429de: field available_reactions is nil")
 		}
 		if err := c.AvailableReactions.Encode(b); err != nil {
-			return fmt.Errorf("unable to encode channelFull#52d6806b: field available_reactions: %w", err)
+			return fmt.Errorf("unable to encode channelFull#e07429de: field available_reactions: %w", err)
 		}
 	}
 	if c.Flags2.Has(13) {
@@ -2555,15 +2085,15 @@ func (c *ChannelFull) EncodeBare(b *bin.Buffer) error {
 	}
 	if c.Flags2.Has(4) {
 		if err := c.Stories.Encode(b); err != nil {
-			return fmt.Errorf("unable to encode channelFull#52d6806b: field stories: %w", err)
+			return fmt.Errorf("unable to encode channelFull#e07429de: field stories: %w", err)
 		}
 	}
 	if c.Flags2.Has(7) {
 		if c.Wallpaper == nil {
-			return fmt.Errorf("unable to encode channelFull#52d6806b: field wallpaper is nil")
+			return fmt.Errorf("unable to encode channelFull#e07429de: field wallpaper is nil")
 		}
 		if err := c.Wallpaper.Encode(b); err != nil {
-			return fmt.Errorf("unable to encode channelFull#52d6806b: field wallpaper: %w", err)
+			return fmt.Errorf("unable to encode channelFull#e07429de: field wallpaper: %w", err)
 		}
 	}
 	if c.Flags2.Has(8) {
@@ -2574,16 +2104,19 @@ func (c *ChannelFull) EncodeBare(b *bin.Buffer) error {
 	}
 	if c.Flags2.Has(10) {
 		if err := c.Emojiset.Encode(b); err != nil {
-			return fmt.Errorf("unable to encode channelFull#52d6806b: field emojiset: %w", err)
+			return fmt.Errorf("unable to encode channelFull#e07429de: field emojiset: %w", err)
 		}
 	}
 	if c.Flags2.Has(17) {
 		if err := c.BotVerification.Encode(b); err != nil {
-			return fmt.Errorf("unable to encode channelFull#52d6806b: field bot_verification: %w", err)
+			return fmt.Errorf("unable to encode channelFull#e07429de: field bot_verification: %w", err)
 		}
 	}
 	if c.Flags2.Has(18) {
 		b.PutInt(c.StargiftsCount)
+	}
+	if c.Flags2.Has(21) {
+		b.PutLong(c.SendPaidMessagesStars)
 	}
 	return nil
 }
@@ -2591,10 +2124,10 @@ func (c *ChannelFull) EncodeBare(b *bin.Buffer) error {
 // Decode implements bin.Decoder.
 func (c *ChannelFull) Decode(b *bin.Buffer) error {
 	if c == nil {
-		return fmt.Errorf("can't decode channelFull#52d6806b to nil")
+		return fmt.Errorf("can't decode channelFull#e07429de to nil")
 	}
 	if err := b.ConsumeID(ChannelFullTypeID); err != nil {
-		return fmt.Errorf("unable to decode channelFull#52d6806b: %w", err)
+		return fmt.Errorf("unable to decode channelFull#e07429de: %w", err)
 	}
 	return c.DecodeBare(b)
 }
@@ -2602,11 +2135,11 @@ func (c *ChannelFull) Decode(b *bin.Buffer) error {
 // DecodeBare implements bin.BareDecoder.
 func (c *ChannelFull) DecodeBare(b *bin.Buffer) error {
 	if c == nil {
-		return fmt.Errorf("can't decode channelFull#52d6806b to nil")
+		return fmt.Errorf("can't decode channelFull#e07429de to nil")
 	}
 	{
 		if err := c.Flags.Decode(b); err != nil {
-			return fmt.Errorf("unable to decode channelFull#52d6806b: field flags: %w", err)
+			return fmt.Errorf("unable to decode channelFull#e07429de: field flags: %w", err)
 		}
 	}
 	c.CanViewParticipants = c.Flags.Has(3)
@@ -2619,7 +2152,7 @@ func (c *ChannelFull) DecodeBare(b *bin.Buffer) error {
 	c.Blocked = c.Flags.Has(22)
 	{
 		if err := c.Flags2.Decode(b); err != nil {
-			return fmt.Errorf("unable to decode channelFull#52d6806b: field flags2: %w", err)
+			return fmt.Errorf("unable to decode channelFull#e07429de: field flags2: %w", err)
 		}
 	}
 	c.CanDeleteChannel = c.Flags2.Has(0)
@@ -2638,96 +2171,96 @@ func (c *ChannelFull) DecodeBare(b *bin.Buffer) error {
 	{
 		value, err := b.Long()
 		if err != nil {
-			return fmt.Errorf("unable to decode channelFull#52d6806b: field id: %w", err)
+			return fmt.Errorf("unable to decode channelFull#e07429de: field id: %w", err)
 		}
 		c.ID = value
 	}
 	{
 		value, err := b.String()
 		if err != nil {
-			return fmt.Errorf("unable to decode channelFull#52d6806b: field about: %w", err)
+			return fmt.Errorf("unable to decode channelFull#e07429de: field about: %w", err)
 		}
 		c.About = value
 	}
 	if c.Flags.Has(0) {
 		value, err := b.Int()
 		if err != nil {
-			return fmt.Errorf("unable to decode channelFull#52d6806b: field participants_count: %w", err)
+			return fmt.Errorf("unable to decode channelFull#e07429de: field participants_count: %w", err)
 		}
 		c.ParticipantsCount = value
 	}
 	if c.Flags.Has(1) {
 		value, err := b.Int()
 		if err != nil {
-			return fmt.Errorf("unable to decode channelFull#52d6806b: field admins_count: %w", err)
+			return fmt.Errorf("unable to decode channelFull#e07429de: field admins_count: %w", err)
 		}
 		c.AdminsCount = value
 	}
 	if c.Flags.Has(2) {
 		value, err := b.Int()
 		if err != nil {
-			return fmt.Errorf("unable to decode channelFull#52d6806b: field kicked_count: %w", err)
+			return fmt.Errorf("unable to decode channelFull#e07429de: field kicked_count: %w", err)
 		}
 		c.KickedCount = value
 	}
 	if c.Flags.Has(2) {
 		value, err := b.Int()
 		if err != nil {
-			return fmt.Errorf("unable to decode channelFull#52d6806b: field banned_count: %w", err)
+			return fmt.Errorf("unable to decode channelFull#e07429de: field banned_count: %w", err)
 		}
 		c.BannedCount = value
 	}
 	if c.Flags.Has(13) {
 		value, err := b.Int()
 		if err != nil {
-			return fmt.Errorf("unable to decode channelFull#52d6806b: field online_count: %w", err)
+			return fmt.Errorf("unable to decode channelFull#e07429de: field online_count: %w", err)
 		}
 		c.OnlineCount = value
 	}
 	{
 		value, err := b.Int()
 		if err != nil {
-			return fmt.Errorf("unable to decode channelFull#52d6806b: field read_inbox_max_id: %w", err)
+			return fmt.Errorf("unable to decode channelFull#e07429de: field read_inbox_max_id: %w", err)
 		}
 		c.ReadInboxMaxID = value
 	}
 	{
 		value, err := b.Int()
 		if err != nil {
-			return fmt.Errorf("unable to decode channelFull#52d6806b: field read_outbox_max_id: %w", err)
+			return fmt.Errorf("unable to decode channelFull#e07429de: field read_outbox_max_id: %w", err)
 		}
 		c.ReadOutboxMaxID = value
 	}
 	{
 		value, err := b.Int()
 		if err != nil {
-			return fmt.Errorf("unable to decode channelFull#52d6806b: field unread_count: %w", err)
+			return fmt.Errorf("unable to decode channelFull#e07429de: field unread_count: %w", err)
 		}
 		c.UnreadCount = value
 	}
 	{
 		value, err := DecodePhoto(b)
 		if err != nil {
-			return fmt.Errorf("unable to decode channelFull#52d6806b: field chat_photo: %w", err)
+			return fmt.Errorf("unable to decode channelFull#e07429de: field chat_photo: %w", err)
 		}
 		c.ChatPhoto = value
 	}
 	{
 		if err := c.NotifySettings.Decode(b); err != nil {
-			return fmt.Errorf("unable to decode channelFull#52d6806b: field notify_settings: %w", err)
+			return fmt.Errorf("unable to decode channelFull#e07429de: field notify_settings: %w", err)
 		}
 	}
 	if c.Flags.Has(23) {
 		value, err := DecodeExportedChatInvite(b)
 		if err != nil {
-			return fmt.Errorf("unable to decode channelFull#52d6806b: field exported_invite: %w", err)
+			return fmt.Errorf("unable to decode channelFull#e07429de: field exported_invite: %w", err)
 		}
 		c.ExportedInvite = value
 	}
 	{
 		headerLen, err := b.VectorHeader()
 		if err != nil {
-			return fmt.Errorf("unable to decode channelFull#52d6806b: field bot_info: %w", err)
+			return fmt.Errorf("unable to decode channelFull#e07429de: field bot_info: %w", err)
 		}
 
 		if headerLen > 0 {
@@ -2736,7 +2269,7 @@ func (c *ChannelFull) DecodeBare(b *bin.Buffer) error {
 		for idx := 0; idx < headerLen; idx++ {
 			var value BotInfo
 			if err := value.Decode(b); err != nil {
-				return fmt.Errorf("unable to decode channelFull#52d6806b: field bot_info: %w", err)
+				return fmt.Errorf("unable to decode channelFull#e07429de: field bot_info: %w", err)
 			}
 			c.BotInfo = append(c.BotInfo, value)
 		}
@@ -2744,103 +2277,103 @@ func (c *ChannelFull) DecodeBare(b *bin.Buffer) error {
 	if c.Flags.Has(4) {
 		value, err := b.Long()
 		if err != nil {
-			return fmt.Errorf("unable to decode channelFull#52d6806b: field migrated_from_chat_id: %w", err)
+			return fmt.Errorf("unable to decode channelFull#e07429de: field migrated_from_chat_id: %w", err)
 		}
 		c.MigratedFromChatID = value
 	}
 	if c.Flags.Has(4) {
 		value, err := b.Int()
 		if err != nil {
-			return fmt.Errorf("unable to decode channelFull#52d6806b: field migrated_from_max_id: %w", err)
+			return fmt.Errorf("unable to decode channelFull#e07429de: field migrated_from_max_id: %w", err)
 		}
 		c.MigratedFromMaxID = value
 	}
 	if c.Flags.Has(5) {
 		value, err := b.Int()
 		if err != nil {
-			return fmt.Errorf("unable to decode channelFull#52d6806b: field pinned_msg_id: %w", err)
+			return fmt.Errorf("unable to decode channelFull#e07429de: field pinned_msg_id: %w", err)
 		}
 		c.PinnedMsgID = value
 	}
 	if c.Flags.Has(8) {
 		if err := c.Stickerset.Decode(b); err != nil {
-			return fmt.Errorf("unable to decode channelFull#52d6806b: field stickerset: %w", err)
+			return fmt.Errorf("unable to decode channelFull#e07429de: field stickerset: %w", err)
 		}
 	}
 	if c.Flags.Has(9) {
 		value, err := b.Int()
 		if err != nil {
-			return fmt.Errorf("unable to decode channelFull#52d6806b: field available_min_id: %w", err)
+			return fmt.Errorf("unable to decode channelFull#e07429de: field available_min_id: %w", err)
 		}
 		c.AvailableMinID = value
 	}
 	if c.Flags.Has(11) {
 		value, err := b.Int()
 		if err != nil {
-			return fmt.Errorf("unable to decode channelFull#52d6806b: field folder_id: %w", err)
+			return fmt.Errorf("unable to decode channelFull#e07429de: field folder_id: %w", err)
 		}
 		c.FolderID = value
 	}
 	if c.Flags.Has(14) {
 		value, err := b.Long()
 		if err != nil {
-			return fmt.Errorf("unable to decode channelFull#52d6806b: field linked_chat_id: %w", err)
+			return fmt.Errorf("unable to decode channelFull#e07429de: field linked_chat_id: %w", err)
 		}
 		c.LinkedChatID = value
 	}
 	if c.Flags.Has(15) {
 		value, err := DecodeChannelLocation(b)
 		if err != nil {
-			return fmt.Errorf("unable to decode channelFull#52d6806b: field location: %w", err)
+			return fmt.Errorf("unable to decode channelFull#e07429de: field location: %w", err)
 		}
 		c.Location = value
 	}
 	if c.Flags.Has(17) {
 		value, err := b.Int()
 		if err != nil {
-			return fmt.Errorf("unable to decode channelFull#52d6806b: field slowmode_seconds: %w", err)
+			return fmt.Errorf("unable to decode channelFull#e07429de: field slowmode_seconds: %w", err)
 		}
 		c.SlowmodeSeconds = value
 	}
 	if c.Flags.Has(18) {
 		value, err := b.Int()
 		if err != nil {
-			return fmt.Errorf("unable to decode channelFull#52d6806b: field slowmode_next_send_date: %w", err)
+			return fmt.Errorf("unable to decode channelFull#e07429de: field slowmode_next_send_date: %w", err)
 		}
 		c.SlowmodeNextSendDate = value
 	}
 	if c.Flags.Has(12) {
 		value, err := b.Int()
 		if err != nil {
-			return fmt.Errorf("unable to decode channelFull#52d6806b: field stats_dc: %w", err)
+			return fmt.Errorf("unable to decode channelFull#e07429de: field stats_dc: %w", err)
 		}
 		c.StatsDC = value
 	}
 	{
 		value, err := b.Int()
 		if err != nil {
-			return fmt.Errorf("unable to decode channelFull#52d6806b: field pts: %w", err)
+			return fmt.Errorf("unable to decode channelFull#e07429de: field pts: %w", err)
 		}
 		c.Pts = value
 	}
 	if c.Flags.Has(21) {
 		value, err := DecodeInputGroupCall(b)
 		if err != nil {
-			return fmt.Errorf("unable to decode channelFull#52d6806b: field call: %w", err)
+			return fmt.Errorf("unable to decode channelFull#e07429de: field call: %w", err)
 		}
 		c.Call = value
 	}
 	if c.Flags.Has(24) {
 		value, err := b.Int()
 		if err != nil {
-			return fmt.Errorf("unable to decode channelFull#52d6806b: field ttl_period: %w", err)
+			return fmt.Errorf("unable to decode channelFull#e07429de: field ttl_period: %w", err)
 		}
 		c.TTLPeriod = value
 	}
 	if c.Flags.Has(25) {
 		headerLen, err := b.VectorHeader()
 		if err != nil {
-			return fmt.Errorf("unable to decode channelFull#52d6806b: field pending_suggestions: %w", err)
+			return fmt.Errorf("unable to decode channelFull#e07429de: field pending_suggestions: %w", err)
 		}
 
 		if headerLen > 0 {
@@ -2849,7 +2382,7 @@ func (c *ChannelFull) DecodeBare(b *bin.Buffer) error {
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := b.String()
 			if err != nil {
-				return fmt.Errorf("unable to decode channelFull#52d6806b: field pending_suggestions: %w", err)
+				return fmt.Errorf("unable to decode channelFull#e07429de: field pending_suggestions: %w", err)
 			}
 			c.PendingSuggestions = append(c.PendingSuggestions, value)
 		}
@@ -2857,28 +2390,28 @@ func (c *ChannelFull) DecodeBare(b *bin.Buffer) error {
 	if c.Flags.Has(26) {
 		value, err := DecodePeer(b)
 		if err != nil {
-			return fmt.Errorf("unable to decode channelFull#52d6806b: field groupcall_default_join_as: %w", err)
+			return fmt.Errorf("unable to decode channelFull#e07429de: field groupcall_default_join_as: %w", err)
 		}
 		c.GroupcallDefaultJoinAs = value
 	}
 	if c.Flags.Has(27) {
 		value, err := b.String()
 		if err != nil {
-			return fmt.Errorf("unable to decode channelFull#52d6806b: field theme_emoticon: %w", err)
+			return fmt.Errorf("unable to decode channelFull#e07429de: field theme_emoticon: %w", err)
 		}
 		c.ThemeEmoticon = value
 	}
 	if c.Flags.Has(28) {
 		value, err := b.Int()
 		if err != nil {
-			return fmt.Errorf("unable to decode channelFull#52d6806b: field requests_pending: %w", err)
+			return fmt.Errorf("unable to decode channelFull#e07429de: field requests_pending: %w", err)
 		}
 		c.RequestsPending = value
 	}
 	if c.Flags.Has(28) {
 		headerLen, err := b.VectorHeader()
 		if err != nil {
-			return fmt.Errorf("unable to decode channelFull#52d6806b: field recent_requesters: %w", err)
+			return fmt.Errorf("unable to decode channelFull#e07429de: field recent_requesters: %w", err)
 		}
 
 		if headerLen > 0 {
@@ -2887,7 +2420,7 @@ func (c *ChannelFull) DecodeBare(b *bin.Buffer) error {
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := b.Long()
 			if err != nil {
-				return fmt.Errorf("unable to decode channelFull#52d6806b: field recent_requesters: %w", err)
+				return fmt.Errorf("unable to decode channelFull#e07429de: field recent_requesters: %w", err)
 			}
 			c.RecentRequesters = append(c.RecentRequesters, value)
 		}
@@ -2895,66 +2428,73 @@ func (c *ChannelFull) DecodeBare(b *bin.Buffer) error {
 	if c.Flags.Has(29) {
 		value, err := DecodePeer(b)
 		if err != nil {
-			return fmt.Errorf("unable to decode channelFull#52d6806b: field default_send_as: %w", err)
+			return fmt.Errorf("unable to decode channelFull#e07429de: field default_send_as: %w", err)
 		}
 		c.DefaultSendAs = value
 	}
 	if c.Flags.Has(30) {
 		value, err := DecodeChatReactions(b)
 		if err != nil {
-			return fmt.Errorf("unable to decode channelFull#52d6806b: field available_reactions: %w", err)
+			return fmt.Errorf("unable to decode channelFull#e07429de: field available_reactions: %w", err)
 		}
 		c.AvailableReactions = value
 	}
 	if c.Flags2.Has(13) {
 		value, err := b.Int()
 		if err != nil {
-			return fmt.Errorf("unable to decode channelFull#52d6806b: field reactions_limit: %w", err)
+			return fmt.Errorf("unable to decode channelFull#e07429de: field reactions_limit: %w", err)
 		}
 		c.ReactionsLimit = value
 	}
 	if c.Flags2.Has(4) {
 		if err := c.Stories.Decode(b); err != nil {
-			return fmt.Errorf("unable to decode channelFull#52d6806b: field stories: %w", err)
+			return fmt.Errorf("unable to decode channelFull#e07429de: field stories: %w", err)
 		}
 	}
 	if c.Flags2.Has(7) {
 		value, err := DecodeWallPaper(b)
 		if err != nil {
-			return fmt.Errorf("unable to decode channelFull#52d6806b: field wallpaper: %w", err)
+			return fmt.Errorf("unable to decode channelFull#e07429de: field wallpaper: %w", err)
 		}
 		c.Wallpaper = value
 	}
 	if c.Flags2.Has(8) {
 		value, err := b.Int()
 		if err != nil {
-			return fmt.Errorf("unable to decode channelFull#52d6806b: field boosts_applied: %w", err)
+			return fmt.Errorf("unable to decode channelFull#e07429de: field boosts_applied: %w", err)
 		}
 		c.BoostsApplied = value
 	}
 	if c.Flags2.Has(9) {
 		value, err := b.Int()
 		if err != nil {
-			return fmt.Errorf("unable to decode channelFull#52d6806b: field boosts_unrestrict: %w", err)
+			return fmt.Errorf("unable to decode channelFull#e07429de: field boosts_unrestrict: %w", err)
 		}
 		c.BoostsUnrestrict = value
 	}
 	if c.Flags2.Has(10) {
 		if err := c.Emojiset.Decode(b); err != nil {
-			return fmt.Errorf("unable to decode channelFull#52d6806b: field emojiset: %w", err)
+			return fmt.Errorf("unable to decode channelFull#e07429de: field emojiset: %w", err)
 		}
 	}
 	if c.Flags2.Has(17) {
 		if err := c.BotVerification.Decode(b); err != nil {
-			return fmt.Errorf("unable to decode channelFull#52d6806b: field bot_verification: %w", err)
+			return fmt.Errorf("unable to decode channelFull#e07429de: field bot_verification: %w", err)
 		}
 	}
 	if c.Flags2.Has(18) {
 		value, err := b.Int()
 		if err != nil {
-			return fmt.Errorf("unable to decode channelFull#52d6806b: field stargifts_count: %w", err)
+			return fmt.Errorf("unable to decode channelFull#e07429de: field stargifts_count: %w", err)
 		}
 		c.StargiftsCount = value
+	}
+	if c.Flags2.Has(21) {
+		value, err := b.Long()
+		if err != nil {
+			return fmt.Errorf("unable to decode channelFull#e07429de: field send_paid_messages_stars: %w", err)
+		}
+		c.SendPaidMessagesStars = value
 	}
 	return nil
 }
@@ -4042,12 +3582,28 @@ func (c *ChannelFull) GetStargiftsCount() (value int, ok bool) {
 	return c.StargiftsCount, true
 }
 
+// SetSendPaidMessagesStars sets value of SendPaidMessagesStars conditional field.
+func (c *ChannelFull) SetSendPaidMessagesStars(value int64) {
+	c.Flags2.Set(21)
+	c.SendPaidMessagesStars = value
+}
+
+// GetSendPaidMessagesStars returns value of SendPaidMessagesStars conditional field and
+// boolean which is true if field was set.
+func (c *ChannelFull) GetSendPaidMessagesStars() (value int64, ok bool) {
+	if c == nil {
+		return
+	}
+	if !c.Flags2.Has(21) {
+		return value, false
+	}
+	return c.SendPaidMessagesStars, true
+}
+
 // ChatFullClassName is schema name of ChatFullClass.
 const ChatFullClassName = "ChatFull"
 
 // ChatFullClass represents ChatFull generic type.
-//
-// See https://core.telegram.org/type/ChatFull for reference.
 //
 // Constructors:
 //   - [ChatFull]
@@ -4061,7 +3617,7 @@ const ChatFullClassName = "ChatFull"
 //	}
 //	switch v := g.(type) {
 //	case *tg.ChatFull: // chatFull#2633421b
-//	case *tg.ChannelFull: // channelFull#52d6806b
+//	case *tg.ChannelFull: // channelFull#e07429de
 //	default: panic(v)
 //	}
 type ChatFullClass interface {
@@ -4082,80 +3638,39 @@ type ChatFullClass interface {
 	// Zero returns true if current object has a zero value.
 	Zero() bool
 
-	// Can we change the username of this chat
+	// CanSetUsername field of ChatFull.
 	GetCanSetUsername() (value bool)
-
-	// Whether scheduled messages¹ are available
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/scheduled-messages
+	// HasScheduled field of ChatFull.
 	GetHasScheduled() (value bool)
-
-	// Whether the real-time chat translation popup¹ should be hidden.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/translation
+	// TranslationsDisabled field of ChatFull.
 	GetTranslationsDisabled() (value bool)
-
-	// ID of the chat
+	// ID field of ChatFull.
 	GetID() (value int64)
-
-	// About string for this chat
+	// About field of ChatFull.
 	GetAbout() (value string)
-
-	// Notification settings
+	// NotifySettings field of ChatFull.
 	GetNotifySettings() (value PeerNotifySettings)
-
-	// Chat invite
+	// ExportedInvite field of ChatFull.
 	GetExportedInvite() (value ExportedChatInviteClass, ok bool)
-
-	// Message ID of the last pinned message¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/pin
+	// PinnedMsgID field of ChatFull.
 	GetPinnedMsgID() (value int, ok bool)
-
-	// Peer folder ID, for more info click here¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/folders#peer-folders
+	// FolderID field of ChatFull.
 	GetFolderID() (value int, ok bool)
-
-	// Group call information
+	// Call field of ChatFull.
 	GetCall() (value InputGroupCallClass, ok bool)
-
-	// Time-To-Live of messages sent by the current user to this chat
+	// TTLPeriod field of ChatFull.
 	GetTTLPeriod() (value int, ok bool)
-
-	// When using phone.getGroupCallJoinAs¹ to get a list of peers that can be used to join
-	// a group call, this field indicates the peer that should be selected by default.
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/phone.getGroupCallJoinAs
+	// GroupcallDefaultJoinAs field of ChatFull.
 	GetGroupcallDefaultJoinAs() (value PeerClass, ok bool)
-
-	// Emoji representing a specific chat theme
+	// ThemeEmoticon field of ChatFull.
 	GetThemeEmoticon() (value string, ok bool)
-
-	// Pending join requests »¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/invites#join-requests
+	// RequestsPending field of ChatFull.
 	GetRequestsPending() (value int, ok bool)
-
-	// IDs of users who requested to join recently
+	// RecentRequesters field of ChatFull.
 	GetRecentRequesters() (value []int64, ok bool)
-	// Allowed message reactions »¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/reactions
+	// AvailableReactions field of ChatFull.
 	GetAvailableReactions() (value ChatReactionsClass, ok bool)
-
-	// This flag may be used to impose a custom limit of unique reactions (i.e. a
-	// customizable version of appConfig.reactions_uniq_max¹).
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/config#reactions-uniq-max
+	// ReactionsLimit field of ChatFull.
 	GetReactionsLimit() (value int, ok bool)
 }
 
@@ -4174,7 +3689,7 @@ func DecodeChatFull(buf *bin.Buffer) (ChatFullClass, error) {
 		}
 		return &v, nil
 	case ChannelFullTypeID:
-		// Decoding channelFull#52d6806b.
+		// Decoding channelFull#e07429de.
 		v := ChannelFull{}
 		if err := v.Decode(buf); err != nil {
 			return nil, fmt.Errorf("unable to decode ChatFullClass: %w", err)

@@ -32,9 +32,6 @@ var (
 )
 
 // PhoneGetCallConfigRequest represents TL type `phone.getCallConfig#55451fa9`.
-// Get phone call configuration to be passed to libtgvoip's shared config
-//
-// See https://core.telegram.org/method/phone.getCallConfig for reference.
 type PhoneGetCallConfigRequest struct {
 }
 
@@ -129,9 +126,6 @@ func (g *PhoneGetCallConfigRequest) DecodeBare(b *bin.Buffer) error {
 }
 
 // PhoneGetCallConfig invokes method phone.getCallConfig#55451fa9 returning error if any.
-// Get phone call configuration to be passed to libtgvoip's shared config
-//
-// See https://core.telegram.org/method/phone.getCallConfig for reference.
 func (c *Client) PhoneGetCallConfig(ctx context.Context) (*DataJSON, error) {
 	var result DataJSON
 

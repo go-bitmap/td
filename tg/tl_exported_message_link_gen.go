@@ -32,13 +32,10 @@ var (
 )
 
 // ExportedMessageLink represents TL type `exportedMessageLink#5dab1af4`.
-// Link to a message in a supergroup/channel
-//
-// See https://core.telegram.org/constructor/exportedMessageLink for reference.
 type ExportedMessageLink struct {
-	// URL
+	// Link field of ExportedMessageLink.
 	Link string
-	// Embed code
+	// HTML field of ExportedMessageLink.
 	HTML string
 }
 
@@ -74,15 +71,6 @@ func (e *ExportedMessageLink) String() string {
 	}
 	type Alias ExportedMessageLink
 	return fmt.Sprintf("ExportedMessageLink%+v", Alias(*e))
-}
-
-// FillFrom fills ExportedMessageLink from given interface.
-func (e *ExportedMessageLink) FillFrom(from interface {
-	GetLink() (value string)
-	GetHTML() (value string)
-}) {
-	e.Link = from.GetLink()
-	e.HTML = from.GetHTML()
 }
 
 // TypeID returns type id in TL schema.

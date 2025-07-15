@@ -32,26 +32,20 @@ var (
 )
 
 // Folder represents TL type `folder#ff544e65`.
-// Folder
-//
-// See https://core.telegram.org/constructor/folder for reference.
 type Folder struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of Folder.
 	Flags bin.Fields
-	// Automatically add new channels to this folder
+	// AutofillNewBroadcasts field of Folder.
 	AutofillNewBroadcasts bool
-	// Automatically add joined new public supergroups to this folder
+	// AutofillPublicGroups field of Folder.
 	AutofillPublicGroups bool
-	// Automatically add new private chats to this folder
+	// AutofillNewCorrespondents field of Folder.
 	AutofillNewCorrespondents bool
-	// Folder ID
+	// ID field of Folder.
 	ID int
-	// Folder title
+	// Title field of Folder.
 	Title string
-	// Folder picture
+	// Photo field of Folder.
 	//
 	// Use SetPhoto and GetPhoto helpers.
 	Photo ChatPhotoClass
@@ -104,26 +98,6 @@ func (f *Folder) String() string {
 	}
 	type Alias Folder
 	return fmt.Sprintf("Folder%+v", Alias(*f))
-}
-
-// FillFrom fills Folder from given interface.
-func (f *Folder) FillFrom(from interface {
-	GetAutofillNewBroadcasts() (value bool)
-	GetAutofillPublicGroups() (value bool)
-	GetAutofillNewCorrespondents() (value bool)
-	GetID() (value int)
-	GetTitle() (value string)
-	GetPhoto() (value ChatPhotoClass, ok bool)
-}) {
-	f.AutofillNewBroadcasts = from.GetAutofillNewBroadcasts()
-	f.AutofillPublicGroups = from.GetAutofillPublicGroups()
-	f.AutofillNewCorrespondents = from.GetAutofillNewCorrespondents()
-	f.ID = from.GetID()
-	f.Title = from.GetTitle()
-	if val, ok := from.GetPhoto(); ok {
-		f.Photo = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -365,13 +339,4 @@ func (f *Folder) GetPhoto() (value ChatPhotoClass, ok bool) {
 		return value, false
 	}
 	return f.Photo, true
-}
-
-// GetPhotoAsNotEmpty returns mapped value of Photo conditional field and
-// boolean which is true if field was set.
-func (f *Folder) GetPhotoAsNotEmpty() (*ChatPhoto, bool) {
-	if value, ok := f.GetPhoto(); ok {
-		return value.AsNotEmpty()
-	}
-	return nil, false
 }

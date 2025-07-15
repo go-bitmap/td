@@ -32,13 +32,10 @@ var (
 )
 
 // AccountAuthorizations represents TL type `account.authorizations#4bff8ea0`.
-// Logged-in sessions
-//
-// See https://core.telegram.org/constructor/account.authorizations for reference.
 type AccountAuthorizations struct {
-	// Time-to-live of session
+	// AuthorizationTTLDays field of AccountAuthorizations.
 	AuthorizationTTLDays int
-	// Logged-in sessions
+	// Authorizations field of AccountAuthorizations.
 	Authorizations []Authorization
 }
 
@@ -74,15 +71,6 @@ func (a *AccountAuthorizations) String() string {
 	}
 	type Alias AccountAuthorizations
 	return fmt.Sprintf("AccountAuthorizations%+v", Alias(*a))
-}
-
-// FillFrom fills AccountAuthorizations from given interface.
-func (a *AccountAuthorizations) FillFrom(from interface {
-	GetAuthorizationTTLDays() (value int)
-	GetAuthorizations() (value []Authorization)
-}) {
-	a.AuthorizationTTLDays = from.GetAuthorizationTTLDays()
-	a.Authorizations = from.GetAuthorizations()
 }
 
 // TypeID returns type id in TL schema.

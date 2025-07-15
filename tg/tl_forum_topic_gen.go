@@ -32,11 +32,8 @@ var (
 )
 
 // ForumTopicDeleted represents TL type `forumTopicDeleted#23f109b`.
-// Represents a deleted forum topic.
-//
-// See https://core.telegram.org/constructor/forumTopicDeleted for reference.
 type ForumTopicDeleted struct {
-	// The ID of the deleted forum topic.
+	// ID field of ForumTopicDeleted.
 	ID int
 }
 
@@ -74,13 +71,6 @@ func (f *ForumTopicDeleted) String() string {
 	}
 	type Alias ForumTopicDeleted
 	return fmt.Sprintf("ForumTopicDeleted%+v", Alias(*f))
-}
-
-// FillFrom fills ForumTopicDeleted from given interface.
-func (f *ForumTopicDeleted) FillFrom(from interface {
-	GetID() (value int)
-}) {
-	f.ID = from.GetID()
 }
 
 // TypeID returns type id in TL schema.
@@ -167,79 +157,48 @@ func (f *ForumTopicDeleted) GetID() (value int) {
 }
 
 // ForumTopic represents TL type `forumTopic#71701da9`.
-// Represents a forum topic¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/forum#forum-topics
-//
-// See https://core.telegram.org/constructor/forumTopic for reference.
 type ForumTopic struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of ForumTopic.
 	Flags bin.Fields
-	// Whether the topic was created by the current user
+	// My field of ForumTopic.
 	My bool
-	// Whether the topic is closed (no messages can be sent to it)
+	// Closed field of ForumTopic.
 	Closed bool
-	// Whether the topic is pinned
+	// Pinned field of ForumTopic.
 	Pinned bool
-	// Whether this constructor is a reduced version of the full topic information. If set,
-	// only the my, closed, id, date, title, icon_color, icon_emoji_id and from_id parameters
-	// will contain valid information. Reduced info is usually only returned in topic-related
-	// admin log events »¹ and in the messages.channelMessages² constructor: if needed,
-	// full information can be fetched using channels.getForumTopicsByID³.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/recent-actions
-	//  2) https://core.telegram.org/constructor/messages.channelMessages
-	//  3) https://core.telegram.org/method/channels.getForumTopicsByID
+	// Short field of ForumTopic.
 	Short bool
-	// Whether the topic is hidden (only valid for the "General" topic, id=1)
+	// Hidden field of ForumTopic.
 	Hidden bool
-	// Topic ID¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/forum#forum-topics
+	// ID field of ForumTopic.
 	ID int
-	// Topic creation date
+	// Date field of ForumTopic.
 	Date int
-	// Topic title
+	// Title field of ForumTopic.
 	Title string
-	// If no custom emoji icon is specified, specifies the color of the fallback topic icon
-	// (RGB), one of 0x6FB9F0, 0xFFD67E, 0xCB86DB, 0x8EEE98, 0xFF93B2, or 0xFB6F5F.
+	// IconColor field of ForumTopic.
 	IconColor int
-	// ID of the custom emoji¹ used as topic icon.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/custom-emoji
+	// IconEmojiID field of ForumTopic.
 	//
 	// Use SetIconEmojiID and GetIconEmojiID helpers.
 	IconEmojiID int64
-	// ID of the last message that was sent to this topic
+	// TopMessage field of ForumTopic.
 	TopMessage int
-	// Position up to which all incoming messages are read.
+	// ReadInboxMaxID field of ForumTopic.
 	ReadInboxMaxID int
-	// Position up to which all outgoing messages are read.
+	// ReadOutboxMaxID field of ForumTopic.
 	ReadOutboxMaxID int
-	// Number of unread messages
+	// UnreadCount field of ForumTopic.
 	UnreadCount int
-	// Number of unread mentions¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/mentions
+	// UnreadMentionsCount field of ForumTopic.
 	UnreadMentionsCount int
-	// Number of unread reactions to messages you sent
+	// UnreadReactionsCount field of ForumTopic.
 	UnreadReactionsCount int
-	// ID of the peer that created the topic
+	// FromID field of ForumTopic.
 	FromID PeerClass
-	// Notification settings
+	// NotifySettings field of ForumTopic.
 	NotifySettings PeerNotifySettings
-	// Message draft¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/drafts
+	// Draft field of ForumTopic.
 	//
 	// Use SetDraft and GetDraft helpers.
 	Draft DraftMessageClass
@@ -336,55 +295,6 @@ func (f *ForumTopic) String() string {
 	}
 	type Alias ForumTopic
 	return fmt.Sprintf("ForumTopic%+v", Alias(*f))
-}
-
-// FillFrom fills ForumTopic from given interface.
-func (f *ForumTopic) FillFrom(from interface {
-	GetMy() (value bool)
-	GetClosed() (value bool)
-	GetPinned() (value bool)
-	GetShort() (value bool)
-	GetHidden() (value bool)
-	GetID() (value int)
-	GetDate() (value int)
-	GetTitle() (value string)
-	GetIconColor() (value int)
-	GetIconEmojiID() (value int64, ok bool)
-	GetTopMessage() (value int)
-	GetReadInboxMaxID() (value int)
-	GetReadOutboxMaxID() (value int)
-	GetUnreadCount() (value int)
-	GetUnreadMentionsCount() (value int)
-	GetUnreadReactionsCount() (value int)
-	GetFromID() (value PeerClass)
-	GetNotifySettings() (value PeerNotifySettings)
-	GetDraft() (value DraftMessageClass, ok bool)
-}) {
-	f.My = from.GetMy()
-	f.Closed = from.GetClosed()
-	f.Pinned = from.GetPinned()
-	f.Short = from.GetShort()
-	f.Hidden = from.GetHidden()
-	f.ID = from.GetID()
-	f.Date = from.GetDate()
-	f.Title = from.GetTitle()
-	f.IconColor = from.GetIconColor()
-	if val, ok := from.GetIconEmojiID(); ok {
-		f.IconEmojiID = val
-	}
-
-	f.TopMessage = from.GetTopMessage()
-	f.ReadInboxMaxID = from.GetReadInboxMaxID()
-	f.ReadOutboxMaxID = from.GetReadOutboxMaxID()
-	f.UnreadCount = from.GetUnreadCount()
-	f.UnreadMentionsCount = from.GetUnreadMentionsCount()
-	f.UnreadReactionsCount = from.GetUnreadReactionsCount()
-	f.FromID = from.GetFromID()
-	f.NotifySettings = from.GetNotifySettings()
-	if val, ok := from.GetDraft(); ok {
-		f.Draft = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -930,8 +840,6 @@ const ForumTopicClassName = "ForumTopic"
 
 // ForumTopicClass represents ForumTopic generic type.
 //
-// See https://core.telegram.org/type/ForumTopic for reference.
-//
 // Constructors:
 //   - [ForumTopicDeleted]
 //   - [ForumTopic]
@@ -965,7 +873,7 @@ type ForumTopicClass interface {
 	// Zero returns true if current object has a zero value.
 	Zero() bool
 
-	// The ID of the deleted forum topic.
+	// ID field of ForumTopicDeleted.
 	GetID() (value int)
 }
 

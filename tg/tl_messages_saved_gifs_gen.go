@@ -32,9 +32,6 @@ var (
 )
 
 // MessagesSavedGifsNotModified represents TL type `messages.savedGifsNotModified#e8025ca2`.
-// No new saved gifs were found
-//
-// See https://core.telegram.org/constructor/messages.savedGifsNotModified for reference.
 type MessagesSavedGifsNotModified struct {
 }
 
@@ -134,16 +131,10 @@ func (s *MessagesSavedGifsNotModified) DecodeBare(b *bin.Buffer) error {
 }
 
 // MessagesSavedGifs represents TL type `messages.savedGifs#84a02a0d`.
-// Saved gifs
-//
-// See https://core.telegram.org/constructor/messages.savedGifs for reference.
 type MessagesSavedGifs struct {
-	// Hash used for caching, for more info click here¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets#hash-generation
+	// Hash field of MessagesSavedGifs.
 	Hash int64
-	// List of saved gifs
+	// Gifs field of MessagesSavedGifs.
 	Gifs []DocumentClass
 }
 
@@ -184,15 +175,6 @@ func (s *MessagesSavedGifs) String() string {
 	}
 	type Alias MessagesSavedGifs
 	return fmt.Sprintf("MessagesSavedGifs%+v", Alias(*s))
-}
-
-// FillFrom fills MessagesSavedGifs from given interface.
-func (s *MessagesSavedGifs) FillFrom(from interface {
-	GetHash() (value int64)
-	GetGifs() (value []DocumentClass)
-}) {
-	s.Hash = from.GetHash()
-	s.Gifs = from.GetGifs()
 }
 
 // TypeID returns type id in TL schema.
@@ -316,17 +298,10 @@ func (s *MessagesSavedGifs) GetGifs() (value []DocumentClass) {
 	return s.Gifs
 }
 
-// MapGifs returns field Gifs wrapped in DocumentClassArray helper.
-func (s *MessagesSavedGifs) MapGifs() (value DocumentClassArray) {
-	return DocumentClassArray(s.Gifs)
-}
-
 // MessagesSavedGifsClassName is schema name of MessagesSavedGifsClass.
 const MessagesSavedGifsClassName = "messages.SavedGifs"
 
 // MessagesSavedGifsClass represents messages.SavedGifs generic type.
-//
-// See https://core.telegram.org/type/messages.SavedGifs for reference.
 //
 // Constructors:
 //   - [MessagesSavedGifsNotModified]
@@ -360,19 +335,6 @@ type MessagesSavedGifsClass interface {
 	String() string
 	// Zero returns true if current object has a zero value.
 	Zero() bool
-
-	// AsModified tries to map MessagesSavedGifsClass to MessagesSavedGifs.
-	AsModified() (*MessagesSavedGifs, bool)
-}
-
-// AsModified tries to map MessagesSavedGifsNotModified to MessagesSavedGifs.
-func (s *MessagesSavedGifsNotModified) AsModified() (*MessagesSavedGifs, bool) {
-	return nil, false
-}
-
-// AsModified tries to map MessagesSavedGifs to MessagesSavedGifs.
-func (s *MessagesSavedGifs) AsModified() (*MessagesSavedGifs, bool) {
-	return s, true
 }
 
 // DecodeMessagesSavedGifs implements binary de-serialization for MessagesSavedGifsClass.

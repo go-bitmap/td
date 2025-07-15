@@ -32,19 +32,10 @@ var (
 )
 
 // InvokeWithTakeoutRequest represents TL type `invokeWithTakeout#aca9fd2e`.
-// Invoke a method within a takeout session, see here » for more info¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/takeout
-//
-// See https://core.telegram.org/constructor/invokeWithTakeout for reference.
 type InvokeWithTakeoutRequest struct {
-	// Takeout session ID »¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/takeout
+	// TakeoutID field of InvokeWithTakeoutRequest.
 	TakeoutID int64
-	// Query
+	// Query field of InvokeWithTakeoutRequest.
 	Query bin.Object
 }
 
@@ -80,15 +71,6 @@ func (i *InvokeWithTakeoutRequest) String() string {
 	}
 	type Alias InvokeWithTakeoutRequest
 	return fmt.Sprintf("InvokeWithTakeoutRequest%+v", Alias(*i))
-}
-
-// FillFrom fills InvokeWithTakeoutRequest from given interface.
-func (i *InvokeWithTakeoutRequest) FillFrom(from interface {
-	GetTakeoutID() (value int64)
-	GetQuery() (value bin.Object)
-}) {
-	i.TakeoutID = from.GetTakeoutID()
-	i.Query = from.GetQuery()
 }
 
 // TypeID returns type id in TL schema.

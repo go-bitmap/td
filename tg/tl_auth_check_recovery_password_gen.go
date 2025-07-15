@@ -32,17 +32,8 @@ var (
 )
 
 // AuthCheckRecoveryPasswordRequest represents TL type `auth.checkRecoveryPassword#d36bf79`.
-// Check if the 2FA recovery code¹ sent using auth.requestPasswordRecovery² is valid,
-// before passing it to auth.recoverPassword³.
-//
-// Links:
-//  1. https://core.telegram.org/api/srp
-//  2. https://core.telegram.org/method/auth.requestPasswordRecovery
-//  3. https://core.telegram.org/method/auth.recoverPassword
-//
-// See https://core.telegram.org/method/auth.checkRecoveryPassword for reference.
 type AuthCheckRecoveryPasswordRequest struct {
-	// Code received via email
+	// Code field of AuthCheckRecoveryPasswordRequest.
 	Code string
 }
 
@@ -75,13 +66,6 @@ func (c *AuthCheckRecoveryPasswordRequest) String() string {
 	}
 	type Alias AuthCheckRecoveryPasswordRequest
 	return fmt.Sprintf("AuthCheckRecoveryPasswordRequest%+v", Alias(*c))
-}
-
-// FillFrom fills AuthCheckRecoveryPasswordRequest from given interface.
-func (c *AuthCheckRecoveryPasswordRequest) FillFrom(from interface {
-	GetCode() (value string)
-}) {
-	c.Code = from.GetCode()
 }
 
 // TypeID returns type id in TL schema.
@@ -168,20 +152,6 @@ func (c *AuthCheckRecoveryPasswordRequest) GetCode() (value string) {
 }
 
 // AuthCheckRecoveryPassword invokes method auth.checkRecoveryPassword#d36bf79 returning error if any.
-// Check if the 2FA recovery code¹ sent using auth.requestPasswordRecovery² is valid,
-// before passing it to auth.recoverPassword³.
-//
-// Links:
-//  1. https://core.telegram.org/api/srp
-//  2. https://core.telegram.org/method/auth.requestPasswordRecovery
-//  3. https://core.telegram.org/method/auth.recoverPassword
-//
-// Possible errors:
-//
-//	400 CODE_EMPTY: The provided code is empty.
-//	400 PASSWORD_RECOVERY_EXPIRED: The recovery code has expired.
-//
-// See https://core.telegram.org/method/auth.checkRecoveryPassword for reference.
 func (c *Client) AuthCheckRecoveryPassword(ctx context.Context, code string) (bool, error) {
 	var result BoolBox
 

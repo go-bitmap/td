@@ -32,17 +32,10 @@ var (
 )
 
 // MessagesGetDhConfigRequest represents TL type `messages.getDhConfig#26cf8950`.
-// Returns configuration parameters for Diffie-Hellman key generation. Can also return a
-// random sequence of bytes of required length.
-//
-// See https://core.telegram.org/method/messages.getDhConfig for reference.
 type MessagesGetDhConfigRequest struct {
-	// Value of the version parameter from messages.dhConfig¹, available at the client
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/messages.dhConfig
+	// Version field of MessagesGetDhConfigRequest.
 	Version int
-	// Length of the required random sequence
+	// RandomLength field of MessagesGetDhConfigRequest.
 	RandomLength int
 }
 
@@ -78,15 +71,6 @@ func (g *MessagesGetDhConfigRequest) String() string {
 	}
 	type Alias MessagesGetDhConfigRequest
 	return fmt.Sprintf("MessagesGetDhConfigRequest%+v", Alias(*g))
-}
-
-// FillFrom fills MessagesGetDhConfigRequest from given interface.
-func (g *MessagesGetDhConfigRequest) FillFrom(from interface {
-	GetVersion() (value int)
-	GetRandomLength() (value int)
-}) {
-	g.Version = from.GetVersion()
-	g.RandomLength = from.GetRandomLength()
 }
 
 // TypeID returns type id in TL schema.
@@ -193,14 +177,6 @@ func (g *MessagesGetDhConfigRequest) GetRandomLength() (value int) {
 }
 
 // MessagesGetDhConfig invokes method messages.getDhConfig#26cf8950 returning error if any.
-// Returns configuration parameters for Diffie-Hellman key generation. Can also return a
-// random sequence of bytes of required length.
-//
-// Possible errors:
-//
-//	400 RANDOM_LENGTH_INVALID: Random length invalid.
-//
-// See https://core.telegram.org/method/messages.getDhConfig for reference.
 func (c *Client) MessagesGetDhConfig(ctx context.Context, request *MessagesGetDhConfigRequest) (MessagesDhConfigClass, error) {
 	var result MessagesDhConfigBox
 

@@ -32,16 +32,10 @@ var (
 )
 
 // DraftMessageEmpty represents TL type `draftMessageEmpty#1b0c841a`.
-// Empty draft
-//
-// See https://core.telegram.org/constructor/draftMessageEmpty for reference.
 type DraftMessageEmpty struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of DraftMessageEmpty.
 	Flags bin.Fields
-	// When was the draft last updated
+	// Date field of DraftMessageEmpty.
 	//
 	// Use SetDate and GetDate helpers.
 	Date int
@@ -84,16 +78,6 @@ func (d *DraftMessageEmpty) String() string {
 	}
 	type Alias DraftMessageEmpty
 	return fmt.Sprintf("DraftMessageEmpty%+v", Alias(*d))
-}
-
-// FillFrom fills DraftMessageEmpty from given interface.
-func (d *DraftMessageEmpty) FillFrom(from interface {
-	GetDate() (value int, ok bool)
-}) {
-	if val, ok := from.GetDate(); ok {
-		d.Date = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -209,47 +193,30 @@ func (d *DraftMessageEmpty) GetDate() (value int, ok bool) {
 }
 
 // DraftMessage represents TL type `draftMessage#2d65321f`.
-// Represents a message draft¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/drafts
-//
-// See https://core.telegram.org/constructor/draftMessage for reference.
 type DraftMessage struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of DraftMessage.
 	Flags bin.Fields
-	// Whether no webpage preview will be generated
+	// NoWebpage field of DraftMessage.
 	NoWebpage bool
-	// If set, any eventual webpage preview will be shown on top of the message instead of at
-	// the bottom.
+	// InvertMedia field of DraftMessage.
 	InvertMedia bool
-	// If set, indicates that the message should be sent in reply to the specified message or
-	// story.
+	// ReplyTo field of DraftMessage.
 	//
 	// Use SetReplyTo and GetReplyTo helpers.
 	ReplyTo InputReplyToClass
-	// The draft
+	// Message field of DraftMessage.
 	Message string
-	// Message entities¹ for styled text.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/entities
+	// Entities field of DraftMessage.
 	//
 	// Use SetEntities and GetEntities helpers.
 	Entities []MessageEntityClass
-	// Media.
+	// Media field of DraftMessage.
 	//
 	// Use SetMedia and GetMedia helpers.
 	Media InputMediaClass
-	// Date of last update of the draft.
+	// Date field of DraftMessage.
 	Date int
-	// A message effect that should be played as specified here »¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/effects
+	// Effect field of DraftMessage.
 	//
 	// Use SetEffect and GetEffect helpers.
 	Effect int64
@@ -313,39 +280,6 @@ func (d *DraftMessage) String() string {
 	}
 	type Alias DraftMessage
 	return fmt.Sprintf("DraftMessage%+v", Alias(*d))
-}
-
-// FillFrom fills DraftMessage from given interface.
-func (d *DraftMessage) FillFrom(from interface {
-	GetNoWebpage() (value bool)
-	GetInvertMedia() (value bool)
-	GetReplyTo() (value InputReplyToClass, ok bool)
-	GetMessage() (value string)
-	GetEntities() (value []MessageEntityClass, ok bool)
-	GetMedia() (value InputMediaClass, ok bool)
-	GetDate() (value int)
-	GetEffect() (value int64, ok bool)
-}) {
-	d.NoWebpage = from.GetNoWebpage()
-	d.InvertMedia = from.GetInvertMedia()
-	if val, ok := from.GetReplyTo(); ok {
-		d.ReplyTo = val
-	}
-
-	d.Message = from.GetMessage()
-	if val, ok := from.GetEntities(); ok {
-		d.Entities = val
-	}
-
-	if val, ok := from.GetMedia(); ok {
-		d.Media = val
-	}
-
-	d.Date = from.GetDate()
-	if val, ok := from.GetEffect(); ok {
-		d.Effect = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -692,20 +626,10 @@ func (d *DraftMessage) GetEffect() (value int64, ok bool) {
 	return d.Effect, true
 }
 
-// MapEntities returns field Entities wrapped in MessageEntityClassArray helper.
-func (d *DraftMessage) MapEntities() (value MessageEntityClassArray, ok bool) {
-	if !d.Flags.Has(3) {
-		return value, false
-	}
-	return MessageEntityClassArray(d.Entities), true
-}
-
 // DraftMessageClassName is schema name of DraftMessageClass.
 const DraftMessageClassName = "DraftMessage"
 
 // DraftMessageClass represents DraftMessage generic type.
-//
-// See https://core.telegram.org/type/DraftMessage for reference.
 //
 // Constructors:
 //   - [DraftMessageEmpty]
@@ -739,19 +663,6 @@ type DraftMessageClass interface {
 	String() string
 	// Zero returns true if current object has a zero value.
 	Zero() bool
-
-	// AsNotEmpty tries to map DraftMessageClass to DraftMessage.
-	AsNotEmpty() (*DraftMessage, bool)
-}
-
-// AsNotEmpty tries to map DraftMessageEmpty to DraftMessage.
-func (d *DraftMessageEmpty) AsNotEmpty() (*DraftMessage, bool) {
-	return nil, false
-}
-
-// AsNotEmpty tries to map DraftMessage to DraftMessage.
-func (d *DraftMessage) AsNotEmpty() (*DraftMessage, bool) {
-	return d, true
 }
 
 // DecodeDraftMessage implements binary de-serialization for DraftMessageClass.

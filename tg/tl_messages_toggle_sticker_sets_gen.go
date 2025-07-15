@@ -32,22 +32,16 @@ var (
 )
 
 // MessagesToggleStickerSetsRequest represents TL type `messages.toggleStickerSets#b5052fea`.
-// Apply changes to multiple stickersets
-//
-// See https://core.telegram.org/method/messages.toggleStickerSets for reference.
 type MessagesToggleStickerSetsRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessagesToggleStickerSetsRequest.
 	Flags bin.Fields
-	// Uninstall the specified stickersets
+	// Uninstall field of MessagesToggleStickerSetsRequest.
 	Uninstall bool
-	// Archive the specified stickersets
+	// Archive field of MessagesToggleStickerSetsRequest.
 	Archive bool
-	// Unarchive the specified stickersets
+	// Unarchive field of MessagesToggleStickerSetsRequest.
 	Unarchive bool
-	// Stickersets to act upon
+	// Stickersets field of MessagesToggleStickerSetsRequest.
 	Stickersets []InputStickerSetClass
 }
 
@@ -92,19 +86,6 @@ func (t *MessagesToggleStickerSetsRequest) String() string {
 	}
 	type Alias MessagesToggleStickerSetsRequest
 	return fmt.Sprintf("MessagesToggleStickerSetsRequest%+v", Alias(*t))
-}
-
-// FillFrom fills MessagesToggleStickerSetsRequest from given interface.
-func (t *MessagesToggleStickerSetsRequest) FillFrom(from interface {
-	GetUninstall() (value bool)
-	GetArchive() (value bool)
-	GetUnarchive() (value bool)
-	GetStickersets() (value []InputStickerSetClass)
-}) {
-	t.Uninstall = from.GetUninstall()
-	t.Archive = from.GetArchive()
-	t.Unarchive = from.GetUnarchive()
-	t.Stickersets = from.GetStickersets()
 }
 
 // TypeID returns type id in TL schema.
@@ -305,15 +286,7 @@ func (t *MessagesToggleStickerSetsRequest) GetStickersets() (value []InputSticke
 	return t.Stickersets
 }
 
-// MapStickersets returns field Stickersets wrapped in InputStickerSetClassArray helper.
-func (t *MessagesToggleStickerSetsRequest) MapStickersets() (value InputStickerSetClassArray) {
-	return InputStickerSetClassArray(t.Stickersets)
-}
-
 // MessagesToggleStickerSets invokes method messages.toggleStickerSets#b5052fea returning error if any.
-// Apply changes to multiple stickersets
-//
-// See https://core.telegram.org/method/messages.toggleStickerSets for reference.
 func (c *Client) MessagesToggleStickerSets(ctx context.Context, request *MessagesToggleStickerSetsRequest) (bool, error) {
 	var result BoolBox
 

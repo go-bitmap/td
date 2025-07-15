@@ -32,20 +32,14 @@ var (
 )
 
 // MessagesQuickReplies represents TL type `messages.quickReplies#c68d6695`.
-// Info about quick reply shortcuts »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/business#quick-reply-shortcuts
-//
-// See https://core.telegram.org/constructor/messages.quickReplies for reference.
 type MessagesQuickReplies struct {
-	// Quick reply shortcuts.
+	// QuickReplies field of MessagesQuickReplies.
 	QuickReplies []QuickReply
-	// Messages mentioned in quick_replies.
+	// Messages field of MessagesQuickReplies.
 	Messages []MessageClass
-	// Mentioned chats
+	// Chats field of MessagesQuickReplies.
 	Chats []ChatClass
-	// Mentioned users
+	// Users field of MessagesQuickReplies.
 	Users []UserClass
 }
 
@@ -92,19 +86,6 @@ func (q *MessagesQuickReplies) String() string {
 	}
 	type Alias MessagesQuickReplies
 	return fmt.Sprintf("MessagesQuickReplies%+v", Alias(*q))
-}
-
-// FillFrom fills MessagesQuickReplies from given interface.
-func (q *MessagesQuickReplies) FillFrom(from interface {
-	GetQuickReplies() (value []QuickReply)
-	GetMessages() (value []MessageClass)
-	GetChats() (value []ChatClass)
-	GetUsers() (value []UserClass)
-}) {
-	q.QuickReplies = from.GetQuickReplies()
-	q.Messages = from.GetMessages()
-	q.Chats = from.GetChats()
-	q.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -319,28 +300,7 @@ func (q *MessagesQuickReplies) GetUsers() (value []UserClass) {
 	return q.Users
 }
 
-// MapMessages returns field Messages wrapped in MessageClassArray helper.
-func (q *MessagesQuickReplies) MapMessages() (value MessageClassArray) {
-	return MessageClassArray(q.Messages)
-}
-
-// MapChats returns field Chats wrapped in ChatClassArray helper.
-func (q *MessagesQuickReplies) MapChats() (value ChatClassArray) {
-	return ChatClassArray(q.Chats)
-}
-
-// MapUsers returns field Users wrapped in UserClassArray helper.
-func (q *MessagesQuickReplies) MapUsers() (value UserClassArray) {
-	return UserClassArray(q.Users)
-}
-
 // MessagesQuickRepliesNotModified represents TL type `messages.quickRepliesNotModified#5f91eb5b`.
-// Info about quick reply shortcuts »¹ hasn't changed.
-//
-// Links:
-//  1. https://core.telegram.org/api/business#quick-reply-shortcuts
-//
-// See https://core.telegram.org/constructor/messages.quickRepliesNotModified for reference.
 type MessagesQuickRepliesNotModified struct {
 }
 
@@ -444,8 +404,6 @@ const MessagesQuickRepliesClassName = "messages.QuickReplies"
 
 // MessagesQuickRepliesClass represents messages.QuickReplies generic type.
 //
-// See https://core.telegram.org/type/messages.QuickReplies for reference.
-//
 // Constructors:
 //   - [MessagesQuickReplies]
 //   - [MessagesQuickRepliesNotModified]
@@ -478,19 +436,6 @@ type MessagesQuickRepliesClass interface {
 	String() string
 	// Zero returns true if current object has a zero value.
 	Zero() bool
-
-	// AsModified tries to map MessagesQuickRepliesClass to MessagesQuickReplies.
-	AsModified() (*MessagesQuickReplies, bool)
-}
-
-// AsModified tries to map MessagesQuickReplies to MessagesQuickReplies.
-func (q *MessagesQuickReplies) AsModified() (*MessagesQuickReplies, bool) {
-	return q, true
-}
-
-// AsModified tries to map MessagesQuickRepliesNotModified to MessagesQuickReplies.
-func (q *MessagesQuickRepliesNotModified) AsModified() (*MessagesQuickReplies, bool) {
-	return nil, false
 }
 
 // DecodeMessagesQuickReplies implements binary de-serialization for MessagesQuickRepliesClass.

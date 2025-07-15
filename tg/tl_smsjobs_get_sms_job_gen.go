@@ -32,11 +32,8 @@ var (
 )
 
 // SMSJobsGetSMSJobRequest represents TL type `smsjobs.getSmsJob#778d902f`.
-// Get info about an SMS job (official clients only).
-//
-// See https://core.telegram.org/method/smsjobs.getSmsJob for reference.
 type SMSJobsGetSMSJobRequest struct {
-	// Job ID
+	// JobID field of SMSJobsGetSMSJobRequest.
 	JobID string
 }
 
@@ -69,13 +66,6 @@ func (g *SMSJobsGetSMSJobRequest) String() string {
 	}
 	type Alias SMSJobsGetSMSJobRequest
 	return fmt.Sprintf("SMSJobsGetSMSJobRequest%+v", Alias(*g))
-}
-
-// FillFrom fills SMSJobsGetSMSJobRequest from given interface.
-func (g *SMSJobsGetSMSJobRequest) FillFrom(from interface {
-	GetJobID() (value string)
-}) {
-	g.JobID = from.GetJobID()
 }
 
 // TypeID returns type id in TL schema.
@@ -162,13 +152,6 @@ func (g *SMSJobsGetSMSJobRequest) GetJobID() (value string) {
 }
 
 // SMSJobsGetSMSJob invokes method smsjobs.getSmsJob#778d902f returning error if any.
-// Get info about an SMS job (official clients only).
-//
-// Possible errors:
-//
-//	400 SMSJOB_ID_INVALID: The specified job ID is invalid.
-//
-// See https://core.telegram.org/method/smsjobs.getSmsJob for reference.
 func (c *Client) SMSJobsGetSMSJob(ctx context.Context, jobid string) (*SMSJob, error) {
 	var result SMSJob
 

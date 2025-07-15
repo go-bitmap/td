@@ -32,16 +32,10 @@ var (
 )
 
 // MessagesDeletePhoneCallHistoryRequest represents TL type `messages.deletePhoneCallHistory#f9cbe409`.
-// Delete the entire phone call history.
-//
-// See https://core.telegram.org/method/messages.deletePhoneCallHistory for reference.
 type MessagesDeletePhoneCallHistoryRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessagesDeletePhoneCallHistoryRequest.
 	Flags bin.Fields
-	// Whether to remove phone call history for participants as well
+	// Revoke field of MessagesDeletePhoneCallHistoryRequest.
 	Revoke bool
 }
 
@@ -77,13 +71,6 @@ func (d *MessagesDeletePhoneCallHistoryRequest) String() string {
 	}
 	type Alias MessagesDeletePhoneCallHistoryRequest
 	return fmt.Sprintf("MessagesDeletePhoneCallHistoryRequest%+v", Alias(*d))
-}
-
-// FillFrom fills MessagesDeletePhoneCallHistoryRequest from given interface.
-func (d *MessagesDeletePhoneCallHistoryRequest) FillFrom(from interface {
-	GetRevoke() (value bool)
-}) {
-	d.Revoke = from.GetRevoke()
 }
 
 // TypeID returns type id in TL schema.
@@ -191,9 +178,6 @@ func (d *MessagesDeletePhoneCallHistoryRequest) GetRevoke() (value bool) {
 }
 
 // MessagesDeletePhoneCallHistory invokes method messages.deletePhoneCallHistory#f9cbe409 returning error if any.
-// Delete the entire phone call history.
-//
-// See https://core.telegram.org/method/messages.deletePhoneCallHistory for reference.
 func (c *Client) MessagesDeletePhoneCallHistory(ctx context.Context, request *MessagesDeletePhoneCallHistoryRequest) (*MessagesAffectedFoundMessages, error) {
 	var result MessagesAffectedFoundMessages
 

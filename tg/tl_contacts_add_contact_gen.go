@@ -32,30 +32,18 @@ var (
 )
 
 // ContactsAddContactRequest represents TL type `contacts.addContact#e8f463d0`.
-// Add an existing telegram user as contact.
-// Use contacts.importContacts¹ to add contacts by phone number, without knowing their
-// Telegram ID.
-//
-// Links:
-//  1. https://core.telegram.org/method/contacts.importContacts
-//
-// See https://core.telegram.org/method/contacts.addContact for reference.
 type ContactsAddContactRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of ContactsAddContactRequest.
 	Flags bin.Fields
-	// Allow the other user to see our phone number?
+	// AddPhonePrivacyException field of ContactsAddContactRequest.
 	AddPhonePrivacyException bool
-	// Telegram ID of the other user
+	// ID field of ContactsAddContactRequest.
 	ID InputUserClass
-	// First name
+	// FirstName field of ContactsAddContactRequest.
 	FirstName string
-	// Last name
+	// LastName field of ContactsAddContactRequest.
 	LastName string
-	// User's phone number, may be omitted to simply add the user to the contact list,
-	// without a phone number.
+	// Phone field of ContactsAddContactRequest.
 	Phone string
 }
 
@@ -103,21 +91,6 @@ func (a *ContactsAddContactRequest) String() string {
 	}
 	type Alias ContactsAddContactRequest
 	return fmt.Sprintf("ContactsAddContactRequest%+v", Alias(*a))
-}
-
-// FillFrom fills ContactsAddContactRequest from given interface.
-func (a *ContactsAddContactRequest) FillFrom(from interface {
-	GetAddPhonePrivacyException() (value bool)
-	GetID() (value InputUserClass)
-	GetFirstName() (value string)
-	GetLastName() (value string)
-	GetPhone() (value string)
-}) {
-	a.AddPhonePrivacyException = from.GetAddPhonePrivacyException()
-	a.ID = from.GetID()
-	a.FirstName = from.GetFirstName()
-	a.LastName = from.GetLastName()
-	a.Phone = from.GetPhone()
 }
 
 // TypeID returns type id in TL schema.
@@ -310,21 +283,6 @@ func (a *ContactsAddContactRequest) GetPhone() (value string) {
 }
 
 // ContactsAddContact invokes method contacts.addContact#e8f463d0 returning error if any.
-// Add an existing telegram user as contact.
-// Use contacts.importContacts¹ to add contacts by phone number, without knowing their
-// Telegram ID.
-//
-// Links:
-//  1. https://core.telegram.org/method/contacts.importContacts
-//
-// Possible errors:
-//
-//	400 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
-//	400 CONTACT_ID_INVALID: The provided contact ID is invalid.
-//	400 CONTACT_NAME_EMPTY: Contact name empty.
-//	400 MSG_ID_INVALID: Invalid message ID provided.
-//
-// See https://core.telegram.org/method/contacts.addContact for reference.
 func (c *Client) ContactsAddContact(ctx context.Context, request *ContactsAddContactRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

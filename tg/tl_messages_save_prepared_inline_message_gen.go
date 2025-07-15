@@ -32,28 +32,14 @@ var (
 )
 
 // MessagesSavePreparedInlineMessageRequest represents TL type `messages.savePreparedInlineMessage#f21f7f2f`.
-// Save a prepared inline message¹, to be shared by the user of the mini app using a
-// web_app_send_prepared_message event²
-//
-// Links:
-//  1. https://core.telegram.org/api/bots/inline#21-using-a-prepared-inline-message
-//  2. https://core.telegram.org/api/web-events#web-app-send-prepared-message
-//
-// See https://core.telegram.org/method/messages.savePreparedInlineMessage for reference.
 type MessagesSavePreparedInlineMessageRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessagesSavePreparedInlineMessageRequest.
 	Flags bin.Fields
-	// The message
+	// Result field of MessagesSavePreparedInlineMessageRequest.
 	Result InputBotInlineResultClass
-	// The user to whom the web_app_send_prepared_message event¹ event will be sent
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/web-events#web-app-send-prepared-message
+	// UserID field of MessagesSavePreparedInlineMessageRequest.
 	UserID InputUserClass
-	// Types of chats where this message can be sent
+	// PeerTypes field of MessagesSavePreparedInlineMessageRequest.
 	//
 	// Use SetPeerTypes and GetPeerTypes helpers.
 	PeerTypes []InlineQueryPeerTypeClass
@@ -97,20 +83,6 @@ func (s *MessagesSavePreparedInlineMessageRequest) String() string {
 	}
 	type Alias MessagesSavePreparedInlineMessageRequest
 	return fmt.Sprintf("MessagesSavePreparedInlineMessageRequest%+v", Alias(*s))
-}
-
-// FillFrom fills MessagesSavePreparedInlineMessageRequest from given interface.
-func (s *MessagesSavePreparedInlineMessageRequest) FillFrom(from interface {
-	GetResult() (value InputBotInlineResultClass)
-	GetUserID() (value InputUserClass)
-	GetPeerTypes() (value []InlineQueryPeerTypeClass, ok bool)
-}) {
-	s.Result = from.GetResult()
-	s.UserID = from.GetUserID()
-	if val, ok := from.GetPeerTypes(); ok {
-		s.PeerTypes = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -293,30 +265,7 @@ func (s *MessagesSavePreparedInlineMessageRequest) GetPeerTypes() (value []Inlin
 	return s.PeerTypes, true
 }
 
-// MapPeerTypes returns field PeerTypes wrapped in InlineQueryPeerTypeClassArray helper.
-func (s *MessagesSavePreparedInlineMessageRequest) MapPeerTypes() (value InlineQueryPeerTypeClassArray, ok bool) {
-	if !s.Flags.Has(0) {
-		return value, false
-	}
-	return InlineQueryPeerTypeClassArray(s.PeerTypes), true
-}
-
 // MessagesSavePreparedInlineMessage invokes method messages.savePreparedInlineMessage#f21f7f2f returning error if any.
-// Save a prepared inline message¹, to be shared by the user of the mini app using a
-// web_app_send_prepared_message event²
-//
-// Links:
-//  1. https://core.telegram.org/api/bots/inline#21-using-a-prepared-inline-message
-//  2. https://core.telegram.org/api/web-events#web-app-send-prepared-message
-//
-// Possible errors:
-//
-//	400 RESULT_ID_INVALID: One of the specified result IDs is invalid.
-//	400 USER_BOT_REQUIRED: This method can only be called by a bot.
-//	400 USER_ID_INVALID: The provided user ID is invalid.
-//
-// See https://core.telegram.org/method/messages.savePreparedInlineMessage for reference.
-// Can be used by bots.
 func (c *Client) MessagesSavePreparedInlineMessage(ctx context.Context, request *MessagesSavePreparedInlineMessageRequest) (*MessagesBotPreparedInlineMessage, error) {
 	var result MessagesBotPreparedInlineMessage
 

@@ -32,18 +32,12 @@ var (
 )
 
 // MessagesToggleDialogPinRequest represents TL type `messages.toggleDialogPin#a731e257`.
-// Pin/unpin a dialog
-//
-// See https://core.telegram.org/method/messages.toggleDialogPin for reference.
 type MessagesToggleDialogPinRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessagesToggleDialogPinRequest.
 	Flags bin.Fields
-	// Whether to pin or unpin the dialog
+	// Pinned field of MessagesToggleDialogPinRequest.
 	Pinned bool
-	// The dialog to pin
+	// Peer field of MessagesToggleDialogPinRequest.
 	Peer InputDialogPeerClass
 }
 
@@ -82,15 +76,6 @@ func (t *MessagesToggleDialogPinRequest) String() string {
 	}
 	type Alias MessagesToggleDialogPinRequest
 	return fmt.Sprintf("MessagesToggleDialogPinRequest%+v", Alias(*t))
-}
-
-// FillFrom fills MessagesToggleDialogPinRequest from given interface.
-func (t *MessagesToggleDialogPinRequest) FillFrom(from interface {
-	GetPinned() (value bool)
-	GetPeer() (value InputDialogPeerClass)
-}) {
-	t.Pinned = from.GetPinned()
-	t.Peer = from.GetPeer()
 }
 
 // TypeID returns type id in TL schema.
@@ -223,16 +208,6 @@ func (t *MessagesToggleDialogPinRequest) GetPeer() (value InputDialogPeerClass) 
 }
 
 // MessagesToggleDialogPin invokes method messages.toggleDialogPin#a731e257 returning error if any.
-// Pin/unpin a dialog
-//
-// Possible errors:
-//
-//	400 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
-//	400 PEER_HISTORY_EMPTY: You can't pin an empty chat with a user.
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//	400 PINNED_DIALOGS_TOO_MUCH: Too many pinned dialogs.
-//
-// See https://core.telegram.org/method/messages.toggleDialogPin for reference.
 func (c *Client) MessagesToggleDialogPin(ctx context.Context, request *MessagesToggleDialogPinRequest) (bool, error) {
 	var result BoolBox
 

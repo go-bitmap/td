@@ -32,8 +32,6 @@ var (
 )
 
 // SavedStarGift represents TL type `savedStarGift#dfda0499`.
-//
-// See https://core.telegram.org/constructor/savedStarGift for reference.
 type SavedStarGift struct {
 	// Flags field of SavedStarGift.
 	Flags bin.Fields
@@ -173,75 +171,6 @@ func (s *SavedStarGift) String() string {
 	}
 	type Alias SavedStarGift
 	return fmt.Sprintf("SavedStarGift%+v", Alias(*s))
-}
-
-// FillFrom fills SavedStarGift from given interface.
-func (s *SavedStarGift) FillFrom(from interface {
-	GetNameHidden() (value bool)
-	GetUnsaved() (value bool)
-	GetRefunded() (value bool)
-	GetCanUpgrade() (value bool)
-	GetPinnedToTop() (value bool)
-	GetFromID() (value PeerClass, ok bool)
-	GetDate() (value int)
-	GetGift() (value StarGiftClass)
-	GetMessage() (value TextWithEntities, ok bool)
-	GetMsgID() (value int, ok bool)
-	GetSavedID() (value int64, ok bool)
-	GetConvertStars() (value int64, ok bool)
-	GetUpgradeStars() (value int64, ok bool)
-	GetCanExportAt() (value int, ok bool)
-	GetTransferStars() (value int64, ok bool)
-	GetCanTransferAt() (value int, ok bool)
-	GetCanResellAt() (value int, ok bool)
-}) {
-	s.NameHidden = from.GetNameHidden()
-	s.Unsaved = from.GetUnsaved()
-	s.Refunded = from.GetRefunded()
-	s.CanUpgrade = from.GetCanUpgrade()
-	s.PinnedToTop = from.GetPinnedToTop()
-	if val, ok := from.GetFromID(); ok {
-		s.FromID = val
-	}
-
-	s.Date = from.GetDate()
-	s.Gift = from.GetGift()
-	if val, ok := from.GetMessage(); ok {
-		s.Message = val
-	}
-
-	if val, ok := from.GetMsgID(); ok {
-		s.MsgID = val
-	}
-
-	if val, ok := from.GetSavedID(); ok {
-		s.SavedID = val
-	}
-
-	if val, ok := from.GetConvertStars(); ok {
-		s.ConvertStars = val
-	}
-
-	if val, ok := from.GetUpgradeStars(); ok {
-		s.UpgradeStars = val
-	}
-
-	if val, ok := from.GetCanExportAt(); ok {
-		s.CanExportAt = val
-	}
-
-	if val, ok := from.GetTransferStars(); ok {
-		s.TransferStars = val
-	}
-
-	if val, ok := from.GetCanTransferAt(); ok {
-		s.CanTransferAt = val
-	}
-
-	if val, ok := from.GetCanResellAt(); ok {
-		s.CanResellAt = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.

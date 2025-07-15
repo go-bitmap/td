@@ -32,15 +32,8 @@ var (
 )
 
 // HelpTermsOfServiceUpdateEmpty represents TL type `help.termsOfServiceUpdateEmpty#e3309f7f`.
-// No changes were made to telegram's terms of service
-//
-// See https://core.telegram.org/constructor/help.termsOfServiceUpdateEmpty for reference.
 type HelpTermsOfServiceUpdateEmpty struct {
-	// New TOS updates will have to be queried using help.getTermsOfServiceUpdate¹ in
-	// expires seconds
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/help.getTermsOfServiceUpdate
+	// Expires field of HelpTermsOfServiceUpdateEmpty.
 	Expires int
 }
 
@@ -78,13 +71,6 @@ func (t *HelpTermsOfServiceUpdateEmpty) String() string {
 	}
 	type Alias HelpTermsOfServiceUpdateEmpty
 	return fmt.Sprintf("HelpTermsOfServiceUpdateEmpty%+v", Alias(*t))
-}
-
-// FillFrom fills HelpTermsOfServiceUpdateEmpty from given interface.
-func (t *HelpTermsOfServiceUpdateEmpty) FillFrom(from interface {
-	GetExpires() (value int)
-}) {
-	t.Expires = from.GetExpires()
 }
 
 // TypeID returns type id in TL schema.
@@ -171,22 +157,10 @@ func (t *HelpTermsOfServiceUpdateEmpty) GetExpires() (value int) {
 }
 
 // HelpTermsOfServiceUpdate represents TL type `help.termsOfServiceUpdate#28ecf961`.
-// Info about an update of telegram's terms of service. If the terms of service are
-// declined, then the account.deleteAccount¹ method should be called with the reason
-// "Decline ToS update"
-//
-// Links:
-//  1. https://core.telegram.org/method/account.deleteAccount
-//
-// See https://core.telegram.org/constructor/help.termsOfServiceUpdate for reference.
 type HelpTermsOfServiceUpdate struct {
-	// New TOS updates will have to be queried using help.getTermsOfServiceUpdate¹ in
-	// expires seconds
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/help.getTermsOfServiceUpdate
+	// Expires field of HelpTermsOfServiceUpdate.
 	Expires int
-	// New terms of service
+	// TermsOfService field of HelpTermsOfServiceUpdate.
 	TermsOfService HelpTermsOfService
 }
 
@@ -227,15 +201,6 @@ func (t *HelpTermsOfServiceUpdate) String() string {
 	}
 	type Alias HelpTermsOfServiceUpdate
 	return fmt.Sprintf("HelpTermsOfServiceUpdate%+v", Alias(*t))
-}
-
-// FillFrom fills HelpTermsOfServiceUpdate from given interface.
-func (t *HelpTermsOfServiceUpdate) FillFrom(from interface {
-	GetExpires() (value int)
-	GetTermsOfService() (value HelpTermsOfService)
-}) {
-	t.Expires = from.GetExpires()
-	t.TermsOfService = from.GetTermsOfService()
 }
 
 // TypeID returns type id in TL schema.
@@ -346,8 +311,6 @@ const HelpTermsOfServiceUpdateClassName = "help.TermsOfServiceUpdate"
 
 // HelpTermsOfServiceUpdateClass represents help.TermsOfServiceUpdate generic type.
 //
-// See https://core.telegram.org/type/help.TermsOfServiceUpdate for reference.
-//
 // Constructors:
 //   - [HelpTermsOfServiceUpdateEmpty]
 //   - [HelpTermsOfServiceUpdate]
@@ -381,25 +344,8 @@ type HelpTermsOfServiceUpdateClass interface {
 	// Zero returns true if current object has a zero value.
 	Zero() bool
 
-	// New TOS updates will have to be queried using help.getTermsOfServiceUpdate¹ in
-	// expires seconds
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/help.getTermsOfServiceUpdate
+	// Expires field of HelpTermsOfServiceUpdateEmpty.
 	GetExpires() (value int)
-
-	// AsNotEmpty tries to map HelpTermsOfServiceUpdateClass to HelpTermsOfServiceUpdate.
-	AsNotEmpty() (*HelpTermsOfServiceUpdate, bool)
-}
-
-// AsNotEmpty tries to map HelpTermsOfServiceUpdateEmpty to HelpTermsOfServiceUpdate.
-func (t *HelpTermsOfServiceUpdateEmpty) AsNotEmpty() (*HelpTermsOfServiceUpdate, bool) {
-	return nil, false
-}
-
-// AsNotEmpty tries to map HelpTermsOfServiceUpdate to HelpTermsOfServiceUpdate.
-func (t *HelpTermsOfServiceUpdate) AsNotEmpty() (*HelpTermsOfServiceUpdate, bool) {
-	return t, true
 }
 
 // DecodeHelpTermsOfServiceUpdate implements binary de-serialization for HelpTermsOfServiceUpdateClass.

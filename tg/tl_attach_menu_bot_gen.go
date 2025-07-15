@@ -32,55 +32,30 @@ var (
 )
 
 // AttachMenuBot represents TL type `attachMenuBot#d90d8dfe`.
-// Represents a bot mini app that can be launched from the attachment/side menu »¹
-// At least one of the show_in_attach_menu or the show_in_side_menu flags will always be
-// set.
-//
-// Links:
-//  1. https://core.telegram.org/api/bots/attach
-//
-// See https://core.telegram.org/constructor/attachMenuBot for reference.
 type AttachMenuBot struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of AttachMenuBot.
 	Flags bin.Fields
-	// If set, before launching the mini app the client should ask the user to add the mini
-	// app to the attachment/side menu, and only if the user accepts, after invoking messages
-	// toggleBotInAttachMenu¹ the app should be opened.
-	//
-	// Links:
-	//  1) https://core.telegram.org/method/messages.toggleBotInAttachMenu
+	// Inactive field of AttachMenuBot.
 	Inactive bool
-	// Deprecated flag, can be ignored.
+	// HasSettings field of AttachMenuBot.
 	HasSettings bool
-	// Whether the bot would like to send messages to the user.
+	// RequestWriteAccess field of AttachMenuBot.
 	RequestWriteAccess bool
-	// Whether, when installed, an attachment menu entry should be shown for the Mini App.
+	// ShowInAttachMenu field of AttachMenuBot.
 	ShowInAttachMenu bool
-	// Whether, when installed, an entry in the main view side menu should be shown for the
-	// Mini App.
+	// ShowInSideMenu field of AttachMenuBot.
 	ShowInSideMenu bool
-	// If inactive if set and the user hasn't previously accepted the third-party mini apps
-	// Terms of Service¹ for this bot, when showing the mini app installation prompt, an
-	// additional mandatory checkbox to accept the mini apps TOS² and a disclaimer
-	// indicating that this Mini App is not affiliated to Telegram should be shown.
-	//
-	// Links:
-	//  1) https://telegram.org/tos/mini-apps
-	//  2) https://telegram.org/tos/mini-apps
+	// SideMenuDisclaimerNeeded field of AttachMenuBot.
 	SideMenuDisclaimerNeeded bool
-	// Bot ID
+	// BotID field of AttachMenuBot.
 	BotID int64
-	// Attachment menu item name
+	// ShortName field of AttachMenuBot.
 	ShortName string
-	// List of dialog types where this attachment menu entry should be shown
+	// PeerTypes field of AttachMenuBot.
 	//
 	// Use SetPeerTypes and GetPeerTypes helpers.
 	PeerTypes []AttachMenuPeerTypeClass
-	// List of platform-specific static icons and animations to use for the attachment menu
-	// button
+	// Icons field of AttachMenuBot.
 	Icons []AttachMenuBotIcon
 }
 
@@ -143,34 +118,6 @@ func (a *AttachMenuBot) String() string {
 	}
 	type Alias AttachMenuBot
 	return fmt.Sprintf("AttachMenuBot%+v", Alias(*a))
-}
-
-// FillFrom fills AttachMenuBot from given interface.
-func (a *AttachMenuBot) FillFrom(from interface {
-	GetInactive() (value bool)
-	GetHasSettings() (value bool)
-	GetRequestWriteAccess() (value bool)
-	GetShowInAttachMenu() (value bool)
-	GetShowInSideMenu() (value bool)
-	GetSideMenuDisclaimerNeeded() (value bool)
-	GetBotID() (value int64)
-	GetShortName() (value string)
-	GetPeerTypes() (value []AttachMenuPeerTypeClass, ok bool)
-	GetIcons() (value []AttachMenuBotIcon)
-}) {
-	a.Inactive = from.GetInactive()
-	a.HasSettings = from.GetHasSettings()
-	a.RequestWriteAccess = from.GetRequestWriteAccess()
-	a.ShowInAttachMenu = from.GetShowInAttachMenu()
-	a.ShowInSideMenu = from.GetShowInSideMenu()
-	a.SideMenuDisclaimerNeeded = from.GetSideMenuDisclaimerNeeded()
-	a.BotID = from.GetBotID()
-	a.ShortName = from.GetShortName()
-	if val, ok := from.GetPeerTypes(); ok {
-		a.PeerTypes = val
-	}
-
-	a.Icons = from.GetIcons()
 }
 
 // TypeID returns type id in TL schema.
@@ -544,12 +491,4 @@ func (a *AttachMenuBot) GetIcons() (value []AttachMenuBotIcon) {
 		return
 	}
 	return a.Icons
-}
-
-// MapPeerTypes returns field PeerTypes wrapped in AttachMenuPeerTypeClassArray helper.
-func (a *AttachMenuBot) MapPeerTypes() (value AttachMenuPeerTypeClassArray, ok bool) {
-	if !a.Flags.Has(3) {
-		return value, false
-	}
-	return AttachMenuPeerTypeClassArray(a.PeerTypes), true
 }

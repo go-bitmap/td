@@ -32,23 +32,14 @@ var (
 )
 
 // MessagesSearchStickerSetsRequest represents TL type `messages.searchStickerSets#35705b8a`.
-// Search for stickersets
-//
-// See https://core.telegram.org/method/messages.searchStickerSets for reference.
 type MessagesSearchStickerSetsRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessagesSearchStickerSetsRequest.
 	Flags bin.Fields
-	// Exclude featured stickersets from results
+	// ExcludeFeatured field of MessagesSearchStickerSetsRequest.
 	ExcludeFeatured bool
-	// Query string
+	// Q field of MessagesSearchStickerSetsRequest.
 	Q string
-	// Hash used for caching, for more info click here¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets#hash-generation
+	// Hash field of MessagesSearchStickerSetsRequest.
 	Hash int64
 }
 
@@ -90,17 +81,6 @@ func (s *MessagesSearchStickerSetsRequest) String() string {
 	}
 	type Alias MessagesSearchStickerSetsRequest
 	return fmt.Sprintf("MessagesSearchStickerSetsRequest%+v", Alias(*s))
-}
-
-// FillFrom fills MessagesSearchStickerSetsRequest from given interface.
-func (s *MessagesSearchStickerSetsRequest) FillFrom(from interface {
-	GetExcludeFeatured() (value bool)
-	GetQ() (value string)
-	GetHash() (value int64)
-}) {
-	s.ExcludeFeatured = from.GetExcludeFeatured()
-	s.Q = from.GetQ()
-	s.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -248,9 +228,6 @@ func (s *MessagesSearchStickerSetsRequest) GetHash() (value int64) {
 }
 
 // MessagesSearchStickerSets invokes method messages.searchStickerSets#35705b8a returning error if any.
-// Search for stickersets
-//
-// See https://core.telegram.org/method/messages.searchStickerSets for reference.
 func (c *Client) MessagesSearchStickerSets(ctx context.Context, request *MessagesSearchStickerSetsRequest) (MessagesFoundStickerSetsClass, error) {
 	var result MessagesFoundStickerSetsBox
 

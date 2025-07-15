@@ -32,24 +32,14 @@ var (
 )
 
 // MessagesUploadImportedMediaRequest represents TL type `messages.uploadImportedMedia#2a862092`.
-// Upload a media file associated with an imported chat, click here for more info »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/import
-//
-// See https://core.telegram.org/method/messages.uploadImportedMedia for reference.
 type MessagesUploadImportedMediaRequest struct {
-	// The Telegram chat where the media will be imported
+	// Peer field of MessagesUploadImportedMediaRequest.
 	Peer InputPeerClass
-	// Identifier of a history import session¹, returned by messages.initHistoryImport²
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/import
-	//  2) https://core.telegram.org/method/messages.initHistoryImport
+	// ImportID field of MessagesUploadImportedMediaRequest.
 	ImportID int64
-	// File name
+	// FileName field of MessagesUploadImportedMediaRequest.
 	FileName string
-	// Media metadata
+	// Media field of MessagesUploadImportedMediaRequest.
 	Media InputMediaClass
 }
 
@@ -91,19 +81,6 @@ func (u *MessagesUploadImportedMediaRequest) String() string {
 	}
 	type Alias MessagesUploadImportedMediaRequest
 	return fmt.Sprintf("MessagesUploadImportedMediaRequest%+v", Alias(*u))
-}
-
-// FillFrom fills MessagesUploadImportedMediaRequest from given interface.
-func (u *MessagesUploadImportedMediaRequest) FillFrom(from interface {
-	GetPeer() (value InputPeerClass)
-	GetImportID() (value int64)
-	GetFileName() (value string)
-	GetMedia() (value InputMediaClass)
-}) {
-	u.Peer = from.GetPeer()
-	u.ImportID = from.GetImportID()
-	u.FileName = from.GetFileName()
-	u.Media = from.GetMedia()
 }
 
 // TypeID returns type id in TL schema.
@@ -260,18 +237,6 @@ func (u *MessagesUploadImportedMediaRequest) GetMedia() (value InputMediaClass) 
 }
 
 // MessagesUploadImportedMedia invokes method messages.uploadImportedMedia#2a862092 returning error if any.
-// Upload a media file associated with an imported chat, click here for more info »¹.
-//
-// Links:
-//  1. https://core.telegram.org/api/import
-//
-// Possible errors:
-//
-//	400 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
-//	400 IMPORT_ID_INVALID: The specified import ID is invalid.
-//	400 MEDIA_INVALID: Media invalid.
-//
-// See https://core.telegram.org/method/messages.uploadImportedMedia for reference.
 func (c *Client) MessagesUploadImportedMedia(ctx context.Context, request *MessagesUploadImportedMediaRequest) (MessageMediaClass, error) {
 	var result MessageMediaBox
 

@@ -31,20 +31,20 @@ var (
 	_ = tdjson.Encoder{}
 )
 
-// MessagesGetSponsoredMessagesRequest represents TL type `messages.getSponsoredMessages#9bd2f439`.
-// Get a list of sponsored messages for a peer, see here »¹ for more info.
-//
-// Links:
-//  1. https://core.telegram.org/api/sponsored-messages
-//
-// See https://core.telegram.org/method/messages.getSponsoredMessages for reference.
+// MessagesGetSponsoredMessagesRequest represents TL type `messages.getSponsoredMessages#3d6ce850`.
 type MessagesGetSponsoredMessagesRequest struct {
-	// The currently open channel/bot.
+	// Flags field of MessagesGetSponsoredMessagesRequest.
+	Flags bin.Fields
+	// Peer field of MessagesGetSponsoredMessagesRequest.
 	Peer InputPeerClass
+	// MsgID field of MessagesGetSponsoredMessagesRequest.
+	//
+	// Use SetMsgID and GetMsgID helpers.
+	MsgID int
 }
 
 // MessagesGetSponsoredMessagesRequestTypeID is TL type id of MessagesGetSponsoredMessagesRequest.
-const MessagesGetSponsoredMessagesRequestTypeID = 0x9bd2f439
+const MessagesGetSponsoredMessagesRequestTypeID = 0x3d6ce850
 
 // Ensuring interfaces in compile-time for MessagesGetSponsoredMessagesRequest.
 var (
@@ -58,7 +58,13 @@ func (g *MessagesGetSponsoredMessagesRequest) Zero() bool {
 	if g == nil {
 		return true
 	}
+	if !(g.Flags.Zero()) {
+		return false
+	}
 	if !(g.Peer == nil) {
+		return false
+	}
+	if !(g.MsgID == 0) {
 		return false
 	}
 
@@ -72,13 +78,6 @@ func (g *MessagesGetSponsoredMessagesRequest) String() string {
 	}
 	type Alias MessagesGetSponsoredMessagesRequest
 	return fmt.Sprintf("MessagesGetSponsoredMessagesRequest%+v", Alias(*g))
-}
-
-// FillFrom fills MessagesGetSponsoredMessagesRequest from given interface.
-func (g *MessagesGetSponsoredMessagesRequest) FillFrom(from interface {
-	GetPeer() (value InputPeerClass)
-}) {
-	g.Peer = from.GetPeer()
 }
 
 // TypeID returns type id in TL schema.
@@ -108,14 +107,26 @@ func (g *MessagesGetSponsoredMessagesRequest) TypeInfo() tdp.Type {
 			Name:       "Peer",
 			SchemaName: "peer",
 		},
+		{
+			Name:       "MsgID",
+			SchemaName: "msg_id",
+			Null:       !g.Flags.Has(0),
+		},
 	}
 	return typ
+}
+
+// SetFlags sets flags for non-zero fields.
+func (g *MessagesGetSponsoredMessagesRequest) SetFlags() {
+	if !(g.MsgID == 0) {
+		g.Flags.Set(0)
+	}
 }
 
 // Encode implements bin.Encoder.
 func (g *MessagesGetSponsoredMessagesRequest) Encode(b *bin.Buffer) error {
 	if g == nil {
-		return fmt.Errorf("can't encode messages.getSponsoredMessages#9bd2f439 as nil")
+		return fmt.Errorf("can't encode messages.getSponsoredMessages#3d6ce850 as nil")
 	}
 	b.PutID(MessagesGetSponsoredMessagesRequestTypeID)
 	return g.EncodeBare(b)
@@ -124,13 +135,20 @@ func (g *MessagesGetSponsoredMessagesRequest) Encode(b *bin.Buffer) error {
 // EncodeBare implements bin.BareEncoder.
 func (g *MessagesGetSponsoredMessagesRequest) EncodeBare(b *bin.Buffer) error {
 	if g == nil {
-		return fmt.Errorf("can't encode messages.getSponsoredMessages#9bd2f439 as nil")
+		return fmt.Errorf("can't encode messages.getSponsoredMessages#3d6ce850 as nil")
+	}
+	g.SetFlags()
+	if err := g.Flags.Encode(b); err != nil {
+		return fmt.Errorf("unable to encode messages.getSponsoredMessages#3d6ce850: field flags: %w", err)
 	}
 	if g.Peer == nil {
-		return fmt.Errorf("unable to encode messages.getSponsoredMessages#9bd2f439: field peer is nil")
+		return fmt.Errorf("unable to encode messages.getSponsoredMessages#3d6ce850: field peer is nil")
 	}
 	if err := g.Peer.Encode(b); err != nil {
-		return fmt.Errorf("unable to encode messages.getSponsoredMessages#9bd2f439: field peer: %w", err)
+		return fmt.Errorf("unable to encode messages.getSponsoredMessages#3d6ce850: field peer: %w", err)
+	}
+	if g.Flags.Has(0) {
+		b.PutInt(g.MsgID)
 	}
 	return nil
 }
@@ -138,10 +156,10 @@ func (g *MessagesGetSponsoredMessagesRequest) EncodeBare(b *bin.Buffer) error {
 // Decode implements bin.Decoder.
 func (g *MessagesGetSponsoredMessagesRequest) Decode(b *bin.Buffer) error {
 	if g == nil {
-		return fmt.Errorf("can't decode messages.getSponsoredMessages#9bd2f439 to nil")
+		return fmt.Errorf("can't decode messages.getSponsoredMessages#3d6ce850 to nil")
 	}
 	if err := b.ConsumeID(MessagesGetSponsoredMessagesRequestTypeID); err != nil {
-		return fmt.Errorf("unable to decode messages.getSponsoredMessages#9bd2f439: %w", err)
+		return fmt.Errorf("unable to decode messages.getSponsoredMessages#3d6ce850: %w", err)
 	}
 	return g.DecodeBare(b)
 }
@@ -149,14 +167,26 @@ func (g *MessagesGetSponsoredMessagesRequest) Decode(b *bin.Buffer) error {
 // DecodeBare implements bin.BareDecoder.
 func (g *MessagesGetSponsoredMessagesRequest) DecodeBare(b *bin.Buffer) error {
 	if g == nil {
-		return fmt.Errorf("can't decode messages.getSponsoredMessages#9bd2f439 to nil")
+		return fmt.Errorf("can't decode messages.getSponsoredMessages#3d6ce850 to nil")
+	}
+	{
+		if err := g.Flags.Decode(b); err != nil {
+			return fmt.Errorf("unable to decode messages.getSponsoredMessages#3d6ce850: field flags: %w", err)
+		}
 	}
 	{
 		value, err := DecodeInputPeer(b)
 		if err != nil {
-			return fmt.Errorf("unable to decode messages.getSponsoredMessages#9bd2f439: field peer: %w", err)
+			return fmt.Errorf("unable to decode messages.getSponsoredMessages#3d6ce850: field peer: %w", err)
 		}
 		g.Peer = value
+	}
+	if g.Flags.Has(0) {
+		value, err := b.Int()
+		if err != nil {
+			return fmt.Errorf("unable to decode messages.getSponsoredMessages#3d6ce850: field msg_id: %w", err)
+		}
+		g.MsgID = value
 	}
 	return nil
 }
@@ -169,19 +199,28 @@ func (g *MessagesGetSponsoredMessagesRequest) GetPeer() (value InputPeerClass) {
 	return g.Peer
 }
 
-// MessagesGetSponsoredMessages invokes method messages.getSponsoredMessages#9bd2f439 returning error if any.
-// Get a list of sponsored messages for a peer, see here »¹ for more info.
-//
-// Links:
-//  1. https://core.telegram.org/api/sponsored-messages
-//
-// See https://core.telegram.org/method/messages.getSponsoredMessages for reference.
-func (c *Client) MessagesGetSponsoredMessages(ctx context.Context, peer InputPeerClass) (MessagesSponsoredMessagesClass, error) {
+// SetMsgID sets value of MsgID conditional field.
+func (g *MessagesGetSponsoredMessagesRequest) SetMsgID(value int) {
+	g.Flags.Set(0)
+	g.MsgID = value
+}
+
+// GetMsgID returns value of MsgID conditional field and
+// boolean which is true if field was set.
+func (g *MessagesGetSponsoredMessagesRequest) GetMsgID() (value int, ok bool) {
+	if g == nil {
+		return
+	}
+	if !g.Flags.Has(0) {
+		return value, false
+	}
+	return g.MsgID, true
+}
+
+// MessagesGetSponsoredMessages invokes method messages.getSponsoredMessages#3d6ce850 returning error if any.
+func (c *Client) MessagesGetSponsoredMessages(ctx context.Context, request *MessagesGetSponsoredMessagesRequest) (MessagesSponsoredMessagesClass, error) {
 	var result MessagesSponsoredMessagesBox
 
-	request := &MessagesGetSponsoredMessagesRequest{
-		Peer: peer,
-	}
 	if err := c.rpc.Invoke(ctx, request, &result); err != nil {
 		return nil, err
 	}

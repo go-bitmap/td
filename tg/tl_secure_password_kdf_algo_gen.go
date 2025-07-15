@@ -32,9 +32,6 @@ var (
 )
 
 // SecurePasswordKdfAlgoUnknown represents TL type `securePasswordKdfAlgoUnknown#4a8537`.
-// Unknown KDF algo (most likely the client has to be updated)
-//
-// See https://core.telegram.org/constructor/securePasswordKdfAlgoUnknown for reference.
 type SecurePasswordKdfAlgoUnknown struct {
 }
 
@@ -134,11 +131,8 @@ func (s *SecurePasswordKdfAlgoUnknown) DecodeBare(b *bin.Buffer) error {
 }
 
 // SecurePasswordKdfAlgoPBKDF2HMACSHA512iter100000 represents TL type `securePasswordKdfAlgoPBKDF2HMACSHA512iter100000#bbf2dda0`.
-// PBKDF2 with SHA512 and 100000 iterations KDF algo
-//
-// See https://core.telegram.org/constructor/securePasswordKdfAlgoPBKDF2HMACSHA512iter100000 for reference.
 type SecurePasswordKdfAlgoPBKDF2HMACSHA512iter100000 struct {
-	// Salt
+	// Salt field of SecurePasswordKdfAlgoPBKDF2HMACSHA512iter100000.
 	Salt []byte
 }
 
@@ -178,13 +172,6 @@ func (s *SecurePasswordKdfAlgoPBKDF2HMACSHA512iter100000) String() string {
 	}
 	type Alias SecurePasswordKdfAlgoPBKDF2HMACSHA512iter100000
 	return fmt.Sprintf("SecurePasswordKdfAlgoPBKDF2HMACSHA512iter100000%+v", Alias(*s))
-}
-
-// FillFrom fills SecurePasswordKdfAlgoPBKDF2HMACSHA512iter100000 from given interface.
-func (s *SecurePasswordKdfAlgoPBKDF2HMACSHA512iter100000) FillFrom(from interface {
-	GetSalt() (value []byte)
-}) {
-	s.Salt = from.GetSalt()
 }
 
 // TypeID returns type id in TL schema.
@@ -271,11 +258,8 @@ func (s *SecurePasswordKdfAlgoPBKDF2HMACSHA512iter100000) GetSalt() (value []byt
 }
 
 // SecurePasswordKdfAlgoSHA512 represents TL type `securePasswordKdfAlgoSHA512#86471d92`.
-// SHA512 KDF algo
-//
-// See https://core.telegram.org/constructor/securePasswordKdfAlgoSHA512 for reference.
 type SecurePasswordKdfAlgoSHA512 struct {
-	// Salt
+	// Salt field of SecurePasswordKdfAlgoSHA512.
 	Salt []byte
 }
 
@@ -313,13 +297,6 @@ func (s *SecurePasswordKdfAlgoSHA512) String() string {
 	}
 	type Alias SecurePasswordKdfAlgoSHA512
 	return fmt.Sprintf("SecurePasswordKdfAlgoSHA512%+v", Alias(*s))
-}
-
-// FillFrom fills SecurePasswordKdfAlgoSHA512 from given interface.
-func (s *SecurePasswordKdfAlgoSHA512) FillFrom(from interface {
-	GetSalt() (value []byte)
-}) {
-	s.Salt = from.GetSalt()
 }
 
 // TypeID returns type id in TL schema.
@@ -409,8 +386,6 @@ func (s *SecurePasswordKdfAlgoSHA512) GetSalt() (value []byte) {
 const SecurePasswordKdfAlgoClassName = "SecurePasswordKdfAlgo"
 
 // SecurePasswordKdfAlgoClass represents SecurePasswordKdfAlgo generic type.
-//
-// See https://core.telegram.org/type/SecurePasswordKdfAlgo for reference.
 //
 // Constructors:
 //   - [SecurePasswordKdfAlgoUnknown]

@@ -32,19 +32,10 @@ var (
 )
 
 // MessagesAffectedMessages represents TL type `messages.affectedMessages#84d19185`.
-// Events affected by operation
-//
-// See https://core.telegram.org/constructor/messages.affectedMessages for reference.
 type MessagesAffectedMessages struct {
-	// Event count after generation¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/updates
+	// Pts field of MessagesAffectedMessages.
 	Pts int
-	// Number of events that were generated¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/updates
+	// PtsCount field of MessagesAffectedMessages.
 	PtsCount int
 }
 
@@ -80,15 +71,6 @@ func (a *MessagesAffectedMessages) String() string {
 	}
 	type Alias MessagesAffectedMessages
 	return fmt.Sprintf("MessagesAffectedMessages%+v", Alias(*a))
-}
-
-// FillFrom fills MessagesAffectedMessages from given interface.
-func (a *MessagesAffectedMessages) FillFrom(from interface {
-	GetPts() (value int)
-	GetPtsCount() (value int)
-}) {
-	a.Pts = from.GetPts()
-	a.PtsCount = from.GetPtsCount()
 }
 
 // TypeID returns type id in TL schema.

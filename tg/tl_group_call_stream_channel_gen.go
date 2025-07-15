@@ -32,20 +32,12 @@ var (
 )
 
 // GroupCallStreamChannel represents TL type `groupCallStreamChannel#80eb48af`.
-// Info about an RTMP stream in a group call or livestream
-//
-// See https://core.telegram.org/constructor/groupCallStreamChannel for reference.
 type GroupCallStreamChannel struct {
-	// Channel ID
+	// Channel field of GroupCallStreamChannel.
 	Channel int
-	// Specifies the duration of the video segment to fetch in milliseconds, by bitshifting
-	// 1000 to the right scale times: duration_ms := 1000 >> scale.
+	// Scale field of GroupCallStreamChannel.
 	Scale int
-	// Last seen timestamp to easily start fetching livestream chunks using
-	// inputGroupCallStream¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/inputGroupCallStream
+	// LastTimestampMs field of GroupCallStreamChannel.
 	LastTimestampMs int64
 }
 
@@ -84,17 +76,6 @@ func (g *GroupCallStreamChannel) String() string {
 	}
 	type Alias GroupCallStreamChannel
 	return fmt.Sprintf("GroupCallStreamChannel%+v", Alias(*g))
-}
-
-// FillFrom fills GroupCallStreamChannel from given interface.
-func (g *GroupCallStreamChannel) FillFrom(from interface {
-	GetChannel() (value int)
-	GetScale() (value int)
-	GetLastTimestampMs() (value int64)
-}) {
-	g.Channel = from.GetChannel()
-	g.Scale = from.GetScale()
-	g.LastTimestampMs = from.GetLastTimestampMs()
 }
 
 // TypeID returns type id in TL schema.

@@ -32,18 +32,12 @@ var (
 )
 
 // ChannelsEditCreatorRequest represents TL type `channels.editCreator#8f38cd1f`.
-// Transfer channel ownership
-//
-// See https://core.telegram.org/method/channels.editCreator for reference.
 type ChannelsEditCreatorRequest struct {
-	// Channel
+	// Channel field of ChannelsEditCreatorRequest.
 	Channel InputChannelClass
-	// New channel owner
+	// UserID field of ChannelsEditCreatorRequest.
 	UserID InputUserClass
-	// 2FA password¹ of account
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/srp
+	// Password field of ChannelsEditCreatorRequest.
 	Password InputCheckPasswordSRPClass
 }
 
@@ -82,17 +76,6 @@ func (e *ChannelsEditCreatorRequest) String() string {
 	}
 	type Alias ChannelsEditCreatorRequest
 	return fmt.Sprintf("ChannelsEditCreatorRequest%+v", Alias(*e))
-}
-
-// FillFrom fills ChannelsEditCreatorRequest from given interface.
-func (e *ChannelsEditCreatorRequest) FillFrom(from interface {
-	GetChannel() (value InputChannelClass)
-	GetUserID() (value InputUserClass)
-	GetPassword() (value InputCheckPasswordSRPClass)
-}) {
-	e.Channel = from.GetChannel()
-	e.UserID = from.GetUserID()
-	e.Password = from.GetPassword()
 }
 
 // TypeID returns type id in TL schema.
@@ -233,34 +216,7 @@ func (e *ChannelsEditCreatorRequest) GetPassword() (value InputCheckPasswordSRPC
 	return e.Password
 }
 
-// GetChannelAsNotEmpty returns mapped value of Channel field.
-func (e *ChannelsEditCreatorRequest) GetChannelAsNotEmpty() (NotEmptyInputChannel, bool) {
-	return e.Channel.AsNotEmpty()
-}
-
-// GetPasswordAsNotEmpty returns mapped value of Password field.
-func (e *ChannelsEditCreatorRequest) GetPasswordAsNotEmpty() (*InputCheckPasswordSRP, bool) {
-	return e.Password.AsNotEmpty()
-}
-
 // ChannelsEditCreator invokes method channels.editCreator#8f38cd1f returning error if any.
-// Transfer channel ownership
-//
-// Possible errors:
-//
-//	400 CHANNELS_ADMIN_PUBLIC_TOO_MUCH: You're admin of too many public channels, make some channels private to change the username of this channel.
-//	400 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
-//	400 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
-//	400 CHAT_NOT_MODIFIED: No changes were made to chat information because the new information you passed is identical to the current information.
-//	403 CHAT_WRITE_FORBIDDEN: You can't write in this chat.
-//	400 PASSWORD_HASH_INVALID: The provided password hash is invalid.
-//	400 PASSWORD_MISSING: You must enable 2FA before executing this operation.
-//	400 PASSWORD_TOO_FRESH_%d: The password was modified less than 24 hours ago, try again in %d seconds.
-//	400 SESSION_TOO_FRESH_%d: This session was created less than 24 hours ago, try again in %d seconds.
-//	400 SRP_ID_INVALID: Invalid SRP ID provided.
-//	400 USER_ID_INVALID: The provided user ID is invalid.
-//
-// See https://core.telegram.org/method/channels.editCreator for reference.
 func (c *Client) ChannelsEditCreator(ctx context.Context, request *ChannelsEditCreatorRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

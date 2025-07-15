@@ -32,13 +32,10 @@ var (
 )
 
 // PaymentsGetPaymentReceiptRequest represents TL type `payments.getPaymentReceipt#2478d1cc`.
-// Get payment receipt
-//
-// See https://core.telegram.org/method/payments.getPaymentReceipt for reference.
 type PaymentsGetPaymentReceiptRequest struct {
-	// The peer where the payment receipt was sent
+	// Peer field of PaymentsGetPaymentReceiptRequest.
 	Peer InputPeerClass
-	// Message ID of receipt
+	// MsgID field of PaymentsGetPaymentReceiptRequest.
 	MsgID int
 }
 
@@ -74,15 +71,6 @@ func (g *PaymentsGetPaymentReceiptRequest) String() string {
 	}
 	type Alias PaymentsGetPaymentReceiptRequest
 	return fmt.Sprintf("PaymentsGetPaymentReceiptRequest%+v", Alias(*g))
-}
-
-// FillFrom fills PaymentsGetPaymentReceiptRequest from given interface.
-func (g *PaymentsGetPaymentReceiptRequest) FillFrom(from interface {
-	GetPeer() (value InputPeerClass)
-	GetMsgID() (value int)
-}) {
-	g.Peer = from.GetPeer()
-	g.MsgID = from.GetMsgID()
 }
 
 // TypeID returns type id in TL schema.
@@ -194,13 +182,6 @@ func (g *PaymentsGetPaymentReceiptRequest) GetMsgID() (value int) {
 }
 
 // PaymentsGetPaymentReceipt invokes method payments.getPaymentReceipt#2478d1cc returning error if any.
-// Get payment receipt
-//
-// Possible errors:
-//
-//	400 MESSAGE_ID_INVALID: The provided message id is invalid.
-//
-// See https://core.telegram.org/method/payments.getPaymentReceipt for reference.
 func (c *Client) PaymentsGetPaymentReceipt(ctx context.Context, request *PaymentsGetPaymentReceiptRequest) (PaymentsPaymentReceiptClass, error) {
 	var result PaymentsPaymentReceiptBox
 

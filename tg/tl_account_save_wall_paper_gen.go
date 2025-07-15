@@ -32,21 +32,12 @@ var (
 )
 
 // AccountSaveWallPaperRequest represents TL type `account.saveWallPaper#6c5a5b37`.
-// Install/uninstall wallpaper¹
-//
-// Links:
-//  1. https://core.telegram.org/api/wallpapers
-//
-// See https://core.telegram.org/method/account.saveWallPaper for reference.
 type AccountSaveWallPaperRequest struct {
-	// Wallpaper¹ to install or uninstall
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/wallpapers
+	// Wallpaper field of AccountSaveWallPaperRequest.
 	Wallpaper InputWallPaperClass
-	// Uninstall wallpaper?
+	// Unsave field of AccountSaveWallPaperRequest.
 	Unsave bool
-	// Wallpaper settings
+	// Settings field of AccountSaveWallPaperRequest.
 	Settings WallPaperSettings
 }
 
@@ -85,17 +76,6 @@ func (s *AccountSaveWallPaperRequest) String() string {
 	}
 	type Alias AccountSaveWallPaperRequest
 	return fmt.Sprintf("AccountSaveWallPaperRequest%+v", Alias(*s))
-}
-
-// FillFrom fills AccountSaveWallPaperRequest from given interface.
-func (s *AccountSaveWallPaperRequest) FillFrom(from interface {
-	GetWallpaper() (value InputWallPaperClass)
-	GetUnsave() (value bool)
-	GetSettings() (value WallPaperSettings)
-}) {
-	s.Wallpaper = from.GetWallpaper()
-	s.Unsave = from.GetUnsave()
-	s.Settings = from.GetSettings()
 }
 
 // TypeID returns type id in TL schema.
@@ -227,16 +207,6 @@ func (s *AccountSaveWallPaperRequest) GetSettings() (value WallPaperSettings) {
 }
 
 // AccountSaveWallPaper invokes method account.saveWallPaper#6c5a5b37 returning error if any.
-// Install/uninstall wallpaper¹
-//
-// Links:
-//  1. https://core.telegram.org/api/wallpapers
-//
-// Possible errors:
-//
-//	400 WALLPAPER_INVALID: The specified wallpaper is invalid.
-//
-// See https://core.telegram.org/method/account.saveWallPaper for reference.
 func (c *Client) AccountSaveWallPaper(ctx context.Context, request *AccountSaveWallPaperRequest) (bool, error) {
 	var result BoolBox
 

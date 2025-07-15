@@ -32,19 +32,10 @@ var (
 )
 
 // ChannelsSetDiscussionGroupRequest represents TL type `channels.setDiscussionGroup#40582bb2`.
-// Associate a group to a channel as discussion group¹ for that channel
-//
-// Links:
-//  1. https://core.telegram.org/api/discussion
-//
-// See https://core.telegram.org/method/channels.setDiscussionGroup for reference.
 type ChannelsSetDiscussionGroupRequest struct {
-	// Channel
+	// Broadcast field of ChannelsSetDiscussionGroupRequest.
 	Broadcast InputChannelClass
-	// Discussion group¹ to associate to the channel
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/discussion
+	// Group field of ChannelsSetDiscussionGroupRequest.
 	Group InputChannelClass
 }
 
@@ -80,15 +71,6 @@ func (s *ChannelsSetDiscussionGroupRequest) String() string {
 	}
 	type Alias ChannelsSetDiscussionGroupRequest
 	return fmt.Sprintf("ChannelsSetDiscussionGroupRequest%+v", Alias(*s))
-}
-
-// FillFrom fills ChannelsSetDiscussionGroupRequest from given interface.
-func (s *ChannelsSetDiscussionGroupRequest) FillFrom(from interface {
-	GetBroadcast() (value InputChannelClass)
-	GetGroup() (value InputChannelClass)
-}) {
-	s.Broadcast = from.GetBroadcast()
-	s.Group = from.GetGroup()
 }
 
 // TypeID returns type id in TL schema.
@@ -204,33 +186,7 @@ func (s *ChannelsSetDiscussionGroupRequest) GetGroup() (value InputChannelClass)
 	return s.Group
 }
 
-// GetBroadcastAsNotEmpty returns mapped value of Broadcast field.
-func (s *ChannelsSetDiscussionGroupRequest) GetBroadcastAsNotEmpty() (NotEmptyInputChannel, bool) {
-	return s.Broadcast.AsNotEmpty()
-}
-
-// GetGroupAsNotEmpty returns mapped value of Group field.
-func (s *ChannelsSetDiscussionGroupRequest) GetGroupAsNotEmpty() (NotEmptyInputChannel, bool) {
-	return s.Group.AsNotEmpty()
-}
-
 // ChannelsSetDiscussionGroup invokes method channels.setDiscussionGroup#40582bb2 returning error if any.
-// Associate a group to a channel as discussion group¹ for that channel
-//
-// Links:
-//  1. https://core.telegram.org/api/discussion
-//
-// Possible errors:
-//
-//	400 BROADCAST_ID_INVALID: Broadcast ID invalid.
-//	400 CHANNEL_INVALID: The provided channel is invalid.
-//	400 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
-//	403 CHAT_WRITE_FORBIDDEN: You can't write in this chat.
-//	400 LINK_NOT_MODIFIED: Discussion link not modified.
-//	400 MEGAGROUP_ID_INVALID: Invalid supergroup ID.
-//	400 MEGAGROUP_PREHISTORY_HIDDEN: Group with hidden history for new members can't be set as discussion groups.
-//
-// See https://core.telegram.org/method/channels.setDiscussionGroup for reference.
 func (c *Client) ChannelsSetDiscussionGroup(ctx context.Context, request *ChannelsSetDiscussionGroupRequest) (bool, error) {
 	var result BoolBox
 

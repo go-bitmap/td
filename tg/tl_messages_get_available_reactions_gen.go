@@ -32,17 +32,8 @@ var (
 )
 
 // MessagesGetAvailableReactionsRequest represents TL type `messages.getAvailableReactions#18dea0ac`.
-// Obtain available message reactions »¹
-//
-// Links:
-//  1. https://core.telegram.org/api/reactions
-//
-// See https://core.telegram.org/method/messages.getAvailableReactions for reference.
 type MessagesGetAvailableReactionsRequest struct {
-	// Hash used for caching, for more info click here¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets#hash-generation
+	// Hash field of MessagesGetAvailableReactionsRequest.
 	Hash int
 }
 
@@ -75,13 +66,6 @@ func (g *MessagesGetAvailableReactionsRequest) String() string {
 	}
 	type Alias MessagesGetAvailableReactionsRequest
 	return fmt.Sprintf("MessagesGetAvailableReactionsRequest%+v", Alias(*g))
-}
-
-// FillFrom fills MessagesGetAvailableReactionsRequest from given interface.
-func (g *MessagesGetAvailableReactionsRequest) FillFrom(from interface {
-	GetHash() (value int)
-}) {
-	g.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -168,12 +152,6 @@ func (g *MessagesGetAvailableReactionsRequest) GetHash() (value int) {
 }
 
 // MessagesGetAvailableReactions invokes method messages.getAvailableReactions#18dea0ac returning error if any.
-// Obtain available message reactions »¹
-//
-// Links:
-//  1. https://core.telegram.org/api/reactions
-//
-// See https://core.telegram.org/method/messages.getAvailableReactions for reference.
 func (c *Client) MessagesGetAvailableReactions(ctx context.Context, hash int) (MessagesAvailableReactionsClass, error) {
 	var result MessagesAvailableReactionsBox
 

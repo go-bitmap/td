@@ -32,34 +32,28 @@ var (
 )
 
 // PageTableCell represents TL type `pageTableCell#34566b6a`.
-// Table cell
-//
-// See https://core.telegram.org/constructor/pageTableCell for reference.
 type PageTableCell struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of PageTableCell.
 	Flags bin.Fields
-	// Is this element part of the column header
+	// Header field of PageTableCell.
 	Header bool
-	// Horizontally centered block
+	// AlignCenter field of PageTableCell.
 	AlignCenter bool
-	// Right-aligned block
+	// AlignRight field of PageTableCell.
 	AlignRight bool
-	// Vertically centered block
+	// ValignMiddle field of PageTableCell.
 	ValignMiddle bool
-	// Block vertically-aligned to the bottom
+	// ValignBottom field of PageTableCell.
 	ValignBottom bool
-	// Content
+	// Text field of PageTableCell.
 	//
 	// Use SetText and GetText helpers.
 	Text RichTextClass
-	// For how many columns should this cell extend
+	// Colspan field of PageTableCell.
 	//
 	// Use SetColspan and GetColspan helpers.
 	Colspan int
-	// For how many rows should this cell extend
+	// Rowspan field of PageTableCell.
 	//
 	// Use SetRowspan and GetRowspan helpers.
 	Rowspan int
@@ -118,36 +112,6 @@ func (p *PageTableCell) String() string {
 	}
 	type Alias PageTableCell
 	return fmt.Sprintf("PageTableCell%+v", Alias(*p))
-}
-
-// FillFrom fills PageTableCell from given interface.
-func (p *PageTableCell) FillFrom(from interface {
-	GetHeader() (value bool)
-	GetAlignCenter() (value bool)
-	GetAlignRight() (value bool)
-	GetValignMiddle() (value bool)
-	GetValignBottom() (value bool)
-	GetText() (value RichTextClass, ok bool)
-	GetColspan() (value int, ok bool)
-	GetRowspan() (value int, ok bool)
-}) {
-	p.Header = from.GetHeader()
-	p.AlignCenter = from.GetAlignCenter()
-	p.AlignRight = from.GetAlignRight()
-	p.ValignMiddle = from.GetValignMiddle()
-	p.ValignBottom = from.GetValignBottom()
-	if val, ok := from.GetText(); ok {
-		p.Text = val
-	}
-
-	if val, ok := from.GetColspan(); ok {
-		p.Colspan = val
-	}
-
-	if val, ok := from.GetRowspan(); ok {
-		p.Rowspan = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.

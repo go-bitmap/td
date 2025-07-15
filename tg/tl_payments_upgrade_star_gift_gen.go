@@ -32,8 +32,6 @@ var (
 )
 
 // PaymentsUpgradeStarGiftRequest represents TL type `payments.upgradeStarGift#aed6e4f5`.
-//
-// See https://core.telegram.org/method/payments.upgradeStarGift for reference.
 type PaymentsUpgradeStarGiftRequest struct {
 	// Flags field of PaymentsUpgradeStarGiftRequest.
 	Flags bin.Fields
@@ -78,15 +76,6 @@ func (u *PaymentsUpgradeStarGiftRequest) String() string {
 	}
 	type Alias PaymentsUpgradeStarGiftRequest
 	return fmt.Sprintf("PaymentsUpgradeStarGiftRequest%+v", Alias(*u))
-}
-
-// FillFrom fills PaymentsUpgradeStarGiftRequest from given interface.
-func (u *PaymentsUpgradeStarGiftRequest) FillFrom(from interface {
-	GetKeepOriginalDetails() (value bool)
-	GetStargift() (value InputSavedStarGiftClass)
-}) {
-	u.KeepOriginalDetails = from.GetKeepOriginalDetails()
-	u.Stargift = from.GetStargift()
 }
 
 // TypeID returns type id in TL schema.
@@ -219,8 +208,6 @@ func (u *PaymentsUpgradeStarGiftRequest) GetStargift() (value InputSavedStarGift
 }
 
 // PaymentsUpgradeStarGift invokes method payments.upgradeStarGift#aed6e4f5 returning error if any.
-//
-// See https://core.telegram.org/method/payments.upgradeStarGift for reference.
 func (c *Client) PaymentsUpgradeStarGift(ctx context.Context, request *PaymentsUpgradeStarGiftRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

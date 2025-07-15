@@ -32,9 +32,6 @@ var (
 )
 
 // HelpGetInviteTextRequest represents TL type `help.getInviteText#4d392343`.
-// Returns localized text of a text message with an invitation.
-//
-// See https://core.telegram.org/method/help.getInviteText for reference.
 type HelpGetInviteTextRequest struct {
 }
 
@@ -129,9 +126,6 @@ func (g *HelpGetInviteTextRequest) DecodeBare(b *bin.Buffer) error {
 }
 
 // HelpGetInviteText invokes method help.getInviteText#4d392343 returning error if any.
-// Returns localized text of a text message with an invitation.
-//
-// See https://core.telegram.org/method/help.getInviteText for reference.
 func (c *Client) HelpGetInviteText(ctx context.Context) (*HelpInviteText, error) {
 	var result HelpInviteText
 

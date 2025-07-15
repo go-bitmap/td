@@ -32,16 +32,10 @@ var (
 )
 
 // StoriesGetStoriesByIDRequest represents TL type `stories.getStoriesByID#5774ca74`.
-// Obtain full info about a set of stories¹ by their IDs.
-//
-// Links:
-//  1. https://core.telegram.org/api/stories
-//
-// See https://core.telegram.org/method/stories.getStoriesByID for reference.
 type StoriesGetStoriesByIDRequest struct {
-	// Peer where the stories were posted
+	// Peer field of StoriesGetStoriesByIDRequest.
 	Peer InputPeerClass
-	// Story IDs
+	// ID field of StoriesGetStoriesByIDRequest.
 	ID []int
 }
 
@@ -77,15 +71,6 @@ func (g *StoriesGetStoriesByIDRequest) String() string {
 	}
 	type Alias StoriesGetStoriesByIDRequest
 	return fmt.Sprintf("StoriesGetStoriesByIDRequest%+v", Alias(*g))
-}
-
-// FillFrom fills StoriesGetStoriesByIDRequest from given interface.
-func (g *StoriesGetStoriesByIDRequest) FillFrom(from interface {
-	GetPeer() (value InputPeerClass)
-	GetID() (value []int)
-}) {
-	g.Peer = from.GetPeer()
-	g.ID = from.GetID()
 }
 
 // TypeID returns type id in TL schema.
@@ -210,20 +195,6 @@ func (g *StoriesGetStoriesByIDRequest) GetID() (value []int) {
 }
 
 // StoriesGetStoriesByID invokes method stories.getStoriesByID#5774ca74 returning error if any.
-// Obtain full info about a set of stories¹ by their IDs.
-//
-// Links:
-//  1. https://core.telegram.org/api/stories
-//
-// Possible errors:
-//
-//	400 CHANNEL_INVALID: The provided channel is invalid.
-//	400 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//	400 STORIES_NEVER_CREATED: This peer hasn't ever posted any stories.
-//	400 STORY_ID_EMPTY: You specified no story IDs.
-//
-// See https://core.telegram.org/method/stories.getStoriesByID for reference.
 func (c *Client) StoriesGetStoriesByID(ctx context.Context, request *StoriesGetStoriesByIDRequest) (*StoriesStories, error) {
 	var result StoriesStories
 

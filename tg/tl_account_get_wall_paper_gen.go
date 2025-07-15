@@ -32,17 +32,8 @@ var (
 )
 
 // AccountGetWallPaperRequest represents TL type `account.getWallPaper#fc8ddbea`.
-// Get info about a certain wallpaper¹
-//
-// Links:
-//  1. https://core.telegram.org/api/wallpapers
-//
-// See https://core.telegram.org/method/account.getWallPaper for reference.
 type AccountGetWallPaperRequest struct {
-	// The wallpaper¹ to get info about
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/wallpapers
+	// Wallpaper field of AccountGetWallPaperRequest.
 	Wallpaper InputWallPaperClass
 }
 
@@ -75,13 +66,6 @@ func (g *AccountGetWallPaperRequest) String() string {
 	}
 	type Alias AccountGetWallPaperRequest
 	return fmt.Sprintf("AccountGetWallPaperRequest%+v", Alias(*g))
-}
-
-// FillFrom fills AccountGetWallPaperRequest from given interface.
-func (g *AccountGetWallPaperRequest) FillFrom(from interface {
-	GetWallpaper() (value InputWallPaperClass)
-}) {
-	g.Wallpaper = from.GetWallpaper()
 }
 
 // TypeID returns type id in TL schema.
@@ -173,16 +157,6 @@ func (g *AccountGetWallPaperRequest) GetWallpaper() (value InputWallPaperClass) 
 }
 
 // AccountGetWallPaper invokes method account.getWallPaper#fc8ddbea returning error if any.
-// Get info about a certain wallpaper¹
-//
-// Links:
-//  1. https://core.telegram.org/api/wallpapers
-//
-// Possible errors:
-//
-//	400 WALLPAPER_INVALID: The specified wallpaper is invalid.
-//
-// See https://core.telegram.org/method/account.getWallPaper for reference.
 func (c *Client) AccountGetWallPaper(ctx context.Context, wallpaper InputWallPaperClass) (WallPaperClass, error) {
 	var result WallPaperBox
 

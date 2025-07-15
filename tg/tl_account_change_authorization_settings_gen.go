@@ -32,34 +32,18 @@ var (
 )
 
 // AccountChangeAuthorizationSettingsRequest represents TL type `account.changeAuthorizationSettings#40f48462`.
-// Change settings related to a session.
-//
-// See https://core.telegram.org/method/account.changeAuthorizationSettings for reference.
 type AccountChangeAuthorizationSettingsRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of AccountChangeAuthorizationSettingsRequest.
 	Flags bin.Fields
-	// If set, confirms a newly logged in session »¹.
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/auth#confirming-login
+	// Confirmed field of AccountChangeAuthorizationSettingsRequest.
 	Confirmed bool
-	// Session ID from the authorization¹ constructor, fetchable using account
-	// getAuthorizations²
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/authorization
-	//  2) https://core.telegram.org/method/account.getAuthorizations
+	// Hash field of AccountChangeAuthorizationSettingsRequest.
 	Hash int64
-	// Whether to enable or disable receiving encrypted chats: if the flag is not set, the
-	// previous setting is not changed
+	// EncryptedRequestsDisabled field of AccountChangeAuthorizationSettingsRequest.
 	//
 	// Use SetEncryptedRequestsDisabled and GetEncryptedRequestsDisabled helpers.
 	EncryptedRequestsDisabled bool
-	// Whether to enable or disable receiving calls: if the flag is not set, the previous
-	// setting is not changed
+	// CallRequestsDisabled field of AccountChangeAuthorizationSettingsRequest.
 	//
 	// Use SetCallRequestsDisabled and GetCallRequestsDisabled helpers.
 	CallRequestsDisabled bool
@@ -106,25 +90,6 @@ func (c *AccountChangeAuthorizationSettingsRequest) String() string {
 	}
 	type Alias AccountChangeAuthorizationSettingsRequest
 	return fmt.Sprintf("AccountChangeAuthorizationSettingsRequest%+v", Alias(*c))
-}
-
-// FillFrom fills AccountChangeAuthorizationSettingsRequest from given interface.
-func (c *AccountChangeAuthorizationSettingsRequest) FillFrom(from interface {
-	GetConfirmed() (value bool)
-	GetHash() (value int64)
-	GetEncryptedRequestsDisabled() (value bool, ok bool)
-	GetCallRequestsDisabled() (value bool, ok bool)
-}) {
-	c.Confirmed = from.GetConfirmed()
-	c.Hash = from.GetHash()
-	if val, ok := from.GetEncryptedRequestsDisabled(); ok {
-		c.EncryptedRequestsDisabled = val
-	}
-
-	if val, ok := from.GetCallRequestsDisabled(); ok {
-		c.CallRequestsDisabled = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -324,13 +289,6 @@ func (c *AccountChangeAuthorizationSettingsRequest) GetCallRequestsDisabled() (v
 }
 
 // AccountChangeAuthorizationSettings invokes method account.changeAuthorizationSettings#40f48462 returning error if any.
-// Change settings related to a session.
-//
-// Possible errors:
-//
-//	400 HASH_INVALID: The provided hash is invalid.
-//
-// See https://core.telegram.org/method/account.changeAuthorizationSettings for reference.
 func (c *Client) AccountChangeAuthorizationSettings(ctx context.Context, request *AccountChangeAuthorizationSettingsRequest) (bool, error) {
 	var result BoolBox
 

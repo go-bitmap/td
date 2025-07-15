@@ -32,9 +32,6 @@ var (
 )
 
 // MessagesStickerSetInstallResultSuccess represents TL type `messages.stickerSetInstallResultSuccess#38641628`.
-// The stickerset was installed successfully
-//
-// See https://core.telegram.org/constructor/messages.stickerSetInstallResultSuccess for reference.
 type MessagesStickerSetInstallResultSuccess struct {
 }
 
@@ -136,12 +133,8 @@ func (s *MessagesStickerSetInstallResultSuccess) DecodeBare(b *bin.Buffer) error
 }
 
 // MessagesStickerSetInstallResultArchive represents TL type `messages.stickerSetInstallResultArchive#35e410a8`.
-// The stickerset was installed, but since there are too many stickersets some were
-// archived
-//
-// See https://core.telegram.org/constructor/messages.stickerSetInstallResultArchive for reference.
 type MessagesStickerSetInstallResultArchive struct {
-	// Archived stickersets
+	// Sets field of MessagesStickerSetInstallResultArchive.
 	Sets []StickerSetCoveredClass
 }
 
@@ -181,13 +174,6 @@ func (s *MessagesStickerSetInstallResultArchive) String() string {
 	}
 	type Alias MessagesStickerSetInstallResultArchive
 	return fmt.Sprintf("MessagesStickerSetInstallResultArchive%+v", Alias(*s))
-}
-
-// FillFrom fills MessagesStickerSetInstallResultArchive from given interface.
-func (s *MessagesStickerSetInstallResultArchive) FillFrom(from interface {
-	GetSets() (value []StickerSetCoveredClass)
-}) {
-	s.Sets = from.GetSets()
 }
 
 // TypeID returns type id in TL schema.
@@ -291,17 +277,10 @@ func (s *MessagesStickerSetInstallResultArchive) GetSets() (value []StickerSetCo
 	return s.Sets
 }
 
-// MapSets returns field Sets wrapped in StickerSetCoveredClassArray helper.
-func (s *MessagesStickerSetInstallResultArchive) MapSets() (value StickerSetCoveredClassArray) {
-	return StickerSetCoveredClassArray(s.Sets)
-}
-
 // MessagesStickerSetInstallResultClassName is schema name of MessagesStickerSetInstallResultClass.
 const MessagesStickerSetInstallResultClassName = "messages.StickerSetInstallResult"
 
 // MessagesStickerSetInstallResultClass represents messages.StickerSetInstallResult generic type.
-//
-// See https://core.telegram.org/type/messages.StickerSetInstallResult for reference.
 //
 // Constructors:
 //   - [MessagesStickerSetInstallResultSuccess]

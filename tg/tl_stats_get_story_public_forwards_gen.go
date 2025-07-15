@@ -32,30 +32,14 @@ var (
 )
 
 // StatsGetStoryPublicForwardsRequest represents TL type `stats.getStoryPublicForwards#a6437ef6`.
-// Obtain forwards of a story¹ as a message to public chats and reposts by public
-// channels.
-//
-// Links:
-//  1. https://core.telegram.org/api/stories
-//
-// See https://core.telegram.org/method/stats.getStoryPublicForwards for reference.
 type StatsGetStoryPublicForwardsRequest struct {
-	// Peer where the story was originally posted
+	// Peer field of StatsGetStoryPublicForwardsRequest.
 	Peer InputPeerClass
-	// Story¹ ID
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/stories
+	// ID field of StatsGetStoryPublicForwardsRequest.
 	ID int
-	// Offset for pagination, from stats.PublicForwards¹.next_offset.
-	//
-	// Links:
-	//  1) https://core.telegram.org/constructor/stats.publicForwards
+	// Offset field of StatsGetStoryPublicForwardsRequest.
 	Offset string
-	// Maximum number of results to return, see pagination¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/offsets
+	// Limit field of StatsGetStoryPublicForwardsRequest.
 	Limit int
 }
 
@@ -97,19 +81,6 @@ func (g *StatsGetStoryPublicForwardsRequest) String() string {
 	}
 	type Alias StatsGetStoryPublicForwardsRequest
 	return fmt.Sprintf("StatsGetStoryPublicForwardsRequest%+v", Alias(*g))
-}
-
-// FillFrom fills StatsGetStoryPublicForwardsRequest from given interface.
-func (g *StatsGetStoryPublicForwardsRequest) FillFrom(from interface {
-	GetPeer() (value InputPeerClass)
-	GetID() (value int)
-	GetOffset() (value string)
-	GetLimit() (value int)
-}) {
-	g.Peer = from.GetPeer()
-	g.ID = from.GetID()
-	g.Offset = from.GetOffset()
-	g.Limit = from.GetLimit()
 }
 
 // TypeID returns type id in TL schema.
@@ -261,17 +232,6 @@ func (g *StatsGetStoryPublicForwardsRequest) GetLimit() (value int) {
 }
 
 // StatsGetStoryPublicForwards invokes method stats.getStoryPublicForwards#a6437ef6 returning error if any.
-// Obtain forwards of a story¹ as a message to public chats and reposts by public
-// channels.
-//
-// Links:
-//  1. https://core.telegram.org/api/stories
-//
-// Possible errors:
-//
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//
-// See https://core.telegram.org/method/stats.getStoryPublicForwards for reference.
 func (c *Client) StatsGetStoryPublicForwards(ctx context.Context, request *StatsGetStoryPublicForwardsRequest) (*StatsPublicForwards, error) {
 	var result StatsPublicForwards
 

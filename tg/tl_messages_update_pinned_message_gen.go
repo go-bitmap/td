@@ -32,24 +32,18 @@ var (
 )
 
 // MessagesUpdatePinnedMessageRequest represents TL type `messages.updatePinnedMessage#d2aaf7ec`.
-// Pin a message
-//
-// See https://core.telegram.org/method/messages.updatePinnedMessage for reference.
 type MessagesUpdatePinnedMessageRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of MessagesUpdatePinnedMessageRequest.
 	Flags bin.Fields
-	// Pin the message silently, without triggering a notification
+	// Silent field of MessagesUpdatePinnedMessageRequest.
 	Silent bool
-	// Whether the message should unpinned or pinned
+	// Unpin field of MessagesUpdatePinnedMessageRequest.
 	Unpin bool
-	// Whether the message should only be pinned on the local side of a one-to-one chat
+	// PmOneside field of MessagesUpdatePinnedMessageRequest.
 	PmOneside bool
-	// The peer where to pin the message
+	// Peer field of MessagesUpdatePinnedMessageRequest.
 	Peer InputPeerClass
-	// The message to pin or unpin
+	// ID field of MessagesUpdatePinnedMessageRequest.
 	ID int
 }
 
@@ -97,21 +91,6 @@ func (u *MessagesUpdatePinnedMessageRequest) String() string {
 	}
 	type Alias MessagesUpdatePinnedMessageRequest
 	return fmt.Sprintf("MessagesUpdatePinnedMessageRequest%+v", Alias(*u))
-}
-
-// FillFrom fills MessagesUpdatePinnedMessageRequest from given interface.
-func (u *MessagesUpdatePinnedMessageRequest) FillFrom(from interface {
-	GetSilent() (value bool)
-	GetUnpin() (value bool)
-	GetPmOneside() (value bool)
-	GetPeer() (value InputPeerClass)
-	GetID() (value int)
-}) {
-	u.Silent = from.GetSilent()
-	u.Unpin = from.GetUnpin()
-	u.PmOneside = from.GetPmOneside()
-	u.Peer = from.GetPeer()
-	u.ID = from.GetID()
 }
 
 // TypeID returns type id in TL schema.
@@ -320,22 +299,6 @@ func (u *MessagesUpdatePinnedMessageRequest) GetID() (value int) {
 }
 
 // MessagesUpdatePinnedMessage invokes method messages.updatePinnedMessage#d2aaf7ec returning error if any.
-// Pin a message
-//
-// Possible errors:
-//
-//	400 BOT_ONESIDE_NOT_AVAIL: Bots can't pin messages in PM just for themselves.
-//	400 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
-//	400 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
-//	400 CHAT_NOT_MODIFIED: No changes were made to chat information because the new information you passed is identical to the current information.
-//	403 CHAT_WRITE_FORBIDDEN: You can't write in this chat.
-//	400 MESSAGE_ID_INVALID: The provided message id is invalid.
-//	400 PEER_ID_INVALID: The provided peer id is invalid.
-//	400 PIN_RESTRICTED: You can't pin messages.
-//	400 USER_BANNED_IN_CHANNEL: You're banned from sending messages in supergroups/channels.
-//
-// See https://core.telegram.org/method/messages.updatePinnedMessage for reference.
-// Can be used by bots.
 func (c *Client) MessagesUpdatePinnedMessage(ctx context.Context, request *MessagesUpdatePinnedMessageRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

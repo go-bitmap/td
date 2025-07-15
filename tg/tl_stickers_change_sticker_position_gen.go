@@ -32,14 +32,10 @@ var (
 )
 
 // StickersChangeStickerPositionRequest represents TL type `stickers.changeStickerPosition#ffb6d4ca`.
-// Changes the absolute position of a sticker in the set to which it belongs. The sticker
-// set must have been created by the current user/bot.
-//
-// See https://core.telegram.org/method/stickers.changeStickerPosition for reference.
 type StickersChangeStickerPositionRequest struct {
-	// The sticker
+	// Sticker field of StickersChangeStickerPositionRequest.
 	Sticker InputDocumentClass
-	// The new position of the sticker, zero-based
+	// Position field of StickersChangeStickerPositionRequest.
 	Position int
 }
 
@@ -75,15 +71,6 @@ func (c *StickersChangeStickerPositionRequest) String() string {
 	}
 	type Alias StickersChangeStickerPositionRequest
 	return fmt.Sprintf("StickersChangeStickerPositionRequest%+v", Alias(*c))
-}
-
-// FillFrom fills StickersChangeStickerPositionRequest from given interface.
-func (c *StickersChangeStickerPositionRequest) FillFrom(from interface {
-	GetSticker() (value InputDocumentClass)
-	GetPosition() (value int)
-}) {
-	c.Sticker = from.GetSticker()
-	c.Position = from.GetPosition()
 }
 
 // TypeID returns type id in TL schema.
@@ -194,21 +181,7 @@ func (c *StickersChangeStickerPositionRequest) GetPosition() (value int) {
 	return c.Position
 }
 
-// GetStickerAsNotEmpty returns mapped value of Sticker field.
-func (c *StickersChangeStickerPositionRequest) GetStickerAsNotEmpty() (*InputDocument, bool) {
-	return c.Sticker.AsNotEmpty()
-}
-
 // StickersChangeStickerPosition invokes method stickers.changeStickerPosition#ffb6d4ca returning error if any.
-// Changes the absolute position of a sticker in the set to which it belongs. The sticker
-// set must have been created by the current user/bot.
-//
-// Possible errors:
-//
-//	400 STICKER_INVALID: The provided sticker is invalid.
-//
-// See https://core.telegram.org/method/stickers.changeStickerPosition for reference.
-// Can be used by bots.
 func (c *Client) StickersChangeStickerPosition(ctx context.Context, request *StickersChangeStickerPositionRequest) (MessagesStickerSetClass, error) {
 	var result MessagesStickerSetBox
 

@@ -32,30 +32,16 @@ var (
 )
 
 // AccountUpdateColorRequest represents TL type `account.updateColor#7cefa15d`.
-// Update the accent color and background custom emoji »¹ of the current account.
-//
-// Links:
-//  1. https://core.telegram.org/api/colors
-//
-// See https://core.telegram.org/method/account.updateColor for reference.
 type AccountUpdateColorRequest struct {
-	// Flags, see TL conditional fields¹
-	//
-	// Links:
-	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
+	// Flags field of AccountUpdateColorRequest.
 	Flags bin.Fields
-	// Whether to change the accent color emoji pattern of the profile page; otherwise, the
-	// accent color and emoji pattern of messages will be changed.
+	// ForProfile field of AccountUpdateColorRequest.
 	ForProfile bool
-	// ID of the accent color palette »¹ to use (not RGB24, see here »² for more info).
-	//
-	// Links:
-	//  1) https://core.telegram.org/api/colors
-	//  2) https://core.telegram.org/api/colors
+	// Color field of AccountUpdateColorRequest.
 	//
 	// Use SetColor and GetColor helpers.
 	Color int
-	// Custom emoji ID used in the accent color pattern.
+	// BackgroundEmojiID field of AccountUpdateColorRequest.
 	//
 	// Use SetBackgroundEmojiID and GetBackgroundEmojiID helpers.
 	BackgroundEmojiID int64
@@ -99,23 +85,6 @@ func (u *AccountUpdateColorRequest) String() string {
 	}
 	type Alias AccountUpdateColorRequest
 	return fmt.Sprintf("AccountUpdateColorRequest%+v", Alias(*u))
-}
-
-// FillFrom fills AccountUpdateColorRequest from given interface.
-func (u *AccountUpdateColorRequest) FillFrom(from interface {
-	GetForProfile() (value bool)
-	GetColor() (value int, ok bool)
-	GetBackgroundEmojiID() (value int64, ok bool)
-}) {
-	u.ForProfile = from.GetForProfile()
-	if val, ok := from.GetColor(); ok {
-		u.Color = val
-	}
-
-	if val, ok := from.GetBackgroundEmojiID(); ok {
-		u.BackgroundEmojiID = val
-	}
-
 }
 
 // TypeID returns type id in TL schema.
@@ -295,17 +264,6 @@ func (u *AccountUpdateColorRequest) GetBackgroundEmojiID() (value int64, ok bool
 }
 
 // AccountUpdateColor invokes method account.updateColor#7cefa15d returning error if any.
-// Update the accent color and background custom emoji »¹ of the current account.
-//
-// Links:
-//  1. https://core.telegram.org/api/colors
-//
-// Possible errors:
-//
-//	400 COLOR_INVALID: The specified color palette ID was invalid.
-//	403 PREMIUM_ACCOUNT_REQUIRED: A premium account is required to execute this action.
-//
-// See https://core.telegram.org/method/account.updateColor for reference.
 func (c *Client) AccountUpdateColor(ctx context.Context, request *AccountUpdateColorRequest) (bool, error) {
 	var result BoolBox
 
