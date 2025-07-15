@@ -32,10 +32,21 @@ var (
 )
 
 // MessagesDeleteQuickReplyMessagesRequest represents TL type `messages.deleteQuickReplyMessages#e105e910`.
+// Delete one or more messages from a quick reply shortcut¹. This will also emit an
+// updateDeleteQuickReplyMessages² update.
+//
+// Links:
+//  1. https://core.telegram.org/api/business#quick-reply-shortcuts
+//  2. https://core.telegram.org/constructor/updateDeleteQuickReplyMessages
+//
+// See https://core.telegram.org/method/messages.deleteQuickReplyMessages for reference.
 type MessagesDeleteQuickReplyMessagesRequest struct {
-	// ShortcutID field of MessagesDeleteQuickReplyMessagesRequest.
+	// Shortcut ID¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/business#quick-reply-shortcuts
 	ShortcutID int
-	// ID field of MessagesDeleteQuickReplyMessagesRequest.
+	// IDs of shortcut messages to delete.
 	ID []int
 }
 
@@ -71,6 +82,15 @@ func (d *MessagesDeleteQuickReplyMessagesRequest) String() string {
 	}
 	type Alias MessagesDeleteQuickReplyMessagesRequest
 	return fmt.Sprintf("MessagesDeleteQuickReplyMessagesRequest%+v", Alias(*d))
+}
+
+// FillFrom fills MessagesDeleteQuickReplyMessagesRequest from given interface.
+func (d *MessagesDeleteQuickReplyMessagesRequest) FillFrom(from interface {
+	GetShortcutID() (value int)
+	GetID() (value []int)
+}) {
+	d.ShortcutID = from.GetShortcutID()
+	d.ID = from.GetID()
 }
 
 // TypeID returns type id in TL schema.
@@ -190,6 +210,18 @@ func (d *MessagesDeleteQuickReplyMessagesRequest) GetID() (value []int) {
 }
 
 // MessagesDeleteQuickReplyMessages invokes method messages.deleteQuickReplyMessages#e105e910 returning error if any.
+// Delete one or more messages from a quick reply shortcut¹. This will also emit an
+// updateDeleteQuickReplyMessages² update.
+//
+// Links:
+//  1. https://core.telegram.org/api/business#quick-reply-shortcuts
+//  2. https://core.telegram.org/constructor/updateDeleteQuickReplyMessages
+//
+// Possible errors:
+//
+//	400 SHORTCUT_INVALID: The specified shortcut is invalid.
+//
+// See https://core.telegram.org/method/messages.deleteQuickReplyMessages for reference.
 func (c *Client) MessagesDeleteQuickReplyMessages(ctx context.Context, request *MessagesDeleteQuickReplyMessagesRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

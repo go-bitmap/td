@@ -32,18 +32,32 @@ var (
 )
 
 // MessagesVotesList represents TL type `messages.votesList#4899484e`.
+// How users voted in a poll
+//
+// See https://core.telegram.org/constructor/messages.votesList for reference.
 type MessagesVotesList struct {
-	// Flags field of MessagesVotesList.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Count field of MessagesVotesList.
+	// Total number of votes for all options (or only for the chosen option, if provided to
+	// messages.getPollVotes¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/method/messages.getPollVotes
 	Count int
-	// Votes field of MessagesVotesList.
+	// Vote info for each user
 	Votes []MessagePeerVoteClass
-	// Chats field of MessagesVotesList.
+	// Mentioned chats
 	Chats []ChatClass
-	// Users field of MessagesVotesList.
+	// Info about users that voted in the poll
 	Users []UserClass
-	// NextOffset field of MessagesVotesList.
+	// Offset to use with the next messages.getPollVotes¹ request, empty string if no more
+	// results are available.
+	//
+	// Links:
+	//  1) https://core.telegram.org/method/messages.getPollVotes
 	//
 	// Use SetNextOffset and GetNextOffset helpers.
 	NextOffset string
@@ -93,6 +107,24 @@ func (v *MessagesVotesList) String() string {
 	}
 	type Alias MessagesVotesList
 	return fmt.Sprintf("MessagesVotesList%+v", Alias(*v))
+}
+
+// FillFrom fills MessagesVotesList from given interface.
+func (v *MessagesVotesList) FillFrom(from interface {
+	GetCount() (value int)
+	GetVotes() (value []MessagePeerVoteClass)
+	GetChats() (value []ChatClass)
+	GetUsers() (value []UserClass)
+	GetNextOffset() (value string, ok bool)
+}) {
+	v.Count = from.GetCount()
+	v.Votes = from.GetVotes()
+	v.Chats = from.GetChats()
+	v.Users = from.GetUsers()
+	if val, ok := from.GetNextOffset(); ok {
+		v.NextOffset = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -339,4 +371,19 @@ func (v *MessagesVotesList) GetNextOffset() (value string, ok bool) {
 		return value, false
 	}
 	return v.NextOffset, true
+}
+
+// MapVotes returns field Votes wrapped in MessagePeerVoteClassArray helper.
+func (v *MessagesVotesList) MapVotes() (value MessagePeerVoteClassArray) {
+	return MessagePeerVoteClassArray(v.Votes)
+}
+
+// MapChats returns field Chats wrapped in ChatClassArray helper.
+func (v *MessagesVotesList) MapChats() (value ChatClassArray) {
+	return ChatClassArray(v.Chats)
+}
+
+// MapUsers returns field Users wrapped in UserClassArray helper.
+func (v *MessagesVotesList) MapUsers() (value UserClassArray) {
+	return UserClassArray(v.Users)
 }

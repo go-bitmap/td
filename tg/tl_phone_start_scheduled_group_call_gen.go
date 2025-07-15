@@ -32,8 +32,11 @@ var (
 )
 
 // PhoneStartScheduledGroupCallRequest represents TL type `phone.startScheduledGroupCall#5680e342`.
+// Start a scheduled group call.
+//
+// See https://core.telegram.org/method/phone.startScheduledGroupCall for reference.
 type PhoneStartScheduledGroupCallRequest struct {
-	// Call field of PhoneStartScheduledGroupCallRequest.
+	// The scheduled group call
 	Call InputGroupCallClass
 }
 
@@ -66,6 +69,13 @@ func (s *PhoneStartScheduledGroupCallRequest) String() string {
 	}
 	type Alias PhoneStartScheduledGroupCallRequest
 	return fmt.Sprintf("PhoneStartScheduledGroupCallRequest%+v", Alias(*s))
+}
+
+// FillFrom fills PhoneStartScheduledGroupCallRequest from given interface.
+func (s *PhoneStartScheduledGroupCallRequest) FillFrom(from interface {
+	GetCall() (value InputGroupCallClass)
+}) {
+	s.Call = from.GetCall()
 }
 
 // TypeID returns type id in TL schema.
@@ -157,6 +167,14 @@ func (s *PhoneStartScheduledGroupCallRequest) GetCall() (value InputGroupCallCla
 }
 
 // PhoneStartScheduledGroupCall invokes method phone.startScheduledGroupCall#5680e342 returning error if any.
+// Start a scheduled group call.
+//
+// Possible errors:
+//
+//	403 GROUPCALL_ALREADY_STARTED: The groupcall has already started, you can join directly using phone.joinGroupCall.
+//	400 GROUPCALL_INVALID: The specified group call is invalid.
+//
+// See https://core.telegram.org/method/phone.startScheduledGroupCall for reference.
 func (c *Client) PhoneStartScheduledGroupCall(ctx context.Context, call InputGroupCallClass) (UpdatesClass, error) {
 	var result UpdatesBox
 

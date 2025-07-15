@@ -32,8 +32,11 @@ var (
 )
 
 // AccountGetPrivacyRequest represents TL type `account.getPrivacy#dadbc950`.
+// Get privacy settings of current account
+//
+// See https://core.telegram.org/method/account.getPrivacy for reference.
 type AccountGetPrivacyRequest struct {
-	// Key field of AccountGetPrivacyRequest.
+	// Peer category whose privacy settings should be fetched
 	Key InputPrivacyKeyClass
 }
 
@@ -66,6 +69,13 @@ func (g *AccountGetPrivacyRequest) String() string {
 	}
 	type Alias AccountGetPrivacyRequest
 	return fmt.Sprintf("AccountGetPrivacyRequest%+v", Alias(*g))
+}
+
+// FillFrom fills AccountGetPrivacyRequest from given interface.
+func (g *AccountGetPrivacyRequest) FillFrom(from interface {
+	GetKey() (value InputPrivacyKeyClass)
+}) {
+	g.Key = from.GetKey()
 }
 
 // TypeID returns type id in TL schema.
@@ -157,6 +167,13 @@ func (g *AccountGetPrivacyRequest) GetKey() (value InputPrivacyKeyClass) {
 }
 
 // AccountGetPrivacy invokes method account.getPrivacy#dadbc950 returning error if any.
+// Get privacy settings of current account
+//
+// Possible errors:
+//
+//	400 PRIVACY_KEY_INVALID: The privacy key is invalid.
+//
+// See https://core.telegram.org/method/account.getPrivacy for reference.
 func (c *Client) AccountGetPrivacy(ctx context.Context, key InputPrivacyKeyClass) (*AccountPrivacyRules, error) {
 	var result AccountPrivacyRules
 

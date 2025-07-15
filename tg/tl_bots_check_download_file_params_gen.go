@@ -32,12 +32,29 @@ var (
 )
 
 // BotsCheckDownloadFileParamsRequest represents TL type `bots.checkDownloadFileParams#50077589`.
+// Check if a mini app¹ can request the download of a specific file: called when
+// handling web_app_request_file_download events »²
+//
+// Links:
+//  1. https://core.telegram.org/api/bots/webapps
+//  2. https://core.telegram.org/api/web-events#web-app-request-file-download
+//
+// See https://core.telegram.org/method/bots.checkDownloadFileParams for reference.
 type BotsCheckDownloadFileParamsRequest struct {
-	// Bot field of BotsCheckDownloadFileParamsRequest.
+	// The bot that owns the mini app¹ that requested the download
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/bots/webapps
 	Bot InputUserClass
-	// FileName field of BotsCheckDownloadFileParamsRequest.
+	// The filename from the web_app_request_file_download event »¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/web-events#web-app-request-file-download
 	FileName string
-	// URL field of BotsCheckDownloadFileParamsRequest.
+	// The url from the web_app_request_file_download event »¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/web-events#web-app-request-file-download
 	URL string
 }
 
@@ -76,6 +93,17 @@ func (c *BotsCheckDownloadFileParamsRequest) String() string {
 	}
 	type Alias BotsCheckDownloadFileParamsRequest
 	return fmt.Sprintf("BotsCheckDownloadFileParamsRequest%+v", Alias(*c))
+}
+
+// FillFrom fills BotsCheckDownloadFileParamsRequest from given interface.
+func (c *BotsCheckDownloadFileParamsRequest) FillFrom(from interface {
+	GetBot() (value InputUserClass)
+	GetFileName() (value string)
+	GetURL() (value string)
+}) {
+	c.Bot = from.GetBot()
+	c.FileName = from.GetFileName()
+	c.URL = from.GetURL()
 }
 
 // TypeID returns type id in TL schema.
@@ -207,6 +235,18 @@ func (c *BotsCheckDownloadFileParamsRequest) GetURL() (value string) {
 }
 
 // BotsCheckDownloadFileParams invokes method bots.checkDownloadFileParams#50077589 returning error if any.
+// Check if a mini app¹ can request the download of a specific file: called when
+// handling web_app_request_file_download events »²
+//
+// Links:
+//  1. https://core.telegram.org/api/bots/webapps
+//  2. https://core.telegram.org/api/web-events#web-app-request-file-download
+//
+// Possible errors:
+//
+//	400 BOT_INVALID: This is not a valid bot.
+//
+// See https://core.telegram.org/method/bots.checkDownloadFileParams for reference.
 func (c *Client) BotsCheckDownloadFileParams(ctx context.Context, request *BotsCheckDownloadFileParamsRequest) (bool, error) {
 	var result BoolBox
 

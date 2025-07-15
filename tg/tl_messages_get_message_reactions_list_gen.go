@@ -32,22 +32,38 @@ var (
 )
 
 // MessagesGetMessageReactionsListRequest represents TL type `messages.getMessageReactionsList#461b3f48`.
+// Get message reaction¹ list, along with the sender of each reaction.
+//
+// Links:
+//  1. https://core.telegram.org/api/reactions
+//
+// See https://core.telegram.org/method/messages.getMessageReactionsList for reference.
 type MessagesGetMessageReactionsListRequest struct {
-	// Flags field of MessagesGetMessageReactionsListRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Peer field of MessagesGetMessageReactionsListRequest.
+	// Peer
 	Peer InputPeerClass
-	// ID field of MessagesGetMessageReactionsListRequest.
+	// Message ID
 	ID int
-	// Reaction field of MessagesGetMessageReactionsListRequest.
+	// Get only reactions of this type
 	//
 	// Use SetReaction and GetReaction helpers.
 	Reaction ReactionClass
-	// Offset field of MessagesGetMessageReactionsListRequest.
+	// Offset for pagination (taken from the next_offset field of the returned messages
+	// MessageReactionsList¹); empty in the first request.
+	//
+	// Links:
+	//  1) https://core.telegram.org/type/messages.MessageReactionsList
 	//
 	// Use SetOffset and GetOffset helpers.
 	Offset string
-	// Limit field of MessagesGetMessageReactionsListRequest.
+	// Maximum number of results to return, see pagination¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets
 	Limit int
 }
 
@@ -95,6 +111,27 @@ func (g *MessagesGetMessageReactionsListRequest) String() string {
 	}
 	type Alias MessagesGetMessageReactionsListRequest
 	return fmt.Sprintf("MessagesGetMessageReactionsListRequest%+v", Alias(*g))
+}
+
+// FillFrom fills MessagesGetMessageReactionsListRequest from given interface.
+func (g *MessagesGetMessageReactionsListRequest) FillFrom(from interface {
+	GetPeer() (value InputPeerClass)
+	GetID() (value int)
+	GetReaction() (value ReactionClass, ok bool)
+	GetOffset() (value string, ok bool)
+	GetLimit() (value int)
+}) {
+	g.Peer = from.GetPeer()
+	g.ID = from.GetID()
+	if val, ok := from.GetReaction(); ok {
+		g.Reaction = val
+	}
+
+	if val, ok := from.GetOffset(); ok {
+		g.Offset = val
+	}
+
+	g.Limit = from.GetLimit()
 }
 
 // TypeID returns type id in TL schema.
@@ -316,6 +353,17 @@ func (g *MessagesGetMessageReactionsListRequest) GetLimit() (value int) {
 }
 
 // MessagesGetMessageReactionsList invokes method messages.getMessageReactionsList#461b3f48 returning error if any.
+// Get message reaction¹ list, along with the sender of each reaction.
+//
+// Links:
+//  1. https://core.telegram.org/api/reactions
+//
+// Possible errors:
+//
+//	403 BROADCAST_FORBIDDEN: Channel poll voters and reactions cannot be fetched to prevent deanonymization.
+//	400 MSG_ID_INVALID: Invalid message ID provided.
+//
+// See https://core.telegram.org/method/messages.getMessageReactionsList for reference.
 func (c *Client) MessagesGetMessageReactionsList(ctx context.Context, request *MessagesGetMessageReactionsListRequest) (*MessagesMessageReactionsList, error) {
 	var result MessagesMessageReactionsList
 

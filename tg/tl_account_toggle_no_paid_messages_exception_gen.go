@@ -32,6 +32,8 @@ var (
 )
 
 // AccountToggleNoPaidMessagesExceptionRequest represents TL type `account.toggleNoPaidMessagesException#fe2eda76`.
+//
+// See https://core.telegram.org/method/account.toggleNoPaidMessagesException for reference.
 type AccountToggleNoPaidMessagesExceptionRequest struct {
 	// Flags field of AccountToggleNoPaidMessagesExceptionRequest.
 	Flags bin.Fields
@@ -88,6 +90,22 @@ func (t *AccountToggleNoPaidMessagesExceptionRequest) String() string {
 	}
 	type Alias AccountToggleNoPaidMessagesExceptionRequest
 	return fmt.Sprintf("AccountToggleNoPaidMessagesExceptionRequest%+v", Alias(*t))
+}
+
+// FillFrom fills AccountToggleNoPaidMessagesExceptionRequest from given interface.
+func (t *AccountToggleNoPaidMessagesExceptionRequest) FillFrom(from interface {
+	GetRefundCharged() (value bool)
+	GetRequirePayment() (value bool)
+	GetParentPeer() (value InputPeerClass, ok bool)
+	GetUserID() (value InputUserClass)
+}) {
+	t.RefundCharged = from.GetRefundCharged()
+	t.RequirePayment = from.GetRequirePayment()
+	if val, ok := from.GetParentPeer(); ok {
+		t.ParentPeer = val
+	}
+
+	t.UserID = from.GetUserID()
 }
 
 // TypeID returns type id in TL schema.
@@ -289,6 +307,8 @@ func (t *AccountToggleNoPaidMessagesExceptionRequest) GetUserID() (value InputUs
 }
 
 // AccountToggleNoPaidMessagesException invokes method account.toggleNoPaidMessagesException#fe2eda76 returning error if any.
+//
+// See https://core.telegram.org/method/account.toggleNoPaidMessagesException for reference.
 func (c *Client) AccountToggleNoPaidMessagesException(ctx context.Context, request *AccountToggleNoPaidMessagesExceptionRequest) (bool, error) {
 	var result BoolBox
 

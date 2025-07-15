@@ -32,20 +32,27 @@ var (
 )
 
 // MediaAreaVenue represents TL type `mediaAreaVenue#be82db9c`.
+// Represents a location tag attached to a story¹, with additional venue information.
+//
+// Links:
+//  1. https://core.telegram.org/api/stories
+//
+// See https://core.telegram.org/constructor/mediaAreaVenue for reference.
 type MediaAreaVenue struct {
-	// Coordinates field of MediaAreaVenue.
+	// The size and location of the media area corresponding to the location sticker on top
+	// of the story media.
 	Coordinates MediaAreaCoordinates
-	// Geo field of MediaAreaVenue.
+	// Coordinates of the venue
 	Geo GeoPointClass
-	// Title field of MediaAreaVenue.
+	// Venue name
 	Title string
-	// Address field of MediaAreaVenue.
+	// Address
 	Address string
-	// Provider field of MediaAreaVenue.
+	// Venue provider: currently only "foursquare" needs to be supported.
 	Provider string
-	// VenueID field of MediaAreaVenue.
+	// Venue ID in the provider's database
 	VenueID string
-	// VenueType field of MediaAreaVenue.
+	// Venue type in the provider's database
 	VenueType string
 }
 
@@ -101,6 +108,25 @@ func (m *MediaAreaVenue) String() string {
 	}
 	type Alias MediaAreaVenue
 	return fmt.Sprintf("MediaAreaVenue%+v", Alias(*m))
+}
+
+// FillFrom fills MediaAreaVenue from given interface.
+func (m *MediaAreaVenue) FillFrom(from interface {
+	GetCoordinates() (value MediaAreaCoordinates)
+	GetGeo() (value GeoPointClass)
+	GetTitle() (value string)
+	GetAddress() (value string)
+	GetProvider() (value string)
+	GetVenueID() (value string)
+	GetVenueType() (value string)
+}) {
+	m.Coordinates = from.GetCoordinates()
+	m.Geo = from.GetGeo()
+	m.Title = from.GetTitle()
+	m.Address = from.GetAddress()
+	m.Provider = from.GetProvider()
+	m.VenueID = from.GetVenueID()
+	m.VenueType = from.GetVenueType()
 }
 
 // TypeID returns type id in TL schema.
@@ -312,12 +338,27 @@ func (m *MediaAreaVenue) GetVenueType() (value string) {
 }
 
 // InputMediaAreaVenue represents TL type `inputMediaAreaVenue#b282217f`.
+// Represents a location tag¹ attached to a story², with additional venue information.
+//
+// Links:
+//  1. https://core.telegram.org/api/stories#media-areas
+//  2. https://core.telegram.org/api/stories
+//
+// See https://core.telegram.org/constructor/inputMediaAreaVenue for reference.
 type InputMediaAreaVenue struct {
-	// Coordinates field of InputMediaAreaVenue.
+	// The size and location of the media area corresponding to the location sticker on top
+	// of the story media.
 	Coordinates MediaAreaCoordinates
-	// QueryID field of InputMediaAreaVenue.
+	// The query_id from messages.botResults¹, see here »² for more info.
+	//
+	// Links:
+	//  1) https://core.telegram.org/constructor/messages.botResults
+	//  2) https://core.telegram.org/api/stories#media-areas
 	QueryID int64
-	// ResultID field of InputMediaAreaVenue.
+	// The id of the chosen result, see here »¹ for more info.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/stories#media-areas
 	ResultID string
 }
 
@@ -361,6 +402,17 @@ func (i *InputMediaAreaVenue) String() string {
 	}
 	type Alias InputMediaAreaVenue
 	return fmt.Sprintf("InputMediaAreaVenue%+v", Alias(*i))
+}
+
+// FillFrom fills InputMediaAreaVenue from given interface.
+func (i *InputMediaAreaVenue) FillFrom(from interface {
+	GetCoordinates() (value MediaAreaCoordinates)
+	GetQueryID() (value int64)
+	GetResultID() (value string)
+}) {
+	i.Coordinates = from.GetCoordinates()
+	i.QueryID = from.GetQueryID()
+	i.ResultID = from.GetResultID()
 }
 
 // TypeID returns type id in TL schema.
@@ -487,14 +539,24 @@ func (i *InputMediaAreaVenue) GetResultID() (value string) {
 }
 
 // MediaAreaGeoPoint represents TL type `mediaAreaGeoPoint#cad5452d`.
+// Represents a geolocation tag attached to a story¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/stories
+//
+// See https://core.telegram.org/constructor/mediaAreaGeoPoint for reference.
 type MediaAreaGeoPoint struct {
-	// Flags field of MediaAreaGeoPoint.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Coordinates field of MediaAreaGeoPoint.
+	// The size and position of the media area corresponding to the location sticker on top
+	// of the story media.
 	Coordinates MediaAreaCoordinates
-	// Geo field of MediaAreaGeoPoint.
+	// Coordinates of the geolocation tag.
 	Geo GeoPointClass
-	// Address field of MediaAreaGeoPoint.
+	// Optional textual representation of the address.
 	//
 	// Use SetAddress and GetAddress helpers.
 	Address GeoPointAddress
@@ -543,6 +605,20 @@ func (m *MediaAreaGeoPoint) String() string {
 	}
 	type Alias MediaAreaGeoPoint
 	return fmt.Sprintf("MediaAreaGeoPoint%+v", Alias(*m))
+}
+
+// FillFrom fills MediaAreaGeoPoint from given interface.
+func (m *MediaAreaGeoPoint) FillFrom(from interface {
+	GetCoordinates() (value MediaAreaCoordinates)
+	GetGeo() (value GeoPointClass)
+	GetAddress() (value GeoPointAddress, ok bool)
+}) {
+	m.Coordinates = from.GetCoordinates()
+	m.Geo = from.GetGeo()
+	if val, ok := from.GetAddress(); ok {
+		m.Address = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -703,16 +779,25 @@ func (m *MediaAreaGeoPoint) GetAddress() (value GeoPointAddress, ok bool) {
 }
 
 // MediaAreaSuggestedReaction represents TL type `mediaAreaSuggestedReaction#14455871`.
+// Represents a reaction bubble.
+//
+// See https://core.telegram.org/constructor/mediaAreaSuggestedReaction for reference.
 type MediaAreaSuggestedReaction struct {
-	// Flags field of MediaAreaSuggestedReaction.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Dark field of MediaAreaSuggestedReaction.
+	// Whether the reaction bubble has a dark background.
 	Dark bool
-	// Flipped field of MediaAreaSuggestedReaction.
+	// Whether the reaction bubble is mirrored (see here »¹ for more info).
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/stories#reactions
 	Flipped bool
-	// Coordinates field of MediaAreaSuggestedReaction.
+	// The coordinates of the media area corresponding to the reaction button.
 	Coordinates MediaAreaCoordinates
-	// Reaction field of MediaAreaSuggestedReaction.
+	// The reaction that should be sent when this area is clicked.
 	Reaction ReactionClass
 }
 
@@ -762,6 +847,19 @@ func (m *MediaAreaSuggestedReaction) String() string {
 	}
 	type Alias MediaAreaSuggestedReaction
 	return fmt.Sprintf("MediaAreaSuggestedReaction%+v", Alias(*m))
+}
+
+// FillFrom fills MediaAreaSuggestedReaction from given interface.
+func (m *MediaAreaSuggestedReaction) FillFrom(from interface {
+	GetDark() (value bool)
+	GetFlipped() (value bool)
+	GetCoordinates() (value MediaAreaCoordinates)
+	GetReaction() (value ReactionClass)
+}) {
+	m.Dark = from.GetDark()
+	m.Flipped = from.GetFlipped()
+	m.Coordinates = from.GetCoordinates()
+	m.Reaction = from.GetReaction()
 }
 
 // TypeID returns type id in TL schema.
@@ -942,12 +1040,16 @@ func (m *MediaAreaSuggestedReaction) GetReaction() (value ReactionClass) {
 }
 
 // MediaAreaChannelPost represents TL type `mediaAreaChannelPost#770416af`.
+// Represents a channel post.
+//
+// See https://core.telegram.org/constructor/mediaAreaChannelPost for reference.
 type MediaAreaChannelPost struct {
-	// Coordinates field of MediaAreaChannelPost.
+	// The size and location of the media area corresponding to the location sticker on top
+	// of the story media.
 	Coordinates MediaAreaCoordinates
-	// ChannelID field of MediaAreaChannelPost.
+	// The channel that posted the message
 	ChannelID int64
-	// MsgID field of MediaAreaChannelPost.
+	// ID of the channel message
 	MsgID int
 }
 
@@ -991,6 +1093,17 @@ func (m *MediaAreaChannelPost) String() string {
 	}
 	type Alias MediaAreaChannelPost
 	return fmt.Sprintf("MediaAreaChannelPost%+v", Alias(*m))
+}
+
+// FillFrom fills MediaAreaChannelPost from given interface.
+func (m *MediaAreaChannelPost) FillFrom(from interface {
+	GetCoordinates() (value MediaAreaCoordinates)
+	GetChannelID() (value int64)
+	GetMsgID() (value int)
+}) {
+	m.Coordinates = from.GetCoordinates()
+	m.ChannelID = from.GetChannelID()
+	m.MsgID = from.GetMsgID()
 }
 
 // TypeID returns type id in TL schema.
@@ -1117,12 +1230,16 @@ func (m *MediaAreaChannelPost) GetMsgID() (value int) {
 }
 
 // InputMediaAreaChannelPost represents TL type `inputMediaAreaChannelPost#2271f2bf`.
+// Represents a channel post
+//
+// See https://core.telegram.org/constructor/inputMediaAreaChannelPost for reference.
 type InputMediaAreaChannelPost struct {
-	// Coordinates field of InputMediaAreaChannelPost.
+	// The size and location of the media area corresponding to the location sticker on top
+	// of the story media.
 	Coordinates MediaAreaCoordinates
-	// Channel field of InputMediaAreaChannelPost.
+	// The channel that posted the message
 	Channel InputChannelClass
-	// MsgID field of InputMediaAreaChannelPost.
+	// ID of the channel message
 	MsgID int
 }
 
@@ -1166,6 +1283,17 @@ func (i *InputMediaAreaChannelPost) String() string {
 	}
 	type Alias InputMediaAreaChannelPost
 	return fmt.Sprintf("InputMediaAreaChannelPost%+v", Alias(*i))
+}
+
+// FillFrom fills InputMediaAreaChannelPost from given interface.
+func (i *InputMediaAreaChannelPost) FillFrom(from interface {
+	GetCoordinates() (value MediaAreaCoordinates)
+	GetChannel() (value InputChannelClass)
+	GetMsgID() (value int)
+}) {
+	i.Coordinates = from.GetCoordinates()
+	i.Channel = from.GetChannel()
+	i.MsgID = from.GetMsgID()
 }
 
 // TypeID returns type id in TL schema.
@@ -1297,10 +1425,17 @@ func (i *InputMediaAreaChannelPost) GetMsgID() (value int) {
 }
 
 // MediaAreaURL represents TL type `mediaAreaUrl#37381085`.
+// Represents a URL media area¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/stories#urls
+//
+// See https://core.telegram.org/constructor/mediaAreaUrl for reference.
 type MediaAreaURL struct {
-	// Coordinates field of MediaAreaURL.
+	// The size and location of the media area corresponding to the URL button on top of the
+	// story media.
 	Coordinates MediaAreaCoordinates
-	// URL field of MediaAreaURL.
+	// URL to open when clicked.
 	URL string
 }
 
@@ -1341,6 +1476,15 @@ func (m *MediaAreaURL) String() string {
 	}
 	type Alias MediaAreaURL
 	return fmt.Sprintf("MediaAreaURL%+v", Alias(*m))
+}
+
+// FillFrom fills MediaAreaURL from given interface.
+func (m *MediaAreaURL) FillFrom(from interface {
+	GetCoordinates() (value MediaAreaCoordinates)
+	GetURL() (value string)
+}) {
+	m.Coordinates = from.GetCoordinates()
+	m.URL = from.GetURL()
 }
 
 // TypeID returns type id in TL schema.
@@ -1447,14 +1591,24 @@ func (m *MediaAreaURL) GetURL() (value string) {
 }
 
 // MediaAreaWeather represents TL type `mediaAreaWeather#49a6549c`.
+// Represents a weather widget »¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/stories#weather
+//
+// See https://core.telegram.org/constructor/mediaAreaWeather for reference.
 type MediaAreaWeather struct {
-	// Coordinates field of MediaAreaWeather.
+	// The size and location of the media area corresponding to the widget on top of the
+	// story media.
 	Coordinates MediaAreaCoordinates
-	// Emoji field of MediaAreaWeather.
+	// Weather emoji, should be rendered as an animated emoji¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/animated-emojis
 	Emoji string
-	// TemperatureC field of MediaAreaWeather.
+	// Temperature in degrees Celsius.
 	TemperatureC float64
-	// Color field of MediaAreaWeather.
+	// ARGB background color.
 	Color int
 }
 
@@ -1501,6 +1655,19 @@ func (m *MediaAreaWeather) String() string {
 	}
 	type Alias MediaAreaWeather
 	return fmt.Sprintf("MediaAreaWeather%+v", Alias(*m))
+}
+
+// FillFrom fills MediaAreaWeather from given interface.
+func (m *MediaAreaWeather) FillFrom(from interface {
+	GetCoordinates() (value MediaAreaCoordinates)
+	GetEmoji() (value string)
+	GetTemperatureC() (value float64)
+	GetColor() (value int)
+}) {
+	m.Coordinates = from.GetCoordinates()
+	m.Emoji = from.GetEmoji()
+	m.TemperatureC = from.GetTemperatureC()
+	m.Color = from.GetColor()
 }
 
 // TypeID returns type id in TL schema.
@@ -1647,6 +1814,8 @@ func (m *MediaAreaWeather) GetColor() (value int) {
 }
 
 // MediaAreaStarGift represents TL type `mediaAreaStarGift#5787686d`.
+//
+// See https://core.telegram.org/constructor/mediaAreaStarGift for reference.
 type MediaAreaStarGift struct {
 	// Coordinates field of MediaAreaStarGift.
 	Coordinates MediaAreaCoordinates
@@ -1691,6 +1860,15 @@ func (m *MediaAreaStarGift) String() string {
 	}
 	type Alias MediaAreaStarGift
 	return fmt.Sprintf("MediaAreaStarGift%+v", Alias(*m))
+}
+
+// FillFrom fills MediaAreaStarGift from given interface.
+func (m *MediaAreaStarGift) FillFrom(from interface {
+	GetCoordinates() (value MediaAreaCoordinates)
+	GetSlug() (value string)
+}) {
+	m.Coordinates = from.GetCoordinates()
+	m.Slug = from.GetSlug()
 }
 
 // TypeID returns type id in TL schema.
@@ -1801,6 +1979,8 @@ const MediaAreaClassName = "MediaArea"
 
 // MediaAreaClass represents MediaArea generic type.
 //
+// See https://core.telegram.org/type/MediaArea for reference.
+//
 // Constructors:
 //   - [MediaAreaVenue]
 //   - [InputMediaAreaVenue]
@@ -1848,7 +2028,8 @@ type MediaAreaClass interface {
 	// Zero returns true if current object has a zero value.
 	Zero() bool
 
-	// Coordinates field of MediaAreaVenue.
+	// The size and location of the media area corresponding to the location sticker on top
+	// of the story media.
 	GetCoordinates() (value MediaAreaCoordinates)
 }
 

@@ -32,6 +32,8 @@ var (
 )
 
 // SponsoredPeer represents TL type `sponsoredPeer#c69708d3`.
+//
+// See https://core.telegram.org/constructor/sponsoredPeer for reference.
 type SponsoredPeer struct {
 	// Flags field of SponsoredPeer.
 	Flags bin.Fields
@@ -90,6 +92,25 @@ func (s *SponsoredPeer) String() string {
 	}
 	type Alias SponsoredPeer
 	return fmt.Sprintf("SponsoredPeer%+v", Alias(*s))
+}
+
+// FillFrom fills SponsoredPeer from given interface.
+func (s *SponsoredPeer) FillFrom(from interface {
+	GetRandomID() (value []byte)
+	GetPeer() (value PeerClass)
+	GetSponsorInfo() (value string, ok bool)
+	GetAdditionalInfo() (value string, ok bool)
+}) {
+	s.RandomID = from.GetRandomID()
+	s.Peer = from.GetPeer()
+	if val, ok := from.GetSponsorInfo(); ok {
+		s.SponsorInfo = val
+	}
+
+	if val, ok := from.GetAdditionalInfo(); ok {
+		s.AdditionalInfo = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.

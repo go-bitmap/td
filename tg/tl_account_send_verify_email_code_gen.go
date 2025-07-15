@@ -32,10 +32,13 @@ var (
 )
 
 // AccountSendVerifyEmailCodeRequest represents TL type `account.sendVerifyEmailCode#98e037bb`.
+// Send an email verification code.
+//
+// See https://core.telegram.org/method/account.sendVerifyEmailCode for reference.
 type AccountSendVerifyEmailCodeRequest struct {
-	// Purpose field of AccountSendVerifyEmailCodeRequest.
+	// Verification purpose.
 	Purpose EmailVerifyPurposeClass
-	// Email field of AccountSendVerifyEmailCodeRequest.
+	// The email where to send the code.
 	Email string
 }
 
@@ -71,6 +74,15 @@ func (s *AccountSendVerifyEmailCodeRequest) String() string {
 	}
 	type Alias AccountSendVerifyEmailCodeRequest
 	return fmt.Sprintf("AccountSendVerifyEmailCodeRequest%+v", Alias(*s))
+}
+
+// FillFrom fills AccountSendVerifyEmailCodeRequest from given interface.
+func (s *AccountSendVerifyEmailCodeRequest) FillFrom(from interface {
+	GetPurpose() (value EmailVerifyPurposeClass)
+	GetEmail() (value string)
+}) {
+	s.Purpose = from.GetPurpose()
+	s.Email = from.GetEmail()
 }
 
 // TypeID returns type id in TL schema.
@@ -182,6 +194,17 @@ func (s *AccountSendVerifyEmailCodeRequest) GetEmail() (value string) {
 }
 
 // AccountSendVerifyEmailCode invokes method account.sendVerifyEmailCode#98e037bb returning error if any.
+// Send an email verification code.
+//
+// Possible errors:
+//
+//	400 EMAIL_INVALID: The specified email is invalid.
+//	400 EMAIL_NOT_ALLOWED: The specified email cannot be used to complete the operation.
+//	400 EMAIL_NOT_SETUP: In order to change the login email with emailVerifyPurposeLoginChange, an existing login email must already be set using emailVerifyPurposeLoginSetup.
+//	400 PHONE_HASH_EXPIRED: An invalid or expired phone_code_hash was provided.
+//	400 PHONE_NUMBER_INVALID: The phone number is invalid.
+//
+// See https://core.telegram.org/method/account.sendVerifyEmailCode for reference.
 func (c *Client) AccountSendVerifyEmailCode(ctx context.Context, request *AccountSendVerifyEmailCodeRequest) (*AccountSentEmailCode, error) {
 	var result AccountSentEmailCode
 

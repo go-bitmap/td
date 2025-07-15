@@ -32,6 +32,12 @@ var (
 )
 
 // MessagesEmojiGroupsNotModified represents TL type `messages.emojiGroupsNotModified#6fb4ad87`.
+// The list of emoji categories¹ hasn't changed.
+//
+// Links:
+//  1. https://core.telegram.org/api/emoji-categories
+//
+// See https://core.telegram.org/constructor/messages.emojiGroupsNotModified for reference.
 type MessagesEmojiGroupsNotModified struct {
 }
 
@@ -131,10 +137,22 @@ func (e *MessagesEmojiGroupsNotModified) DecodeBare(b *bin.Buffer) error {
 }
 
 // MessagesEmojiGroups represents TL type `messages.emojiGroups#881fb94b`.
+// Represents a list of emoji categories¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/emoji-categories
+//
+// See https://core.telegram.org/constructor/messages.emojiGroups for reference.
 type MessagesEmojiGroups struct {
-	// Hash field of MessagesEmojiGroups.
+	// Hash used for caching, for more info click here¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets#hash-generation
 	Hash int
-	// Groups field of MessagesEmojiGroups.
+	// A list of emoji categories¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/emoji-categories
 	Groups []EmojiGroupClass
 }
 
@@ -175,6 +193,15 @@ func (e *MessagesEmojiGroups) String() string {
 	}
 	type Alias MessagesEmojiGroups
 	return fmt.Sprintf("MessagesEmojiGroups%+v", Alias(*e))
+}
+
+// FillFrom fills MessagesEmojiGroups from given interface.
+func (e *MessagesEmojiGroups) FillFrom(from interface {
+	GetHash() (value int)
+	GetGroups() (value []EmojiGroupClass)
+}) {
+	e.Hash = from.GetHash()
+	e.Groups = from.GetGroups()
 }
 
 // TypeID returns type id in TL schema.
@@ -298,10 +325,17 @@ func (e *MessagesEmojiGroups) GetGroups() (value []EmojiGroupClass) {
 	return e.Groups
 }
 
+// MapGroups returns field Groups wrapped in EmojiGroupClassArray helper.
+func (e *MessagesEmojiGroups) MapGroups() (value EmojiGroupClassArray) {
+	return EmojiGroupClassArray(e.Groups)
+}
+
 // MessagesEmojiGroupsClassName is schema name of MessagesEmojiGroupsClass.
 const MessagesEmojiGroupsClassName = "messages.EmojiGroups"
 
 // MessagesEmojiGroupsClass represents messages.EmojiGroups generic type.
+//
+// See https://core.telegram.org/type/messages.EmojiGroups for reference.
 //
 // Constructors:
 //   - [MessagesEmojiGroupsNotModified]
@@ -335,6 +369,19 @@ type MessagesEmojiGroupsClass interface {
 	String() string
 	// Zero returns true if current object has a zero value.
 	Zero() bool
+
+	// AsModified tries to map MessagesEmojiGroupsClass to MessagesEmojiGroups.
+	AsModified() (*MessagesEmojiGroups, bool)
+}
+
+// AsModified tries to map MessagesEmojiGroupsNotModified to MessagesEmojiGroups.
+func (e *MessagesEmojiGroupsNotModified) AsModified() (*MessagesEmojiGroups, bool) {
+	return nil, false
+}
+
+// AsModified tries to map MessagesEmojiGroups to MessagesEmojiGroups.
+func (e *MessagesEmojiGroups) AsModified() (*MessagesEmojiGroups, bool) {
+	return e, true
 }
 
 // DecodeMessagesEmojiGroups implements binary de-serialization for MessagesEmojiGroupsClass.

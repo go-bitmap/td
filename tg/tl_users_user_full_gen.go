@@ -32,12 +32,15 @@ var (
 )
 
 // UsersUserFull represents TL type `users.userFull#3b6d152e`.
+// Full user information
+//
+// See https://core.telegram.org/constructor/users.userFull for reference.
 type UsersUserFull struct {
-	// FullUser field of UsersUserFull.
+	// Full user information
 	FullUser UserFull
-	// Chats field of UsersUserFull.
+	// Mentioned chats
 	Chats []ChatClass
-	// Users field of UsersUserFull.
+	// Mentioned users
 	Users []UserClass
 }
 
@@ -76,6 +79,17 @@ func (u *UsersUserFull) String() string {
 	}
 	type Alias UsersUserFull
 	return fmt.Sprintf("UsersUserFull%+v", Alias(*u))
+}
+
+// FillFrom fills UsersUserFull from given interface.
+func (u *UsersUserFull) FillFrom(from interface {
+	GetFullUser() (value UserFull)
+	GetChats() (value []ChatClass)
+	GetUsers() (value []UserClass)
+}) {
+	u.FullUser = from.GetFullUser()
+	u.Chats = from.GetChats()
+	u.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -235,4 +249,14 @@ func (u *UsersUserFull) GetUsers() (value []UserClass) {
 		return
 	}
 	return u.Users
+}
+
+// MapChats returns field Chats wrapped in ChatClassArray helper.
+func (u *UsersUserFull) MapChats() (value ChatClassArray) {
+	return ChatClassArray(u.Chats)
+}
+
+// MapUsers returns field Users wrapped in UserClassArray helper.
+func (u *UsersUserFull) MapUsers() (value UserClassArray) {
+	return UserClassArray(u.Users)
 }

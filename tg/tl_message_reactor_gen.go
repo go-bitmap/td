@@ -32,20 +32,32 @@ var (
 )
 
 // MessageReactor represents TL type `messageReactor#4ba3a95a`.
+// Info about a user in the paid Star reactions leaderboard¹ for a message.
+//
+// Links:
+//  1. https://core.telegram.org/api/reactions#paid-reactions
+//
+// See https://core.telegram.org/constructor/messageReactor for reference.
 type MessageReactor struct {
-	// Flags field of MessageReactor.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Top field of MessageReactor.
+	// If set, the reactor is one of the most active reactors; may be unset if the reactor is
+	// the current user.
 	Top bool
-	// My field of MessageReactor.
+	// If set, this reactor is the current user.
 	My bool
-	// Anonymous field of MessageReactor.
+	// If set, the reactor is anonymous.
 	Anonymous bool
-	// PeerID field of MessageReactor.
+	// Identifier of the peer that reacted: may be unset for anonymous reactors different
+	// from the current user (i.e. if the current user sent an anonymous reaction anonymous
+	// will be set but this field will also be set).
 	//
 	// Use SetPeerID and GetPeerID helpers.
 	PeerID PeerClass
-	// Count field of MessageReactor.
+	// The number of sent Telegram Stars.
 	Count int
 }
 
@@ -93,6 +105,24 @@ func (m *MessageReactor) String() string {
 	}
 	type Alias MessageReactor
 	return fmt.Sprintf("MessageReactor%+v", Alias(*m))
+}
+
+// FillFrom fills MessageReactor from given interface.
+func (m *MessageReactor) FillFrom(from interface {
+	GetTop() (value bool)
+	GetMy() (value bool)
+	GetAnonymous() (value bool)
+	GetPeerID() (value PeerClass, ok bool)
+	GetCount() (value int)
+}) {
+	m.Top = from.GetTop()
+	m.My = from.GetMy()
+	m.Anonymous = from.GetAnonymous()
+	if val, ok := from.GetPeerID(); ok {
+		m.PeerID = val
+	}
+
+	m.Count = from.GetCount()
 }
 
 // TypeID returns type id in TL schema.

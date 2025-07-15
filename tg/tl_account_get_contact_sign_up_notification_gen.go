@@ -32,6 +32,9 @@ var (
 )
 
 // AccountGetContactSignUpNotificationRequest represents TL type `account.getContactSignUpNotification#9f07c728`.
+// Whether the user will receive notifications when contacts sign up
+//
+// See https://core.telegram.org/method/account.getContactSignUpNotification for reference.
 type AccountGetContactSignUpNotificationRequest struct {
 }
 
@@ -126,6 +129,9 @@ func (g *AccountGetContactSignUpNotificationRequest) DecodeBare(b *bin.Buffer) e
 }
 
 // AccountGetContactSignUpNotification invokes method account.getContactSignUpNotification#9f07c728 returning error if any.
+// Whether the user will receive notifications when contacts sign up
+//
+// See https://core.telegram.org/method/account.getContactSignUpNotification for reference.
 func (c *Client) AccountGetContactSignUpNotification(ctx context.Context) (bool, error) {
 	var result BoolBox
 

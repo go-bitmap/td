@@ -32,12 +32,31 @@ var (
 )
 
 // RestrictionReason represents TL type `restrictionReason#d072acb4`.
+// Restriction reason.
+// Contains the reason why access to a certain object must be restricted. Clients are
+// supposed to deny access to the channel if the platform field is equal to all or to the
+// current platform (ios, android, wp, etc.). Platforms can be concatenated (ios-android,
+// ios-wp), unknown platforms are to be ignored. The text is the error message that
+// should be shown to the user.
+// The restriction_add_platforms »¹ client configuration parameter contains an array of
+// platform identifiers that must also be treated as our own, in additional to the one
+// hardcoded in the client.
+//
+// Links:
+//  1. https://core.telegram.org/api/config#restriction-add-platforms
+//
+// See https://core.telegram.org/constructor/restrictionReason for reference.
 type RestrictionReason struct {
-	// Platform field of RestrictionReason.
+	// Platform identifier (ios, android, wp, all, etc.), can be concatenated with a dash as
+	// separator (android-ios, ios-wp, etc)
 	Platform string
-	// Reason field of RestrictionReason.
+	// Restriction reason (porno, terms, etc.). Ignore this restriction reason if it is
+	// contained in the ignore_restriction_reasons »¹ client configuration parameter.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/config#ignore-restriction-reasons
 	Reason string
-	// Text field of RestrictionReason.
+	// Error message to be shown to the user
 	Text string
 }
 
@@ -76,6 +95,17 @@ func (r *RestrictionReason) String() string {
 	}
 	type Alias RestrictionReason
 	return fmt.Sprintf("RestrictionReason%+v", Alias(*r))
+}
+
+// FillFrom fills RestrictionReason from given interface.
+func (r *RestrictionReason) FillFrom(from interface {
+	GetPlatform() (value string)
+	GetReason() (value string)
+	GetText() (value string)
+}) {
+	r.Platform = from.GetPlatform()
+	r.Reason = from.GetReason()
+	r.Text = from.GetText()
 }
 
 // TypeID returns type id in TL schema.

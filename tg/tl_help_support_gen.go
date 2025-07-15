@@ -32,10 +32,13 @@ var (
 )
 
 // HelpSupport represents TL type `help.support#17c6b5f6`.
+// Info on support user.
+//
+// See https://core.telegram.org/constructor/help.support for reference.
 type HelpSupport struct {
-	// PhoneNumber field of HelpSupport.
+	// Phone number
 	PhoneNumber string
-	// User field of HelpSupport.
+	// User
 	User UserClass
 }
 
@@ -71,6 +74,15 @@ func (s *HelpSupport) String() string {
 	}
 	type Alias HelpSupport
 	return fmt.Sprintf("HelpSupport%+v", Alias(*s))
+}
+
+// FillFrom fills HelpSupport from given interface.
+func (s *HelpSupport) FillFrom(from interface {
+	GetPhoneNumber() (value string)
+	GetUser() (value UserClass)
+}) {
+	s.PhoneNumber = from.GetPhoneNumber()
+	s.User = from.GetUser()
 }
 
 // TypeID returns type id in TL schema.
@@ -179,4 +191,9 @@ func (s *HelpSupport) GetUser() (value UserClass) {
 		return
 	}
 	return s.User
+}
+
+// GetUserAsNotEmpty returns mapped value of User field.
+func (s *HelpSupport) GetUserAsNotEmpty() (*User, bool) {
+	return s.User.AsNotEmpty()
 }

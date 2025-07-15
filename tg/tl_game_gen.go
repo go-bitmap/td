@@ -32,22 +32,28 @@ var (
 )
 
 // Game represents TL type `game#bdf9653b`.
+// Indicates an already sent game
+//
+// See https://core.telegram.org/constructor/game for reference.
 type Game struct {
-	// Flags field of Game.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// ID field of Game.
+	// ID of the game
 	ID int64
-	// AccessHash field of Game.
+	// Access hash of the game
 	AccessHash int64
-	// ShortName field of Game.
+	// Short name for the game
 	ShortName string
-	// Title field of Game.
+	// Title of the game
 	Title string
-	// Description field of Game.
+	// Game description
 	Description string
-	// Photo field of Game.
+	// Game preview
 	Photo PhotoClass
-	// Document field of Game.
+	// Optional attached document
 	//
 	// Use SetDocument and GetDocument helpers.
 	Document DocumentClass
@@ -103,6 +109,28 @@ func (g *Game) String() string {
 	}
 	type Alias Game
 	return fmt.Sprintf("Game%+v", Alias(*g))
+}
+
+// FillFrom fills Game from given interface.
+func (g *Game) FillFrom(from interface {
+	GetID() (value int64)
+	GetAccessHash() (value int64)
+	GetShortName() (value string)
+	GetTitle() (value string)
+	GetDescription() (value string)
+	GetPhoto() (value PhotoClass)
+	GetDocument() (value DocumentClass, ok bool)
+}) {
+	g.ID = from.GetID()
+	g.AccessHash = from.GetAccessHash()
+	g.ShortName = from.GetShortName()
+	g.Title = from.GetTitle()
+	g.Description = from.GetDescription()
+	g.Photo = from.GetPhoto()
+	if val, ok := from.GetDocument(); ok {
+		g.Document = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -345,4 +373,18 @@ func (g *Game) GetDocument() (value DocumentClass, ok bool) {
 		return value, false
 	}
 	return g.Document, true
+}
+
+// GetPhotoAsNotEmpty returns mapped value of Photo field.
+func (g *Game) GetPhotoAsNotEmpty() (*Photo, bool) {
+	return g.Photo.AsNotEmpty()
+}
+
+// GetDocumentAsNotEmpty returns mapped value of Document conditional field and
+// boolean which is true if field was set.
+func (g *Game) GetDocumentAsNotEmpty() (*Document, bool) {
+	if value, ok := g.GetDocument(); ok {
+		return value.AsNotEmpty()
+	}
+	return nil, false
 }

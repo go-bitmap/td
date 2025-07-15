@@ -32,8 +32,17 @@ var (
 )
 
 // MessagesHidePeerSettingsBarRequest represents TL type `messages.hidePeerSettingsBar#4facb138`.
+// Should be called after the user hides the report spam/add as contact bar¹ of a new
+// chat, effectively prevents the user from executing the actions specified in the action
+// bar »².
+//
+// Links:
+//  1. https://core.telegram.org/api/action-bar
+//  2. https://core.telegram.org/api/action-bar
+//
+// See https://core.telegram.org/method/messages.hidePeerSettingsBar for reference.
 type MessagesHidePeerSettingsBarRequest struct {
-	// Peer field of MessagesHidePeerSettingsBarRequest.
+	// Peer
 	Peer InputPeerClass
 }
 
@@ -66,6 +75,13 @@ func (h *MessagesHidePeerSettingsBarRequest) String() string {
 	}
 	type Alias MessagesHidePeerSettingsBarRequest
 	return fmt.Sprintf("MessagesHidePeerSettingsBarRequest%+v", Alias(*h))
+}
+
+// FillFrom fills MessagesHidePeerSettingsBarRequest from given interface.
+func (h *MessagesHidePeerSettingsBarRequest) FillFrom(from interface {
+	GetPeer() (value InputPeerClass)
+}) {
+	h.Peer = from.GetPeer()
 }
 
 // TypeID returns type id in TL schema.
@@ -157,6 +173,19 @@ func (h *MessagesHidePeerSettingsBarRequest) GetPeer() (value InputPeerClass) {
 }
 
 // MessagesHidePeerSettingsBar invokes method messages.hidePeerSettingsBar#4facb138 returning error if any.
+// Should be called after the user hides the report spam/add as contact bar¹ of a new
+// chat, effectively prevents the user from executing the actions specified in the action
+// bar »².
+//
+// Links:
+//  1. https://core.telegram.org/api/action-bar
+//  2. https://core.telegram.org/api/action-bar
+//
+// Possible errors:
+//
+//	400 PEER_ID_INVALID: The provided peer id is invalid.
+//
+// See https://core.telegram.org/method/messages.hidePeerSettingsBar for reference.
 func (c *Client) MessagesHidePeerSettingsBar(ctx context.Context, peer InputPeerClass) (bool, error) {
 	var result BoolBox
 

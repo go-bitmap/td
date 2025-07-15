@@ -32,26 +32,32 @@ var (
 )
 
 // AccountUpdateThemeRequest represents TL type `account.updateTheme#2bf40ccc`.
+// Update theme
+//
+// See https://core.telegram.org/method/account.updateTheme for reference.
 type AccountUpdateThemeRequest struct {
-	// Flags field of AccountUpdateThemeRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Format field of AccountUpdateThemeRequest.
+	// Theme format, a string that identifies the theming engines supported by the client
 	Format string
-	// Theme field of AccountUpdateThemeRequest.
+	// Theme to update
 	Theme InputThemeClass
-	// Slug field of AccountUpdateThemeRequest.
+	// Unique theme ID
 	//
 	// Use SetSlug and GetSlug helpers.
 	Slug string
-	// Title field of AccountUpdateThemeRequest.
+	// Theme name
 	//
 	// Use SetTitle and GetTitle helpers.
 	Title string
-	// Document field of AccountUpdateThemeRequest.
+	// Theme file
 	//
 	// Use SetDocument and GetDocument helpers.
 	Document InputDocumentClass
-	// Settings field of AccountUpdateThemeRequest.
+	// Theme settings
 	//
 	// Use SetSettings and GetSettings helpers.
 	Settings []InputThemeSettings
@@ -104,6 +110,35 @@ func (u *AccountUpdateThemeRequest) String() string {
 	}
 	type Alias AccountUpdateThemeRequest
 	return fmt.Sprintf("AccountUpdateThemeRequest%+v", Alias(*u))
+}
+
+// FillFrom fills AccountUpdateThemeRequest from given interface.
+func (u *AccountUpdateThemeRequest) FillFrom(from interface {
+	GetFormat() (value string)
+	GetTheme() (value InputThemeClass)
+	GetSlug() (value string, ok bool)
+	GetTitle() (value string, ok bool)
+	GetDocument() (value InputDocumentClass, ok bool)
+	GetSettings() (value []InputThemeSettings, ok bool)
+}) {
+	u.Format = from.GetFormat()
+	u.Theme = from.GetTheme()
+	if val, ok := from.GetSlug(); ok {
+		u.Slug = val
+	}
+
+	if val, ok := from.GetTitle(); ok {
+		u.Title = val
+	}
+
+	if val, ok := from.GetDocument(); ok {
+		u.Document = val
+	}
+
+	if val, ok := from.GetSettings(); ok {
+		u.Settings = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -391,7 +426,23 @@ func (u *AccountUpdateThemeRequest) GetSettings() (value []InputThemeSettings, o
 	return u.Settings, true
 }
 
+// GetDocumentAsNotEmpty returns mapped value of Document conditional field and
+// boolean which is true if field was set.
+func (u *AccountUpdateThemeRequest) GetDocumentAsNotEmpty() (*InputDocument, bool) {
+	if value, ok := u.GetDocument(); ok {
+		return value.AsNotEmpty()
+	}
+	return nil, false
+}
+
 // AccountUpdateTheme invokes method account.updateTheme#2bf40ccc returning error if any.
+// Update theme
+//
+// Possible errors:
+//
+//	400 THEME_INVALID: Invalid theme provided.
+//
+// See https://core.telegram.org/method/account.updateTheme for reference.
 func (c *Client) AccountUpdateTheme(ctx context.Context, request *AccountUpdateThemeRequest) (*Theme, error) {
 	var result Theme
 

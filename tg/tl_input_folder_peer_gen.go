@@ -32,10 +32,16 @@ var (
 )
 
 // InputFolderPeer represents TL type `inputFolderPeer#fbd2c296`.
+// Peer in a folder
+//
+// See https://core.telegram.org/constructor/inputFolderPeer for reference.
 type InputFolderPeer struct {
-	// Peer field of InputFolderPeer.
+	// Peer
 	Peer InputPeerClass
-	// FolderID field of InputFolderPeer.
+	// Peer folder ID, for more info click here¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/folders#peer-folders
 	FolderID int
 }
 
@@ -71,6 +77,15 @@ func (i *InputFolderPeer) String() string {
 	}
 	type Alias InputFolderPeer
 	return fmt.Sprintf("InputFolderPeer%+v", Alias(*i))
+}
+
+// FillFrom fills InputFolderPeer from given interface.
+func (i *InputFolderPeer) FillFrom(from interface {
+	GetPeer() (value InputPeerClass)
+	GetFolderID() (value int)
+}) {
+	i.Peer = from.GetPeer()
+	i.FolderID = from.GetFolderID()
 }
 
 // TypeID returns type id in TL schema.

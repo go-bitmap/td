@@ -32,18 +32,33 @@ var (
 )
 
 // PhoneCallProtocol represents TL type `phoneCallProtocol#fc878fc8`.
+// Protocol info for libtgvoip
+//
+// See https://core.telegram.org/constructor/phoneCallProtocol for reference.
 type PhoneCallProtocol struct {
-	// Flags field of PhoneCallProtocol.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// UDPP2P field of PhoneCallProtocol.
+	// Whether to allow P2P connection to the other participant
 	UDPP2P bool
-	// UDPReflector field of PhoneCallProtocol.
+	// Whether to allow connection to the other participants through the reflector servers
 	UDPReflector bool
-	// MinLayer field of PhoneCallProtocol.
+	// Minimum layer for remote libtgvoip
 	MinLayer int
-	// MaxLayer field of PhoneCallProtocol.
+	// Maximum layer for remote libtgvoip
 	MaxLayer int
-	// LibraryVersions field of PhoneCallProtocol.
+	// When using phone.requestCall¹ and phone.acceptCall², specify all library versions
+	// supported by the client. The server will merge and choose the best library version
+	// supported by both peers, returning only the best value in the result of the callee's
+	// phone.acceptCall³ and in the phoneCallAccepted⁴ update received by the caller.
+	//
+	// Links:
+	//  1) https://core.telegram.org/method/phone.requestCall
+	//  2) https://core.telegram.org/method/phone.acceptCall
+	//  3) https://core.telegram.org/method/phone.acceptCall
+	//  4) https://core.telegram.org/constructor/phoneCallAccepted
 	LibraryVersions []string
 }
 
@@ -91,6 +106,21 @@ func (p *PhoneCallProtocol) String() string {
 	}
 	type Alias PhoneCallProtocol
 	return fmt.Sprintf("PhoneCallProtocol%+v", Alias(*p))
+}
+
+// FillFrom fills PhoneCallProtocol from given interface.
+func (p *PhoneCallProtocol) FillFrom(from interface {
+	GetUDPP2P() (value bool)
+	GetUDPReflector() (value bool)
+	GetMinLayer() (value int)
+	GetMaxLayer() (value int)
+	GetLibraryVersions() (value []string)
+}) {
+	p.UDPP2P = from.GetUDPP2P()
+	p.UDPReflector = from.GetUDPReflector()
+	p.MinLayer = from.GetMinLayer()
+	p.MaxLayer = from.GetMaxLayer()
+	p.LibraryVersions = from.GetLibraryVersions()
 }
 
 // TypeID returns type id in TL schema.

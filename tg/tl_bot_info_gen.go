@@ -32,40 +32,58 @@ var (
 )
 
 // BotInfo represents TL type `botInfo#4d8a0299`.
+// Info about bots (available bot commands, etc)
+//
+// See https://core.telegram.org/constructor/botInfo for reference.
 type BotInfo struct {
-	// Flags field of BotInfo.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// HasPreviewMedias field of BotInfo.
+	// If set, the bot has some preview medias for the configured Main Mini App, see here
+	// »¹ for more info on Main Mini App preview medias.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/bots/webapps#main-mini-app-previews
 	HasPreviewMedias bool
-	// UserID field of BotInfo.
+	// ID of the bot
 	//
 	// Use SetUserID and GetUserID helpers.
 	UserID int64
-	// Description field of BotInfo.
+	// Description of the bot
 	//
 	// Use SetDescription and GetDescription helpers.
 	Description string
-	// DescriptionPhoto field of BotInfo.
+	// Description photo
 	//
 	// Use SetDescriptionPhoto and GetDescriptionPhoto helpers.
 	DescriptionPhoto PhotoClass
-	// DescriptionDocument field of BotInfo.
+	// Description animation in MPEG4 format
 	//
 	// Use SetDescriptionDocument and GetDescriptionDocument helpers.
 	DescriptionDocument DocumentClass
-	// Commands field of BotInfo.
+	// Bot commands that can be used in the chat
 	//
 	// Use SetCommands and GetCommands helpers.
 	Commands []BotCommand
-	// MenuButton field of BotInfo.
+	// Indicates the action to execute when pressing the in-UI menu button for bots
 	//
 	// Use SetMenuButton and GetMenuButton helpers.
 	MenuButton BotMenuButtonClass
-	// PrivacyPolicyURL field of BotInfo.
+	// The HTTP link to the privacy policy of the bot. If not set, then the /privacy command
+	// must be used, if supported by the bot (i.e. if it's present in the commands vector).
+	// If it isn't supported, then https://telegram.org/privacy-tpa¹ must be opened, instead.
+	//
+	// Links:
+	//  1) https://telegram.org/privacy-tpa
 	//
 	// Use SetPrivacyPolicyURL and GetPrivacyPolicyURL helpers.
 	PrivacyPolicyURL string
-	// AppSettings field of BotInfo.
+	// Mini app »¹ settings
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/bots/webapps
 	//
 	// Use SetAppSettings and GetAppSettings helpers.
 	AppSettings BotAppSettings
@@ -134,6 +152,58 @@ func (b *BotInfo) String() string {
 	}
 	type Alias BotInfo
 	return fmt.Sprintf("BotInfo%+v", Alias(*b))
+}
+
+// FillFrom fills BotInfo from given interface.
+func (b *BotInfo) FillFrom(from interface {
+	GetHasPreviewMedias() (value bool)
+	GetUserID() (value int64, ok bool)
+	GetDescription() (value string, ok bool)
+	GetDescriptionPhoto() (value PhotoClass, ok bool)
+	GetDescriptionDocument() (value DocumentClass, ok bool)
+	GetCommands() (value []BotCommand, ok bool)
+	GetMenuButton() (value BotMenuButtonClass, ok bool)
+	GetPrivacyPolicyURL() (value string, ok bool)
+	GetAppSettings() (value BotAppSettings, ok bool)
+	GetVerifierSettings() (value BotVerifierSettings, ok bool)
+}) {
+	b.HasPreviewMedias = from.GetHasPreviewMedias()
+	if val, ok := from.GetUserID(); ok {
+		b.UserID = val
+	}
+
+	if val, ok := from.GetDescription(); ok {
+		b.Description = val
+	}
+
+	if val, ok := from.GetDescriptionPhoto(); ok {
+		b.DescriptionPhoto = val
+	}
+
+	if val, ok := from.GetDescriptionDocument(); ok {
+		b.DescriptionDocument = val
+	}
+
+	if val, ok := from.GetCommands(); ok {
+		b.Commands = val
+	}
+
+	if val, ok := from.GetMenuButton(); ok {
+		b.MenuButton = val
+	}
+
+	if val, ok := from.GetPrivacyPolicyURL(); ok {
+		b.PrivacyPolicyURL = val
+	}
+
+	if val, ok := from.GetAppSettings(); ok {
+		b.AppSettings = val
+	}
+
+	if val, ok := from.GetVerifierSettings(); ok {
+		b.VerifierSettings = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -592,4 +662,22 @@ func (b *BotInfo) GetVerifierSettings() (value BotVerifierSettings, ok bool) {
 		return value, false
 	}
 	return b.VerifierSettings, true
+}
+
+// GetDescriptionPhotoAsNotEmpty returns mapped value of DescriptionPhoto conditional field and
+// boolean which is true if field was set.
+func (b *BotInfo) GetDescriptionPhotoAsNotEmpty() (*Photo, bool) {
+	if value, ok := b.GetDescriptionPhoto(); ok {
+		return value.AsNotEmpty()
+	}
+	return nil, false
+}
+
+// GetDescriptionDocumentAsNotEmpty returns mapped value of DescriptionDocument conditional field and
+// boolean which is true if field was set.
+func (b *BotInfo) GetDescriptionDocumentAsNotEmpty() (*Document, bool) {
+	if value, ok := b.GetDescriptionDocument(); ok {
+		return value.AsNotEmpty()
+	}
+	return nil, false
 }

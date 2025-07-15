@@ -32,14 +32,26 @@ var (
 )
 
 // ChannelsDeleteHistoryRequest represents TL type `channels.deleteHistory#9baa9647`.
+// Delete the history of a supergroup¹
+//
+// Links:
+//  1. https://core.telegram.org/api/channel
+//
+// See https://core.telegram.org/method/channels.deleteHistory for reference.
 type ChannelsDeleteHistoryRequest struct {
-	// Flags field of ChannelsDeleteHistoryRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// ForEveryone field of ChannelsDeleteHistoryRequest.
+	// Whether the history should be deleted for everyone
 	ForEveryone bool
-	// Channel field of ChannelsDeleteHistoryRequest.
+	// Supergroup¹ whose history must be deleted
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/channel
 	Channel InputChannelClass
-	// MaxID field of ChannelsDeleteHistoryRequest.
+	// ID of message up to which the history must be deleted
 	MaxID int
 }
 
@@ -81,6 +93,17 @@ func (d *ChannelsDeleteHistoryRequest) String() string {
 	}
 	type Alias ChannelsDeleteHistoryRequest
 	return fmt.Sprintf("ChannelsDeleteHistoryRequest%+v", Alias(*d))
+}
+
+// FillFrom fills ChannelsDeleteHistoryRequest from given interface.
+func (d *ChannelsDeleteHistoryRequest) FillFrom(from interface {
+	GetForEveryone() (value bool)
+	GetChannel() (value InputChannelClass)
+	GetMaxID() (value int)
+}) {
+	d.ForEveryone = from.GetForEveryone()
+	d.Channel = from.GetChannel()
+	d.MaxID = from.GetMaxID()
 }
 
 // TypeID returns type id in TL schema.
@@ -232,7 +255,26 @@ func (d *ChannelsDeleteHistoryRequest) GetMaxID() (value int) {
 	return d.MaxID
 }
 
+// GetChannelAsNotEmpty returns mapped value of Channel field.
+func (d *ChannelsDeleteHistoryRequest) GetChannelAsNotEmpty() (NotEmptyInputChannel, bool) {
+	return d.Channel.AsNotEmpty()
+}
+
 // ChannelsDeleteHistory invokes method channels.deleteHistory#9baa9647 returning error if any.
+// Delete the history of a supergroup¹
+//
+// Links:
+//  1. https://core.telegram.org/api/channel
+//
+// Possible errors:
+//
+//	400 CHANNEL_INVALID: The provided channel is invalid.
+//	400 CHANNEL_PARICIPANT_MISSING: The current user is not in the channel.
+//	400 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
+//	400 CHANNEL_TOO_BIG: This channel has too many participants (>1000) to be deleted.
+//	400 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
+//
+// See https://core.telegram.org/method/channels.deleteHistory for reference.
 func (c *Client) ChannelsDeleteHistory(ctx context.Context, request *ChannelsDeleteHistoryRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

@@ -32,12 +32,21 @@ var (
 )
 
 // AccountUnregisterDeviceRequest represents TL type `account.unregisterDevice#6a0d3206`.
+// Deletes a device by its token, stops sending PUSH-notifications to it.
+//
+// See https://core.telegram.org/method/account.unregisterDevice for reference.
 type AccountUnregisterDeviceRequest struct {
-	// TokenType field of AccountUnregisterDeviceRequest.
+	// Device token type, see PUSH updates¹ for the possible values.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/push-updates#subscribing-to-notifications
 	TokenType int
-	// Token field of AccountUnregisterDeviceRequest.
+	// Device token, see PUSH updates¹ for the possible values.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/push-updates#subscribing-to-notifications
 	Token string
-	// OtherUIDs field of AccountUnregisterDeviceRequest.
+	// List of user identifiers of other users currently using the client
 	OtherUIDs []int64
 }
 
@@ -76,6 +85,17 @@ func (u *AccountUnregisterDeviceRequest) String() string {
 	}
 	type Alias AccountUnregisterDeviceRequest
 	return fmt.Sprintf("AccountUnregisterDeviceRequest%+v", Alias(*u))
+}
+
+// FillFrom fills AccountUnregisterDeviceRequest from given interface.
+func (u *AccountUnregisterDeviceRequest) FillFrom(from interface {
+	GetTokenType() (value int)
+	GetToken() (value string)
+	GetOtherUIDs() (value []int64)
+}) {
+	u.TokenType = from.GetTokenType()
+	u.Token = from.GetToken()
+	u.OtherUIDs = from.GetOtherUIDs()
 }
 
 // TypeID returns type id in TL schema.
@@ -215,6 +235,13 @@ func (u *AccountUnregisterDeviceRequest) GetOtherUIDs() (value []int64) {
 }
 
 // AccountUnregisterDevice invokes method account.unregisterDevice#6a0d3206 returning error if any.
+// Deletes a device by its token, stops sending PUSH-notifications to it.
+//
+// Possible errors:
+//
+//	400 TOKEN_INVALID: The provided token is invalid.
+//
+// See https://core.telegram.org/method/account.unregisterDevice for reference.
 func (c *Client) AccountUnregisterDevice(ctx context.Context, request *AccountUnregisterDeviceRequest) (bool, error) {
 	var result BoolBox
 

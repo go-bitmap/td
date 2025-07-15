@@ -32,22 +32,37 @@ var (
 )
 
 // ChatInviteImporter represents TL type `chatInviteImporter#8c5adfd9`.
+// When and which user joined the chat using a chat invite
+//
+// See https://core.telegram.org/constructor/chatInviteImporter for reference.
 type ChatInviteImporter struct {
-	// Flags field of ChatInviteImporter.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Requested field of ChatInviteImporter.
+	// Whether this user currently has a pending join request »¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/invites#join-requests
 	Requested bool
-	// ViaChatlist field of ChatInviteImporter.
+	// The participant joined by importing a chat folder deep link »¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/links#chat-folder-links
 	ViaChatlist bool
-	// UserID field of ChatInviteImporter.
+	// The user
 	UserID int64
-	// Date field of ChatInviteImporter.
+	// When did the user join
 	Date int
-	// About field of ChatInviteImporter.
+	// For users with pending requests, contains bio of the user that requested to join
 	//
 	// Use SetAbout and GetAbout helpers.
 	About string
-	// ApprovedBy field of ChatInviteImporter.
+	// The administrator that approved the join request »¹ of the user
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/invites#join-requests
 	//
 	// Use SetApprovedBy and GetApprovedBy helpers.
 	ApprovedBy int64
@@ -100,6 +115,29 @@ func (c *ChatInviteImporter) String() string {
 	}
 	type Alias ChatInviteImporter
 	return fmt.Sprintf("ChatInviteImporter%+v", Alias(*c))
+}
+
+// FillFrom fills ChatInviteImporter from given interface.
+func (c *ChatInviteImporter) FillFrom(from interface {
+	GetRequested() (value bool)
+	GetViaChatlist() (value bool)
+	GetUserID() (value int64)
+	GetDate() (value int)
+	GetAbout() (value string, ok bool)
+	GetApprovedBy() (value int64, ok bool)
+}) {
+	c.Requested = from.GetRequested()
+	c.ViaChatlist = from.GetViaChatlist()
+	c.UserID = from.GetUserID()
+	c.Date = from.GetDate()
+	if val, ok := from.GetAbout(); ok {
+		c.About = val
+	}
+
+	if val, ok := from.GetApprovedBy(); ok {
+		c.ApprovedBy = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.

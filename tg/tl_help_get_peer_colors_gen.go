@@ -32,8 +32,17 @@ var (
 )
 
 // HelpGetPeerColorsRequest represents TL type `help.getPeerColors#da80f42f`.
+// Get the set of accent color palettes »¹ that can be used for message accents.
+//
+// Links:
+//  1. https://core.telegram.org/api/colors
+//
+// See https://core.telegram.org/method/help.getPeerColors for reference.
 type HelpGetPeerColorsRequest struct {
-	// Hash field of HelpGetPeerColorsRequest.
+	// Hash used for caching, for more info click here¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets#hash-generation
 	Hash int
 }
 
@@ -66,6 +75,13 @@ func (g *HelpGetPeerColorsRequest) String() string {
 	}
 	type Alias HelpGetPeerColorsRequest
 	return fmt.Sprintf("HelpGetPeerColorsRequest%+v", Alias(*g))
+}
+
+// FillFrom fills HelpGetPeerColorsRequest from given interface.
+func (g *HelpGetPeerColorsRequest) FillFrom(from interface {
+	GetHash() (value int)
+}) {
+	g.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -152,6 +168,12 @@ func (g *HelpGetPeerColorsRequest) GetHash() (value int) {
 }
 
 // HelpGetPeerColors invokes method help.getPeerColors#da80f42f returning error if any.
+// Get the set of accent color palettes »¹ that can be used for message accents.
+//
+// Links:
+//  1. https://core.telegram.org/api/colors
+//
+// See https://core.telegram.org/method/help.getPeerColors for reference.
 func (c *Client) HelpGetPeerColors(ctx context.Context, hash int) (HelpPeerColorsClass, error) {
 	var result HelpPeerColorsBox
 

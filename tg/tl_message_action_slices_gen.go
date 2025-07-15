@@ -688,6 +688,32 @@ func (s MessageActionClassArray) AsMessageActionConferenceCall() (to MessageActi
 	return to
 }
 
+// AsMessageActionTodoCompletions returns copy with only MessageActionTodoCompletions constructors.
+func (s MessageActionClassArray) AsMessageActionTodoCompletions() (to MessageActionTodoCompletionsArray) {
+	for _, elem := range s {
+		value, ok := elem.(*MessageActionTodoCompletions)
+		if !ok {
+			continue
+		}
+		to = append(to, *value)
+	}
+
+	return to
+}
+
+// AsMessageActionTodoAppendTasks returns copy with only MessageActionTodoAppendTasks constructors.
+func (s MessageActionClassArray) AsMessageActionTodoAppendTasks() (to MessageActionTodoAppendTasksArray) {
+	for _, elem := range s {
+		value, ok := elem.(*MessageActionTodoAppendTasks)
+		if !ok {
+			continue
+		}
+		to = append(to, *value)
+	}
+
+	return to
+}
+
 // MessageActionChatCreateArray is adapter for slice of MessageActionChatCreate.
 type MessageActionChatCreateArray []MessageActionChatCreate
 
@@ -4284,6 +4310,170 @@ func (s *MessageActionConferenceCallArray) PopFirst() (v MessageActionConference
 
 // Pop returns last element of slice (if exists) and deletes it.
 func (s *MessageActionConferenceCallArray) Pop() (v MessageActionConferenceCall, ok bool) {
+	if s == nil || len(*s) < 1 {
+		return
+	}
+
+	a := *s
+	v = a[len(a)-1]
+	a = a[:len(a)-1]
+	*s = a
+
+	return v, true
+}
+
+// MessageActionTodoCompletionsArray is adapter for slice of MessageActionTodoCompletions.
+type MessageActionTodoCompletionsArray []MessageActionTodoCompletions
+
+// Sort sorts slice of MessageActionTodoCompletions.
+func (s MessageActionTodoCompletionsArray) Sort(less func(a, b MessageActionTodoCompletions) bool) MessageActionTodoCompletionsArray {
+	sort.Slice(s, func(i, j int) bool {
+		return less(s[i], s[j])
+	})
+	return s
+}
+
+// SortStable sorts slice of MessageActionTodoCompletions.
+func (s MessageActionTodoCompletionsArray) SortStable(less func(a, b MessageActionTodoCompletions) bool) MessageActionTodoCompletionsArray {
+	sort.SliceStable(s, func(i, j int) bool {
+		return less(s[i], s[j])
+	})
+	return s
+}
+
+// Retain filters in-place slice of MessageActionTodoCompletions.
+func (s MessageActionTodoCompletionsArray) Retain(keep func(x MessageActionTodoCompletions) bool) MessageActionTodoCompletionsArray {
+	n := 0
+	for _, x := range s {
+		if keep(x) {
+			s[n] = x
+			n++
+		}
+	}
+	s = s[:n]
+
+	return s
+}
+
+// First returns first element of slice (if exists).
+func (s MessageActionTodoCompletionsArray) First() (v MessageActionTodoCompletions, ok bool) {
+	if len(s) < 1 {
+		return
+	}
+	return s[0], true
+}
+
+// Last returns last element of slice (if exists).
+func (s MessageActionTodoCompletionsArray) Last() (v MessageActionTodoCompletions, ok bool) {
+	if len(s) < 1 {
+		return
+	}
+	return s[len(s)-1], true
+}
+
+// PopFirst returns first element of slice (if exists) and deletes it.
+func (s *MessageActionTodoCompletionsArray) PopFirst() (v MessageActionTodoCompletions, ok bool) {
+	if s == nil || len(*s) < 1 {
+		return
+	}
+
+	a := *s
+	v = a[0]
+
+	// Delete by index from SliceTricks.
+	copy(a[0:], a[1:])
+	var zero MessageActionTodoCompletions
+	a[len(a)-1] = zero
+	a = a[:len(a)-1]
+	*s = a
+
+	return v, true
+}
+
+// Pop returns last element of slice (if exists) and deletes it.
+func (s *MessageActionTodoCompletionsArray) Pop() (v MessageActionTodoCompletions, ok bool) {
+	if s == nil || len(*s) < 1 {
+		return
+	}
+
+	a := *s
+	v = a[len(a)-1]
+	a = a[:len(a)-1]
+	*s = a
+
+	return v, true
+}
+
+// MessageActionTodoAppendTasksArray is adapter for slice of MessageActionTodoAppendTasks.
+type MessageActionTodoAppendTasksArray []MessageActionTodoAppendTasks
+
+// Sort sorts slice of MessageActionTodoAppendTasks.
+func (s MessageActionTodoAppendTasksArray) Sort(less func(a, b MessageActionTodoAppendTasks) bool) MessageActionTodoAppendTasksArray {
+	sort.Slice(s, func(i, j int) bool {
+		return less(s[i], s[j])
+	})
+	return s
+}
+
+// SortStable sorts slice of MessageActionTodoAppendTasks.
+func (s MessageActionTodoAppendTasksArray) SortStable(less func(a, b MessageActionTodoAppendTasks) bool) MessageActionTodoAppendTasksArray {
+	sort.SliceStable(s, func(i, j int) bool {
+		return less(s[i], s[j])
+	})
+	return s
+}
+
+// Retain filters in-place slice of MessageActionTodoAppendTasks.
+func (s MessageActionTodoAppendTasksArray) Retain(keep func(x MessageActionTodoAppendTasks) bool) MessageActionTodoAppendTasksArray {
+	n := 0
+	for _, x := range s {
+		if keep(x) {
+			s[n] = x
+			n++
+		}
+	}
+	s = s[:n]
+
+	return s
+}
+
+// First returns first element of slice (if exists).
+func (s MessageActionTodoAppendTasksArray) First() (v MessageActionTodoAppendTasks, ok bool) {
+	if len(s) < 1 {
+		return
+	}
+	return s[0], true
+}
+
+// Last returns last element of slice (if exists).
+func (s MessageActionTodoAppendTasksArray) Last() (v MessageActionTodoAppendTasks, ok bool) {
+	if len(s) < 1 {
+		return
+	}
+	return s[len(s)-1], true
+}
+
+// PopFirst returns first element of slice (if exists) and deletes it.
+func (s *MessageActionTodoAppendTasksArray) PopFirst() (v MessageActionTodoAppendTasks, ok bool) {
+	if s == nil || len(*s) < 1 {
+		return
+	}
+
+	a := *s
+	v = a[0]
+
+	// Delete by index from SliceTricks.
+	copy(a[0:], a[1:])
+	var zero MessageActionTodoAppendTasks
+	a[len(a)-1] = zero
+	a = a[:len(a)-1]
+	*s = a
+
+	return v, true
+}
+
+// Pop returns last element of slice (if exists) and deletes it.
+func (s *MessageActionTodoAppendTasksArray) Pop() (v MessageActionTodoAppendTasks, ok bool) {
 	if s == nil || len(*s) < 1 {
 		return
 	}

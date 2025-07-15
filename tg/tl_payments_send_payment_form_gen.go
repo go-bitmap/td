@@ -32,24 +32,39 @@ var (
 )
 
 // PaymentsSendPaymentFormRequest represents TL type `payments.sendPaymentForm#2d03522f`.
+// Send compiled payment form
+//
+// See https://core.telegram.org/method/payments.sendPaymentForm for reference.
 type PaymentsSendPaymentFormRequest struct {
-	// Flags field of PaymentsSendPaymentFormRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// FormID field of PaymentsSendPaymentFormRequest.
+	// Form ID
 	FormID int64
-	// Invoice field of PaymentsSendPaymentFormRequest.
+	// Invoice
 	Invoice InputInvoiceClass
-	// RequestedInfoID field of PaymentsSendPaymentFormRequest.
+	// ID of saved and validated order info¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/constructor/payments.validatedRequestedInfo
 	//
 	// Use SetRequestedInfoID and GetRequestedInfoID helpers.
 	RequestedInfoID string
-	// ShippingOptionID field of PaymentsSendPaymentFormRequest.
+	// Chosen shipping option ID
 	//
 	// Use SetShippingOptionID and GetShippingOptionID helpers.
 	ShippingOptionID string
-	// Credentials field of PaymentsSendPaymentFormRequest.
+	// Payment credentials
 	Credentials InputPaymentCredentialsClass
-	// TipAmount field of PaymentsSendPaymentFormRequest.
+	// Tip, in the smallest units of the currency (integer, not float/double). For example,
+	// for a price of US$ 1.45 pass amount = 145. See the exp parameter in currencies.json¹,
+	// it shows the number of digits past the decimal point for each currency (2 for the
+	// majority of currencies).
+	//
+	// Links:
+	//  1) https://core.telegram.org/bots/payments/currencies.json
 	//
 	// Use SetTipAmount and GetTipAmount helpers.
 	TipAmount int64
@@ -102,6 +117,32 @@ func (s *PaymentsSendPaymentFormRequest) String() string {
 	}
 	type Alias PaymentsSendPaymentFormRequest
 	return fmt.Sprintf("PaymentsSendPaymentFormRequest%+v", Alias(*s))
+}
+
+// FillFrom fills PaymentsSendPaymentFormRequest from given interface.
+func (s *PaymentsSendPaymentFormRequest) FillFrom(from interface {
+	GetFormID() (value int64)
+	GetInvoice() (value InputInvoiceClass)
+	GetRequestedInfoID() (value string, ok bool)
+	GetShippingOptionID() (value string, ok bool)
+	GetCredentials() (value InputPaymentCredentialsClass)
+	GetTipAmount() (value int64, ok bool)
+}) {
+	s.FormID = from.GetFormID()
+	s.Invoice = from.GetInvoice()
+	if val, ok := from.GetRequestedInfoID(); ok {
+		s.RequestedInfoID = val
+	}
+
+	if val, ok := from.GetShippingOptionID(); ok {
+		s.ShippingOptionID = val
+	}
+
+	s.Credentials = from.GetCredentials()
+	if val, ok := from.GetTipAmount(); ok {
+		s.TipAmount = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -359,6 +400,15 @@ func (s *PaymentsSendPaymentFormRequest) GetTipAmount() (value int64, ok bool) {
 }
 
 // PaymentsSendPaymentForm invokes method payments.sendPaymentForm#2d03522f returning error if any.
+// Send compiled payment form
+//
+// Possible errors:
+//
+//	400 MESSAGE_ID_INVALID: The provided message id is invalid.
+//	400 PEER_ID_INVALID: The provided peer id is invalid.
+//	400 TMP_PASSWORD_INVALID: The passed tmp_password is invalid.
+//
+// See https://core.telegram.org/method/payments.sendPaymentForm for reference.
 func (c *Client) PaymentsSendPaymentForm(ctx context.Context, request *PaymentsSendPaymentFormRequest) (PaymentsPaymentResultClass, error) {
 	var result PaymentsPaymentResultBox
 

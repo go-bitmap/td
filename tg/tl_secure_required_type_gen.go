@@ -32,16 +32,22 @@ var (
 )
 
 // SecureRequiredType represents TL type `secureRequiredType#829d99da`.
+// Required type
+//
+// See https://core.telegram.org/constructor/secureRequiredType for reference.
 type SecureRequiredType struct {
-	// Flags field of SecureRequiredType.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// NativeNames field of SecureRequiredType.
+	// Native names
 	NativeNames bool
-	// SelfieRequired field of SecureRequiredType.
+	// Is a selfie required
 	SelfieRequired bool
-	// TranslationRequired field of SecureRequiredType.
+	// Is a translation required
 	TranslationRequired bool
-	// Type field of SecureRequiredType.
+	// Secure value type
 	Type SecureValueTypeClass
 }
 
@@ -91,6 +97,19 @@ func (s *SecureRequiredType) String() string {
 	}
 	type Alias SecureRequiredType
 	return fmt.Sprintf("SecureRequiredType%+v", Alias(*s))
+}
+
+// FillFrom fills SecureRequiredType from given interface.
+func (s *SecureRequiredType) FillFrom(from interface {
+	GetNativeNames() (value bool)
+	GetSelfieRequired() (value bool)
+	GetTranslationRequired() (value bool)
+	GetType() (value SecureValueTypeClass)
+}) {
+	s.NativeNames = from.GetNativeNames()
+	s.SelfieRequired = from.GetSelfieRequired()
+	s.TranslationRequired = from.GetTranslationRequired()
+	s.Type = from.GetType()
 }
 
 // TypeID returns type id in TL schema.
@@ -279,8 +298,11 @@ func (s *SecureRequiredType) GetType() (value SecureValueTypeClass) {
 }
 
 // SecureRequiredTypeOneOf represents TL type `secureRequiredTypeOneOf#27477b4`.
+// One of
+//
+// See https://core.telegram.org/constructor/secureRequiredTypeOneOf for reference.
 type SecureRequiredTypeOneOf struct {
-	// Types field of SecureRequiredTypeOneOf.
+	// Secure required value types
 	Types []SecureRequiredTypeClass
 }
 
@@ -318,6 +340,13 @@ func (s *SecureRequiredTypeOneOf) String() string {
 	}
 	type Alias SecureRequiredTypeOneOf
 	return fmt.Sprintf("SecureRequiredTypeOneOf%+v", Alias(*s))
+}
+
+// FillFrom fills SecureRequiredTypeOneOf from given interface.
+func (s *SecureRequiredTypeOneOf) FillFrom(from interface {
+	GetTypes() (value []SecureRequiredTypeClass)
+}) {
+	s.Types = from.GetTypes()
 }
 
 // TypeID returns type id in TL schema.
@@ -421,10 +450,17 @@ func (s *SecureRequiredTypeOneOf) GetTypes() (value []SecureRequiredTypeClass) {
 	return s.Types
 }
 
+// MapTypes returns field Types wrapped in SecureRequiredTypeClassArray helper.
+func (s *SecureRequiredTypeOneOf) MapTypes() (value SecureRequiredTypeClassArray) {
+	return SecureRequiredTypeClassArray(s.Types)
+}
+
 // SecureRequiredTypeClassName is schema name of SecureRequiredTypeClass.
 const SecureRequiredTypeClassName = "SecureRequiredType"
 
 // SecureRequiredTypeClass represents SecureRequiredType generic type.
+//
+// See https://core.telegram.org/type/SecureRequiredType for reference.
 //
 // Constructors:
 //   - [SecureRequiredType]

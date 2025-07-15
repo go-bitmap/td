@@ -32,10 +32,13 @@ var (
 )
 
 // AccountSaveThemeRequest represents TL type `account.saveTheme#f257106c`.
+// Save a theme
+//
+// See https://core.telegram.org/method/account.saveTheme for reference.
 type AccountSaveThemeRequest struct {
-	// Theme field of AccountSaveThemeRequest.
+	// Theme to save
 	Theme InputThemeClass
-	// Unsave field of AccountSaveThemeRequest.
+	// Unsave
 	Unsave bool
 }
 
@@ -71,6 +74,15 @@ func (s *AccountSaveThemeRequest) String() string {
 	}
 	type Alias AccountSaveThemeRequest
 	return fmt.Sprintf("AccountSaveThemeRequest%+v", Alias(*s))
+}
+
+// FillFrom fills AccountSaveThemeRequest from given interface.
+func (s *AccountSaveThemeRequest) FillFrom(from interface {
+	GetTheme() (value InputThemeClass)
+	GetUnsave() (value bool)
+}) {
+	s.Theme = from.GetTheme()
+	s.Unsave = from.GetUnsave()
 }
 
 // TypeID returns type id in TL schema.
@@ -182,6 +194,13 @@ func (s *AccountSaveThemeRequest) GetUnsave() (value bool) {
 }
 
 // AccountSaveTheme invokes method account.saveTheme#f257106c returning error if any.
+// Save a theme
+//
+// Possible errors:
+//
+//	400 THEME_INVALID: Invalid theme provided.
+//
+// See https://core.telegram.org/method/account.saveTheme for reference.
 func (c *Client) AccountSaveTheme(ctx context.Context, request *AccountSaveThemeRequest) (bool, error) {
 	var result BoolBox
 

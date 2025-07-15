@@ -32,10 +32,17 @@ var (
 )
 
 // StoriesGetStoriesViewsRequest represents TL type `stories.getStoriesViews#28e16cc8`.
+// Obtain info about the view count, forward count, reactions and recent viewers of one
+// or more stories¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/stories
+//
+// See https://core.telegram.org/method/stories.getStoriesViews for reference.
 type StoriesGetStoriesViewsRequest struct {
-	// Peer field of StoriesGetStoriesViewsRequest.
+	// Peer whose stories should be fetched
 	Peer InputPeerClass
-	// ID field of StoriesGetStoriesViewsRequest.
+	// Story IDs
 	ID []int
 }
 
@@ -71,6 +78,15 @@ func (g *StoriesGetStoriesViewsRequest) String() string {
 	}
 	type Alias StoriesGetStoriesViewsRequest
 	return fmt.Sprintf("StoriesGetStoriesViewsRequest%+v", Alias(*g))
+}
+
+// FillFrom fills StoriesGetStoriesViewsRequest from given interface.
+func (g *StoriesGetStoriesViewsRequest) FillFrom(from interface {
+	GetPeer() (value InputPeerClass)
+	GetID() (value []int)
+}) {
+	g.Peer = from.GetPeer()
+	g.ID = from.GetID()
 }
 
 // TypeID returns type id in TL schema.
@@ -195,6 +211,20 @@ func (g *StoriesGetStoriesViewsRequest) GetID() (value []int) {
 }
 
 // StoriesGetStoriesViews invokes method stories.getStoriesViews#28e16cc8 returning error if any.
+// Obtain info about the view count, forward count, reactions and recent viewers of one
+// or more stories¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/stories
+//
+// Possible errors:
+//
+//	400 CHANNEL_INVALID: The provided channel is invalid.
+//	400 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
+//	400 PEER_ID_INVALID: The provided peer id is invalid.
+//	400 STORY_ID_EMPTY: You specified no story IDs.
+//
+// See https://core.telegram.org/method/stories.getStoriesViews for reference.
 func (c *Client) StoriesGetStoriesViews(ctx context.Context, request *StoriesGetStoriesViewsRequest) (*StoriesStoryViews, error) {
 	var result StoriesStoryViews
 

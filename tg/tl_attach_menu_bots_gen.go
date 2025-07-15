@@ -32,6 +32,9 @@ var (
 )
 
 // AttachMenuBotsNotModified represents TL type `attachMenuBotsNotModified#f1d88a5c`.
+// The list of bot mini apps hasn't changed
+//
+// See https://core.telegram.org/constructor/attachMenuBotsNotModified for reference.
 type AttachMenuBotsNotModified struct {
 }
 
@@ -131,12 +134,24 @@ func (a *AttachMenuBotsNotModified) DecodeBare(b *bin.Buffer) error {
 }
 
 // AttachMenuBots represents TL type `attachMenuBots#3c4301c0`.
+// Represents a list of bot mini apps that can be launched from the attachment menu »¹
+//
+// Links:
+//  1. https://core.telegram.org/api/bots/attach
+//
+// See https://core.telegram.org/constructor/attachMenuBots for reference.
 type AttachMenuBots struct {
-	// Hash field of AttachMenuBots.
+	// Hash used for caching, for more info click here¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets#hash-generation
 	Hash int64
-	// Bots field of AttachMenuBots.
+	// List of bot mini apps that can be launched from the attachment menu »¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/bots/attach
 	Bots []AttachMenuBot
-	// Users field of AttachMenuBots.
+	// Info about related users/bots
 	Users []UserClass
 }
 
@@ -180,6 +195,17 @@ func (a *AttachMenuBots) String() string {
 	}
 	type Alias AttachMenuBots
 	return fmt.Sprintf("AttachMenuBots%+v", Alias(*a))
+}
+
+// FillFrom fills AttachMenuBots from given interface.
+func (a *AttachMenuBots) FillFrom(from interface {
+	GetHash() (value int64)
+	GetBots() (value []AttachMenuBot)
+	GetUsers() (value []UserClass)
+}) {
+	a.Hash = from.GetHash()
+	a.Bots = from.GetBots()
+	a.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -338,10 +364,17 @@ func (a *AttachMenuBots) GetUsers() (value []UserClass) {
 	return a.Users
 }
 
+// MapUsers returns field Users wrapped in UserClassArray helper.
+func (a *AttachMenuBots) MapUsers() (value UserClassArray) {
+	return UserClassArray(a.Users)
+}
+
 // AttachMenuBotsClassName is schema name of AttachMenuBotsClass.
 const AttachMenuBotsClassName = "AttachMenuBots"
 
 // AttachMenuBotsClass represents AttachMenuBots generic type.
+//
+// See https://core.telegram.org/type/AttachMenuBots for reference.
 //
 // Constructors:
 //   - [AttachMenuBotsNotModified]
@@ -375,6 +408,19 @@ type AttachMenuBotsClass interface {
 	String() string
 	// Zero returns true if current object has a zero value.
 	Zero() bool
+
+	// AsModified tries to map AttachMenuBotsClass to AttachMenuBots.
+	AsModified() (*AttachMenuBots, bool)
+}
+
+// AsModified tries to map AttachMenuBotsNotModified to AttachMenuBots.
+func (a *AttachMenuBotsNotModified) AsModified() (*AttachMenuBots, bool) {
+	return nil, false
+}
+
+// AsModified tries to map AttachMenuBots to AttachMenuBots.
+func (a *AttachMenuBots) AsModified() (*AttachMenuBots, bool) {
+	return a, true
 }
 
 // DecodeAttachMenuBots implements binary de-serialization for AttachMenuBotsClass.

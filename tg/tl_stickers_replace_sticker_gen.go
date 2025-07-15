@@ -32,10 +32,16 @@ var (
 )
 
 // StickersReplaceStickerRequest represents TL type `stickers.replaceSticker#4696459a`.
+// Replace a sticker in a stickerset »¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/stickers
+//
+// See https://core.telegram.org/method/stickers.replaceSticker for reference.
 type StickersReplaceStickerRequest struct {
-	// Sticker field of StickersReplaceStickerRequest.
+	// Old sticker document.
 	Sticker InputDocumentClass
-	// NewSticker field of StickersReplaceStickerRequest.
+	// New sticker.
 	NewSticker InputStickerSetItem
 }
 
@@ -71,6 +77,15 @@ func (r *StickersReplaceStickerRequest) String() string {
 	}
 	type Alias StickersReplaceStickerRequest
 	return fmt.Sprintf("StickersReplaceStickerRequest%+v", Alias(*r))
+}
+
+// FillFrom fills StickersReplaceStickerRequest from given interface.
+func (r *StickersReplaceStickerRequest) FillFrom(from interface {
+	GetSticker() (value InputDocumentClass)
+	GetNewSticker() (value InputStickerSetItem)
+}) {
+	r.Sticker = from.GetSticker()
+	r.NewSticker = from.GetNewSticker()
 }
 
 // TypeID returns type id in TL schema.
@@ -181,7 +196,23 @@ func (r *StickersReplaceStickerRequest) GetNewSticker() (value InputStickerSetIt
 	return r.NewSticker
 }
 
+// GetStickerAsNotEmpty returns mapped value of Sticker field.
+func (r *StickersReplaceStickerRequest) GetStickerAsNotEmpty() (*InputDocument, bool) {
+	return r.Sticker.AsNotEmpty()
+}
+
 // StickersReplaceSticker invokes method stickers.replaceSticker#4696459a returning error if any.
+// Replace a sticker in a stickerset »¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/stickers
+//
+// Possible errors:
+//
+//	400 STICKER_INVALID: The provided sticker is invalid.
+//
+// See https://core.telegram.org/method/stickers.replaceSticker for reference.
+// Can be used by bots.
 func (c *Client) StickersReplaceSticker(ctx context.Context, request *StickersReplaceStickerRequest) (MessagesStickerSetClass, error) {
 	var result MessagesStickerSetBox
 

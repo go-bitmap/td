@@ -32,8 +32,21 @@ var (
 )
 
 // ContactsGetContactsRequest represents TL type `contacts.getContacts#5dd69e12`.
+// Returns the current user's contact list.
+//
+// See https://core.telegram.org/method/contacts.getContacts for reference.
 type ContactsGetContactsRequest struct {
-	// Hash field of ContactsGetContactsRequest.
+	// Hash used for caching, for more info click here¹.Note that the hash is computed using
+	// the usual algorithm², passing to the algorithm first the previously returned contacts
+	// contacts³.saved_count field, then max 100000 sorted user IDs from the contact list,
+	// including the ID of the currently logged in user if it is saved as a contact. Example:
+	// tdlib implementation⁴.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets#hash-generation
+	//  2) https://core.telegram.org/api/offsets#hash-generation
+	//  3) https://core.telegram.org/constructor/contacts.contacts
+	//  4) https://github.com/tdlib/td/blob/63c7d0301825b78c30dc7307f1f1466be049eb79/td/telegram/UserManager.cpp#L5754
 	Hash int64
 }
 
@@ -66,6 +79,13 @@ func (g *ContactsGetContactsRequest) String() string {
 	}
 	type Alias ContactsGetContactsRequest
 	return fmt.Sprintf("ContactsGetContactsRequest%+v", Alias(*g))
+}
+
+// FillFrom fills ContactsGetContactsRequest from given interface.
+func (g *ContactsGetContactsRequest) FillFrom(from interface {
+	GetHash() (value int64)
+}) {
+	g.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -152,6 +172,9 @@ func (g *ContactsGetContactsRequest) GetHash() (value int64) {
 }
 
 // ContactsGetContacts invokes method contacts.getContacts#5dd69e12 returning error if any.
+// Returns the current user's contact list.
+//
+// See https://core.telegram.org/method/contacts.getContacts for reference.
 func (c *Client) ContactsGetContacts(ctx context.Context, hash int64) (ContactsContactsClass, error) {
 	var result ContactsContactsBox
 

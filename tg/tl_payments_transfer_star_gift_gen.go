@@ -32,6 +32,8 @@ var (
 )
 
 // PaymentsTransferStarGiftRequest represents TL type `payments.transferStarGift#7f18176a`.
+//
+// See https://core.telegram.org/method/payments.transferStarGift for reference.
 type PaymentsTransferStarGiftRequest struct {
 	// Stargift field of PaymentsTransferStarGiftRequest.
 	Stargift InputSavedStarGiftClass
@@ -71,6 +73,15 @@ func (t *PaymentsTransferStarGiftRequest) String() string {
 	}
 	type Alias PaymentsTransferStarGiftRequest
 	return fmt.Sprintf("PaymentsTransferStarGiftRequest%+v", Alias(*t))
+}
+
+// FillFrom fills PaymentsTransferStarGiftRequest from given interface.
+func (t *PaymentsTransferStarGiftRequest) FillFrom(from interface {
+	GetStargift() (value InputSavedStarGiftClass)
+	GetToID() (value InputPeerClass)
+}) {
+	t.Stargift = from.GetStargift()
+	t.ToID = from.GetToID()
 }
 
 // TypeID returns type id in TL schema.
@@ -187,6 +198,8 @@ func (t *PaymentsTransferStarGiftRequest) GetToID() (value InputPeerClass) {
 }
 
 // PaymentsTransferStarGift invokes method payments.transferStarGift#7f18176a returning error if any.
+//
+// See https://core.telegram.org/method/payments.transferStarGift for reference.
 func (c *Client) PaymentsTransferStarGift(ctx context.Context, request *PaymentsTransferStarGiftRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

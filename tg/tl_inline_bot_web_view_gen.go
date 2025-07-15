@@ -32,10 +32,17 @@ var (
 )
 
 // InlineBotWebView represents TL type `inlineBotWebView#b57295d5`.
+// Specifies an inline mode mini app¹ button, shown on top of the inline query results
+// list.
+//
+// Links:
+//  1. https://core.telegram.org/api/bots/webapps#inline-mode-mini-apps
+//
+// See https://core.telegram.org/constructor/inlineBotWebView for reference.
 type InlineBotWebView struct {
-	// Text field of InlineBotWebView.
+	// Text of the button
 	Text string
-	// URL field of InlineBotWebView.
+	// Webapp URL
 	URL string
 }
 
@@ -71,6 +78,15 @@ func (i *InlineBotWebView) String() string {
 	}
 	type Alias InlineBotWebView
 	return fmt.Sprintf("InlineBotWebView%+v", Alias(*i))
+}
+
+// FillFrom fills InlineBotWebView from given interface.
+func (i *InlineBotWebView) FillFrom(from interface {
+	GetText() (value string)
+	GetURL() (value string)
+}) {
+	i.Text = from.GetText()
+	i.URL = from.GetURL()
 }
 
 // TypeID returns type id in TL schema.

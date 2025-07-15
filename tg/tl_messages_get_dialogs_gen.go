@@ -32,24 +32,46 @@ var (
 )
 
 // MessagesGetDialogsRequest represents TL type `messages.getDialogs#a0f4cb4f`.
+// Returns the current user dialog list.
+//
+// See https://core.telegram.org/method/messages.getDialogs for reference.
 type MessagesGetDialogsRequest struct {
-	// Flags field of MessagesGetDialogsRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// ExcludePinned field of MessagesGetDialogsRequest.
+	// Exclude pinned dialogs
 	ExcludePinned bool
-	// FolderID field of MessagesGetDialogsRequest.
+	// Peer folder ID, for more info click here¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/folders#peer-folders
 	//
 	// Use SetFolderID and GetFolderID helpers.
 	FolderID int
-	// OffsetDate field of MessagesGetDialogsRequest.
+	// Offsets for pagination, for more info click here¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets
 	OffsetDate int
-	// OffsetID field of MessagesGetDialogsRequest.
+	// Offsets for pagination, for more info click here¹ (top_message ID used for
+	// pagination)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets
 	OffsetID int
-	// OffsetPeer field of MessagesGetDialogsRequest.
+	// Offset peer for pagination¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets
 	OffsetPeer InputPeerClass
-	// Limit field of MessagesGetDialogsRequest.
+	// Number of list elements to be returned
 	Limit int
-	// Hash field of MessagesGetDialogsRequest.
+	// Hash used for caching, for more info click here¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets#hash-generation
 	Hash int64
 }
 
@@ -103,6 +125,28 @@ func (g *MessagesGetDialogsRequest) String() string {
 	}
 	type Alias MessagesGetDialogsRequest
 	return fmt.Sprintf("MessagesGetDialogsRequest%+v", Alias(*g))
+}
+
+// FillFrom fills MessagesGetDialogsRequest from given interface.
+func (g *MessagesGetDialogsRequest) FillFrom(from interface {
+	GetExcludePinned() (value bool)
+	GetFolderID() (value int, ok bool)
+	GetOffsetDate() (value int)
+	GetOffsetID() (value int)
+	GetOffsetPeer() (value InputPeerClass)
+	GetLimit() (value int)
+	GetHash() (value int64)
+}) {
+	g.ExcludePinned = from.GetExcludePinned()
+	if val, ok := from.GetFolderID(); ok {
+		g.FolderID = val
+	}
+
+	g.OffsetDate = from.GetOffsetDate()
+	g.OffsetID = from.GetOffsetID()
+	g.OffsetPeer = from.GetOffsetPeer()
+	g.Limit = from.GetLimit()
+	g.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -351,6 +395,16 @@ func (g *MessagesGetDialogsRequest) GetHash() (value int64) {
 }
 
 // MessagesGetDialogs invokes method messages.getDialogs#a0f4cb4f returning error if any.
+// Returns the current user dialog list.
+//
+// Possible errors:
+//
+//	403 CHAT_WRITE_FORBIDDEN: You can't write in this chat.
+//	400 FOLDER_ID_INVALID: Invalid folder ID.
+//	400 OFFSET_PEER_ID_INVALID: The provided offset peer is invalid.
+//	400 TAKEOUT_INVALID: The specified takeout ID is invalid.
+//
+// See https://core.telegram.org/method/messages.getDialogs for reference.
 func (c *Client) MessagesGetDialogs(ctx context.Context, request *MessagesGetDialogsRequest) (MessagesDialogsClass, error) {
 	var result MessagesDialogsBox
 

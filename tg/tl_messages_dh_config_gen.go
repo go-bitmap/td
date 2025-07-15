@@ -32,8 +32,11 @@ var (
 )
 
 // MessagesDhConfigNotModified represents TL type `messages.dhConfigNotModified#c0e24635`.
+// Configuring parameters did not change.
+//
+// See https://core.telegram.org/constructor/messages.dhConfigNotModified for reference.
 type MessagesDhConfigNotModified struct {
-	// Random field of MessagesDhConfigNotModified.
+	// Random sequence of bytes of assigned length
 	Random []byte
 }
 
@@ -71,6 +74,13 @@ func (d *MessagesDhConfigNotModified) String() string {
 	}
 	type Alias MessagesDhConfigNotModified
 	return fmt.Sprintf("MessagesDhConfigNotModified%+v", Alias(*d))
+}
+
+// FillFrom fills MessagesDhConfigNotModified from given interface.
+func (d *MessagesDhConfigNotModified) FillFrom(from interface {
+	GetRandom() (value []byte)
+}) {
+	d.Random = from.GetRandom()
 }
 
 // TypeID returns type id in TL schema.
@@ -157,14 +167,23 @@ func (d *MessagesDhConfigNotModified) GetRandom() (value []byte) {
 }
 
 // MessagesDhConfig represents TL type `messages.dhConfig#2c221edd`.
+// New set of configuring parameters.
+//
+// See https://core.telegram.org/constructor/messages.dhConfig for reference.
 type MessagesDhConfig struct {
-	// G field of MessagesDhConfig.
+	// New value prime, see Wikipedia¹
+	//
+	// Links:
+	//  1) https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange
 	G int
-	// P field of MessagesDhConfig.
+	// New value primitive root, see Wikipedia¹
+	//
+	// Links:
+	//  1) https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange
 	P []byte
-	// Version field of MessagesDhConfig.
+	// Version of set of parameters
 	Version int
-	// Random field of MessagesDhConfig.
+	// Random sequence of bytes of assigned length
 	Random []byte
 }
 
@@ -211,6 +230,19 @@ func (d *MessagesDhConfig) String() string {
 	}
 	type Alias MessagesDhConfig
 	return fmt.Sprintf("MessagesDhConfig%+v", Alias(*d))
+}
+
+// FillFrom fills MessagesDhConfig from given interface.
+func (d *MessagesDhConfig) FillFrom(from interface {
+	GetG() (value int)
+	GetP() (value []byte)
+	GetVersion() (value int)
+	GetRandom() (value []byte)
+}) {
+	d.G = from.GetG()
+	d.P = from.GetP()
+	d.Version = from.GetVersion()
+	d.Random = from.GetRandom()
 }
 
 // TypeID returns type id in TL schema.
@@ -361,6 +393,8 @@ const MessagesDhConfigClassName = "messages.DhConfig"
 
 // MessagesDhConfigClass represents messages.DhConfig generic type.
 //
+// See https://core.telegram.org/type/messages.DhConfig for reference.
+//
 // Constructors:
 //   - [MessagesDhConfigNotModified]
 //   - [MessagesDhConfig]
@@ -394,8 +428,20 @@ type MessagesDhConfigClass interface {
 	// Zero returns true if current object has a zero value.
 	Zero() bool
 
-	// Random field of MessagesDhConfigNotModified.
+	// Random sequence of bytes of assigned length
 	GetRandom() (value []byte)
+	// AsModified tries to map MessagesDhConfigClass to MessagesDhConfig.
+	AsModified() (*MessagesDhConfig, bool)
+}
+
+// AsModified tries to map MessagesDhConfigNotModified to MessagesDhConfig.
+func (d *MessagesDhConfigNotModified) AsModified() (*MessagesDhConfig, bool) {
+	return nil, false
+}
+
+// AsModified tries to map MessagesDhConfig to MessagesDhConfig.
+func (d *MessagesDhConfig) AsModified() (*MessagesDhConfig, bool) {
+	return d, true
 }
 
 // DecodeMessagesDhConfig implements binary de-serialization for MessagesDhConfigClass.

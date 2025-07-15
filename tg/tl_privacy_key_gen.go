@@ -32,6 +32,22 @@ var (
 )
 
 // PrivacyKeyStatusTimestamp represents TL type `privacyKeyStatusTimestamp#bc2eab30`.
+// Whether we can see the last online timestamp of this user.
+// Note that if we decide to hide our exact last online timestamp to someone (i.e., users
+// A, B, C, or all users) and we do not have a Premium¹ subscription, we won't be able
+// to see the exact last online timestamp of those users (A, B, C, or all users), even if
+// those users do share it with us.
+// If those users do share their exact online status with us, but we can't see it due to
+// the reason mentioned above, the by_me flag of userStatusRecently¹,
+// userStatusLastWeek², userStatusLastMonth³ will be set.
+//
+// Links:
+//  1. https://core.telegram.org/api/premium
+//  2. https://core.telegram.org/constructor/userStatusRecently
+//  3. https://core.telegram.org/constructor/userStatusLastWeek
+//  4. https://core.telegram.org/constructor/userStatusLastMonth
+//
+// See https://core.telegram.org/constructor/privacyKeyStatusTimestamp for reference.
 type PrivacyKeyStatusTimestamp struct {
 }
 
@@ -131,6 +147,9 @@ func (p *PrivacyKeyStatusTimestamp) DecodeBare(b *bin.Buffer) error {
 }
 
 // PrivacyKeyChatInvite represents TL type `privacyKeyChatInvite#500e6dfa`.
+// Whether the user can be invited to chats
+//
+// See https://core.telegram.org/constructor/privacyKeyChatInvite for reference.
 type PrivacyKeyChatInvite struct {
 }
 
@@ -230,6 +249,9 @@ func (p *PrivacyKeyChatInvite) DecodeBare(b *bin.Buffer) error {
 }
 
 // PrivacyKeyPhoneCall represents TL type `privacyKeyPhoneCall#3d662b7b`.
+// Whether the user accepts phone calls
+//
+// See https://core.telegram.org/constructor/privacyKeyPhoneCall for reference.
 type PrivacyKeyPhoneCall struct {
 }
 
@@ -329,6 +351,9 @@ func (p *PrivacyKeyPhoneCall) DecodeBare(b *bin.Buffer) error {
 }
 
 // PrivacyKeyPhoneP2P represents TL type `privacyKeyPhoneP2P#39491cc8`.
+// Whether P2P connections in phone calls with this user are allowed
+//
+// See https://core.telegram.org/constructor/privacyKeyPhoneP2P for reference.
 type PrivacyKeyPhoneP2P struct {
 }
 
@@ -428,6 +453,12 @@ func (p *PrivacyKeyPhoneP2P) DecodeBare(b *bin.Buffer) error {
 }
 
 // PrivacyKeyForwards represents TL type `privacyKeyForwards#69ec56a3`.
+// Whether messages forwarded from the user will be anonymously forwarded¹
+//
+// Links:
+//  1. https://telegram.org/blog/unsend-privacy-emoji#anonymous-forwarding
+//
+// See https://core.telegram.org/constructor/privacyKeyForwards for reference.
 type PrivacyKeyForwards struct {
 }
 
@@ -527,6 +558,9 @@ func (p *PrivacyKeyForwards) DecodeBare(b *bin.Buffer) error {
 }
 
 // PrivacyKeyProfilePhoto represents TL type `privacyKeyProfilePhoto#96151fed`.
+// Whether the profile picture of the user is visible
+//
+// See https://core.telegram.org/constructor/privacyKeyProfilePhoto for reference.
 type PrivacyKeyProfilePhoto struct {
 }
 
@@ -626,6 +660,9 @@ func (p *PrivacyKeyProfilePhoto) DecodeBare(b *bin.Buffer) error {
 }
 
 // PrivacyKeyPhoneNumber represents TL type `privacyKeyPhoneNumber#d19ae46d`.
+// Whether the user allows us to see his phone number
+//
+// See https://core.telegram.org/constructor/privacyKeyPhoneNumber for reference.
 type PrivacyKeyPhoneNumber struct {
 }
 
@@ -725,6 +762,9 @@ func (p *PrivacyKeyPhoneNumber) DecodeBare(b *bin.Buffer) error {
 }
 
 // PrivacyKeyAddedByPhone represents TL type `privacyKeyAddedByPhone#42ffd42b`.
+// Whether this user can be added to our contact list by their phone number
+//
+// See https://core.telegram.org/constructor/privacyKeyAddedByPhone for reference.
 type PrivacyKeyAddedByPhone struct {
 }
 
@@ -824,6 +864,9 @@ func (p *PrivacyKeyAddedByPhone) DecodeBare(b *bin.Buffer) error {
 }
 
 // PrivacyKeyVoiceMessages represents TL type `privacyKeyVoiceMessages#697f414`.
+// Whether the user accepts voice messages
+//
+// See https://core.telegram.org/constructor/privacyKeyVoiceMessages for reference.
 type PrivacyKeyVoiceMessages struct {
 }
 
@@ -923,6 +966,9 @@ func (p *PrivacyKeyVoiceMessages) DecodeBare(b *bin.Buffer) error {
 }
 
 // PrivacyKeyAbout represents TL type `privacyKeyAbout#a486b761`.
+// Whether people can see your bio
+//
+// See https://core.telegram.org/constructor/privacyKeyAbout for reference.
 type PrivacyKeyAbout struct {
 }
 
@@ -1022,6 +1068,9 @@ func (p *PrivacyKeyAbout) DecodeBare(b *bin.Buffer) error {
 }
 
 // PrivacyKeyBirthday represents TL type `privacyKeyBirthday#2000a518`.
+// Whether the user can see our birthday.
+//
+// See https://core.telegram.org/constructor/privacyKeyBirthday for reference.
 type PrivacyKeyBirthday struct {
 }
 
@@ -1121,6 +1170,12 @@ func (p *PrivacyKeyBirthday) DecodeBare(b *bin.Buffer) error {
 }
 
 // PrivacyKeyStarGiftsAutoSave represents TL type `privacyKeyStarGiftsAutoSave#2ca4fdf8`.
+// Whether received gifts¹ will be automatically displayed on our profile
+//
+// Links:
+//  1. https://core.telegram.org/api/gifts
+//
+// See https://core.telegram.org/constructor/privacyKeyStarGiftsAutoSave for reference.
 type PrivacyKeyStarGiftsAutoSave struct {
 }
 
@@ -1220,6 +1275,8 @@ func (p *PrivacyKeyStarGiftsAutoSave) DecodeBare(b *bin.Buffer) error {
 }
 
 // PrivacyKeyNoPaidMessages represents TL type `privacyKeyNoPaidMessages#17d348d2`.
+//
+// See https://core.telegram.org/constructor/privacyKeyNoPaidMessages for reference.
 type PrivacyKeyNoPaidMessages struct {
 }
 
@@ -1322,6 +1379,8 @@ func (p *PrivacyKeyNoPaidMessages) DecodeBare(b *bin.Buffer) error {
 const PrivacyKeyClassName = "PrivacyKey"
 
 // PrivacyKeyClass represents PrivacyKey generic type.
+//
+// See https://core.telegram.org/type/PrivacyKey for reference.
 //
 // Constructors:
 //   - [PrivacyKeyStatusTimestamp]

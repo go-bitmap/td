@@ -32,16 +32,29 @@ var (
 )
 
 // InputSingleMedia represents TL type `inputSingleMedia#1cc6e91f`.
+// A single media in an album or grouped media¹ sent with messages.sendMultiMedia².
+//
+// Links:
+//  1. https://core.telegram.org/api/files#albums-grouped-media
+//  2. https://core.telegram.org/method/messages.sendMultiMedia
+//
+// See https://core.telegram.org/constructor/inputSingleMedia for reference.
 type InputSingleMedia struct {
-	// Flags field of InputSingleMedia.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Media field of InputSingleMedia.
+	// The media
 	Media InputMediaClass
-	// RandomID field of InputSingleMedia.
+	// Unique client media ID required to prevent message resending
 	RandomID int64
-	// Message field of InputSingleMedia.
+	// A caption for the media
 	Message string
-	// Entities field of InputSingleMedia.
+	// Message entities¹ for styled text
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities
 	//
 	// Use SetEntities and GetEntities helpers.
 	Entities []MessageEntityClass
@@ -88,6 +101,22 @@ func (i *InputSingleMedia) String() string {
 	}
 	type Alias InputSingleMedia
 	return fmt.Sprintf("InputSingleMedia%+v", Alias(*i))
+}
+
+// FillFrom fills InputSingleMedia from given interface.
+func (i *InputSingleMedia) FillFrom(from interface {
+	GetMedia() (value InputMediaClass)
+	GetRandomID() (value int64)
+	GetMessage() (value string)
+	GetEntities() (value []MessageEntityClass, ok bool)
+}) {
+	i.Media = from.GetMedia()
+	i.RandomID = from.GetRandomID()
+	i.Message = from.GetMessage()
+	if val, ok := from.GetEntities(); ok {
+		i.Entities = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -283,4 +312,12 @@ func (i *InputSingleMedia) GetEntities() (value []MessageEntityClass, ok bool) {
 		return value, false
 	}
 	return i.Entities, true
+}
+
+// MapEntities returns field Entities wrapped in MessageEntityClassArray helper.
+func (i *InputSingleMedia) MapEntities() (value MessageEntityClassArray, ok bool) {
+	if !i.Flags.Has(0) {
+		return value, false
+	}
+	return MessageEntityClassArray(i.Entities), true
 }

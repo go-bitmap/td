@@ -32,8 +32,16 @@ var (
 )
 
 // ChatlistsGetLeaveChatlistSuggestionsRequest represents TL type `chatlists.getLeaveChatlistSuggestions#fdbcd714`.
+// Returns identifiers of pinned or always included chats from a chat folder imported
+// using a chat folder deep link »¹, which are suggested to be left when the chat
+// folder is deleted.
+//
+// Links:
+//  1. https://core.telegram.org/api/links#chat-folder-links
+//
+// See https://core.telegram.org/method/chatlists.getLeaveChatlistSuggestions for reference.
 type ChatlistsGetLeaveChatlistSuggestionsRequest struct {
-	// Chatlist field of ChatlistsGetLeaveChatlistSuggestionsRequest.
+	// Folder ID
 	Chatlist InputChatlistDialogFilter
 }
 
@@ -66,6 +74,13 @@ func (g *ChatlistsGetLeaveChatlistSuggestionsRequest) String() string {
 	}
 	type Alias ChatlistsGetLeaveChatlistSuggestionsRequest
 	return fmt.Sprintf("ChatlistsGetLeaveChatlistSuggestionsRequest%+v", Alias(*g))
+}
+
+// FillFrom fills ChatlistsGetLeaveChatlistSuggestionsRequest from given interface.
+func (g *ChatlistsGetLeaveChatlistSuggestionsRequest) FillFrom(from interface {
+	GetChatlist() (value InputChatlistDialogFilter)
+}) {
+	g.Chatlist = from.GetChatlist()
 }
 
 // TypeID returns type id in TL schema.
@@ -152,6 +167,19 @@ func (g *ChatlistsGetLeaveChatlistSuggestionsRequest) GetChatlist() (value Input
 }
 
 // ChatlistsGetLeaveChatlistSuggestions invokes method chatlists.getLeaveChatlistSuggestions#fdbcd714 returning error if any.
+// Returns identifiers of pinned or always included chats from a chat folder imported
+// using a chat folder deep link »¹, which are suggested to be left when the chat
+// folder is deleted.
+//
+// Links:
+//  1. https://core.telegram.org/api/links#chat-folder-links
+//
+// Possible errors:
+//
+//	400 FILTER_ID_INVALID: The specified filter ID is invalid.
+//	400 FILTER_NOT_SUPPORTED: The specified filter cannot be used in this context.
+//
+// See https://core.telegram.org/method/chatlists.getLeaveChatlistSuggestions for reference.
 func (c *Client) ChatlistsGetLeaveChatlistSuggestions(ctx context.Context, chatlist InputChatlistDialogFilter) ([]PeerClass, error) {
 	var result PeerClassVector
 

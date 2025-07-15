@@ -32,10 +32,16 @@ var (
 )
 
 // MessagesClearRecentStickersRequest represents TL type `messages.clearRecentStickers#8999602d`.
+// Clear recent stickers
+//
+// See https://core.telegram.org/method/messages.clearRecentStickers for reference.
 type MessagesClearRecentStickersRequest struct {
-	// Flags field of MessagesClearRecentStickersRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Attached field of MessagesClearRecentStickersRequest.
+	// Set this flag to clear the list of stickers recently attached to photo or video files
 	Attached bool
 }
 
@@ -71,6 +77,13 @@ func (c *MessagesClearRecentStickersRequest) String() string {
 	}
 	type Alias MessagesClearRecentStickersRequest
 	return fmt.Sprintf("MessagesClearRecentStickersRequest%+v", Alias(*c))
+}
+
+// FillFrom fills MessagesClearRecentStickersRequest from given interface.
+func (c *MessagesClearRecentStickersRequest) FillFrom(from interface {
+	GetAttached() (value bool)
+}) {
+	c.Attached = from.GetAttached()
 }
 
 // TypeID returns type id in TL schema.
@@ -178,6 +191,9 @@ func (c *MessagesClearRecentStickersRequest) GetAttached() (value bool) {
 }
 
 // MessagesClearRecentStickers invokes method messages.clearRecentStickers#8999602d returning error if any.
+// Clear recent stickers
+//
+// See https://core.telegram.org/method/messages.clearRecentStickers for reference.
 func (c *Client) MessagesClearRecentStickers(ctx context.Context, request *MessagesClearRecentStickersRequest) (bool, error) {
 	var result BoolBox
 

@@ -32,6 +32,8 @@ var (
 )
 
 // StarGiftAttributeModel represents TL type `starGiftAttributeModel#39d99013`.
+//
+// See https://core.telegram.org/constructor/starGiftAttributeModel for reference.
 type StarGiftAttributeModel struct {
 	// Name field of StarGiftAttributeModel.
 	Name string
@@ -81,6 +83,17 @@ func (s *StarGiftAttributeModel) String() string {
 	}
 	type Alias StarGiftAttributeModel
 	return fmt.Sprintf("StarGiftAttributeModel%+v", Alias(*s))
+}
+
+// FillFrom fills StarGiftAttributeModel from given interface.
+func (s *StarGiftAttributeModel) FillFrom(from interface {
+	GetName() (value string)
+	GetDocument() (value DocumentClass)
+	GetRarityPermille() (value int)
+}) {
+	s.Name = from.GetName()
+	s.Document = from.GetDocument()
+	s.RarityPermille = from.GetRarityPermille()
 }
 
 // TypeID returns type id in TL schema.
@@ -212,6 +225,8 @@ func (s *StarGiftAttributeModel) GetRarityPermille() (value int) {
 }
 
 // StarGiftAttributePattern represents TL type `starGiftAttributePattern#13acff19`.
+//
+// See https://core.telegram.org/constructor/starGiftAttributePattern for reference.
 type StarGiftAttributePattern struct {
 	// Name field of StarGiftAttributePattern.
 	Name string
@@ -261,6 +276,17 @@ func (s *StarGiftAttributePattern) String() string {
 	}
 	type Alias StarGiftAttributePattern
 	return fmt.Sprintf("StarGiftAttributePattern%+v", Alias(*s))
+}
+
+// FillFrom fills StarGiftAttributePattern from given interface.
+func (s *StarGiftAttributePattern) FillFrom(from interface {
+	GetName() (value string)
+	GetDocument() (value DocumentClass)
+	GetRarityPermille() (value int)
+}) {
+	s.Name = from.GetName()
+	s.Document = from.GetDocument()
+	s.RarityPermille = from.GetRarityPermille()
 }
 
 // TypeID returns type id in TL schema.
@@ -392,6 +418,8 @@ func (s *StarGiftAttributePattern) GetRarityPermille() (value int) {
 }
 
 // StarGiftAttributeBackdrop represents TL type `starGiftAttributeBackdrop#d93d859c`.
+//
+// See https://core.telegram.org/constructor/starGiftAttributeBackdrop for reference.
 type StarGiftAttributeBackdrop struct {
 	// Name field of StarGiftAttributeBackdrop.
 	Name string
@@ -461,6 +489,25 @@ func (s *StarGiftAttributeBackdrop) String() string {
 	}
 	type Alias StarGiftAttributeBackdrop
 	return fmt.Sprintf("StarGiftAttributeBackdrop%+v", Alias(*s))
+}
+
+// FillFrom fills StarGiftAttributeBackdrop from given interface.
+func (s *StarGiftAttributeBackdrop) FillFrom(from interface {
+	GetName() (value string)
+	GetBackdropID() (value int)
+	GetCenterColor() (value int)
+	GetEdgeColor() (value int)
+	GetPatternColor() (value int)
+	GetTextColor() (value int)
+	GetRarityPermille() (value int)
+}) {
+	s.Name = from.GetName()
+	s.BackdropID = from.GetBackdropID()
+	s.CenterColor = from.GetCenterColor()
+	s.EdgeColor = from.GetEdgeColor()
+	s.PatternColor = from.GetPatternColor()
+	s.TextColor = from.GetTextColor()
+	s.RarityPermille = from.GetRarityPermille()
 }
 
 // TypeID returns type id in TL schema.
@@ -667,6 +714,8 @@ func (s *StarGiftAttributeBackdrop) GetRarityPermille() (value int) {
 }
 
 // StarGiftAttributeOriginalDetails represents TL type `starGiftAttributeOriginalDetails#e0bff26c`.
+//
+// See https://core.telegram.org/constructor/starGiftAttributeOriginalDetails for reference.
 type StarGiftAttributeOriginalDetails struct {
 	// Flags field of StarGiftAttributeOriginalDetails.
 	Flags bin.Fields
@@ -730,6 +779,25 @@ func (s *StarGiftAttributeOriginalDetails) String() string {
 	}
 	type Alias StarGiftAttributeOriginalDetails
 	return fmt.Sprintf("StarGiftAttributeOriginalDetails%+v", Alias(*s))
+}
+
+// FillFrom fills StarGiftAttributeOriginalDetails from given interface.
+func (s *StarGiftAttributeOriginalDetails) FillFrom(from interface {
+	GetSenderID() (value PeerClass, ok bool)
+	GetRecipientID() (value PeerClass)
+	GetDate() (value int)
+	GetMessage() (value TextWithEntities, ok bool)
+}) {
+	if val, ok := from.GetSenderID(); ok {
+		s.SenderID = val
+	}
+
+	s.RecipientID = from.GetRecipientID()
+	s.Date = from.GetDate()
+	if val, ok := from.GetMessage(); ok {
+		s.Message = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -934,6 +1002,8 @@ func (s *StarGiftAttributeOriginalDetails) GetMessage() (value TextWithEntities,
 const StarGiftAttributeClassName = "StarGiftAttribute"
 
 // StarGiftAttributeClass represents StarGiftAttribute generic type.
+//
+// See https://core.telegram.org/type/StarGiftAttribute for reference.
 //
 // Constructors:
 //   - [StarGiftAttributeModel]

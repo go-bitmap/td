@@ -32,12 +32,18 @@ var (
 )
 
 // WebPageEmpty represents TL type `webPageEmpty#211a1788`.
+// No preview is available for the webpage
+//
+// See https://core.telegram.org/constructor/webPageEmpty for reference.
 type WebPageEmpty struct {
-	// Flags field of WebPageEmpty.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// ID field of WebPageEmpty.
+	// Preview ID
 	ID int64
-	// URL field of WebPageEmpty.
+	// URL of the webpage.
 	//
 	// Use SetURL and GetURL helpers.
 	URL string
@@ -83,6 +89,18 @@ func (w *WebPageEmpty) String() string {
 	}
 	type Alias WebPageEmpty
 	return fmt.Sprintf("WebPageEmpty%+v", Alias(*w))
+}
+
+// FillFrom fills WebPageEmpty from given interface.
+func (w *WebPageEmpty) FillFrom(from interface {
+	GetID() (value int64)
+	GetURL() (value string, ok bool)
+}) {
+	w.ID = from.GetID()
+	if val, ok := from.GetURL(); ok {
+		w.URL = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -218,16 +236,22 @@ func (w *WebPageEmpty) GetURL() (value string, ok bool) {
 }
 
 // WebPagePending represents TL type `webPagePending#b0d13e47`.
+// A preview of the webpage is currently being generated
+//
+// See https://core.telegram.org/constructor/webPagePending for reference.
 type WebPagePending struct {
-	// Flags field of WebPagePending.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// ID field of WebPagePending.
+	// ID of preview
 	ID int64
-	// URL field of WebPagePending.
+	// URL of the webpage
 	//
 	// Use SetURL and GetURL helpers.
 	URL string
-	// Date field of WebPagePending.
+	// When was the processing started
 	Date int
 }
 
@@ -274,6 +298,20 @@ func (w *WebPagePending) String() string {
 	}
 	type Alias WebPagePending
 	return fmt.Sprintf("WebPagePending%+v", Alias(*w))
+}
+
+// FillFrom fills WebPagePending from given interface.
+func (w *WebPagePending) FillFrom(from interface {
+	GetID() (value int64)
+	GetURL() (value string, ok bool)
+	GetDate() (value int)
+}) {
+	w.ID = from.GetID()
+	if val, ok := from.GetURL(); ok {
+		w.URL = val
+	}
+
+	w.Date = from.GetDate()
 }
 
 // TypeID returns type id in TL schema.
@@ -429,74 +467,91 @@ func (w *WebPagePending) GetDate() (value int) {
 }
 
 // WebPage represents TL type `webPage#e89c45b2`.
+// Webpage preview
+//
+// See https://core.telegram.org/constructor/webPage for reference.
 type WebPage struct {
-	// Flags field of WebPage.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// HasLargeMedia field of WebPage.
+	// Whether the size of the media in the preview can be changed.
 	HasLargeMedia bool
 	// VideoCoverPhoto field of WebPage.
 	VideoCoverPhoto bool
-	// ID field of WebPage.
+	// Preview ID
 	ID int64
-	// URL field of WebPage.
+	// URL of previewed webpage
 	URL string
-	// DisplayURL field of WebPage.
+	// Webpage URL to be displayed to the user
 	DisplayURL string
-	// Hash field of WebPage.
+	// Hash used for caching, for more info click here¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets#hash-generation
 	Hash int
-	// Type field of WebPage.
+	// Type of the web page. One of the following: - video- gif- photo- document- profile-
+	// telegram_background- telegram_theme- telegram_story- telegram_channel-
+	// telegram_channel_request- telegram_megagroup- telegram_chat-
+	// telegram_megagroup_request- telegram_chat_request- telegram_album- telegram_message-
+	// telegram_bot- telegram_voicechat- telegram_livestream- telegram_user- telegram_botapp-
+	// telegram_channel_boost- telegram_group_boost- telegram_giftcode- telegram_stickerset
 	//
 	// Use SetType and GetType helpers.
 	Type string
-	// SiteName field of WebPage.
+	// Short name of the site (e.g., Google Docs, App Store)
 	//
 	// Use SetSiteName and GetSiteName helpers.
 	SiteName string
-	// Title field of WebPage.
+	// Title of the content
 	//
 	// Use SetTitle and GetTitle helpers.
 	Title string
-	// Description field of WebPage.
+	// Content description
 	//
 	// Use SetDescription and GetDescription helpers.
 	Description string
-	// Photo field of WebPage.
+	// Image representing the content
 	//
 	// Use SetPhoto and GetPhoto helpers.
 	Photo PhotoClass
-	// EmbedURL field of WebPage.
+	// URL to show in the embedded preview
 	//
 	// Use SetEmbedURL and GetEmbedURL helpers.
 	EmbedURL string
-	// EmbedType field of WebPage.
+	// MIME type of the embedded preview, (e.g., text/html or video/mp4)
 	//
 	// Use SetEmbedType and GetEmbedType helpers.
 	EmbedType string
-	// EmbedWidth field of WebPage.
+	// Width of the embedded preview
 	//
 	// Use SetEmbedWidth and GetEmbedWidth helpers.
 	EmbedWidth int
-	// EmbedHeight field of WebPage.
+	// Height of the embedded preview
 	//
 	// Use SetEmbedHeight and GetEmbedHeight helpers.
 	EmbedHeight int
-	// Duration field of WebPage.
+	// Duration of the content, in seconds
 	//
 	// Use SetDuration and GetDuration helpers.
 	Duration int
-	// Author field of WebPage.
+	// Author of the content
 	//
 	// Use SetAuthor and GetAuthor helpers.
 	Author string
-	// Document field of WebPage.
+	// Preview of the content as a media file
 	//
 	// Use SetDocument and GetDocument helpers.
 	Document DocumentClass
-	// CachedPage field of WebPage.
+	// Page contents in instant view¹ format
+	//
+	// Links:
+	//  1) https://instantview.telegram.org
 	//
 	// Use SetCachedPage and GetCachedPage helpers.
 	CachedPage Page
-	// Attributes field of WebPage.
+	// Webpage attributes
 	//
 	// Use SetAttributes and GetAttributes helpers.
 	Attributes []WebPageAttributeClass
@@ -596,6 +651,93 @@ func (w *WebPage) String() string {
 	}
 	type Alias WebPage
 	return fmt.Sprintf("WebPage%+v", Alias(*w))
+}
+
+// FillFrom fills WebPage from given interface.
+func (w *WebPage) FillFrom(from interface {
+	GetHasLargeMedia() (value bool)
+	GetVideoCoverPhoto() (value bool)
+	GetID() (value int64)
+	GetURL() (value string)
+	GetDisplayURL() (value string)
+	GetHash() (value int)
+	GetType() (value string, ok bool)
+	GetSiteName() (value string, ok bool)
+	GetTitle() (value string, ok bool)
+	GetDescription() (value string, ok bool)
+	GetPhoto() (value PhotoClass, ok bool)
+	GetEmbedURL() (value string, ok bool)
+	GetEmbedType() (value string, ok bool)
+	GetEmbedWidth() (value int, ok bool)
+	GetEmbedHeight() (value int, ok bool)
+	GetDuration() (value int, ok bool)
+	GetAuthor() (value string, ok bool)
+	GetDocument() (value DocumentClass, ok bool)
+	GetCachedPage() (value Page, ok bool)
+	GetAttributes() (value []WebPageAttributeClass, ok bool)
+}) {
+	w.HasLargeMedia = from.GetHasLargeMedia()
+	w.VideoCoverPhoto = from.GetVideoCoverPhoto()
+	w.ID = from.GetID()
+	w.URL = from.GetURL()
+	w.DisplayURL = from.GetDisplayURL()
+	w.Hash = from.GetHash()
+	if val, ok := from.GetType(); ok {
+		w.Type = val
+	}
+
+	if val, ok := from.GetSiteName(); ok {
+		w.SiteName = val
+	}
+
+	if val, ok := from.GetTitle(); ok {
+		w.Title = val
+	}
+
+	if val, ok := from.GetDescription(); ok {
+		w.Description = val
+	}
+
+	if val, ok := from.GetPhoto(); ok {
+		w.Photo = val
+	}
+
+	if val, ok := from.GetEmbedURL(); ok {
+		w.EmbedURL = val
+	}
+
+	if val, ok := from.GetEmbedType(); ok {
+		w.EmbedType = val
+	}
+
+	if val, ok := from.GetEmbedWidth(); ok {
+		w.EmbedWidth = val
+	}
+
+	if val, ok := from.GetEmbedHeight(); ok {
+		w.EmbedHeight = val
+	}
+
+	if val, ok := from.GetDuration(); ok {
+		w.Duration = val
+	}
+
+	if val, ok := from.GetAuthor(); ok {
+		w.Author = val
+	}
+
+	if val, ok := from.GetDocument(); ok {
+		w.Document = val
+	}
+
+	if val, ok := from.GetCachedPage(); ok {
+		w.CachedPage = val
+	}
+
+	if val, ok := from.GetAttributes(); ok {
+		w.Attributes = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -1342,11 +1484,25 @@ func (w *WebPage) GetAttributes() (value []WebPageAttributeClass, ok bool) {
 	return w.Attributes, true
 }
 
+// MapAttributes returns field Attributes wrapped in WebPageAttributeClassArray helper.
+func (w *WebPage) MapAttributes() (value WebPageAttributeClassArray, ok bool) {
+	if !w.Flags.Has(12) {
+		return value, false
+	}
+	return WebPageAttributeClassArray(w.Attributes), true
+}
+
 // WebPageNotModified represents TL type `webPageNotModified#7311ca11`.
+// The preview of the webpage hasn't changed
+//
+// See https://core.telegram.org/constructor/webPageNotModified for reference.
 type WebPageNotModified struct {
-	// Flags field of WebPageNotModified.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// CachedPageViews field of WebPageNotModified.
+	// Page view count
 	//
 	// Use SetCachedPageViews and GetCachedPageViews helpers.
 	CachedPageViews int
@@ -1389,6 +1545,16 @@ func (w *WebPageNotModified) String() string {
 	}
 	type Alias WebPageNotModified
 	return fmt.Sprintf("WebPageNotModified%+v", Alias(*w))
+}
+
+// FillFrom fills WebPageNotModified from given interface.
+func (w *WebPageNotModified) FillFrom(from interface {
+	GetCachedPageViews() (value int, ok bool)
+}) {
+	if val, ok := from.GetCachedPageViews(); ok {
+		w.CachedPageViews = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -1508,6 +1674,8 @@ const WebPageClassName = "WebPage"
 
 // WebPageClass represents WebPage generic type.
 //
+// See https://core.telegram.org/type/WebPage for reference.
+//
 // Constructors:
 //   - [WebPageEmpty]
 //   - [WebPagePending]
@@ -1544,6 +1712,56 @@ type WebPageClass interface {
 	String() string
 	// Zero returns true if current object has a zero value.
 	Zero() bool
+
+	// AsModified tries to map WebPageClass to ModifiedWebPage.
+	AsModified() (ModifiedWebPage, bool)
+}
+
+// ModifiedWebPage represents Modified subset of WebPageClass.
+type ModifiedWebPage interface {
+	bin.Encoder
+	bin.Decoder
+	bin.BareEncoder
+	bin.BareDecoder
+	construct() WebPageClass
+
+	// TypeID returns type id in TL schema.
+	//
+	// See https://core.telegram.org/mtproto/TL-tl#remarks.
+	TypeID() uint32
+	// TypeName returns name of type in TL schema.
+	TypeName() string
+	// String implements fmt.Stringer.
+	String() string
+	// Zero returns true if current object has a zero value.
+	Zero() bool
+
+	// Preview ID
+	GetID() (value int64)
+}
+
+// AsModified tries to map WebPageEmpty to ModifiedWebPage.
+func (w *WebPageEmpty) AsModified() (ModifiedWebPage, bool) {
+	value, ok := (WebPageClass(w)).(ModifiedWebPage)
+	return value, ok
+}
+
+// AsModified tries to map WebPagePending to ModifiedWebPage.
+func (w *WebPagePending) AsModified() (ModifiedWebPage, bool) {
+	value, ok := (WebPageClass(w)).(ModifiedWebPage)
+	return value, ok
+}
+
+// AsModified tries to map WebPage to ModifiedWebPage.
+func (w *WebPage) AsModified() (ModifiedWebPage, bool) {
+	value, ok := (WebPageClass(w)).(ModifiedWebPage)
+	return value, ok
+}
+
+// AsModified tries to map WebPageNotModified to ModifiedWebPage.
+func (w *WebPageNotModified) AsModified() (ModifiedWebPage, bool) {
+	value, ok := (WebPageClass(w)).(ModifiedWebPage)
+	return value, ok
 }
 
 // DecodeWebPage implements binary de-serialization for WebPageClass.

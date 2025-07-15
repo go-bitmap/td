@@ -32,10 +32,19 @@ var (
 )
 
 // ChannelsReadMessageContentsRequest represents TL type `channels.readMessageContents#eab5dc38`.
+// Mark channel/supergroup¹ message contents as read
+//
+// Links:
+//  1. https://core.telegram.org/api/channel
+//
+// See https://core.telegram.org/method/channels.readMessageContents for reference.
 type ChannelsReadMessageContentsRequest struct {
-	// Channel field of ChannelsReadMessageContentsRequest.
+	// Channel/supergroup¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/channel
 	Channel InputChannelClass
-	// ID field of ChannelsReadMessageContentsRequest.
+	// IDs of messages whose contents should be marked as read
 	ID []int
 }
 
@@ -71,6 +80,15 @@ func (r *ChannelsReadMessageContentsRequest) String() string {
 	}
 	type Alias ChannelsReadMessageContentsRequest
 	return fmt.Sprintf("ChannelsReadMessageContentsRequest%+v", Alias(*r))
+}
+
+// FillFrom fills ChannelsReadMessageContentsRequest from given interface.
+func (r *ChannelsReadMessageContentsRequest) FillFrom(from interface {
+	GetChannel() (value InputChannelClass)
+	GetID() (value []int)
+}) {
+	r.Channel = from.GetChannel()
+	r.ID = from.GetID()
 }
 
 // TypeID returns type id in TL schema.
@@ -194,7 +212,24 @@ func (r *ChannelsReadMessageContentsRequest) GetID() (value []int) {
 	return r.ID
 }
 
+// GetChannelAsNotEmpty returns mapped value of Channel field.
+func (r *ChannelsReadMessageContentsRequest) GetChannelAsNotEmpty() (NotEmptyInputChannel, bool) {
+	return r.Channel.AsNotEmpty()
+}
+
 // ChannelsReadMessageContents invokes method channels.readMessageContents#eab5dc38 returning error if any.
+// Mark channel/supergroup¹ message contents as read
+//
+// Links:
+//  1. https://core.telegram.org/api/channel
+//
+// Possible errors:
+//
+//	400 CHANNEL_INVALID: The provided channel is invalid.
+//	406 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
+//	400 MSG_ID_INVALID: Invalid message ID provided.
+//
+// See https://core.telegram.org/method/channels.readMessageContents for reference.
 func (c *Client) ChannelsReadMessageContents(ctx context.Context, request *ChannelsReadMessageContentsRequest) (bool, error) {
 	var result BoolBox
 

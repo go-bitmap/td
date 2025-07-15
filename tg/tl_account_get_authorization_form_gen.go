@@ -32,12 +32,15 @@ var (
 )
 
 // AccountGetAuthorizationFormRequest represents TL type `account.getAuthorizationForm#a929597a`.
+// Returns a Telegram Passport authorization form for sharing data with a service
+//
+// See https://core.telegram.org/method/account.getAuthorizationForm for reference.
 type AccountGetAuthorizationFormRequest struct {
-	// BotID field of AccountGetAuthorizationFormRequest.
+	// User identifier of the service's bot
 	BotID int64
-	// Scope field of AccountGetAuthorizationFormRequest.
+	// Telegram Passport element types requested by the service
 	Scope string
-	// PublicKey field of AccountGetAuthorizationFormRequest.
+	// Service's public key
 	PublicKey string
 }
 
@@ -76,6 +79,17 @@ func (g *AccountGetAuthorizationFormRequest) String() string {
 	}
 	type Alias AccountGetAuthorizationFormRequest
 	return fmt.Sprintf("AccountGetAuthorizationFormRequest%+v", Alias(*g))
+}
+
+// FillFrom fills AccountGetAuthorizationFormRequest from given interface.
+func (g *AccountGetAuthorizationFormRequest) FillFrom(from interface {
+	GetBotID() (value int64)
+	GetScope() (value string)
+	GetPublicKey() (value string)
+}) {
+	g.BotID = from.GetBotID()
+	g.Scope = from.GetScope()
+	g.PublicKey = from.GetPublicKey()
 }
 
 // TypeID returns type id in TL schema.
@@ -202,6 +216,14 @@ func (g *AccountGetAuthorizationFormRequest) GetPublicKey() (value string) {
 }
 
 // AccountGetAuthorizationForm invokes method account.getAuthorizationForm#a929597a returning error if any.
+// Returns a Telegram Passport authorization form for sharing data with a service
+//
+// Possible errors:
+//
+//	400 BOT_INVALID: This is not a valid bot.
+//	400 PUBLIC_KEY_REQUIRED: A public key is required.
+//
+// See https://core.telegram.org/method/account.getAuthorizationForm for reference.
 func (c *Client) AccountGetAuthorizationForm(ctx context.Context, request *AccountGetAuthorizationFormRequest) (*AccountAuthorizationForm, error) {
 	var result AccountAuthorizationForm
 

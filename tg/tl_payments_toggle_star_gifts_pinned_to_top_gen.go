@@ -32,6 +32,8 @@ var (
 )
 
 // PaymentsToggleStarGiftsPinnedToTopRequest represents TL type `payments.toggleStarGiftsPinnedToTop#1513e7b0`.
+//
+// See https://core.telegram.org/method/payments.toggleStarGiftsPinnedToTop for reference.
 type PaymentsToggleStarGiftsPinnedToTopRequest struct {
 	// Peer field of PaymentsToggleStarGiftsPinnedToTopRequest.
 	Peer InputPeerClass
@@ -71,6 +73,15 @@ func (t *PaymentsToggleStarGiftsPinnedToTopRequest) String() string {
 	}
 	type Alias PaymentsToggleStarGiftsPinnedToTopRequest
 	return fmt.Sprintf("PaymentsToggleStarGiftsPinnedToTopRequest%+v", Alias(*t))
+}
+
+// FillFrom fills PaymentsToggleStarGiftsPinnedToTopRequest from given interface.
+func (t *PaymentsToggleStarGiftsPinnedToTopRequest) FillFrom(from interface {
+	GetPeer() (value InputPeerClass)
+	GetStargift() (value []InputSavedStarGiftClass)
+}) {
+	t.Peer = from.GetPeer()
+	t.Stargift = from.GetStargift()
 }
 
 // TypeID returns type id in TL schema.
@@ -199,7 +210,14 @@ func (t *PaymentsToggleStarGiftsPinnedToTopRequest) GetStargift() (value []Input
 	return t.Stargift
 }
 
+// MapStargift returns field Stargift wrapped in InputSavedStarGiftClassArray helper.
+func (t *PaymentsToggleStarGiftsPinnedToTopRequest) MapStargift() (value InputSavedStarGiftClassArray) {
+	return InputSavedStarGiftClassArray(t.Stargift)
+}
+
 // PaymentsToggleStarGiftsPinnedToTop invokes method payments.toggleStarGiftsPinnedToTop#1513e7b0 returning error if any.
+//
+// See https://core.telegram.org/method/payments.toggleStarGiftsPinnedToTop for reference.
 func (c *Client) PaymentsToggleStarGiftsPinnedToTop(ctx context.Context, request *PaymentsToggleStarGiftsPinnedToTopRequest) (bool, error) {
 	var result BoolBox
 

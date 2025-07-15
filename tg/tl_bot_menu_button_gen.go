@@ -32,6 +32,13 @@ var (
 )
 
 // BotMenuButtonDefault represents TL type `botMenuButtonDefault#7533a588`.
+// Placeholder bot menu button¹ never returned to users: see the docs for more info².
+//
+// Links:
+//  1. https://core.telegram.org/api/bots/menu
+//  2. https://core.telegram.org/api/bots/menu
+//
+// See https://core.telegram.org/constructor/botMenuButtonDefault for reference.
 type BotMenuButtonDefault struct {
 }
 
@@ -131,6 +138,12 @@ func (b *BotMenuButtonDefault) DecodeBare(buf *bin.Buffer) error {
 }
 
 // BotMenuButtonCommands represents TL type `botMenuButtonCommands#4258c205`.
+// Bot menu button¹ that opens the bot command list when clicked.
+//
+// Links:
+//  1. https://core.telegram.org/api/bots/menu
+//
+// See https://core.telegram.org/constructor/botMenuButtonCommands for reference.
 type BotMenuButtonCommands struct {
 }
 
@@ -230,10 +243,20 @@ func (b *BotMenuButtonCommands) DecodeBare(buf *bin.Buffer) error {
 }
 
 // BotMenuButton represents TL type `botMenuButton#c7b57ce6`.
+// Bot menu button¹ that opens a web app² when clicked.
+//
+// Links:
+//  1. https://core.telegram.org/api/bots/menu
+//  2. https://core.telegram.org/api/bots/webapps
+//
+// See https://core.telegram.org/constructor/botMenuButton for reference.
 type BotMenuButton struct {
-	// Text field of BotMenuButton.
+	// Title to be displayed on the menu button instead of 'Menu'
 	Text string
-	// URL field of BotMenuButton.
+	// URL of a web app¹ to open when the user clicks on the button
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/bots/webapps
 	URL string
 }
 
@@ -274,6 +297,15 @@ func (b *BotMenuButton) String() string {
 	}
 	type Alias BotMenuButton
 	return fmt.Sprintf("BotMenuButton%+v", Alias(*b))
+}
+
+// FillFrom fills BotMenuButton from given interface.
+func (b *BotMenuButton) FillFrom(from interface {
+	GetText() (value string)
+	GetURL() (value string)
+}) {
+	b.Text = from.GetText()
+	b.URL = from.GetURL()
 }
 
 // TypeID returns type id in TL schema.
@@ -383,6 +415,8 @@ func (b *BotMenuButton) GetURL() (value string) {
 const BotMenuButtonClassName = "BotMenuButton"
 
 // BotMenuButtonClass represents BotMenuButton generic type.
+//
+// See https://core.telegram.org/type/BotMenuButton for reference.
 //
 // Constructors:
 //   - [BotMenuButtonDefault]

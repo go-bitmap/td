@@ -32,6 +32,9 @@ var (
 )
 
 // HelpCountriesListNotModified represents TL type `help.countriesListNotModified#93cc1f32`.
+// The country list has not changed
+//
+// See https://core.telegram.org/constructor/help.countriesListNotModified for reference.
 type HelpCountriesListNotModified struct {
 }
 
@@ -131,10 +134,16 @@ func (c *HelpCountriesListNotModified) DecodeBare(b *bin.Buffer) error {
 }
 
 // HelpCountriesList represents TL type `help.countriesList#87d0759e`.
+// Name, ISO code, localized name and phone codes/patterns of all available countries
+//
+// See https://core.telegram.org/constructor/help.countriesList for reference.
 type HelpCountriesList struct {
-	// Countries field of HelpCountriesList.
+	// Name, ISO code, localized name and phone codes/patterns of all available countries
 	Countries []HelpCountry
-	// Hash field of HelpCountriesList.
+	// Hash used for caching, for more info click here¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets#hash-generation
 	Hash int
 }
 
@@ -175,6 +184,15 @@ func (c *HelpCountriesList) String() string {
 	}
 	type Alias HelpCountriesList
 	return fmt.Sprintf("HelpCountriesList%+v", Alias(*c))
+}
+
+// FillFrom fills HelpCountriesList from given interface.
+func (c *HelpCountriesList) FillFrom(from interface {
+	GetCountries() (value []HelpCountry)
+	GetHash() (value int)
+}) {
+	c.Countries = from.GetCountries()
+	c.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -300,6 +318,8 @@ const HelpCountriesListClassName = "help.CountriesList"
 
 // HelpCountriesListClass represents help.CountriesList generic type.
 //
+// See https://core.telegram.org/type/help.CountriesList for reference.
+//
 // Constructors:
 //   - [HelpCountriesListNotModified]
 //   - [HelpCountriesList]
@@ -332,6 +352,19 @@ type HelpCountriesListClass interface {
 	String() string
 	// Zero returns true if current object has a zero value.
 	Zero() bool
+
+	// AsModified tries to map HelpCountriesListClass to HelpCountriesList.
+	AsModified() (*HelpCountriesList, bool)
+}
+
+// AsModified tries to map HelpCountriesListNotModified to HelpCountriesList.
+func (c *HelpCountriesListNotModified) AsModified() (*HelpCountriesList, bool) {
+	return nil, false
+}
+
+// AsModified tries to map HelpCountriesList to HelpCountriesList.
+func (c *HelpCountriesList) AsModified() (*HelpCountriesList, bool) {
+	return c, true
 }
 
 // DecodeHelpCountriesList implements binary de-serialization for HelpCountriesListClass.

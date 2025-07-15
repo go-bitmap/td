@@ -32,10 +32,13 @@ var (
 )
 
 // PageCaption represents TL type `pageCaption#6f747657`.
+// Page caption
+//
+// See https://core.telegram.org/constructor/pageCaption for reference.
 type PageCaption struct {
-	// Text field of PageCaption.
+	// Caption
 	Text RichTextClass
-	// Credit field of PageCaption.
+	// Credits
 	Credit RichTextClass
 }
 
@@ -71,6 +74,15 @@ func (p *PageCaption) String() string {
 	}
 	type Alias PageCaption
 	return fmt.Sprintf("PageCaption%+v", Alias(*p))
+}
+
+// FillFrom fills PageCaption from given interface.
+func (p *PageCaption) FillFrom(from interface {
+	GetText() (value RichTextClass)
+	GetCredit() (value RichTextClass)
+}) {
+	p.Text = from.GetText()
+	p.Credit = from.GetCredit()
 }
 
 // TypeID returns type id in TL schema.

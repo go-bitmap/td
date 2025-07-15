@@ -32,8 +32,11 @@ var (
 )
 
 // MessagesChats represents TL type `messages.chats#64ff9fd5`.
+// List of chats with auxiliary data.
+//
+// See https://core.telegram.org/constructor/messages.chats for reference.
 type MessagesChats struct {
-	// Chats field of MessagesChats.
+	// List of chats
 	Chats []ChatClass
 }
 
@@ -71,6 +74,13 @@ func (c *MessagesChats) String() string {
 	}
 	type Alias MessagesChats
 	return fmt.Sprintf("MessagesChats%+v", Alias(*c))
+}
+
+// FillFrom fills MessagesChats from given interface.
+func (c *MessagesChats) FillFrom(from interface {
+	GetChats() (value []ChatClass)
+}) {
+	c.Chats = from.GetChats()
 }
 
 // TypeID returns type id in TL schema.
@@ -174,11 +184,22 @@ func (c *MessagesChats) GetChats() (value []ChatClass) {
 	return c.Chats
 }
 
+// MapChats returns field Chats wrapped in ChatClassArray helper.
+func (c *MessagesChats) MapChats() (value ChatClassArray) {
+	return ChatClassArray(c.Chats)
+}
+
 // MessagesChatsSlice represents TL type `messages.chatsSlice#9cd81144`.
+// Partial list of chats, more would have to be fetched with pagination¹
+//
+// Links:
+//  1. https://core.telegram.org/api/offsets
+//
+// See https://core.telegram.org/constructor/messages.chatsSlice for reference.
 type MessagesChatsSlice struct {
-	// Count field of MessagesChatsSlice.
+	// Total number of results that were found server-side (not all are included in chats)
 	Count int
-	// Chats field of MessagesChatsSlice.
+	// Chats
 	Chats []ChatClass
 }
 
@@ -219,6 +240,15 @@ func (c *MessagesChatsSlice) String() string {
 	}
 	type Alias MessagesChatsSlice
 	return fmt.Sprintf("MessagesChatsSlice%+v", Alias(*c))
+}
+
+// FillFrom fills MessagesChatsSlice from given interface.
+func (c *MessagesChatsSlice) FillFrom(from interface {
+	GetCount() (value int)
+	GetChats() (value []ChatClass)
+}) {
+	c.Count = from.GetCount()
+	c.Chats = from.GetChats()
 }
 
 // TypeID returns type id in TL schema.
@@ -342,10 +372,17 @@ func (c *MessagesChatsSlice) GetChats() (value []ChatClass) {
 	return c.Chats
 }
 
+// MapChats returns field Chats wrapped in ChatClassArray helper.
+func (c *MessagesChatsSlice) MapChats() (value ChatClassArray) {
+	return ChatClassArray(c.Chats)
+}
+
 // MessagesChatsClassName is schema name of MessagesChatsClass.
 const MessagesChatsClassName = "messages.Chats"
 
 // MessagesChatsClass represents messages.Chats generic type.
+//
+// See https://core.telegram.org/type/messages.Chats for reference.
 //
 // Constructors:
 //   - [MessagesChats]
@@ -380,8 +417,10 @@ type MessagesChatsClass interface {
 	// Zero returns true if current object has a zero value.
 	Zero() bool
 
-	// Chats field of MessagesChats.
+	// List of chats
 	GetChats() (value []ChatClass)
+	// List of chats
+	MapChats() (value ChatClassArray)
 }
 
 // DecodeMessagesChats implements binary de-serialization for MessagesChatsClass.

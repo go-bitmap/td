@@ -32,24 +32,37 @@ var (
 )
 
 // RequestedPeerUser represents TL type `requestedPeerUser#d62ff46a`.
+// Info about a user, shared by a user with the currently logged in bot using messages
+// sendBotRequestedPeer¹.
+// All fields except the ID are optional, and will be populated if present on the chosen
+// user, according to the parameters of the requesting inputKeyboardButtonRequestPeer¹.
+//
+// Links:
+//  1. https://core.telegram.org/method/messages.sendBotRequestedPeer
+//  2. https://core.telegram.org/constructor/inputKeyboardButtonRequestPeer
+//
+// See https://core.telegram.org/constructor/requestedPeerUser for reference.
 type RequestedPeerUser struct {
-	// Flags field of RequestedPeerUser.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// UserID field of RequestedPeerUser.
+	// User ID.
 	UserID int64
-	// FirstName field of RequestedPeerUser.
+	// First name.
 	//
 	// Use SetFirstName and GetFirstName helpers.
 	FirstName string
-	// LastName field of RequestedPeerUser.
+	// Last name.
 	//
 	// Use SetLastName and GetLastName helpers.
 	LastName string
-	// Username field of RequestedPeerUser.
+	// Username.
 	//
 	// Use SetUsername and GetUsername helpers.
 	Username string
-	// Photo field of RequestedPeerUser.
+	// Profile photo.
 	//
 	// Use SetPhoto and GetPhoto helpers.
 	Photo PhotoClass
@@ -104,6 +117,33 @@ func (r *RequestedPeerUser) String() string {
 	}
 	type Alias RequestedPeerUser
 	return fmt.Sprintf("RequestedPeerUser%+v", Alias(*r))
+}
+
+// FillFrom fills RequestedPeerUser from given interface.
+func (r *RequestedPeerUser) FillFrom(from interface {
+	GetUserID() (value int64)
+	GetFirstName() (value string, ok bool)
+	GetLastName() (value string, ok bool)
+	GetUsername() (value string, ok bool)
+	GetPhoto() (value PhotoClass, ok bool)
+}) {
+	r.UserID = from.GetUserID()
+	if val, ok := from.GetFirstName(); ok {
+		r.FirstName = val
+	}
+
+	if val, ok := from.GetLastName(); ok {
+		r.LastName = val
+	}
+
+	if val, ok := from.GetUsername(); ok {
+		r.Username = val
+	}
+
+	if val, ok := from.GetPhoto(); ok {
+		r.Photo = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -352,16 +392,30 @@ func (r *RequestedPeerUser) GetPhoto() (value PhotoClass, ok bool) {
 }
 
 // RequestedPeerChat represents TL type `requestedPeerChat#7307544f`.
+// Info about a chat¹, shared by a user with the currently logged in bot using messages
+// sendBotRequestedPeer².
+// All fields except the ID are optional, and will be populated if present on the chosen
+// chat, according to the parameters of the requesting inputKeyboardButtonRequestPeer¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/channel
+//  2. https://core.telegram.org/method/messages.sendBotRequestedPeer
+//  3. https://core.telegram.org/constructor/inputKeyboardButtonRequestPeer
+//
+// See https://core.telegram.org/constructor/requestedPeerChat for reference.
 type RequestedPeerChat struct {
-	// Flags field of RequestedPeerChat.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// ChatID field of RequestedPeerChat.
+	// Chat ID.
 	ChatID int64
-	// Title field of RequestedPeerChat.
+	// Chat title.
 	//
 	// Use SetTitle and GetTitle helpers.
 	Title string
-	// Photo field of RequestedPeerChat.
+	// Chat photo.
 	//
 	// Use SetPhoto and GetPhoto helpers.
 	Photo PhotoClass
@@ -410,6 +464,23 @@ func (r *RequestedPeerChat) String() string {
 	}
 	type Alias RequestedPeerChat
 	return fmt.Sprintf("RequestedPeerChat%+v", Alias(*r))
+}
+
+// FillFrom fills RequestedPeerChat from given interface.
+func (r *RequestedPeerChat) FillFrom(from interface {
+	GetChatID() (value int64)
+	GetTitle() (value string, ok bool)
+	GetPhoto() (value PhotoClass, ok bool)
+}) {
+	r.ChatID = from.GetChatID()
+	if val, ok := from.GetTitle(); ok {
+		r.Title = val
+	}
+
+	if val, ok := from.GetPhoto(); ok {
+		r.Photo = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -586,20 +657,35 @@ func (r *RequestedPeerChat) GetPhoto() (value PhotoClass, ok bool) {
 }
 
 // RequestedPeerChannel represents TL type `requestedPeerChannel#8ba403e4`.
+// Info about a channel/supergroup¹, shared by a user with the currently logged in bot
+// using messages.sendBotRequestedPeer².
+// All fields except the ID are optional, and will be populated if present on the chosen
+// channel/supergroup, according to the parameters of the requesting
+// inputKeyboardButtonRequestPeer¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/channel
+//  2. https://core.telegram.org/method/messages.sendBotRequestedPeer
+//  3. https://core.telegram.org/constructor/inputKeyboardButtonRequestPeer
+//
+// See https://core.telegram.org/constructor/requestedPeerChannel for reference.
 type RequestedPeerChannel struct {
-	// Flags field of RequestedPeerChannel.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// ChannelID field of RequestedPeerChannel.
+	// Channel/supergroup ID.
 	ChannelID int64
-	// Title field of RequestedPeerChannel.
+	// Channel/supergroup title.
 	//
 	// Use SetTitle and GetTitle helpers.
 	Title string
-	// Username field of RequestedPeerChannel.
+	// Channel/supergroup username.
 	//
 	// Use SetUsername and GetUsername helpers.
 	Username string
-	// Photo field of RequestedPeerChannel.
+	// Channel/supergroup photo.
 	//
 	// Use SetPhoto and GetPhoto helpers.
 	Photo PhotoClass
@@ -651,6 +737,28 @@ func (r *RequestedPeerChannel) String() string {
 	}
 	type Alias RequestedPeerChannel
 	return fmt.Sprintf("RequestedPeerChannel%+v", Alias(*r))
+}
+
+// FillFrom fills RequestedPeerChannel from given interface.
+func (r *RequestedPeerChannel) FillFrom(from interface {
+	GetChannelID() (value int64)
+	GetTitle() (value string, ok bool)
+	GetUsername() (value string, ok bool)
+	GetPhoto() (value PhotoClass, ok bool)
+}) {
+	r.ChannelID = from.GetChannelID()
+	if val, ok := from.GetTitle(); ok {
+		r.Title = val
+	}
+
+	if val, ok := from.GetUsername(); ok {
+		r.Username = val
+	}
+
+	if val, ok := from.GetPhoto(); ok {
+		r.Photo = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -867,6 +975,8 @@ const RequestedPeerClassName = "RequestedPeer"
 
 // RequestedPeerClass represents RequestedPeer generic type.
 //
+// See https://core.telegram.org/type/RequestedPeer for reference.
+//
 // Constructors:
 //   - [RequestedPeerUser]
 //   - [RequestedPeerChat]
@@ -902,7 +1012,7 @@ type RequestedPeerClass interface {
 	// Zero returns true if current object has a zero value.
 	Zero() bool
 
-	// Photo field of RequestedPeerUser.
+	// Profile photo.
 	GetPhoto() (value PhotoClass, ok bool)
 }
 

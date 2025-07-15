@@ -68,6 +68,13 @@ func (vec *DialogPeerClassVector) String() string {
 	return fmt.Sprintf("DialogPeerClassVector%+v", Alias(*vec))
 }
 
+// FillFrom fills DialogPeerClassVector from given interface.
+func (vec *DialogPeerClassVector) FillFrom(from interface {
+	GetElems() (value []DialogPeerClass)
+}) {
+	vec.Elems = from.GetElems()
+}
+
 // TypeID returns type id in TL schema.
 //
 // See https://core.telegram.org/mtproto/TL-tl#remarks.
@@ -165,4 +172,9 @@ func (vec *DialogPeerClassVector) GetElems() (value []DialogPeerClass) {
 		return
 	}
 	return vec.Elems
+}
+
+// MapElems returns field Elems wrapped in DialogPeerClassArray helper.
+func (vec *DialogPeerClassVector) MapElems() (value DialogPeerClassArray) {
+	return DialogPeerClassArray(vec.Elems)
 }

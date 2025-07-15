@@ -32,8 +32,11 @@ var (
 )
 
 // PeerUser represents TL type `peerUser#59511722`.
+// Chat partner
+//
+// See https://core.telegram.org/constructor/peerUser for reference.
 type PeerUser struct {
-	// UserID field of PeerUser.
+	// User identifier
 	UserID int64
 }
 
@@ -71,6 +74,13 @@ func (p *PeerUser) String() string {
 	}
 	type Alias PeerUser
 	return fmt.Sprintf("PeerUser%+v", Alias(*p))
+}
+
+// FillFrom fills PeerUser from given interface.
+func (p *PeerUser) FillFrom(from interface {
+	GetUserID() (value int64)
+}) {
+	p.UserID = from.GetUserID()
 }
 
 // TypeID returns type id in TL schema.
@@ -157,8 +167,11 @@ func (p *PeerUser) GetUserID() (value int64) {
 }
 
 // PeerChat represents TL type `peerChat#36c6019a`.
+// Group.
+//
+// See https://core.telegram.org/constructor/peerChat for reference.
 type PeerChat struct {
-	// ChatID field of PeerChat.
+	// Group identifier
 	ChatID int64
 }
 
@@ -196,6 +209,13 @@ func (p *PeerChat) String() string {
 	}
 	type Alias PeerChat
 	return fmt.Sprintf("PeerChat%+v", Alias(*p))
+}
+
+// FillFrom fills PeerChat from given interface.
+func (p *PeerChat) FillFrom(from interface {
+	GetChatID() (value int64)
+}) {
+	p.ChatID = from.GetChatID()
 }
 
 // TypeID returns type id in TL schema.
@@ -282,8 +302,11 @@ func (p *PeerChat) GetChatID() (value int64) {
 }
 
 // PeerChannel represents TL type `peerChannel#a2a5371e`.
+// Channel/supergroup
+//
+// See https://core.telegram.org/constructor/peerChannel for reference.
 type PeerChannel struct {
-	// ChannelID field of PeerChannel.
+	// Channel ID
 	ChannelID int64
 }
 
@@ -321,6 +344,13 @@ func (p *PeerChannel) String() string {
 	}
 	type Alias PeerChannel
 	return fmt.Sprintf("PeerChannel%+v", Alias(*p))
+}
+
+// FillFrom fills PeerChannel from given interface.
+func (p *PeerChannel) FillFrom(from interface {
+	GetChannelID() (value int64)
+}) {
+	p.ChannelID = from.GetChannelID()
 }
 
 // TypeID returns type id in TL schema.
@@ -411,6 +441,8 @@ const PeerClassName = "Peer"
 
 // PeerClass represents Peer generic type.
 //
+// See https://core.telegram.org/type/Peer for reference.
+//
 // Constructors:
 //   - [PeerUser]
 //   - [PeerChat]
@@ -445,6 +477,14 @@ type PeerClass interface {
 	String() string
 	// Zero returns true if current object has a zero value.
 	Zero() bool
+}
+
+// AsInput tries to map PeerChat to InputPeerChat.
+func (p *PeerChat) AsInput() *InputPeerChat {
+	value := new(InputPeerChat)
+	value.ChatID = p.GetChatID()
+
+	return value
 }
 
 // DecodePeer implements binary de-serialization for PeerClass.

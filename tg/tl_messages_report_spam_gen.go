@@ -32,8 +32,15 @@ var (
 )
 
 // MessagesReportSpamRequest represents TL type `messages.reportSpam#cf1592db`.
+// Report a new incoming chat for spam, if the peer settings¹ of the chat allow us to do
+// that
+//
+// Links:
+//  1. https://core.telegram.org/constructor/peerSettings
+//
+// See https://core.telegram.org/method/messages.reportSpam for reference.
 type MessagesReportSpamRequest struct {
-	// Peer field of MessagesReportSpamRequest.
+	// Peer to report
 	Peer InputPeerClass
 }
 
@@ -66,6 +73,13 @@ func (r *MessagesReportSpamRequest) String() string {
 	}
 	type Alias MessagesReportSpamRequest
 	return fmt.Sprintf("MessagesReportSpamRequest%+v", Alias(*r))
+}
+
+// FillFrom fills MessagesReportSpamRequest from given interface.
+func (r *MessagesReportSpamRequest) FillFrom(from interface {
+	GetPeer() (value InputPeerClass)
+}) {
+	r.Peer = from.GetPeer()
 }
 
 // TypeID returns type id in TL schema.
@@ -157,6 +171,19 @@ func (r *MessagesReportSpamRequest) GetPeer() (value InputPeerClass) {
 }
 
 // MessagesReportSpam invokes method messages.reportSpam#cf1592db returning error if any.
+// Report a new incoming chat for spam, if the peer settings¹ of the chat allow us to do
+// that
+//
+// Links:
+//  1. https://core.telegram.org/constructor/peerSettings
+//
+// Possible errors:
+//
+//	400 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
+//	400 MSG_ID_INVALID: Invalid message ID provided.
+//	400 PEER_ID_INVALID: The provided peer id is invalid.
+//
+// See https://core.telegram.org/method/messages.reportSpam for reference.
 func (c *Client) MessagesReportSpam(ctx context.Context, peer InputPeerClass) (bool, error) {
 	var result BoolBox
 

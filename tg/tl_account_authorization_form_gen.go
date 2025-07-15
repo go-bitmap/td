@@ -32,18 +32,36 @@ var (
 )
 
 // AccountAuthorizationForm represents TL type `account.authorizationForm#ad2e1cd8`.
+// Telegram Passport¹ authorization form
+//
+// Links:
+//  1. https://core.telegram.org/passport
+//
+// See https://core.telegram.org/constructor/account.authorizationForm for reference.
 type AccountAuthorizationForm struct {
-	// Flags field of AccountAuthorizationForm.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// RequiredTypes field of AccountAuthorizationForm.
+	// Required Telegram Passport¹ documents
+	//
+	// Links:
+	//  1) https://core.telegram.org/passport
 	RequiredTypes []SecureRequiredTypeClass
-	// Values field of AccountAuthorizationForm.
+	// Already submitted Telegram Passport¹ documents
+	//
+	// Links:
+	//  1) https://core.telegram.org/passport
 	Values []SecureValue
-	// Errors field of AccountAuthorizationForm.
+	// Telegram Passport¹ errors
+	//
+	// Links:
+	//  1) https://core.telegram.org/passport
 	Errors []SecureValueErrorClass
-	// Users field of AccountAuthorizationForm.
+	// Info about the bot to which the form will be submitted
 	Users []UserClass
-	// PrivacyPolicyURL field of AccountAuthorizationForm.
+	// URL of the service's privacy policy
 	//
 	// Use SetPrivacyPolicyURL and GetPrivacyPolicyURL helpers.
 	PrivacyPolicyURL string
@@ -93,6 +111,24 @@ func (a *AccountAuthorizationForm) String() string {
 	}
 	type Alias AccountAuthorizationForm
 	return fmt.Sprintf("AccountAuthorizationForm%+v", Alias(*a))
+}
+
+// FillFrom fills AccountAuthorizationForm from given interface.
+func (a *AccountAuthorizationForm) FillFrom(from interface {
+	GetRequiredTypes() (value []SecureRequiredTypeClass)
+	GetValues() (value []SecureValue)
+	GetErrors() (value []SecureValueErrorClass)
+	GetUsers() (value []UserClass)
+	GetPrivacyPolicyURL() (value string, ok bool)
+}) {
+	a.RequiredTypes = from.GetRequiredTypes()
+	a.Values = from.GetValues()
+	a.Errors = from.GetErrors()
+	a.Users = from.GetUsers()
+	if val, ok := from.GetPrivacyPolicyURL(); ok {
+		a.PrivacyPolicyURL = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -354,4 +390,19 @@ func (a *AccountAuthorizationForm) GetPrivacyPolicyURL() (value string, ok bool)
 		return value, false
 	}
 	return a.PrivacyPolicyURL, true
+}
+
+// MapRequiredTypes returns field RequiredTypes wrapped in SecureRequiredTypeClassArray helper.
+func (a *AccountAuthorizationForm) MapRequiredTypes() (value SecureRequiredTypeClassArray) {
+	return SecureRequiredTypeClassArray(a.RequiredTypes)
+}
+
+// MapErrors returns field Errors wrapped in SecureValueErrorClassArray helper.
+func (a *AccountAuthorizationForm) MapErrors() (value SecureValueErrorClassArray) {
+	return SecureValueErrorClassArray(a.Errors)
+}
+
+// MapUsers returns field Users wrapped in UserClassArray helper.
+func (a *AccountAuthorizationForm) MapUsers() (value UserClassArray) {
+	return UserClassArray(a.Users)
 }

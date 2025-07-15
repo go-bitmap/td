@@ -32,6 +32,8 @@ var (
 )
 
 // PaymentsGetSavedStarGiftsRequest represents TL type `payments.getSavedStarGifts#23830de9`.
+//
+// See https://core.telegram.org/method/payments.getSavedStarGifts for reference.
 type PaymentsGetSavedStarGiftsRequest struct {
 	// Flags field of PaymentsGetSavedStarGiftsRequest.
 	Flags bin.Fields
@@ -111,6 +113,29 @@ func (g *PaymentsGetSavedStarGiftsRequest) String() string {
 	}
 	type Alias PaymentsGetSavedStarGiftsRequest
 	return fmt.Sprintf("PaymentsGetSavedStarGiftsRequest%+v", Alias(*g))
+}
+
+// FillFrom fills PaymentsGetSavedStarGiftsRequest from given interface.
+func (g *PaymentsGetSavedStarGiftsRequest) FillFrom(from interface {
+	GetExcludeUnsaved() (value bool)
+	GetExcludeSaved() (value bool)
+	GetExcludeUnlimited() (value bool)
+	GetExcludeLimited() (value bool)
+	GetExcludeUnique() (value bool)
+	GetSortByValue() (value bool)
+	GetPeer() (value InputPeerClass)
+	GetOffset() (value string)
+	GetLimit() (value int)
+}) {
+	g.ExcludeUnsaved = from.GetExcludeUnsaved()
+	g.ExcludeSaved = from.GetExcludeSaved()
+	g.ExcludeUnlimited = from.GetExcludeUnlimited()
+	g.ExcludeLimited = from.GetExcludeLimited()
+	g.ExcludeUnique = from.GetExcludeUnique()
+	g.SortByValue = from.GetSortByValue()
+	g.Peer = from.GetPeer()
+	g.Offset = from.GetOffset()
+	g.Limit = from.GetLimit()
 }
 
 // TypeID returns type id in TL schema.
@@ -423,6 +448,8 @@ func (g *PaymentsGetSavedStarGiftsRequest) GetLimit() (value int) {
 }
 
 // PaymentsGetSavedStarGifts invokes method payments.getSavedStarGifts#23830de9 returning error if any.
+//
+// See https://core.telegram.org/method/payments.getSavedStarGifts for reference.
 func (c *Client) PaymentsGetSavedStarGifts(ctx context.Context, request *PaymentsGetSavedStarGiftsRequest) (*PaymentsSavedStarGifts, error) {
 	var result PaymentsSavedStarGifts
 

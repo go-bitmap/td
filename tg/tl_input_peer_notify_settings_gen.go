@@ -32,34 +32,40 @@ var (
 )
 
 // InputPeerNotifySettings represents TL type `inputPeerNotifySettings#cacb6ae2`.
+// Notification settings.
+//
+// See https://core.telegram.org/constructor/inputPeerNotifySettings for reference.
 type InputPeerNotifySettings struct {
-	// Flags field of InputPeerNotifySettings.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// ShowPreviews field of InputPeerNotifySettings.
+	// If the text of the message shall be displayed in notification
 	//
 	// Use SetShowPreviews and GetShowPreviews helpers.
 	ShowPreviews bool
-	// Silent field of InputPeerNotifySettings.
+	// Peer was muted?
 	//
 	// Use SetSilent and GetSilent helpers.
 	Silent bool
-	// MuteUntil field of InputPeerNotifySettings.
+	// Date until which all notifications shall be switched off
 	//
 	// Use SetMuteUntil and GetMuteUntil helpers.
 	MuteUntil int
-	// Sound field of InputPeerNotifySettings.
+	// Identifier of an audio file to play for notifications.
 	//
 	// Use SetSound and GetSound helpers.
 	Sound NotificationSoundClass
-	// StoriesMuted field of InputPeerNotifySettings.
+	// Whether story notifications should be disabled.
 	//
 	// Use SetStoriesMuted and GetStoriesMuted helpers.
 	StoriesMuted bool
-	// StoriesHideSender field of InputPeerNotifySettings.
+	// Whether the sender name should be displayed in story notifications.
 	//
 	// Use SetStoriesHideSender and GetStoriesHideSender helpers.
 	StoriesHideSender bool
-	// StoriesSound field of InputPeerNotifySettings.
+	// Identifier of an audio file to play for story notifications.
 	//
 	// Use SetStoriesSound and GetStoriesSound helpers.
 	StoriesSound NotificationSoundClass
@@ -115,6 +121,46 @@ func (i *InputPeerNotifySettings) String() string {
 	}
 	type Alias InputPeerNotifySettings
 	return fmt.Sprintf("InputPeerNotifySettings%+v", Alias(*i))
+}
+
+// FillFrom fills InputPeerNotifySettings from given interface.
+func (i *InputPeerNotifySettings) FillFrom(from interface {
+	GetShowPreviews() (value bool, ok bool)
+	GetSilent() (value bool, ok bool)
+	GetMuteUntil() (value int, ok bool)
+	GetSound() (value NotificationSoundClass, ok bool)
+	GetStoriesMuted() (value bool, ok bool)
+	GetStoriesHideSender() (value bool, ok bool)
+	GetStoriesSound() (value NotificationSoundClass, ok bool)
+}) {
+	if val, ok := from.GetShowPreviews(); ok {
+		i.ShowPreviews = val
+	}
+
+	if val, ok := from.GetSilent(); ok {
+		i.Silent = val
+	}
+
+	if val, ok := from.GetMuteUntil(); ok {
+		i.MuteUntil = val
+	}
+
+	if val, ok := from.GetSound(); ok {
+		i.Sound = val
+	}
+
+	if val, ok := from.GetStoriesMuted(); ok {
+		i.StoriesMuted = val
+	}
+
+	if val, ok := from.GetStoriesHideSender(); ok {
+		i.StoriesHideSender = val
+	}
+
+	if val, ok := from.GetStoriesSound(); ok {
+		i.StoriesSound = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.

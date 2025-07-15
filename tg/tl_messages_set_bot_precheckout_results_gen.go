@@ -32,14 +32,33 @@ var (
 )
 
 // MessagesSetBotPrecheckoutResultsRequest represents TL type `messages.setBotPrecheckoutResults#9c2dd95`.
+// Once the user has confirmed their payment and shipping details, the bot receives an
+// updateBotPrecheckoutQuery¹ update.
+// Use this method to respond to such pre-checkout queries.
+// Note: Telegram must receive an answer within 10 seconds after the pre-checkout query
+// was sent.
+//
+// Links:
+//  1. https://core.telegram.org/constructor/updateBotPrecheckoutQuery
+//
+// See https://core.telegram.org/method/messages.setBotPrecheckoutResults for reference.
 type MessagesSetBotPrecheckoutResultsRequest struct {
-	// Flags field of MessagesSetBotPrecheckoutResultsRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Success field of MessagesSetBotPrecheckoutResultsRequest.
+	// Set this flag if everything is alright (goods are available, etc.) and the bot is
+	// ready to proceed with the order, otherwise do not set it, and set the error field,
+	// instead
 	Success bool
-	// QueryID field of MessagesSetBotPrecheckoutResultsRequest.
+	// Unique identifier for the query to be answered
 	QueryID int64
-	// Error field of MessagesSetBotPrecheckoutResultsRequest.
+	// Required if the success isn't set. Error message in human readable form that explains
+	// the reason for failure to proceed with the checkout (e.g. "Sorry, somebody just bought
+	// the last of our amazing black T-shirts while you were busy filling out your payment
+	// details. Please choose a different color or garment!"). Telegram will display this
+	// message to the user.
 	//
 	// Use SetError and GetError helpers.
 	Error string
@@ -83,6 +102,20 @@ func (s *MessagesSetBotPrecheckoutResultsRequest) String() string {
 	}
 	type Alias MessagesSetBotPrecheckoutResultsRequest
 	return fmt.Sprintf("MessagesSetBotPrecheckoutResultsRequest%+v", Alias(*s))
+}
+
+// FillFrom fills MessagesSetBotPrecheckoutResultsRequest from given interface.
+func (s *MessagesSetBotPrecheckoutResultsRequest) FillFrom(from interface {
+	GetSuccess() (value bool)
+	GetQueryID() (value int64)
+	GetError() (value string, ok bool)
+}) {
+	s.Success = from.GetSuccess()
+	s.QueryID = from.GetQueryID()
+	if val, ok := from.GetError(); ok {
+		s.Error = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -246,6 +279,22 @@ func (s *MessagesSetBotPrecheckoutResultsRequest) GetError() (value string, ok b
 }
 
 // MessagesSetBotPrecheckoutResults invokes method messages.setBotPrecheckoutResults#9c2dd95 returning error if any.
+// Once the user has confirmed their payment and shipping details, the bot receives an
+// updateBotPrecheckoutQuery¹ update.
+// Use this method to respond to such pre-checkout queries.
+// Note: Telegram must receive an answer within 10 seconds after the pre-checkout query
+// was sent.
+//
+// Links:
+//  1. https://core.telegram.org/constructor/updateBotPrecheckoutQuery
+//
+// Possible errors:
+//
+//	400 ERROR_TEXT_EMPTY: The provided error message is empty.
+//	400 USER_BOT_REQUIRED: This method can only be called by a bot.
+//
+// See https://core.telegram.org/method/messages.setBotPrecheckoutResults for reference.
+// Can be used by bots.
 func (c *Client) MessagesSetBotPrecheckoutResults(ctx context.Context, request *MessagesSetBotPrecheckoutResultsRequest) (bool, error) {
 	var result BoolBox
 

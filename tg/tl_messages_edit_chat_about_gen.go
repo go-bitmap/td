@@ -32,10 +32,19 @@ var (
 )
 
 // MessagesEditChatAboutRequest represents TL type `messages.editChatAbout#def60797`.
+// Edit the description of a group/supergroup/channel¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/channel
+//
+// See https://core.telegram.org/method/messages.editChatAbout for reference.
 type MessagesEditChatAboutRequest struct {
-	// Peer field of MessagesEditChatAboutRequest.
+	// The group/supergroup/channel¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/channel
 	Peer InputPeerClass
-	// About field of MessagesEditChatAboutRequest.
+	// The new description
 	About string
 }
 
@@ -71,6 +80,15 @@ func (e *MessagesEditChatAboutRequest) String() string {
 	}
 	type Alias MessagesEditChatAboutRequest
 	return fmt.Sprintf("MessagesEditChatAboutRequest%+v", Alias(*e))
+}
+
+// FillFrom fills MessagesEditChatAboutRequest from given interface.
+func (e *MessagesEditChatAboutRequest) FillFrom(from interface {
+	GetPeer() (value InputPeerClass)
+	GetAbout() (value string)
+}) {
+	e.Peer = from.GetPeer()
+	e.About = from.GetAbout()
 }
 
 // TypeID returns type id in TL schema.
@@ -182,6 +200,25 @@ func (e *MessagesEditChatAboutRequest) GetAbout() (value string) {
 }
 
 // MessagesEditChatAbout invokes method messages.editChatAbout#def60797 returning error if any.
+// Edit the description of a group/supergroup/channel¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/channel
+//
+// Possible errors:
+//
+//	400 CHANNEL_INVALID: The provided channel is invalid.
+//	400 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
+//	400 CHAT_ABOUT_NOT_MODIFIED: About text has not changed.
+//	400 CHAT_ABOUT_TOO_LONG: Chat about too long.
+//	400 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
+//	400 CHAT_ID_INVALID: The provided chat id is invalid.
+//	400 CHAT_NOT_MODIFIED: No changes were made to chat information because the new information you passed is identical to the current information.
+//	403 CHAT_WRITE_FORBIDDEN: You can't write in this chat.
+//	400 PEER_ID_INVALID: The provided peer id is invalid.
+//
+// See https://core.telegram.org/method/messages.editChatAbout for reference.
+// Can be used by bots.
 func (c *Client) MessagesEditChatAbout(ctx context.Context, request *MessagesEditChatAboutRequest) (bool, error) {
 	var result BoolBox
 

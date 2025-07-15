@@ -32,10 +32,24 @@ var (
 )
 
 // MessagesGetWebPageRequest represents TL type `messages.getWebPage#8d9692a3`.
+// Get instant view¹ page
+//
+// Links:
+//  1. https://instantview.telegram.org
+//
+// See https://core.telegram.org/method/messages.getWebPage for reference.
 type MessagesGetWebPageRequest struct {
-	// URL field of MessagesGetWebPageRequest.
+	// URL of IV page to fetch
 	URL string
-	// Hash field of MessagesGetWebPageRequest.
+	// Hash used for caching, for more info click here¹. Note: the usual hash generation
+	// algorithm cannot be used in this case, please re-use the webPage².hash field returned
+	// by a previous call to the method, or pass 0 if this is the first call or if the
+	// previous call did not return a webPage³.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets#hash-generation
+	//  2) https://core.telegram.org/constructor/webPage
+	//  3) https://core.telegram.org/constructor/webPage
 	Hash int
 }
 
@@ -71,6 +85,15 @@ func (g *MessagesGetWebPageRequest) String() string {
 	}
 	type Alias MessagesGetWebPageRequest
 	return fmt.Sprintf("MessagesGetWebPageRequest%+v", Alias(*g))
+}
+
+// FillFrom fills MessagesGetWebPageRequest from given interface.
+func (g *MessagesGetWebPageRequest) FillFrom(from interface {
+	GetURL() (value string)
+	GetHash() (value int)
+}) {
+	g.URL = from.GetURL()
+	g.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -177,6 +200,16 @@ func (g *MessagesGetWebPageRequest) GetHash() (value int) {
 }
 
 // MessagesGetWebPage invokes method messages.getWebPage#8d9692a3 returning error if any.
+// Get instant view¹ page
+//
+// Links:
+//  1. https://instantview.telegram.org
+//
+// Possible errors:
+//
+//	400 WC_CONVERT_URL_INVALID: WC convert URL invalid.
+//
+// See https://core.telegram.org/method/messages.getWebPage for reference.
 func (c *Client) MessagesGetWebPage(ctx context.Context, request *MessagesGetWebPageRequest) (*MessagesWebPage, error) {
 	var result MessagesWebPage
 

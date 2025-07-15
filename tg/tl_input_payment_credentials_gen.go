@@ -32,10 +32,13 @@ var (
 )
 
 // InputPaymentCredentialsSaved represents TL type `inputPaymentCredentialsSaved#c10eb2cf`.
+// Saved payment credentials
+//
+// See https://core.telegram.org/constructor/inputPaymentCredentialsSaved for reference.
 type InputPaymentCredentialsSaved struct {
-	// ID field of InputPaymentCredentialsSaved.
+	// Credential ID
 	ID string
-	// TmpPassword field of InputPaymentCredentialsSaved.
+	// Temporary password
 	TmpPassword []byte
 }
 
@@ -76,6 +79,15 @@ func (i *InputPaymentCredentialsSaved) String() string {
 	}
 	type Alias InputPaymentCredentialsSaved
 	return fmt.Sprintf("InputPaymentCredentialsSaved%+v", Alias(*i))
+}
+
+// FillFrom fills InputPaymentCredentialsSaved from given interface.
+func (i *InputPaymentCredentialsSaved) FillFrom(from interface {
+	GetID() (value string)
+	GetTmpPassword() (value []byte)
+}) {
+	i.ID = from.GetID()
+	i.TmpPassword = from.GetTmpPassword()
 }
 
 // TypeID returns type id in TL schema.
@@ -182,12 +194,18 @@ func (i *InputPaymentCredentialsSaved) GetTmpPassword() (value []byte) {
 }
 
 // InputPaymentCredentials represents TL type `inputPaymentCredentials#3417d728`.
+// Payment credentials
+//
+// See https://core.telegram.org/constructor/inputPaymentCredentials for reference.
 type InputPaymentCredentials struct {
-	// Flags field of InputPaymentCredentials.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Save field of InputPaymentCredentials.
+	// Save payment credential for future use
 	Save bool
-	// Data field of InputPaymentCredentials.
+	// Payment credentials
 	Data DataJSON
 }
 
@@ -231,6 +249,15 @@ func (i *InputPaymentCredentials) String() string {
 	}
 	type Alias InputPaymentCredentials
 	return fmt.Sprintf("InputPaymentCredentials%+v", Alias(*i))
+}
+
+// FillFrom fills InputPaymentCredentials from given interface.
+func (i *InputPaymentCredentials) FillFrom(from interface {
+	GetSave() (value bool)
+	GetData() (value DataJSON)
+}) {
+	i.Save = from.GetSave()
+	i.Data = from.GetData()
 }
 
 // TypeID returns type id in TL schema.
@@ -358,8 +385,11 @@ func (i *InputPaymentCredentials) GetData() (value DataJSON) {
 }
 
 // InputPaymentCredentialsApplePay represents TL type `inputPaymentCredentialsApplePay#aa1c39f`.
+// Apple pay payment credentials
+//
+// See https://core.telegram.org/constructor/inputPaymentCredentialsApplePay for reference.
 type InputPaymentCredentialsApplePay struct {
-	// PaymentData field of InputPaymentCredentialsApplePay.
+	// Payment data
 	PaymentData DataJSON
 }
 
@@ -397,6 +427,13 @@ func (i *InputPaymentCredentialsApplePay) String() string {
 	}
 	type Alias InputPaymentCredentialsApplePay
 	return fmt.Sprintf("InputPaymentCredentialsApplePay%+v", Alias(*i))
+}
+
+// FillFrom fills InputPaymentCredentialsApplePay from given interface.
+func (i *InputPaymentCredentialsApplePay) FillFrom(from interface {
+	GetPaymentData() (value DataJSON)
+}) {
+	i.PaymentData = from.GetPaymentData()
 }
 
 // TypeID returns type id in TL schema.
@@ -483,8 +520,11 @@ func (i *InputPaymentCredentialsApplePay) GetPaymentData() (value DataJSON) {
 }
 
 // InputPaymentCredentialsGooglePay represents TL type `inputPaymentCredentialsGooglePay#8ac32801`.
+// Google Pay payment credentials
+//
+// See https://core.telegram.org/constructor/inputPaymentCredentialsGooglePay for reference.
 type InputPaymentCredentialsGooglePay struct {
-	// PaymentToken field of InputPaymentCredentialsGooglePay.
+	// Payment token
 	PaymentToken DataJSON
 }
 
@@ -522,6 +562,13 @@ func (i *InputPaymentCredentialsGooglePay) String() string {
 	}
 	type Alias InputPaymentCredentialsGooglePay
 	return fmt.Sprintf("InputPaymentCredentialsGooglePay%+v", Alias(*i))
+}
+
+// FillFrom fills InputPaymentCredentialsGooglePay from given interface.
+func (i *InputPaymentCredentialsGooglePay) FillFrom(from interface {
+	GetPaymentToken() (value DataJSON)
+}) {
+	i.PaymentToken = from.GetPaymentToken()
 }
 
 // TypeID returns type id in TL schema.
@@ -611,6 +658,8 @@ func (i *InputPaymentCredentialsGooglePay) GetPaymentToken() (value DataJSON) {
 const InputPaymentCredentialsClassName = "InputPaymentCredentials"
 
 // InputPaymentCredentialsClass represents InputPaymentCredentials generic type.
+//
+// See https://core.telegram.org/type/InputPaymentCredentials for reference.
 //
 // Constructors:
 //   - [InputPaymentCredentialsSaved]

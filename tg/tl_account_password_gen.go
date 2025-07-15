@@ -32,46 +32,80 @@ var (
 )
 
 // AccountPassword represents TL type `account.password#957b50fb`.
+// Configuration for two-factor authorization
+//
+// See https://core.telegram.org/constructor/account.password for reference.
 type AccountPassword struct {
-	// Flags field of AccountPassword.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// HasRecovery field of AccountPassword.
+	// Whether the user has a recovery method configured
 	HasRecovery bool
-	// HasSecureValues field of AccountPassword.
+	// Whether telegram passport¹ is enabled
+	//
+	// Links:
+	//  1) https://core.telegram.org/passport
 	HasSecureValues bool
-	// HasPassword field of AccountPassword.
+	// Whether the user has a password
 	HasPassword bool
-	// CurrentAlgo field of AccountPassword.
+	// The KDF algorithm for SRP two-factor authentication¹ of the current password
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/srp
 	//
 	// Use SetCurrentAlgo and GetCurrentAlgo helpers.
 	CurrentAlgo PasswordKdfAlgoClass
-	// SRPB field of AccountPassword.
+	// Srp B param for SRP authorization¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/srp
 	//
 	// Use SetSRPB and GetSRPB helpers.
 	SRPB []byte
-	// SRPID field of AccountPassword.
+	// Srp ID param for SRP authorization¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/srp
 	//
 	// Use SetSRPID and GetSRPID helpers.
 	SRPID int64
-	// Hint field of AccountPassword.
+	// Text hint for the password
 	//
 	// Use SetHint and GetHint helpers.
 	Hint string
-	// EmailUnconfirmedPattern field of AccountPassword.
+	// A password recovery email¹ with the specified pattern² is still awaiting
+	// verification
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/srp#email-verification
+	//  2) https://core.telegram.org/api/pattern
 	//
 	// Use SetEmailUnconfirmedPattern and GetEmailUnconfirmedPattern helpers.
 	EmailUnconfirmedPattern string
-	// NewAlgo field of AccountPassword.
+	// The KDF algorithm for SRP two-factor authentication¹ to use when creating new
+	// passwords
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/srp
 	NewAlgo PasswordKdfAlgoClass
-	// NewSecureAlgo field of AccountPassword.
+	// The KDF algorithm for telegram passport¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/passport
 	NewSecureAlgo SecurePasswordKdfAlgoClass
-	// SecureRandom field of AccountPassword.
+	// Secure random string
 	SecureRandom []byte
-	// PendingResetDate field of AccountPassword.
+	// The 2FA password will be automatically removed at this date, unless the user cancels
+	// the operation
 	//
 	// Use SetPendingResetDate and GetPendingResetDate helpers.
 	PendingResetDate int
-	// LoginEmailPattern field of AccountPassword.
+	// A verified login email with the specified pattern¹ is configured
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/pattern
 	//
 	// Use SetLoginEmailPattern and GetLoginEmailPattern helpers.
 	LoginEmailPattern string
@@ -145,6 +179,58 @@ func (p *AccountPassword) String() string {
 	}
 	type Alias AccountPassword
 	return fmt.Sprintf("AccountPassword%+v", Alias(*p))
+}
+
+// FillFrom fills AccountPassword from given interface.
+func (p *AccountPassword) FillFrom(from interface {
+	GetHasRecovery() (value bool)
+	GetHasSecureValues() (value bool)
+	GetHasPassword() (value bool)
+	GetCurrentAlgo() (value PasswordKdfAlgoClass, ok bool)
+	GetSRPB() (value []byte, ok bool)
+	GetSRPID() (value int64, ok bool)
+	GetHint() (value string, ok bool)
+	GetEmailUnconfirmedPattern() (value string, ok bool)
+	GetNewAlgo() (value PasswordKdfAlgoClass)
+	GetNewSecureAlgo() (value SecurePasswordKdfAlgoClass)
+	GetSecureRandom() (value []byte)
+	GetPendingResetDate() (value int, ok bool)
+	GetLoginEmailPattern() (value string, ok bool)
+}) {
+	p.HasRecovery = from.GetHasRecovery()
+	p.HasSecureValues = from.GetHasSecureValues()
+	p.HasPassword = from.GetHasPassword()
+	if val, ok := from.GetCurrentAlgo(); ok {
+		p.CurrentAlgo = val
+	}
+
+	if val, ok := from.GetSRPB(); ok {
+		p.SRPB = val
+	}
+
+	if val, ok := from.GetSRPID(); ok {
+		p.SRPID = val
+	}
+
+	if val, ok := from.GetHint(); ok {
+		p.Hint = val
+	}
+
+	if val, ok := from.GetEmailUnconfirmedPattern(); ok {
+		p.EmailUnconfirmedPattern = val
+	}
+
+	p.NewAlgo = from.GetNewAlgo()
+	p.NewSecureAlgo = from.GetNewSecureAlgo()
+	p.SecureRandom = from.GetSecureRandom()
+	if val, ok := from.GetPendingResetDate(); ok {
+		p.PendingResetDate = val
+	}
+
+	if val, ok := from.GetLoginEmailPattern(); ok {
+		p.LoginEmailPattern = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.

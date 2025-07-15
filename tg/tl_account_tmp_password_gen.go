@@ -32,10 +32,13 @@ var (
 )
 
 // AccountTmpPassword represents TL type `account.tmpPassword#db64fd34`.
+// Temporary payment password
+//
+// See https://core.telegram.org/constructor/account.tmpPassword for reference.
 type AccountTmpPassword struct {
-	// TmpPassword field of AccountTmpPassword.
+	// Temporary password
 	TmpPassword []byte
-	// ValidUntil field of AccountTmpPassword.
+	// Validity period
 	ValidUntil int
 }
 
@@ -71,6 +74,15 @@ func (t *AccountTmpPassword) String() string {
 	}
 	type Alias AccountTmpPassword
 	return fmt.Sprintf("AccountTmpPassword%+v", Alias(*t))
+}
+
+// FillFrom fills AccountTmpPassword from given interface.
+func (t *AccountTmpPassword) FillFrom(from interface {
+	GetTmpPassword() (value []byte)
+	GetValidUntil() (value int)
+}) {
+	t.TmpPassword = from.GetTmpPassword()
+	t.ValidUntil = from.GetValidUntil()
 }
 
 // TypeID returns type id in TL schema.

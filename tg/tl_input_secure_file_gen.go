@@ -32,16 +32,22 @@ var (
 )
 
 // InputSecureFileUploaded represents TL type `inputSecureFileUploaded#3334b0f0`.
+// Uploaded secure file, for more info see the passport docs »¹
+//
+// Links:
+//  1. https://core.telegram.org/passport/encryption#inputsecurefile
+//
+// See https://core.telegram.org/constructor/inputSecureFileUploaded for reference.
 type InputSecureFileUploaded struct {
-	// ID field of InputSecureFileUploaded.
+	// Secure file ID
 	ID int64
-	// Parts field of InputSecureFileUploaded.
+	// Secure file part count
 	Parts int
-	// MD5Checksum field of InputSecureFileUploaded.
+	// MD5 hash of encrypted uploaded file, to be checked server-side
 	MD5Checksum string
-	// FileHash field of InputSecureFileUploaded.
+	// File hash
 	FileHash []byte
-	// Secret field of InputSecureFileUploaded.
+	// Secret
 	Secret []byte
 }
 
@@ -91,6 +97,21 @@ func (i *InputSecureFileUploaded) String() string {
 	}
 	type Alias InputSecureFileUploaded
 	return fmt.Sprintf("InputSecureFileUploaded%+v", Alias(*i))
+}
+
+// FillFrom fills InputSecureFileUploaded from given interface.
+func (i *InputSecureFileUploaded) FillFrom(from interface {
+	GetID() (value int64)
+	GetParts() (value int)
+	GetMD5Checksum() (value string)
+	GetFileHash() (value []byte)
+	GetSecret() (value []byte)
+}) {
+	i.ID = from.GetID()
+	i.Parts = from.GetParts()
+	i.MD5Checksum = from.GetMD5Checksum()
+	i.FileHash = from.GetFileHash()
+	i.Secret = from.GetSecret()
 }
 
 // TypeID returns type id in TL schema.
@@ -257,10 +278,17 @@ func (i *InputSecureFileUploaded) GetSecret() (value []byte) {
 }
 
 // InputSecureFile represents TL type `inputSecureFile#5367e5be`.
+// Pre-uploaded passport¹ file, for more info see the passport docs »²
+//
+// Links:
+//  1. https://core.telegram.org/passport
+//  2. https://core.telegram.org/passport/encryption#inputsecurefile
+//
+// See https://core.telegram.org/constructor/inputSecureFile for reference.
 type InputSecureFile struct {
-	// ID field of InputSecureFile.
+	// Secure file ID
 	ID int64
-	// AccessHash field of InputSecureFile.
+	// Secure file access hash
 	AccessHash int64
 }
 
@@ -301,6 +329,15 @@ func (i *InputSecureFile) String() string {
 	}
 	type Alias InputSecureFile
 	return fmt.Sprintf("InputSecureFile%+v", Alias(*i))
+}
+
+// FillFrom fills InputSecureFile from given interface.
+func (i *InputSecureFile) FillFrom(from interface {
+	GetID() (value int64)
+	GetAccessHash() (value int64)
+}) {
+	i.ID = from.GetID()
+	i.AccessHash = from.GetAccessHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -411,6 +448,8 @@ const InputSecureFileClassName = "InputSecureFile"
 
 // InputSecureFileClass represents InputSecureFile generic type.
 //
+// See https://core.telegram.org/type/InputSecureFile for reference.
+//
 // Constructors:
 //   - [InputSecureFileUploaded]
 //   - [InputSecureFile]
@@ -444,8 +483,17 @@ type InputSecureFileClass interface {
 	// Zero returns true if current object has a zero value.
 	Zero() bool
 
-	// ID field of InputSecureFileUploaded.
+	// Secure file ID
 	GetID() (value int64)
+}
+
+// AsInputSecureFileLocation tries to map InputSecureFile to InputSecureFileLocation.
+func (i *InputSecureFile) AsInputSecureFileLocation() *InputSecureFileLocation {
+	value := new(InputSecureFileLocation)
+	value.ID = i.GetID()
+	value.AccessHash = i.GetAccessHash()
+
+	return value
 }
 
 // DecodeInputSecureFile implements binary de-serialization for InputSecureFileClass.

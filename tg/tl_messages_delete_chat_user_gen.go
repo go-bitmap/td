@@ -32,14 +32,20 @@ var (
 )
 
 // MessagesDeleteChatUserRequest represents TL type `messages.deleteChatUser#a2185cab`.
+// Deletes a user from a chat and sends a service message on it.
+//
+// See https://core.telegram.org/method/messages.deleteChatUser for reference.
 type MessagesDeleteChatUserRequest struct {
-	// Flags field of MessagesDeleteChatUserRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// RevokeHistory field of MessagesDeleteChatUserRequest.
+	// Remove the entire chat history of the specified user in this chat.
 	RevokeHistory bool
-	// ChatID field of MessagesDeleteChatUserRequest.
+	// Chat ID
 	ChatID int64
-	// UserID field of MessagesDeleteChatUserRequest.
+	// User ID to be deleted
 	UserID InputUserClass
 }
 
@@ -81,6 +87,17 @@ func (d *MessagesDeleteChatUserRequest) String() string {
 	}
 	type Alias MessagesDeleteChatUserRequest
 	return fmt.Sprintf("MessagesDeleteChatUserRequest%+v", Alias(*d))
+}
+
+// FillFrom fills MessagesDeleteChatUserRequest from given interface.
+func (d *MessagesDeleteChatUserRequest) FillFrom(from interface {
+	GetRevokeHistory() (value bool)
+	GetChatID() (value int64)
+	GetUserID() (value InputUserClass)
+}) {
+	d.RevokeHistory = from.GetRevokeHistory()
+	d.ChatID = from.GetChatID()
+	d.UserID = from.GetUserID()
 }
 
 // TypeID returns type id in TL schema.
@@ -233,6 +250,19 @@ func (d *MessagesDeleteChatUserRequest) GetUserID() (value InputUserClass) {
 }
 
 // MessagesDeleteChatUser invokes method messages.deleteChatUser#a2185cab returning error if any.
+// Deletes a user from a chat and sends a service message on it.
+//
+// Possible errors:
+//
+//	400 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
+//	400 CHAT_ID_INVALID: The provided chat id is invalid.
+//	400 INPUT_USER_DEACTIVATED: The specified user was deleted.
+//	400 PEER_ID_INVALID: The provided peer id is invalid.
+//	400 USER_ID_INVALID: The provided user ID is invalid.
+//	400 USER_NOT_PARTICIPANT: You're not a member of this supergroup/channel.
+//
+// See https://core.telegram.org/method/messages.deleteChatUser for reference.
+// Can be used by bots.
 func (c *Client) MessagesDeleteChatUser(ctx context.Context, request *MessagesDeleteChatUserRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

@@ -32,12 +32,15 @@ var (
 )
 
 // MessagesPeerSettings represents TL type `messages.peerSettings#6880b94d`.
+// Peer settings
+//
+// See https://core.telegram.org/constructor/messages.peerSettings for reference.
 type MessagesPeerSettings struct {
-	// Settings field of MessagesPeerSettings.
+	// Peer settings
 	Settings PeerSettings
-	// Chats field of MessagesPeerSettings.
+	// Mentioned chats
 	Chats []ChatClass
-	// Users field of MessagesPeerSettings.
+	// Mentioned users
 	Users []UserClass
 }
 
@@ -76,6 +79,17 @@ func (p *MessagesPeerSettings) String() string {
 	}
 	type Alias MessagesPeerSettings
 	return fmt.Sprintf("MessagesPeerSettings%+v", Alias(*p))
+}
+
+// FillFrom fills MessagesPeerSettings from given interface.
+func (p *MessagesPeerSettings) FillFrom(from interface {
+	GetSettings() (value PeerSettings)
+	GetChats() (value []ChatClass)
+	GetUsers() (value []UserClass)
+}) {
+	p.Settings = from.GetSettings()
+	p.Chats = from.GetChats()
+	p.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -235,4 +249,14 @@ func (p *MessagesPeerSettings) GetUsers() (value []UserClass) {
 		return
 	}
 	return p.Users
+}
+
+// MapChats returns field Chats wrapped in ChatClassArray helper.
+func (p *MessagesPeerSettings) MapChats() (value ChatClassArray) {
+	return ChatClassArray(p.Chats)
+}
+
+// MapUsers returns field Users wrapped in UserClassArray helper.
+func (p *MessagesPeerSettings) MapUsers() (value UserClassArray) {
+	return UserClassArray(p.Users)
 }

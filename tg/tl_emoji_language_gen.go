@@ -32,8 +32,11 @@ var (
 )
 
 // EmojiLanguage represents TL type `emojiLanguage#b3fb5361`.
+// Emoji language
+//
+// See https://core.telegram.org/constructor/emojiLanguage for reference.
 type EmojiLanguage struct {
-	// LangCode field of EmojiLanguage.
+	// Language code
 	LangCode string
 }
 
@@ -66,6 +69,13 @@ func (e *EmojiLanguage) String() string {
 	}
 	type Alias EmojiLanguage
 	return fmt.Sprintf("EmojiLanguage%+v", Alias(*e))
+}
+
+// FillFrom fills EmojiLanguage from given interface.
+func (e *EmojiLanguage) FillFrom(from interface {
+	GetLangCode() (value string)
+}) {
+	e.LangCode = from.GetLangCode()
 }
 
 // TypeID returns type id in TL schema.

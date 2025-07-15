@@ -32,8 +32,11 @@ var (
 )
 
 // PhotoEmpty represents TL type `photoEmpty#2331b22d`.
+// Empty constructor, non-existent photo
+//
+// See https://core.telegram.org/constructor/photoEmpty for reference.
 type PhotoEmpty struct {
-	// ID field of PhotoEmpty.
+	// Photo identifier
 	ID int64
 }
 
@@ -71,6 +74,13 @@ func (p *PhotoEmpty) String() string {
 	}
 	type Alias PhotoEmpty
 	return fmt.Sprintf("PhotoEmpty%+v", Alias(*p))
+}
+
+// FillFrom fills PhotoEmpty from given interface.
+func (p *PhotoEmpty) FillFrom(from interface {
+	GetID() (value int64)
+}) {
+	p.ID = from.GetID()
 }
 
 // TypeID returns type id in TL schema.
@@ -157,26 +167,38 @@ func (p *PhotoEmpty) GetID() (value int64) {
 }
 
 // Photo represents TL type `photo#fb197a65`.
+// Photo
+//
+// See https://core.telegram.org/constructor/photo for reference.
 type Photo struct {
-	// Flags field of Photo.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// HasStickers field of Photo.
+	// Whether the photo has mask stickers attached to it
 	HasStickers bool
-	// ID field of Photo.
+	// ID
 	ID int64
-	// AccessHash field of Photo.
+	// Access hash
 	AccessHash int64
-	// FileReference field of Photo.
+	// file reference¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/file_reference
 	FileReference []byte
-	// Date field of Photo.
+	// Date of upload
 	Date int
-	// Sizes field of Photo.
+	// Available sizes for download
 	Sizes []PhotoSizeClass
-	// VideoSizes field of Photo.
+	// For animated profiles¹, the MPEG4 videos
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/files#animated-profile-pictures
 	//
 	// Use SetVideoSizes and GetVideoSizes helpers.
 	VideoSizes []VideoSizeClass
-	// DCID field of Photo.
+	// DC ID to use for download
 	DCID int
 }
 
@@ -238,6 +260,30 @@ func (p *Photo) String() string {
 	}
 	type Alias Photo
 	return fmt.Sprintf("Photo%+v", Alias(*p))
+}
+
+// FillFrom fills Photo from given interface.
+func (p *Photo) FillFrom(from interface {
+	GetHasStickers() (value bool)
+	GetID() (value int64)
+	GetAccessHash() (value int64)
+	GetFileReference() (value []byte)
+	GetDate() (value int)
+	GetSizes() (value []PhotoSizeClass)
+	GetVideoSizes() (value []VideoSizeClass, ok bool)
+	GetDCID() (value int)
+}) {
+	p.HasStickers = from.GetHasStickers()
+	p.ID = from.GetID()
+	p.AccessHash = from.GetAccessHash()
+	p.FileReference = from.GetFileReference()
+	p.Date = from.GetDate()
+	p.Sizes = from.GetSizes()
+	if val, ok := from.GetVideoSizes(); ok {
+		p.VideoSizes = val
+	}
+
+	p.DCID = from.GetDCID()
 }
 
 // TypeID returns type id in TL schema.
@@ -536,10 +582,25 @@ func (p *Photo) GetDCID() (value int) {
 	return p.DCID
 }
 
+// MapSizes returns field Sizes wrapped in PhotoSizeClassArray helper.
+func (p *Photo) MapSizes() (value PhotoSizeClassArray) {
+	return PhotoSizeClassArray(p.Sizes)
+}
+
+// MapVideoSizes returns field VideoSizes wrapped in VideoSizeClassArray helper.
+func (p *Photo) MapVideoSizes() (value VideoSizeClassArray, ok bool) {
+	if !p.Flags.Has(1) {
+		return value, false
+	}
+	return VideoSizeClassArray(p.VideoSizes), true
+}
+
 // PhotoClassName is schema name of PhotoClass.
 const PhotoClassName = "Photo"
 
 // PhotoClass represents Photo generic type.
+//
+// See https://core.telegram.org/type/Photo for reference.
 //
 // Constructors:
 //   - [PhotoEmpty]
@@ -574,8 +635,31 @@ type PhotoClass interface {
 	// Zero returns true if current object has a zero value.
 	Zero() bool
 
-	// ID field of PhotoEmpty.
+	// Photo identifier
 	GetID() (value int64)
+
+	// AsNotEmpty tries to map PhotoClass to Photo.
+	AsNotEmpty() (*Photo, bool)
+}
+
+// AsInput tries to map Photo to InputPhoto.
+func (p *Photo) AsInput() *InputPhoto {
+	value := new(InputPhoto)
+	value.ID = p.GetID()
+	value.AccessHash = p.GetAccessHash()
+	value.FileReference = p.GetFileReference()
+
+	return value
+}
+
+// AsNotEmpty tries to map PhotoEmpty to Photo.
+func (p *PhotoEmpty) AsNotEmpty() (*Photo, bool) {
+	return nil, false
+}
+
+// AsNotEmpty tries to map Photo to Photo.
+func (p *Photo) AsNotEmpty() (*Photo, bool) {
+	return p, true
 }
 
 // DecodePhoto implements binary de-serialization for PhotoClass.

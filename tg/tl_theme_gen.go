@@ -32,36 +32,45 @@ var (
 )
 
 // Theme represents TL type `theme#a00e67d6`.
+// Theme
+//
+// See https://core.telegram.org/constructor/theme for reference.
 type Theme struct {
-	// Flags field of Theme.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Creator field of Theme.
+	// Whether the current user is the creator of this theme
 	Creator bool
-	// Default field of Theme.
+	// Whether this is the default theme
 	Default bool
-	// ForChat field of Theme.
+	// Whether this theme is meant to be used as a chat theme¹
+	//
+	// Links:
+	//  1) https://telegram.org/blog/chat-themes-interactive-emoji-read-receipts
 	ForChat bool
-	// ID field of Theme.
+	// Theme ID
 	ID int64
-	// AccessHash field of Theme.
+	// Theme access hash
 	AccessHash int64
-	// Slug field of Theme.
+	// Unique theme ID
 	Slug string
-	// Title field of Theme.
+	// Theme name
 	Title string
-	// Document field of Theme.
+	// Theme
 	//
 	// Use SetDocument and GetDocument helpers.
 	Document DocumentClass
-	// Settings field of Theme.
+	// Theme settings
 	//
 	// Use SetSettings and GetSettings helpers.
 	Settings []ThemeSettings
-	// Emoticon field of Theme.
+	// Theme emoji
 	//
 	// Use SetEmoticon and GetEmoticon helpers.
 	Emoticon string
-	// InstallsCount field of Theme.
+	// Installation count
 	//
 	// Use SetInstallsCount and GetInstallsCount helpers.
 	InstallsCount int
@@ -129,6 +138,45 @@ func (t *Theme) String() string {
 	}
 	type Alias Theme
 	return fmt.Sprintf("Theme%+v", Alias(*t))
+}
+
+// FillFrom fills Theme from given interface.
+func (t *Theme) FillFrom(from interface {
+	GetCreator() (value bool)
+	GetDefault() (value bool)
+	GetForChat() (value bool)
+	GetID() (value int64)
+	GetAccessHash() (value int64)
+	GetSlug() (value string)
+	GetTitle() (value string)
+	GetDocument() (value DocumentClass, ok bool)
+	GetSettings() (value []ThemeSettings, ok bool)
+	GetEmoticon() (value string, ok bool)
+	GetInstallsCount() (value int, ok bool)
+}) {
+	t.Creator = from.GetCreator()
+	t.Default = from.GetDefault()
+	t.ForChat = from.GetForChat()
+	t.ID = from.GetID()
+	t.AccessHash = from.GetAccessHash()
+	t.Slug = from.GetSlug()
+	t.Title = from.GetTitle()
+	if val, ok := from.GetDocument(); ok {
+		t.Document = val
+	}
+
+	if val, ok := from.GetSettings(); ok {
+		t.Settings = val
+	}
+
+	if val, ok := from.GetEmoticon(); ok {
+		t.Emoticon = val
+	}
+
+	if val, ok := from.GetInstallsCount(); ok {
+		t.InstallsCount = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -533,4 +581,13 @@ func (t *Theme) GetInstallsCount() (value int, ok bool) {
 		return value, false
 	}
 	return t.InstallsCount, true
+}
+
+// GetDocumentAsNotEmpty returns mapped value of Document conditional field and
+// boolean which is true if field was set.
+func (t *Theme) GetDocumentAsNotEmpty() (*Document, bool) {
+	if value, ok := t.GetDocument(); ok {
+		return value.AsNotEmpty()
+	}
+	return nil, false
 }

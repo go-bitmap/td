@@ -68,6 +68,13 @@ func (vec *UserClassVector) String() string {
 	return fmt.Sprintf("UserClassVector%+v", Alias(*vec))
 }
 
+// FillFrom fills UserClassVector from given interface.
+func (vec *UserClassVector) FillFrom(from interface {
+	GetElems() (value []UserClass)
+}) {
+	vec.Elems = from.GetElems()
+}
+
 // TypeID returns type id in TL schema.
 //
 // See https://core.telegram.org/mtproto/TL-tl#remarks.
@@ -165,4 +172,9 @@ func (vec *UserClassVector) GetElems() (value []UserClass) {
 		return
 	}
 	return vec.Elems
+}
+
+// MapElems returns field Elems wrapped in UserClassArray helper.
+func (vec *UserClassVector) MapElems() (value UserClassArray) {
+	return UserClassArray(vec.Elems)
 }

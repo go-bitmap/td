@@ -32,28 +32,38 @@ var (
 )
 
 // MessagesEditInlineBotMessageRequest represents TL type `messages.editInlineBotMessage#83557dba`.
+// Edit an inline bot message
+//
+// See https://core.telegram.org/method/messages.editInlineBotMessage for reference.
 type MessagesEditInlineBotMessageRequest struct {
-	// Flags field of MessagesEditInlineBotMessageRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// NoWebpage field of MessagesEditInlineBotMessageRequest.
+	// Disable webpage preview
 	NoWebpage bool
-	// InvertMedia field of MessagesEditInlineBotMessageRequest.
+	// If set, any eventual webpage preview will be shown on top of the message instead of at
+	// the bottom.
 	InvertMedia bool
-	// ID field of MessagesEditInlineBotMessageRequest.
+	// Sent inline message ID
 	ID InputBotInlineMessageIDClass
-	// Message field of MessagesEditInlineBotMessageRequest.
+	// Message
 	//
 	// Use SetMessage and GetMessage helpers.
 	Message string
-	// Media field of MessagesEditInlineBotMessageRequest.
+	// Media
 	//
 	// Use SetMedia and GetMedia helpers.
 	Media InputMediaClass
-	// ReplyMarkup field of MessagesEditInlineBotMessageRequest.
+	// Reply markup for inline keyboards
 	//
 	// Use SetReplyMarkup and GetReplyMarkup helpers.
 	ReplyMarkup ReplyMarkupClass
-	// Entities field of MessagesEditInlineBotMessageRequest.
+	// Message entities for styled text¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities
 	//
 	// Use SetEntities and GetEntities helpers.
 	Entities []MessageEntityClass
@@ -109,6 +119,37 @@ func (e *MessagesEditInlineBotMessageRequest) String() string {
 	}
 	type Alias MessagesEditInlineBotMessageRequest
 	return fmt.Sprintf("MessagesEditInlineBotMessageRequest%+v", Alias(*e))
+}
+
+// FillFrom fills MessagesEditInlineBotMessageRequest from given interface.
+func (e *MessagesEditInlineBotMessageRequest) FillFrom(from interface {
+	GetNoWebpage() (value bool)
+	GetInvertMedia() (value bool)
+	GetID() (value InputBotInlineMessageIDClass)
+	GetMessage() (value string, ok bool)
+	GetMedia() (value InputMediaClass, ok bool)
+	GetReplyMarkup() (value ReplyMarkupClass, ok bool)
+	GetEntities() (value []MessageEntityClass, ok bool)
+}) {
+	e.NoWebpage = from.GetNoWebpage()
+	e.InvertMedia = from.GetInvertMedia()
+	e.ID = from.GetID()
+	if val, ok := from.GetMessage(); ok {
+		e.Message = val
+	}
+
+	if val, ok := from.GetMedia(); ok {
+		e.Media = val
+	}
+
+	if val, ok := from.GetReplyMarkup(); ok {
+		e.ReplyMarkup = val
+	}
+
+	if val, ok := from.GetEntities(); ok {
+		e.Entities = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -440,7 +481,26 @@ func (e *MessagesEditInlineBotMessageRequest) GetEntities() (value []MessageEnti
 	return e.Entities, true
 }
 
+// MapEntities returns field Entities wrapped in MessageEntityClassArray helper.
+func (e *MessagesEditInlineBotMessageRequest) MapEntities() (value MessageEntityClassArray, ok bool) {
+	if !e.Flags.Has(3) {
+		return value, false
+	}
+	return MessageEntityClassArray(e.Entities), true
+}
+
 // MessagesEditInlineBotMessage invokes method messages.editInlineBotMessage#83557dba returning error if any.
+// Edit an inline bot message
+//
+// Possible errors:
+//
+//	400 BUTTON_DATA_INVALID: The data of one or more of the buttons you provided is invalid.
+//	400 ENTITY_BOUNDS_INVALID: A specified entity offset or length is invalid, see here » for info on how to properly compute the entity offset/length.
+//	400 MESSAGE_ID_INVALID: The provided message id is invalid.
+//	400 MESSAGE_NOT_MODIFIED: The provided message data is identical to the previous message data, the message wasn't modified.
+//
+// See https://core.telegram.org/method/messages.editInlineBotMessage for reference.
+// Can be used by bots.
 func (c *Client) MessagesEditInlineBotMessage(ctx context.Context, request *MessagesEditInlineBotMessageRequest) (bool, error) {
 	var result BoolBox
 

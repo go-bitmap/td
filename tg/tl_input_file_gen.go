@@ -32,14 +32,24 @@ var (
 )
 
 // InputFile represents TL type `inputFile#f52ff27f`.
+// Defines a file saved in parts using the method upload.saveFilePart¹.
+//
+// Links:
+//  1. https://core.telegram.org/method/upload.saveFilePart
+//
+// See https://core.telegram.org/constructor/inputFile for reference.
 type InputFile struct {
-	// ID field of InputFile.
+	// Random file identifier created by the client
 	ID int64
-	// Parts field of InputFile.
+	// Number of parts saved
 	Parts int
-	// Name field of InputFile.
+	// Full name of the file
 	Name string
-	// MD5Checksum field of InputFile.
+	// In case the file's md5-hash¹ was passed, contents of the file will be checked prior
+	// to use
+	//
+	// Links:
+	//  1) https://en.wikipedia.org/wiki/MD5#MD5_hashes
 	MD5Checksum string
 }
 
@@ -86,6 +96,19 @@ func (i *InputFile) String() string {
 	}
 	type Alias InputFile
 	return fmt.Sprintf("InputFile%+v", Alias(*i))
+}
+
+// FillFrom fills InputFile from given interface.
+func (i *InputFile) FillFrom(from interface {
+	GetID() (value int64)
+	GetParts() (value int)
+	GetName() (value string)
+	GetMD5Checksum() (value string)
+}) {
+	i.ID = from.GetID()
+	i.Parts = from.GetParts()
+	i.Name = from.GetName()
+	i.MD5Checksum = from.GetMD5Checksum()
 }
 
 // TypeID returns type id in TL schema.
@@ -232,12 +255,19 @@ func (i *InputFile) GetMD5Checksum() (value string) {
 }
 
 // InputFileBig represents TL type `inputFileBig#fa4f0bb5`.
+// Assigns a big file (over 10 MB in size), saved in part using the method upload
+// saveBigFilePart¹.
+//
+// Links:
+//  1. https://core.telegram.org/method/upload.saveBigFilePart
+//
+// See https://core.telegram.org/constructor/inputFileBig for reference.
 type InputFileBig struct {
-	// ID field of InputFileBig.
+	// Random file id, created by the client
 	ID int64
-	// Parts field of InputFileBig.
+	// Number of parts saved
 	Parts int
-	// Name field of InputFileBig.
+	// Full file name
 	Name string
 }
 
@@ -281,6 +311,17 @@ func (i *InputFileBig) String() string {
 	}
 	type Alias InputFileBig
 	return fmt.Sprintf("InputFileBig%+v", Alias(*i))
+}
+
+// FillFrom fills InputFileBig from given interface.
+func (i *InputFileBig) FillFrom(from interface {
+	GetID() (value int64)
+	GetParts() (value int)
+	GetName() (value string)
+}) {
+	i.ID = from.GetID()
+	i.Parts = from.GetParts()
+	i.Name = from.GetName()
 }
 
 // TypeID returns type id in TL schema.
@@ -407,8 +448,15 @@ func (i *InputFileBig) GetName() (value string) {
 }
 
 // InputFileStoryDocument represents TL type `inputFileStoryDocument#62dc8b48`.
+// Used to edit the thumbnail/static preview of a story, see here »¹ for more info on
+// the full flow.
+//
+// Links:
+//  1. https://core.telegram.org/api/stories#editing-stories
+//
+// See https://core.telegram.org/constructor/inputFileStoryDocument for reference.
 type InputFileStoryDocument struct {
-	// ID field of InputFileStoryDocument.
+	// The old story video.
 	ID InputDocumentClass
 }
 
@@ -446,6 +494,13 @@ func (i *InputFileStoryDocument) String() string {
 	}
 	type Alias InputFileStoryDocument
 	return fmt.Sprintf("InputFileStoryDocument%+v", Alias(*i))
+}
+
+// FillFrom fills InputFileStoryDocument from given interface.
+func (i *InputFileStoryDocument) FillFrom(from interface {
+	GetID() (value InputDocumentClass)
+}) {
+	i.ID = from.GetID()
 }
 
 // TypeID returns type id in TL schema.
@@ -540,6 +595,8 @@ func (i *InputFileStoryDocument) GetID() (value InputDocumentClass) {
 const InputFileClassName = "InputFile"
 
 // InputFileClass represents InputFile generic type.
+//
+// See https://core.telegram.org/type/InputFile for reference.
 //
 // Constructors:
 //   - [InputFile]

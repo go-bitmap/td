@@ -32,24 +32,44 @@ var (
 )
 
 // PaymentsGiveawayInfo represents TL type `payments.giveawayInfo#4367daa0`.
+// Contains info about an ongoing giveaway¹.
+// If neither the participating, joined_too_early_date, admin_disallowed_chat_id or
+// disallowed_country flags are set, the user is not currently participating in the
+// giveaway but could participate by joining all the channels specified in the
+// messageMediaGiveaway¹.channels field.
+//
+// Links:
+//  1. https://core.telegram.org/api/giveaways
+//  2. https://core.telegram.org/constructor/messageMediaGiveaway
+//
+// See https://core.telegram.org/constructor/payments.giveawayInfo for reference.
 type PaymentsGiveawayInfo struct {
-	// Flags field of PaymentsGiveawayInfo.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Participating field of PaymentsGiveawayInfo.
+	// The current user is participating in the giveaway.
 	Participating bool
-	// PreparingResults field of PaymentsGiveawayInfo.
+	// If set, the giveaway has ended and the results are being prepared.
 	PreparingResults bool
-	// StartDate field of PaymentsGiveawayInfo.
+	// When was the giveaway started
 	StartDate int
-	// JoinedTooEarlyDate field of PaymentsGiveawayInfo.
+	// The current user can't participate in the giveaway, because they were already a member
+	// of the channel when the giveaway started, and the only_new_subscribers was set when
+	// starting the giveaway.
 	//
 	// Use SetJoinedTooEarlyDate and GetJoinedTooEarlyDate helpers.
 	JoinedTooEarlyDate int
-	// AdminDisallowedChatID field of PaymentsGiveawayInfo.
+	// If set, the current user can't participate in the giveaway, because they are an
+	// administrator in one of the channels (ID specified in this flag) that created the
+	// giveaway.
 	//
 	// Use SetAdminDisallowedChatID and GetAdminDisallowedChatID helpers.
 	AdminDisallowedChatID int64
-	// DisallowedCountry field of PaymentsGiveawayInfo.
+	// If set, the current user can't participate in this giveaway, because their phone
+	// number is from the specified disallowed country (specified as a two-letter ISO 3166-1
+	// alpha-2 country code).
 	//
 	// Use SetDisallowedCountry and GetDisallowedCountry helpers.
 	DisallowedCountry string
@@ -107,6 +127,32 @@ func (g *PaymentsGiveawayInfo) String() string {
 	}
 	type Alias PaymentsGiveawayInfo
 	return fmt.Sprintf("PaymentsGiveawayInfo%+v", Alias(*g))
+}
+
+// FillFrom fills PaymentsGiveawayInfo from given interface.
+func (g *PaymentsGiveawayInfo) FillFrom(from interface {
+	GetParticipating() (value bool)
+	GetPreparingResults() (value bool)
+	GetStartDate() (value int)
+	GetJoinedTooEarlyDate() (value int, ok bool)
+	GetAdminDisallowedChatID() (value int64, ok bool)
+	GetDisallowedCountry() (value string, ok bool)
+}) {
+	g.Participating = from.GetParticipating()
+	g.PreparingResults = from.GetPreparingResults()
+	g.StartDate = from.GetStartDate()
+	if val, ok := from.GetJoinedTooEarlyDate(); ok {
+		g.JoinedTooEarlyDate = val
+	}
+
+	if val, ok := from.GetAdminDisallowedChatID(); ok {
+		g.AdminDisallowedChatID = val
+	}
+
+	if val, ok := from.GetDisallowedCountry(); ok {
+		g.DisallowedCountry = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -370,28 +416,51 @@ func (g *PaymentsGiveawayInfo) GetDisallowedCountry() (value string, ok bool) {
 }
 
 // PaymentsGiveawayInfoResults represents TL type `payments.giveawayInfoResults#e175e66f`.
+// A giveaway¹ has ended.
+//
+// Links:
+//  1. https://core.telegram.org/api/giveaways
+//
+// See https://core.telegram.org/constructor/payments.giveawayInfoResults for reference.
 type PaymentsGiveawayInfoResults struct {
-	// Flags field of PaymentsGiveawayInfoResults.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Winner field of PaymentsGiveawayInfoResults.
+	// Whether we're one of the winners of this giveaway.
 	Winner bool
-	// Refunded field of PaymentsGiveawayInfoResults.
+	// Whether the giveaway was canceled and was fully refunded.
 	Refunded bool
-	// StartDate field of PaymentsGiveawayInfoResults.
+	// Start date of the giveaway
 	StartDate int
-	// GiftCodeSlug field of PaymentsGiveawayInfoResults.
+	// If we're one of the winners of this giveaway, contains the Premium gift code¹, see
+	// here »² for more info on the full giveaway flow.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/links#premium-giftcode-links
+	//  2) https://core.telegram.org/api/giveaways
 	//
 	// Use SetGiftCodeSlug and GetGiftCodeSlug helpers.
 	GiftCodeSlug string
-	// StarsPrize field of PaymentsGiveawayInfoResults.
+	// If we're one of the winners of this Telegram Star giveaway¹, the number Telegram
+	// Stars² we won.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/giveaways#star-giveaways
+	//  2) https://core.telegram.org/api/stars
 	//
 	// Use SetStarsPrize and GetStarsPrize helpers.
 	StarsPrize int64
-	// FinishDate field of PaymentsGiveawayInfoResults.
+	// End date of the giveaway. May be bigger than the end date specified in parameters of
+	// the giveaway.
 	FinishDate int
-	// WinnersCount field of PaymentsGiveawayInfoResults.
+	// Number of winners in the giveaway
 	WinnersCount int
-	// ActivatedCount field of PaymentsGiveawayInfoResults.
+	// Number of winners, which activated their gift codes¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/links#premium-giftcode-links
 	//
 	// Use SetActivatedCount and GetActivatedCount helpers.
 	ActivatedCount int
@@ -455,6 +524,36 @@ func (g *PaymentsGiveawayInfoResults) String() string {
 	}
 	type Alias PaymentsGiveawayInfoResults
 	return fmt.Sprintf("PaymentsGiveawayInfoResults%+v", Alias(*g))
+}
+
+// FillFrom fills PaymentsGiveawayInfoResults from given interface.
+func (g *PaymentsGiveawayInfoResults) FillFrom(from interface {
+	GetWinner() (value bool)
+	GetRefunded() (value bool)
+	GetStartDate() (value int)
+	GetGiftCodeSlug() (value string, ok bool)
+	GetStarsPrize() (value int64, ok bool)
+	GetFinishDate() (value int)
+	GetWinnersCount() (value int)
+	GetActivatedCount() (value int, ok bool)
+}) {
+	g.Winner = from.GetWinner()
+	g.Refunded = from.GetRefunded()
+	g.StartDate = from.GetStartDate()
+	if val, ok := from.GetGiftCodeSlug(); ok {
+		g.GiftCodeSlug = val
+	}
+
+	if val, ok := from.GetStarsPrize(); ok {
+		g.StarsPrize = val
+	}
+
+	g.FinishDate = from.GetFinishDate()
+	g.WinnersCount = from.GetWinnersCount()
+	if val, ok := from.GetActivatedCount(); ok {
+		g.ActivatedCount = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -762,6 +861,8 @@ const PaymentsGiveawayInfoClassName = "payments.GiveawayInfo"
 
 // PaymentsGiveawayInfoClass represents payments.GiveawayInfo generic type.
 //
+// See https://core.telegram.org/type/payments.GiveawayInfo for reference.
+//
 // Constructors:
 //   - [PaymentsGiveawayInfo]
 //   - [PaymentsGiveawayInfoResults]
@@ -795,7 +896,7 @@ type PaymentsGiveawayInfoClass interface {
 	// Zero returns true if current object has a zero value.
 	Zero() bool
 
-	// StartDate field of PaymentsGiveawayInfo.
+	// When was the giveaway started
 	GetStartDate() (value int)
 }
 

@@ -32,12 +32,19 @@ var (
 )
 
 // LangpackGetStringsRequest represents TL type `langpack.getStrings#efea3803`.
+// Get strings from a language pack
+//
+// See https://core.telegram.org/method/langpack.getStrings for reference.
 type LangpackGetStringsRequest struct {
-	// LangPack field of LangpackGetStringsRequest.
+	// Platform identifier (i.e. android, tdesktop, etc).
 	LangPack string
-	// LangCode field of LangpackGetStringsRequest.
+	// Either an ISO 639-1 language code or a language pack name obtained from a language
+	// pack link¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/links#language-pack-links
 	LangCode string
-	// Keys field of LangpackGetStringsRequest.
+	// Strings to get
 	Keys []string
 }
 
@@ -76,6 +83,17 @@ func (g *LangpackGetStringsRequest) String() string {
 	}
 	type Alias LangpackGetStringsRequest
 	return fmt.Sprintf("LangpackGetStringsRequest%+v", Alias(*g))
+}
+
+// FillFrom fills LangpackGetStringsRequest from given interface.
+func (g *LangpackGetStringsRequest) FillFrom(from interface {
+	GetLangPack() (value string)
+	GetLangCode() (value string)
+	GetKeys() (value []string)
+}) {
+	g.LangPack = from.GetLangPack()
+	g.LangCode = from.GetLangCode()
+	g.Keys = from.GetKeys()
 }
 
 // TypeID returns type id in TL schema.
@@ -215,6 +233,14 @@ func (g *LangpackGetStringsRequest) GetKeys() (value []string) {
 }
 
 // LangpackGetStrings invokes method langpack.getStrings#efea3803 returning error if any.
+// Get strings from a language pack
+//
+// Possible errors:
+//
+//	400 LANG_CODE_NOT_SUPPORTED: The specified language code is not supported.
+//	400 LANG_PACK_INVALID: The provided language pack is invalid.
+//
+// See https://core.telegram.org/method/langpack.getStrings for reference.
 func (c *Client) LangpackGetStrings(ctx context.Context, request *LangpackGetStringsRequest) ([]LangPackStringClass, error) {
 	var result LangPackStringClassVector
 

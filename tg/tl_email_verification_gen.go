@@ -32,8 +32,11 @@ var (
 )
 
 // EmailVerificationCode represents TL type `emailVerificationCode#922e55a9`.
+// Email verification code
+//
+// See https://core.telegram.org/constructor/emailVerificationCode for reference.
 type EmailVerificationCode struct {
-	// Code field of EmailVerificationCode.
+	// Received verification code
 	Code string
 }
 
@@ -71,6 +74,13 @@ func (e *EmailVerificationCode) String() string {
 	}
 	type Alias EmailVerificationCode
 	return fmt.Sprintf("EmailVerificationCode%+v", Alias(*e))
+}
+
+// FillFrom fills EmailVerificationCode from given interface.
+func (e *EmailVerificationCode) FillFrom(from interface {
+	GetCode() (value string)
+}) {
+	e.Code = from.GetCode()
 }
 
 // TypeID returns type id in TL schema.
@@ -157,8 +167,11 @@ func (e *EmailVerificationCode) GetCode() (value string) {
 }
 
 // EmailVerificationGoogle represents TL type `emailVerificationGoogle#db909ec2`.
+// Google ID email verification token
+//
+// See https://core.telegram.org/constructor/emailVerificationGoogle for reference.
 type EmailVerificationGoogle struct {
-	// Token field of EmailVerificationGoogle.
+	// Token
 	Token string
 }
 
@@ -196,6 +209,13 @@ func (e *EmailVerificationGoogle) String() string {
 	}
 	type Alias EmailVerificationGoogle
 	return fmt.Sprintf("EmailVerificationGoogle%+v", Alias(*e))
+}
+
+// FillFrom fills EmailVerificationGoogle from given interface.
+func (e *EmailVerificationGoogle) FillFrom(from interface {
+	GetToken() (value string)
+}) {
+	e.Token = from.GetToken()
 }
 
 // TypeID returns type id in TL schema.
@@ -282,8 +302,11 @@ func (e *EmailVerificationGoogle) GetToken() (value string) {
 }
 
 // EmailVerificationApple represents TL type `emailVerificationApple#96d074fd`.
+// Apple ID email verification token
+//
+// See https://core.telegram.org/constructor/emailVerificationApple for reference.
 type EmailVerificationApple struct {
-	// Token field of EmailVerificationApple.
+	// Token
 	Token string
 }
 
@@ -321,6 +344,13 @@ func (e *EmailVerificationApple) String() string {
 	}
 	type Alias EmailVerificationApple
 	return fmt.Sprintf("EmailVerificationApple%+v", Alias(*e))
+}
+
+// FillFrom fills EmailVerificationApple from given interface.
+func (e *EmailVerificationApple) FillFrom(from interface {
+	GetToken() (value string)
+}) {
+	e.Token = from.GetToken()
 }
 
 // TypeID returns type id in TL schema.
@@ -410,6 +440,8 @@ func (e *EmailVerificationApple) GetToken() (value string) {
 const EmailVerificationClassName = "EmailVerification"
 
 // EmailVerificationClass represents EmailVerification generic type.
+//
+// See https://core.telegram.org/type/EmailVerification for reference.
 //
 // Constructors:
 //   - [EmailVerificationCode]

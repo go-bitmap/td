@@ -32,30 +32,47 @@ var (
 )
 
 // MessagesSaveDraftRequest represents TL type `messages.saveDraft#d372c5ce`.
+// Save a message draft¹ associated to a chat.
+//
+// Links:
+//  1. https://core.telegram.org/api/drafts
+//
+// See https://core.telegram.org/method/messages.saveDraft for reference.
 type MessagesSaveDraftRequest struct {
-	// Flags field of MessagesSaveDraftRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// NoWebpage field of MessagesSaveDraftRequest.
+	// Disable generation of the webpage preview
 	NoWebpage bool
-	// InvertMedia field of MessagesSaveDraftRequest.
+	// If set, any eventual webpage preview will be shown on top of the message instead of at
+	// the bottom.
 	InvertMedia bool
-	// ReplyTo field of MessagesSaveDraftRequest.
+	// If set, indicates that the message should be sent in reply to the specified message or
+	// story.
 	//
 	// Use SetReplyTo and GetReplyTo helpers.
 	ReplyTo InputReplyToClass
-	// Peer field of MessagesSaveDraftRequest.
+	// Destination of the message that should be sent
 	Peer InputPeerClass
-	// Message field of MessagesSaveDraftRequest.
+	// The draft
 	Message string
-	// Entities field of MessagesSaveDraftRequest.
+	// Message entities¹ for styled text
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities
 	//
 	// Use SetEntities and GetEntities helpers.
 	Entities []MessageEntityClass
-	// Media field of MessagesSaveDraftRequest.
+	// Attached media
 	//
 	// Use SetMedia and GetMedia helpers.
 	Media InputMediaClass
-	// Effect field of MessagesSaveDraftRequest.
+	// Specifies a message effect »¹ to use for the message.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/effects
 	//
 	// Use SetEffect and GetEffect helpers.
 	Effect int64
@@ -114,6 +131,39 @@ func (s *MessagesSaveDraftRequest) String() string {
 	}
 	type Alias MessagesSaveDraftRequest
 	return fmt.Sprintf("MessagesSaveDraftRequest%+v", Alias(*s))
+}
+
+// FillFrom fills MessagesSaveDraftRequest from given interface.
+func (s *MessagesSaveDraftRequest) FillFrom(from interface {
+	GetNoWebpage() (value bool)
+	GetInvertMedia() (value bool)
+	GetReplyTo() (value InputReplyToClass, ok bool)
+	GetPeer() (value InputPeerClass)
+	GetMessage() (value string)
+	GetEntities() (value []MessageEntityClass, ok bool)
+	GetMedia() (value InputMediaClass, ok bool)
+	GetEffect() (value int64, ok bool)
+}) {
+	s.NoWebpage = from.GetNoWebpage()
+	s.InvertMedia = from.GetInvertMedia()
+	if val, ok := from.GetReplyTo(); ok {
+		s.ReplyTo = val
+	}
+
+	s.Peer = from.GetPeer()
+	s.Message = from.GetMessage()
+	if val, ok := from.GetEntities(); ok {
+		s.Entities = val
+	}
+
+	if val, ok := from.GetMedia(); ok {
+		s.Media = val
+	}
+
+	if val, ok := from.GetEffect(); ok {
+		s.Effect = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -465,7 +515,27 @@ func (s *MessagesSaveDraftRequest) GetEffect() (value int64, ok bool) {
 	return s.Effect, true
 }
 
+// MapEntities returns field Entities wrapped in MessageEntityClassArray helper.
+func (s *MessagesSaveDraftRequest) MapEntities() (value MessageEntityClassArray, ok bool) {
+	if !s.Flags.Has(3) {
+		return value, false
+	}
+	return MessageEntityClassArray(s.Entities), true
+}
+
 // MessagesSaveDraft invokes method messages.saveDraft#d372c5ce returning error if any.
+// Save a message draft¹ associated to a chat.
+//
+// Links:
+//  1. https://core.telegram.org/api/drafts
+//
+// Possible errors:
+//
+//	400 ENTITY_BOUNDS_INVALID: A specified entity offset or length is invalid, see here » for info on how to properly compute the entity offset/length.
+//	400 MSG_ID_INVALID: Invalid message ID provided.
+//	400 PEER_ID_INVALID: The provided peer id is invalid.
+//
+// See https://core.telegram.org/method/messages.saveDraft for reference.
 func (c *Client) MessagesSaveDraft(ctx context.Context, request *MessagesSaveDraftRequest) (bool, error) {
 	var result BoolBox
 

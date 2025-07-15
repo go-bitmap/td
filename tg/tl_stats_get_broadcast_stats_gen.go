@@ -32,12 +32,21 @@ var (
 )
 
 // StatsGetBroadcastStatsRequest represents TL type `stats.getBroadcastStats#ab42441a`.
+// Get channel statistics¹
+//
+// Links:
+//  1. https://core.telegram.org/api/stats
+//
+// See https://core.telegram.org/method/stats.getBroadcastStats for reference.
 type StatsGetBroadcastStatsRequest struct {
-	// Flags field of StatsGetBroadcastStatsRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Dark field of StatsGetBroadcastStatsRequest.
+	// Whether to enable dark theme for graph colors
 	Dark bool
-	// Channel field of StatsGetBroadcastStatsRequest.
+	// The channel
 	Channel InputChannelClass
 }
 
@@ -76,6 +85,15 @@ func (g *StatsGetBroadcastStatsRequest) String() string {
 	}
 	type Alias StatsGetBroadcastStatsRequest
 	return fmt.Sprintf("StatsGetBroadcastStatsRequest%+v", Alias(*g))
+}
+
+// FillFrom fills StatsGetBroadcastStatsRequest from given interface.
+func (g *StatsGetBroadcastStatsRequest) FillFrom(from interface {
+	GetDark() (value bool)
+	GetChannel() (value InputChannelClass)
+}) {
+	g.Dark = from.GetDark()
+	g.Channel = from.GetChannel()
 }
 
 // TypeID returns type id in TL schema.
@@ -207,7 +225,25 @@ func (g *StatsGetBroadcastStatsRequest) GetChannel() (value InputChannelClass) {
 	return g.Channel
 }
 
+// GetChannelAsNotEmpty returns mapped value of Channel field.
+func (g *StatsGetBroadcastStatsRequest) GetChannelAsNotEmpty() (NotEmptyInputChannel, bool) {
+	return g.Channel.AsNotEmpty()
+}
+
 // StatsGetBroadcastStats invokes method stats.getBroadcastStats#ab42441a returning error if any.
+// Get channel statistics¹
+//
+// Links:
+//  1. https://core.telegram.org/api/stats
+//
+// Possible errors:
+//
+//	400 BROADCAST_REQUIRED: This method can only be called on a channel, please use stats.getMegagroupStats for supergroups.
+//	400 CHANNEL_INVALID: The provided channel is invalid.
+//	400 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
+//	403 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
+//
+// See https://core.telegram.org/method/stats.getBroadcastStats for reference.
 func (c *Client) StatsGetBroadcastStats(ctx context.Context, request *StatsGetBroadcastStatsRequest) (*StatsBroadcastStats, error) {
 	var result StatsBroadcastStats
 

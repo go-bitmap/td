@@ -32,8 +32,11 @@ var (
 )
 
 // MessagesReadFeaturedStickersRequest represents TL type `messages.readFeaturedStickers#5b118126`.
+// Mark new featured stickers as read
+//
+// See https://core.telegram.org/method/messages.readFeaturedStickers for reference.
 type MessagesReadFeaturedStickersRequest struct {
-	// ID field of MessagesReadFeaturedStickersRequest.
+	// IDs of stickersets to mark as read
 	ID []int64
 }
 
@@ -66,6 +69,13 @@ func (r *MessagesReadFeaturedStickersRequest) String() string {
 	}
 	type Alias MessagesReadFeaturedStickersRequest
 	return fmt.Sprintf("MessagesReadFeaturedStickersRequest%+v", Alias(*r))
+}
+
+// FillFrom fills MessagesReadFeaturedStickersRequest from given interface.
+func (r *MessagesReadFeaturedStickersRequest) FillFrom(from interface {
+	GetID() (value []int64)
+}) {
+	r.ID = from.GetID()
 }
 
 // TypeID returns type id in TL schema.
@@ -165,6 +175,9 @@ func (r *MessagesReadFeaturedStickersRequest) GetID() (value []int64) {
 }
 
 // MessagesReadFeaturedStickers invokes method messages.readFeaturedStickers#5b118126 returning error if any.
+// Mark new featured stickers as read
+//
+// See https://core.telegram.org/method/messages.readFeaturedStickers for reference.
 func (c *Client) MessagesReadFeaturedStickers(ctx context.Context, id []int64) (bool, error) {
 	var result BoolBox
 

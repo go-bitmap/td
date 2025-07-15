@@ -32,10 +32,17 @@ var (
 )
 
 // InputInvoiceMessage represents TL type `inputInvoiceMessage#c5b56859`.
+// An invoice contained in a messageMediaInvoice¹ message or paid media »².
+//
+// Links:
+//  1. https://core.telegram.org/constructor/messageMediaInvoice
+//  2. https://core.telegram.org/api/paid-media
+//
+// See https://core.telegram.org/constructor/inputInvoiceMessage for reference.
 type InputInvoiceMessage struct {
-	// Peer field of InputInvoiceMessage.
+	// Chat where the invoice/paid media was sent
 	Peer InputPeerClass
-	// MsgID field of InputInvoiceMessage.
+	// Message ID
 	MsgID int
 }
 
@@ -76,6 +83,15 @@ func (i *InputInvoiceMessage) String() string {
 	}
 	type Alias InputInvoiceMessage
 	return fmt.Sprintf("InputInvoiceMessage%+v", Alias(*i))
+}
+
+// FillFrom fills InputInvoiceMessage from given interface.
+func (i *InputInvoiceMessage) FillFrom(from interface {
+	GetPeer() (value InputPeerClass)
+	GetMsgID() (value int)
+}) {
+	i.Peer = from.GetPeer()
+	i.MsgID = from.GetMsgID()
 }
 
 // TypeID returns type id in TL schema.
@@ -187,8 +203,16 @@ func (i *InputInvoiceMessage) GetMsgID() (value int) {
 }
 
 // InputInvoiceSlug represents TL type `inputInvoiceSlug#c326caef`.
+// An invoice slug taken from an invoice deep link¹ or from the premium_invoice_slug app
+// config parameter »²
+//
+// Links:
+//  1. https://core.telegram.org/api/links#invoice-links
+//  2. https://core.telegram.org/api/config#premium-invoice-slug
+//
+// See https://core.telegram.org/constructor/inputInvoiceSlug for reference.
 type InputInvoiceSlug struct {
-	// Slug field of InputInvoiceSlug.
+	// The invoice slug
 	Slug string
 }
 
@@ -226,6 +250,13 @@ func (i *InputInvoiceSlug) String() string {
 	}
 	type Alias InputInvoiceSlug
 	return fmt.Sprintf("InputInvoiceSlug%+v", Alias(*i))
+}
+
+// FillFrom fills InputInvoiceSlug from given interface.
+func (i *InputInvoiceSlug) FillFrom(from interface {
+	GetSlug() (value string)
+}) {
+	i.Slug = from.GetSlug()
 }
 
 // TypeID returns type id in TL schema.
@@ -312,10 +343,31 @@ func (i *InputInvoiceSlug) GetSlug() (value string) {
 }
 
 // InputInvoicePremiumGiftCode represents TL type `inputInvoicePremiumGiftCode#98986c0d`.
+// Used if the user wishes to start a channel/supergroup giveaway¹ or send some
+// giftcodes² to members of a channel/supergroup, in exchange for boosts³.
+//
+// Links:
+//  1. https://core.telegram.org/api/giveaways
+//  2. https://core.telegram.org/api/giveaways
+//  3. https://core.telegram.org/api/boost
+//
+// See https://core.telegram.org/constructor/inputInvoicePremiumGiftCode for reference.
 type InputInvoicePremiumGiftCode struct {
-	// Purpose field of InputInvoicePremiumGiftCode.
+	// Should be populated with inputStorePaymentPremiumGiveaway¹ for giveaways² and
+	// inputStorePaymentPremiumGiftCode³ for gifts⁴.
+	//
+	// Links:
+	//  1) https://core.telegram.org/constructor/inputStorePaymentPremiumGiveaway
+	//  2) https://core.telegram.org/api/giveaways
+	//  3) https://core.telegram.org/constructor/inputStorePaymentPremiumGiftCode
+	//  4) https://core.telegram.org/api/giveaways
 	Purpose InputStorePaymentPurposeClass
-	// Option field of InputInvoicePremiumGiftCode.
+	// Should be populated with one of the giveaway options returned by payments
+	// getPremiumGiftCodeOptions¹, see the giveaways »² documentation for more info.
+	//
+	// Links:
+	//  1) https://core.telegram.org/method/payments.getPremiumGiftCodeOptions
+	//  2) https://core.telegram.org/api/giveaways
 	Option PremiumGiftCodeOption
 }
 
@@ -356,6 +408,15 @@ func (i *InputInvoicePremiumGiftCode) String() string {
 	}
 	type Alias InputInvoicePremiumGiftCode
 	return fmt.Sprintf("InputInvoicePremiumGiftCode%+v", Alias(*i))
+}
+
+// FillFrom fills InputInvoicePremiumGiftCode from given interface.
+func (i *InputInvoicePremiumGiftCode) FillFrom(from interface {
+	GetPurpose() (value InputStorePaymentPurposeClass)
+	GetOption() (value PremiumGiftCodeOption)
+}) {
+	i.Purpose = from.GetPurpose()
+	i.Option = from.GetOption()
 }
 
 // TypeID returns type id in TL schema.
@@ -467,8 +528,22 @@ func (i *InputInvoicePremiumGiftCode) GetOption() (value PremiumGiftCodeOption) 
 }
 
 // InputInvoiceStars represents TL type `inputInvoiceStars#65f00ce3`.
+// Used to top up the Telegram Stars¹ balance of the current account or someone else's
+// account, or to start a Telegram Star giveaway »².
+//
+// Links:
+//  1. https://core.telegram.org/api/stars
+//  2. https://core.telegram.org/api/giveaways#star-giveaways
+//
+// See https://core.telegram.org/constructor/inputInvoiceStars for reference.
 type InputInvoiceStars struct {
-	// Purpose field of InputInvoiceStars.
+	// An inputStorePaymentStarsGiveaway¹, inputStorePaymentStarsTopup² or
+	// inputStorePaymentStarsGift³.
+	//
+	// Links:
+	//  1) https://core.telegram.org/constructor/inputStorePaymentStarsGiveaway
+	//  2) https://core.telegram.org/constructor/inputStorePaymentStarsTopup
+	//  3) https://core.telegram.org/constructor/inputStorePaymentStarsGift
 	Purpose InputStorePaymentPurposeClass
 }
 
@@ -506,6 +581,13 @@ func (i *InputInvoiceStars) String() string {
 	}
 	type Alias InputInvoiceStars
 	return fmt.Sprintf("InputInvoiceStars%+v", Alias(*i))
+}
+
+// FillFrom fills InputInvoiceStars from given interface.
+func (i *InputInvoiceStars) FillFrom(from interface {
+	GetPurpose() (value InputStorePaymentPurposeClass)
+}) {
+	i.Purpose = from.GetPurpose()
 }
 
 // TypeID returns type id in TL schema.
@@ -597,8 +679,17 @@ func (i *InputInvoiceStars) GetPurpose() (value InputStorePaymentPurposeClass) {
 }
 
 // InputInvoiceChatInviteSubscription represents TL type `inputInvoiceChatInviteSubscription#34e793f1`.
+// Used to pay for a Telegram Star subscription »¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/stars#star-subscriptions
+//
+// See https://core.telegram.org/constructor/inputInvoiceChatInviteSubscription for reference.
 type InputInvoiceChatInviteSubscription struct {
-	// Hash field of InputInvoiceChatInviteSubscription.
+	// The invitation link of the Telegram Star subscription »¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/stars#star-subscriptions
 	Hash string
 }
 
@@ -636,6 +727,13 @@ func (i *InputInvoiceChatInviteSubscription) String() string {
 	}
 	type Alias InputInvoiceChatInviteSubscription
 	return fmt.Sprintf("InputInvoiceChatInviteSubscription%+v", Alias(*i))
+}
+
+// FillFrom fills InputInvoiceChatInviteSubscription from given interface.
+func (i *InputInvoiceChatInviteSubscription) FillFrom(from interface {
+	GetHash() (value string)
+}) {
+	i.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -722,18 +820,35 @@ func (i *InputInvoiceChatInviteSubscription) GetHash() (value string) {
 }
 
 // InputInvoiceStarGift represents TL type `inputInvoiceStarGift#e8625e92`.
+// Used to buy a Telegram Star Gift, see here »¹ for more info.
+//
+// Links:
+//  1. https://core.telegram.org/api/gifts
+//
+// See https://core.telegram.org/constructor/inputInvoiceStarGift for reference.
 type InputInvoiceStarGift struct {
-	// Flags field of InputInvoiceStarGift.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// HideName field of InputInvoiceStarGift.
+	// If set, your name will be hidden if the destination user decides to display the gift
+	// on their profile (they will still see that you sent the gift)
 	HideName bool
 	// IncludeUpgrade field of InputInvoiceStarGift.
 	IncludeUpgrade bool
 	// Peer field of InputInvoiceStarGift.
 	Peer InputPeerClass
-	// GiftID field of InputInvoiceStarGift.
+	// Identifier of the gift, from starGift¹.id
+	//
+	// Links:
+	//  1) https://core.telegram.org/constructor/starGift
 	GiftID int64
-	// Message field of InputInvoiceStarGift.
+	// Optional message, attached with the gift. The maximum length for this field is
+	// specified in the stargifts_message_length_max client configuration value »¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/config#stargifts-message-length-max
 	//
 	// Use SetMessage and GetMessage helpers.
 	Message TextWithEntities
@@ -788,6 +903,24 @@ func (i *InputInvoiceStarGift) String() string {
 	}
 	type Alias InputInvoiceStarGift
 	return fmt.Sprintf("InputInvoiceStarGift%+v", Alias(*i))
+}
+
+// FillFrom fills InputInvoiceStarGift from given interface.
+func (i *InputInvoiceStarGift) FillFrom(from interface {
+	GetHideName() (value bool)
+	GetIncludeUpgrade() (value bool)
+	GetPeer() (value InputPeerClass)
+	GetGiftID() (value int64)
+	GetMessage() (value TextWithEntities, ok bool)
+}) {
+	i.HideName = from.GetHideName()
+	i.IncludeUpgrade = from.GetIncludeUpgrade()
+	i.Peer = from.GetPeer()
+	i.GiftID = from.GetGiftID()
+	if val, ok := from.GetMessage(); ok {
+		i.Message = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -1004,6 +1137,8 @@ func (i *InputInvoiceStarGift) GetMessage() (value TextWithEntities, ok bool) {
 }
 
 // InputInvoiceStarGiftUpgrade represents TL type `inputInvoiceStarGiftUpgrade#4d818d5d`.
+//
+// See https://core.telegram.org/constructor/inputInvoiceStarGiftUpgrade for reference.
 type InputInvoiceStarGiftUpgrade struct {
 	// Flags field of InputInvoiceStarGiftUpgrade.
 	Flags bin.Fields
@@ -1053,6 +1188,15 @@ func (i *InputInvoiceStarGiftUpgrade) String() string {
 	}
 	type Alias InputInvoiceStarGiftUpgrade
 	return fmt.Sprintf("InputInvoiceStarGiftUpgrade%+v", Alias(*i))
+}
+
+// FillFrom fills InputInvoiceStarGiftUpgrade from given interface.
+func (i *InputInvoiceStarGiftUpgrade) FillFrom(from interface {
+	GetKeepOriginalDetails() (value bool)
+	GetStargift() (value InputSavedStarGiftClass)
+}) {
+	i.KeepOriginalDetails = from.GetKeepOriginalDetails()
+	i.Stargift = from.GetStargift()
 }
 
 // TypeID returns type id in TL schema.
@@ -1185,6 +1329,8 @@ func (i *InputInvoiceStarGiftUpgrade) GetStargift() (value InputSavedStarGiftCla
 }
 
 // InputInvoiceStarGiftTransfer represents TL type `inputInvoiceStarGiftTransfer#4a5f5bd9`.
+//
+// See https://core.telegram.org/constructor/inputInvoiceStarGiftTransfer for reference.
 type InputInvoiceStarGiftTransfer struct {
 	// Stargift field of InputInvoiceStarGiftTransfer.
 	Stargift InputSavedStarGiftClass
@@ -1229,6 +1375,15 @@ func (i *InputInvoiceStarGiftTransfer) String() string {
 	}
 	type Alias InputInvoiceStarGiftTransfer
 	return fmt.Sprintf("InputInvoiceStarGiftTransfer%+v", Alias(*i))
+}
+
+// FillFrom fills InputInvoiceStarGiftTransfer from given interface.
+func (i *InputInvoiceStarGiftTransfer) FillFrom(from interface {
+	GetStargift() (value InputSavedStarGiftClass)
+	GetToID() (value InputPeerClass)
+}) {
+	i.Stargift = from.GetStargift()
+	i.ToID = from.GetToID()
 }
 
 // TypeID returns type id in TL schema.
@@ -1345,6 +1500,8 @@ func (i *InputInvoiceStarGiftTransfer) GetToID() (value InputPeerClass) {
 }
 
 // InputInvoicePremiumGiftStars represents TL type `inputInvoicePremiumGiftStars#dabab2ef`.
+//
+// See https://core.telegram.org/constructor/inputInvoicePremiumGiftStars for reference.
 type InputInvoicePremiumGiftStars struct {
 	// Flags field of InputInvoicePremiumGiftStars.
 	Flags bin.Fields
@@ -1401,6 +1558,20 @@ func (i *InputInvoicePremiumGiftStars) String() string {
 	}
 	type Alias InputInvoicePremiumGiftStars
 	return fmt.Sprintf("InputInvoicePremiumGiftStars%+v", Alias(*i))
+}
+
+// FillFrom fills InputInvoicePremiumGiftStars from given interface.
+func (i *InputInvoicePremiumGiftStars) FillFrom(from interface {
+	GetUserID() (value InputUserClass)
+	GetMonths() (value int)
+	GetMessage() (value TextWithEntities, ok bool)
+}) {
+	i.UserID = from.GetUserID()
+	i.Months = from.GetMonths()
+	if val, ok := from.GetMessage(); ok {
+		i.Message = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -1561,6 +1732,8 @@ func (i *InputInvoicePremiumGiftStars) GetMessage() (value TextWithEntities, ok 
 }
 
 // InputInvoiceBusinessBotTransferStars represents TL type `inputInvoiceBusinessBotTransferStars#f4997e42`.
+//
+// See https://core.telegram.org/constructor/inputInvoiceBusinessBotTransferStars for reference.
 type InputInvoiceBusinessBotTransferStars struct {
 	// Bot field of InputInvoiceBusinessBotTransferStars.
 	Bot InputUserClass
@@ -1605,6 +1778,15 @@ func (i *InputInvoiceBusinessBotTransferStars) String() string {
 	}
 	type Alias InputInvoiceBusinessBotTransferStars
 	return fmt.Sprintf("InputInvoiceBusinessBotTransferStars%+v", Alias(*i))
+}
+
+// FillFrom fills InputInvoiceBusinessBotTransferStars from given interface.
+func (i *InputInvoiceBusinessBotTransferStars) FillFrom(from interface {
+	GetBot() (value InputUserClass)
+	GetStars() (value int64)
+}) {
+	i.Bot = from.GetBot()
+	i.Stars = from.GetStars()
 }
 
 // TypeID returns type id in TL schema.
@@ -1716,6 +1898,8 @@ func (i *InputInvoiceBusinessBotTransferStars) GetStars() (value int64) {
 }
 
 // InputInvoiceStarGiftResale represents TL type `inputInvoiceStarGiftResale#63cbc38c`.
+//
+// See https://core.telegram.org/constructor/inputInvoiceStarGiftResale for reference.
 type InputInvoiceStarGiftResale struct {
 	// Slug field of InputInvoiceStarGiftResale.
 	Slug string
@@ -1760,6 +1944,15 @@ func (i *InputInvoiceStarGiftResale) String() string {
 	}
 	type Alias InputInvoiceStarGiftResale
 	return fmt.Sprintf("InputInvoiceStarGiftResale%+v", Alias(*i))
+}
+
+// FillFrom fills InputInvoiceStarGiftResale from given interface.
+func (i *InputInvoiceStarGiftResale) FillFrom(from interface {
+	GetSlug() (value string)
+	GetToID() (value InputPeerClass)
+}) {
+	i.Slug = from.GetSlug()
+	i.ToID = from.GetToID()
 }
 
 // TypeID returns type id in TL schema.
@@ -1874,6 +2067,8 @@ func (i *InputInvoiceStarGiftResale) GetToID() (value InputPeerClass) {
 const InputInvoiceClassName = "InputInvoice"
 
 // InputInvoiceClass represents InputInvoice generic type.
+//
+// See https://core.telegram.org/type/InputInvoice for reference.
 //
 // Constructors:
 //   - [InputInvoiceMessage]

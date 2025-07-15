@@ -32,10 +32,19 @@ var (
 )
 
 // TextWithEntities represents TL type `textWithEntities#751f3146`.
+// Styled text with message entities¹
+//
+// Links:
+//  1. https://core.telegram.org/api/entities
+//
+// See https://core.telegram.org/constructor/textWithEntities for reference.
 type TextWithEntities struct {
-	// Text field of TextWithEntities.
+	// Text
 	Text string
-	// Entities field of TextWithEntities.
+	// Message entities for styled text¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities
 	Entities []MessageEntityClass
 }
 
@@ -71,6 +80,15 @@ func (t *TextWithEntities) String() string {
 	}
 	type Alias TextWithEntities
 	return fmt.Sprintf("TextWithEntities%+v", Alias(*t))
+}
+
+// FillFrom fills TextWithEntities from given interface.
+func (t *TextWithEntities) FillFrom(from interface {
+	GetText() (value string)
+	GetEntities() (value []MessageEntityClass)
+}) {
+	t.Text = from.GetText()
+	t.Entities = from.GetEntities()
 }
 
 // TypeID returns type id in TL schema.
@@ -192,4 +210,9 @@ func (t *TextWithEntities) GetEntities() (value []MessageEntityClass) {
 		return
 	}
 	return t.Entities
+}
+
+// MapEntities returns field Entities wrapped in MessageEntityClassArray helper.
+func (t *TextWithEntities) MapEntities() (value MessageEntityClassArray) {
+	return MessageEntityClassArray(t.Entities)
 }

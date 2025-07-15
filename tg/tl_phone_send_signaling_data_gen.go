@@ -32,10 +32,13 @@ var (
 )
 
 // PhoneSendSignalingDataRequest represents TL type `phone.sendSignalingData#ff7a9383`.
+// Send VoIP signaling data
+//
+// See https://core.telegram.org/method/phone.sendSignalingData for reference.
 type PhoneSendSignalingDataRequest struct {
-	// Peer field of PhoneSendSignalingDataRequest.
+	// Phone call
 	Peer InputPhoneCall
-	// Data field of PhoneSendSignalingDataRequest.
+	// Signaling payload
 	Data []byte
 }
 
@@ -71,6 +74,15 @@ func (s *PhoneSendSignalingDataRequest) String() string {
 	}
 	type Alias PhoneSendSignalingDataRequest
 	return fmt.Sprintf("PhoneSendSignalingDataRequest%+v", Alias(*s))
+}
+
+// FillFrom fills PhoneSendSignalingDataRequest from given interface.
+func (s *PhoneSendSignalingDataRequest) FillFrom(from interface {
+	GetPeer() (value InputPhoneCall)
+	GetData() (value []byte)
+}) {
+	s.Peer = from.GetPeer()
+	s.Data = from.GetData()
 }
 
 // TypeID returns type id in TL schema.
@@ -177,6 +189,13 @@ func (s *PhoneSendSignalingDataRequest) GetData() (value []byte) {
 }
 
 // PhoneSendSignalingData invokes method phone.sendSignalingData#ff7a9383 returning error if any.
+// Send VoIP signaling data
+//
+// Possible errors:
+//
+//	400 CALL_PEER_INVALID: The provided call peer object is invalid.
+//
+// See https://core.telegram.org/method/phone.sendSignalingData for reference.
 func (c *Client) PhoneSendSignalingData(ctx context.Context, request *PhoneSendSignalingDataRequest) (bool, error) {
 	var result BoolBox
 

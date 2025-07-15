@@ -32,6 +32,8 @@ var (
 )
 
 // AccountGetPaidMessagesRevenueRequest represents TL type `account.getPaidMessagesRevenue#19ba4a67`.
+//
+// See https://core.telegram.org/method/account.getPaidMessagesRevenue for reference.
 type AccountGetPaidMessagesRevenueRequest struct {
 	// Flags field of AccountGetPaidMessagesRevenueRequest.
 	Flags bin.Fields
@@ -78,6 +80,18 @@ func (g *AccountGetPaidMessagesRevenueRequest) String() string {
 	}
 	type Alias AccountGetPaidMessagesRevenueRequest
 	return fmt.Sprintf("AccountGetPaidMessagesRevenueRequest%+v", Alias(*g))
+}
+
+// FillFrom fills AccountGetPaidMessagesRevenueRequest from given interface.
+func (g *AccountGetPaidMessagesRevenueRequest) FillFrom(from interface {
+	GetParentPeer() (value InputPeerClass, ok bool)
+	GetUserID() (value InputUserClass)
+}) {
+	if val, ok := from.GetParentPeer(); ok {
+		g.ParentPeer = val
+	}
+
+	g.UserID = from.GetUserID()
 }
 
 // TypeID returns type id in TL schema.
@@ -223,6 +237,8 @@ func (g *AccountGetPaidMessagesRevenueRequest) GetUserID() (value InputUserClass
 }
 
 // AccountGetPaidMessagesRevenue invokes method account.getPaidMessagesRevenue#19ba4a67 returning error if any.
+//
+// See https://core.telegram.org/method/account.getPaidMessagesRevenue for reference.
 func (c *Client) AccountGetPaidMessagesRevenue(ctx context.Context, request *AccountGetPaidMessagesRevenueRequest) (*AccountPaidMessagesRevenue, error) {
 	var result AccountPaidMessagesRevenue
 

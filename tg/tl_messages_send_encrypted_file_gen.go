@@ -32,18 +32,28 @@ var (
 )
 
 // MessagesSendEncryptedFileRequest represents TL type `messages.sendEncryptedFile#5559481d`.
+// Sends a message with a file attachment to a secret chat
+//
+// See https://core.telegram.org/method/messages.sendEncryptedFile for reference.
 type MessagesSendEncryptedFileRequest struct {
-	// Flags field of MessagesSendEncryptedFileRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Silent field of MessagesSendEncryptedFileRequest.
+	// Whether to send the file without triggering a notification
 	Silent bool
-	// Peer field of MessagesSendEncryptedFileRequest.
+	// Secret chat ID
 	Peer InputEncryptedChat
-	// RandomID field of MessagesSendEncryptedFileRequest.
+	// Unique client message ID necessary to prevent message resending
 	RandomID int64
-	// Data field of MessagesSendEncryptedFileRequest.
+	// TL-serialization of DecryptedMessage¹ type, encrypted with a key generated during
+	// chat initialization
+	//
+	// Links:
+	//  1) https://core.telegram.org/type/DecryptedMessage
 	Data []byte
-	// File field of MessagesSendEncryptedFileRequest.
+	// File attachment for the secret chat
 	File InputEncryptedFileClass
 }
 
@@ -91,6 +101,21 @@ func (s *MessagesSendEncryptedFileRequest) String() string {
 	}
 	type Alias MessagesSendEncryptedFileRequest
 	return fmt.Sprintf("MessagesSendEncryptedFileRequest%+v", Alias(*s))
+}
+
+// FillFrom fills MessagesSendEncryptedFileRequest from given interface.
+func (s *MessagesSendEncryptedFileRequest) FillFrom(from interface {
+	GetSilent() (value bool)
+	GetPeer() (value InputEncryptedChat)
+	GetRandomID() (value int64)
+	GetData() (value []byte)
+	GetFile() (value InputEncryptedFileClass)
+}) {
+	s.Silent = from.GetSilent()
+	s.Peer = from.GetPeer()
+	s.RandomID = from.GetRandomID()
+	s.Data = from.GetData()
+	s.File = from.GetFile()
 }
 
 // TypeID returns type id in TL schema.
@@ -282,7 +307,24 @@ func (s *MessagesSendEncryptedFileRequest) GetFile() (value InputEncryptedFileCl
 	return s.File
 }
 
+// GetFileAsNotEmpty returns mapped value of File field.
+func (s *MessagesSendEncryptedFileRequest) GetFileAsNotEmpty() (NotEmptyInputEncryptedFile, bool) {
+	return s.File.AsNotEmpty()
+}
+
 // MessagesSendEncryptedFile invokes method messages.sendEncryptedFile#5559481d returning error if any.
+// Sends a message with a file attachment to a secret chat
+//
+// Possible errors:
+//
+//	400 CHAT_ID_INVALID: The provided chat id is invalid.
+//	400 DATA_TOO_LONG: Data too long.
+//	400 ENCRYPTION_DECLINED: The secret chat was declined.
+//	400 FILE_EMTPY: An empty file was provided.
+//	400 MD5_CHECKSUM_INVALID: The MD5 checksums do not match.
+//	400 MSG_WAIT_FAILED: A waiting call returned an error.
+//
+// See https://core.telegram.org/method/messages.sendEncryptedFile for reference.
 func (c *Client) MessagesSendEncryptedFile(ctx context.Context, request *MessagesSendEncryptedFileRequest) (MessagesSentEncryptedMessageClass, error) {
 	var result MessagesSentEncryptedMessageBox
 

@@ -32,14 +32,26 @@ var (
 )
 
 // InputBusinessIntro represents TL type `inputBusinessIntro#9c469cd`.
+// Telegram Business introduction »¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/business#business-introduction
+//
+// See https://core.telegram.org/constructor/inputBusinessIntro for reference.
 type InputBusinessIntro struct {
-	// Flags field of InputBusinessIntro.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Title field of InputBusinessIntro.
+	// Title of the introduction message
 	Title string
-	// Description field of InputBusinessIntro.
+	// Profile introduction
 	Description string
-	// Sticker field of InputBusinessIntro.
+	// Optional introduction sticker¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/stickers
 	//
 	// Use SetSticker and GetSticker helpers.
 	Sticker InputDocumentClass
@@ -83,6 +95,20 @@ func (i *InputBusinessIntro) String() string {
 	}
 	type Alias InputBusinessIntro
 	return fmt.Sprintf("InputBusinessIntro%+v", Alias(*i))
+}
+
+// FillFrom fills InputBusinessIntro from given interface.
+func (i *InputBusinessIntro) FillFrom(from interface {
+	GetTitle() (value string)
+	GetDescription() (value string)
+	GetSticker() (value InputDocumentClass, ok bool)
+}) {
+	i.Title = from.GetTitle()
+	i.Description = from.GetDescription()
+	if val, ok := from.GetSticker(); ok {
+		i.Sticker = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -240,4 +266,13 @@ func (i *InputBusinessIntro) GetSticker() (value InputDocumentClass, ok bool) {
 		return value, false
 	}
 	return i.Sticker, true
+}
+
+// GetStickerAsNotEmpty returns mapped value of Sticker conditional field and
+// boolean which is true if field was set.
+func (i *InputBusinessIntro) GetStickerAsNotEmpty() (*InputDocument, bool) {
+	if value, ok := i.GetSticker(); ok {
+		return value.AsNotEmpty()
+	}
+	return nil, false
 }

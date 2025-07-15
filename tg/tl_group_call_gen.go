@@ -32,12 +32,15 @@ var (
 )
 
 // GroupCallDiscarded represents TL type `groupCallDiscarded#7780bcb4`.
+// An ended group call
+//
+// See https://core.telegram.org/constructor/groupCallDiscarded for reference.
 type GroupCallDiscarded struct {
-	// ID field of GroupCallDiscarded.
+	// Group call ID
 	ID int64
-	// AccessHash field of GroupCallDiscarded.
+	// Group call access hash
 	AccessHash int64
-	// Duration field of GroupCallDiscarded.
+	// Group call duration
 	Duration int
 }
 
@@ -81,6 +84,17 @@ func (g *GroupCallDiscarded) String() string {
 	}
 	type Alias GroupCallDiscarded
 	return fmt.Sprintf("GroupCallDiscarded%+v", Alias(*g))
+}
+
+// FillFrom fills GroupCallDiscarded from given interface.
+func (g *GroupCallDiscarded) FillFrom(from interface {
+	GetID() (value int64)
+	GetAccessHash() (value int64)
+	GetDuration() (value int)
+}) {
+	g.ID = from.GetID()
+	g.AccessHash = from.GetAccessHash()
+	g.Duration = from.GetDuration()
 }
 
 // TypeID returns type id in TL schema.
@@ -207,58 +221,74 @@ func (g *GroupCallDiscarded) GetDuration() (value int) {
 }
 
 // GroupCall represents TL type `groupCall#553b0ba1`.
+// Info about a group call or livestream
+//
+// See https://core.telegram.org/constructor/groupCall for reference.
 type GroupCall struct {
-	// Flags field of GroupCall.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// JoinMuted field of GroupCall.
+	// Whether the user should be muted upon joining the call
 	JoinMuted bool
-	// CanChangeJoinMuted field of GroupCall.
+	// Whether the current user can change the value of the join_muted flag using phone
+	// toggleGroupCallSettings¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/method/phone.toggleGroupCallSettings
 	CanChangeJoinMuted bool
-	// JoinDateAsc field of GroupCall.
+	// Specifies the ordering to use when locally sorting by date and displaying in the UI
+	// group call participants.
 	JoinDateAsc bool
-	// ScheduleStartSubscribed field of GroupCall.
+	// Whether we subscribed to the scheduled call
 	ScheduleStartSubscribed bool
-	// CanStartVideo field of GroupCall.
+	// Whether you can start streaming video into the call
 	CanStartVideo bool
-	// RecordVideoActive field of GroupCall.
+	// Whether the group call is currently being recorded
 	RecordVideoActive bool
-	// RtmpStream field of GroupCall.
+	// Whether RTMP streams are allowed
 	RtmpStream bool
-	// ListenersHidden field of GroupCall.
+	// Whether the listeners list is hidden and cannot be fetched using phone
+	// getGroupParticipants¹. The phone.groupParticipants.count and groupCall
+	// participants_count counters will still include listeners.
+	//
+	// Links:
+	//  1) https://core.telegram.org/method/phone.getGroupParticipants
 	ListenersHidden bool
 	// Conference field of GroupCall.
 	Conference bool
 	// Creator field of GroupCall.
 	Creator bool
-	// ID field of GroupCall.
+	// Group call ID
 	ID int64
-	// AccessHash field of GroupCall.
+	// Group call access hash
 	AccessHash int64
-	// ParticipantsCount field of GroupCall.
+	// Participant count
 	ParticipantsCount int
-	// Title field of GroupCall.
+	// Group call title
 	//
 	// Use SetTitle and GetTitle helpers.
 	Title string
-	// StreamDCID field of GroupCall.
+	// DC ID to be used for livestream chunks
 	//
 	// Use SetStreamDCID and GetStreamDCID helpers.
 	StreamDCID int
-	// RecordStartDate field of GroupCall.
+	// When was the recording started
 	//
 	// Use SetRecordStartDate and GetRecordStartDate helpers.
 	RecordStartDate int
-	// ScheduleDate field of GroupCall.
+	// When is the call scheduled to start
 	//
 	// Use SetScheduleDate and GetScheduleDate helpers.
 	ScheduleDate int
-	// UnmutedVideoCount field of GroupCall.
+	// Number of people currently streaming video into the call
 	//
 	// Use SetUnmutedVideoCount and GetUnmutedVideoCount helpers.
 	UnmutedVideoCount int
-	// UnmutedVideoLimit field of GroupCall.
+	// Maximum number of people allowed to stream video into the call
 	UnmutedVideoLimit int
-	// Version field of GroupCall.
+	// Version
 	Version int
 	// InviteLink field of GroupCall.
 	//
@@ -363,6 +393,71 @@ func (g *GroupCall) String() string {
 	}
 	type Alias GroupCall
 	return fmt.Sprintf("GroupCall%+v", Alias(*g))
+}
+
+// FillFrom fills GroupCall from given interface.
+func (g *GroupCall) FillFrom(from interface {
+	GetJoinMuted() (value bool)
+	GetCanChangeJoinMuted() (value bool)
+	GetJoinDateAsc() (value bool)
+	GetScheduleStartSubscribed() (value bool)
+	GetCanStartVideo() (value bool)
+	GetRecordVideoActive() (value bool)
+	GetRtmpStream() (value bool)
+	GetListenersHidden() (value bool)
+	GetConference() (value bool)
+	GetCreator() (value bool)
+	GetID() (value int64)
+	GetAccessHash() (value int64)
+	GetParticipantsCount() (value int)
+	GetTitle() (value string, ok bool)
+	GetStreamDCID() (value int, ok bool)
+	GetRecordStartDate() (value int, ok bool)
+	GetScheduleDate() (value int, ok bool)
+	GetUnmutedVideoCount() (value int, ok bool)
+	GetUnmutedVideoLimit() (value int)
+	GetVersion() (value int)
+	GetInviteLink() (value string, ok bool)
+}) {
+	g.JoinMuted = from.GetJoinMuted()
+	g.CanChangeJoinMuted = from.GetCanChangeJoinMuted()
+	g.JoinDateAsc = from.GetJoinDateAsc()
+	g.ScheduleStartSubscribed = from.GetScheduleStartSubscribed()
+	g.CanStartVideo = from.GetCanStartVideo()
+	g.RecordVideoActive = from.GetRecordVideoActive()
+	g.RtmpStream = from.GetRtmpStream()
+	g.ListenersHidden = from.GetListenersHidden()
+	g.Conference = from.GetConference()
+	g.Creator = from.GetCreator()
+	g.ID = from.GetID()
+	g.AccessHash = from.GetAccessHash()
+	g.ParticipantsCount = from.GetParticipantsCount()
+	if val, ok := from.GetTitle(); ok {
+		g.Title = val
+	}
+
+	if val, ok := from.GetStreamDCID(); ok {
+		g.StreamDCID = val
+	}
+
+	if val, ok := from.GetRecordStartDate(); ok {
+		g.RecordStartDate = val
+	}
+
+	if val, ok := from.GetScheduleDate(); ok {
+		g.ScheduleDate = val
+	}
+
+	if val, ok := from.GetUnmutedVideoCount(); ok {
+		g.UnmutedVideoCount = val
+	}
+
+	g.UnmutedVideoLimit = from.GetUnmutedVideoLimit()
+	g.Version = from.GetVersion()
+	if val, ok := from.GetInviteLink(); ok {
+		g.InviteLink = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -1042,6 +1137,8 @@ const GroupCallClassName = "GroupCall"
 
 // GroupCallClass represents GroupCall generic type.
 //
+// See https://core.telegram.org/type/GroupCall for reference.
+//
 // Constructors:
 //   - [GroupCallDiscarded]
 //   - [GroupCall]
@@ -1075,10 +1172,20 @@ type GroupCallClass interface {
 	// Zero returns true if current object has a zero value.
 	Zero() bool
 
-	// ID field of GroupCallDiscarded.
+	// Group call ID
 	GetID() (value int64)
-	// AccessHash field of GroupCallDiscarded.
+
+	// Group call access hash
 	GetAccessHash() (value int64)
+}
+
+// AsInput tries to map GroupCall to InputGroupCall.
+func (g *GroupCall) AsInput() *InputGroupCall {
+	value := new(InputGroupCall)
+	value.ID = g.GetID()
+	value.AccessHash = g.GetAccessHash()
+
+	return value
 }
 
 // DecodeGroupCall implements binary de-serialization for GroupCallClass.

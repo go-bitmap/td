@@ -32,12 +32,23 @@ var (
 )
 
 // PhoneExportGroupCallInviteRequest represents TL type `phone.exportGroupCallInvite#e6aa647f`.
+// Get an invite link¹ for a group call or livestream
+//
+// Links:
+//  1. https://core.telegram.org/api/links#video-chat-livestream-links
+//
+// See https://core.telegram.org/method/phone.exportGroupCallInvite for reference.
 type PhoneExportGroupCallInviteRequest struct {
-	// Flags field of PhoneExportGroupCallInviteRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// CanSelfUnmute field of PhoneExportGroupCallInviteRequest.
+	// For livestreams or muted group chats, if set, users that join using this link will be
+	// able to speak without explicitly requesting permission by (for example by raising
+	// their hand).
 	CanSelfUnmute bool
-	// Call field of PhoneExportGroupCallInviteRequest.
+	// The group call
 	Call InputGroupCallClass
 }
 
@@ -76,6 +87,15 @@ func (e *PhoneExportGroupCallInviteRequest) String() string {
 	}
 	type Alias PhoneExportGroupCallInviteRequest
 	return fmt.Sprintf("PhoneExportGroupCallInviteRequest%+v", Alias(*e))
+}
+
+// FillFrom fills PhoneExportGroupCallInviteRequest from given interface.
+func (e *PhoneExportGroupCallInviteRequest) FillFrom(from interface {
+	GetCanSelfUnmute() (value bool)
+	GetCall() (value InputGroupCallClass)
+}) {
+	e.CanSelfUnmute = from.GetCanSelfUnmute()
+	e.Call = from.GetCall()
 }
 
 // TypeID returns type id in TL schema.
@@ -208,6 +228,17 @@ func (e *PhoneExportGroupCallInviteRequest) GetCall() (value InputGroupCallClass
 }
 
 // PhoneExportGroupCallInvite invokes method phone.exportGroupCallInvite#e6aa647f returning error if any.
+// Get an invite link¹ for a group call or livestream
+//
+// Links:
+//  1. https://core.telegram.org/api/links#video-chat-livestream-links
+//
+// Possible errors:
+//
+//	400 GROUPCALL_INVALID: The specified group call is invalid.
+//	403 PUBLIC_CHANNEL_MISSING: You can only export group call invite links for public chats or channels.
+//
+// See https://core.telegram.org/method/phone.exportGroupCallInvite for reference.
 func (c *Client) PhoneExportGroupCallInvite(ctx context.Context, request *PhoneExportGroupCallInviteRequest) (*PhoneExportedGroupCallInvite, error) {
 	var result PhoneExportedGroupCallInvite
 

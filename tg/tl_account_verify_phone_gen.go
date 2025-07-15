@@ -32,12 +32,24 @@ var (
 )
 
 // AccountVerifyPhoneRequest represents TL type `account.verifyPhone#4dd3a7f6`.
+// Verify a phone number for telegram passport¹.
+//
+// Links:
+//  1. https://core.telegram.org/passport
+//
+// See https://core.telegram.org/method/account.verifyPhone for reference.
 type AccountVerifyPhoneRequest struct {
-	// PhoneNumber field of AccountVerifyPhoneRequest.
+	// Phone number
 	PhoneNumber string
-	// PhoneCodeHash field of AccountVerifyPhoneRequest.
+	// Phone code hash received from the call to account.sendVerifyPhoneCode¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/method/account.sendVerifyPhoneCode
 	PhoneCodeHash string
-	// PhoneCode field of AccountVerifyPhoneRequest.
+	// Code received after the call to account.sendVerifyPhoneCode¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/method/account.sendVerifyPhoneCode
 	PhoneCode string
 }
 
@@ -76,6 +88,17 @@ func (v *AccountVerifyPhoneRequest) String() string {
 	}
 	type Alias AccountVerifyPhoneRequest
 	return fmt.Sprintf("AccountVerifyPhoneRequest%+v", Alias(*v))
+}
+
+// FillFrom fills AccountVerifyPhoneRequest from given interface.
+func (v *AccountVerifyPhoneRequest) FillFrom(from interface {
+	GetPhoneNumber() (value string)
+	GetPhoneCodeHash() (value string)
+	GetPhoneCode() (value string)
+}) {
+	v.PhoneNumber = from.GetPhoneNumber()
+	v.PhoneCodeHash = from.GetPhoneCodeHash()
+	v.PhoneCode = from.GetPhoneCode()
 }
 
 // TypeID returns type id in TL schema.
@@ -202,6 +225,18 @@ func (v *AccountVerifyPhoneRequest) GetPhoneCode() (value string) {
 }
 
 // AccountVerifyPhone invokes method account.verifyPhone#4dd3a7f6 returning error if any.
+// Verify a phone number for telegram passport¹.
+//
+// Links:
+//  1. https://core.telegram.org/passport
+//
+// Possible errors:
+//
+//	400 PHONE_CODE_EMPTY: phone_code is missing.
+//	400 PHONE_CODE_EXPIRED: The phone code you provided has expired.
+//	400 PHONE_NUMBER_INVALID: The phone number is invalid.
+//
+// See https://core.telegram.org/method/account.verifyPhone for reference.
 func (c *Client) AccountVerifyPhone(ctx context.Context, request *AccountVerifyPhoneRequest) (bool, error) {
 	var result BoolBox
 

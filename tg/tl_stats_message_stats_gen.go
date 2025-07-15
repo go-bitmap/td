@@ -32,10 +32,13 @@ var (
 )
 
 // StatsMessageStats represents TL type `stats.messageStats#7fe91c14`.
+// Message statistics
+//
+// See https://core.telegram.org/constructor/stats.messageStats for reference.
 type StatsMessageStats struct {
-	// ViewsGraph field of StatsMessageStats.
+	// Message view graph
 	ViewsGraph StatsGraphClass
-	// ReactionsByEmotionGraph field of StatsMessageStats.
+	// A graph containing the number of reactions on stories categorized by emotion
 	ReactionsByEmotionGraph StatsGraphClass
 }
 
@@ -71,6 +74,15 @@ func (m *StatsMessageStats) String() string {
 	}
 	type Alias StatsMessageStats
 	return fmt.Sprintf("StatsMessageStats%+v", Alias(*m))
+}
+
+// FillFrom fills StatsMessageStats from given interface.
+func (m *StatsMessageStats) FillFrom(from interface {
+	GetViewsGraph() (value StatsGraphClass)
+	GetReactionsByEmotionGraph() (value StatsGraphClass)
+}) {
+	m.ViewsGraph = from.GetViewsGraph()
+	m.ReactionsByEmotionGraph = from.GetReactionsByEmotionGraph()
 }
 
 // TypeID returns type id in TL schema.

@@ -32,18 +32,25 @@ var (
 )
 
 // AuthSignUpRequest represents TL type `auth.signUp#aac7b717`.
+// Registers a validated phone number in the system.
+//
+// See https://core.telegram.org/method/auth.signUp for reference.
 type AuthSignUpRequest struct {
-	// Flags field of AuthSignUpRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// NoJoinedNotifications field of AuthSignUpRequest.
+	// If set, users on Telegram that have already added phone_number to their contacts will
+	// not receive signup notifications about this user.
 	NoJoinedNotifications bool
-	// PhoneNumber field of AuthSignUpRequest.
+	// Phone number in the international format
 	PhoneNumber string
-	// PhoneCodeHash field of AuthSignUpRequest.
+	// SMS-message ID
 	PhoneCodeHash string
-	// FirstName field of AuthSignUpRequest.
+	// New user first name
 	FirstName string
-	// LastName field of AuthSignUpRequest.
+	// New user last name
 	LastName string
 }
 
@@ -91,6 +98,21 @@ func (s *AuthSignUpRequest) String() string {
 	}
 	type Alias AuthSignUpRequest
 	return fmt.Sprintf("AuthSignUpRequest%+v", Alias(*s))
+}
+
+// FillFrom fills AuthSignUpRequest from given interface.
+func (s *AuthSignUpRequest) FillFrom(from interface {
+	GetNoJoinedNotifications() (value bool)
+	GetPhoneNumber() (value string)
+	GetPhoneCodeHash() (value string)
+	GetFirstName() (value string)
+	GetLastName() (value string)
+}) {
+	s.NoJoinedNotifications = from.GetNoJoinedNotifications()
+	s.PhoneNumber = from.GetPhoneNumber()
+	s.PhoneCodeHash = from.GetPhoneCodeHash()
+	s.FirstName = from.GetFirstName()
+	s.LastName = from.GetLastName()
 }
 
 // TypeID returns type id in TL schema.
@@ -278,6 +300,20 @@ func (s *AuthSignUpRequest) GetLastName() (value string) {
 }
 
 // AuthSignUp invokes method auth.signUp#aac7b717 returning error if any.
+// Registers a validated phone number in the system.
+//
+// Possible errors:
+//
+//	400 FIRSTNAME_INVALID: The first name is invalid.
+//	400 LASTNAME_INVALID: The last name is invalid.
+//	400 PHONE_CODE_EMPTY: phone_code is missing.
+//	400 PHONE_CODE_EXPIRED: The phone code you provided has expired.
+//	400 PHONE_CODE_INVALID: The provided phone code is invalid.
+//	400 PHONE_NUMBER_FLOOD: You asked for the code too many times.
+//	406 PHONE_NUMBER_INVALID: The phone number is invalid.
+//	400 PHONE_NUMBER_OCCUPIED: The phone number is already in use.
+//
+// See https://core.telegram.org/method/auth.signUp for reference.
 func (c *Client) AuthSignUp(ctx context.Context, request *AuthSignUpRequest) (AuthAuthorizationClass, error) {
 	var result AuthAuthorizationBox
 

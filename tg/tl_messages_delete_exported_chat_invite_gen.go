@@ -32,10 +32,13 @@ var (
 )
 
 // MessagesDeleteExportedChatInviteRequest represents TL type `messages.deleteExportedChatInvite#d464a42b`.
+// Delete a chat invite
+//
+// See https://core.telegram.org/method/messages.deleteExportedChatInvite for reference.
 type MessagesDeleteExportedChatInviteRequest struct {
-	// Peer field of MessagesDeleteExportedChatInviteRequest.
+	// Peer
 	Peer InputPeerClass
-	// Link field of MessagesDeleteExportedChatInviteRequest.
+	// Invite link
 	Link string
 }
 
@@ -71,6 +74,15 @@ func (d *MessagesDeleteExportedChatInviteRequest) String() string {
 	}
 	type Alias MessagesDeleteExportedChatInviteRequest
 	return fmt.Sprintf("MessagesDeleteExportedChatInviteRequest%+v", Alias(*d))
+}
+
+// FillFrom fills MessagesDeleteExportedChatInviteRequest from given interface.
+func (d *MessagesDeleteExportedChatInviteRequest) FillFrom(from interface {
+	GetPeer() (value InputPeerClass)
+	GetLink() (value string)
+}) {
+	d.Peer = from.GetPeer()
+	d.Link = from.GetLink()
 }
 
 // TypeID returns type id in TL schema.
@@ -182,6 +194,15 @@ func (d *MessagesDeleteExportedChatInviteRequest) GetLink() (value string) {
 }
 
 // MessagesDeleteExportedChatInvite invokes method messages.deleteExportedChatInvite#d464a42b returning error if any.
+// Delete a chat invite
+//
+// Possible errors:
+//
+//	400 INVITE_HASH_EXPIRED: The invite link has expired.
+//	400 INVITE_REVOKED_MISSING: The specified invite link was already revoked or is invalid.
+//	400 PEER_ID_INVALID: The provided peer id is invalid.
+//
+// See https://core.telegram.org/method/messages.deleteExportedChatInvite for reference.
 func (c *Client) MessagesDeleteExportedChatInvite(ctx context.Context, request *MessagesDeleteExportedChatInviteRequest) (bool, error) {
 	var result BoolBox
 

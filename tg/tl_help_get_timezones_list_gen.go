@@ -32,8 +32,18 @@ var (
 )
 
 // HelpGetTimezonesListRequest represents TL type `help.getTimezonesList#49b30240`.
+// Returns timezone information that may be used elsewhere in the API, such as to set
+// Telegram Business opening hours »¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/business#opening-hours
+//
+// See https://core.telegram.org/method/help.getTimezonesList for reference.
 type HelpGetTimezonesListRequest struct {
-	// Hash field of HelpGetTimezonesListRequest.
+	// Hash used for caching, for more info click here¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets#hash-generation
 	Hash int
 }
 
@@ -66,6 +76,13 @@ func (g *HelpGetTimezonesListRequest) String() string {
 	}
 	type Alias HelpGetTimezonesListRequest
 	return fmt.Sprintf("HelpGetTimezonesListRequest%+v", Alias(*g))
+}
+
+// FillFrom fills HelpGetTimezonesListRequest from given interface.
+func (g *HelpGetTimezonesListRequest) FillFrom(from interface {
+	GetHash() (value int)
+}) {
+	g.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -152,6 +169,13 @@ func (g *HelpGetTimezonesListRequest) GetHash() (value int) {
 }
 
 // HelpGetTimezonesList invokes method help.getTimezonesList#49b30240 returning error if any.
+// Returns timezone information that may be used elsewhere in the API, such as to set
+// Telegram Business opening hours »¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/business#opening-hours
+//
+// See https://core.telegram.org/method/help.getTimezonesList for reference.
 func (c *Client) HelpGetTimezonesList(ctx context.Context, hash int) (HelpTimezonesListClass, error) {
 	var result HelpTimezonesListBox
 

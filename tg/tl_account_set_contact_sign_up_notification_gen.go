@@ -32,8 +32,11 @@ var (
 )
 
 // AccountSetContactSignUpNotificationRequest represents TL type `account.setContactSignUpNotification#cff43f61`.
+// Toggle contact sign up notifications
+//
+// See https://core.telegram.org/method/account.setContactSignUpNotification for reference.
 type AccountSetContactSignUpNotificationRequest struct {
-	// Silent field of AccountSetContactSignUpNotificationRequest.
+	// Whether to disable contact sign up notifications
 	Silent bool
 }
 
@@ -66,6 +69,13 @@ func (s *AccountSetContactSignUpNotificationRequest) String() string {
 	}
 	type Alias AccountSetContactSignUpNotificationRequest
 	return fmt.Sprintf("AccountSetContactSignUpNotificationRequest%+v", Alias(*s))
+}
+
+// FillFrom fills AccountSetContactSignUpNotificationRequest from given interface.
+func (s *AccountSetContactSignUpNotificationRequest) FillFrom(from interface {
+	GetSilent() (value bool)
+}) {
+	s.Silent = from.GetSilent()
 }
 
 // TypeID returns type id in TL schema.
@@ -152,6 +162,9 @@ func (s *AccountSetContactSignUpNotificationRequest) GetSilent() (value bool) {
 }
 
 // AccountSetContactSignUpNotification invokes method account.setContactSignUpNotification#cff43f61 returning error if any.
+// Toggle contact sign up notifications
+//
+// See https://core.telegram.org/method/account.setContactSignUpNotification for reference.
 func (c *Client) AccountSetContactSignUpNotification(ctx context.Context, silent bool) (bool, error) {
 	var result BoolBox
 

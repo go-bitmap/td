@@ -32,10 +32,22 @@ var (
 )
 
 // AuthLoggedOut represents TL type `auth.loggedOut#c3a2835f`.
+// Future auth token »¹ to be used on subsequent authorizations
+//
+// Links:
+//  1. https://core.telegram.org/api/auth#future-auth-tokens
+//
+// See https://core.telegram.org/constructor/auth.loggedOut for reference.
 type AuthLoggedOut struct {
-	// Flags field of AuthLoggedOut.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// FutureAuthToken field of AuthLoggedOut.
+	// Future auth token »¹ to be used on subsequent authorizations
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/auth#future-auth-tokens
 	//
 	// Use SetFutureAuthToken and GetFutureAuthToken helpers.
 	FutureAuthToken []byte
@@ -73,6 +85,16 @@ func (l *AuthLoggedOut) String() string {
 	}
 	type Alias AuthLoggedOut
 	return fmt.Sprintf("AuthLoggedOut%+v", Alias(*l))
+}
+
+// FillFrom fills AuthLoggedOut from given interface.
+func (l *AuthLoggedOut) FillFrom(from interface {
+	GetFutureAuthToken() (value []byte, ok bool)
+}) {
+	if val, ok := from.GetFutureAuthToken(); ok {
+		l.FutureAuthToken = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.

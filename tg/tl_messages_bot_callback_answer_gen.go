@@ -32,24 +32,30 @@ var (
 )
 
 // MessagesBotCallbackAnswer represents TL type `messages.botCallbackAnswer#36585ea4`.
+// Callback answer sent by the bot in response to a button press
+//
+// See https://core.telegram.org/constructor/messages.botCallbackAnswer for reference.
 type MessagesBotCallbackAnswer struct {
-	// Flags field of MessagesBotCallbackAnswer.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Alert field of MessagesBotCallbackAnswer.
+	// Whether an alert should be shown to the user instead of a toast notification
 	Alert bool
-	// HasURL field of MessagesBotCallbackAnswer.
+	// Whether an URL is present
 	HasURL bool
-	// NativeUI field of MessagesBotCallbackAnswer.
+	// Whether to show games in WebView or in native UI.
 	NativeUI bool
-	// Message field of MessagesBotCallbackAnswer.
+	// Alert to show
 	//
 	// Use SetMessage and GetMessage helpers.
 	Message string
-	// URL field of MessagesBotCallbackAnswer.
+	// URL to open
 	//
 	// Use SetURL and GetURL helpers.
 	URL string
-	// CacheTime field of MessagesBotCallbackAnswer.
+	// For how long should this answer be cached
 	CacheTime int
 }
 
@@ -100,6 +106,29 @@ func (b *MessagesBotCallbackAnswer) String() string {
 	}
 	type Alias MessagesBotCallbackAnswer
 	return fmt.Sprintf("MessagesBotCallbackAnswer%+v", Alias(*b))
+}
+
+// FillFrom fills MessagesBotCallbackAnswer from given interface.
+func (b *MessagesBotCallbackAnswer) FillFrom(from interface {
+	GetAlert() (value bool)
+	GetHasURL() (value bool)
+	GetNativeUI() (value bool)
+	GetMessage() (value string, ok bool)
+	GetURL() (value string, ok bool)
+	GetCacheTime() (value int)
+}) {
+	b.Alert = from.GetAlert()
+	b.HasURL = from.GetHasURL()
+	b.NativeUI = from.GetNativeUI()
+	if val, ok := from.GetMessage(); ok {
+		b.Message = val
+	}
+
+	if val, ok := from.GetURL(); ok {
+		b.URL = val
+	}
+
+	b.CacheTime = from.GetCacheTime()
 }
 
 // TypeID returns type id in TL schema.

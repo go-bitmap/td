@@ -32,46 +32,117 @@ var (
 )
 
 // ChannelAdminLogEventsFilter represents TL type `channelAdminLogEventsFilter#ea107ae4`.
+// Filter only certain admin log events
+//
+// See https://core.telegram.org/constructor/channelAdminLogEventsFilter for reference.
 type ChannelAdminLogEventsFilter struct {
-	// Flags field of ChannelAdminLogEventsFilter.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Join field of ChannelAdminLogEventsFilter.
+	// Join events¹, including joins using invite links² and join requests³.
+	//
+	// Links:
+	//  1) https://core.telegram.org/constructor/channelAdminLogEventActionParticipantJoin
+	//  2) https://core.telegram.org/constructor/channelAdminLogEventActionParticipantJoinByInvite
+	//  3) https://core.telegram.org/constructor/channelAdminLogEventActionParticipantJoinByRequest
 	Join bool
-	// Leave field of ChannelAdminLogEventsFilter.
+	// Leave events¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/constructor/channelAdminLogEventActionParticipantLeave
 	Leave bool
-	// Invite field of ChannelAdminLogEventsFilter.
+	// Invite events¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/constructor/channelAdminLogEventActionParticipantInvite
 	Invite bool
-	// Ban field of ChannelAdminLogEventsFilter.
+	// Ban events¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/constructor/channelAdminLogEventActionParticipantToggleBan
 	Ban bool
-	// Unban field of ChannelAdminLogEventsFilter.
+	// Unban events¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/constructor/channelAdminLogEventActionParticipantToggleBan
 	Unban bool
-	// Kick field of ChannelAdminLogEventsFilter.
+	// Kick events¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/constructor/channelAdminLogEventActionParticipantToggleBan
 	Kick bool
-	// Unkick field of ChannelAdminLogEventsFilter.
+	// Unkick events¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/constructor/channelAdminLogEventActionParticipantToggleBan
 	Unkick bool
-	// Promote field of ChannelAdminLogEventsFilter.
+	// Admin promotion events¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/constructor/channelAdminLogEventActionParticipantToggleAdmin
 	Promote bool
-	// Demote field of ChannelAdminLogEventsFilter.
+	// Admin demotion events¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/constructor/channelAdminLogEventActionParticipantToggleAdmin
 	Demote bool
-	// Info field of ChannelAdminLogEventsFilter.
+	// Info change events (when about¹, linked chat², location³, photo⁴, stickerset⁵,
+	// title⁶ or username⁷, slowmode⁸, history TTL⁹ settings of a channel gets
+	// modified)
+	//
+	// Links:
+	//  1) https://core.telegram.org/constructor/channelAdminLogEventActionChangeAbout
+	//  2) https://core.telegram.org/constructor/channelAdminLogEventActionChangeLinkedChat
+	//  3) https://core.telegram.org/constructor/channelAdminLogEventActionChangeLocation
+	//  4) https://core.telegram.org/constructor/channelAdminLogEventActionChangePhoto
+	//  5) https://core.telegram.org/constructor/channelAdminLogEventActionChangeStickerSet
+	//  6) https://core.telegram.org/constructor/channelAdminLogEventActionChangeTitle
+	//  7) https://core.telegram.org/constructor/channelAdminLogEventActionChangeUsername
+	//  8) https://core.telegram.org/constructor/channelAdminLogEventActionToggleSlowMode
+	//  9) https://core.telegram.org/constructor/channelAdminLogEventActionChangeHistoryTTL
 	Info bool
-	// Settings field of ChannelAdminLogEventsFilter.
+	// Settings change events (invites¹, hidden prehistory², signatures³, default banned
+	// rights⁴, forum toggle events⁵)
+	//
+	// Links:
+	//  1) https://core.telegram.org/constructor/channelAdminLogEventActionToggleInvites
+	//  2) https://core.telegram.org/constructor/channelAdminLogEventActionTogglePreHistoryHidden
+	//  3) https://core.telegram.org/constructor/channelAdminLogEventActionToggleSignatures
+	//  4) https://core.telegram.org/constructor/channelAdminLogEventActionDefaultBannedRights
+	//  5) https://core.telegram.org/constructor/channelAdminLogEventActionToggleForum
 	Settings bool
-	// Pinned field of ChannelAdminLogEventsFilter.
+	// Message pin events¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/constructor/channelAdminLogEventActionUpdatePinned
 	Pinned bool
-	// Edit field of ChannelAdminLogEventsFilter.
+	// Message edit events¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/constructor/channelAdminLogEventActionEditMessage
 	Edit bool
-	// Delete field of ChannelAdminLogEventsFilter.
+	// Message deletion events¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/constructor/channelAdminLogEventActionDeleteMessage
 	Delete bool
-	// GroupCall field of ChannelAdminLogEventsFilter.
+	// Group call events
 	GroupCall bool
-	// Invites field of ChannelAdminLogEventsFilter.
+	// Invite events
 	Invites bool
-	// Send field of ChannelAdminLogEventsFilter.
+	// A message was posted in a channel
 	Send bool
-	// Forums field of ChannelAdminLogEventsFilter.
+	// Forum¹-related events
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/forum
 	Forums bool
-	// SubExtend field of ChannelAdminLogEventsFilter.
+	// Telegram Star subscription extension events »¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/constructor/channelAdminLogEventActionParticipantSubExtend
 	SubExtend bool
 }
 
@@ -161,6 +232,49 @@ func (c *ChannelAdminLogEventsFilter) String() string {
 	}
 	type Alias ChannelAdminLogEventsFilter
 	return fmt.Sprintf("ChannelAdminLogEventsFilter%+v", Alias(*c))
+}
+
+// FillFrom fills ChannelAdminLogEventsFilter from given interface.
+func (c *ChannelAdminLogEventsFilter) FillFrom(from interface {
+	GetJoin() (value bool)
+	GetLeave() (value bool)
+	GetInvite() (value bool)
+	GetBan() (value bool)
+	GetUnban() (value bool)
+	GetKick() (value bool)
+	GetUnkick() (value bool)
+	GetPromote() (value bool)
+	GetDemote() (value bool)
+	GetInfo() (value bool)
+	GetSettings() (value bool)
+	GetPinned() (value bool)
+	GetEdit() (value bool)
+	GetDelete() (value bool)
+	GetGroupCall() (value bool)
+	GetInvites() (value bool)
+	GetSend() (value bool)
+	GetForums() (value bool)
+	GetSubExtend() (value bool)
+}) {
+	c.Join = from.GetJoin()
+	c.Leave = from.GetLeave()
+	c.Invite = from.GetInvite()
+	c.Ban = from.GetBan()
+	c.Unban = from.GetUnban()
+	c.Kick = from.GetKick()
+	c.Unkick = from.GetUnkick()
+	c.Promote = from.GetPromote()
+	c.Demote = from.GetDemote()
+	c.Info = from.GetInfo()
+	c.Settings = from.GetSettings()
+	c.Pinned = from.GetPinned()
+	c.Edit = from.GetEdit()
+	c.Delete = from.GetDelete()
+	c.GroupCall = from.GetGroupCall()
+	c.Invites = from.GetInvites()
+	c.Send = from.GetSend()
+	c.Forums = from.GetForums()
+	c.SubExtend = from.GetSubExtend()
 }
 
 // TypeID returns type id in TL schema.

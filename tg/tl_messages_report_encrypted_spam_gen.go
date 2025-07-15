@@ -32,8 +32,11 @@ var (
 )
 
 // MessagesReportEncryptedSpamRequest represents TL type `messages.reportEncryptedSpam#4b0c8c0f`.
+// Report a secret chat for spam
+//
+// See https://core.telegram.org/method/messages.reportEncryptedSpam for reference.
 type MessagesReportEncryptedSpamRequest struct {
-	// Peer field of MessagesReportEncryptedSpamRequest.
+	// The secret chat to report
 	Peer InputEncryptedChat
 }
 
@@ -66,6 +69,13 @@ func (r *MessagesReportEncryptedSpamRequest) String() string {
 	}
 	type Alias MessagesReportEncryptedSpamRequest
 	return fmt.Sprintf("MessagesReportEncryptedSpamRequest%+v", Alias(*r))
+}
+
+// FillFrom fills MessagesReportEncryptedSpamRequest from given interface.
+func (r *MessagesReportEncryptedSpamRequest) FillFrom(from interface {
+	GetPeer() (value InputEncryptedChat)
+}) {
+	r.Peer = from.GetPeer()
 }
 
 // TypeID returns type id in TL schema.
@@ -152,6 +162,13 @@ func (r *MessagesReportEncryptedSpamRequest) GetPeer() (value InputEncryptedChat
 }
 
 // MessagesReportEncryptedSpam invokes method messages.reportEncryptedSpam#4b0c8c0f returning error if any.
+// Report a secret chat for spam
+//
+// Possible errors:
+//
+//	400 CHAT_ID_INVALID: The provided chat id is invalid.
+//
+// See https://core.telegram.org/method/messages.reportEncryptedSpam for reference.
 func (c *Client) MessagesReportEncryptedSpam(ctx context.Context, peer InputEncryptedChat) (bool, error) {
 	var result BoolBox
 

@@ -32,14 +32,23 @@ var (
 )
 
 // BusinessLocation represents TL type `businessLocation#ac5c1af7`.
+// Represents the location of a Telegram Business »¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/business#location
+//
+// See https://core.telegram.org/constructor/businessLocation for reference.
 type BusinessLocation struct {
-	// Flags field of BusinessLocation.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// GeoPoint field of BusinessLocation.
+	// Geographical coordinates (optional).
 	//
 	// Use SetGeoPoint and GetGeoPoint helpers.
 	GeoPoint GeoPointClass
-	// Address field of BusinessLocation.
+	// Textual description of the address (mandatory).
 	Address string
 }
 
@@ -78,6 +87,18 @@ func (b *BusinessLocation) String() string {
 	}
 	type Alias BusinessLocation
 	return fmt.Sprintf("BusinessLocation%+v", Alias(*b))
+}
+
+// FillFrom fills BusinessLocation from given interface.
+func (b *BusinessLocation) FillFrom(from interface {
+	GetGeoPoint() (value GeoPointClass, ok bool)
+	GetAddress() (value string)
+}) {
+	if val, ok := from.GetGeoPoint(); ok {
+		b.GeoPoint = val
+	}
+
+	b.Address = from.GetAddress()
 }
 
 // TypeID returns type id in TL schema.
@@ -215,4 +236,13 @@ func (b *BusinessLocation) GetAddress() (value string) {
 		return
 	}
 	return b.Address
+}
+
+// GetGeoPointAsNotEmpty returns mapped value of GeoPoint conditional field and
+// boolean which is true if field was set.
+func (b *BusinessLocation) GetGeoPointAsNotEmpty() (*GeoPoint, bool) {
+	if value, ok := b.GetGeoPoint(); ok {
+		return value.AsNotEmpty()
+	}
+	return nil, false
 }

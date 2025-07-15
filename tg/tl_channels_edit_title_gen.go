@@ -32,10 +32,16 @@ var (
 )
 
 // ChannelsEditTitleRequest represents TL type `channels.editTitle#566decd0`.
+// Edit the name of a channel/supergroup¹
+//
+// Links:
+//  1. https://core.telegram.org/api/channel
+//
+// See https://core.telegram.org/method/channels.editTitle for reference.
 type ChannelsEditTitleRequest struct {
-	// Channel field of ChannelsEditTitleRequest.
+	// Channel/supergroup
 	Channel InputChannelClass
-	// Title field of ChannelsEditTitleRequest.
+	// New name
 	Title string
 }
 
@@ -71,6 +77,15 @@ func (e *ChannelsEditTitleRequest) String() string {
 	}
 	type Alias ChannelsEditTitleRequest
 	return fmt.Sprintf("ChannelsEditTitleRequest%+v", Alias(*e))
+}
+
+// FillFrom fills ChannelsEditTitleRequest from given interface.
+func (e *ChannelsEditTitleRequest) FillFrom(from interface {
+	GetChannel() (value InputChannelClass)
+	GetTitle() (value string)
+}) {
+	e.Channel = from.GetChannel()
+	e.Title = from.GetTitle()
 }
 
 // TypeID returns type id in TL schema.
@@ -181,7 +196,28 @@ func (e *ChannelsEditTitleRequest) GetTitle() (value string) {
 	return e.Title
 }
 
+// GetChannelAsNotEmpty returns mapped value of Channel field.
+func (e *ChannelsEditTitleRequest) GetChannelAsNotEmpty() (NotEmptyInputChannel, bool) {
+	return e.Channel.AsNotEmpty()
+}
+
 // ChannelsEditTitle invokes method channels.editTitle#566decd0 returning error if any.
+// Edit the name of a channel/supergroup¹
+//
+// Links:
+//  1. https://core.telegram.org/api/channel
+//
+// Possible errors:
+//
+//	400 CHANNEL_INVALID: The provided channel is invalid.
+//	400 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
+//	403 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
+//	400 CHAT_NOT_MODIFIED: No changes were made to chat information because the new information you passed is identical to the current information.
+//	400 CHAT_TITLE_EMPTY: No chat title provided.
+//	403 CHAT_WRITE_FORBIDDEN: You can't write in this chat.
+//
+// See https://core.telegram.org/method/channels.editTitle for reference.
+// Can be used by bots.
 func (c *Client) ChannelsEditTitle(ctx context.Context, request *ChannelsEditTitleRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

@@ -32,8 +32,14 @@ var (
 )
 
 // MessagesCheckChatInviteRequest represents TL type `messages.checkChatInvite#3eadb1bb`.
+// Check the validity of a chat invite link and get basic info about it
+//
+// See https://core.telegram.org/method/messages.checkChatInvite for reference.
 type MessagesCheckChatInviteRequest struct {
-	// Hash field of MessagesCheckChatInviteRequest.
+	// Invite hash from chat invite deep link »¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/links#chat-invite-links
 	Hash string
 }
 
@@ -66,6 +72,13 @@ func (c *MessagesCheckChatInviteRequest) String() string {
 	}
 	type Alias MessagesCheckChatInviteRequest
 	return fmt.Sprintf("MessagesCheckChatInviteRequest%+v", Alias(*c))
+}
+
+// FillFrom fills MessagesCheckChatInviteRequest from given interface.
+func (c *MessagesCheckChatInviteRequest) FillFrom(from interface {
+	GetHash() (value string)
+}) {
+	c.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -152,6 +165,16 @@ func (c *MessagesCheckChatInviteRequest) GetHash() (value string) {
 }
 
 // MessagesCheckChatInvite invokes method messages.checkChatInvite#3eadb1bb returning error if any.
+// Check the validity of a chat invite link and get basic info about it
+//
+// Possible errors:
+//
+//	406 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
+//	400 INVITE_HASH_EMPTY: The invite hash is empty.
+//	406 INVITE_HASH_EXPIRED: The invite link has expired.
+//	400 INVITE_HASH_INVALID: The invite hash is invalid.
+//
+// See https://core.telegram.org/method/messages.checkChatInvite for reference.
 func (c *Client) MessagesCheckChatInvite(ctx context.Context, hash string) (ChatInviteClass, error) {
 	var result ChatInviteBox
 

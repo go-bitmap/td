@@ -32,10 +32,16 @@ var (
 )
 
 // ChannelsEditPhotoRequest represents TL type `channels.editPhoto#f12e57c9`.
+// Change the photo of a channel/supergroup¹
+//
+// Links:
+//  1. https://core.telegram.org/api/channel
+//
+// See https://core.telegram.org/method/channels.editPhoto for reference.
 type ChannelsEditPhotoRequest struct {
-	// Channel field of ChannelsEditPhotoRequest.
+	// Channel/supergroup whose photo should be edited
 	Channel InputChannelClass
-	// Photo field of ChannelsEditPhotoRequest.
+	// New photo
 	Photo InputChatPhotoClass
 }
 
@@ -71,6 +77,15 @@ func (e *ChannelsEditPhotoRequest) String() string {
 	}
 	type Alias ChannelsEditPhotoRequest
 	return fmt.Sprintf("ChannelsEditPhotoRequest%+v", Alias(*e))
+}
+
+// FillFrom fills ChannelsEditPhotoRequest from given interface.
+func (e *ChannelsEditPhotoRequest) FillFrom(from interface {
+	GetChannel() (value InputChannelClass)
+	GetPhoto() (value InputChatPhotoClass)
+}) {
+	e.Channel = from.GetChannel()
+	e.Photo = from.GetPhoto()
 }
 
 // TypeID returns type id in TL schema.
@@ -186,7 +201,35 @@ func (e *ChannelsEditPhotoRequest) GetPhoto() (value InputChatPhotoClass) {
 	return e.Photo
 }
 
+// GetChannelAsNotEmpty returns mapped value of Channel field.
+func (e *ChannelsEditPhotoRequest) GetChannelAsNotEmpty() (NotEmptyInputChannel, bool) {
+	return e.Channel.AsNotEmpty()
+}
+
 // ChannelsEditPhoto invokes method channels.editPhoto#f12e57c9 returning error if any.
+// Change the photo of a channel/supergroup¹
+//
+// Links:
+//  1. https://core.telegram.org/api/channel
+//
+// Possible errors:
+//
+//	400 CHANNEL_INVALID: The provided channel is invalid.
+//	400 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
+//	403 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
+//	400 CHAT_NOT_MODIFIED: No changes were made to chat information because the new information you passed is identical to the current information.
+//	403 CHAT_WRITE_FORBIDDEN: You can't write in this chat.
+//	400 FILE_PARTS_INVALID: The number of file parts is invalid.
+//	400 FILE_REFERENCE_INVALID: The specified file reference is invalid.
+//	400 IMAGE_PROCESS_FAILED: Failure while processing image.
+//	400 PHOTO_CROP_SIZE_SMALL: Photo is too small.
+//	400 PHOTO_EXT_INVALID: The extension of the photo is invalid.
+//	400 PHOTO_FILE_MISSING: Profile photo file missing.
+//	400 PHOTO_INVALID: Photo invalid.
+//	400 STICKER_MIME_INVALID: The specified sticker MIME type is invalid.
+//
+// See https://core.telegram.org/method/channels.editPhoto for reference.
+// Can be used by bots.
 func (c *Client) ChannelsEditPhoto(ctx context.Context, request *ChannelsEditPhotoRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

@@ -32,8 +32,14 @@ var (
 )
 
 // ContactsToggleTopPeersRequest represents TL type `contacts.toggleTopPeers#8514bdda`.
+// Enable/disable top peers¹
+//
+// Links:
+//  1. https://core.telegram.org/api/top-rating
+//
+// See https://core.telegram.org/method/contacts.toggleTopPeers for reference.
 type ContactsToggleTopPeersRequest struct {
-	// Enabled field of ContactsToggleTopPeersRequest.
+	// Enable/disable
 	Enabled bool
 }
 
@@ -66,6 +72,13 @@ func (t *ContactsToggleTopPeersRequest) String() string {
 	}
 	type Alias ContactsToggleTopPeersRequest
 	return fmt.Sprintf("ContactsToggleTopPeersRequest%+v", Alias(*t))
+}
+
+// FillFrom fills ContactsToggleTopPeersRequest from given interface.
+func (t *ContactsToggleTopPeersRequest) FillFrom(from interface {
+	GetEnabled() (value bool)
+}) {
+	t.Enabled = from.GetEnabled()
 }
 
 // TypeID returns type id in TL schema.
@@ -152,6 +165,12 @@ func (t *ContactsToggleTopPeersRequest) GetEnabled() (value bool) {
 }
 
 // ContactsToggleTopPeers invokes method contacts.toggleTopPeers#8514bdda returning error if any.
+// Enable/disable top peers¹
+//
+// Links:
+//  1. https://core.telegram.org/api/top-rating
+//
+// See https://core.telegram.org/method/contacts.toggleTopPeers for reference.
 func (c *Client) ContactsToggleTopPeers(ctx context.Context, enabled bool) (bool, error) {
 	var result BoolBox
 

@@ -32,16 +32,30 @@ var (
 )
 
 // InputBusinessChatLink represents TL type `inputBusinessChatLink#11679fa7`.
+// Contains info about a business chat deep link »¹ to be created by the current
+// account.
+//
+// Links:
+//  1. https://core.telegram.org/api/business#business-chat-links
+//
+// See https://core.telegram.org/constructor/inputBusinessChatLink for reference.
 type InputBusinessChatLink struct {
-	// Flags field of InputBusinessChatLink.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Message field of InputBusinessChatLink.
+	// Message to pre-fill in the message input field.
 	Message string
-	// Entities field of InputBusinessChatLink.
+	// Message entities for styled text¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities
 	//
 	// Use SetEntities and GetEntities helpers.
 	Entities []MessageEntityClass
-	// Title field of InputBusinessChatLink.
+	// Human-readable name of the link, to simplify management in the UI (only visible to the
+	// creator of the link).
 	//
 	// Use SetTitle and GetTitle helpers.
 	Title string
@@ -85,6 +99,23 @@ func (i *InputBusinessChatLink) String() string {
 	}
 	type Alias InputBusinessChatLink
 	return fmt.Sprintf("InputBusinessChatLink%+v", Alias(*i))
+}
+
+// FillFrom fills InputBusinessChatLink from given interface.
+func (i *InputBusinessChatLink) FillFrom(from interface {
+	GetMessage() (value string)
+	GetEntities() (value []MessageEntityClass, ok bool)
+	GetTitle() (value string, ok bool)
+}) {
+	i.Message = from.GetMessage()
+	if val, ok := from.GetEntities(); ok {
+		i.Entities = val
+	}
+
+	if val, ok := from.GetTitle(); ok {
+		i.Title = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -271,4 +302,12 @@ func (i *InputBusinessChatLink) GetTitle() (value string, ok bool) {
 		return value, false
 	}
 	return i.Title, true
+}
+
+// MapEntities returns field Entities wrapped in MessageEntityClassArray helper.
+func (i *InputBusinessChatLink) MapEntities() (value MessageEntityClassArray, ok bool) {
+	if !i.Flags.Has(0) {
+		return value, false
+	}
+	return MessageEntityClassArray(i.Entities), true
 }

@@ -32,12 +32,24 @@ var (
 )
 
 // PaymentsGetStarsRevenueStatsRequest represents TL type `payments.getStarsRevenueStats#d91ffad6`.
+// Get Telegram Star revenue statistics »¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/stars
+//
+// See https://core.telegram.org/method/payments.getStarsRevenueStats for reference.
 type PaymentsGetStarsRevenueStatsRequest struct {
-	// Flags field of PaymentsGetStarsRevenueStatsRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Dark field of PaymentsGetStarsRevenueStatsRequest.
+	// Whether to enable dark theme for graph colors
 	Dark bool
-	// Peer field of PaymentsGetStarsRevenueStatsRequest.
+	// Get statistics for the specified bot, channel or ourselves (inputPeerSelf¹).
+	//
+	// Links:
+	//  1) https://core.telegram.org/constructor/inputPeerSelf
 	Peer InputPeerClass
 }
 
@@ -76,6 +88,15 @@ func (g *PaymentsGetStarsRevenueStatsRequest) String() string {
 	}
 	type Alias PaymentsGetStarsRevenueStatsRequest
 	return fmt.Sprintf("PaymentsGetStarsRevenueStatsRequest%+v", Alias(*g))
+}
+
+// FillFrom fills PaymentsGetStarsRevenueStatsRequest from given interface.
+func (g *PaymentsGetStarsRevenueStatsRequest) FillFrom(from interface {
+	GetDark() (value bool)
+	GetPeer() (value InputPeerClass)
+}) {
+	g.Dark = from.GetDark()
+	g.Peer = from.GetPeer()
 }
 
 // TypeID returns type id in TL schema.
@@ -208,6 +229,16 @@ func (g *PaymentsGetStarsRevenueStatsRequest) GetPeer() (value InputPeerClass) {
 }
 
 // PaymentsGetStarsRevenueStats invokes method payments.getStarsRevenueStats#d91ffad6 returning error if any.
+// Get Telegram Star revenue statistics »¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/stars
+//
+// Possible errors:
+//
+//	400 PEER_ID_INVALID: The provided peer id is invalid.
+//
+// See https://core.telegram.org/method/payments.getStarsRevenueStats for reference.
 func (c *Client) PaymentsGetStarsRevenueStats(ctx context.Context, request *PaymentsGetStarsRevenueStatsRequest) (*PaymentsStarsRevenueStats, error) {
 	var result PaymentsStarsRevenueStats
 

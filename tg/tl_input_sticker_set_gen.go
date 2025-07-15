@@ -32,6 +32,9 @@ var (
 )
 
 // InputStickerSetEmpty represents TL type `inputStickerSetEmpty#ffb62b95`.
+// Empty constructor
+//
+// See https://core.telegram.org/constructor/inputStickerSetEmpty for reference.
 type InputStickerSetEmpty struct {
 }
 
@@ -131,10 +134,13 @@ func (i *InputStickerSetEmpty) DecodeBare(b *bin.Buffer) error {
 }
 
 // InputStickerSetID represents TL type `inputStickerSetID#9de7a269`.
+// Stickerset by ID
+//
+// See https://core.telegram.org/constructor/inputStickerSetID for reference.
 type InputStickerSetID struct {
-	// ID field of InputStickerSetID.
+	// ID
 	ID int64
-	// AccessHash field of InputStickerSetID.
+	// Access hash
 	AccessHash int64
 }
 
@@ -175,6 +181,15 @@ func (i *InputStickerSetID) String() string {
 	}
 	type Alias InputStickerSetID
 	return fmt.Sprintf("InputStickerSetID%+v", Alias(*i))
+}
+
+// FillFrom fills InputStickerSetID from given interface.
+func (i *InputStickerSetID) FillFrom(from interface {
+	GetID() (value int64)
+	GetAccessHash() (value int64)
+}) {
+	i.ID = from.GetID()
+	i.AccessHash = from.GetAccessHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -281,8 +296,17 @@ func (i *InputStickerSetID) GetAccessHash() (value int64) {
 }
 
 // InputStickerSetShortName represents TL type `inputStickerSetShortName#861cc8a0`.
+// Stickerset by short name, from a stickerset deep link »¹
+//
+// Links:
+//  1. https://core.telegram.org/api/links#stickerset-links
+//
+// See https://core.telegram.org/constructor/inputStickerSetShortName for reference.
 type InputStickerSetShortName struct {
-	// ShortName field of InputStickerSetShortName.
+	// Short name from a stickerset deep link »¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/links#stickerset-links
 	ShortName string
 }
 
@@ -320,6 +344,13 @@ func (i *InputStickerSetShortName) String() string {
 	}
 	type Alias InputStickerSetShortName
 	return fmt.Sprintf("InputStickerSetShortName%+v", Alias(*i))
+}
+
+// FillFrom fills InputStickerSetShortName from given interface.
+func (i *InputStickerSetShortName) FillFrom(from interface {
+	GetShortName() (value string)
+}) {
+	i.ShortName = from.GetShortName()
 }
 
 // TypeID returns type id in TL schema.
@@ -406,6 +437,9 @@ func (i *InputStickerSetShortName) GetShortName() (value string) {
 }
 
 // InputStickerSetAnimatedEmoji represents TL type `inputStickerSetAnimatedEmoji#28703c8`.
+// Animated emojis stickerset
+//
+// See https://core.telegram.org/constructor/inputStickerSetAnimatedEmoji for reference.
 type InputStickerSetAnimatedEmoji struct {
 }
 
@@ -505,8 +539,14 @@ func (i *InputStickerSetAnimatedEmoji) DecodeBare(b *bin.Buffer) error {
 }
 
 // InputStickerSetDice represents TL type `inputStickerSetDice#e67f520e`.
+// Used for fetching animated dice stickers¹
+//
+// Links:
+//  1. https://core.telegram.org/api/dice
+//
+// See https://core.telegram.org/constructor/inputStickerSetDice for reference.
 type InputStickerSetDice struct {
-	// Emoticon field of InputStickerSetDice.
+	// The emoji, for now ,  and  are supported
 	Emoticon string
 }
 
@@ -544,6 +584,13 @@ func (i *InputStickerSetDice) String() string {
 	}
 	type Alias InputStickerSetDice
 	return fmt.Sprintf("InputStickerSetDice%+v", Alias(*i))
+}
+
+// FillFrom fills InputStickerSetDice from given interface.
+func (i *InputStickerSetDice) FillFrom(from interface {
+	GetEmoticon() (value string)
+}) {
+	i.Emoticon = from.GetEmoticon()
 }
 
 // TypeID returns type id in TL schema.
@@ -630,6 +677,10 @@ func (i *InputStickerSetDice) GetEmoticon() (value string) {
 }
 
 // InputStickerSetAnimatedEmojiAnimations represents TL type `inputStickerSetAnimatedEmojiAnimations#cde3739`.
+// Animated emoji reaction stickerset (contains animations to play when a user clicks on
+// a given animated emoji)
+//
+// See https://core.telegram.org/constructor/inputStickerSetAnimatedEmojiAnimations for reference.
 type InputStickerSetAnimatedEmojiAnimations struct {
 }
 
@@ -729,6 +780,9 @@ func (i *InputStickerSetAnimatedEmojiAnimations) DecodeBare(b *bin.Buffer) error
 }
 
 // InputStickerSetPremiumGifts represents TL type `inputStickerSetPremiumGifts#c88b3b02`.
+// Stickers to show when receiving a gifted Telegram Premium subscription
+//
+// See https://core.telegram.org/constructor/inputStickerSetPremiumGifts for reference.
 type InputStickerSetPremiumGifts struct {
 }
 
@@ -828,6 +882,13 @@ func (i *InputStickerSetPremiumGifts) DecodeBare(b *bin.Buffer) error {
 }
 
 // InputStickerSetEmojiGenericAnimations represents TL type `inputStickerSetEmojiGenericAnimations#4c4d4ce`.
+// Generic animation stickerset containing animations to play when reacting to messages
+// using a normal emoji without a custom animation¹
+//
+// Links:
+//  1. https://core.telegram.org/api/reactions
+//
+// See https://core.telegram.org/constructor/inputStickerSetEmojiGenericAnimations for reference.
 type InputStickerSetEmojiGenericAnimations struct {
 }
 
@@ -927,6 +988,12 @@ func (i *InputStickerSetEmojiGenericAnimations) DecodeBare(b *bin.Buffer) error 
 }
 
 // InputStickerSetEmojiDefaultStatuses represents TL type `inputStickerSetEmojiDefaultStatuses#29d0f5ee`.
+// Default custom emoji status¹ stickerset
+//
+// Links:
+//  1. https://core.telegram.org/api/emoji-status
+//
+// See https://core.telegram.org/constructor/inputStickerSetEmojiDefaultStatuses for reference.
 type InputStickerSetEmojiDefaultStatuses struct {
 }
 
@@ -1026,6 +1093,13 @@ func (i *InputStickerSetEmojiDefaultStatuses) DecodeBare(b *bin.Buffer) error {
 }
 
 // InputStickerSetEmojiDefaultTopicIcons represents TL type `inputStickerSetEmojiDefaultTopicIcons#44c1f8e9`.
+// Default custom emoji¹ stickerset for forum topic icons²
+//
+// Links:
+//  1. https://core.telegram.org/api/custom-emoji
+//  2. https://core.telegram.org/api/forum#forum-topics
+//
+// See https://core.telegram.org/constructor/inputStickerSetEmojiDefaultTopicIcons for reference.
 type InputStickerSetEmojiDefaultTopicIcons struct {
 }
 
@@ -1125,6 +1199,12 @@ func (i *InputStickerSetEmojiDefaultTopicIcons) DecodeBare(b *bin.Buffer) error 
 }
 
 // InputStickerSetEmojiChannelDefaultStatuses represents TL type `inputStickerSetEmojiChannelDefaultStatuses#49748553`.
+// Default custom emoji status¹ stickerset for channel statuses
+//
+// Links:
+//  1. https://core.telegram.org/api/emoji-status
+//
+// See https://core.telegram.org/constructor/inputStickerSetEmojiChannelDefaultStatuses for reference.
 type InputStickerSetEmojiChannelDefaultStatuses struct {
 }
 
@@ -1227,6 +1307,8 @@ func (i *InputStickerSetEmojiChannelDefaultStatuses) DecodeBare(b *bin.Buffer) e
 const InputStickerSetClassName = "InputStickerSet"
 
 // InputStickerSetClass represents InputStickerSet generic type.
+//
+// See https://core.telegram.org/type/InputStickerSet for reference.
 //
 // Constructors:
 //   - [InputStickerSetEmpty]

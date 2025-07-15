@@ -32,8 +32,14 @@ var (
 )
 
 // HelpPeerColorSet represents TL type `help.peerColorSet#26219a58`.
+// Represents a color palette that can be used in message accents »¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/colors
+//
+// See https://core.telegram.org/constructor/help.peerColorSet for reference.
 type HelpPeerColorSet struct {
-	// Colors field of HelpPeerColorSet.
+	// A list of 1-3 colors in RGB format, describing the accent color.
 	Colors []int
 }
 
@@ -71,6 +77,13 @@ func (p *HelpPeerColorSet) String() string {
 	}
 	type Alias HelpPeerColorSet
 	return fmt.Sprintf("HelpPeerColorSet%+v", Alias(*p))
+}
+
+// FillFrom fills HelpPeerColorSet from given interface.
+func (p *HelpPeerColorSet) FillFrom(from interface {
+	GetColors() (value []int)
+}) {
+	p.Colors = from.GetColors()
 }
 
 // TypeID returns type id in TL schema.
@@ -170,12 +183,21 @@ func (p *HelpPeerColorSet) GetColors() (value []int) {
 }
 
 // HelpPeerColorProfileSet represents TL type `help.peerColorProfileSet#767d61eb`.
+// Represents a color palette that can be used in profile pages »¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/colors
+//
+// See https://core.telegram.org/constructor/help.peerColorProfileSet for reference.
 type HelpPeerColorProfileSet struct {
-	// PaletteColors field of HelpPeerColorProfileSet.
+	// A list of 1-2 colors in RGB format, shown in the color palette settings to describe
+	// the current palette.
 	PaletteColors []int
-	// BgColors field of HelpPeerColorProfileSet.
+	// A list of 1-2 colors in RGB format describing the colors used to generate the actual
+	// background used in the profile page.
 	BgColors []int
-	// StoryColors field of HelpPeerColorProfileSet.
+	// A list of 2 colors in RGB format describing the colors of the gradient used for the
+	// unread active story indicator around the profile photo.
 	StoryColors []int
 }
 
@@ -219,6 +241,17 @@ func (p *HelpPeerColorProfileSet) String() string {
 	}
 	type Alias HelpPeerColorProfileSet
 	return fmt.Sprintf("HelpPeerColorProfileSet%+v", Alias(*p))
+}
+
+// FillFrom fills HelpPeerColorProfileSet from given interface.
+func (p *HelpPeerColorProfileSet) FillFrom(from interface {
+	GetPaletteColors() (value []int)
+	GetBgColors() (value []int)
+	GetStoryColors() (value []int)
+}) {
+	p.PaletteColors = from.GetPaletteColors()
+	p.BgColors = from.GetBgColors()
+	p.StoryColors = from.GetStoryColors()
 }
 
 // TypeID returns type id in TL schema.
@@ -387,6 +420,8 @@ func (p *HelpPeerColorProfileSet) GetStoryColors() (value []int) {
 const HelpPeerColorSetClassName = "help.PeerColorSet"
 
 // HelpPeerColorSetClass represents help.PeerColorSet generic type.
+//
+// See https://core.telegram.org/type/help.PeerColorSet for reference.
 //
 // Constructors:
 //   - [HelpPeerColorSet]

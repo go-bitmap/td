@@ -32,8 +32,12 @@ var (
 )
 
 // PhoneReceivedCallRequest represents TL type `phone.receivedCall#17d54f61`.
+// Optional: notify the server that the user is currently busy in a call: this will
+// automatically refuse all incoming phone calls until the current phone call is ended.
+//
+// See https://core.telegram.org/method/phone.receivedCall for reference.
 type PhoneReceivedCallRequest struct {
-	// Peer field of PhoneReceivedCallRequest.
+	// The phone call we're currently in
 	Peer InputPhoneCall
 }
 
@@ -66,6 +70,13 @@ func (r *PhoneReceivedCallRequest) String() string {
 	}
 	type Alias PhoneReceivedCallRequest
 	return fmt.Sprintf("PhoneReceivedCallRequest%+v", Alias(*r))
+}
+
+// FillFrom fills PhoneReceivedCallRequest from given interface.
+func (r *PhoneReceivedCallRequest) FillFrom(from interface {
+	GetPeer() (value InputPhoneCall)
+}) {
+	r.Peer = from.GetPeer()
 }
 
 // TypeID returns type id in TL schema.
@@ -152,6 +163,15 @@ func (r *PhoneReceivedCallRequest) GetPeer() (value InputPhoneCall) {
 }
 
 // PhoneReceivedCall invokes method phone.receivedCall#17d54f61 returning error if any.
+// Optional: notify the server that the user is currently busy in a call: this will
+// automatically refuse all incoming phone calls until the current phone call is ended.
+//
+// Possible errors:
+//
+//	400 CALL_ALREADY_DECLINED: The call was already declined.
+//	400 CALL_PEER_INVALID: The provided call peer object is invalid.
+//
+// See https://core.telegram.org/method/phone.receivedCall for reference.
 func (c *Client) PhoneReceivedCall(ctx context.Context, peer InputPhoneCall) (bool, error) {
 	var result BoolBox
 

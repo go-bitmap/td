@@ -32,12 +32,15 @@ var (
 )
 
 // ChannelsGetSendAsRequest represents TL type `channels.getSendAs#e785a43f`.
+// Obtains a list of peers that can be used to send messages in a specific group
+//
+// See https://core.telegram.org/method/channels.getSendAs for reference.
 type ChannelsGetSendAsRequest struct {
 	// Flags field of ChannelsGetSendAsRequest.
 	Flags bin.Fields
 	// ForPaidReactions field of ChannelsGetSendAsRequest.
 	ForPaidReactions bool
-	// Peer field of ChannelsGetSendAsRequest.
+	// The group where we intend to send messages
 	Peer InputPeerClass
 }
 
@@ -76,6 +79,15 @@ func (g *ChannelsGetSendAsRequest) String() string {
 	}
 	type Alias ChannelsGetSendAsRequest
 	return fmt.Sprintf("ChannelsGetSendAsRequest%+v", Alias(*g))
+}
+
+// FillFrom fills ChannelsGetSendAsRequest from given interface.
+func (g *ChannelsGetSendAsRequest) FillFrom(from interface {
+	GetForPaidReactions() (value bool)
+	GetPeer() (value InputPeerClass)
+}) {
+	g.ForPaidReactions = from.GetForPaidReactions()
+	g.Peer = from.GetPeer()
 }
 
 // TypeID returns type id in TL schema.
@@ -208,6 +220,16 @@ func (g *ChannelsGetSendAsRequest) GetPeer() (value InputPeerClass) {
 }
 
 // ChannelsGetSendAs invokes method channels.getSendAs#e785a43f returning error if any.
+// Obtains a list of peers that can be used to send messages in a specific group
+//
+// Possible errors:
+//
+//	400 CHANNEL_INVALID: The provided channel is invalid.
+//	400 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
+//	400 CHAT_ID_INVALID: The provided chat id is invalid.
+//	400 PEER_ID_INVALID: The provided peer id is invalid.
+//
+// See https://core.telegram.org/method/channels.getSendAs for reference.
 func (c *Client) ChannelsGetSendAs(ctx context.Context, request *ChannelsGetSendAsRequest) (*ChannelsSendAsPeers, error) {
 	var result ChannelsSendAsPeers
 

@@ -32,10 +32,13 @@ var (
 )
 
 // PaymentFormMethod represents TL type `paymentFormMethod#88f8f21b`.
+// Represents an additional payment method
+//
+// See https://core.telegram.org/constructor/paymentFormMethod for reference.
 type PaymentFormMethod struct {
-	// URL field of PaymentFormMethod.
+	// URL to open in a webview to process the payment
 	URL string
-	// Title field of PaymentFormMethod.
+	// Payment method description
 	Title string
 }
 
@@ -71,6 +74,15 @@ func (p *PaymentFormMethod) String() string {
 	}
 	type Alias PaymentFormMethod
 	return fmt.Sprintf("PaymentFormMethod%+v", Alias(*p))
+}
+
+// FillFrom fills PaymentFormMethod from given interface.
+func (p *PaymentFormMethod) FillFrom(from interface {
+	GetURL() (value string)
+	GetTitle() (value string)
+}) {
+	p.URL = from.GetURL()
+	p.Title = from.GetTitle()
 }
 
 // TypeID returns type id in TL schema.

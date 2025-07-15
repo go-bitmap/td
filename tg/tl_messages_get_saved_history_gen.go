@@ -32,6 +32,12 @@ var (
 )
 
 // MessagesGetSavedHistoryRequest represents TL type `messages.getSavedHistory#998ab009`.
+// Returns saved messages »¹ forwarded from a specific peer
+//
+// Links:
+//  1. https://core.telegram.org/api/saved-messages
+//
+// See https://core.telegram.org/method/messages.getSavedHistory for reference.
 type MessagesGetSavedHistoryRequest struct {
 	// Flags field of MessagesGetSavedHistoryRequest.
 	Flags bin.Fields
@@ -39,21 +45,26 @@ type MessagesGetSavedHistoryRequest struct {
 	//
 	// Use SetParentPeer and GetParentPeer helpers.
 	ParentPeer InputPeerClass
-	// Peer field of MessagesGetSavedHistoryRequest.
+	// Target peer
 	Peer InputPeerClass
-	// OffsetID field of MessagesGetSavedHistoryRequest.
+	// Only return messages starting from the specified message ID
 	OffsetID int
-	// OffsetDate field of MessagesGetSavedHistoryRequest.
+	// Only return messages sent before the specified date
 	OffsetDate int
-	// AddOffset field of MessagesGetSavedHistoryRequest.
+	// Number of list elements to be skipped, negative values are also accepted.
 	AddOffset int
-	// Limit field of MessagesGetSavedHistoryRequest.
+	// Number of results to return
 	Limit int
-	// MaxID field of MessagesGetSavedHistoryRequest.
+	// If a positive value was transferred, the method will return only messages with IDs
+	// less than max_id
 	MaxID int
-	// MinID field of MessagesGetSavedHistoryRequest.
+	// If a positive value was transferred, the method will return only messages with IDs
+	// more than min_id
 	MinID int
-	// Hash field of MessagesGetSavedHistoryRequest.
+	// Result hash¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets
 	Hash int64
 }
 
@@ -113,6 +124,32 @@ func (g *MessagesGetSavedHistoryRequest) String() string {
 	}
 	type Alias MessagesGetSavedHistoryRequest
 	return fmt.Sprintf("MessagesGetSavedHistoryRequest%+v", Alias(*g))
+}
+
+// FillFrom fills MessagesGetSavedHistoryRequest from given interface.
+func (g *MessagesGetSavedHistoryRequest) FillFrom(from interface {
+	GetParentPeer() (value InputPeerClass, ok bool)
+	GetPeer() (value InputPeerClass)
+	GetOffsetID() (value int)
+	GetOffsetDate() (value int)
+	GetAddOffset() (value int)
+	GetLimit() (value int)
+	GetMaxID() (value int)
+	GetMinID() (value int)
+	GetHash() (value int64)
+}) {
+	if val, ok := from.GetParentPeer(); ok {
+		g.ParentPeer = val
+	}
+
+	g.Peer = from.GetPeer()
+	g.OffsetID = from.GetOffsetID()
+	g.OffsetDate = from.GetOffsetDate()
+	g.AddOffset = from.GetAddOffset()
+	g.Limit = from.GetLimit()
+	g.MaxID = from.GetMaxID()
+	g.MinID = from.GetMinID()
+	g.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -398,6 +435,16 @@ func (g *MessagesGetSavedHistoryRequest) GetHash() (value int64) {
 }
 
 // MessagesGetSavedHistory invokes method messages.getSavedHistory#998ab009 returning error if any.
+// Returns saved messages »¹ forwarded from a specific peer
+//
+// Links:
+//  1. https://core.telegram.org/api/saved-messages
+//
+// Possible errors:
+//
+//	400 PEER_ID_INVALID: The provided peer id is invalid.
+//
+// See https://core.telegram.org/method/messages.getSavedHistory for reference.
 func (c *Client) MessagesGetSavedHistory(ctx context.Context, request *MessagesGetSavedHistoryRequest) (MessagesMessagesClass, error) {
 	var result MessagesMessagesBox
 

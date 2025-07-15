@@ -32,8 +32,14 @@ var (
 )
 
 // ContactsAcceptContactRequest represents TL type `contacts.acceptContact#f831a20f`.
+// If the add contact action bar is active¹, add that user as contact
+//
+// Links:
+//  1. https://core.telegram.org/api/action-bar#add-contact
+//
+// See https://core.telegram.org/method/contacts.acceptContact for reference.
 type ContactsAcceptContactRequest struct {
-	// ID field of ContactsAcceptContactRequest.
+	// The user to add as contact
 	ID InputUserClass
 }
 
@@ -66,6 +72,13 @@ func (a *ContactsAcceptContactRequest) String() string {
 	}
 	type Alias ContactsAcceptContactRequest
 	return fmt.Sprintf("ContactsAcceptContactRequest%+v", Alias(*a))
+}
+
+// FillFrom fills ContactsAcceptContactRequest from given interface.
+func (a *ContactsAcceptContactRequest) FillFrom(from interface {
+	GetID() (value InputUserClass)
+}) {
+	a.ID = from.GetID()
 }
 
 // TypeID returns type id in TL schema.
@@ -157,6 +170,19 @@ func (a *ContactsAcceptContactRequest) GetID() (value InputUserClass) {
 }
 
 // ContactsAcceptContact invokes method contacts.acceptContact#f831a20f returning error if any.
+// If the add contact action bar is active¹, add that user as contact
+//
+// Links:
+//  1. https://core.telegram.org/api/action-bar#add-contact
+//
+// Possible errors:
+//
+//	400 CONTACT_ADD_MISSING: Contact to add is missing.
+//	400 CONTACT_ID_INVALID: The provided contact ID is invalid.
+//	400 CONTACT_REQ_MISSING: Missing contact request.
+//	400 MSG_ID_INVALID: Invalid message ID provided.
+//
+// See https://core.telegram.org/method/contacts.acceptContact for reference.
 func (c *Client) ContactsAcceptContact(ctx context.Context, id InputUserClass) (UpdatesClass, error) {
 	var result UpdatesBox
 

@@ -32,12 +32,15 @@ var (
 )
 
 // NearestDC represents TL type `nearestDc#8e1a1775`.
+// Nearest data center, according to geo-ip.
+//
+// See https://core.telegram.org/constructor/nearestDc for reference.
 type NearestDC struct {
-	// Country field of NearestDC.
+	// Country code determined by geo-ip
 	Country string
-	// ThisDC field of NearestDC.
+	// Number of current data center
 	ThisDC int
-	// NearestDC field of NearestDC.
+	// Number of nearest data center
 	NearestDC int
 }
 
@@ -76,6 +79,17 @@ func (n *NearestDC) String() string {
 	}
 	type Alias NearestDC
 	return fmt.Sprintf("NearestDC%+v", Alias(*n))
+}
+
+// FillFrom fills NearestDC from given interface.
+func (n *NearestDC) FillFrom(from interface {
+	GetCountry() (value string)
+	GetThisDC() (value int)
+	GetNearestDC() (value int)
+}) {
+	n.Country = from.GetCountry()
+	n.ThisDC = from.GetThisDC()
+	n.NearestDC = from.GetNearestDC()
 }
 
 // TypeID returns type id in TL schema.

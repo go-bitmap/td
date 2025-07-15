@@ -32,6 +32,8 @@ var (
 )
 
 // AccountPaidMessagesRevenue represents TL type `account.paidMessagesRevenue#1e109708`.
+//
+// See https://core.telegram.org/constructor/account.paidMessagesRevenue for reference.
 type AccountPaidMessagesRevenue struct {
 	// StarsAmount field of AccountPaidMessagesRevenue.
 	StarsAmount int64
@@ -66,6 +68,13 @@ func (p *AccountPaidMessagesRevenue) String() string {
 	}
 	type Alias AccountPaidMessagesRevenue
 	return fmt.Sprintf("AccountPaidMessagesRevenue%+v", Alias(*p))
+}
+
+// FillFrom fills AccountPaidMessagesRevenue from given interface.
+func (p *AccountPaidMessagesRevenue) FillFrom(from interface {
+	GetStarsAmount() (value int64)
+}) {
+	p.StarsAmount = from.GetStarsAmount()
 }
 
 // TypeID returns type id in TL schema.

@@ -32,10 +32,14 @@ var (
 )
 
 // MessagesReadHistoryRequest represents TL type `messages.readHistory#e306d3a`.
+// Marks message history as read.
+//
+// See https://core.telegram.org/method/messages.readHistory for reference.
 type MessagesReadHistoryRequest struct {
-	// Peer field of MessagesReadHistoryRequest.
+	// Target user or group
 	Peer InputPeerClass
-	// MaxID field of MessagesReadHistoryRequest.
+	// If a positive value is passed, only messages with identifiers less or equal than the
+	// given one will be read
 	MaxID int
 }
 
@@ -71,6 +75,15 @@ func (r *MessagesReadHistoryRequest) String() string {
 	}
 	type Alias MessagesReadHistoryRequest
 	return fmt.Sprintf("MessagesReadHistoryRequest%+v", Alias(*r))
+}
+
+// FillFrom fills MessagesReadHistoryRequest from given interface.
+func (r *MessagesReadHistoryRequest) FillFrom(from interface {
+	GetPeer() (value InputPeerClass)
+	GetMaxID() (value int)
+}) {
+	r.Peer = from.GetPeer()
+	r.MaxID = from.GetMaxID()
 }
 
 // TypeID returns type id in TL schema.
@@ -182,6 +195,16 @@ func (r *MessagesReadHistoryRequest) GetMaxID() (value int) {
 }
 
 // MessagesReadHistory invokes method messages.readHistory#e306d3a returning error if any.
+// Marks message history as read.
+//
+// Possible errors:
+//
+//	400 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
+//	400 CHAT_ID_INVALID: The provided chat id is invalid.
+//	400 MSG_ID_INVALID: Invalid message ID provided.
+//	400 PEER_ID_INVALID: The provided peer id is invalid.
+//
+// See https://core.telegram.org/method/messages.readHistory for reference.
 func (c *Client) MessagesReadHistory(ctx context.Context, request *MessagesReadHistoryRequest) (*MessagesAffectedMessages, error) {
 	var result MessagesAffectedMessages
 

@@ -32,16 +32,23 @@ var (
 )
 
 // UploadWebFile represents TL type `upload.webFile#21e753bc`.
+// Represents a chunk of an HTTP webfile¹ downloaded through telegram's secure MTProto
+// servers
+//
+// Links:
+//  1. https://core.telegram.org/api/files
+//
+// See https://core.telegram.org/constructor/upload.webFile for reference.
 type UploadWebFile struct {
-	// Size field of UploadWebFile.
+	// File size
 	Size int
-	// MimeType field of UploadWebFile.
+	// Mime type
 	MimeType string
-	// FileType field of UploadWebFile.
+	// File type
 	FileType StorageFileTypeClass
-	// Mtime field of UploadWebFile.
+	// Modified time
 	Mtime int
-	// Bytes field of UploadWebFile.
+	// Data
 	Bytes []byte
 }
 
@@ -86,6 +93,21 @@ func (w *UploadWebFile) String() string {
 	}
 	type Alias UploadWebFile
 	return fmt.Sprintf("UploadWebFile%+v", Alias(*w))
+}
+
+// FillFrom fills UploadWebFile from given interface.
+func (w *UploadWebFile) FillFrom(from interface {
+	GetSize() (value int)
+	GetMimeType() (value string)
+	GetFileType() (value StorageFileTypeClass)
+	GetMtime() (value int)
+	GetBytes() (value []byte)
+}) {
+	w.Size = from.GetSize()
+	w.MimeType = from.GetMimeType()
+	w.FileType = from.GetFileType()
+	w.Mtime = from.GetMtime()
+	w.Bytes = from.GetBytes()
 }
 
 // TypeID returns type id in TL schema.

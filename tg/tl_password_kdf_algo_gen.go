@@ -32,6 +32,10 @@ var (
 )
 
 // PasswordKdfAlgoUnknown represents TL type `passwordKdfAlgoUnknown#d45ab096`.
+// Unknown KDF (most likely, the client is outdated and does not support the specified
+// KDF algorithm)
+//
+// See https://core.telegram.org/constructor/passwordKdfAlgoUnknown for reference.
 type PasswordKdfAlgoUnknown struct {
 }
 
@@ -131,14 +135,32 @@ func (p *PasswordKdfAlgoUnknown) DecodeBare(b *bin.Buffer) error {
 }
 
 // PasswordKdfAlgoSHA256SHA256PBKDF2HMACSHA512iter100000SHA256ModPow represents TL type `passwordKdfAlgoSHA256SHA256PBKDF2HMACSHA512iter100000SHA256ModPow#3a912d4a`.
+// This key derivation algorithm defines that SRP 2FA login¹ must be used
+//
+// Links:
+//  1. https://core.telegram.org/api/srp
+//
+// See https://core.telegram.org/constructor/passwordKdfAlgoSHA256SHA256PBKDF2HMACSHA512iter100000SHA256ModPow for reference.
 type PasswordKdfAlgoSHA256SHA256PBKDF2HMACSHA512iter100000SHA256ModPow struct {
-	// Salt1 field of PasswordKdfAlgoSHA256SHA256PBKDF2HMACSHA512iter100000SHA256ModPow.
+	// One of two salts used by the derivation function (see SRP 2FA login¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/srp
 	Salt1 []byte
-	// Salt2 field of PasswordKdfAlgoSHA256SHA256PBKDF2HMACSHA512iter100000SHA256ModPow.
+	// One of two salts used by the derivation function (see SRP 2FA login¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/srp
 	Salt2 []byte
-	// G field of PasswordKdfAlgoSHA256SHA256PBKDF2HMACSHA512iter100000SHA256ModPow.
+	// Base (see SRP 2FA login¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/srp
 	G int
-	// P field of PasswordKdfAlgoSHA256SHA256PBKDF2HMACSHA512iter100000SHA256ModPow.
+	// 2048-bit modulus (see SRP 2FA login¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/srp
 	P []byte
 }
 
@@ -187,6 +209,19 @@ func (p *PasswordKdfAlgoSHA256SHA256PBKDF2HMACSHA512iter100000SHA256ModPow) Stri
 	}
 	type Alias PasswordKdfAlgoSHA256SHA256PBKDF2HMACSHA512iter100000SHA256ModPow
 	return fmt.Sprintf("PasswordKdfAlgoSHA256SHA256PBKDF2HMACSHA512iter100000SHA256ModPow%+v", Alias(*p))
+}
+
+// FillFrom fills PasswordKdfAlgoSHA256SHA256PBKDF2HMACSHA512iter100000SHA256ModPow from given interface.
+func (p *PasswordKdfAlgoSHA256SHA256PBKDF2HMACSHA512iter100000SHA256ModPow) FillFrom(from interface {
+	GetSalt1() (value []byte)
+	GetSalt2() (value []byte)
+	GetG() (value int)
+	GetP() (value []byte)
+}) {
+	p.Salt1 = from.GetSalt1()
+	p.Salt2 = from.GetSalt2()
+	p.G = from.GetG()
+	p.P = from.GetP()
 }
 
 // TypeID returns type id in TL schema.
@@ -336,6 +371,8 @@ func (p *PasswordKdfAlgoSHA256SHA256PBKDF2HMACSHA512iter100000SHA256ModPow) GetP
 const PasswordKdfAlgoClassName = "PasswordKdfAlgo"
 
 // PasswordKdfAlgoClass represents PasswordKdfAlgo generic type.
+//
+// See https://core.telegram.org/type/PasswordKdfAlgo for reference.
 //
 // Constructors:
 //   - [PasswordKdfAlgoUnknown]

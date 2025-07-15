@@ -32,10 +32,16 @@ var (
 )
 
 // PaymentsGetStarsTransactionsByIDRequest represents TL type `payments.getStarsTransactionsByID#27842d2e`.
+// Obtain info about Telegram Star transactions »¹ using specific transaction IDs.
+//
+// Links:
+//  1. https://core.telegram.org/api/stars#balance-and-transaction-history
+//
+// See https://core.telegram.org/method/payments.getStarsTransactionsByID for reference.
 type PaymentsGetStarsTransactionsByIDRequest struct {
-	// Peer field of PaymentsGetStarsTransactionsByIDRequest.
+	// Channel or bot.
 	Peer InputPeerClass
-	// ID field of PaymentsGetStarsTransactionsByIDRequest.
+	// Transaction IDs.
 	ID []InputStarsTransaction
 }
 
@@ -71,6 +77,15 @@ func (g *PaymentsGetStarsTransactionsByIDRequest) String() string {
 	}
 	type Alias PaymentsGetStarsTransactionsByIDRequest
 	return fmt.Sprintf("PaymentsGetStarsTransactionsByIDRequest%+v", Alias(*g))
+}
+
+// FillFrom fills PaymentsGetStarsTransactionsByIDRequest from given interface.
+func (g *PaymentsGetStarsTransactionsByIDRequest) FillFrom(from interface {
+	GetPeer() (value InputPeerClass)
+	GetID() (value []InputStarsTransaction)
+}) {
+	g.Peer = from.GetPeer()
+	g.ID = from.GetID()
 }
 
 // TypeID returns type id in TL schema.
@@ -197,6 +212,17 @@ func (g *PaymentsGetStarsTransactionsByIDRequest) GetID() (value []InputStarsTra
 }
 
 // PaymentsGetStarsTransactionsByID invokes method payments.getStarsTransactionsByID#27842d2e returning error if any.
+// Obtain info about Telegram Star transactions »¹ using specific transaction IDs.
+//
+// Links:
+//  1. https://core.telegram.org/api/stars#balance-and-transaction-history
+//
+// Possible errors:
+//
+//	400 PEER_ID_INVALID: The provided peer id is invalid.
+//	400 TRANSACTION_ID_INVALID: The specified transaction ID is invalid.
+//
+// See https://core.telegram.org/method/payments.getStarsTransactionsByID for reference.
 func (c *Client) PaymentsGetStarsTransactionsByID(ctx context.Context, request *PaymentsGetStarsTransactionsByIDRequest) (*PaymentsStarsStatus, error) {
 	var result PaymentsStarsStatus
 

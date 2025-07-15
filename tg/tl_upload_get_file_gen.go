@@ -32,18 +32,28 @@ var (
 )
 
 // UploadGetFileRequest represents TL type `upload.getFile#be5335be`.
+// Returns content of a whole file or its part.
+//
+// See https://core.telegram.org/method/upload.getFile for reference.
 type UploadGetFileRequest struct {
-	// Flags field of UploadGetFileRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Precise field of UploadGetFileRequest.
+	// Disable some checks on limit and offset values, useful for example to stream videos by
+	// keyframes
 	Precise bool
-	// CDNSupported field of UploadGetFileRequest.
+	// Whether the current client supports CDN downloads¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/cdn
 	CDNSupported bool
-	// Location field of UploadGetFileRequest.
+	// File location
 	Location InputFileLocationClass
-	// Offset field of UploadGetFileRequest.
+	// Number of bytes to be skipped
 	Offset int64
-	// Limit field of UploadGetFileRequest.
+	// Number of bytes to be returned
 	Limit int
 }
 
@@ -91,6 +101,21 @@ func (g *UploadGetFileRequest) String() string {
 	}
 	type Alias UploadGetFileRequest
 	return fmt.Sprintf("UploadGetFileRequest%+v", Alias(*g))
+}
+
+// FillFrom fills UploadGetFileRequest from given interface.
+func (g *UploadGetFileRequest) FillFrom(from interface {
+	GetPrecise() (value bool)
+	GetCDNSupported() (value bool)
+	GetLocation() (value InputFileLocationClass)
+	GetOffset() (value int64)
+	GetLimit() (value int)
+}) {
+	g.Precise = from.GetPrecise()
+	g.CDNSupported = from.GetCDNSupported()
+	g.Location = from.GetLocation()
+	g.Offset = from.GetOffset()
+	g.Limit = from.GetLimit()
 }
 
 // TypeID returns type id in TL schema.
@@ -291,6 +316,26 @@ func (g *UploadGetFileRequest) GetLimit() (value int) {
 }
 
 // UploadGetFile invokes method upload.getFile#be5335be returning error if any.
+// Returns content of a whole file or its part.
+//
+// Possible errors:
+//
+//	400 CDN_METHOD_INVALID: You can't call this method in a CDN DC.
+//	400 CHANNEL_INVALID: The provided channel is invalid.
+//	400 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
+//	406 FILEREF_UPGRADE_NEEDED: The client has to be updated in order to support file references.
+//	400 FILE_ID_INVALID: The provided file id is invalid.
+//	400 FILE_REFERENCE_EMPTY: An empty file reference was specified.
+//	400 FILE_REFERENCE_EXPIRED: File reference expired, it must be refetched as described in the documentation.
+//	420 FLOOD_PREMIUM_WAIT_%d: Please wait %d seconds before repeating the action, or purchase a Telegram Premium subscription to remove this rate limit.
+//	400 LIMIT_INVALID: The provided limit is invalid.
+//	400 LOCATION_INVALID: The provided location is invalid.
+//	400 MSG_ID_INVALID: Invalid message ID provided.
+//	400 OFFSET_INVALID: The provided offset is invalid.
+//	400 PEER_ID_INVALID: The provided peer id is invalid.
+//
+// See https://core.telegram.org/method/upload.getFile for reference.
+// Can be used by bots.
 func (c *Client) UploadGetFile(ctx context.Context, request *UploadGetFileRequest) (UploadFileClass, error) {
 	var result UploadFileBox
 

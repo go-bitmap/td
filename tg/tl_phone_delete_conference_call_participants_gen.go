@@ -32,6 +32,8 @@ var (
 )
 
 // PhoneDeleteConferenceCallParticipantsRequest represents TL type `phone.deleteConferenceCallParticipants#8ca60525`.
+//
+// See https://core.telegram.org/method/phone.deleteConferenceCallParticipants for reference.
 type PhoneDeleteConferenceCallParticipantsRequest struct {
 	// Flags field of PhoneDeleteConferenceCallParticipantsRequest.
 	Flags bin.Fields
@@ -91,6 +93,21 @@ func (d *PhoneDeleteConferenceCallParticipantsRequest) String() string {
 	}
 	type Alias PhoneDeleteConferenceCallParticipantsRequest
 	return fmt.Sprintf("PhoneDeleteConferenceCallParticipantsRequest%+v", Alias(*d))
+}
+
+// FillFrom fills PhoneDeleteConferenceCallParticipantsRequest from given interface.
+func (d *PhoneDeleteConferenceCallParticipantsRequest) FillFrom(from interface {
+	GetOnlyLeft() (value bool)
+	GetKick() (value bool)
+	GetCall() (value InputGroupCallClass)
+	GetIDs() (value []int64)
+	GetBlock() (value []byte)
+}) {
+	d.OnlyLeft = from.GetOnlyLeft()
+	d.Kick = from.GetKick()
+	d.Call = from.GetCall()
+	d.IDs = from.GetIDs()
+	d.Block = from.GetBlock()
 }
 
 // TypeID returns type id in TL schema.
@@ -304,6 +321,8 @@ func (d *PhoneDeleteConferenceCallParticipantsRequest) GetBlock() (value []byte)
 }
 
 // PhoneDeleteConferenceCallParticipants invokes method phone.deleteConferenceCallParticipants#8ca60525 returning error if any.
+//
+// See https://core.telegram.org/method/phone.deleteConferenceCallParticipants for reference.
 func (c *Client) PhoneDeleteConferenceCallParticipants(ctx context.Context, request *PhoneDeleteConferenceCallParticipantsRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

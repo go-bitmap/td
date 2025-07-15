@@ -68,6 +68,13 @@ func (vec *WallPaperClassVector) String() string {
 	return fmt.Sprintf("WallPaperClassVector%+v", Alias(*vec))
 }
 
+// FillFrom fills WallPaperClassVector from given interface.
+func (vec *WallPaperClassVector) FillFrom(from interface {
+	GetElems() (value []WallPaperClass)
+}) {
+	vec.Elems = from.GetElems()
+}
+
 // TypeID returns type id in TL schema.
 //
 // See https://core.telegram.org/mtproto/TL-tl#remarks.
@@ -165,4 +172,9 @@ func (vec *WallPaperClassVector) GetElems() (value []WallPaperClass) {
 		return
 	}
 	return vec.Elems
+}
+
+// MapElems returns field Elems wrapped in WallPaperClassArray helper.
+func (vec *WallPaperClassVector) MapElems() (value WallPaperClassArray) {
+	return WallPaperClassArray(vec.Elems)
 }

@@ -32,10 +32,19 @@ var (
 )
 
 // MessagesDeleteFactCheckRequest represents TL type `messages.deleteFactCheck#d1da940c`.
+// Delete a fact-check¹ from a message.
+// Can only be used by independent fact-checkers as specified by the appConfig
+// can_edit_factcheck¹ configuration flag.
+//
+// Links:
+//  1. https://core.telegram.org/api/factcheck
+//  2. https://core.telegram.org/api/config#can-edit-factcheck
+//
+// See https://core.telegram.org/method/messages.deleteFactCheck for reference.
 type MessagesDeleteFactCheckRequest struct {
-	// Peer field of MessagesDeleteFactCheckRequest.
+	// Peer where the message was sent.
 	Peer InputPeerClass
-	// MsgID field of MessagesDeleteFactCheckRequest.
+	// Message ID
 	MsgID int
 }
 
@@ -71,6 +80,15 @@ func (d *MessagesDeleteFactCheckRequest) String() string {
 	}
 	type Alias MessagesDeleteFactCheckRequest
 	return fmt.Sprintf("MessagesDeleteFactCheckRequest%+v", Alias(*d))
+}
+
+// FillFrom fills MessagesDeleteFactCheckRequest from given interface.
+func (d *MessagesDeleteFactCheckRequest) FillFrom(from interface {
+	GetPeer() (value InputPeerClass)
+	GetMsgID() (value int)
+}) {
+	d.Peer = from.GetPeer()
+	d.MsgID = from.GetMsgID()
 }
 
 // TypeID returns type id in TL schema.
@@ -182,6 +200,20 @@ func (d *MessagesDeleteFactCheckRequest) GetMsgID() (value int) {
 }
 
 // MessagesDeleteFactCheck invokes method messages.deleteFactCheck#d1da940c returning error if any.
+// Delete a fact-check¹ from a message.
+// Can only be used by independent fact-checkers as specified by the appConfig
+// can_edit_factcheck¹ configuration flag.
+//
+// Links:
+//  1. https://core.telegram.org/api/factcheck
+//  2. https://core.telegram.org/api/config#can-edit-factcheck
+//
+// Possible errors:
+//
+//	403 CHAT_ACTION_FORBIDDEN: You cannot execute this action.
+//	400 PEER_ID_INVALID: The provided peer id is invalid.
+//
+// See https://core.telegram.org/method/messages.deleteFactCheck for reference.
 func (c *Client) MessagesDeleteFactCheck(ctx context.Context, request *MessagesDeleteFactCheckRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

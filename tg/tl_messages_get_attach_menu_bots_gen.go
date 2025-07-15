@@ -32,8 +32,17 @@ var (
 )
 
 // MessagesGetAttachMenuBotsRequest represents TL type `messages.getAttachMenuBots#16fcc2cb`.
+// Returns installed attachment menu bot mini apps »¹
+//
+// Links:
+//  1. https://core.telegram.org/api/bots/attach
+//
+// See https://core.telegram.org/method/messages.getAttachMenuBots for reference.
 type MessagesGetAttachMenuBotsRequest struct {
-	// Hash field of MessagesGetAttachMenuBotsRequest.
+	// Hash used for caching, for more info click here¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets#hash-generation
 	Hash int64
 }
 
@@ -66,6 +75,13 @@ func (g *MessagesGetAttachMenuBotsRequest) String() string {
 	}
 	type Alias MessagesGetAttachMenuBotsRequest
 	return fmt.Sprintf("MessagesGetAttachMenuBotsRequest%+v", Alias(*g))
+}
+
+// FillFrom fills MessagesGetAttachMenuBotsRequest from given interface.
+func (g *MessagesGetAttachMenuBotsRequest) FillFrom(from interface {
+	GetHash() (value int64)
+}) {
+	g.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -152,6 +168,12 @@ func (g *MessagesGetAttachMenuBotsRequest) GetHash() (value int64) {
 }
 
 // MessagesGetAttachMenuBots invokes method messages.getAttachMenuBots#16fcc2cb returning error if any.
+// Returns installed attachment menu bot mini apps »¹
+//
+// Links:
+//  1. https://core.telegram.org/api/bots/attach
+//
+// See https://core.telegram.org/method/messages.getAttachMenuBots for reference.
 func (c *Client) MessagesGetAttachMenuBots(ctx context.Context, hash int64) (AttachMenuBotsClass, error) {
 	var result AttachMenuBotsBox
 

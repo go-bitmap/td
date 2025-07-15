@@ -32,10 +32,13 @@ var (
 )
 
 // ContactsContactBirthdays represents TL type `contacts.contactBirthdays#114ff30d`.
+// Birthday information of our contacts.
+//
+// See https://core.telegram.org/constructor/contacts.contactBirthdays for reference.
 type ContactsContactBirthdays struct {
-	// Contacts field of ContactsContactBirthdays.
+	// Birthday info
 	Contacts []ContactBirthday
-	// Users field of ContactsContactBirthdays.
+	// User information
 	Users []UserClass
 }
 
@@ -71,6 +74,15 @@ func (c *ContactsContactBirthdays) String() string {
 	}
 	type Alias ContactsContactBirthdays
 	return fmt.Sprintf("ContactsContactBirthdays%+v", Alias(*c))
+}
+
+// FillFrom fills ContactsContactBirthdays from given interface.
+func (c *ContactsContactBirthdays) FillFrom(from interface {
+	GetContacts() (value []ContactBirthday)
+	GetUsers() (value []UserClass)
+}) {
+	c.Contacts = from.GetContacts()
+	c.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -207,4 +219,9 @@ func (c *ContactsContactBirthdays) GetUsers() (value []UserClass) {
 		return
 	}
 	return c.Users
+}
+
+// MapUsers returns field Users wrapped in UserClassArray helper.
+func (c *ContactsContactBirthdays) MapUsers() (value UserClassArray) {
+	return UserClassArray(c.Users)
 }

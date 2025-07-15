@@ -32,6 +32,9 @@ var (
 )
 
 // PrivacyValueAllowContacts represents TL type `privacyValueAllowContacts#fffe1bac`.
+// Allow all contacts
+//
+// See https://core.telegram.org/constructor/privacyValueAllowContacts for reference.
 type PrivacyValueAllowContacts struct {
 }
 
@@ -131,6 +134,9 @@ func (p *PrivacyValueAllowContacts) DecodeBare(b *bin.Buffer) error {
 }
 
 // PrivacyValueAllowAll represents TL type `privacyValueAllowAll#65427b82`.
+// Allow all users
+//
+// See https://core.telegram.org/constructor/privacyValueAllowAll for reference.
 type PrivacyValueAllowAll struct {
 }
 
@@ -230,8 +236,11 @@ func (p *PrivacyValueAllowAll) DecodeBare(b *bin.Buffer) error {
 }
 
 // PrivacyValueAllowUsers represents TL type `privacyValueAllowUsers#b8905fb2`.
+// Allow only certain users
+//
+// See https://core.telegram.org/constructor/privacyValueAllowUsers for reference.
 type PrivacyValueAllowUsers struct {
-	// Users field of PrivacyValueAllowUsers.
+	// Allowed users
 	Users []int64
 }
 
@@ -269,6 +278,13 @@ func (p *PrivacyValueAllowUsers) String() string {
 	}
 	type Alias PrivacyValueAllowUsers
 	return fmt.Sprintf("PrivacyValueAllowUsers%+v", Alias(*p))
+}
+
+// FillFrom fills PrivacyValueAllowUsers from given interface.
+func (p *PrivacyValueAllowUsers) FillFrom(from interface {
+	GetUsers() (value []int64)
+}) {
+	p.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -368,6 +384,9 @@ func (p *PrivacyValueAllowUsers) GetUsers() (value []int64) {
 }
 
 // PrivacyValueDisallowContacts represents TL type `privacyValueDisallowContacts#f888fa1a`.
+// Disallow only contacts
+//
+// See https://core.telegram.org/constructor/privacyValueDisallowContacts for reference.
 type PrivacyValueDisallowContacts struct {
 }
 
@@ -467,6 +486,9 @@ func (p *PrivacyValueDisallowContacts) DecodeBare(b *bin.Buffer) error {
 }
 
 // PrivacyValueDisallowAll represents TL type `privacyValueDisallowAll#8b73e763`.
+// Disallow all users
+//
+// See https://core.telegram.org/constructor/privacyValueDisallowAll for reference.
 type PrivacyValueDisallowAll struct {
 }
 
@@ -566,8 +588,11 @@ func (p *PrivacyValueDisallowAll) DecodeBare(b *bin.Buffer) error {
 }
 
 // PrivacyValueDisallowUsers represents TL type `privacyValueDisallowUsers#e4621141`.
+// Disallow only certain users
+//
+// See https://core.telegram.org/constructor/privacyValueDisallowUsers for reference.
 type PrivacyValueDisallowUsers struct {
-	// Users field of PrivacyValueDisallowUsers.
+	// Disallowed users
 	Users []int64
 }
 
@@ -605,6 +630,13 @@ func (p *PrivacyValueDisallowUsers) String() string {
 	}
 	type Alias PrivacyValueDisallowUsers
 	return fmt.Sprintf("PrivacyValueDisallowUsers%+v", Alias(*p))
+}
+
+// FillFrom fills PrivacyValueDisallowUsers from given interface.
+func (p *PrivacyValueDisallowUsers) FillFrom(from interface {
+	GetUsers() (value []int64)
+}) {
+	p.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -704,8 +736,11 @@ func (p *PrivacyValueDisallowUsers) GetUsers() (value []int64) {
 }
 
 // PrivacyValueAllowChatParticipants represents TL type `privacyValueAllowChatParticipants#6b134e8e`.
+// Allow all participants of certain chats
+//
+// See https://core.telegram.org/constructor/privacyValueAllowChatParticipants for reference.
 type PrivacyValueAllowChatParticipants struct {
-	// Chats field of PrivacyValueAllowChatParticipants.
+	// Allowed chats
 	Chats []int64
 }
 
@@ -743,6 +778,13 @@ func (p *PrivacyValueAllowChatParticipants) String() string {
 	}
 	type Alias PrivacyValueAllowChatParticipants
 	return fmt.Sprintf("PrivacyValueAllowChatParticipants%+v", Alias(*p))
+}
+
+// FillFrom fills PrivacyValueAllowChatParticipants from given interface.
+func (p *PrivacyValueAllowChatParticipants) FillFrom(from interface {
+	GetChats() (value []int64)
+}) {
+	p.Chats = from.GetChats()
 }
 
 // TypeID returns type id in TL schema.
@@ -842,8 +884,11 @@ func (p *PrivacyValueAllowChatParticipants) GetChats() (value []int64) {
 }
 
 // PrivacyValueDisallowChatParticipants represents TL type `privacyValueDisallowChatParticipants#41c87565`.
+// Disallow only participants of certain chats
+//
+// See https://core.telegram.org/constructor/privacyValueDisallowChatParticipants for reference.
 type PrivacyValueDisallowChatParticipants struct {
-	// Chats field of PrivacyValueDisallowChatParticipants.
+	// Disallowed chats
 	Chats []int64
 }
 
@@ -881,6 +926,13 @@ func (p *PrivacyValueDisallowChatParticipants) String() string {
 	}
 	type Alias PrivacyValueDisallowChatParticipants
 	return fmt.Sprintf("PrivacyValueDisallowChatParticipants%+v", Alias(*p))
+}
+
+// FillFrom fills PrivacyValueDisallowChatParticipants from given interface.
+func (p *PrivacyValueDisallowChatParticipants) FillFrom(from interface {
+	GetChats() (value []int64)
+}) {
+	p.Chats = from.GetChats()
 }
 
 // TypeID returns type id in TL schema.
@@ -980,6 +1032,12 @@ func (p *PrivacyValueDisallowChatParticipants) GetChats() (value []int64) {
 }
 
 // PrivacyValueAllowCloseFriends represents TL type `privacyValueAllowCloseFriends#f7e8d89b`.
+// Allow only close friends »¹
+//
+// Links:
+//  1. https://core.telegram.org/api/privacy
+//
+// See https://core.telegram.org/constructor/privacyValueAllowCloseFriends for reference.
 type PrivacyValueAllowCloseFriends struct {
 }
 
@@ -1079,6 +1137,14 @@ func (p *PrivacyValueAllowCloseFriends) DecodeBare(b *bin.Buffer) error {
 }
 
 // PrivacyValueAllowPremium represents TL type `privacyValueAllowPremium#ece9814b`.
+// Allow only users with a Premium subscription »¹, currently only usable for
+// inputPrivacyKeyChatInvite².
+//
+// Links:
+//  1. https://core.telegram.org/api/premium
+//  2. https://core.telegram.org/constructor/inputPrivacyKeyChatInvite
+//
+// See https://core.telegram.org/constructor/privacyValueAllowPremium for reference.
 type PrivacyValueAllowPremium struct {
 }
 
@@ -1178,6 +1244,9 @@ func (p *PrivacyValueAllowPremium) DecodeBare(b *bin.Buffer) error {
 }
 
 // PrivacyValueAllowBots represents TL type `privacyValueAllowBots#21461b5d`.
+// Allow bots and mini apps
+//
+// See https://core.telegram.org/constructor/privacyValueAllowBots for reference.
 type PrivacyValueAllowBots struct {
 }
 
@@ -1277,6 +1346,9 @@ func (p *PrivacyValueAllowBots) DecodeBare(b *bin.Buffer) error {
 }
 
 // PrivacyValueDisallowBots represents TL type `privacyValueDisallowBots#f6a5f82f`.
+// Disallow bots and mini apps
+//
+// See https://core.telegram.org/constructor/privacyValueDisallowBots for reference.
 type PrivacyValueDisallowBots struct {
 }
 
@@ -1380,6 +1452,8 @@ const PrivacyRuleClassName = "PrivacyRule"
 
 // PrivacyRuleClass represents PrivacyRule generic type.
 //
+// See https://core.telegram.org/type/PrivacyRule for reference.
+//
 // Constructors:
 //   - [PrivacyValueAllowContacts]
 //   - [PrivacyValueAllowAll]
@@ -1432,6 +1506,22 @@ type PrivacyRuleClass interface {
 	String() string
 	// Zero returns true if current object has a zero value.
 	Zero() bool
+}
+
+// AsInput tries to map PrivacyValueAllowChatParticipants to InputPrivacyValueAllowChatParticipants.
+func (p *PrivacyValueAllowChatParticipants) AsInput() *InputPrivacyValueAllowChatParticipants {
+	value := new(InputPrivacyValueAllowChatParticipants)
+	value.Chats = p.GetChats()
+
+	return value
+}
+
+// AsInput tries to map PrivacyValueDisallowChatParticipants to InputPrivacyValueDisallowChatParticipants.
+func (p *PrivacyValueDisallowChatParticipants) AsInput() *InputPrivacyValueDisallowChatParticipants {
+	value := new(InputPrivacyValueDisallowChatParticipants)
+	value.Chats = p.GetChats()
+
+	return value
 }
 
 // DecodePrivacyRule implements binary de-serialization for PrivacyRuleClass.

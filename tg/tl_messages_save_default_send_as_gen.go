@@ -32,10 +32,14 @@ var (
 )
 
 // MessagesSaveDefaultSendAsRequest represents TL type `messages.saveDefaultSendAs#ccfddf96`.
+// Change the default peer that should be used when sending messages, reactions, poll
+// votes to a specific group
+//
+// See https://core.telegram.org/method/messages.saveDefaultSendAs for reference.
 type MessagesSaveDefaultSendAsRequest struct {
-	// Peer field of MessagesSaveDefaultSendAsRequest.
+	// Group
 	Peer InputPeerClass
-	// SendAs field of MessagesSaveDefaultSendAsRequest.
+	// The default peer that should be used when sending messages to the group
 	SendAs InputPeerClass
 }
 
@@ -71,6 +75,15 @@ func (s *MessagesSaveDefaultSendAsRequest) String() string {
 	}
 	type Alias MessagesSaveDefaultSendAsRequest
 	return fmt.Sprintf("MessagesSaveDefaultSendAsRequest%+v", Alias(*s))
+}
+
+// FillFrom fills MessagesSaveDefaultSendAsRequest from given interface.
+func (s *MessagesSaveDefaultSendAsRequest) FillFrom(from interface {
+	GetPeer() (value InputPeerClass)
+	GetSendAs() (value InputPeerClass)
+}) {
+	s.Peer = from.GetPeer()
+	s.SendAs = from.GetSendAs()
 }
 
 // TypeID returns type id in TL schema.
@@ -187,6 +200,15 @@ func (s *MessagesSaveDefaultSendAsRequest) GetSendAs() (value InputPeerClass) {
 }
 
 // MessagesSaveDefaultSendAs invokes method messages.saveDefaultSendAs#ccfddf96 returning error if any.
+// Change the default peer that should be used when sending messages, reactions, poll
+// votes to a specific group
+//
+// Possible errors:
+//
+//	400 PEER_ID_INVALID: The provided peer id is invalid.
+//	400 SEND_AS_PEER_INVALID: You can't send messages as the specified peer.
+//
+// See https://core.telegram.org/method/messages.saveDefaultSendAs for reference.
 func (c *Client) MessagesSaveDefaultSendAs(ctx context.Context, request *MessagesSaveDefaultSendAsRequest) (bool, error) {
 	var result BoolBox
 

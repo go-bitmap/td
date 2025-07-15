@@ -32,50 +32,75 @@ var (
 )
 
 // StatsBroadcastStats represents TL type `stats.broadcastStats#396ca5fc`.
+// Channel statistics¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/stats
+//
+// See https://core.telegram.org/constructor/stats.broadcastStats for reference.
 type StatsBroadcastStats struct {
-	// Period field of StatsBroadcastStats.
+	// Period in consideration
 	Period StatsDateRangeDays
-	// Followers field of StatsBroadcastStats.
+	// Follower count change for period in consideration
 	Followers StatsAbsValueAndPrev
-	// ViewsPerPost field of StatsBroadcastStats.
+	// total_viewcount/postcount, for posts posted during the period in consideration. Note
+	// that in this case, current refers to the period in consideration (min_date till
+	// max_date), and prev refers to the previous period ((min_date - (max_date - min_date))
+	// till min_date).
 	ViewsPerPost StatsAbsValueAndPrev
-	// SharesPerPost field of StatsBroadcastStats.
+	// total_sharecount/postcount, for posts posted during the period in consideration. Note
+	// that in this case, current refers to the period in consideration (min_date till
+	// max_date), and prev refers to the previous period ((min_date - (max_date - min_date))
+	// till min_date)
 	SharesPerPost StatsAbsValueAndPrev
-	// ReactionsPerPost field of StatsBroadcastStats.
+	// total_reactions/postcount, for posts posted during the period in consideration. Note
+	// that in this case, current refers to the period in consideration (min_date till
+	// max_date), and prev refers to the previous period ((min_date - (max_date - min_date))
+	// till min_date)
 	ReactionsPerPost StatsAbsValueAndPrev
-	// ViewsPerStory field of StatsBroadcastStats.
+	// total_views/storycount, for posts posted during the period in consideration. Note that
+	// in this case, current refers to the period in consideration (min_date till max_date),
+	// and prev refers to the previous period ((min_date - (max_date - min_date)) till
+	// min_date)
 	ViewsPerStory StatsAbsValueAndPrev
-	// SharesPerStory field of StatsBroadcastStats.
+	// total_shares/storycount, for posts posted during the period in consideration. Note
+	// that in this case, current refers to the period in consideration (min_date till
+	// max_date), and prev refers to the previous period ((min_date - (max_date - min_date))
+	// till min_date)
 	SharesPerStory StatsAbsValueAndPrev
-	// ReactionsPerStory field of StatsBroadcastStats.
+	// total_reactions/storycount, for posts posted during the period in consideration. Note
+	// that in this case, current refers to the period in consideration (min_date till
+	// max_date), and prev refers to the previous period ((min_date - (max_date - min_date))
+	// till min_date)
 	ReactionsPerStory StatsAbsValueAndPrev
-	// EnabledNotifications field of StatsBroadcastStats.
+	// Percentage of subscribers with enabled notifications
 	EnabledNotifications StatsPercentValue
-	// GrowthGraph field of StatsBroadcastStats.
+	// Channel growth graph (absolute subscriber count)
 	GrowthGraph StatsGraphClass
-	// FollowersGraph field of StatsBroadcastStats.
+	// Followers growth graph (relative subscriber count)
 	FollowersGraph StatsGraphClass
-	// MuteGraph field of StatsBroadcastStats.
+	// Muted users graph (relative)
 	MuteGraph StatsGraphClass
-	// TopHoursGraph field of StatsBroadcastStats.
+	// Views per hour graph (absolute)
 	TopHoursGraph StatsGraphClass
-	// InteractionsGraph field of StatsBroadcastStats.
+	// Interactions graph (absolute)
 	InteractionsGraph StatsGraphClass
-	// IvInteractionsGraph field of StatsBroadcastStats.
+	// IV interactions graph (absolute)
 	IvInteractionsGraph StatsGraphClass
-	// ViewsBySourceGraph field of StatsBroadcastStats.
+	// Views by source graph (absolute)
 	ViewsBySourceGraph StatsGraphClass
-	// NewFollowersBySourceGraph field of StatsBroadcastStats.
+	// New followers by source graph (absolute)
 	NewFollowersBySourceGraph StatsGraphClass
-	// LanguagesGraph field of StatsBroadcastStats.
+	// Subscriber language graph (pie chart)
 	LanguagesGraph StatsGraphClass
-	// ReactionsByEmotionGraph field of StatsBroadcastStats.
+	// A graph containing the number of reactions on posts categorized by emotion
 	ReactionsByEmotionGraph StatsGraphClass
-	// StoryInteractionsGraph field of StatsBroadcastStats.
+	// A graph containing the number of story views and shares
 	StoryInteractionsGraph StatsGraphClass
-	// StoryReactionsByEmotionGraph field of StatsBroadcastStats.
+	// A graph containing the number of reactions on stories categorized by emotion
 	StoryReactionsByEmotionGraph StatsGraphClass
-	// RecentPostsInteractions field of StatsBroadcastStats.
+	// Detailed statistics about number of views and shares of recently sent messages and
+	// stories
 	RecentPostsInteractions []PostInteractionCountersClass
 }
 
@@ -171,6 +196,55 @@ func (b *StatsBroadcastStats) String() string {
 	}
 	type Alias StatsBroadcastStats
 	return fmt.Sprintf("StatsBroadcastStats%+v", Alias(*b))
+}
+
+// FillFrom fills StatsBroadcastStats from given interface.
+func (b *StatsBroadcastStats) FillFrom(from interface {
+	GetPeriod() (value StatsDateRangeDays)
+	GetFollowers() (value StatsAbsValueAndPrev)
+	GetViewsPerPost() (value StatsAbsValueAndPrev)
+	GetSharesPerPost() (value StatsAbsValueAndPrev)
+	GetReactionsPerPost() (value StatsAbsValueAndPrev)
+	GetViewsPerStory() (value StatsAbsValueAndPrev)
+	GetSharesPerStory() (value StatsAbsValueAndPrev)
+	GetReactionsPerStory() (value StatsAbsValueAndPrev)
+	GetEnabledNotifications() (value StatsPercentValue)
+	GetGrowthGraph() (value StatsGraphClass)
+	GetFollowersGraph() (value StatsGraphClass)
+	GetMuteGraph() (value StatsGraphClass)
+	GetTopHoursGraph() (value StatsGraphClass)
+	GetInteractionsGraph() (value StatsGraphClass)
+	GetIvInteractionsGraph() (value StatsGraphClass)
+	GetViewsBySourceGraph() (value StatsGraphClass)
+	GetNewFollowersBySourceGraph() (value StatsGraphClass)
+	GetLanguagesGraph() (value StatsGraphClass)
+	GetReactionsByEmotionGraph() (value StatsGraphClass)
+	GetStoryInteractionsGraph() (value StatsGraphClass)
+	GetStoryReactionsByEmotionGraph() (value StatsGraphClass)
+	GetRecentPostsInteractions() (value []PostInteractionCountersClass)
+}) {
+	b.Period = from.GetPeriod()
+	b.Followers = from.GetFollowers()
+	b.ViewsPerPost = from.GetViewsPerPost()
+	b.SharesPerPost = from.GetSharesPerPost()
+	b.ReactionsPerPost = from.GetReactionsPerPost()
+	b.ViewsPerStory = from.GetViewsPerStory()
+	b.SharesPerStory = from.GetSharesPerStory()
+	b.ReactionsPerStory = from.GetReactionsPerStory()
+	b.EnabledNotifications = from.GetEnabledNotifications()
+	b.GrowthGraph = from.GetGrowthGraph()
+	b.FollowersGraph = from.GetFollowersGraph()
+	b.MuteGraph = from.GetMuteGraph()
+	b.TopHoursGraph = from.GetTopHoursGraph()
+	b.InteractionsGraph = from.GetInteractionsGraph()
+	b.IvInteractionsGraph = from.GetIvInteractionsGraph()
+	b.ViewsBySourceGraph = from.GetViewsBySourceGraph()
+	b.NewFollowersBySourceGraph = from.GetNewFollowersBySourceGraph()
+	b.LanguagesGraph = from.GetLanguagesGraph()
+	b.ReactionsByEmotionGraph = from.GetReactionsByEmotionGraph()
+	b.StoryInteractionsGraph = from.GetStoryInteractionsGraph()
+	b.StoryReactionsByEmotionGraph = from.GetStoryReactionsByEmotionGraph()
+	b.RecentPostsInteractions = from.GetRecentPostsInteractions()
 }
 
 // TypeID returns type id in TL schema.
@@ -752,4 +826,9 @@ func (b *StatsBroadcastStats) GetRecentPostsInteractions() (value []PostInteract
 		return
 	}
 	return b.RecentPostsInteractions
+}
+
+// MapRecentPostsInteractions returns field RecentPostsInteractions wrapped in PostInteractionCountersClassArray helper.
+func (b *StatsBroadcastStats) MapRecentPostsInteractions() (value PostInteractionCountersClassArray) {
+	return PostInteractionCountersClassArray(b.RecentPostsInteractions)
 }

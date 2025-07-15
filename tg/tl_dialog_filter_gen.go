@@ -32,44 +32,95 @@ var (
 )
 
 // DialogFilter represents TL type `dialogFilter#aa472651`.
+// Dialog filter AKA folder¹
+//
+// Links:
+//  1. https://core.telegram.org/api/folders
+//
+// See https://core.telegram.org/constructor/dialogFilter for reference.
 type DialogFilter struct {
-	// Flags field of DialogFilter.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Contacts field of DialogFilter.
+	// Whether to include all contacts in this folder¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/folders
 	Contacts bool
-	// NonContacts field of DialogFilter.
+	// Whether to include all non-contacts in this folder¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/folders
 	NonContacts bool
-	// Groups field of DialogFilter.
+	// Whether to include all groups in this folder¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/folders
 	Groups bool
-	// Broadcasts field of DialogFilter.
+	// Whether to include all channels in this folder¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/folders
 	Broadcasts bool
-	// Bots field of DialogFilter.
+	// Whether to include all bots in this folder¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/folders
 	Bots bool
-	// ExcludeMuted field of DialogFilter.
+	// Whether to exclude muted chats from this folder¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/folders
 	ExcludeMuted bool
-	// ExcludeRead field of DialogFilter.
+	// Whether to exclude read chats from this folder¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/folders
 	ExcludeRead bool
-	// ExcludeArchived field of DialogFilter.
+	// Whether to exclude archived chats from this folder¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/folders
 	ExcludeArchived bool
 	// TitleNoanimate field of DialogFilter.
 	TitleNoanimate bool
-	// ID field of DialogFilter.
+	// Folder¹ ID
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/folders
 	ID int
-	// Title field of DialogFilter.
+	// Folder¹ name (max 12 UTF-8 chars)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/folders
 	Title TextWithEntities
-	// Emoticon field of DialogFilter.
+	// Emoji to use as icon for the folder.
 	//
 	// Use SetEmoticon and GetEmoticon helpers.
 	Emoticon string
-	// Color field of DialogFilter.
+	// A color ID for the folder tag associated to this folder, see here »¹ for more info.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/folders#folder-tags
 	//
 	// Use SetColor and GetColor helpers.
 	Color int
-	// PinnedPeers field of DialogFilter.
+	// Pinned chats, folders¹ can have unlimited pinned chats
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/folders
 	PinnedPeers []InputPeerClass
-	// IncludePeers field of DialogFilter.
+	// Include the following chats in this folder¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/folders
 	IncludePeers []InputPeerClass
-	// ExcludePeers field of DialogFilter.
+	// Exclude the following chats from this folder¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/folders
 	ExcludePeers []InputPeerClass
 }
 
@@ -155,6 +206,49 @@ func (d *DialogFilter) String() string {
 	}
 	type Alias DialogFilter
 	return fmt.Sprintf("DialogFilter%+v", Alias(*d))
+}
+
+// FillFrom fills DialogFilter from given interface.
+func (d *DialogFilter) FillFrom(from interface {
+	GetContacts() (value bool)
+	GetNonContacts() (value bool)
+	GetGroups() (value bool)
+	GetBroadcasts() (value bool)
+	GetBots() (value bool)
+	GetExcludeMuted() (value bool)
+	GetExcludeRead() (value bool)
+	GetExcludeArchived() (value bool)
+	GetTitleNoanimate() (value bool)
+	GetID() (value int)
+	GetTitle() (value TextWithEntities)
+	GetEmoticon() (value string, ok bool)
+	GetColor() (value int, ok bool)
+	GetPinnedPeers() (value []InputPeerClass)
+	GetIncludePeers() (value []InputPeerClass)
+	GetExcludePeers() (value []InputPeerClass)
+}) {
+	d.Contacts = from.GetContacts()
+	d.NonContacts = from.GetNonContacts()
+	d.Groups = from.GetGroups()
+	d.Broadcasts = from.GetBroadcasts()
+	d.Bots = from.GetBots()
+	d.ExcludeMuted = from.GetExcludeMuted()
+	d.ExcludeRead = from.GetExcludeRead()
+	d.ExcludeArchived = from.GetExcludeArchived()
+	d.TitleNoanimate = from.GetTitleNoanimate()
+	d.ID = from.GetID()
+	d.Title = from.GetTitle()
+	if val, ok := from.GetEmoticon(); ok {
+		d.Emoticon = val
+	}
+
+	if val, ok := from.GetColor(); ok {
+		d.Color = val
+	}
+
+	d.PinnedPeers = from.GetPinnedPeers()
+	d.IncludePeers = from.GetIncludePeers()
+	d.ExcludePeers = from.GetExcludePeers()
 }
 
 // TypeID returns type id in TL schema.
@@ -711,7 +805,25 @@ func (d *DialogFilter) GetExcludePeers() (value []InputPeerClass) {
 	return d.ExcludePeers
 }
 
+// MapPinnedPeers returns field PinnedPeers wrapped in InputPeerClassArray helper.
+func (d *DialogFilter) MapPinnedPeers() (value InputPeerClassArray) {
+	return InputPeerClassArray(d.PinnedPeers)
+}
+
+// MapIncludePeers returns field IncludePeers wrapped in InputPeerClassArray helper.
+func (d *DialogFilter) MapIncludePeers() (value InputPeerClassArray) {
+	return InputPeerClassArray(d.IncludePeers)
+}
+
+// MapExcludePeers returns field ExcludePeers wrapped in InputPeerClassArray helper.
+func (d *DialogFilter) MapExcludePeers() (value InputPeerClassArray) {
+	return InputPeerClassArray(d.ExcludePeers)
+}
+
 // DialogFilterDefault represents TL type `dialogFilterDefault#363293ae`.
+// Used only when reordering folders to indicate the default (all chats) folder.
+//
+// See https://core.telegram.org/constructor/dialogFilterDefault for reference.
 type DialogFilterDefault struct {
 }
 
@@ -811,28 +923,47 @@ func (d *DialogFilterDefault) DecodeBare(b *bin.Buffer) error {
 }
 
 // DialogFilterChatlist represents TL type `dialogFilterChatlist#96537bd7`.
+// A folder imported using a chat folder deep link »¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/links#chat-folder-links
+//
+// See https://core.telegram.org/constructor/dialogFilterChatlist for reference.
 type DialogFilterChatlist struct {
-	// Flags field of DialogFilterChatlist.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// HasMyInvites field of DialogFilterChatlist.
+	// Whether the current user has created some chat folder deep links »¹ to share the
+	// folder as well.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/links#chat-folder-links
 	HasMyInvites bool
 	// TitleNoanimate field of DialogFilterChatlist.
 	TitleNoanimate bool
-	// ID field of DialogFilterChatlist.
+	// ID of the folder
 	ID int
-	// Title field of DialogFilterChatlist.
+	// Name of the folder (max 12 UTF-8 chars)
 	Title TextWithEntities
-	// Emoticon field of DialogFilterChatlist.
+	// Emoji to use as icon for the folder.
 	//
 	// Use SetEmoticon and GetEmoticon helpers.
 	Emoticon string
-	// Color field of DialogFilterChatlist.
+	// A color ID for the folder tag associated to this folder, see here »¹ for more info.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/folders#folder-tags
 	//
 	// Use SetColor and GetColor helpers.
 	Color int
-	// PinnedPeers field of DialogFilterChatlist.
+	// Pinned chats, folders¹ can have unlimited pinned chats
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/folders
 	PinnedPeers []InputPeerClass
-	// IncludePeers field of DialogFilterChatlist.
+	// Chats to include in the folder
 	IncludePeers []InputPeerClass
 }
 
@@ -894,6 +1025,33 @@ func (d *DialogFilterChatlist) String() string {
 	}
 	type Alias DialogFilterChatlist
 	return fmt.Sprintf("DialogFilterChatlist%+v", Alias(*d))
+}
+
+// FillFrom fills DialogFilterChatlist from given interface.
+func (d *DialogFilterChatlist) FillFrom(from interface {
+	GetHasMyInvites() (value bool)
+	GetTitleNoanimate() (value bool)
+	GetID() (value int)
+	GetTitle() (value TextWithEntities)
+	GetEmoticon() (value string, ok bool)
+	GetColor() (value int, ok bool)
+	GetPinnedPeers() (value []InputPeerClass)
+	GetIncludePeers() (value []InputPeerClass)
+}) {
+	d.HasMyInvites = from.GetHasMyInvites()
+	d.TitleNoanimate = from.GetTitleNoanimate()
+	d.ID = from.GetID()
+	d.Title = from.GetTitle()
+	if val, ok := from.GetEmoticon(); ok {
+		d.Emoticon = val
+	}
+
+	if val, ok := from.GetColor(); ok {
+		d.Color = val
+	}
+
+	d.PinnedPeers = from.GetPinnedPeers()
+	d.IncludePeers = from.GetIncludePeers()
 }
 
 // TypeID returns type id in TL schema.
@@ -1216,10 +1374,22 @@ func (d *DialogFilterChatlist) GetIncludePeers() (value []InputPeerClass) {
 	return d.IncludePeers
 }
 
+// MapPinnedPeers returns field PinnedPeers wrapped in InputPeerClassArray helper.
+func (d *DialogFilterChatlist) MapPinnedPeers() (value InputPeerClassArray) {
+	return InputPeerClassArray(d.PinnedPeers)
+}
+
+// MapIncludePeers returns field IncludePeers wrapped in InputPeerClassArray helper.
+func (d *DialogFilterChatlist) MapIncludePeers() (value InputPeerClassArray) {
+	return InputPeerClassArray(d.IncludePeers)
+}
+
 // DialogFilterClassName is schema name of DialogFilterClass.
 const DialogFilterClassName = "DialogFilter"
 
 // DialogFilterClass represents DialogFilter generic type.
+//
+// See https://core.telegram.org/type/DialogFilter for reference.
 //
 // Constructors:
 //   - [DialogFilter]
@@ -1255,6 +1425,14 @@ type DialogFilterClass interface {
 	String() string
 	// Zero returns true if current object has a zero value.
 	Zero() bool
+}
+
+// AsInputChatlist tries to map DialogFilter to InputChatlistDialogFilter.
+func (d *DialogFilter) AsInputChatlist() *InputChatlistDialogFilter {
+	value := new(InputChatlistDialogFilter)
+	value.FilterID = d.GetID()
+
+	return value
 }
 
 // DecodeDialogFilter implements binary de-serialization for DialogFilterClass.

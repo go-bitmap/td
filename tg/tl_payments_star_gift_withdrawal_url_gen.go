@@ -32,6 +32,8 @@ var (
 )
 
 // PaymentsStarGiftWithdrawalURL represents TL type `payments.starGiftWithdrawalUrl#84aa3a9c`.
+//
+// See https://core.telegram.org/constructor/payments.starGiftWithdrawalUrl for reference.
 type PaymentsStarGiftWithdrawalURL struct {
 	// URL field of PaymentsStarGiftWithdrawalURL.
 	URL string
@@ -66,6 +68,13 @@ func (s *PaymentsStarGiftWithdrawalURL) String() string {
 	}
 	type Alias PaymentsStarGiftWithdrawalURL
 	return fmt.Sprintf("PaymentsStarGiftWithdrawalURL%+v", Alias(*s))
+}
+
+// FillFrom fills PaymentsStarGiftWithdrawalURL from given interface.
+func (s *PaymentsStarGiftWithdrawalURL) FillFrom(from interface {
+	GetURL() (value string)
+}) {
+	s.URL = from.GetURL()
 }
 
 // TypeID returns type id in TL schema.

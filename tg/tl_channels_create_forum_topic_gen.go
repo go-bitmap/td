@@ -32,24 +32,45 @@ var (
 )
 
 // ChannelsCreateForumTopicRequest represents TL type `channels.createForumTopic#f40c0224`.
+// Create a forum topic¹; requires manage_topics rights².
+//
+// Links:
+//  1. https://core.telegram.org/api/forum
+//  2. https://core.telegram.org/api/rights
+//
+// See https://core.telegram.org/method/channels.createForumTopic for reference.
 type ChannelsCreateForumTopicRequest struct {
-	// Flags field of ChannelsCreateForumTopicRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Channel field of ChannelsCreateForumTopicRequest.
+	// The forum¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/forum
 	Channel InputChannelClass
-	// Title field of ChannelsCreateForumTopicRequest.
+	// Topic title (maximum UTF-8 length: 128)
 	Title string
-	// IconColor field of ChannelsCreateForumTopicRequest.
+	// If no custom emoji icon is specified, specifies the color of the fallback topic icon
+	// (RGB), one of 0x6FB9F0, 0xFFD67E, 0xCB86DB, 0x8EEE98, 0xFF93B2, or 0xFB6F5F.
 	//
 	// Use SetIconColor and GetIconColor helpers.
 	IconColor int
-	// IconEmojiID field of ChannelsCreateForumTopicRequest.
+	// ID of the custom emoji¹ used as topic icon. Telegram Premium² users can use any
+	// custom emoji, other users can only use the custom emojis contained in the
+	// inputStickerSetEmojiDefaultTopicIcons³ emoji pack.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/custom-emoji
+	//  2) https://core.telegram.org/api/premium
+	//  3) https://core.telegram.org/constructor/inputStickerSetEmojiDefaultTopicIcons
 	//
 	// Use SetIconEmojiID and GetIconEmojiID helpers.
 	IconEmojiID int64
-	// RandomID field of ChannelsCreateForumTopicRequest.
+	// Unique client message ID to prevent duplicate sending of the same event
 	RandomID int64
-	// SendAs field of ChannelsCreateForumTopicRequest.
+	// Create the topic as the specified peer
 	//
 	// Use SetSendAs and GetSendAs helpers.
 	SendAs InputPeerClass
@@ -102,6 +123,32 @@ func (c *ChannelsCreateForumTopicRequest) String() string {
 	}
 	type Alias ChannelsCreateForumTopicRequest
 	return fmt.Sprintf("ChannelsCreateForumTopicRequest%+v", Alias(*c))
+}
+
+// FillFrom fills ChannelsCreateForumTopicRequest from given interface.
+func (c *ChannelsCreateForumTopicRequest) FillFrom(from interface {
+	GetChannel() (value InputChannelClass)
+	GetTitle() (value string)
+	GetIconColor() (value int, ok bool)
+	GetIconEmojiID() (value int64, ok bool)
+	GetRandomID() (value int64)
+	GetSendAs() (value InputPeerClass, ok bool)
+}) {
+	c.Channel = from.GetChannel()
+	c.Title = from.GetTitle()
+	if val, ok := from.GetIconColor(); ok {
+		c.IconColor = val
+	}
+
+	if val, ok := from.GetIconEmojiID(); ok {
+		c.IconEmojiID = val
+	}
+
+	c.RandomID = from.GetRandomID()
+	if val, ok := from.GetSendAs(); ok {
+		c.SendAs = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -358,7 +405,28 @@ func (c *ChannelsCreateForumTopicRequest) GetSendAs() (value InputPeerClass, ok 
 	return c.SendAs, true
 }
 
+// GetChannelAsNotEmpty returns mapped value of Channel field.
+func (c *ChannelsCreateForumTopicRequest) GetChannelAsNotEmpty() (NotEmptyInputChannel, bool) {
+	return c.Channel.AsNotEmpty()
+}
+
 // ChannelsCreateForumTopic invokes method channels.createForumTopic#f40c0224 returning error if any.
+// Create a forum topic¹; requires manage_topics rights².
+//
+// Links:
+//  1. https://core.telegram.org/api/forum
+//  2. https://core.telegram.org/api/rights
+//
+// Possible errors:
+//
+//	400 CHANNEL_FORUM_MISSING: This supergroup is not a forum.
+//	400 CHANNEL_INVALID: The provided channel is invalid.
+//	403 CHAT_WRITE_FORBIDDEN: You can't write in this chat.
+//	403 PREMIUM_ACCOUNT_REQUIRED: A premium account is required to execute this action.
+//	400 TOPIC_TITLE_EMPTY: The specified topic title is empty.
+//
+// See https://core.telegram.org/method/channels.createForumTopic for reference.
+// Can be used by bots.
 func (c *Client) ChannelsCreateForumTopic(ctx context.Context, request *ChannelsCreateForumTopicRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

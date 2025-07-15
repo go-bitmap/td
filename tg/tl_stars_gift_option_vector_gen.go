@@ -68,6 +68,13 @@ func (vec *StarsGiftOptionVector) String() string {
 	return fmt.Sprintf("StarsGiftOptionVector%+v", Alias(*vec))
 }
 
+// FillFrom fills StarsGiftOptionVector from given interface.
+func (vec *StarsGiftOptionVector) FillFrom(from interface {
+	GetElems() (value []StarsGiftOption)
+}) {
+	vec.Elems = from.GetElems()
+}
+
 // TypeID returns type id in TL schema.
 //
 // See https://core.telegram.org/mtproto/TL-tl#remarks.

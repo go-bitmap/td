@@ -32,8 +32,11 @@ var (
 )
 
 // AuthDropTempAuthKeysRequest represents TL type `auth.dropTempAuthKeys#8e48a188`.
+// Delete all temporary authorization keys except for the ones specified
+//
+// See https://core.telegram.org/method/auth.dropTempAuthKeys for reference.
 type AuthDropTempAuthKeysRequest struct {
-	// ExceptAuthKeys field of AuthDropTempAuthKeysRequest.
+	// The auth keys that shouldn't be dropped.
 	ExceptAuthKeys []int64
 }
 
@@ -66,6 +69,13 @@ func (d *AuthDropTempAuthKeysRequest) String() string {
 	}
 	type Alias AuthDropTempAuthKeysRequest
 	return fmt.Sprintf("AuthDropTempAuthKeysRequest%+v", Alias(*d))
+}
+
+// FillFrom fills AuthDropTempAuthKeysRequest from given interface.
+func (d *AuthDropTempAuthKeysRequest) FillFrom(from interface {
+	GetExceptAuthKeys() (value []int64)
+}) {
+	d.ExceptAuthKeys = from.GetExceptAuthKeys()
 }
 
 // TypeID returns type id in TL schema.
@@ -165,6 +175,10 @@ func (d *AuthDropTempAuthKeysRequest) GetExceptAuthKeys() (value []int64) {
 }
 
 // AuthDropTempAuthKeys invokes method auth.dropTempAuthKeys#8e48a188 returning error if any.
+// Delete all temporary authorization keys except for the ones specified
+//
+// See https://core.telegram.org/method/auth.dropTempAuthKeys for reference.
+// Can be used by bots.
 func (c *Client) AuthDropTempAuthKeys(ctx context.Context, exceptauthkeys []int64) (bool, error) {
 	var result BoolBox
 

@@ -32,14 +32,25 @@ var (
 )
 
 // MessagesCreateChatRequest represents TL type `messages.createChat#92ceddd4`.
+// Creates a new chat.
+//
+// See https://core.telegram.org/method/messages.createChat for reference.
 type MessagesCreateChatRequest struct {
-	// Flags field of MessagesCreateChatRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Users field of MessagesCreateChatRequest.
+	// List of user IDs to be invited
 	Users []InputUserClass
-	// Title field of MessagesCreateChatRequest.
+	// Chat name
 	Title string
-	// TTLPeriod field of MessagesCreateChatRequest.
+	// Time-to-live of all messages that will be sent in the chat: once message.date+message
+	// ttl_period === time(), the message will be deleted on the server, and must be deleted
+	// locally as well. You can use messages.setDefaultHistoryTTL¹ to edit this value later.
+	//
+	// Links:
+	//  1) https://core.telegram.org/method/messages.setDefaultHistoryTTL
 	//
 	// Use SetTTLPeriod and GetTTLPeriod helpers.
 	TTLPeriod int
@@ -83,6 +94,20 @@ func (c *MessagesCreateChatRequest) String() string {
 	}
 	type Alias MessagesCreateChatRequest
 	return fmt.Sprintf("MessagesCreateChatRequest%+v", Alias(*c))
+}
+
+// FillFrom fills MessagesCreateChatRequest from given interface.
+func (c *MessagesCreateChatRequest) FillFrom(from interface {
+	GetUsers() (value []InputUserClass)
+	GetTitle() (value string)
+	GetTTLPeriod() (value int, ok bool)
+}) {
+	c.Users = from.GetUsers()
+	c.Title = from.GetTitle()
+	if val, ok := from.GetTTLPeriod(); ok {
+		c.TTLPeriod = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -255,7 +280,25 @@ func (c *MessagesCreateChatRequest) GetTTLPeriod() (value int, ok bool) {
 	return c.TTLPeriod, true
 }
 
+// MapUsers returns field Users wrapped in InputUserClassArray helper.
+func (c *MessagesCreateChatRequest) MapUsers() (value InputUserClassArray) {
+	return InputUserClassArray(c.Users)
+}
+
 // MessagesCreateChat invokes method messages.createChat#92ceddd4 returning error if any.
+// Creates a new chat.
+//
+// Possible errors:
+//
+//	500 CHAT_ID_GENERATE_FAILED: Failure while generating the chat ID.
+//	400 CHAT_INVALID: Invalid chat.
+//	400 CHAT_TITLE_EMPTY: No chat title provided.
+//	400 INPUT_USER_DEACTIVATED: The specified user was deleted.
+//	400 TTL_PERIOD_INVALID: The specified TTL period is invalid.
+//	400 USERS_TOO_FEW: Not enough users (to create a chat, for example).
+//	406 USER_RESTRICTED: You're spamreported, you can't create channels or chats.
+//
+// See https://core.telegram.org/method/messages.createChat for reference.
 func (c *Client) MessagesCreateChat(ctx context.Context, request *MessagesCreateChatRequest) (*MessagesInvitedUsers, error) {
 	var result MessagesInvitedUsers
 

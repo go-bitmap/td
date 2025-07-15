@@ -32,26 +32,49 @@ var (
 )
 
 // StarsGiveawayOption represents TL type `starsGiveawayOption#94ce852a`.
+// Contains info about a Telegram Star giveaway¹ option.
+//
+// Links:
+//  1. https://core.telegram.org/api/giveaways#star-giveaways
+//
+// See https://core.telegram.org/constructor/starsGiveawayOption for reference.
 type StarsGiveawayOption struct {
-	// Flags field of StarsGiveawayOption.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Extended field of StarsGiveawayOption.
+	// If set, this option must only be shown in the full list of giveaway options (i.e. they
+	// must be added to the list only when the user clicks on the expand button).
 	Extended bool
-	// Default field of StarsGiveawayOption.
+	// If set, this option must be pre-selected by default in the option list.
 	Default bool
-	// Stars field of StarsGiveawayOption.
+	// The number of Telegram Stars that will be distributed among winners
 	Stars int64
-	// YearlyBoosts field of StarsGiveawayOption.
+	// Number of times the chat will be boosted for one year if the
+	// inputStorePaymentStarsGiveaway¹.boost_peer flag is populated
+	//
+	// Links:
+	//  1) https://core.telegram.org/constructor/inputStorePaymentStarsGiveaway
 	YearlyBoosts int
-	// StoreProduct field of StarsGiveawayOption.
+	// Identifier of the store product associated with the option, official apps only.
 	//
 	// Use SetStoreProduct and GetStoreProduct helpers.
 	StoreProduct string
-	// Currency field of StarsGiveawayOption.
+	// Three-letter ISO 4217 currency¹ code
+	//
+	// Links:
+	//  1) https://core.telegram.org/bots/payments#supported-currencies
 	Currency string
-	// Amount field of StarsGiveawayOption.
+	// Total price in the smallest units of the currency (integer, not float/double). For
+	// example, for a price of US$ 1.45 pass amount = 145. See the exp parameter in
+	// currencies.json¹, it shows the number of digits past the decimal point for each
+	// currency (2 for the majority of currencies).
+	//
+	// Links:
+	//  1) https://core.telegram.org/bots/payments/currencies.json
 	Amount int64
-	// Winners field of StarsGiveawayOption.
+	// Allowed options for the number of giveaway winners.
 	Winners []StarsGiveawayWinnersOption
 }
 
@@ -108,6 +131,30 @@ func (s *StarsGiveawayOption) String() string {
 	}
 	type Alias StarsGiveawayOption
 	return fmt.Sprintf("StarsGiveawayOption%+v", Alias(*s))
+}
+
+// FillFrom fills StarsGiveawayOption from given interface.
+func (s *StarsGiveawayOption) FillFrom(from interface {
+	GetExtended() (value bool)
+	GetDefault() (value bool)
+	GetStars() (value int64)
+	GetYearlyBoosts() (value int)
+	GetStoreProduct() (value string, ok bool)
+	GetCurrency() (value string)
+	GetAmount() (value int64)
+	GetWinners() (value []StarsGiveawayWinnersOption)
+}) {
+	s.Extended = from.GetExtended()
+	s.Default = from.GetDefault()
+	s.Stars = from.GetStars()
+	s.YearlyBoosts = from.GetYearlyBoosts()
+	if val, ok := from.GetStoreProduct(); ok {
+		s.StoreProduct = val
+	}
+
+	s.Currency = from.GetCurrency()
+	s.Amount = from.GetAmount()
+	s.Winners = from.GetWinners()
 }
 
 // TypeID returns type id in TL schema.

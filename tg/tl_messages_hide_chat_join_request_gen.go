@@ -32,14 +32,29 @@ var (
 )
 
 // MessagesHideChatJoinRequestRequest represents TL type `messages.hideChatJoinRequest#7fe7e815`.
+// Dismiss or approve a chat join request¹ related to a specific chat or channel.
+//
+// Links:
+//  1. https://core.telegram.org/api/invites#join-requests
+//
+// See https://core.telegram.org/method/messages.hideChatJoinRequest for reference.
 type MessagesHideChatJoinRequestRequest struct {
-	// Flags field of MessagesHideChatJoinRequestRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Approved field of MessagesHideChatJoinRequestRequest.
+	// Whether to dismiss or approve the chat join request »¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/invites#join-requests
 	Approved bool
-	// Peer field of MessagesHideChatJoinRequestRequest.
+	// The chat or channel
 	Peer InputPeerClass
-	// UserID field of MessagesHideChatJoinRequestRequest.
+	// The user whose join request »¹ should be dismissed or approved
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/invites#join-requests
 	UserID InputUserClass
 }
 
@@ -81,6 +96,17 @@ func (h *MessagesHideChatJoinRequestRequest) String() string {
 	}
 	type Alias MessagesHideChatJoinRequestRequest
 	return fmt.Sprintf("MessagesHideChatJoinRequestRequest%+v", Alias(*h))
+}
+
+// FillFrom fills MessagesHideChatJoinRequestRequest from given interface.
+func (h *MessagesHideChatJoinRequestRequest) FillFrom(from interface {
+	GetApproved() (value bool)
+	GetPeer() (value InputPeerClass)
+	GetUserID() (value InputUserClass)
+}) {
+	h.Approved = from.GetApproved()
+	h.Peer = from.GetPeer()
+	h.UserID = from.GetUserID()
 }
 
 // TypeID returns type id in TL schema.
@@ -238,6 +264,27 @@ func (h *MessagesHideChatJoinRequestRequest) GetUserID() (value InputUserClass) 
 }
 
 // MessagesHideChatJoinRequest invokes method messages.hideChatJoinRequest#7fe7e815 returning error if any.
+// Dismiss or approve a chat join request¹ related to a specific chat or channel.
+//
+// Links:
+//  1. https://core.telegram.org/api/invites#join-requests
+//
+// Possible errors:
+//
+//	400 CHANNELS_TOO_MUCH: You have joined too many channels/supergroups.
+//	400 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
+//	400 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
+//	403 CHAT_WRITE_FORBIDDEN: You can't write in this chat.
+//	400 HIDE_REQUESTER_MISSING: The join request was missing or was already handled.
+//	400 INPUT_USER_DEACTIVATED: The specified user was deleted.
+//	400 MSG_ID_INVALID: Invalid message ID provided.
+//	400 PEER_ID_INVALID: The provided peer id is invalid.
+//	400 USER_ALREADY_PARTICIPANT: The user is already in the group.
+//	403 USER_CHANNELS_TOO_MUCH: One of the users you tried to add is already in too many channels/supergroups.
+//	400 USER_ID_INVALID: The provided user ID is invalid.
+//
+// See https://core.telegram.org/method/messages.hideChatJoinRequest for reference.
+// Can be used by bots.
 func (c *Client) MessagesHideChatJoinRequest(ctx context.Context, request *MessagesHideChatJoinRequestRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

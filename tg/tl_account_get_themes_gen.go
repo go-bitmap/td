@@ -32,10 +32,16 @@ var (
 )
 
 // AccountGetThemesRequest represents TL type `account.getThemes#7206e458`.
+// Get installed themes
+//
+// See https://core.telegram.org/method/account.getThemes for reference.
 type AccountGetThemesRequest struct {
-	// Format field of AccountGetThemesRequest.
+	// Theme format, a string that identifies the theming engines supported by the client
 	Format string
-	// Hash field of AccountGetThemesRequest.
+	// Hash used for caching, for more info click here¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets#hash-generation
 	Hash int64
 }
 
@@ -71,6 +77,15 @@ func (g *AccountGetThemesRequest) String() string {
 	}
 	type Alias AccountGetThemesRequest
 	return fmt.Sprintf("AccountGetThemesRequest%+v", Alias(*g))
+}
+
+// FillFrom fills AccountGetThemesRequest from given interface.
+func (g *AccountGetThemesRequest) FillFrom(from interface {
+	GetFormat() (value string)
+	GetHash() (value int64)
+}) {
+	g.Format = from.GetFormat()
+	g.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -177,6 +192,9 @@ func (g *AccountGetThemesRequest) GetHash() (value int64) {
 }
 
 // AccountGetThemes invokes method account.getThemes#7206e458 returning error if any.
+// Get installed themes
+//
+// See https://core.telegram.org/method/account.getThemes for reference.
 func (c *Client) AccountGetThemes(ctx context.Context, request *AccountGetThemesRequest) (AccountThemesClass, error) {
 	var result AccountThemesBox
 

@@ -32,10 +32,13 @@ var (
 )
 
 // MessagesSearchResultsPositions represents TL type `messages.searchResultsPositions#53b22baf`.
+// Information about sparse positions of messages
+//
+// See https://core.telegram.org/constructor/messages.searchResultsPositions for reference.
 type MessagesSearchResultsPositions struct {
-	// Count field of MessagesSearchResultsPositions.
+	// Total number of found messages
 	Count int
-	// Positions field of MessagesSearchResultsPositions.
+	// List of message positions
 	Positions []SearchResultPosition
 }
 
@@ -71,6 +74,15 @@ func (s *MessagesSearchResultsPositions) String() string {
 	}
 	type Alias MessagesSearchResultsPositions
 	return fmt.Sprintf("MessagesSearchResultsPositions%+v", Alias(*s))
+}
+
+// FillFrom fills MessagesSearchResultsPositions from given interface.
+func (s *MessagesSearchResultsPositions) FillFrom(from interface {
+	GetCount() (value int)
+	GetPositions() (value []SearchResultPosition)
+}) {
+	s.Count = from.GetCount()
+	s.Positions = from.GetPositions()
 }
 
 // TypeID returns type id in TL schema.

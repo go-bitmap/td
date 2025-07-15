@@ -32,28 +32,35 @@ var (
 )
 
 // MessagesEditExportedChatInviteRequest represents TL type `messages.editExportedChatInvite#bdca2f75`.
+// Edit an exported chat invite
+//
+// See https://core.telegram.org/method/messages.editExportedChatInvite for reference.
 type MessagesEditExportedChatInviteRequest struct {
-	// Flags field of MessagesEditExportedChatInviteRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Revoked field of MessagesEditExportedChatInviteRequest.
+	// Whether to revoke the chat invite
 	Revoked bool
-	// Peer field of MessagesEditExportedChatInviteRequest.
+	// Chat
 	Peer InputPeerClass
-	// Link field of MessagesEditExportedChatInviteRequest.
+	// Invite link
 	Link string
-	// ExpireDate field of MessagesEditExportedChatInviteRequest.
+	// New expiration date
 	//
 	// Use SetExpireDate and GetExpireDate helpers.
 	ExpireDate int
-	// UsageLimit field of MessagesEditExportedChatInviteRequest.
+	// Maximum number of users that can join using this link
 	//
 	// Use SetUsageLimit and GetUsageLimit helpers.
 	UsageLimit int
-	// RequestNeeded field of MessagesEditExportedChatInviteRequest.
+	// Whether admin confirmation is required before admitting each separate user into the
+	// chat
 	//
 	// Use SetRequestNeeded and GetRequestNeeded helpers.
 	RequestNeeded bool
-	// Title field of MessagesEditExportedChatInviteRequest.
+	// Description of the invite link, visible only to administrators
 	//
 	// Use SetTitle and GetTitle helpers.
 	Title string
@@ -109,6 +116,37 @@ func (e *MessagesEditExportedChatInviteRequest) String() string {
 	}
 	type Alias MessagesEditExportedChatInviteRequest
 	return fmt.Sprintf("MessagesEditExportedChatInviteRequest%+v", Alias(*e))
+}
+
+// FillFrom fills MessagesEditExportedChatInviteRequest from given interface.
+func (e *MessagesEditExportedChatInviteRequest) FillFrom(from interface {
+	GetRevoked() (value bool)
+	GetPeer() (value InputPeerClass)
+	GetLink() (value string)
+	GetExpireDate() (value int, ok bool)
+	GetUsageLimit() (value int, ok bool)
+	GetRequestNeeded() (value bool, ok bool)
+	GetTitle() (value string, ok bool)
+}) {
+	e.Revoked = from.GetRevoked()
+	e.Peer = from.GetPeer()
+	e.Link = from.GetLink()
+	if val, ok := from.GetExpireDate(); ok {
+		e.ExpireDate = val
+	}
+
+	if val, ok := from.GetUsageLimit(); ok {
+		e.UsageLimit = val
+	}
+
+	if val, ok := from.GetRequestNeeded(); ok {
+		e.RequestNeeded = val
+	}
+
+	if val, ok := from.GetTitle(); ok {
+		e.Title = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -405,6 +443,21 @@ func (e *MessagesEditExportedChatInviteRequest) GetTitle() (value string, ok boo
 }
 
 // MessagesEditExportedChatInvite invokes method messages.editExportedChatInvite#bdca2f75 returning error if any.
+// Edit an exported chat invite
+//
+// Possible errors:
+//
+//	400 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
+//	400 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
+//	400 CHAT_INVITE_PERMANENT: You can't set an expiration date on permanent invite links.
+//	403 CHAT_WRITE_FORBIDDEN: You can't write in this chat.
+//	403 EDIT_BOT_INVITE_FORBIDDEN: Normal users can't edit invites that were created by bots.
+//	400 INVITE_HASH_EXPIRED: The invite link has expired.
+//	400 PEER_ID_INVALID: The provided peer id is invalid.
+//	400 USAGE_LIMIT_INVALID: The specified usage limit is invalid.
+//
+// See https://core.telegram.org/method/messages.editExportedChatInvite for reference.
+// Can be used by bots.
 func (c *Client) MessagesEditExportedChatInvite(ctx context.Context, request *MessagesEditExportedChatInviteRequest) (MessagesExportedChatInviteClass, error) {
 	var result MessagesExportedChatInviteBox
 

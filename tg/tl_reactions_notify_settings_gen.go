@@ -32,20 +32,39 @@ var (
 )
 
 // ReactionsNotifySettings represents TL type `reactionsNotifySettings#56e34970`.
+// Reaction notification settings, see here »¹ for more info.
+//
+// Links:
+//  1. https://core.telegram.org/api/reactions#notifications-about-reactions
+//
+// See https://core.telegram.org/constructor/reactionsNotifySettings for reference.
 type ReactionsNotifySettings struct {
-	// Flags field of ReactionsNotifySettings.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// MessagesNotifyFrom field of ReactionsNotifySettings.
+	// Message reaction notification settings, if not set completely disables
+	// notifications/updates about message reactions.
 	//
 	// Use SetMessagesNotifyFrom and GetMessagesNotifyFrom helpers.
 	MessagesNotifyFrom ReactionNotificationsFromClass
-	// StoriesNotifyFrom field of ReactionsNotifySettings.
+	// Story reaction notification settings, if not set completely disables
+	// notifications/updates about reactions to stories.
 	//
 	// Use SetStoriesNotifyFrom and GetStoriesNotifyFrom helpers.
 	StoriesNotifyFrom ReactionNotificationsFromClass
-	// Sound field of ReactionsNotifySettings.
+	// Notification sound for reactions »¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/ringtones
 	Sound NotificationSoundClass
-	// ShowPreviews field of ReactionsNotifySettings.
+	// If false, push notifications »¹ about message/story reactions will only be of type
+	// REACT_HIDDEN/REACT_STORY_HIDDEN, without any information about the reacted-to story or
+	// the reaction itself.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/push-updates
 	ShowPreviews bool
 }
 
@@ -90,6 +109,25 @@ func (r *ReactionsNotifySettings) String() string {
 	}
 	type Alias ReactionsNotifySettings
 	return fmt.Sprintf("ReactionsNotifySettings%+v", Alias(*r))
+}
+
+// FillFrom fills ReactionsNotifySettings from given interface.
+func (r *ReactionsNotifySettings) FillFrom(from interface {
+	GetMessagesNotifyFrom() (value ReactionNotificationsFromClass, ok bool)
+	GetStoriesNotifyFrom() (value ReactionNotificationsFromClass, ok bool)
+	GetSound() (value NotificationSoundClass)
+	GetShowPreviews() (value bool)
+}) {
+	if val, ok := from.GetMessagesNotifyFrom(); ok {
+		r.MessagesNotifyFrom = val
+	}
+
+	if val, ok := from.GetStoriesNotifyFrom(); ok {
+		r.StoriesNotifyFrom = val
+	}
+
+	r.Sound = from.GetSound()
+	r.ShowPreviews = from.GetShowPreviews()
 }
 
 // TypeID returns type id in TL schema.

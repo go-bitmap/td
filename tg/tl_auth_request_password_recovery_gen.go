@@ -32,6 +32,14 @@ var (
 )
 
 // AuthRequestPasswordRecoveryRequest represents TL type `auth.requestPasswordRecovery#d897bc66`.
+// Request recovery code of a 2FA password¹, only for accounts with a recovery email
+// configured².
+//
+// Links:
+//  1. https://core.telegram.org/api/srp
+//  2. https://core.telegram.org/api/srp#email-verification
+//
+// See https://core.telegram.org/method/auth.requestPasswordRecovery for reference.
 type AuthRequestPasswordRecoveryRequest struct {
 }
 
@@ -126,6 +134,19 @@ func (r *AuthRequestPasswordRecoveryRequest) DecodeBare(b *bin.Buffer) error {
 }
 
 // AuthRequestPasswordRecovery invokes method auth.requestPasswordRecovery#d897bc66 returning error if any.
+// Request recovery code of a 2FA password¹, only for accounts with a recovery email
+// configured².
+//
+// Links:
+//  1. https://core.telegram.org/api/srp
+//  2. https://core.telegram.org/api/srp#email-verification
+//
+// Possible errors:
+//
+//	400 PASSWORD_EMPTY: The provided password is empty.
+//	400 PASSWORD_RECOVERY_NA: No email was set, can't recover password via email.
+//
+// See https://core.telegram.org/method/auth.requestPasswordRecovery for reference.
 func (c *Client) AuthRequestPasswordRecovery(ctx context.Context) (*AuthPasswordRecovery, error) {
 	var result AuthPasswordRecovery
 

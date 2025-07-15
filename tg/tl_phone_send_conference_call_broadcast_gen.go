@@ -32,6 +32,8 @@ var (
 )
 
 // PhoneSendConferenceCallBroadcastRequest represents TL type `phone.sendConferenceCallBroadcast#c6701900`.
+//
+// See https://core.telegram.org/method/phone.sendConferenceCallBroadcast for reference.
 type PhoneSendConferenceCallBroadcastRequest struct {
 	// Call field of PhoneSendConferenceCallBroadcastRequest.
 	Call InputGroupCallClass
@@ -71,6 +73,15 @@ func (s *PhoneSendConferenceCallBroadcastRequest) String() string {
 	}
 	type Alias PhoneSendConferenceCallBroadcastRequest
 	return fmt.Sprintf("PhoneSendConferenceCallBroadcastRequest%+v", Alias(*s))
+}
+
+// FillFrom fills PhoneSendConferenceCallBroadcastRequest from given interface.
+func (s *PhoneSendConferenceCallBroadcastRequest) FillFrom(from interface {
+	GetCall() (value InputGroupCallClass)
+	GetBlock() (value []byte)
+}) {
+	s.Call = from.GetCall()
+	s.Block = from.GetBlock()
 }
 
 // TypeID returns type id in TL schema.
@@ -182,6 +193,8 @@ func (s *PhoneSendConferenceCallBroadcastRequest) GetBlock() (value []byte) {
 }
 
 // PhoneSendConferenceCallBroadcast invokes method phone.sendConferenceCallBroadcast#c6701900 returning error if any.
+//
+// See https://core.telegram.org/method/phone.sendConferenceCallBroadcast for reference.
 func (c *Client) PhoneSendConferenceCallBroadcast(ctx context.Context, request *PhoneSendConferenceCallBroadcastRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

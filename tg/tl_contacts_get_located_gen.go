@@ -32,14 +32,28 @@ var (
 )
 
 // ContactsGetLocatedRequest represents TL type `contacts.getLocated#d348bc44`.
+// Get users and geochats near you, see here »¹ for more info.
+//
+// Links:
+//  1. https://core.telegram.org/api/nearby
+//
+// See https://core.telegram.org/method/contacts.getLocated for reference.
 type ContactsGetLocatedRequest struct {
-	// Flags field of ContactsGetLocatedRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Background field of ContactsGetLocatedRequest.
+	// While the geolocation of the current user is public, clients should update it in the
+	// background every half-an-hour or so, while setting this flag. Do this only if the new
+	// location is more than 1 KM away from the previous one, or if the previous location is
+	// unknown.
 	Background bool
-	// GeoPoint field of ContactsGetLocatedRequest.
+	// Geolocation
 	GeoPoint InputGeoPointClass
-	// SelfExpires field of ContactsGetLocatedRequest.
+	// If set, the geolocation of the current user will be public for the specified number of
+	// seconds; pass 0x7fffffff to disable expiry, 0 to make the current geolocation private;
+	// if the flag isn't set, no changes will be applied.
 	//
 	// Use SetSelfExpires and GetSelfExpires helpers.
 	SelfExpires int
@@ -83,6 +97,20 @@ func (g *ContactsGetLocatedRequest) String() string {
 	}
 	type Alias ContactsGetLocatedRequest
 	return fmt.Sprintf("ContactsGetLocatedRequest%+v", Alias(*g))
+}
+
+// FillFrom fills ContactsGetLocatedRequest from given interface.
+func (g *ContactsGetLocatedRequest) FillFrom(from interface {
+	GetBackground() (value bool)
+	GetGeoPoint() (value InputGeoPointClass)
+	GetSelfExpires() (value int, ok bool)
+}) {
+	g.Background = from.GetBackground()
+	g.GeoPoint = from.GetGeoPoint()
+	if val, ok := from.GetSelfExpires(); ok {
+		g.SelfExpires = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -250,7 +278,25 @@ func (g *ContactsGetLocatedRequest) GetSelfExpires() (value int, ok bool) {
 	return g.SelfExpires, true
 }
 
+// GetGeoPointAsNotEmpty returns mapped value of GeoPoint field.
+func (g *ContactsGetLocatedRequest) GetGeoPointAsNotEmpty() (*InputGeoPoint, bool) {
+	return g.GeoPoint.AsNotEmpty()
+}
+
 // ContactsGetLocated invokes method contacts.getLocated#d348bc44 returning error if any.
+// Get users and geochats near you, see here »¹ for more info.
+//
+// Links:
+//  1. https://core.telegram.org/api/nearby
+//
+// Possible errors:
+//
+//	406 BUSINESS_ADDRESS_ACTIVE: The user is currently advertising a Business Location, the location may only be changed (or removed) using account.updateBusinessLocation ».  .
+//	400 GEO_POINT_INVALID: Invalid geoposition provided.
+//	406 USERPIC_PRIVACY_REQUIRED: You need to disable privacy settings for your profile picture in order to make your geolocation public.
+//	406 USERPIC_UPLOAD_REQUIRED: You must have a profile picture to publish your geolocation.
+//
+// See https://core.telegram.org/method/contacts.getLocated for reference.
 func (c *Client) ContactsGetLocated(ctx context.Context, request *ContactsGetLocatedRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

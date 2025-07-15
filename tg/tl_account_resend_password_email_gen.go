@@ -32,6 +32,12 @@ var (
 )
 
 // AccountResendPasswordEmailRequest represents TL type `account.resendPasswordEmail#7a7f2a15`.
+// Resend the code to verify an email to use as 2FA recovery method¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/srp
+//
+// See https://core.telegram.org/method/account.resendPasswordEmail for reference.
 type AccountResendPasswordEmailRequest struct {
 }
 
@@ -126,6 +132,16 @@ func (r *AccountResendPasswordEmailRequest) DecodeBare(b *bin.Buffer) error {
 }
 
 // AccountResendPasswordEmail invokes method account.resendPasswordEmail#7a7f2a15 returning error if any.
+// Resend the code to verify an email to use as 2FA recovery method¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/srp
+//
+// Possible errors:
+//
+//	400 EMAIL_HASH_EXPIRED: Email hash expired.
+//
+// See https://core.telegram.org/method/account.resendPasswordEmail for reference.
 func (c *Client) AccountResendPasswordEmail(ctx context.Context) (bool, error) {
 	var result BoolBox
 

@@ -32,18 +32,27 @@ var (
 )
 
 // MessageViews represents TL type `messageViews#455b853d`.
+// View, forward counter + info about replies of a specific message
+//
+// See https://core.telegram.org/constructor/messageViews for reference.
 type MessageViews struct {
-	// Flags field of MessageViews.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Views field of MessageViews.
+	// View count of message
 	//
 	// Use SetViews and GetViews helpers.
 	Views int
-	// Forwards field of MessageViews.
+	// Forward count of message
 	//
 	// Use SetForwards and GetForwards helpers.
 	Forwards int
-	// Replies field of MessageViews.
+	// Reply and thread¹ information of message
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/threads
 	//
 	// Use SetReplies and GetReplies helpers.
 	Replies MessageReplies
@@ -87,6 +96,26 @@ func (m *MessageViews) String() string {
 	}
 	type Alias MessageViews
 	return fmt.Sprintf("MessageViews%+v", Alias(*m))
+}
+
+// FillFrom fills MessageViews from given interface.
+func (m *MessageViews) FillFrom(from interface {
+	GetViews() (value int, ok bool)
+	GetForwards() (value int, ok bool)
+	GetReplies() (value MessageReplies, ok bool)
+}) {
+	if val, ok := from.GetViews(); ok {
+		m.Views = val
+	}
+
+	if val, ok := from.GetForwards(); ok {
+		m.Forwards = val
+	}
+
+	if val, ok := from.GetReplies(); ok {
+		m.Replies = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.

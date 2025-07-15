@@ -32,12 +32,15 @@ var (
 )
 
 // MessagesInactiveChats represents TL type `messages.inactiveChats#a927fec5`.
+// Inactive chat list
+//
+// See https://core.telegram.org/constructor/messages.inactiveChats for reference.
 type MessagesInactiveChats struct {
-	// Dates field of MessagesInactiveChats.
+	// When was the chat last active
 	Dates []int
-	// Chats field of MessagesInactiveChats.
+	// Chat list
 	Chats []ChatClass
-	// Users field of MessagesInactiveChats.
+	// Users mentioned in the chat list
 	Users []UserClass
 }
 
@@ -76,6 +79,17 @@ func (i *MessagesInactiveChats) String() string {
 	}
 	type Alias MessagesInactiveChats
 	return fmt.Sprintf("MessagesInactiveChats%+v", Alias(*i))
+}
+
+// FillFrom fills MessagesInactiveChats from given interface.
+func (i *MessagesInactiveChats) FillFrom(from interface {
+	GetDates() (value []int)
+	GetChats() (value []ChatClass)
+	GetUsers() (value []UserClass)
+}) {
+	i.Dates = from.GetDates()
+	i.Chats = from.GetChats()
+	i.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -248,4 +262,14 @@ func (i *MessagesInactiveChats) GetUsers() (value []UserClass) {
 		return
 	}
 	return i.Users
+}
+
+// MapChats returns field Chats wrapped in ChatClassArray helper.
+func (i *MessagesInactiveChats) MapChats() (value ChatClassArray) {
+	return ChatClassArray(i.Chats)
+}
+
+// MapUsers returns field Users wrapped in UserClassArray helper.
+func (i *MessagesInactiveChats) MapUsers() (value UserClassArray) {
+	return UserClassArray(i.Users)
 }

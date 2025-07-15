@@ -32,6 +32,8 @@ var (
 )
 
 // PhoneInviteConferenceCallParticipantRequest represents TL type `phone.inviteConferenceCallParticipant#bcf22685`.
+//
+// See https://core.telegram.org/method/phone.inviteConferenceCallParticipant for reference.
 type PhoneInviteConferenceCallParticipantRequest struct {
 	// Flags field of PhoneInviteConferenceCallParticipantRequest.
 	Flags bin.Fields
@@ -81,6 +83,17 @@ func (i *PhoneInviteConferenceCallParticipantRequest) String() string {
 	}
 	type Alias PhoneInviteConferenceCallParticipantRequest
 	return fmt.Sprintf("PhoneInviteConferenceCallParticipantRequest%+v", Alias(*i))
+}
+
+// FillFrom fills PhoneInviteConferenceCallParticipantRequest from given interface.
+func (i *PhoneInviteConferenceCallParticipantRequest) FillFrom(from interface {
+	GetVideo() (value bool)
+	GetCall() (value InputGroupCallClass)
+	GetUserID() (value InputUserClass)
+}) {
+	i.Video = from.GetVideo()
+	i.Call = from.GetCall()
+	i.UserID = from.GetUserID()
 }
 
 // TypeID returns type id in TL schema.
@@ -238,6 +251,8 @@ func (i *PhoneInviteConferenceCallParticipantRequest) GetUserID() (value InputUs
 }
 
 // PhoneInviteConferenceCallParticipant invokes method phone.inviteConferenceCallParticipant#bcf22685 returning error if any.
+//
+// See https://core.telegram.org/method/phone.inviteConferenceCallParticipant for reference.
 func (c *Client) PhoneInviteConferenceCallParticipant(ctx context.Context, request *PhoneInviteConferenceCallParticipantRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

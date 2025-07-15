@@ -32,22 +32,28 @@ var (
 )
 
 // PaymentRequestedInfo represents TL type `paymentRequestedInfo#909c3f94`.
+// Order info provided by the user
+//
+// See https://core.telegram.org/constructor/paymentRequestedInfo for reference.
 type PaymentRequestedInfo struct {
-	// Flags field of PaymentRequestedInfo.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Name field of PaymentRequestedInfo.
+	// User's full name
 	//
 	// Use SetName and GetName helpers.
 	Name string
-	// Phone field of PaymentRequestedInfo.
+	// User's phone number
 	//
 	// Use SetPhone and GetPhone helpers.
 	Phone string
-	// Email field of PaymentRequestedInfo.
+	// User's email address
 	//
 	// Use SetEmail and GetEmail helpers.
 	Email string
-	// ShippingAddress field of PaymentRequestedInfo.
+	// User's shipping address
 	//
 	// Use SetShippingAddress and GetShippingAddress helpers.
 	ShippingAddress PostAddress
@@ -94,6 +100,31 @@ func (p *PaymentRequestedInfo) String() string {
 	}
 	type Alias PaymentRequestedInfo
 	return fmt.Sprintf("PaymentRequestedInfo%+v", Alias(*p))
+}
+
+// FillFrom fills PaymentRequestedInfo from given interface.
+func (p *PaymentRequestedInfo) FillFrom(from interface {
+	GetName() (value string, ok bool)
+	GetPhone() (value string, ok bool)
+	GetEmail() (value string, ok bool)
+	GetShippingAddress() (value PostAddress, ok bool)
+}) {
+	if val, ok := from.GetName(); ok {
+		p.Name = val
+	}
+
+	if val, ok := from.GetPhone(); ok {
+		p.Phone = val
+	}
+
+	if val, ok := from.GetEmail(); ok {
+		p.Email = val
+	}
+
+	if val, ok := from.GetShippingAddress(); ok {
+		p.ShippingAddress = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.

@@ -32,16 +32,22 @@ var (
 )
 
 // ChatlistsChatlistInviteAlready represents TL type `chatlists.chatlistInviteAlready#fa87f659`.
+// Updated info about a chat folder deep link »¹ we already imported.
+//
+// Links:
+//  1. https://core.telegram.org/api/links#chat-folder-links
+//
+// See https://core.telegram.org/constructor/chatlists.chatlistInviteAlready for reference.
 type ChatlistsChatlistInviteAlready struct {
-	// FilterID field of ChatlistsChatlistInviteAlready.
+	// ID of the imported folder
 	FilterID int
-	// MissingPeers field of ChatlistsChatlistInviteAlready.
+	// New peers to be imported
 	MissingPeers []PeerClass
-	// AlreadyPeers field of ChatlistsChatlistInviteAlready.
+	// Peers that were already imported
 	AlreadyPeers []PeerClass
-	// Chats field of ChatlistsChatlistInviteAlready.
+	// Related chat information
 	Chats []ChatClass
-	// Users field of ChatlistsChatlistInviteAlready.
+	// Related user information
 	Users []UserClass
 }
 
@@ -91,6 +97,21 @@ func (c *ChatlistsChatlistInviteAlready) String() string {
 	}
 	type Alias ChatlistsChatlistInviteAlready
 	return fmt.Sprintf("ChatlistsChatlistInviteAlready%+v", Alias(*c))
+}
+
+// FillFrom fills ChatlistsChatlistInviteAlready from given interface.
+func (c *ChatlistsChatlistInviteAlready) FillFrom(from interface {
+	GetFilterID() (value int)
+	GetMissingPeers() (value []PeerClass)
+	GetAlreadyPeers() (value []PeerClass)
+	GetChats() (value []ChatClass)
+	GetUsers() (value []UserClass)
+}) {
+	c.FilterID = from.GetFilterID()
+	c.MissingPeers = from.GetMissingPeers()
+	c.AlreadyPeers = from.GetAlreadyPeers()
+	c.Chats = from.GetChats()
+	c.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -328,23 +349,52 @@ func (c *ChatlistsChatlistInviteAlready) GetUsers() (value []UserClass) {
 	return c.Users
 }
 
+// MapMissingPeers returns field MissingPeers wrapped in PeerClassArray helper.
+func (c *ChatlistsChatlistInviteAlready) MapMissingPeers() (value PeerClassArray) {
+	return PeerClassArray(c.MissingPeers)
+}
+
+// MapAlreadyPeers returns field AlreadyPeers wrapped in PeerClassArray helper.
+func (c *ChatlistsChatlistInviteAlready) MapAlreadyPeers() (value PeerClassArray) {
+	return PeerClassArray(c.AlreadyPeers)
+}
+
+// MapChats returns field Chats wrapped in ChatClassArray helper.
+func (c *ChatlistsChatlistInviteAlready) MapChats() (value ChatClassArray) {
+	return ChatClassArray(c.Chats)
+}
+
+// MapUsers returns field Users wrapped in UserClassArray helper.
+func (c *ChatlistsChatlistInviteAlready) MapUsers() (value UserClassArray) {
+	return UserClassArray(c.Users)
+}
+
 // ChatlistsChatlistInvite represents TL type `chatlists.chatlistInvite#f10ece2f`.
+// Info about a chat folder deep link »¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/links#chat-folder-links
+//
+// See https://core.telegram.org/constructor/chatlists.chatlistInvite for reference.
 type ChatlistsChatlistInvite struct {
-	// Flags field of ChatlistsChatlistInvite.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
 	// TitleNoanimate field of ChatlistsChatlistInvite.
 	TitleNoanimate bool
-	// Title field of ChatlistsChatlistInvite.
+	// Name of the link
 	Title TextWithEntities
-	// Emoticon field of ChatlistsChatlistInvite.
+	// Emoji to use as icon for the folder.
 	//
 	// Use SetEmoticon and GetEmoticon helpers.
 	Emoticon string
-	// Peers field of ChatlistsChatlistInvite.
+	// Supergroups and channels to join
 	Peers []PeerClass
-	// Chats field of ChatlistsChatlistInvite.
+	// Related chat information
 	Chats []ChatClass
-	// Users field of ChatlistsChatlistInvite.
+	// Related user information
 	Users []UserClass
 }
 
@@ -400,6 +450,26 @@ func (c *ChatlistsChatlistInvite) String() string {
 	}
 	type Alias ChatlistsChatlistInvite
 	return fmt.Sprintf("ChatlistsChatlistInvite%+v", Alias(*c))
+}
+
+// FillFrom fills ChatlistsChatlistInvite from given interface.
+func (c *ChatlistsChatlistInvite) FillFrom(from interface {
+	GetTitleNoanimate() (value bool)
+	GetTitle() (value TextWithEntities)
+	GetEmoticon() (value string, ok bool)
+	GetPeers() (value []PeerClass)
+	GetChats() (value []ChatClass)
+	GetUsers() (value []UserClass)
+}) {
+	c.TitleNoanimate = from.GetTitleNoanimate()
+	c.Title = from.GetTitle()
+	if val, ok := from.GetEmoticon(); ok {
+		c.Emoticon = val
+	}
+
+	c.Peers = from.GetPeers()
+	c.Chats = from.GetChats()
+	c.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -676,10 +746,27 @@ func (c *ChatlistsChatlistInvite) GetUsers() (value []UserClass) {
 	return c.Users
 }
 
+// MapPeers returns field Peers wrapped in PeerClassArray helper.
+func (c *ChatlistsChatlistInvite) MapPeers() (value PeerClassArray) {
+	return PeerClassArray(c.Peers)
+}
+
+// MapChats returns field Chats wrapped in ChatClassArray helper.
+func (c *ChatlistsChatlistInvite) MapChats() (value ChatClassArray) {
+	return ChatClassArray(c.Chats)
+}
+
+// MapUsers returns field Users wrapped in UserClassArray helper.
+func (c *ChatlistsChatlistInvite) MapUsers() (value UserClassArray) {
+	return UserClassArray(c.Users)
+}
+
 // ChatlistsChatlistInviteClassName is schema name of ChatlistsChatlistInviteClass.
 const ChatlistsChatlistInviteClassName = "chatlists.ChatlistInvite"
 
 // ChatlistsChatlistInviteClass represents chatlists.ChatlistInvite generic type.
+//
+// See https://core.telegram.org/type/chatlists.ChatlistInvite for reference.
 //
 // Constructors:
 //   - [ChatlistsChatlistInviteAlready]
@@ -714,10 +801,14 @@ type ChatlistsChatlistInviteClass interface {
 	// Zero returns true if current object has a zero value.
 	Zero() bool
 
-	// Chats field of ChatlistsChatlistInviteAlready.
+	// Related chat information
 	GetChats() (value []ChatClass)
-	// Users field of ChatlistsChatlistInviteAlready.
+	// Related chat information
+	MapChats() (value ChatClassArray)
+	// Related user information
 	GetUsers() (value []UserClass)
+	// Related user information
+	MapUsers() (value UserClassArray)
 }
 
 // DecodeChatlistsChatlistInvite implements binary de-serialization for ChatlistsChatlistInviteClass.

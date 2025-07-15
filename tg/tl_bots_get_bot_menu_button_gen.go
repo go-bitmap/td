@@ -32,8 +32,16 @@ var (
 )
 
 // BotsGetBotMenuButtonRequest represents TL type `bots.getBotMenuButton#9c60eb28`.
+// Gets the menu button action for a given user or for all users, previously set using
+// bots.setBotMenuButton¹; users can see this information in the botInfo² constructor.
+//
+// Links:
+//  1. https://core.telegram.org/method/bots.setBotMenuButton
+//  2. https://core.telegram.org/constructor/botInfo
+//
+// See https://core.telegram.org/method/bots.getBotMenuButton for reference.
 type BotsGetBotMenuButtonRequest struct {
-	// UserID field of BotsGetBotMenuButtonRequest.
+	// User ID or empty for the default menu button.
 	UserID InputUserClass
 }
 
@@ -66,6 +74,13 @@ func (g *BotsGetBotMenuButtonRequest) String() string {
 	}
 	type Alias BotsGetBotMenuButtonRequest
 	return fmt.Sprintf("BotsGetBotMenuButtonRequest%+v", Alias(*g))
+}
+
+// FillFrom fills BotsGetBotMenuButtonRequest from given interface.
+func (g *BotsGetBotMenuButtonRequest) FillFrom(from interface {
+	GetUserID() (value InputUserClass)
+}) {
+	g.UserID = from.GetUserID()
 }
 
 // TypeID returns type id in TL schema.
@@ -157,6 +172,19 @@ func (g *BotsGetBotMenuButtonRequest) GetUserID() (value InputUserClass) {
 }
 
 // BotsGetBotMenuButton invokes method bots.getBotMenuButton#9c60eb28 returning error if any.
+// Gets the menu button action for a given user or for all users, previously set using
+// bots.setBotMenuButton¹; users can see this information in the botInfo² constructor.
+//
+// Links:
+//  1. https://core.telegram.org/method/bots.setBotMenuButton
+//  2. https://core.telegram.org/constructor/botInfo
+//
+// Possible errors:
+//
+//	400 USER_BOT_REQUIRED: This method can only be called by a bot.
+//
+// See https://core.telegram.org/method/bots.getBotMenuButton for reference.
+// Can be used by bots.
 func (c *Client) BotsGetBotMenuButton(ctx context.Context, userid InputUserClass) (BotMenuButtonClass, error) {
 	var result BotMenuButtonBox
 

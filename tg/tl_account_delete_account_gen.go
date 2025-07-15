@@ -32,12 +32,30 @@ var (
 )
 
 // AccountDeleteAccountRequest represents TL type `account.deleteAccount#a2c0cf74`.
+// Delete the user's account from the telegram servers.
+// Can also be used to delete the account of a user that provided the login code, but
+// forgot the 2FA password and no recovery method is configured, see here »¹ for more
+// info on password recovery, and here »² for more info on account deletion.
+//
+// Links:
+//  1. https://core.telegram.org/api/srp#password-recovery
+//  2. https://core.telegram.org/api/account-deletion
+//
+// See https://core.telegram.org/method/account.deleteAccount for reference.
 type AccountDeleteAccountRequest struct {
-	// Flags field of AccountDeleteAccountRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Reason field of AccountDeleteAccountRequest.
+	// Why is the account being deleted, can be empty
 	Reason string
-	// Password field of AccountDeleteAccountRequest.
+	// 2FA password¹: this field can be omitted even for accounts with 2FA enabled: in this
+	// case account account deletion will be delayed by 7 days as specified in the docs »²
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/srp
+	//  2) https://core.telegram.org/api/account-deletion
 	//
 	// Use SetPassword and GetPassword helpers.
 	Password InputCheckPasswordSRPClass
@@ -78,6 +96,18 @@ func (d *AccountDeleteAccountRequest) String() string {
 	}
 	type Alias AccountDeleteAccountRequest
 	return fmt.Sprintf("AccountDeleteAccountRequest%+v", Alias(*d))
+}
+
+// FillFrom fills AccountDeleteAccountRequest from given interface.
+func (d *AccountDeleteAccountRequest) FillFrom(from interface {
+	GetReason() (value string)
+	GetPassword() (value InputCheckPasswordSRPClass, ok bool)
+}) {
+	d.Reason = from.GetReason()
+	if val, ok := from.GetPassword(); ok {
+		d.Password = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -217,7 +247,31 @@ func (d *AccountDeleteAccountRequest) GetPassword() (value InputCheckPasswordSRP
 	return d.Password, true
 }
 
+// GetPasswordAsNotEmpty returns mapped value of Password conditional field and
+// boolean which is true if field was set.
+func (d *AccountDeleteAccountRequest) GetPasswordAsNotEmpty() (*InputCheckPasswordSRP, bool) {
+	if value, ok := d.GetPassword(); ok {
+		return value.AsNotEmpty()
+	}
+	return nil, false
+}
+
 // AccountDeleteAccount invokes method account.deleteAccount#a2c0cf74 returning error if any.
+// Delete the user's account from the telegram servers.
+// Can also be used to delete the account of a user that provided the login code, but
+// forgot the 2FA password and no recovery method is configured, see here »¹ for more
+// info on password recovery, and here »² for more info on account deletion.
+//
+// Links:
+//  1. https://core.telegram.org/api/srp#password-recovery
+//  2. https://core.telegram.org/api/account-deletion
+//
+// Possible errors:
+//
+//	420 2FA_CONFIRM_WAIT_%d: Since this account is active and protected by a 2FA password, we will delete it in 1 week for security purposes. You can cancel this process at any time, you'll be able to reset your account in %d seconds.
+//	400 PASSWORD_HASH_INVALID: The provided password hash is invalid.
+//
+// See https://core.telegram.org/method/account.deleteAccount for reference.
 func (c *Client) AccountDeleteAccount(ctx context.Context, request *AccountDeleteAccountRequest) (bool, error) {
 	var result BoolBox
 

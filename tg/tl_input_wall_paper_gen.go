@@ -32,10 +32,19 @@ var (
 )
 
 // InputWallPaper represents TL type `inputWallPaper#e630b979`.
+// Wallpaper¹
+//
+// Links:
+//  1. https://core.telegram.org/api/wallpapers
+//
+// See https://core.telegram.org/constructor/inputWallPaper for reference.
 type InputWallPaper struct {
-	// ID field of InputWallPaper.
+	// Wallpaper¹ ID
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/wallpapers
 	ID int64
-	// AccessHash field of InputWallPaper.
+	// Access hash
 	AccessHash int64
 }
 
@@ -76,6 +85,15 @@ func (i *InputWallPaper) String() string {
 	}
 	type Alias InputWallPaper
 	return fmt.Sprintf("InputWallPaper%+v", Alias(*i))
+}
+
+// FillFrom fills InputWallPaper from given interface.
+func (i *InputWallPaper) FillFrom(from interface {
+	GetID() (value int64)
+	GetAccessHash() (value int64)
+}) {
+	i.ID = from.GetID()
+	i.AccessHash = from.GetAccessHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -182,8 +200,15 @@ func (i *InputWallPaper) GetAccessHash() (value int64) {
 }
 
 // InputWallPaperSlug represents TL type `inputWallPaperSlug#72091c80`.
+// Wallpaper¹ by slug (a unique ID, obtained from a wallpaper link »²)
+//
+// Links:
+//  1. https://core.telegram.org/api/wallpapers
+//  2. https://core.telegram.org/api/links#wallpaper-links
+//
+// See https://core.telegram.org/constructor/inputWallPaperSlug for reference.
 type InputWallPaperSlug struct {
-	// Slug field of InputWallPaperSlug.
+	// Unique wallpaper ID
 	Slug string
 }
 
@@ -221,6 +246,13 @@ func (i *InputWallPaperSlug) String() string {
 	}
 	type Alias InputWallPaperSlug
 	return fmt.Sprintf("InputWallPaperSlug%+v", Alias(*i))
+}
+
+// FillFrom fills InputWallPaperSlug from given interface.
+func (i *InputWallPaperSlug) FillFrom(from interface {
+	GetSlug() (value string)
+}) {
+	i.Slug = from.GetSlug()
 }
 
 // TypeID returns type id in TL schema.
@@ -307,8 +339,16 @@ func (i *InputWallPaperSlug) GetSlug() (value string) {
 }
 
 // InputWallPaperNoFile represents TL type `inputWallPaperNoFile#967a462e`.
+// Wallpaper¹ with no file access hash, used for example when deleting (unsave=true)
+// wallpapers using account.saveWallPaper², specifying just the wallpaper ID.
+//
+// Links:
+//  1. https://core.telegram.org/api/wallpapers
+//  2. https://core.telegram.org/method/account.saveWallPaper
+//
+// See https://core.telegram.org/constructor/inputWallPaperNoFile for reference.
 type InputWallPaperNoFile struct {
-	// ID field of InputWallPaperNoFile.
+	// Wallpaper ID
 	ID int64
 }
 
@@ -346,6 +386,13 @@ func (i *InputWallPaperNoFile) String() string {
 	}
 	type Alias InputWallPaperNoFile
 	return fmt.Sprintf("InputWallPaperNoFile%+v", Alias(*i))
+}
+
+// FillFrom fills InputWallPaperNoFile from given interface.
+func (i *InputWallPaperNoFile) FillFrom(from interface {
+	GetID() (value int64)
+}) {
+	i.ID = from.GetID()
 }
 
 // TypeID returns type id in TL schema.
@@ -435,6 +482,8 @@ func (i *InputWallPaperNoFile) GetID() (value int64) {
 const InputWallPaperClassName = "InputWallPaper"
 
 // InputWallPaperClass represents InputWallPaper generic type.
+//
+// See https://core.telegram.org/type/InputWallPaper for reference.
 //
 // Constructors:
 //   - [InputWallPaper]

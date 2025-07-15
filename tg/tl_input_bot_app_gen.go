@@ -32,10 +32,22 @@ var (
 )
 
 // InputBotAppID represents TL type `inputBotAppID#a920bd7a`.
+// Used to fetch information about a direct link Mini App¹ by its ID
+//
+// Links:
+//  1. https://core.telegram.org/api/bots/webapps#direct-link-mini-apps
+//
+// See https://core.telegram.org/constructor/inputBotAppID for reference.
 type InputBotAppID struct {
-	// ID field of InputBotAppID.
+	// direct link Mini App¹ ID.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/bots/webapps#direct-link-mini-apps
 	ID int64
-	// AccessHash field of InputBotAppID.
+	// Access hash, obtained from the botApp¹ constructor.
+	//
+	// Links:
+	//  1) https://core.telegram.org/constructor/botApp
 	AccessHash int64
 }
 
@@ -76,6 +88,15 @@ func (i *InputBotAppID) String() string {
 	}
 	type Alias InputBotAppID
 	return fmt.Sprintf("InputBotAppID%+v", Alias(*i))
+}
+
+// FillFrom fills InputBotAppID from given interface.
+func (i *InputBotAppID) FillFrom(from interface {
+	GetID() (value int64)
+	GetAccessHash() (value int64)
+}) {
+	i.ID = from.GetID()
+	i.AccessHash = from.GetAccessHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -182,10 +203,19 @@ func (i *InputBotAppID) GetAccessHash() (value int64) {
 }
 
 // InputBotAppShortName represents TL type `inputBotAppShortName#908c0407`.
+// Used to fetch information about a direct link Mini App¹ by its short name
+//
+// Links:
+//  1. https://core.telegram.org/api/bots/webapps#direct-link-mini-apps
+//
+// See https://core.telegram.org/constructor/inputBotAppShortName for reference.
 type InputBotAppShortName struct {
-	// BotID field of InputBotAppShortName.
+	// ID of the bot that owns the bot mini app
 	BotID InputUserClass
-	// ShortName field of InputBotAppShortName.
+	// Short name, obtained from a Direct Mini App deep link¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/links#direct-mini-app-links
 	ShortName string
 }
 
@@ -226,6 +256,15 @@ func (i *InputBotAppShortName) String() string {
 	}
 	type Alias InputBotAppShortName
 	return fmt.Sprintf("InputBotAppShortName%+v", Alias(*i))
+}
+
+// FillFrom fills InputBotAppShortName from given interface.
+func (i *InputBotAppShortName) FillFrom(from interface {
+	GetBotID() (value InputUserClass)
+	GetShortName() (value string)
+}) {
+	i.BotID = from.GetBotID()
+	i.ShortName = from.GetShortName()
 }
 
 // TypeID returns type id in TL schema.
@@ -340,6 +379,8 @@ func (i *InputBotAppShortName) GetShortName() (value string) {
 const InputBotAppClassName = "InputBotApp"
 
 // InputBotAppClass represents InputBotApp generic type.
+//
+// See https://core.telegram.org/type/InputBotApp for reference.
 //
 // Constructors:
 //   - [InputBotAppID]

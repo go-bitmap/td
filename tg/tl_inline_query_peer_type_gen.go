@@ -32,6 +32,9 @@ var (
 )
 
 // InlineQueryPeerTypeSameBotPM represents TL type `inlineQueryPeerTypeSameBotPM#3081ed9d`.
+// Peer type: private chat with the bot itself
+//
+// See https://core.telegram.org/constructor/inlineQueryPeerTypeSameBotPM for reference.
 type InlineQueryPeerTypeSameBotPM struct {
 }
 
@@ -131,6 +134,9 @@ func (i *InlineQueryPeerTypeSameBotPM) DecodeBare(b *bin.Buffer) error {
 }
 
 // InlineQueryPeerTypePM represents TL type `inlineQueryPeerTypePM#833c0fac`.
+// Peer type: private chat
+//
+// See https://core.telegram.org/constructor/inlineQueryPeerTypePM for reference.
 type InlineQueryPeerTypePM struct {
 }
 
@@ -230,6 +236,12 @@ func (i *InlineQueryPeerTypePM) DecodeBare(b *bin.Buffer) error {
 }
 
 // InlineQueryPeerTypeChat represents TL type `inlineQueryPeerTypeChat#d766c50a`.
+// Peer type: chat¹
+//
+// Links:
+//  1. https://core.telegram.org/api/channel
+//
+// See https://core.telegram.org/constructor/inlineQueryPeerTypeChat for reference.
 type InlineQueryPeerTypeChat struct {
 }
 
@@ -329,6 +341,12 @@ func (i *InlineQueryPeerTypeChat) DecodeBare(b *bin.Buffer) error {
 }
 
 // InlineQueryPeerTypeMegagroup represents TL type `inlineQueryPeerTypeMegagroup#5ec4be43`.
+// Peer type: supergroup¹
+//
+// Links:
+//  1. https://core.telegram.org/api/channel
+//
+// See https://core.telegram.org/constructor/inlineQueryPeerTypeMegagroup for reference.
 type InlineQueryPeerTypeMegagroup struct {
 }
 
@@ -428,6 +446,12 @@ func (i *InlineQueryPeerTypeMegagroup) DecodeBare(b *bin.Buffer) error {
 }
 
 // InlineQueryPeerTypeBroadcast represents TL type `inlineQueryPeerTypeBroadcast#6334ee9a`.
+// Peer type: channel¹
+//
+// Links:
+//  1. https://core.telegram.org/api/channel
+//
+// See https://core.telegram.org/constructor/inlineQueryPeerTypeBroadcast for reference.
 type InlineQueryPeerTypeBroadcast struct {
 }
 
@@ -527,6 +551,9 @@ func (i *InlineQueryPeerTypeBroadcast) DecodeBare(b *bin.Buffer) error {
 }
 
 // InlineQueryPeerTypeBotPM represents TL type `inlineQueryPeerTypeBotPM#e3b2d0c`.
+// Peer type: private chat with a bot.
+//
+// See https://core.telegram.org/constructor/inlineQueryPeerTypeBotPM for reference.
 type InlineQueryPeerTypeBotPM struct {
 }
 
@@ -629,6 +656,8 @@ func (i *InlineQueryPeerTypeBotPM) DecodeBare(b *bin.Buffer) error {
 const InlineQueryPeerTypeClassName = "InlineQueryPeerType"
 
 // InlineQueryPeerTypeClass represents InlineQueryPeerType generic type.
+//
+// See https://core.telegram.org/type/InlineQueryPeerType for reference.
 //
 // Constructors:
 //   - [InlineQueryPeerTypeSameBotPM]

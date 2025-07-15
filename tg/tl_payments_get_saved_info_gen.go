@@ -32,6 +32,9 @@ var (
 )
 
 // PaymentsGetSavedInfoRequest represents TL type `payments.getSavedInfo#227d824b`.
+// Get saved payment information
+//
+// See https://core.telegram.org/method/payments.getSavedInfo for reference.
 type PaymentsGetSavedInfoRequest struct {
 }
 
@@ -126,6 +129,9 @@ func (g *PaymentsGetSavedInfoRequest) DecodeBare(b *bin.Buffer) error {
 }
 
 // PaymentsGetSavedInfo invokes method payments.getSavedInfo#227d824b returning error if any.
+// Get saved payment information
+//
+// See https://core.telegram.org/method/payments.getSavedInfo for reference.
 func (c *Client) PaymentsGetSavedInfo(ctx context.Context) (*PaymentsSavedInfo, error) {
 	var result PaymentsSavedInfo
 

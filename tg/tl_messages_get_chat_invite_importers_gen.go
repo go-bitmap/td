@@ -32,28 +32,54 @@ var (
 )
 
 // MessagesGetChatInviteImportersRequest represents TL type `messages.getChatInviteImporters#df04dd4e`.
+// Get info about the users that joined the chat using a specific chat invite
+//
+// See https://core.telegram.org/method/messages.getChatInviteImporters for reference.
 type MessagesGetChatInviteImportersRequest struct {
-	// Flags field of MessagesGetChatInviteImportersRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Requested field of MessagesGetChatInviteImportersRequest.
+	// If set, only returns info about users with pending join requests »¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/invites#join-requests
 	Requested bool
-	// SubscriptionExpired field of MessagesGetChatInviteImportersRequest.
+	// Set this flag if the link is a Telegram Star subscription link »¹ and only members
+	// with already expired subscription must be returned.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/stars#star-subscriptions
 	SubscriptionExpired bool
-	// Peer field of MessagesGetChatInviteImportersRequest.
+	// Chat
 	Peer InputPeerClass
-	// Link field of MessagesGetChatInviteImportersRequest.
+	// Invite link
 	//
 	// Use SetLink and GetLink helpers.
 	Link string
-	// Q field of MessagesGetChatInviteImportersRequest.
+	// Search for a user in the pending join requests »¹ list: only available when the
+	// requested flag is set, cannot be used together with a specific link.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/invites#join-requests
 	//
 	// Use SetQ and GetQ helpers.
 	Q string
-	// OffsetDate field of MessagesGetChatInviteImportersRequest.
+	// Offsets for pagination, for more info click here¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets
 	OffsetDate int
-	// OffsetUser field of MessagesGetChatInviteImportersRequest.
+	// User ID for pagination¹: if set, offset_date must also be set.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets
 	OffsetUser InputUserClass
-	// Limit field of MessagesGetChatInviteImportersRequest.
+	// Maximum number of results to return, see pagination¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets
 	Limit int
 }
 
@@ -110,6 +136,33 @@ func (g *MessagesGetChatInviteImportersRequest) String() string {
 	}
 	type Alias MessagesGetChatInviteImportersRequest
 	return fmt.Sprintf("MessagesGetChatInviteImportersRequest%+v", Alias(*g))
+}
+
+// FillFrom fills MessagesGetChatInviteImportersRequest from given interface.
+func (g *MessagesGetChatInviteImportersRequest) FillFrom(from interface {
+	GetRequested() (value bool)
+	GetSubscriptionExpired() (value bool)
+	GetPeer() (value InputPeerClass)
+	GetLink() (value string, ok bool)
+	GetQ() (value string, ok bool)
+	GetOffsetDate() (value int)
+	GetOffsetUser() (value InputUserClass)
+	GetLimit() (value int)
+}) {
+	g.Requested = from.GetRequested()
+	g.SubscriptionExpired = from.GetSubscriptionExpired()
+	g.Peer = from.GetPeer()
+	if val, ok := from.GetLink(); ok {
+		g.Link = val
+	}
+
+	if val, ok := from.GetQ(); ok {
+		g.Q = val
+	}
+
+	g.OffsetDate = from.GetOffsetDate()
+	g.OffsetUser = from.GetOffsetUser()
+	g.Limit = from.GetLimit()
 }
 
 // TypeID returns type id in TL schema.
@@ -407,6 +460,19 @@ func (g *MessagesGetChatInviteImportersRequest) GetLimit() (value int) {
 }
 
 // MessagesGetChatInviteImporters invokes method messages.getChatInviteImporters#df04dd4e returning error if any.
+// Get info about the users that joined the chat using a specific chat invite
+//
+// Possible errors:
+//
+//	400 CHANNEL_INVALID: The provided channel is invalid.
+//	400 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
+//	400 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
+//	403 CHAT_WRITE_FORBIDDEN: You can't write in this chat.
+//	400 INVITE_HASH_EXPIRED: The invite link has expired.
+//	400 PEER_ID_INVALID: The provided peer id is invalid.
+//	400 SEARCH_WITH_LINK_NOT_SUPPORTED: You cannot provide a search query and an invite link at the same time.
+//
+// See https://core.telegram.org/method/messages.getChatInviteImporters for reference.
 func (c *Client) MessagesGetChatInviteImporters(ctx context.Context, request *MessagesGetChatInviteImportersRequest) (*MessagesChatInviteImporters, error) {
 	var result MessagesChatInviteImporters
 

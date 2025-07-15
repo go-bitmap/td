@@ -32,8 +32,17 @@ var (
 )
 
 // MessagesGetDefaultTagReactionsRequest represents TL type `messages.getDefaultTagReactions#bdf93428`.
+// Fetch a default recommended list of saved message tag reactions¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/saved-messages#tags
+//
+// See https://core.telegram.org/method/messages.getDefaultTagReactions for reference.
 type MessagesGetDefaultTagReactionsRequest struct {
-	// Hash field of MessagesGetDefaultTagReactionsRequest.
+	// Hash used for caching, for more info click here¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets#hash-generation
 	Hash int64
 }
 
@@ -66,6 +75,13 @@ func (g *MessagesGetDefaultTagReactionsRequest) String() string {
 	}
 	type Alias MessagesGetDefaultTagReactionsRequest
 	return fmt.Sprintf("MessagesGetDefaultTagReactionsRequest%+v", Alias(*g))
+}
+
+// FillFrom fills MessagesGetDefaultTagReactionsRequest from given interface.
+func (g *MessagesGetDefaultTagReactionsRequest) FillFrom(from interface {
+	GetHash() (value int64)
+}) {
+	g.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -152,6 +168,12 @@ func (g *MessagesGetDefaultTagReactionsRequest) GetHash() (value int64) {
 }
 
 // MessagesGetDefaultTagReactions invokes method messages.getDefaultTagReactions#bdf93428 returning error if any.
+// Fetch a default recommended list of saved message tag reactions¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/saved-messages#tags
+//
+// See https://core.telegram.org/method/messages.getDefaultTagReactions for reference.
 func (c *Client) MessagesGetDefaultTagReactions(ctx context.Context, hash int64) (MessagesReactionsClass, error) {
 	var result MessagesReactionsBox
 

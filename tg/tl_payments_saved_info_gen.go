@@ -32,12 +32,18 @@ var (
 )
 
 // PaymentsSavedInfo represents TL type `payments.savedInfo#fb8fe43c`.
+// Saved server-side order information
+//
+// See https://core.telegram.org/constructor/payments.savedInfo for reference.
 type PaymentsSavedInfo struct {
-	// Flags field of PaymentsSavedInfo.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// HasSavedCredentials field of PaymentsSavedInfo.
+	// Whether the user has some saved payment credentials
 	HasSavedCredentials bool
-	// SavedInfo field of PaymentsSavedInfo.
+	// Saved server-side order information
 	//
 	// Use SetSavedInfo and GetSavedInfo helpers.
 	SavedInfo PaymentRequestedInfo
@@ -78,6 +84,18 @@ func (s *PaymentsSavedInfo) String() string {
 	}
 	type Alias PaymentsSavedInfo
 	return fmt.Sprintf("PaymentsSavedInfo%+v", Alias(*s))
+}
+
+// FillFrom fills PaymentsSavedInfo from given interface.
+func (s *PaymentsSavedInfo) FillFrom(from interface {
+	GetHasSavedCredentials() (value bool)
+	GetSavedInfo() (value PaymentRequestedInfo, ok bool)
+}) {
+	s.HasSavedCredentials = from.GetHasSavedCredentials()
+	if val, ok := from.GetSavedInfo(); ok {
+		s.SavedInfo = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.

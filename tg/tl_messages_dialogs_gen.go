@@ -32,14 +32,17 @@ var (
 )
 
 // MessagesDialogs represents TL type `messages.dialogs#15ba6c40`.
+// Full list of chats with messages and auxiliary data.
+//
+// See https://core.telegram.org/constructor/messages.dialogs for reference.
 type MessagesDialogs struct {
-	// Dialogs field of MessagesDialogs.
+	// List of chats
 	Dialogs []DialogClass
-	// Messages field of MessagesDialogs.
+	// List of last messages from each chat
 	Messages []MessageClass
-	// Chats field of MessagesDialogs.
+	// List of groups mentioned in the chats
 	Chats []ChatClass
-	// Users field of MessagesDialogs.
+	// List of users mentioned in messages and groups
 	Users []UserClass
 }
 
@@ -86,6 +89,19 @@ func (d *MessagesDialogs) String() string {
 	}
 	type Alias MessagesDialogs
 	return fmt.Sprintf("MessagesDialogs%+v", Alias(*d))
+}
+
+// FillFrom fills MessagesDialogs from given interface.
+func (d *MessagesDialogs) FillFrom(from interface {
+	GetDialogs() (value []DialogClass)
+	GetMessages() (value []MessageClass)
+	GetChats() (value []ChatClass)
+	GetUsers() (value []UserClass)
+}) {
+	d.Dialogs = from.GetDialogs()
+	d.Messages = from.GetMessages()
+	d.Chats = from.GetChats()
+	d.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -303,17 +319,40 @@ func (d *MessagesDialogs) GetUsers() (value []UserClass) {
 	return d.Users
 }
 
+// MapDialogs returns field Dialogs wrapped in DialogClassArray helper.
+func (d *MessagesDialogs) MapDialogs() (value DialogClassArray) {
+	return DialogClassArray(d.Dialogs)
+}
+
+// MapMessages returns field Messages wrapped in MessageClassArray helper.
+func (d *MessagesDialogs) MapMessages() (value MessageClassArray) {
+	return MessageClassArray(d.Messages)
+}
+
+// MapChats returns field Chats wrapped in ChatClassArray helper.
+func (d *MessagesDialogs) MapChats() (value ChatClassArray) {
+	return ChatClassArray(d.Chats)
+}
+
+// MapUsers returns field Users wrapped in UserClassArray helper.
+func (d *MessagesDialogs) MapUsers() (value UserClassArray) {
+	return UserClassArray(d.Users)
+}
+
 // MessagesDialogsSlice represents TL type `messages.dialogsSlice#71e094f3`.
+// Incomplete list of dialogs with messages and auxiliary data.
+//
+// See https://core.telegram.org/constructor/messages.dialogsSlice for reference.
 type MessagesDialogsSlice struct {
-	// Count field of MessagesDialogsSlice.
+	// Total number of dialogs
 	Count int
-	// Dialogs field of MessagesDialogsSlice.
+	// List of dialogs
 	Dialogs []DialogClass
-	// Messages field of MessagesDialogsSlice.
+	// List of last messages from dialogs
 	Messages []MessageClass
-	// Chats field of MessagesDialogsSlice.
+	// List of chats mentioned in dialogs
 	Chats []ChatClass
-	// Users field of MessagesDialogsSlice.
+	// List of users mentioned in messages and chats
 	Users []UserClass
 }
 
@@ -363,6 +402,21 @@ func (d *MessagesDialogsSlice) String() string {
 	}
 	type Alias MessagesDialogsSlice
 	return fmt.Sprintf("MessagesDialogsSlice%+v", Alias(*d))
+}
+
+// FillFrom fills MessagesDialogsSlice from given interface.
+func (d *MessagesDialogsSlice) FillFrom(from interface {
+	GetCount() (value int)
+	GetDialogs() (value []DialogClass)
+	GetMessages() (value []MessageClass)
+	GetChats() (value []ChatClass)
+	GetUsers() (value []UserClass)
+}) {
+	d.Count = from.GetCount()
+	d.Dialogs = from.GetDialogs()
+	d.Messages = from.GetMessages()
+	d.Chats = from.GetChats()
+	d.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -600,9 +654,32 @@ func (d *MessagesDialogsSlice) GetUsers() (value []UserClass) {
 	return d.Users
 }
 
+// MapDialogs returns field Dialogs wrapped in DialogClassArray helper.
+func (d *MessagesDialogsSlice) MapDialogs() (value DialogClassArray) {
+	return DialogClassArray(d.Dialogs)
+}
+
+// MapMessages returns field Messages wrapped in MessageClassArray helper.
+func (d *MessagesDialogsSlice) MapMessages() (value MessageClassArray) {
+	return MessageClassArray(d.Messages)
+}
+
+// MapChats returns field Chats wrapped in ChatClassArray helper.
+func (d *MessagesDialogsSlice) MapChats() (value ChatClassArray) {
+	return ChatClassArray(d.Chats)
+}
+
+// MapUsers returns field Users wrapped in UserClassArray helper.
+func (d *MessagesDialogsSlice) MapUsers() (value UserClassArray) {
+	return UserClassArray(d.Users)
+}
+
 // MessagesDialogsNotModified represents TL type `messages.dialogsNotModified#f0e3e596`.
+// Dialogs haven't changed
+//
+// See https://core.telegram.org/constructor/messages.dialogsNotModified for reference.
 type MessagesDialogsNotModified struct {
-	// Count field of MessagesDialogsNotModified.
+	// Number of dialogs found server-side by the query
 	Count int
 }
 
@@ -640,6 +717,13 @@ func (d *MessagesDialogsNotModified) String() string {
 	}
 	type Alias MessagesDialogsNotModified
 	return fmt.Sprintf("MessagesDialogsNotModified%+v", Alias(*d))
+}
+
+// FillFrom fills MessagesDialogsNotModified from given interface.
+func (d *MessagesDialogsNotModified) FillFrom(from interface {
+	GetCount() (value int)
+}) {
+	d.Count = from.GetCount()
 }
 
 // TypeID returns type id in TL schema.
@@ -730,6 +814,8 @@ const MessagesDialogsClassName = "messages.Dialogs"
 
 // MessagesDialogsClass represents messages.Dialogs generic type.
 //
+// See https://core.telegram.org/type/messages.Dialogs for reference.
+//
 // Constructors:
 //   - [MessagesDialogs]
 //   - [MessagesDialogsSlice]
@@ -764,6 +850,59 @@ type MessagesDialogsClass interface {
 	String() string
 	// Zero returns true if current object has a zero value.
 	Zero() bool
+
+	// AsModified tries to map MessagesDialogsClass to ModifiedMessagesDialogs.
+	AsModified() (ModifiedMessagesDialogs, bool)
+}
+
+// ModifiedMessagesDialogs represents Modified subset of MessagesDialogsClass.
+type ModifiedMessagesDialogs interface {
+	bin.Encoder
+	bin.Decoder
+	bin.BareEncoder
+	bin.BareDecoder
+	construct() MessagesDialogsClass
+
+	// TypeID returns type id in TL schema.
+	//
+	// See https://core.telegram.org/mtproto/TL-tl#remarks.
+	TypeID() uint32
+	// TypeName returns name of type in TL schema.
+	TypeName() string
+	// String implements fmt.Stringer.
+	String() string
+	// Zero returns true if current object has a zero value.
+	Zero() bool
+
+	// List of chats
+	GetDialogs() (value []DialogClass)
+
+	// List of last messages from each chat
+	GetMessages() (value []MessageClass)
+
+	// List of groups mentioned in the chats
+	GetChats() (value []ChatClass)
+
+	// List of users mentioned in messages and groups
+	GetUsers() (value []UserClass)
+}
+
+// AsModified tries to map MessagesDialogs to ModifiedMessagesDialogs.
+func (d *MessagesDialogs) AsModified() (ModifiedMessagesDialogs, bool) {
+	value, ok := (MessagesDialogsClass(d)).(ModifiedMessagesDialogs)
+	return value, ok
+}
+
+// AsModified tries to map MessagesDialogsSlice to ModifiedMessagesDialogs.
+func (d *MessagesDialogsSlice) AsModified() (ModifiedMessagesDialogs, bool) {
+	value, ok := (MessagesDialogsClass(d)).(ModifiedMessagesDialogs)
+	return value, ok
+}
+
+// AsModified tries to map MessagesDialogsNotModified to ModifiedMessagesDialogs.
+func (d *MessagesDialogsNotModified) AsModified() (ModifiedMessagesDialogs, bool) {
+	value, ok := (MessagesDialogsClass(d)).(ModifiedMessagesDialogs)
+	return value, ok
 }
 
 // DecodeMessagesDialogs implements binary de-serialization for MessagesDialogsClass.

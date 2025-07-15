@@ -32,8 +32,22 @@ var (
 )
 
 // MessagesCheckHistoryImportPeerRequest represents TL type `messages.checkHistoryImportPeer#5dc60f03`.
+// Check whether chat history exported from another chat app can be imported into a
+// specific Telegram chat, click here for more info »¹.
+// If the check succeeds, and no RPC errors are returned, a messages
+// CheckedHistoryImportPeer¹ constructor will be returned, with a confirmation text to
+// be shown to the user, before actually initializing the import.
+//
+// Links:
+//  1. https://core.telegram.org/api/import
+//  2. https://core.telegram.org/type/messages.CheckedHistoryImportPeer
+//
+// See https://core.telegram.org/method/messages.checkHistoryImportPeer for reference.
 type MessagesCheckHistoryImportPeerRequest struct {
-	// Peer field of MessagesCheckHistoryImportPeerRequest.
+	// The chat where we want to import history »¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/import
 	Peer InputPeerClass
 }
 
@@ -66,6 +80,13 @@ func (c *MessagesCheckHistoryImportPeerRequest) String() string {
 	}
 	type Alias MessagesCheckHistoryImportPeerRequest
 	return fmt.Sprintf("MessagesCheckHistoryImportPeerRequest%+v", Alias(*c))
+}
+
+// FillFrom fills MessagesCheckHistoryImportPeerRequest from given interface.
+func (c *MessagesCheckHistoryImportPeerRequest) FillFrom(from interface {
+	GetPeer() (value InputPeerClass)
+}) {
+	c.Peer = from.GetPeer()
 }
 
 // TypeID returns type id in TL schema.
@@ -157,6 +178,23 @@ func (c *MessagesCheckHistoryImportPeerRequest) GetPeer() (value InputPeerClass)
 }
 
 // MessagesCheckHistoryImportPeer invokes method messages.checkHistoryImportPeer#5dc60f03 returning error if any.
+// Check whether chat history exported from another chat app can be imported into a
+// specific Telegram chat, click here for more info »¹.
+// If the check succeeds, and no RPC errors are returned, a messages
+// CheckedHistoryImportPeer¹ constructor will be returned, with a confirmation text to
+// be shown to the user, before actually initializing the import.
+//
+// Links:
+//  1. https://core.telegram.org/api/import
+//  2. https://core.telegram.org/type/messages.CheckedHistoryImportPeer
+//
+// Possible errors:
+//
+//	400 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
+//	400 PEER_ID_INVALID: The provided peer id is invalid.
+//	400 USER_NOT_MUTUAL_CONTACT: The provided user is not a mutual contact.
+//
+// See https://core.telegram.org/method/messages.checkHistoryImportPeer for reference.
 func (c *Client) MessagesCheckHistoryImportPeer(ctx context.Context, peer InputPeerClass) (*MessagesCheckedHistoryImportPeer, error) {
 	var result MessagesCheckedHistoryImportPeer
 

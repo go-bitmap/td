@@ -32,12 +32,15 @@ var (
 )
 
 // HelpRecentMeURLs represents TL type `help.recentMeUrls#e0310d7`.
+// Recent t.me URLs
+//
+// See https://core.telegram.org/constructor/help.recentMeUrls for reference.
 type HelpRecentMeURLs struct {
-	// URLs field of HelpRecentMeURLs.
+	// URLs
 	URLs []RecentMeURLClass
-	// Chats field of HelpRecentMeURLs.
+	// Chats
 	Chats []ChatClass
-	// Users field of HelpRecentMeURLs.
+	// Users
 	Users []UserClass
 }
 
@@ -76,6 +79,17 @@ func (r *HelpRecentMeURLs) String() string {
 	}
 	type Alias HelpRecentMeURLs
 	return fmt.Sprintf("HelpRecentMeURLs%+v", Alias(*r))
+}
+
+// FillFrom fills HelpRecentMeURLs from given interface.
+func (r *HelpRecentMeURLs) FillFrom(from interface {
+	GetURLs() (value []RecentMeURLClass)
+	GetChats() (value []ChatClass)
+	GetUsers() (value []UserClass)
+}) {
+	r.URLs = from.GetURLs()
+	r.Chats = from.GetChats()
+	r.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -253,4 +267,19 @@ func (r *HelpRecentMeURLs) GetUsers() (value []UserClass) {
 		return
 	}
 	return r.Users
+}
+
+// MapURLs returns field URLs wrapped in RecentMeURLClassArray helper.
+func (r *HelpRecentMeURLs) MapURLs() (value RecentMeURLClassArray) {
+	return RecentMeURLClassArray(r.URLs)
+}
+
+// MapChats returns field Chats wrapped in ChatClassArray helper.
+func (r *HelpRecentMeURLs) MapChats() (value ChatClassArray) {
+	return ChatClassArray(r.Chats)
+}
+
+// MapUsers returns field Users wrapped in UserClassArray helper.
+func (r *HelpRecentMeURLs) MapUsers() (value UserClassArray) {
+	return UserClassArray(r.Users)
 }

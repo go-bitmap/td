@@ -32,8 +32,13 @@ var (
 )
 
 // EmojiURL represents TL type `emojiURL#a575739d`.
+// An HTTP URL which can be used to automatically log in into translation platform and
+// suggest new emoji replacements. The URL will be valid for 30 seconds after generation
+//
+// See https://core.telegram.org/constructor/emojiURL for reference.
 type EmojiURL struct {
-	// URL field of EmojiURL.
+	// An HTTP URL which can be used to automatically log in into translation platform and
+	// suggest new emoji replacements. The URL will be valid for 30 seconds after generation
 	URL string
 }
 
@@ -66,6 +71,13 @@ func (e *EmojiURL) String() string {
 	}
 	type Alias EmojiURL
 	return fmt.Sprintf("EmojiURL%+v", Alias(*e))
+}
+
+// FillFrom fills EmojiURL from given interface.
+func (e *EmojiURL) FillFrom(from interface {
+	GetURL() (value string)
+}) {
+	e.URL = from.GetURL()
 }
 
 // TypeID returns type id in TL schema.

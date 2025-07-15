@@ -32,6 +32,9 @@ var (
 )
 
 // HelpGetConfigRequest represents TL type `help.getConfig#c4f9186b`.
+// Returns current configuration, including data center configuration.
+//
+// See https://core.telegram.org/method/help.getConfig for reference.
 type HelpGetConfigRequest struct {
 }
 
@@ -126,6 +129,20 @@ func (g *HelpGetConfigRequest) DecodeBare(b *bin.Buffer) error {
 }
 
 // HelpGetConfig invokes method help.getConfig#c4f9186b returning error if any.
+// Returns current configuration, including data center configuration.
+//
+// Possible errors:
+//
+//	400 CONNECTION_API_ID_INVALID: The provided API id is invalid.
+//	400 CONNECTION_APP_VERSION_EMPTY: App version is empty.
+//	400 CONNECTION_LAYER_INVALID: Layer invalid.
+//	400 DATA_INVALID: Encrypted data invalid.
+//	400 MSG_ID_INVALID: Invalid message ID provided.
+//	400 USERNAME_INVALID: The provided username is not valid.
+//	403 USER_PRIVACY_RESTRICTED: The user's privacy settings do not allow you to do this.
+//
+// See https://core.telegram.org/method/help.getConfig for reference.
+// Can be used by bots.
 func (c *Client) HelpGetConfig(ctx context.Context) (*Config, error) {
 	var result Config
 

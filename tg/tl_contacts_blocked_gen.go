@@ -32,12 +32,15 @@ var (
 )
 
 // ContactsBlocked represents TL type `contacts.blocked#ade1591`.
+// Full list of blocked users.
+//
+// See https://core.telegram.org/constructor/contacts.blocked for reference.
 type ContactsBlocked struct {
-	// Blocked field of ContactsBlocked.
+	// List of blocked users
 	Blocked []PeerBlocked
-	// Chats field of ContactsBlocked.
+	// Blocked chats
 	Chats []ChatClass
-	// Users field of ContactsBlocked.
+	// List of users
 	Users []UserClass
 }
 
@@ -81,6 +84,17 @@ func (b *ContactsBlocked) String() string {
 	}
 	type Alias ContactsBlocked
 	return fmt.Sprintf("ContactsBlocked%+v", Alias(*b))
+}
+
+// FillFrom fills ContactsBlocked from given interface.
+func (b *ContactsBlocked) FillFrom(from interface {
+	GetBlocked() (value []PeerBlocked)
+	GetChats() (value []ChatClass)
+	GetUsers() (value []UserClass)
+}) {
+	b.Blocked = from.GetBlocked()
+	b.Chats = from.GetChats()
+	b.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -257,15 +271,28 @@ func (b *ContactsBlocked) GetUsers() (value []UserClass) {
 	return b.Users
 }
 
+// MapChats returns field Chats wrapped in ChatClassArray helper.
+func (b *ContactsBlocked) MapChats() (value ChatClassArray) {
+	return ChatClassArray(b.Chats)
+}
+
+// MapUsers returns field Users wrapped in UserClassArray helper.
+func (b *ContactsBlocked) MapUsers() (value UserClassArray) {
+	return UserClassArray(b.Users)
+}
+
 // ContactsBlockedSlice represents TL type `contacts.blockedSlice#e1664194`.
+// Incomplete list of blocked users.
+//
+// See https://core.telegram.org/constructor/contacts.blockedSlice for reference.
 type ContactsBlockedSlice struct {
-	// Count field of ContactsBlockedSlice.
+	// Total number of elements in the list
 	Count int
-	// Blocked field of ContactsBlockedSlice.
+	// List of blocked users
 	Blocked []PeerBlocked
-	// Chats field of ContactsBlockedSlice.
+	// Blocked chats
 	Chats []ChatClass
-	// Users field of ContactsBlockedSlice.
+	// List of users
 	Users []UserClass
 }
 
@@ -312,6 +339,19 @@ func (b *ContactsBlockedSlice) String() string {
 	}
 	type Alias ContactsBlockedSlice
 	return fmt.Sprintf("ContactsBlockedSlice%+v", Alias(*b))
+}
+
+// FillFrom fills ContactsBlockedSlice from given interface.
+func (b *ContactsBlockedSlice) FillFrom(from interface {
+	GetCount() (value int)
+	GetBlocked() (value []PeerBlocked)
+	GetChats() (value []ChatClass)
+	GetUsers() (value []UserClass)
+}) {
+	b.Count = from.GetCount()
+	b.Blocked = from.GetBlocked()
+	b.Chats = from.GetChats()
+	b.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -508,10 +548,22 @@ func (b *ContactsBlockedSlice) GetUsers() (value []UserClass) {
 	return b.Users
 }
 
+// MapChats returns field Chats wrapped in ChatClassArray helper.
+func (b *ContactsBlockedSlice) MapChats() (value ChatClassArray) {
+	return ChatClassArray(b.Chats)
+}
+
+// MapUsers returns field Users wrapped in UserClassArray helper.
+func (b *ContactsBlockedSlice) MapUsers() (value UserClassArray) {
+	return UserClassArray(b.Users)
+}
+
 // ContactsBlockedClassName is schema name of ContactsBlockedClass.
 const ContactsBlockedClassName = "contacts.Blocked"
 
 // ContactsBlockedClass represents contacts.Blocked generic type.
+//
+// See https://core.telegram.org/type/contacts.Blocked for reference.
 //
 // Constructors:
 //   - [ContactsBlocked]
@@ -546,12 +598,16 @@ type ContactsBlockedClass interface {
 	// Zero returns true if current object has a zero value.
 	Zero() bool
 
-	// Blocked field of ContactsBlocked.
+	// List of blocked users
 	GetBlocked() (value []PeerBlocked)
-	// Chats field of ContactsBlocked.
+	// Blocked chats
 	GetChats() (value []ChatClass)
-	// Users field of ContactsBlocked.
+	// Blocked chats
+	MapChats() (value ChatClassArray)
+	// List of users
 	GetUsers() (value []UserClass)
+	// List of users
+	MapUsers() (value UserClassArray)
 }
 
 // DecodeContactsBlocked implements binary de-serialization for ContactsBlockedClass.

@@ -32,6 +32,8 @@ var (
 )
 
 // AccountGetCollectibleEmojiStatusesRequest represents TL type `account.getCollectibleEmojiStatuses#2e7b4543`.
+//
+// See https://core.telegram.org/method/account.getCollectibleEmojiStatuses for reference.
 type AccountGetCollectibleEmojiStatusesRequest struct {
 	// Hash field of AccountGetCollectibleEmojiStatusesRequest.
 	Hash int64
@@ -66,6 +68,13 @@ func (g *AccountGetCollectibleEmojiStatusesRequest) String() string {
 	}
 	type Alias AccountGetCollectibleEmojiStatusesRequest
 	return fmt.Sprintf("AccountGetCollectibleEmojiStatusesRequest%+v", Alias(*g))
+}
+
+// FillFrom fills AccountGetCollectibleEmojiStatusesRequest from given interface.
+func (g *AccountGetCollectibleEmojiStatusesRequest) FillFrom(from interface {
+	GetHash() (value int64)
+}) {
+	g.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -152,6 +161,8 @@ func (g *AccountGetCollectibleEmojiStatusesRequest) GetHash() (value int64) {
 }
 
 // AccountGetCollectibleEmojiStatuses invokes method account.getCollectibleEmojiStatuses#2e7b4543 returning error if any.
+//
+// See https://core.telegram.org/method/account.getCollectibleEmojiStatuses for reference.
 func (c *Client) AccountGetCollectibleEmojiStatuses(ctx context.Context, hash int64) (AccountEmojiStatusesClass, error) {
 	var result AccountEmojiStatusesBox
 

@@ -32,10 +32,16 @@ var (
 )
 
 // MessagesTranscribeAudioRequest represents TL type `messages.transcribeAudio#269e9a49`.
+// Transcribe voice message¹
+//
+// Links:
+//  1. https://core.telegram.org/api/transcribe
+//
+// See https://core.telegram.org/method/messages.transcribeAudio for reference.
 type MessagesTranscribeAudioRequest struct {
-	// Peer field of MessagesTranscribeAudioRequest.
+	// Peer ID where the voice message was sent
 	Peer InputPeerClass
-	// MsgID field of MessagesTranscribeAudioRequest.
+	// Voice message ID
 	MsgID int
 }
 
@@ -71,6 +77,15 @@ func (t *MessagesTranscribeAudioRequest) String() string {
 	}
 	type Alias MessagesTranscribeAudioRequest
 	return fmt.Sprintf("MessagesTranscribeAudioRequest%+v", Alias(*t))
+}
+
+// FillFrom fills MessagesTranscribeAudioRequest from given interface.
+func (t *MessagesTranscribeAudioRequest) FillFrom(from interface {
+	GetPeer() (value InputPeerClass)
+	GetMsgID() (value int)
+}) {
+	t.Peer = from.GetPeer()
+	t.MsgID = from.GetMsgID()
 }
 
 // TypeID returns type id in TL schema.
@@ -182,6 +197,18 @@ func (t *MessagesTranscribeAudioRequest) GetMsgID() (value int) {
 }
 
 // MessagesTranscribeAudio invokes method messages.transcribeAudio#269e9a49 returning error if any.
+// Transcribe voice message¹
+//
+// Links:
+//  1. https://core.telegram.org/api/transcribe
+//
+// Possible errors:
+//
+//	400 PEER_ID_INVALID: The provided peer id is invalid.
+//	403 PREMIUM_ACCOUNT_REQUIRED: A premium account is required to execute this action.
+//	400 TRANSCRIPTION_FAILED: Audio transcription failed.
+//
+// See https://core.telegram.org/method/messages.transcribeAudio for reference.
 func (c *Client) MessagesTranscribeAudio(ctx context.Context, request *MessagesTranscribeAudioRequest) (*MessagesTranscribedAudio, error) {
 	var result MessagesTranscribedAudio
 

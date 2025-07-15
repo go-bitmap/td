@@ -32,6 +32,12 @@ var (
 )
 
 // BusinessAwayMessageScheduleAlways represents TL type `businessAwayMessageScheduleAlways#c9b9e2b9`.
+// Always send Telegram Business away messages¹ to users writing to us in private.
+//
+// Links:
+//  1. https://core.telegram.org/api/business#away-messages
+//
+// See https://core.telegram.org/constructor/businessAwayMessageScheduleAlways for reference.
 type BusinessAwayMessageScheduleAlways struct {
 }
 
@@ -131,6 +137,14 @@ func (b *BusinessAwayMessageScheduleAlways) DecodeBare(buf *bin.Buffer) error {
 }
 
 // BusinessAwayMessageScheduleOutsideWorkHours represents TL type `businessAwayMessageScheduleOutsideWorkHours#c3f2f501`.
+// Send Telegram Business away messages¹ to users writing to us in private outside of
+// the configured Telegram Business working hours².
+//
+// Links:
+//  1. https://core.telegram.org/api/business#away-messages
+//  2. https://core.telegram.org/api/business#opening-hours
+//
+// See https://core.telegram.org/constructor/businessAwayMessageScheduleOutsideWorkHours for reference.
 type BusinessAwayMessageScheduleOutsideWorkHours struct {
 }
 
@@ -232,10 +246,17 @@ func (b *BusinessAwayMessageScheduleOutsideWorkHours) DecodeBare(buf *bin.Buffer
 }
 
 // BusinessAwayMessageScheduleCustom represents TL type `businessAwayMessageScheduleCustom#cc4d9ecc`.
+// Send Telegram Business away messages¹ to users writing to us in private in the
+// specified time span.
+//
+// Links:
+//  1. https://core.telegram.org/api/business#away-messages
+//
+// See https://core.telegram.org/constructor/businessAwayMessageScheduleCustom for reference.
 type BusinessAwayMessageScheduleCustom struct {
-	// StartDate field of BusinessAwayMessageScheduleCustom.
+	// Start date (UNIX timestamp).
 	StartDate int
-	// EndDate field of BusinessAwayMessageScheduleCustom.
+	// End date (UNIX timestamp).
 	EndDate int
 }
 
@@ -276,6 +297,15 @@ func (b *BusinessAwayMessageScheduleCustom) String() string {
 	}
 	type Alias BusinessAwayMessageScheduleCustom
 	return fmt.Sprintf("BusinessAwayMessageScheduleCustom%+v", Alias(*b))
+}
+
+// FillFrom fills BusinessAwayMessageScheduleCustom from given interface.
+func (b *BusinessAwayMessageScheduleCustom) FillFrom(from interface {
+	GetStartDate() (value int)
+	GetEndDate() (value int)
+}) {
+	b.StartDate = from.GetStartDate()
+	b.EndDate = from.GetEndDate()
 }
 
 // TypeID returns type id in TL schema.
@@ -385,6 +415,8 @@ func (b *BusinessAwayMessageScheduleCustom) GetEndDate() (value int) {
 const BusinessAwayMessageScheduleClassName = "BusinessAwayMessageSchedule"
 
 // BusinessAwayMessageScheduleClass represents BusinessAwayMessageSchedule generic type.
+//
+// See https://core.telegram.org/type/BusinessAwayMessageSchedule for reference.
 //
 // Constructors:
 //   - [BusinessAwayMessageScheduleAlways]

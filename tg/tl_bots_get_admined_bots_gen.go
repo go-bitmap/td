@@ -32,6 +32,9 @@ var (
 )
 
 // BotsGetAdminedBotsRequest represents TL type `bots.getAdminedBots#b0711d83`.
+// Get a list of bots owned by the current user
+//
+// See https://core.telegram.org/method/bots.getAdminedBots for reference.
 type BotsGetAdminedBotsRequest struct {
 }
 
@@ -126,6 +129,9 @@ func (g *BotsGetAdminedBotsRequest) DecodeBare(b *bin.Buffer) error {
 }
 
 // BotsGetAdminedBots invokes method bots.getAdminedBots#b0711d83 returning error if any.
+// Get a list of bots owned by the current user
+//
+// See https://core.telegram.org/method/bots.getAdminedBots for reference.
 func (c *Client) BotsGetAdminedBots(ctx context.Context) ([]UserClass, error) {
 	var result UserClassVector
 

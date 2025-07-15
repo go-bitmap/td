@@ -32,32 +32,41 @@ var (
 )
 
 // AvailableReaction represents TL type `availableReaction#c077ec01`.
+// Animations associated with a message reaction
+//
+// See https://core.telegram.org/constructor/availableReaction for reference.
 type AvailableReaction struct {
-	// Flags field of AvailableReaction.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Inactive field of AvailableReaction.
+	// If not set, the reaction can be added to new messages and enabled in chats.
 	Inactive bool
-	// Premium field of AvailableReaction.
+	// Whether this reaction can only be used by Telegram Premium users
 	Premium bool
-	// Reaction field of AvailableReaction.
+	// Reaction emoji
 	Reaction string
-	// Title field of AvailableReaction.
+	// Reaction description
 	Title string
-	// StaticIcon field of AvailableReaction.
+	// Static icon for the reaction
 	StaticIcon DocumentClass
-	// AppearAnimation field of AvailableReaction.
+	// The animated sticker to show when the user opens the reaction dropdown
 	AppearAnimation DocumentClass
-	// SelectAnimation field of AvailableReaction.
+	// The animated sticker to show when the user hovers over the reaction
 	SelectAnimation DocumentClass
-	// ActivateAnimation field of AvailableReaction.
+	// The animated sticker to show when the reaction is chosen and activated
 	ActivateAnimation DocumentClass
-	// EffectAnimation field of AvailableReaction.
+	// The background effect (still an animated sticker) to play under the activate_animation
+	// when the reaction is chosen and activated
 	EffectAnimation DocumentClass
-	// AroundAnimation field of AvailableReaction.
+	// The animation that plays around the button when you press an existing reaction (played
+	// together with center_icon).
 	//
 	// Use SetAroundAnimation and GetAroundAnimation helpers.
 	AroundAnimation DocumentClass
-	// CenterIcon field of AvailableReaction.
+	// The animation of the emoji inside the button when you press an existing reaction
+	// (played together with around_animation).
 	//
 	// Use SetCenterIcon and GetCenterIcon helpers.
 	CenterIcon DocumentClass
@@ -125,6 +134,39 @@ func (a *AvailableReaction) String() string {
 	}
 	type Alias AvailableReaction
 	return fmt.Sprintf("AvailableReaction%+v", Alias(*a))
+}
+
+// FillFrom fills AvailableReaction from given interface.
+func (a *AvailableReaction) FillFrom(from interface {
+	GetInactive() (value bool)
+	GetPremium() (value bool)
+	GetReaction() (value string)
+	GetTitle() (value string)
+	GetStaticIcon() (value DocumentClass)
+	GetAppearAnimation() (value DocumentClass)
+	GetSelectAnimation() (value DocumentClass)
+	GetActivateAnimation() (value DocumentClass)
+	GetEffectAnimation() (value DocumentClass)
+	GetAroundAnimation() (value DocumentClass, ok bool)
+	GetCenterIcon() (value DocumentClass, ok bool)
+}) {
+	a.Inactive = from.GetInactive()
+	a.Premium = from.GetPremium()
+	a.Reaction = from.GetReaction()
+	a.Title = from.GetTitle()
+	a.StaticIcon = from.GetStaticIcon()
+	a.AppearAnimation = from.GetAppearAnimation()
+	a.SelectAnimation = from.GetSelectAnimation()
+	a.ActivateAnimation = from.GetActivateAnimation()
+	a.EffectAnimation = from.GetEffectAnimation()
+	if val, ok := from.GetAroundAnimation(); ok {
+		a.AroundAnimation = val
+	}
+
+	if val, ok := from.GetCenterIcon(); ok {
+		a.CenterIcon = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -504,4 +546,47 @@ func (a *AvailableReaction) GetCenterIcon() (value DocumentClass, ok bool) {
 		return value, false
 	}
 	return a.CenterIcon, true
+}
+
+// GetStaticIconAsNotEmpty returns mapped value of StaticIcon field.
+func (a *AvailableReaction) GetStaticIconAsNotEmpty() (*Document, bool) {
+	return a.StaticIcon.AsNotEmpty()
+}
+
+// GetAppearAnimationAsNotEmpty returns mapped value of AppearAnimation field.
+func (a *AvailableReaction) GetAppearAnimationAsNotEmpty() (*Document, bool) {
+	return a.AppearAnimation.AsNotEmpty()
+}
+
+// GetSelectAnimationAsNotEmpty returns mapped value of SelectAnimation field.
+func (a *AvailableReaction) GetSelectAnimationAsNotEmpty() (*Document, bool) {
+	return a.SelectAnimation.AsNotEmpty()
+}
+
+// GetActivateAnimationAsNotEmpty returns mapped value of ActivateAnimation field.
+func (a *AvailableReaction) GetActivateAnimationAsNotEmpty() (*Document, bool) {
+	return a.ActivateAnimation.AsNotEmpty()
+}
+
+// GetEffectAnimationAsNotEmpty returns mapped value of EffectAnimation field.
+func (a *AvailableReaction) GetEffectAnimationAsNotEmpty() (*Document, bool) {
+	return a.EffectAnimation.AsNotEmpty()
+}
+
+// GetAroundAnimationAsNotEmpty returns mapped value of AroundAnimation conditional field and
+// boolean which is true if field was set.
+func (a *AvailableReaction) GetAroundAnimationAsNotEmpty() (*Document, bool) {
+	if value, ok := a.GetAroundAnimation(); ok {
+		return value.AsNotEmpty()
+	}
+	return nil, false
+}
+
+// GetCenterIconAsNotEmpty returns mapped value of CenterIcon conditional field and
+// boolean which is true if field was set.
+func (a *AvailableReaction) GetCenterIconAsNotEmpty() (*Document, bool) {
+	if value, ok := a.GetCenterIcon(); ok {
+		return value.AsNotEmpty()
+	}
+	return nil, false
 }

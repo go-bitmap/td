@@ -32,12 +32,18 @@ var (
 )
 
 // MessagesDiscardEncryptionRequest represents TL type `messages.discardEncryption#f393aea0`.
+// Cancels a request for creation and/or delete info on secret chat.
+//
+// See https://core.telegram.org/method/messages.discardEncryption for reference.
 type MessagesDiscardEncryptionRequest struct {
-	// Flags field of MessagesDiscardEncryptionRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// DeleteHistory field of MessagesDiscardEncryptionRequest.
+	// Whether to delete the entire chat history for the other user as well
 	DeleteHistory bool
-	// ChatID field of MessagesDiscardEncryptionRequest.
+	// Secret chat ID
 	ChatID int
 }
 
@@ -76,6 +82,15 @@ func (d *MessagesDiscardEncryptionRequest) String() string {
 	}
 	type Alias MessagesDiscardEncryptionRequest
 	return fmt.Sprintf("MessagesDiscardEncryptionRequest%+v", Alias(*d))
+}
+
+// FillFrom fills MessagesDiscardEncryptionRequest from given interface.
+func (d *MessagesDiscardEncryptionRequest) FillFrom(from interface {
+	GetDeleteHistory() (value bool)
+	GetChatID() (value int)
+}) {
+	d.DeleteHistory = from.GetDeleteHistory()
+	d.ChatID = from.GetChatID()
 }
 
 // TypeID returns type id in TL schema.
@@ -203,6 +218,16 @@ func (d *MessagesDiscardEncryptionRequest) GetChatID() (value int) {
 }
 
 // MessagesDiscardEncryption invokes method messages.discardEncryption#f393aea0 returning error if any.
+// Cancels a request for creation and/or delete info on secret chat.
+//
+// Possible errors:
+//
+//	400 CHAT_ID_EMPTY: The provided chat ID is empty.
+//	400 ENCRYPTION_ALREADY_ACCEPTED: Secret chat already accepted.
+//	400 ENCRYPTION_ALREADY_DECLINED: The secret chat was already declined.
+//	400 ENCRYPTION_ID_INVALID: The provided secret chat ID is invalid.
+//
+// See https://core.telegram.org/method/messages.discardEncryption for reference.
 func (c *Client) MessagesDiscardEncryption(ctx context.Context, request *MessagesDiscardEncryptionRequest) (bool, error) {
 	var result BoolBox
 

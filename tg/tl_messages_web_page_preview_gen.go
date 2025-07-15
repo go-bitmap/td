@@ -32,6 +32,8 @@ var (
 )
 
 // MessagesWebPagePreview represents TL type `messages.webPagePreview#b53e8b21`.
+//
+// See https://core.telegram.org/constructor/messages.webPagePreview for reference.
 type MessagesWebPagePreview struct {
 	// Media field of MessagesWebPagePreview.
 	Media MessageMediaClass
@@ -71,6 +73,15 @@ func (w *MessagesWebPagePreview) String() string {
 	}
 	type Alias MessagesWebPagePreview
 	return fmt.Sprintf("MessagesWebPagePreview%+v", Alias(*w))
+}
+
+// FillFrom fills MessagesWebPagePreview from given interface.
+func (w *MessagesWebPagePreview) FillFrom(from interface {
+	GetMedia() (value MessageMediaClass)
+	GetUsers() (value []UserClass)
+}) {
+	w.Media = from.GetMedia()
+	w.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -197,4 +208,9 @@ func (w *MessagesWebPagePreview) GetUsers() (value []UserClass) {
 		return
 	}
 	return w.Users
+}
+
+// MapUsers returns field Users wrapped in UserClassArray helper.
+func (w *MessagesWebPagePreview) MapUsers() (value UserClassArray) {
+	return UserClassArray(w.Users)
 }

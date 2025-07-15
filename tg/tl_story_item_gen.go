@@ -32,8 +32,11 @@ var (
 )
 
 // StoryItemDeleted represents TL type `storyItemDeleted#51e6ee4f`.
+// Represents a previously active story, that was deleted
+//
+// See https://core.telegram.org/constructor/storyItemDeleted for reference.
 type StoryItemDeleted struct {
-	// ID field of StoryItemDeleted.
+	// Story ID
 	ID int
 }
 
@@ -71,6 +74,13 @@ func (s *StoryItemDeleted) String() string {
 	}
 	type Alias StoryItemDeleted
 	return fmt.Sprintf("StoryItemDeleted%+v", Alias(*s))
+}
+
+// FillFrom fills StoryItemDeleted from given interface.
+func (s *StoryItemDeleted) FillFrom(from interface {
+	GetID() (value int)
+}) {
+	s.ID = from.GetID()
 }
 
 // TypeID returns type id in TL schema.
@@ -157,16 +167,31 @@ func (s *StoryItemDeleted) GetID() (value int) {
 }
 
 // StoryItemSkipped represents TL type `storyItemSkipped#ffadc913`.
+// Represents an active story, whose full information was omitted for space and
+// performance reasons; use stories.getStoriesByID¹ to fetch full info about the skipped
+// story when and if needed.
+//
+// Links:
+//  1. https://core.telegram.org/method/stories.getStoriesByID
+//
+// See https://core.telegram.org/constructor/storyItemSkipped for reference.
 type StoryItemSkipped struct {
-	// Flags field of StoryItemSkipped.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// CloseFriends field of StoryItemSkipped.
+	// Whether this story can only be viewed by our close friends, see here »¹ for more
+	// info
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/privacy
 	CloseFriends bool
-	// ID field of StoryItemSkipped.
+	// Story ID
 	ID int
-	// Date field of StoryItemSkipped.
+	// When was the story posted.
 	Date int
-	// ExpireDate field of StoryItemSkipped.
+	// When does the story expire.
 	ExpireDate int
 }
 
@@ -216,6 +241,19 @@ func (s *StoryItemSkipped) String() string {
 	}
 	type Alias StoryItemSkipped
 	return fmt.Sprintf("StoryItemSkipped%+v", Alias(*s))
+}
+
+// FillFrom fills StoryItemSkipped from given interface.
+func (s *StoryItemSkipped) FillFrom(from interface {
+	GetCloseFriends() (value bool)
+	GetID() (value int)
+	GetDate() (value int)
+	GetExpireDate() (value int)
+}) {
+	s.CloseFriends = from.GetCloseFriends()
+	s.ID = from.GetID()
+	s.Date = from.GetDate()
+	s.ExpireDate = from.GetExpireDate()
 }
 
 // TypeID returns type id in TL schema.
@@ -383,64 +421,98 @@ func (s *StoryItemSkipped) GetExpireDate() (value int) {
 }
 
 // StoryItem represents TL type `storyItem#79b26a24`.
+// Represents a story¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/stories
+//
+// See https://core.telegram.org/constructor/storyItem for reference.
 type StoryItem struct {
-	// Flags field of StoryItem.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Pinned field of StoryItem.
+	// Whether this story is pinned on the user's profile
 	Pinned bool
-	// Public field of StoryItem.
+	// Whether this story is public and can be viewed by everyone
 	Public bool
-	// CloseFriends field of StoryItem.
+	// Whether this story can only be viewed by our close friends, see here »¹ for more
+	// info
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/privacy
 	CloseFriends bool
-	// Min field of StoryItem.
+	// Full information about this story was omitted for space and performance reasons; use
+	// stories.getStoriesByID¹ to fetch full info about this story when and if needed.
+	//
+	// Links:
+	//  1) https://core.telegram.org/method/stories.getStoriesByID
 	Min bool
-	// Noforwards field of StoryItem.
+	// Whether this story is protected¹ and thus cannot be forwarded; clients should also
+	// prevent users from saving attached media (i.e. videos should only be streamed, photos
+	// should be kept in RAM, et cetera).
+	//
+	// Links:
+	//  1) https://telegram.org/blog/protected-content-delete-by-date-and-more
 	Noforwards bool
-	// Edited field of StoryItem.
+	// Indicates whether the story was edited.
 	Edited bool
-	// Contacts field of StoryItem.
+	// Whether this story can only be viewed by our contacts
 	Contacts bool
-	// SelectedContacts field of StoryItem.
+	// Whether this story can only be viewed by a select list of our contacts
 	SelectedContacts bool
-	// Out field of StoryItem.
+	// indicates whether we sent this story.
 	Out bool
-	// ID field of StoryItem.
+	// ID of the story.
 	ID int
-	// Date field of StoryItem.
+	// When was the story posted.
 	Date int
-	// FromID field of StoryItem.
+	// Sender of the story.
 	//
 	// Use SetFromID and GetFromID helpers.
 	FromID PeerClass
-	// FwdFrom field of StoryItem.
+	// For reposted stories »¹, contains info about the original story.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/stories#reposting-stories
 	//
 	// Use SetFwdFrom and GetFwdFrom helpers.
 	FwdFrom StoryFwdHeader
-	// ExpireDate field of StoryItem.
+	// When does the story expire.
 	ExpireDate int
-	// Caption field of StoryItem.
+	// Story caption.
 	//
 	// Use SetCaption and GetCaption helpers.
 	Caption string
-	// Entities field of StoryItem.
+	// Message entities for styled text¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities
 	//
 	// Use SetEntities and GetEntities helpers.
 	Entities []MessageEntityClass
-	// Media field of StoryItem.
+	// Story media.
 	Media MessageMediaClass
-	// MediaAreas field of StoryItem.
+	// List of media areas, see here »¹ for more info on media areas.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/stories#media-areas
 	//
 	// Use SetMediaAreas and GetMediaAreas helpers.
 	MediaAreas []MediaAreaClass
-	// Privacy field of StoryItem.
+	// Privacy rules¹ indicating who can and can't view this story
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/privacy
 	//
 	// Use SetPrivacy and GetPrivacy helpers.
 	Privacy []PrivacyRuleClass
-	// Views field of StoryItem.
+	// View date and reaction information
 	//
 	// Use SetViews and GetViews helpers.
 	Views StoryViews
-	// SentReaction field of StoryItem.
+	// The reaction we sent.
 	//
 	// Use SetSentReaction and GetSentReaction helpers.
 	SentReaction ReactionClass
@@ -543,6 +615,77 @@ func (s *StoryItem) String() string {
 	}
 	type Alias StoryItem
 	return fmt.Sprintf("StoryItem%+v", Alias(*s))
+}
+
+// FillFrom fills StoryItem from given interface.
+func (s *StoryItem) FillFrom(from interface {
+	GetPinned() (value bool)
+	GetPublic() (value bool)
+	GetCloseFriends() (value bool)
+	GetMin() (value bool)
+	GetNoforwards() (value bool)
+	GetEdited() (value bool)
+	GetContacts() (value bool)
+	GetSelectedContacts() (value bool)
+	GetOut() (value bool)
+	GetID() (value int)
+	GetDate() (value int)
+	GetFromID() (value PeerClass, ok bool)
+	GetFwdFrom() (value StoryFwdHeader, ok bool)
+	GetExpireDate() (value int)
+	GetCaption() (value string, ok bool)
+	GetEntities() (value []MessageEntityClass, ok bool)
+	GetMedia() (value MessageMediaClass)
+	GetMediaAreas() (value []MediaAreaClass, ok bool)
+	GetPrivacy() (value []PrivacyRuleClass, ok bool)
+	GetViews() (value StoryViews, ok bool)
+	GetSentReaction() (value ReactionClass, ok bool)
+}) {
+	s.Pinned = from.GetPinned()
+	s.Public = from.GetPublic()
+	s.CloseFriends = from.GetCloseFriends()
+	s.Min = from.GetMin()
+	s.Noforwards = from.GetNoforwards()
+	s.Edited = from.GetEdited()
+	s.Contacts = from.GetContacts()
+	s.SelectedContacts = from.GetSelectedContacts()
+	s.Out = from.GetOut()
+	s.ID = from.GetID()
+	s.Date = from.GetDate()
+	if val, ok := from.GetFromID(); ok {
+		s.FromID = val
+	}
+
+	if val, ok := from.GetFwdFrom(); ok {
+		s.FwdFrom = val
+	}
+
+	s.ExpireDate = from.GetExpireDate()
+	if val, ok := from.GetCaption(); ok {
+		s.Caption = val
+	}
+
+	if val, ok := from.GetEntities(); ok {
+		s.Entities = val
+	}
+
+	s.Media = from.GetMedia()
+	if val, ok := from.GetMediaAreas(); ok {
+		s.MediaAreas = val
+	}
+
+	if val, ok := from.GetPrivacy(); ok {
+		s.Privacy = val
+	}
+
+	if val, ok := from.GetViews(); ok {
+		s.Views = val
+	}
+
+	if val, ok := from.GetSentReaction(); ok {
+		s.SentReaction = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -1310,10 +1453,36 @@ func (s *StoryItem) GetSentReaction() (value ReactionClass, ok bool) {
 	return s.SentReaction, true
 }
 
+// MapEntities returns field Entities wrapped in MessageEntityClassArray helper.
+func (s *StoryItem) MapEntities() (value MessageEntityClassArray, ok bool) {
+	if !s.Flags.Has(1) {
+		return value, false
+	}
+	return MessageEntityClassArray(s.Entities), true
+}
+
+// MapMediaAreas returns field MediaAreas wrapped in MediaAreaClassArray helper.
+func (s *StoryItem) MapMediaAreas() (value MediaAreaClassArray, ok bool) {
+	if !s.Flags.Has(14) {
+		return value, false
+	}
+	return MediaAreaClassArray(s.MediaAreas), true
+}
+
+// MapPrivacy returns field Privacy wrapped in PrivacyRuleClassArray helper.
+func (s *StoryItem) MapPrivacy() (value PrivacyRuleClassArray, ok bool) {
+	if !s.Flags.Has(2) {
+		return value, false
+	}
+	return PrivacyRuleClassArray(s.Privacy), true
+}
+
 // StoryItemClassName is schema name of StoryItemClass.
 const StoryItemClassName = "StoryItem"
 
 // StoryItemClass represents StoryItem generic type.
+//
+// See https://core.telegram.org/type/StoryItem for reference.
 //
 // Constructors:
 //   - [StoryItemDeleted]
@@ -1350,7 +1519,7 @@ type StoryItemClass interface {
 	// Zero returns true if current object has a zero value.
 	Zero() bool
 
-	// ID field of StoryItemDeleted.
+	// Story ID
 	GetID() (value int)
 }
 

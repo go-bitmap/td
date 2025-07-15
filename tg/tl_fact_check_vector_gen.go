@@ -68,6 +68,13 @@ func (vec *FactCheckVector) String() string {
 	return fmt.Sprintf("FactCheckVector%+v", Alias(*vec))
 }
 
+// FillFrom fills FactCheckVector from given interface.
+func (vec *FactCheckVector) FillFrom(from interface {
+	GetElems() (value []FactCheck)
+}) {
+	vec.Elems = from.GetElems()
+}
+
 // TypeID returns type id in TL schema.
 //
 // See https://core.telegram.org/mtproto/TL-tl#remarks.

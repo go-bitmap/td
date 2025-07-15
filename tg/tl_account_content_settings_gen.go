@@ -32,12 +32,19 @@ var (
 )
 
 // AccountContentSettings represents TL type `account.contentSettings#57e28221`.
+// Sensitive content settings
+//
+// See https://core.telegram.org/constructor/account.contentSettings for reference.
 type AccountContentSettings struct {
-	// Flags field of AccountContentSettings.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// SensitiveEnabled field of AccountContentSettings.
+	// Whether viewing of sensitive (NSFW) content is enabled
 	SensitiveEnabled bool
-	// SensitiveCanChange field of AccountContentSettings.
+	// Whether the current client can change the sensitive content settings to view NSFW
+	// content
 	SensitiveCanChange bool
 }
 
@@ -76,6 +83,15 @@ func (c *AccountContentSettings) String() string {
 	}
 	type Alias AccountContentSettings
 	return fmt.Sprintf("AccountContentSettings%+v", Alias(*c))
+}
+
+// FillFrom fills AccountContentSettings from given interface.
+func (c *AccountContentSettings) FillFrom(from interface {
+	GetSensitiveEnabled() (value bool)
+	GetSensitiveCanChange() (value bool)
+}) {
+	c.SensitiveEnabled = from.GetSensitiveEnabled()
+	c.SensitiveCanChange = from.GetSensitiveCanChange()
 }
 
 // TypeID returns type id in TL schema.

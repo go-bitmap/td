@@ -32,16 +32,22 @@ var (
 )
 
 // HelpCountryCode represents TL type `help.countryCode#4203c5ef`.
+// Country code and phone number pattern of a specific country
+//
+// See https://core.telegram.org/constructor/help.countryCode for reference.
 type HelpCountryCode struct {
-	// Flags field of HelpCountryCode.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// CountryCode field of HelpCountryCode.
+	// ISO country code
 	CountryCode string
-	// Prefixes field of HelpCountryCode.
+	// Possible phone prefixes
 	//
 	// Use SetPrefixes and GetPrefixes helpers.
 	Prefixes []string
-	// Patterns field of HelpCountryCode.
+	// Phone patterns: for example, XXX XXX XXX
 	//
 	// Use SetPatterns and GetPatterns helpers.
 	Patterns []string
@@ -85,6 +91,23 @@ func (c *HelpCountryCode) String() string {
 	}
 	type Alias HelpCountryCode
 	return fmt.Sprintf("HelpCountryCode%+v", Alias(*c))
+}
+
+// FillFrom fills HelpCountryCode from given interface.
+func (c *HelpCountryCode) FillFrom(from interface {
+	GetCountryCode() (value string)
+	GetPrefixes() (value []string, ok bool)
+	GetPatterns() (value []string, ok bool)
+}) {
+	c.CountryCode = from.GetCountryCode()
+	if val, ok := from.GetPrefixes(); ok {
+		c.Prefixes = val
+	}
+
+	if val, ok := from.GetPatterns(); ok {
+		c.Patterns = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.

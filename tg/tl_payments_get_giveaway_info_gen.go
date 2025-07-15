@@ -32,10 +32,19 @@ var (
 )
 
 // PaymentsGetGiveawayInfoRequest represents TL type `payments.getGiveawayInfo#f4239425`.
+// Obtain information about a Telegram Premium giveaway »¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/giveaways
+//
+// See https://core.telegram.org/method/payments.getGiveawayInfo for reference.
 type PaymentsGetGiveawayInfoRequest struct {
-	// Peer field of PaymentsGetGiveawayInfoRequest.
+	// The peer where the giveaway was posted.
 	Peer InputPeerClass
-	// MsgID field of PaymentsGetGiveawayInfoRequest.
+	// Message ID of the messageActionGiveawayLaunch¹ service message
+	//
+	// Links:
+	//  1) https://core.telegram.org/constructor/messageActionGiveawayLaunch
 	MsgID int
 }
 
@@ -71,6 +80,15 @@ func (g *PaymentsGetGiveawayInfoRequest) String() string {
 	}
 	type Alias PaymentsGetGiveawayInfoRequest
 	return fmt.Sprintf("PaymentsGetGiveawayInfoRequest%+v", Alias(*g))
+}
+
+// FillFrom fills PaymentsGetGiveawayInfoRequest from given interface.
+func (g *PaymentsGetGiveawayInfoRequest) FillFrom(from interface {
+	GetPeer() (value InputPeerClass)
+	GetMsgID() (value int)
+}) {
+	g.Peer = from.GetPeer()
+	g.MsgID = from.GetMsgID()
 }
 
 // TypeID returns type id in TL schema.
@@ -182,6 +200,16 @@ func (g *PaymentsGetGiveawayInfoRequest) GetMsgID() (value int) {
 }
 
 // PaymentsGetGiveawayInfo invokes method payments.getGiveawayInfo#f4239425 returning error if any.
+// Obtain information about a Telegram Premium giveaway »¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/giveaways
+//
+// Possible errors:
+//
+//	400 PEER_ID_INVALID: The provided peer id is invalid.
+//
+// See https://core.telegram.org/method/payments.getGiveawayInfo for reference.
 func (c *Client) PaymentsGetGiveawayInfo(ctx context.Context, request *PaymentsGetGiveawayInfoRequest) (PaymentsGiveawayInfoClass, error) {
 	var result PaymentsGiveawayInfoBox
 

@@ -32,10 +32,13 @@ var (
 )
 
 // PhotosPhotos represents TL type `photos.photos#8dca6aa5`.
+// Full list of photos with auxiliary data.
+//
+// See https://core.telegram.org/constructor/photos.photos for reference.
 type PhotosPhotos struct {
-	// Photos field of PhotosPhotos.
+	// List of photos
 	Photos []PhotoClass
-	// Users field of PhotosPhotos.
+	// List of mentioned users
 	Users []UserClass
 }
 
@@ -76,6 +79,15 @@ func (p *PhotosPhotos) String() string {
 	}
 	type Alias PhotosPhotos
 	return fmt.Sprintf("PhotosPhotos%+v", Alias(*p))
+}
+
+// FillFrom fills PhotosPhotos from given interface.
+func (p *PhotosPhotos) FillFrom(from interface {
+	GetPhotos() (value []PhotoClass)
+	GetUsers() (value []UserClass)
+}) {
+	p.Photos = from.GetPhotos()
+	p.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -217,13 +229,26 @@ func (p *PhotosPhotos) GetUsers() (value []UserClass) {
 	return p.Users
 }
 
+// MapPhotos returns field Photos wrapped in PhotoClassArray helper.
+func (p *PhotosPhotos) MapPhotos() (value PhotoClassArray) {
+	return PhotoClassArray(p.Photos)
+}
+
+// MapUsers returns field Users wrapped in UserClassArray helper.
+func (p *PhotosPhotos) MapUsers() (value UserClassArray) {
+	return UserClassArray(p.Users)
+}
+
 // PhotosPhotosSlice represents TL type `photos.photosSlice#15051f54`.
+// Incomplete list of photos with auxiliary data.
+//
+// See https://core.telegram.org/constructor/photos.photosSlice for reference.
 type PhotosPhotosSlice struct {
-	// Count field of PhotosPhotosSlice.
+	// Total number of photos
 	Count int
-	// Photos field of PhotosPhotosSlice.
+	// List of photos
 	Photos []PhotoClass
-	// Users field of PhotosPhotosSlice.
+	// List of mentioned users
 	Users []UserClass
 }
 
@@ -267,6 +292,17 @@ func (p *PhotosPhotosSlice) String() string {
 	}
 	type Alias PhotosPhotosSlice
 	return fmt.Sprintf("PhotosPhotosSlice%+v", Alias(*p))
+}
+
+// FillFrom fills PhotosPhotosSlice from given interface.
+func (p *PhotosPhotosSlice) FillFrom(from interface {
+	GetCount() (value int)
+	GetPhotos() (value []PhotoClass)
+	GetUsers() (value []UserClass)
+}) {
+	p.Count = from.GetCount()
+	p.Photos = from.GetPhotos()
+	p.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -428,10 +464,22 @@ func (p *PhotosPhotosSlice) GetUsers() (value []UserClass) {
 	return p.Users
 }
 
+// MapPhotos returns field Photos wrapped in PhotoClassArray helper.
+func (p *PhotosPhotosSlice) MapPhotos() (value PhotoClassArray) {
+	return PhotoClassArray(p.Photos)
+}
+
+// MapUsers returns field Users wrapped in UserClassArray helper.
+func (p *PhotosPhotosSlice) MapUsers() (value UserClassArray) {
+	return UserClassArray(p.Users)
+}
+
 // PhotosPhotosClassName is schema name of PhotosPhotosClass.
 const PhotosPhotosClassName = "photos.Photos"
 
 // PhotosPhotosClass represents photos.Photos generic type.
+//
+// See https://core.telegram.org/type/photos.Photos for reference.
 //
 // Constructors:
 //   - [PhotosPhotos]
@@ -466,10 +514,14 @@ type PhotosPhotosClass interface {
 	// Zero returns true if current object has a zero value.
 	Zero() bool
 
-	// Photos field of PhotosPhotos.
+	// List of photos
 	GetPhotos() (value []PhotoClass)
-	// Users field of PhotosPhotos.
+	// List of photos
+	MapPhotos() (value PhotoClassArray)
+	// List of mentioned users
 	GetUsers() (value []UserClass)
+	// List of mentioned users
+	MapUsers() (value UserClassArray)
 }
 
 // DecodePhotosPhotos implements binary de-serialization for PhotosPhotosClass.

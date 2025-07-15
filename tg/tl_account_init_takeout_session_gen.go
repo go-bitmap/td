@@ -32,22 +32,40 @@ var (
 )
 
 // AccountInitTakeoutSessionRequest represents TL type `account.initTakeoutSession#8ef3eab0`.
+// Initialize a takeout session, see here » for more info¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/takeout
+//
+// See https://core.telegram.org/method/account.initTakeoutSession for reference.
 type AccountInitTakeoutSessionRequest struct {
-	// Flags field of AccountInitTakeoutSessionRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Contacts field of AccountInitTakeoutSessionRequest.
+	// Whether to export contacts
 	Contacts bool
-	// MessageUsers field of AccountInitTakeoutSessionRequest.
+	// Whether to export messages in private chats
 	MessageUsers bool
-	// MessageChats field of AccountInitTakeoutSessionRequest.
+	// Whether to export messages in basic groups¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/channel#basic-groups
 	MessageChats bool
-	// MessageMegagroups field of AccountInitTakeoutSessionRequest.
+	// Whether to export messages in supergroups¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/channel#supergroups
 	MessageMegagroups bool
-	// MessageChannels field of AccountInitTakeoutSessionRequest.
+	// Whether to export messages in channels¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/channel#channels
 	MessageChannels bool
-	// Files field of AccountInitTakeoutSessionRequest.
+	// Whether to export files
 	Files bool
-	// FileMaxSize field of AccountInitTakeoutSessionRequest.
+	// Maximum size of files to export
 	//
 	// Use SetFileMaxSize and GetFileMaxSize helpers.
 	FileMaxSize int64
@@ -103,6 +121,28 @@ func (i *AccountInitTakeoutSessionRequest) String() string {
 	}
 	type Alias AccountInitTakeoutSessionRequest
 	return fmt.Sprintf("AccountInitTakeoutSessionRequest%+v", Alias(*i))
+}
+
+// FillFrom fills AccountInitTakeoutSessionRequest from given interface.
+func (i *AccountInitTakeoutSessionRequest) FillFrom(from interface {
+	GetContacts() (value bool)
+	GetMessageUsers() (value bool)
+	GetMessageChats() (value bool)
+	GetMessageMegagroups() (value bool)
+	GetMessageChannels() (value bool)
+	GetFiles() (value bool)
+	GetFileMaxSize() (value int64, ok bool)
+}) {
+	i.Contacts = from.GetContacts()
+	i.MessageUsers = from.GetMessageUsers()
+	i.MessageChats = from.GetMessageChats()
+	i.MessageMegagroups = from.GetMessageMegagroups()
+	i.MessageChannels = from.GetMessageChannels()
+	i.Files = from.GetFiles()
+	if val, ok := from.GetFileMaxSize(); ok {
+		i.FileMaxSize = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -386,6 +426,16 @@ func (i *AccountInitTakeoutSessionRequest) GetFileMaxSize() (value int64, ok boo
 }
 
 // AccountInitTakeoutSession invokes method account.initTakeoutSession#8ef3eab0 returning error if any.
+// Initialize a takeout session, see here » for more info¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/takeout
+//
+// Possible errors:
+//
+//	420 TAKEOUT_INIT_DELAY_%d: Sorry, for security reasons, you will be able to begin downloading your data in %d seconds. We have notified all your devices about the export request to make sure it's authorized and to give you time to react if it's not.
+//
+// See https://core.telegram.org/method/account.initTakeoutSession for reference.
 func (c *Client) AccountInitTakeoutSession(ctx context.Context, request *AccountInitTakeoutSessionRequest) (*AccountTakeout, error) {
 	var result AccountTakeout
 

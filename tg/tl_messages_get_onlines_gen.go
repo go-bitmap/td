@@ -32,8 +32,11 @@ var (
 )
 
 // MessagesGetOnlinesRequest represents TL type `messages.getOnlines#6e2be050`.
+// Get count of online users in a chat
+//
+// See https://core.telegram.org/method/messages.getOnlines for reference.
 type MessagesGetOnlinesRequest struct {
-	// Peer field of MessagesGetOnlinesRequest.
+	// The chat
 	Peer InputPeerClass
 }
 
@@ -66,6 +69,13 @@ func (g *MessagesGetOnlinesRequest) String() string {
 	}
 	type Alias MessagesGetOnlinesRequest
 	return fmt.Sprintf("MessagesGetOnlinesRequest%+v", Alias(*g))
+}
+
+// FillFrom fills MessagesGetOnlinesRequest from given interface.
+func (g *MessagesGetOnlinesRequest) FillFrom(from interface {
+	GetPeer() (value InputPeerClass)
+}) {
+	g.Peer = from.GetPeer()
 }
 
 // TypeID returns type id in TL schema.
@@ -157,6 +167,15 @@ func (g *MessagesGetOnlinesRequest) GetPeer() (value InputPeerClass) {
 }
 
 // MessagesGetOnlines invokes method messages.getOnlines#6e2be050 returning error if any.
+// Get count of online users in a chat
+//
+// Possible errors:
+//
+//	400 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
+//	400 CHAT_ID_INVALID: The provided chat id is invalid.
+//	400 PEER_ID_INVALID: The provided peer id is invalid.
+//
+// See https://core.telegram.org/method/messages.getOnlines for reference.
 func (c *Client) MessagesGetOnlines(ctx context.Context, peer InputPeerClass) (*ChatOnlines, error) {
 	var result ChatOnlines
 

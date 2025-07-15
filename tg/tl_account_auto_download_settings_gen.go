@@ -32,12 +32,15 @@ var (
 )
 
 // AccountAutoDownloadSettings represents TL type `account.autoDownloadSettings#63cacf26`.
+// Media autodownload settings
+//
+// See https://core.telegram.org/constructor/account.autoDownloadSettings for reference.
 type AccountAutoDownloadSettings struct {
-	// Low field of AccountAutoDownloadSettings.
+	// Low data usage preset
 	Low AutoDownloadSettings
-	// Medium field of AccountAutoDownloadSettings.
+	// Medium data usage preset
 	Medium AutoDownloadSettings
-	// High field of AccountAutoDownloadSettings.
+	// High data usage preset
 	High AutoDownloadSettings
 }
 
@@ -76,6 +79,17 @@ func (a *AccountAutoDownloadSettings) String() string {
 	}
 	type Alias AccountAutoDownloadSettings
 	return fmt.Sprintf("AccountAutoDownloadSettings%+v", Alias(*a))
+}
+
+// FillFrom fills AccountAutoDownloadSettings from given interface.
+func (a *AccountAutoDownloadSettings) FillFrom(from interface {
+	GetLow() (value AutoDownloadSettings)
+	GetMedium() (value AutoDownloadSettings)
+	GetHigh() (value AutoDownloadSettings)
+}) {
+	a.Low = from.GetLow()
+	a.Medium = from.GetMedium()
+	a.High = from.GetHigh()
 }
 
 // TypeID returns type id in TL schema.

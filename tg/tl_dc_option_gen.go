@@ -32,28 +32,48 @@ var (
 )
 
 // DCOption represents TL type `dcOption#18b7a10d`.
+// Data center
+//
+// See https://core.telegram.org/constructor/dcOption for reference.
 type DCOption struct {
-	// Flags field of DCOption.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Ipv6 field of DCOption.
+	// Whether the specified IP is an IPv6 address
 	Ipv6 bool
-	// MediaOnly field of DCOption.
+	// Whether this DC should only be used to download or upload files¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/files
 	MediaOnly bool
-	// TCPObfuscatedOnly field of DCOption.
+	// Whether this DC only supports connection with transport obfuscation¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/mtproto-transports#transport-obfuscation
 	TCPObfuscatedOnly bool
-	// CDN field of DCOption.
+	// Whether this is a CDN DC¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/cdn
 	CDN bool
-	// Static field of DCOption.
+	// If set, this IP should be used when connecting through a proxy
 	Static bool
-	// ThisPortOnly field of DCOption.
+	// If set, clients must connect using only the specified port, without trying any other
+	// port.
 	ThisPortOnly bool
-	// ID field of DCOption.
+	// DC ID
 	ID int
-	// IPAddress field of DCOption.
+	// IP address of DC
 	IPAddress string
-	// Port field of DCOption.
+	// Port
 	Port int
-	// Secret field of DCOption.
+	// If the tcpo_only flag is set, specifies the secret to use when connecting using
+	// transport obfuscation¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/mtproto-transports#transport-obfuscation
 	//
 	// Use SetSecret and GetSecret helpers.
 	Secret []byte
@@ -118,6 +138,34 @@ func (d *DCOption) String() string {
 	}
 	type Alias DCOption
 	return fmt.Sprintf("DCOption%+v", Alias(*d))
+}
+
+// FillFrom fills DCOption from given interface.
+func (d *DCOption) FillFrom(from interface {
+	GetIpv6() (value bool)
+	GetMediaOnly() (value bool)
+	GetTCPObfuscatedOnly() (value bool)
+	GetCDN() (value bool)
+	GetStatic() (value bool)
+	GetThisPortOnly() (value bool)
+	GetID() (value int)
+	GetIPAddress() (value string)
+	GetPort() (value int)
+	GetSecret() (value []byte, ok bool)
+}) {
+	d.Ipv6 = from.GetIpv6()
+	d.MediaOnly = from.GetMediaOnly()
+	d.TCPObfuscatedOnly = from.GetTCPObfuscatedOnly()
+	d.CDN = from.GetCDN()
+	d.Static = from.GetStatic()
+	d.ThisPortOnly = from.GetThisPortOnly()
+	d.ID = from.GetID()
+	d.IPAddress = from.GetIPAddress()
+	d.Port = from.GetPort()
+	if val, ok := from.GetSecret(); ok {
+		d.Secret = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.

@@ -32,6 +32,8 @@ var (
 )
 
 // TodoList represents TL type `todoList#49b92a26`.
+//
+// See https://core.telegram.org/constructor/todoList for reference.
 type TodoList struct {
 	// Flags field of TodoList.
 	Flags bin.Fields
@@ -86,6 +88,19 @@ func (t *TodoList) String() string {
 	}
 	type Alias TodoList
 	return fmt.Sprintf("TodoList%+v", Alias(*t))
+}
+
+// FillFrom fills TodoList from given interface.
+func (t *TodoList) FillFrom(from interface {
+	GetOthersCanAppend() (value bool)
+	GetOthersCanComplete() (value bool)
+	GetTitle() (value TextWithEntities)
+	GetList() (value []TodoItem)
+}) {
+	t.OthersCanAppend = from.GetOthersCanAppend()
+	t.OthersCanComplete = from.GetOthersCanComplete()
+	t.Title = from.GetTitle()
+	t.List = from.GetList()
 }
 
 // TypeID returns type id in TL schema.

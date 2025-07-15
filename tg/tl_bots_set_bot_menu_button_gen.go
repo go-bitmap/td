@@ -32,10 +32,16 @@ var (
 )
 
 // BotsSetBotMenuButtonRequest represents TL type `bots.setBotMenuButton#4504d54f`.
+// Sets the menu button action »¹ for a given user or for all users
+//
+// Links:
+//  1. https://core.telegram.org/api/bots/menu
+//
+// See https://core.telegram.org/method/bots.setBotMenuButton for reference.
 type BotsSetBotMenuButtonRequest struct {
-	// UserID field of BotsSetBotMenuButtonRequest.
+	// User ID
 	UserID InputUserClass
-	// Button field of BotsSetBotMenuButtonRequest.
+	// Bot menu button action
 	Button BotMenuButtonClass
 }
 
@@ -71,6 +77,15 @@ func (s *BotsSetBotMenuButtonRequest) String() string {
 	}
 	type Alias BotsSetBotMenuButtonRequest
 	return fmt.Sprintf("BotsSetBotMenuButtonRequest%+v", Alias(*s))
+}
+
+// FillFrom fills BotsSetBotMenuButtonRequest from given interface.
+func (s *BotsSetBotMenuButtonRequest) FillFrom(from interface {
+	GetUserID() (value InputUserClass)
+	GetButton() (value BotMenuButtonClass)
+}) {
+	s.UserID = from.GetUserID()
+	s.Button = from.GetButton()
 }
 
 // TypeID returns type id in TL schema.
@@ -187,6 +202,19 @@ func (s *BotsSetBotMenuButtonRequest) GetButton() (value BotMenuButtonClass) {
 }
 
 // BotsSetBotMenuButton invokes method bots.setBotMenuButton#4504d54f returning error if any.
+// Sets the menu button action »¹ for a given user or for all users
+//
+// Links:
+//  1. https://core.telegram.org/api/bots/menu
+//
+// Possible errors:
+//
+//	400 BUTTON_TEXT_INVALID: The specified button text is invalid.
+//	400 BUTTON_URL_INVALID: Button URL invalid.
+//	400 USER_BOT_REQUIRED: This method can only be called by a bot.
+//
+// See https://core.telegram.org/method/bots.setBotMenuButton for reference.
+// Can be used by bots.
 func (c *Client) BotsSetBotMenuButton(ctx context.Context, request *BotsSetBotMenuButtonRequest) (bool, error) {
 	var result BoolBox
 

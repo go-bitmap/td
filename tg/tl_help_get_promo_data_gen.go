@@ -32,6 +32,9 @@ var (
 )
 
 // HelpGetPromoDataRequest represents TL type `help.getPromoData#c0977421`.
+// Get MTProxy/Public Service Announcement information
+//
+// See https://core.telegram.org/method/help.getPromoData for reference.
 type HelpGetPromoDataRequest struct {
 }
 
@@ -126,6 +129,9 @@ func (g *HelpGetPromoDataRequest) DecodeBare(b *bin.Buffer) error {
 }
 
 // HelpGetPromoData invokes method help.getPromoData#c0977421 returning error if any.
+// Get MTProxy/Public Service Announcement information
+//
+// See https://core.telegram.org/method/help.getPromoData for reference.
 func (c *Client) HelpGetPromoData(ctx context.Context) (HelpPromoDataClass, error) {
 	var result HelpPromoDataBox
 

@@ -32,10 +32,16 @@ var (
 )
 
 // AccountSetContentSettingsRequest represents TL type `account.setContentSettings#b574b16b`.
+// Set sensitive content settings (for viewing or hiding NSFW content)
+//
+// See https://core.telegram.org/method/account.setContentSettings for reference.
 type AccountSetContentSettingsRequest struct {
-	// Flags field of AccountSetContentSettingsRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// SensitiveEnabled field of AccountSetContentSettingsRequest.
+	// Enable NSFW content
 	SensitiveEnabled bool
 }
 
@@ -71,6 +77,13 @@ func (s *AccountSetContentSettingsRequest) String() string {
 	}
 	type Alias AccountSetContentSettingsRequest
 	return fmt.Sprintf("AccountSetContentSettingsRequest%+v", Alias(*s))
+}
+
+// FillFrom fills AccountSetContentSettingsRequest from given interface.
+func (s *AccountSetContentSettingsRequest) FillFrom(from interface {
+	GetSensitiveEnabled() (value bool)
+}) {
+	s.SensitiveEnabled = from.GetSensitiveEnabled()
 }
 
 // TypeID returns type id in TL schema.
@@ -178,6 +191,13 @@ func (s *AccountSetContentSettingsRequest) GetSensitiveEnabled() (value bool) {
 }
 
 // AccountSetContentSettings invokes method account.setContentSettings#b574b16b returning error if any.
+// Set sensitive content settings (for viewing or hiding NSFW content)
+//
+// Possible errors:
+//
+//	403 SENSITIVE_CHANGE_FORBIDDEN: You can't change your sensitive content settings.
+//
+// See https://core.telegram.org/method/account.setContentSettings for reference.
 func (c *Client) AccountSetContentSettings(ctx context.Context, request *AccountSetContentSettingsRequest) (bool, error) {
 	var result BoolBox
 

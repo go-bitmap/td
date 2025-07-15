@@ -32,16 +32,34 @@ var (
 )
 
 // MessagesGetArchivedStickersRequest represents TL type `messages.getArchivedStickers#57f17692`.
+// Get all archived stickers
+//
+// See https://core.telegram.org/method/messages.getArchivedStickers for reference.
 type MessagesGetArchivedStickersRequest struct {
-	// Flags field of MessagesGetArchivedStickersRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Masks field of MessagesGetArchivedStickersRequest.
+	// Get mask stickers¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/stickers#mask-stickers
 	Masks bool
-	// Emojis field of MessagesGetArchivedStickersRequest.
+	// Get custom emoji stickers¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/custom-emoji
 	Emojis bool
-	// OffsetID field of MessagesGetArchivedStickersRequest.
+	// Offsets for pagination, for more info click here¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets
 	OffsetID int64
-	// Limit field of MessagesGetArchivedStickersRequest.
+	// Maximum number of results to return, see pagination¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets
 	Limit int
 }
 
@@ -86,6 +104,19 @@ func (g *MessagesGetArchivedStickersRequest) String() string {
 	}
 	type Alias MessagesGetArchivedStickersRequest
 	return fmt.Sprintf("MessagesGetArchivedStickersRequest%+v", Alias(*g))
+}
+
+// FillFrom fills MessagesGetArchivedStickersRequest from given interface.
+func (g *MessagesGetArchivedStickersRequest) FillFrom(from interface {
+	GetMasks() (value bool)
+	GetEmojis() (value bool)
+	GetOffsetID() (value int64)
+	GetLimit() (value int)
+}) {
+	g.Masks = from.GetMasks()
+	g.Emojis = from.GetEmojis()
+	g.OffsetID = from.GetOffsetID()
+	g.Limit = from.GetLimit()
 }
 
 // TypeID returns type id in TL schema.
@@ -261,6 +292,9 @@ func (g *MessagesGetArchivedStickersRequest) GetLimit() (value int) {
 }
 
 // MessagesGetArchivedStickers invokes method messages.getArchivedStickers#57f17692 returning error if any.
+// Get all archived stickers
+//
+// See https://core.telegram.org/method/messages.getArchivedStickers for reference.
 func (c *Client) MessagesGetArchivedStickers(ctx context.Context, request *MessagesGetArchivedStickersRequest) (*MessagesArchivedStickers, error) {
 	var result MessagesArchivedStickers
 

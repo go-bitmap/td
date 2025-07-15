@@ -32,10 +32,13 @@ var (
 )
 
 // PhonePhoneCall represents TL type `phone.phoneCall#ec82e140`.
+// A VoIP phone call
+//
+// See https://core.telegram.org/constructor/phone.phoneCall for reference.
 type PhonePhoneCall struct {
-	// PhoneCall field of PhonePhoneCall.
+	// The VoIP phone call
 	PhoneCall PhoneCallClass
-	// Users field of PhonePhoneCall.
+	// VoIP phone call participants
 	Users []UserClass
 }
 
@@ -71,6 +74,15 @@ func (p *PhonePhoneCall) String() string {
 	}
 	type Alias PhonePhoneCall
 	return fmt.Sprintf("PhonePhoneCall%+v", Alias(*p))
+}
+
+// FillFrom fills PhonePhoneCall from given interface.
+func (p *PhonePhoneCall) FillFrom(from interface {
+	GetPhoneCall() (value PhoneCallClass)
+	GetUsers() (value []UserClass)
+}) {
+	p.PhoneCall = from.GetPhoneCall()
+	p.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -197,4 +209,14 @@ func (p *PhonePhoneCall) GetUsers() (value []UserClass) {
 		return
 	}
 	return p.Users
+}
+
+// GetPhoneCallAsNotEmpty returns mapped value of PhoneCall field.
+func (p *PhonePhoneCall) GetPhoneCallAsNotEmpty() (NotEmptyPhoneCall, bool) {
+	return p.PhoneCall.AsNotEmpty()
+}
+
+// MapUsers returns field Users wrapped in UserClassArray helper.
+func (p *PhonePhoneCall) MapUsers() (value UserClassArray) {
+	return UserClassArray(p.Users)
 }

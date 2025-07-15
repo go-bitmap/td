@@ -32,8 +32,19 @@ var (
 )
 
 // AuthPasswordRecovery represents TL type `auth.passwordRecovery#137948a5`.
+// Recovery info of a 2FA password¹, only for accounts with a recovery email
+// configured².
+//
+// Links:
+//  1. https://core.telegram.org/api/srp
+//  2. https://core.telegram.org/api/srp#email-verification
+//
+// See https://core.telegram.org/constructor/auth.passwordRecovery for reference.
 type AuthPasswordRecovery struct {
-	// EmailPattern field of AuthPasswordRecovery.
+	// The email to which the recovery code was sent must match this pattern¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/pattern
 	EmailPattern string
 }
 
@@ -66,6 +77,13 @@ func (p *AuthPasswordRecovery) String() string {
 	}
 	type Alias AuthPasswordRecovery
 	return fmt.Sprintf("AuthPasswordRecovery%+v", Alias(*p))
+}
+
+// FillFrom fills AuthPasswordRecovery from given interface.
+func (p *AuthPasswordRecovery) FillFrom(from interface {
+	GetEmailPattern() (value string)
+}) {
+	p.EmailPattern = from.GetEmailPattern()
 }
 
 // TypeID returns type id in TL schema.

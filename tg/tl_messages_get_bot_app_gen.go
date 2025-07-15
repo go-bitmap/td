@@ -32,10 +32,22 @@ var (
 )
 
 // MessagesGetBotAppRequest represents TL type `messages.getBotApp#34fdc5c3`.
+// Obtain information about a direct link Mini App¹
+//
+// Links:
+//  1. https://core.telegram.org/api/bots/webapps#direct-link-mini-apps
+//
+// See https://core.telegram.org/method/messages.getBotApp for reference.
 type MessagesGetBotAppRequest struct {
-	// App field of MessagesGetBotAppRequest.
+	// Bot app information obtained from a Direct Mini App deep link »¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/links#direct-mini-app-links
 	App InputBotAppClass
-	// Hash field of MessagesGetBotAppRequest.
+	// Hash used for caching, for more info click here¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets#hash-generation
 	Hash int64
 }
 
@@ -71,6 +83,15 @@ func (g *MessagesGetBotAppRequest) String() string {
 	}
 	type Alias MessagesGetBotAppRequest
 	return fmt.Sprintf("MessagesGetBotAppRequest%+v", Alias(*g))
+}
+
+// FillFrom fills MessagesGetBotAppRequest from given interface.
+func (g *MessagesGetBotAppRequest) FillFrom(from interface {
+	GetApp() (value InputBotAppClass)
+	GetHash() (value int64)
+}) {
+	g.App = from.GetApp()
+	g.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -182,6 +203,18 @@ func (g *MessagesGetBotAppRequest) GetHash() (value int64) {
 }
 
 // MessagesGetBotApp invokes method messages.getBotApp#34fdc5c3 returning error if any.
+// Obtain information about a direct link Mini App¹
+//
+// Links:
+//  1. https://core.telegram.org/api/bots/webapps#direct-link-mini-apps
+//
+// Possible errors:
+//
+//	400 BOT_APP_BOT_INVALID: The bot_id passed in the inputBotAppShortName constructor is invalid.
+//	400 BOT_APP_INVALID: The specified bot app is invalid.
+//	400 BOT_APP_SHORTNAME_INVALID: The specified bot app short name is invalid.
+//
+// See https://core.telegram.org/method/messages.getBotApp for reference.
 func (c *Client) MessagesGetBotApp(ctx context.Context, request *MessagesGetBotAppRequest) (*MessagesBotApp, error) {
 	var result MessagesBotApp
 

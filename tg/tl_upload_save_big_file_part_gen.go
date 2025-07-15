@@ -32,14 +32,18 @@ var (
 )
 
 // UploadSaveBigFilePartRequest represents TL type `upload.saveBigFilePart#de7b673d`.
+// Saves a part of a large file (over 10 MB in size) to be later passed to one of the
+// methods.
+//
+// See https://core.telegram.org/method/upload.saveBigFilePart for reference.
 type UploadSaveBigFilePartRequest struct {
-	// FileID field of UploadSaveBigFilePartRequest.
+	// Random file id, created by the client
 	FileID int64
-	// FilePart field of UploadSaveBigFilePartRequest.
+	// Part sequence number
 	FilePart int
-	// FileTotalParts field of UploadSaveBigFilePartRequest.
+	// Total number of parts
 	FileTotalParts int
-	// Bytes field of UploadSaveBigFilePartRequest.
+	// Binary data, part contents
 	Bytes []byte
 }
 
@@ -81,6 +85,19 @@ func (s *UploadSaveBigFilePartRequest) String() string {
 	}
 	type Alias UploadSaveBigFilePartRequest
 	return fmt.Sprintf("UploadSaveBigFilePartRequest%+v", Alias(*s))
+}
+
+// FillFrom fills UploadSaveBigFilePartRequest from given interface.
+func (s *UploadSaveBigFilePartRequest) FillFrom(from interface {
+	GetFileID() (value int64)
+	GetFilePart() (value int)
+	GetFileTotalParts() (value int)
+	GetBytes() (value []byte)
+}) {
+	s.FileID = from.GetFileID()
+	s.FilePart = from.GetFilePart()
+	s.FileTotalParts = from.GetFileTotalParts()
+	s.Bytes = from.GetBytes()
 }
 
 // TypeID returns type id in TL schema.
@@ -227,6 +244,21 @@ func (s *UploadSaveBigFilePartRequest) GetBytes() (value []byte) {
 }
 
 // UploadSaveBigFilePart invokes method upload.saveBigFilePart#de7b673d returning error if any.
+// Saves a part of a large file (over 10 MB in size) to be later passed to one of the
+// methods.
+//
+// Possible errors:
+//
+//	400 FILE_PARTS_INVALID: The number of file parts is invalid.
+//	400 FILE_PART_EMPTY: The provided file part is empty.
+//	400 FILE_PART_INVALID: The file part number is invalid.
+//	400 FILE_PART_SIZE_CHANGED: Provided file part size has changed.
+//	400 FILE_PART_SIZE_INVALID: The provided file part size is invalid.
+//	400 FILE_PART_TOO_BIG: The uploaded file part is too big.
+//	400 FILE_PART_TOO_SMALL: The size of the uploaded file part is too small, please see the documentation for the allowed sizes.
+//
+// See https://core.telegram.org/method/upload.saveBigFilePart for reference.
+// Can be used by bots.
 func (c *Client) UploadSaveBigFilePart(ctx context.Context, request *UploadSaveBigFilePartRequest) (bool, error) {
 	var result BoolBox
 

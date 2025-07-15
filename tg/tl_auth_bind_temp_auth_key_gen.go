@@ -32,14 +32,32 @@ var (
 )
 
 // AuthBindTempAuthKeyRequest represents TL type `auth.bindTempAuthKey#cdd42a05`.
+// Binds a temporary authorization key temp_auth_key_id to the permanent authorization
+// key perm_auth_key_id. Each permanent key may only be bound to one temporary key at a
+// time, binding a new temporary key overwrites the previous one.
+// For more information, see Perfect Forward Secrecy¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/pfs
+//
+// See https://core.telegram.org/method/auth.bindTempAuthKey for reference.
 type AuthBindTempAuthKeyRequest struct {
-	// PermAuthKeyID field of AuthBindTempAuthKeyRequest.
+	// Permanent auth_key_id to bind to
 	PermAuthKeyID int64
-	// Nonce field of AuthBindTempAuthKeyRequest.
+	// Random long from Binding message contents¹
+	//
+	// Links:
+	//  1) https://core.telegram.org#binding-message-contents
 	Nonce int64
-	// ExpiresAt field of AuthBindTempAuthKeyRequest.
+	// Unix timestamp to invalidate temporary key, see Binding message contents¹
+	//
+	// Links:
+	//  1) https://core.telegram.org#binding-message-contents
 	ExpiresAt int
-	// EncryptedMessage field of AuthBindTempAuthKeyRequest.
+	// See Generating encrypted_message¹
+	//
+	// Links:
+	//  1) https://core.telegram.org#generating-encrypted-message
 	EncryptedMessage []byte
 }
 
@@ -81,6 +99,19 @@ func (b *AuthBindTempAuthKeyRequest) String() string {
 	}
 	type Alias AuthBindTempAuthKeyRequest
 	return fmt.Sprintf("AuthBindTempAuthKeyRequest%+v", Alias(*b))
+}
+
+// FillFrom fills AuthBindTempAuthKeyRequest from given interface.
+func (b *AuthBindTempAuthKeyRequest) FillFrom(from interface {
+	GetPermAuthKeyID() (value int64)
+	GetNonce() (value int64)
+	GetExpiresAt() (value int)
+	GetEncryptedMessage() (value []byte)
+}) {
+	b.PermAuthKeyID = from.GetPermAuthKeyID()
+	b.Nonce = from.GetNonce()
+	b.ExpiresAt = from.GetExpiresAt()
+	b.EncryptedMessage = from.GetEncryptedMessage()
 }
 
 // TypeID returns type id in TL schema.
@@ -227,6 +258,22 @@ func (b *AuthBindTempAuthKeyRequest) GetEncryptedMessage() (value []byte) {
 }
 
 // AuthBindTempAuthKey invokes method auth.bindTempAuthKey#cdd42a05 returning error if any.
+// Binds a temporary authorization key temp_auth_key_id to the permanent authorization
+// key perm_auth_key_id. Each permanent key may only be bound to one temporary key at a
+// time, binding a new temporary key overwrites the previous one.
+// For more information, see Perfect Forward Secrecy¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/pfs
+//
+// Possible errors:
+//
+//	400 ENCRYPTED_MESSAGE_INVALID: Encrypted message invalid.
+//	400 TEMP_AUTH_KEY_ALREADY_BOUND: The passed temporary key is already bound to another perm_auth_key_id.
+//	400 TEMP_AUTH_KEY_EMPTY: No temporary auth key provided.
+//
+// See https://core.telegram.org/method/auth.bindTempAuthKey for reference.
+// Can be used by bots.
 func (c *Client) AuthBindTempAuthKey(ctx context.Context, request *AuthBindTempAuthKeyRequest) (bool, error) {
 	var result BoolBox
 

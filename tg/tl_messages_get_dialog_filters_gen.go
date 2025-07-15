@@ -32,6 +32,12 @@ var (
 )
 
 // MessagesGetDialogFiltersRequest represents TL type `messages.getDialogFilters#efd48c89`.
+// Get folders¹
+//
+// Links:
+//  1. https://core.telegram.org/api/folders
+//
+// See https://core.telegram.org/method/messages.getDialogFilters for reference.
 type MessagesGetDialogFiltersRequest struct {
 }
 
@@ -126,6 +132,12 @@ func (g *MessagesGetDialogFiltersRequest) DecodeBare(b *bin.Buffer) error {
 }
 
 // MessagesGetDialogFilters invokes method messages.getDialogFilters#efd48c89 returning error if any.
+// Get folders¹
+//
+// Links:
+//  1. https://core.telegram.org/api/folders
+//
+// See https://core.telegram.org/method/messages.getDialogFilters for reference.
 func (c *Client) MessagesGetDialogFilters(ctx context.Context) (*MessagesDialogFilters, error) {
 	var result MessagesDialogFilters
 

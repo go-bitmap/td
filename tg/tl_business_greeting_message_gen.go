@@ -32,12 +32,24 @@ var (
 )
 
 // BusinessGreetingMessage represents TL type `businessGreetingMessage#e519abab`.
+// Describes a Telegram Business greeting¹, automatically sent to new users writing to
+// us in private for the first time, or after a certain inactivity period.
+//
+// Links:
+//  1. https://core.telegram.org/api/business#greeting-messages
+//
+// See https://core.telegram.org/constructor/businessGreetingMessage for reference.
 type BusinessGreetingMessage struct {
-	// ShortcutID field of BusinessGreetingMessage.
+	// ID of a quick reply shorcut, containing the greeting messages to send, see here » for
+	// more info¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/business#quick-reply-shortcuts
 	ShortcutID int
-	// Recipients field of BusinessGreetingMessage.
+	// Allowed recipients for the greeting messages.
 	Recipients BusinessRecipients
-	// NoActivityDays field of BusinessGreetingMessage.
+	// The number of days after which a private chat will be considered as inactive;
+	// currently, must be one of 7, 14, 21, or 28.
 	NoActivityDays int
 }
 
@@ -76,6 +88,17 @@ func (b *BusinessGreetingMessage) String() string {
 	}
 	type Alias BusinessGreetingMessage
 	return fmt.Sprintf("BusinessGreetingMessage%+v", Alias(*b))
+}
+
+// FillFrom fills BusinessGreetingMessage from given interface.
+func (b *BusinessGreetingMessage) FillFrom(from interface {
+	GetShortcutID() (value int)
+	GetRecipients() (value BusinessRecipients)
+	GetNoActivityDays() (value int)
+}) {
+	b.ShortcutID = from.GetShortcutID()
+	b.Recipients = from.GetRecipients()
+	b.NoActivityDays = from.GetNoActivityDays()
 }
 
 // TypeID returns type id in TL schema.

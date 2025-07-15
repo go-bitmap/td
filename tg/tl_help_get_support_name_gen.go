@@ -32,6 +32,9 @@ var (
 )
 
 // HelpGetSupportNameRequest represents TL type `help.getSupportName#d360e72c`.
+// Get localized name of the telegram support user
+//
+// See https://core.telegram.org/method/help.getSupportName for reference.
 type HelpGetSupportNameRequest struct {
 }
 
@@ -126,6 +129,13 @@ func (g *HelpGetSupportNameRequest) DecodeBare(b *bin.Buffer) error {
 }
 
 // HelpGetSupportName invokes method help.getSupportName#d360e72c returning error if any.
+// Get localized name of the telegram support user
+//
+// Possible errors:
+//
+//	403 USER_INVALID: Invalid user provided.
+//
+// See https://core.telegram.org/method/help.getSupportName for reference.
 func (c *Client) HelpGetSupportName(ctx context.Context) (*HelpSupportName, error) {
 	var result HelpSupportName
 

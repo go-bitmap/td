@@ -32,10 +32,19 @@ var (
 )
 
 // AccountUpdatePasswordSettingsRequest represents TL type `account.updatePasswordSettings#a59b102f`.
+// Set a new 2FA password
+//
+// See https://core.telegram.org/method/account.updatePasswordSettings for reference.
 type AccountUpdatePasswordSettingsRequest struct {
-	// Password field of AccountUpdatePasswordSettingsRequest.
+	// The old password (see SRP¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/srp
 	Password InputCheckPasswordSRPClass
-	// NewSettings field of AccountUpdatePasswordSettingsRequest.
+	// The new password (see SRP¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/srp
 	NewSettings AccountPasswordInputSettings
 }
 
@@ -71,6 +80,15 @@ func (u *AccountUpdatePasswordSettingsRequest) String() string {
 	}
 	type Alias AccountUpdatePasswordSettingsRequest
 	return fmt.Sprintf("AccountUpdatePasswordSettingsRequest%+v", Alias(*u))
+}
+
+// FillFrom fills AccountUpdatePasswordSettingsRequest from given interface.
+func (u *AccountUpdatePasswordSettingsRequest) FillFrom(from interface {
+	GetPassword() (value InputCheckPasswordSRPClass)
+	GetNewSettings() (value AccountPasswordInputSettings)
+}) {
+	u.Password = from.GetPassword()
+	u.NewSettings = from.GetNewSettings()
 }
 
 // TypeID returns type id in TL schema.
@@ -181,7 +199,27 @@ func (u *AccountUpdatePasswordSettingsRequest) GetNewSettings() (value AccountPa
 	return u.NewSettings
 }
 
+// GetPasswordAsNotEmpty returns mapped value of Password field.
+func (u *AccountUpdatePasswordSettingsRequest) GetPasswordAsNotEmpty() (*InputCheckPasswordSRP, bool) {
+	return u.Password.AsNotEmpty()
+}
+
 // AccountUpdatePasswordSettings invokes method account.updatePasswordSettings#a59b102f returning error if any.
+// Set a new 2FA password
+//
+// Possible errors:
+//
+//	400 EMAIL_INVALID: The specified email is invalid.
+//	400 EMAIL_UNCONFIRMED: Email unconfirmed.
+//	400 EMAIL_UNCONFIRMED_%d: The provided email isn't confirmed, %d is the length of the verification code that was just sent to the email: use account.verifyEmail to enter the received verification code and enable the recovery email.
+//	400 NEW_SALT_INVALID: The new salt is invalid.
+//	400 NEW_SETTINGS_EMPTY: No password is set on the current account, and no new password was specified in new_settings.
+//	400 NEW_SETTINGS_INVALID: The new password settings are invalid.
+//	400 PASSWORD_HASH_INVALID: The provided password hash is invalid.
+//	400 SRP_ID_INVALID: Invalid SRP ID provided.
+//	400 SRP_PASSWORD_CHANGED: Password has changed.
+//
+// See https://core.telegram.org/method/account.updatePasswordSettings for reference.
 func (c *Client) AccountUpdatePasswordSettings(ctx context.Context, request *AccountUpdatePasswordSettingsRequest) (bool, error) {
 	var result BoolBox
 

@@ -32,8 +32,11 @@ var (
 )
 
 // DialogPeer represents TL type `dialogPeer#e56dbf05`.
+// Peer
+//
+// See https://core.telegram.org/constructor/dialogPeer for reference.
 type DialogPeer struct {
-	// Peer field of DialogPeer.
+	// Peer
 	Peer PeerClass
 }
 
@@ -71,6 +74,13 @@ func (d *DialogPeer) String() string {
 	}
 	type Alias DialogPeer
 	return fmt.Sprintf("DialogPeer%+v", Alias(*d))
+}
+
+// FillFrom fills DialogPeer from given interface.
+func (d *DialogPeer) FillFrom(from interface {
+	GetPeer() (value PeerClass)
+}) {
+	d.Peer = from.GetPeer()
 }
 
 // TypeID returns type id in TL schema.
@@ -162,8 +172,17 @@ func (d *DialogPeer) GetPeer() (value PeerClass) {
 }
 
 // DialogPeerFolder represents TL type `dialogPeerFolder#514519e2`.
+// Peer folder¹
+//
+// Links:
+//  1. https://core.telegram.org/api/folders#peer-folders
+//
+// See https://core.telegram.org/constructor/dialogPeerFolder for reference.
 type DialogPeerFolder struct {
-	// FolderID field of DialogPeerFolder.
+	// Peer folder ID, for more info click here¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/folders#peer-folders
 	FolderID int
 }
 
@@ -201,6 +220,13 @@ func (d *DialogPeerFolder) String() string {
 	}
 	type Alias DialogPeerFolder
 	return fmt.Sprintf("DialogPeerFolder%+v", Alias(*d))
+}
+
+// FillFrom fills DialogPeerFolder from given interface.
+func (d *DialogPeerFolder) FillFrom(from interface {
+	GetFolderID() (value int)
+}) {
+	d.FolderID = from.GetFolderID()
 }
 
 // TypeID returns type id in TL schema.
@@ -291,6 +317,8 @@ const DialogPeerClassName = "DialogPeer"
 
 // DialogPeerClass represents DialogPeer generic type.
 //
+// See https://core.telegram.org/type/DialogPeer for reference.
+//
 // Constructors:
 //   - [DialogPeer]
 //   - [DialogPeerFolder]
@@ -323,6 +351,14 @@ type DialogPeerClass interface {
 	String() string
 	// Zero returns true if current object has a zero value.
 	Zero() bool
+}
+
+// AsInput tries to map DialogPeerFolder to InputDialogPeerFolder.
+func (d *DialogPeerFolder) AsInput() *InputDialogPeerFolder {
+	value := new(InputDialogPeerFolder)
+	value.FolderID = d.GetFolderID()
+
+	return value
 }
 
 // DecodeDialogPeer implements binary de-serialization for DialogPeerClass.

@@ -32,12 +32,24 @@ var (
 )
 
 // StatsGetBroadcastRevenueTransactionsRequest represents TL type `stats.getBroadcastRevenueTransactions#70990b6d`.
+// Fetch channel ad revenue transaction history »¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/revenue
+//
+// See https://core.telegram.org/method/stats.getBroadcastRevenueTransactions for reference.
 type StatsGetBroadcastRevenueTransactionsRequest struct {
-	// Peer field of StatsGetBroadcastRevenueTransactionsRequest.
+	// Get ad revenue transactions for the specified channel or bot
 	Peer InputPeerClass
-	// Offset field of StatsGetBroadcastRevenueTransactionsRequest.
+	// Offset for pagination¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets
 	Offset int
-	// Limit field of StatsGetBroadcastRevenueTransactionsRequest.
+	// Maximum number of results to return, see pagination¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets
 	Limit int
 }
 
@@ -76,6 +88,17 @@ func (g *StatsGetBroadcastRevenueTransactionsRequest) String() string {
 	}
 	type Alias StatsGetBroadcastRevenueTransactionsRequest
 	return fmt.Sprintf("StatsGetBroadcastRevenueTransactionsRequest%+v", Alias(*g))
+}
+
+// FillFrom fills StatsGetBroadcastRevenueTransactionsRequest from given interface.
+func (g *StatsGetBroadcastRevenueTransactionsRequest) FillFrom(from interface {
+	GetPeer() (value InputPeerClass)
+	GetOffset() (value int)
+	GetLimit() (value int)
+}) {
+	g.Peer = from.GetPeer()
+	g.Offset = from.GetOffset()
+	g.Limit = from.GetLimit()
 }
 
 // TypeID returns type id in TL schema.
@@ -207,6 +230,17 @@ func (g *StatsGetBroadcastRevenueTransactionsRequest) GetLimit() (value int) {
 }
 
 // StatsGetBroadcastRevenueTransactions invokes method stats.getBroadcastRevenueTransactions#70990b6d returning error if any.
+// Fetch channel ad revenue transaction history »¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/revenue
+//
+// Possible errors:
+//
+//	400 CHANNEL_INVALID: The provided channel is invalid.
+//	400 PEER_ID_INVALID: The provided peer id is invalid.
+//
+// See https://core.telegram.org/method/stats.getBroadcastRevenueTransactions for reference.
 func (c *Client) StatsGetBroadcastRevenueTransactions(ctx context.Context, request *StatsGetBroadcastRevenueTransactionsRequest) (*StatsBroadcastRevenueTransactions, error) {
 	var result StatsBroadcastRevenueTransactions
 

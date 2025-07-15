@@ -32,12 +32,15 @@ var (
 )
 
 // MessagePeerVote represents TL type `messagePeerVote#b6cc2d5c`.
+// How a peer voted in a poll
+//
+// See https://core.telegram.org/constructor/messagePeerVote for reference.
 type MessagePeerVote struct {
-	// Peer field of MessagePeerVote.
+	// Peer ID
 	Peer PeerClass
-	// Option field of MessagePeerVote.
+	// The option chosen by the peer
 	Option []byte
-	// Date field of MessagePeerVote.
+	// When did the peer cast the vote
 	Date int
 }
 
@@ -81,6 +84,17 @@ func (m *MessagePeerVote) String() string {
 	}
 	type Alias MessagePeerVote
 	return fmt.Sprintf("MessagePeerVote%+v", Alias(*m))
+}
+
+// FillFrom fills MessagePeerVote from given interface.
+func (m *MessagePeerVote) FillFrom(from interface {
+	GetPeer() (value PeerClass)
+	GetOption() (value []byte)
+	GetDate() (value int)
+}) {
+	m.Peer = from.GetPeer()
+	m.Option = from.GetOption()
+	m.Date = from.GetDate()
 }
 
 // TypeID returns type id in TL schema.
@@ -212,10 +226,17 @@ func (m *MessagePeerVote) GetDate() (value int) {
 }
 
 // MessagePeerVoteInputOption represents TL type `messagePeerVoteInputOption#74cda504`.
+// How a peer voted in a poll (reduced constructor, returned if an option was provided to
+// messages.getPollVotes¹)
+//
+// Links:
+//  1. https://core.telegram.org/method/messages.getPollVotes
+//
+// See https://core.telegram.org/constructor/messagePeerVoteInputOption for reference.
 type MessagePeerVoteInputOption struct {
-	// Peer field of MessagePeerVoteInputOption.
+	// The peer that voted for the queried option
 	Peer PeerClass
-	// Date field of MessagePeerVoteInputOption.
+	// When did the peer cast the vote
 	Date int
 }
 
@@ -256,6 +277,15 @@ func (m *MessagePeerVoteInputOption) String() string {
 	}
 	type Alias MessagePeerVoteInputOption
 	return fmt.Sprintf("MessagePeerVoteInputOption%+v", Alias(*m))
+}
+
+// FillFrom fills MessagePeerVoteInputOption from given interface.
+func (m *MessagePeerVoteInputOption) FillFrom(from interface {
+	GetPeer() (value PeerClass)
+	GetDate() (value int)
+}) {
+	m.Peer = from.GetPeer()
+	m.Date = from.GetDate()
 }
 
 // TypeID returns type id in TL schema.
@@ -367,12 +397,15 @@ func (m *MessagePeerVoteInputOption) GetDate() (value int) {
 }
 
 // MessagePeerVoteMultiple represents TL type `messagePeerVoteMultiple#4628f6e6`.
+// How a peer voted in a multiple-choice poll
+//
+// See https://core.telegram.org/constructor/messagePeerVoteMultiple for reference.
 type MessagePeerVoteMultiple struct {
-	// Peer field of MessagePeerVoteMultiple.
+	// Peer ID
 	Peer PeerClass
-	// Options field of MessagePeerVoteMultiple.
+	// Options chosen by the peer
 	Options [][]byte
-	// Date field of MessagePeerVoteMultiple.
+	// When did the peer cast their votes
 	Date int
 }
 
@@ -416,6 +449,17 @@ func (m *MessagePeerVoteMultiple) String() string {
 	}
 	type Alias MessagePeerVoteMultiple
 	return fmt.Sprintf("MessagePeerVoteMultiple%+v", Alias(*m))
+}
+
+// FillFrom fills MessagePeerVoteMultiple from given interface.
+func (m *MessagePeerVoteMultiple) FillFrom(from interface {
+	GetPeer() (value PeerClass)
+	GetOptions() (value [][]byte)
+	GetDate() (value int)
+}) {
+	m.Peer = from.GetPeer()
+	m.Options = from.GetOptions()
+	m.Date = from.GetDate()
 }
 
 // TypeID returns type id in TL schema.
@@ -564,6 +608,8 @@ const MessagePeerVoteClassName = "MessagePeerVote"
 
 // MessagePeerVoteClass represents MessagePeerVote generic type.
 //
+// See https://core.telegram.org/type/MessagePeerVote for reference.
+//
 // Constructors:
 //   - [MessagePeerVote]
 //   - [MessagePeerVoteInputOption]
@@ -599,9 +645,10 @@ type MessagePeerVoteClass interface {
 	// Zero returns true if current object has a zero value.
 	Zero() bool
 
-	// Peer field of MessagePeerVote.
+	// Peer ID
 	GetPeer() (value PeerClass)
-	// Date field of MessagePeerVote.
+
+	// When did the peer cast the vote
 	GetDate() (value int)
 }
 

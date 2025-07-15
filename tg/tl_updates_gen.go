@@ -32,6 +32,12 @@ var (
 )
 
 // UpdatesTooLong represents TL type `updatesTooLong#e317af7e`.
+// Too many updates, it is necessary to execute updates.getDifference¹.
+//
+// Links:
+//  1. https://core.telegram.org/method/updates.getDifference
+//
+// See https://core.telegram.org/constructor/updatesTooLong for reference.
 type UpdatesTooLong struct {
 }
 
@@ -131,46 +137,68 @@ func (u *UpdatesTooLong) DecodeBare(b *bin.Buffer) error {
 }
 
 // UpdateShortMessage represents TL type `updateShortMessage#313bc7f8`.
+// Info about a message sent to (received from) another user
+//
+// See https://core.telegram.org/constructor/updateShortMessage for reference.
 type UpdateShortMessage struct {
-	// Flags field of UpdateShortMessage.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Out field of UpdateShortMessage.
+	// Whether the message is outgoing
 	Out bool
-	// Mentioned field of UpdateShortMessage.
+	// Whether we were mentioned in the message
 	Mentioned bool
-	// MediaUnread field of UpdateShortMessage.
+	// Whether there are some unread mentions in this message
 	MediaUnread bool
-	// Silent field of UpdateShortMessage.
+	// If true, the message is a silent message, no notifications should be triggered
 	Silent bool
-	// ID field of UpdateShortMessage.
+	// The message ID
 	ID int
-	// UserID field of UpdateShortMessage.
+	// The ID of the sender (if outgoing will be the ID of the destination) of the message
 	UserID int64
-	// Message field of UpdateShortMessage.
+	// The message
 	Message string
-	// Pts field of UpdateShortMessage.
+	// PTS¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/updates
 	Pts int
-	// PtsCount field of UpdateShortMessage.
+	// PTS count¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/updates
 	PtsCount int
-	// Date field of UpdateShortMessage.
+	// date¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/updates
 	Date int
-	// FwdFrom field of UpdateShortMessage.
+	// Info about a forwarded message
 	//
 	// Use SetFwdFrom and GetFwdFrom helpers.
 	FwdFrom MessageFwdHeader
-	// ViaBotID field of UpdateShortMessage.
+	// Info about the inline bot used to generate this message
 	//
 	// Use SetViaBotID and GetViaBotID helpers.
 	ViaBotID int64
-	// ReplyTo field of UpdateShortMessage.
+	// Reply and thread¹ information
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/threads
 	//
 	// Use SetReplyTo and GetReplyTo helpers.
 	ReplyTo MessageReplyHeaderClass
-	// Entities field of UpdateShortMessage.
+	// Entities¹ for styled text
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities
 	//
 	// Use SetEntities and GetEntities helpers.
 	Entities []MessageEntityClass
-	// TTLPeriod field of UpdateShortMessage.
+	// Time To Live of the message, once message.date+message.ttl_period === time(), the
+	// message will be deleted on the server, and must be deleted locally as well.
 	//
 	// Use SetTTLPeriod and GetTTLPeriod helpers.
 	TTLPeriod int
@@ -255,6 +283,56 @@ func (u *UpdateShortMessage) String() string {
 	}
 	type Alias UpdateShortMessage
 	return fmt.Sprintf("UpdateShortMessage%+v", Alias(*u))
+}
+
+// FillFrom fills UpdateShortMessage from given interface.
+func (u *UpdateShortMessage) FillFrom(from interface {
+	GetOut() (value bool)
+	GetMentioned() (value bool)
+	GetMediaUnread() (value bool)
+	GetSilent() (value bool)
+	GetID() (value int)
+	GetUserID() (value int64)
+	GetMessage() (value string)
+	GetPts() (value int)
+	GetPtsCount() (value int)
+	GetDate() (value int)
+	GetFwdFrom() (value MessageFwdHeader, ok bool)
+	GetViaBotID() (value int64, ok bool)
+	GetReplyTo() (value MessageReplyHeaderClass, ok bool)
+	GetEntities() (value []MessageEntityClass, ok bool)
+	GetTTLPeriod() (value int, ok bool)
+}) {
+	u.Out = from.GetOut()
+	u.Mentioned = from.GetMentioned()
+	u.MediaUnread = from.GetMediaUnread()
+	u.Silent = from.GetSilent()
+	u.ID = from.GetID()
+	u.UserID = from.GetUserID()
+	u.Message = from.GetMessage()
+	u.Pts = from.GetPts()
+	u.PtsCount = from.GetPtsCount()
+	u.Date = from.GetDate()
+	if val, ok := from.GetFwdFrom(); ok {
+		u.FwdFrom = val
+	}
+
+	if val, ok := from.GetViaBotID(); ok {
+		u.ViaBotID = val
+	}
+
+	if val, ok := from.GetReplyTo(); ok {
+		u.ReplyTo = val
+	}
+
+	if val, ok := from.GetEntities(); ok {
+		u.Entities = val
+	}
+
+	if val, ok := from.GetTTLPeriod(); ok {
+		u.TTLPeriod = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -768,49 +846,77 @@ func (u *UpdateShortMessage) GetTTLPeriod() (value int, ok bool) {
 	return u.TTLPeriod, true
 }
 
+// MapEntities returns field Entities wrapped in MessageEntityClassArray helper.
+func (u *UpdateShortMessage) MapEntities() (value MessageEntityClassArray, ok bool) {
+	if !u.Flags.Has(7) {
+		return value, false
+	}
+	return MessageEntityClassArray(u.Entities), true
+}
+
 // UpdateShortChatMessage represents TL type `updateShortChatMessage#4d6deea5`.
+// Shortened constructor containing info on one new incoming text message from a chat
+//
+// See https://core.telegram.org/constructor/updateShortChatMessage for reference.
 type UpdateShortChatMessage struct {
-	// Flags field of UpdateShortChatMessage.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Out field of UpdateShortChatMessage.
+	// Whether the message is outgoing
 	Out bool
-	// Mentioned field of UpdateShortChatMessage.
+	// Whether we were mentioned in this message
 	Mentioned bool
-	// MediaUnread field of UpdateShortChatMessage.
+	// Whether the message contains some unread mentions
 	MediaUnread bool
-	// Silent field of UpdateShortChatMessage.
+	// If true, the message is a silent message, no notifications should be triggered
 	Silent bool
-	// ID field of UpdateShortChatMessage.
+	// ID of the message
 	ID int
-	// FromID field of UpdateShortChatMessage.
+	// ID of the sender of the message
 	FromID int64
-	// ChatID field of UpdateShortChatMessage.
+	// ID of the chat where the message was sent
 	ChatID int64
-	// Message field of UpdateShortChatMessage.
+	// Message
 	Message string
-	// Pts field of UpdateShortChatMessage.
+	// PTS¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/updates
 	Pts int
-	// PtsCount field of UpdateShortChatMessage.
+	// PTS count¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/updates
 	PtsCount int
-	// Date field of UpdateShortChatMessage.
+	// date¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/updates
 	Date int
-	// FwdFrom field of UpdateShortChatMessage.
+	// Info about a forwarded message
 	//
 	// Use SetFwdFrom and GetFwdFrom helpers.
 	FwdFrom MessageFwdHeader
-	// ViaBotID field of UpdateShortChatMessage.
+	// Info about the inline bot used to generate this message
 	//
 	// Use SetViaBotID and GetViaBotID helpers.
 	ViaBotID int64
-	// ReplyTo field of UpdateShortChatMessage.
+	// Reply (thread) information
 	//
 	// Use SetReplyTo and GetReplyTo helpers.
 	ReplyTo MessageReplyHeaderClass
-	// Entities field of UpdateShortChatMessage.
+	// Entities¹ for styled text
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities
 	//
 	// Use SetEntities and GetEntities helpers.
 	Entities []MessageEntityClass
-	// TTLPeriod field of UpdateShortChatMessage.
+	// Time To Live of the message, once updateShortChatMessage.date+updateShortChatMessage
+	// ttl_period === time(), the message will be deleted on the server, and must be deleted
+	// locally as well.
 	//
 	// Use SetTTLPeriod and GetTTLPeriod helpers.
 	TTLPeriod int
@@ -898,6 +1004,58 @@ func (u *UpdateShortChatMessage) String() string {
 	}
 	type Alias UpdateShortChatMessage
 	return fmt.Sprintf("UpdateShortChatMessage%+v", Alias(*u))
+}
+
+// FillFrom fills UpdateShortChatMessage from given interface.
+func (u *UpdateShortChatMessage) FillFrom(from interface {
+	GetOut() (value bool)
+	GetMentioned() (value bool)
+	GetMediaUnread() (value bool)
+	GetSilent() (value bool)
+	GetID() (value int)
+	GetFromID() (value int64)
+	GetChatID() (value int64)
+	GetMessage() (value string)
+	GetPts() (value int)
+	GetPtsCount() (value int)
+	GetDate() (value int)
+	GetFwdFrom() (value MessageFwdHeader, ok bool)
+	GetViaBotID() (value int64, ok bool)
+	GetReplyTo() (value MessageReplyHeaderClass, ok bool)
+	GetEntities() (value []MessageEntityClass, ok bool)
+	GetTTLPeriod() (value int, ok bool)
+}) {
+	u.Out = from.GetOut()
+	u.Mentioned = from.GetMentioned()
+	u.MediaUnread = from.GetMediaUnread()
+	u.Silent = from.GetSilent()
+	u.ID = from.GetID()
+	u.FromID = from.GetFromID()
+	u.ChatID = from.GetChatID()
+	u.Message = from.GetMessage()
+	u.Pts = from.GetPts()
+	u.PtsCount = from.GetPtsCount()
+	u.Date = from.GetDate()
+	if val, ok := from.GetFwdFrom(); ok {
+		u.FwdFrom = val
+	}
+
+	if val, ok := from.GetViaBotID(); ok {
+		u.ViaBotID = val
+	}
+
+	if val, ok := from.GetReplyTo(); ok {
+		u.ReplyTo = val
+	}
+
+	if val, ok := from.GetEntities(); ok {
+		u.Entities = val
+	}
+
+	if val, ok := from.GetTTLPeriod(); ok {
+		u.TTLPeriod = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -1431,11 +1589,22 @@ func (u *UpdateShortChatMessage) GetTTLPeriod() (value int, ok bool) {
 	return u.TTLPeriod, true
 }
 
+// MapEntities returns field Entities wrapped in MessageEntityClassArray helper.
+func (u *UpdateShortChatMessage) MapEntities() (value MessageEntityClassArray, ok bool) {
+	if !u.Flags.Has(7) {
+		return value, false
+	}
+	return MessageEntityClassArray(u.Entities), true
+}
+
 // UpdateShort represents TL type `updateShort#78d4dec1`.
+// Shortened constructor containing info on one update not requiring auxiliary data
+//
+// See https://core.telegram.org/constructor/updateShort for reference.
 type UpdateShort struct {
-	// Update field of UpdateShort.
+	// Update
 	Update UpdateClass
-	// Date field of UpdateShort.
+	// Date of event
 	Date int
 }
 
@@ -1476,6 +1645,15 @@ func (u *UpdateShort) String() string {
 	}
 	type Alias UpdateShort
 	return fmt.Sprintf("UpdateShort%+v", Alias(*u))
+}
+
+// FillFrom fills UpdateShort from given interface.
+func (u *UpdateShort) FillFrom(from interface {
+	GetUpdate() (value UpdateClass)
+	GetDate() (value int)
+}) {
+	u.Update = from.GetUpdate()
+	u.Date = from.GetDate()
 }
 
 // TypeID returns type id in TL schema.
@@ -1587,18 +1765,21 @@ func (u *UpdateShort) GetDate() (value int) {
 }
 
 // UpdatesCombined represents TL type `updatesCombined#725b04c3`.
+// Constructor for a group of updates.
+//
+// See https://core.telegram.org/constructor/updatesCombined for reference.
 type UpdatesCombined struct {
-	// Updates field of UpdatesCombined.
+	// List of updates
 	Updates []UpdateClass
-	// Users field of UpdatesCombined.
+	// List of users mentioned in updates
 	Users []UserClass
-	// Chats field of UpdatesCombined.
+	// List of chats mentioned in updates
 	Chats []ChatClass
-	// Date field of UpdatesCombined.
+	// Current date
 	Date int
-	// SeqStart field of UpdatesCombined.
+	// Value seq for the earliest update in a group
 	SeqStart int
-	// Seq field of UpdatesCombined.
+	// Value seq for the latest update in a group
 	Seq int
 }
 
@@ -1651,6 +1832,23 @@ func (u *UpdatesCombined) String() string {
 	}
 	type Alias UpdatesCombined
 	return fmt.Sprintf("UpdatesCombined%+v", Alias(*u))
+}
+
+// FillFrom fills UpdatesCombined from given interface.
+func (u *UpdatesCombined) FillFrom(from interface {
+	GetUpdates() (value []UpdateClass)
+	GetUsers() (value []UserClass)
+	GetChats() (value []ChatClass)
+	GetDate() (value int)
+	GetSeqStart() (value int)
+	GetSeq() (value int)
+}) {
+	u.Updates = from.GetUpdates()
+	u.Users = from.GetUsers()
+	u.Chats = from.GetChats()
+	u.Date = from.GetDate()
+	u.SeqStart = from.GetSeqStart()
+	u.Seq = from.GetSeq()
 }
 
 // TypeID returns type id in TL schema.
@@ -1890,7 +2088,24 @@ func (u *UpdatesCombined) GetSeq() (value int) {
 	return u.Seq
 }
 
+// MapUpdates returns field Updates wrapped in UpdateClassArray helper.
+func (u *UpdatesCombined) MapUpdates() (value UpdateClassArray) {
+	return UpdateClassArray(u.Updates)
+}
+
+// MapUsers returns field Users wrapped in UserClassArray helper.
+func (u *UpdatesCombined) MapUsers() (value UserClassArray) {
+	return UserClassArray(u.Users)
+}
+
+// MapChats returns field Chats wrapped in ChatClassArray helper.
+func (u *UpdatesCombined) MapChats() (value ChatClassArray) {
+	return ChatClassArray(u.Chats)
+}
+
 // Updates represents TL type `updates#74ae4240`.
+//
+// See https://core.telegram.org/constructor/updates for reference.
 type Updates struct {
 	// Updates field of Updates.
 	Updates []UpdateClass
@@ -1950,6 +2165,21 @@ func (u *Updates) String() string {
 	}
 	type Alias Updates
 	return fmt.Sprintf("Updates%+v", Alias(*u))
+}
+
+// FillFrom fills Updates from given interface.
+func (u *Updates) FillFrom(from interface {
+	GetUpdates() (value []UpdateClass)
+	GetUsers() (value []UserClass)
+	GetChats() (value []ChatClass)
+	GetDate() (value int)
+	GetSeq() (value int)
+}) {
+	u.Updates = from.GetUpdates()
+	u.Users = from.GetUsers()
+	u.Chats = from.GetChats()
+	u.Date = from.GetDate()
+	u.Seq = from.GetSeq()
 }
 
 // TypeID returns type id in TL schema.
@@ -2169,29 +2399,64 @@ func (u *Updates) GetSeq() (value int) {
 	return u.Seq
 }
 
+// MapUpdates returns field Updates wrapped in UpdateClassArray helper.
+func (u *Updates) MapUpdates() (value UpdateClassArray) {
+	return UpdateClassArray(u.Updates)
+}
+
+// MapUsers returns field Users wrapped in UserClassArray helper.
+func (u *Updates) MapUsers() (value UserClassArray) {
+	return UserClassArray(u.Users)
+}
+
+// MapChats returns field Chats wrapped in ChatClassArray helper.
+func (u *Updates) MapChats() (value ChatClassArray) {
+	return ChatClassArray(u.Chats)
+}
+
 // UpdateShortSentMessage represents TL type `updateShortSentMessage#9015e101`.
+// Shortened constructor containing info on one outgoing message to a contact (the
+// destination chat has to be extracted from the method call that returned this object).
+//
+// See https://core.telegram.org/constructor/updateShortSentMessage for reference.
 type UpdateShortSentMessage struct {
-	// Flags field of UpdateShortSentMessage.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Out field of UpdateShortSentMessage.
+	// Whether the message is outgoing
 	Out bool
-	// ID field of UpdateShortSentMessage.
+	// ID of the sent message
 	ID int
-	// Pts field of UpdateShortSentMessage.
+	// PTS¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/updates
 	Pts int
-	// PtsCount field of UpdateShortSentMessage.
+	// PTS count¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/updates
 	PtsCount int
-	// Date field of UpdateShortSentMessage.
+	// date¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/updates
 	Date int
-	// Media field of UpdateShortSentMessage.
+	// Attached media
 	//
 	// Use SetMedia and GetMedia helpers.
 	Media MessageMediaClass
-	// Entities field of UpdateShortSentMessage.
+	// Entities¹ for styled text
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities
 	//
 	// Use SetEntities and GetEntities helpers.
 	Entities []MessageEntityClass
-	// TTLPeriod field of UpdateShortSentMessage.
+	// Time To Live of the message, once message.date+message.ttl_period === time(), the
+	// message will be deleted on the server, and must be deleted locally as well.
 	//
 	// Use SetTTLPeriod and GetTTLPeriod helpers.
 	TTLPeriod int
@@ -2255,6 +2520,36 @@ func (u *UpdateShortSentMessage) String() string {
 	}
 	type Alias UpdateShortSentMessage
 	return fmt.Sprintf("UpdateShortSentMessage%+v", Alias(*u))
+}
+
+// FillFrom fills UpdateShortSentMessage from given interface.
+func (u *UpdateShortSentMessage) FillFrom(from interface {
+	GetOut() (value bool)
+	GetID() (value int)
+	GetPts() (value int)
+	GetPtsCount() (value int)
+	GetDate() (value int)
+	GetMedia() (value MessageMediaClass, ok bool)
+	GetEntities() (value []MessageEntityClass, ok bool)
+	GetTTLPeriod() (value int, ok bool)
+}) {
+	u.Out = from.GetOut()
+	u.ID = from.GetID()
+	u.Pts = from.GetPts()
+	u.PtsCount = from.GetPtsCount()
+	u.Date = from.GetDate()
+	if val, ok := from.GetMedia(); ok {
+		u.Media = val
+	}
+
+	if val, ok := from.GetEntities(); ok {
+		u.Entities = val
+	}
+
+	if val, ok := from.GetTTLPeriod(); ok {
+		u.TTLPeriod = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -2572,10 +2867,20 @@ func (u *UpdateShortSentMessage) GetTTLPeriod() (value int, ok bool) {
 	return u.TTLPeriod, true
 }
 
+// MapEntities returns field Entities wrapped in MessageEntityClassArray helper.
+func (u *UpdateShortSentMessage) MapEntities() (value MessageEntityClassArray, ok bool) {
+	if !u.Flags.Has(7) {
+		return value, false
+	}
+	return MessageEntityClassArray(u.Entities), true
+}
+
 // UpdatesClassName is schema name of UpdatesClass.
 const UpdatesClassName = "Updates"
 
 // UpdatesClass represents Updates generic type.
+//
+// See https://core.telegram.org/type/Updates for reference.
 //
 // Constructors:
 //   - [UpdatesTooLong]

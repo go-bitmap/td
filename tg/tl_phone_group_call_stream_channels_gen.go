@@ -32,8 +32,11 @@ var (
 )
 
 // PhoneGroupCallStreamChannels represents TL type `phone.groupCallStreamChannels#d0e482b2`.
+// Info about RTMP streams in a group call or livestream
+//
+// See https://core.telegram.org/constructor/phone.groupCallStreamChannels for reference.
 type PhoneGroupCallStreamChannels struct {
-	// Channels field of PhoneGroupCallStreamChannels.
+	// RTMP streams
 	Channels []GroupCallStreamChannel
 }
 
@@ -66,6 +69,13 @@ func (g *PhoneGroupCallStreamChannels) String() string {
 	}
 	type Alias PhoneGroupCallStreamChannels
 	return fmt.Sprintf("PhoneGroupCallStreamChannels%+v", Alias(*g))
+}
+
+// FillFrom fills PhoneGroupCallStreamChannels from given interface.
+func (g *PhoneGroupCallStreamChannels) FillFrom(from interface {
+	GetChannels() (value []GroupCallStreamChannel)
+}) {
+	g.Channels = from.GetChannels()
 }
 
 // TypeID returns type id in TL schema.

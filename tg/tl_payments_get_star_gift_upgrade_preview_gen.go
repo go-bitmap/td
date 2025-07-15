@@ -32,6 +32,8 @@ var (
 )
 
 // PaymentsGetStarGiftUpgradePreviewRequest represents TL type `payments.getStarGiftUpgradePreview#9c9abcb1`.
+//
+// See https://core.telegram.org/method/payments.getStarGiftUpgradePreview for reference.
 type PaymentsGetStarGiftUpgradePreviewRequest struct {
 	// GiftID field of PaymentsGetStarGiftUpgradePreviewRequest.
 	GiftID int64
@@ -66,6 +68,13 @@ func (g *PaymentsGetStarGiftUpgradePreviewRequest) String() string {
 	}
 	type Alias PaymentsGetStarGiftUpgradePreviewRequest
 	return fmt.Sprintf("PaymentsGetStarGiftUpgradePreviewRequest%+v", Alias(*g))
+}
+
+// FillFrom fills PaymentsGetStarGiftUpgradePreviewRequest from given interface.
+func (g *PaymentsGetStarGiftUpgradePreviewRequest) FillFrom(from interface {
+	GetGiftID() (value int64)
+}) {
+	g.GiftID = from.GetGiftID()
 }
 
 // TypeID returns type id in TL schema.
@@ -152,6 +161,8 @@ func (g *PaymentsGetStarGiftUpgradePreviewRequest) GetGiftID() (value int64) {
 }
 
 // PaymentsGetStarGiftUpgradePreview invokes method payments.getStarGiftUpgradePreview#9c9abcb1 returning error if any.
+//
+// See https://core.telegram.org/method/payments.getStarGiftUpgradePreview for reference.
 func (c *Client) PaymentsGetStarGiftUpgradePreview(ctx context.Context, giftid int64) (*PaymentsStarGiftUpgradePreview, error) {
 	var result PaymentsStarGiftUpgradePreview
 

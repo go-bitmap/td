@@ -32,26 +32,41 @@ var (
 )
 
 // AccountPasswordInputSettings represents TL type `account.passwordInputSettings#c23727c9`.
+// Settings for setting up a new password
+//
+// See https://core.telegram.org/constructor/account.passwordInputSettings for reference.
 type AccountPasswordInputSettings struct {
-	// Flags field of AccountPasswordInputSettings.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// NewAlgo field of AccountPasswordInputSettings.
+	// The SRP algorithm¹ to use
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/srp
 	//
 	// Use SetNewAlgo and GetNewAlgo helpers.
 	NewAlgo PasswordKdfAlgoClass
-	// NewPasswordHash field of AccountPasswordInputSettings.
+	// The computed password hash¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/srp
 	//
 	// Use SetNewPasswordHash and GetNewPasswordHash helpers.
 	NewPasswordHash []byte
-	// Hint field of AccountPasswordInputSettings.
+	// Text hint for the password
 	//
 	// Use SetHint and GetHint helpers.
 	Hint string
-	// Email field of AccountPasswordInputSettings.
+	// Password recovery email
 	//
 	// Use SetEmail and GetEmail helpers.
 	Email string
-	// NewSecureSettings field of AccountPasswordInputSettings.
+	// Telegram passport¹ settings
+	//
+	// Links:
+	//  1) https://core.telegram.org/passport
 	//
 	// Use SetNewSecureSettings and GetNewSecureSettings helpers.
 	NewSecureSettings SecureSecretSettings
@@ -101,6 +116,36 @@ func (p *AccountPasswordInputSettings) String() string {
 	}
 	type Alias AccountPasswordInputSettings
 	return fmt.Sprintf("AccountPasswordInputSettings%+v", Alias(*p))
+}
+
+// FillFrom fills AccountPasswordInputSettings from given interface.
+func (p *AccountPasswordInputSettings) FillFrom(from interface {
+	GetNewAlgo() (value PasswordKdfAlgoClass, ok bool)
+	GetNewPasswordHash() (value []byte, ok bool)
+	GetHint() (value string, ok bool)
+	GetEmail() (value string, ok bool)
+	GetNewSecureSettings() (value SecureSecretSettings, ok bool)
+}) {
+	if val, ok := from.GetNewAlgo(); ok {
+		p.NewAlgo = val
+	}
+
+	if val, ok := from.GetNewPasswordHash(); ok {
+		p.NewPasswordHash = val
+	}
+
+	if val, ok := from.GetHint(); ok {
+		p.Hint = val
+	}
+
+	if val, ok := from.GetEmail(); ok {
+		p.Email = val
+	}
+
+	if val, ok := from.GetNewSecureSettings(); ok {
+		p.NewSecureSettings = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.

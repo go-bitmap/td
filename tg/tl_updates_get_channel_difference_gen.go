@@ -32,18 +32,29 @@ var (
 )
 
 // UpdatesGetChannelDifferenceRequest represents TL type `updates.getChannelDifference#3173d78`.
+// Returns the difference between the current state of updates of a certain channel and
+// transmitted.
+//
+// See https://core.telegram.org/method/updates.getChannelDifference for reference.
 type UpdatesGetChannelDifferenceRequest struct {
-	// Flags field of UpdatesGetChannelDifferenceRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Force field of UpdatesGetChannelDifferenceRequest.
+	// Set to true to skip some possibly unneeded updates and reduce server-side load
 	Force bool
-	// Channel field of UpdatesGetChannelDifferenceRequest.
+	// The channel
 	Channel InputChannelClass
-	// Filter field of UpdatesGetChannelDifferenceRequest.
+	// Messsage filter
 	Filter ChannelMessagesFilterClass
-	// Pts field of UpdatesGetChannelDifferenceRequest.
+	// Persistent timestamp (see updates¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/updates
 	Pts int
-	// Limit field of UpdatesGetChannelDifferenceRequest.
+	// How many updates to fetch, max 100000Ordinary (non-bot) users are supposed to pass
+	// 10-100
 	Limit int
 }
 
@@ -91,6 +102,21 @@ func (g *UpdatesGetChannelDifferenceRequest) String() string {
 	}
 	type Alias UpdatesGetChannelDifferenceRequest
 	return fmt.Sprintf("UpdatesGetChannelDifferenceRequest%+v", Alias(*g))
+}
+
+// FillFrom fills UpdatesGetChannelDifferenceRequest from given interface.
+func (g *UpdatesGetChannelDifferenceRequest) FillFrom(from interface {
+	GetForce() (value bool)
+	GetChannel() (value InputChannelClass)
+	GetFilter() (value ChannelMessagesFilterClass)
+	GetPts() (value int)
+	GetLimit() (value int)
+}) {
+	g.Force = from.GetForce()
+	g.Channel = from.GetChannel()
+	g.Filter = from.GetFilter()
+	g.Pts = from.GetPts()
+	g.Limit = from.GetLimit()
 }
 
 // TypeID returns type id in TL schema.
@@ -287,7 +313,37 @@ func (g *UpdatesGetChannelDifferenceRequest) GetLimit() (value int) {
 	return g.Limit
 }
 
+// GetChannelAsNotEmpty returns mapped value of Channel field.
+func (g *UpdatesGetChannelDifferenceRequest) GetChannelAsNotEmpty() (NotEmptyInputChannel, bool) {
+	return g.Channel.AsNotEmpty()
+}
+
+// GetFilterAsNotEmpty returns mapped value of Filter field.
+func (g *UpdatesGetChannelDifferenceRequest) GetFilterAsNotEmpty() (*ChannelMessagesFilter, bool) {
+	return g.Filter.AsNotEmpty()
+}
+
 // UpdatesGetChannelDifference invokes method updates.getChannelDifference#3173d78 returning error if any.
+// Returns the difference between the current state of updates of a certain channel and
+// transmitted.
+//
+// Possible errors:
+//
+//	400 CHANNEL_INVALID: The provided channel is invalid.
+//	406 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
+//	403 CHANNEL_PUBLIC_GROUP_NA: channel/supergroup not available.
+//	403 CHAT_WRITE_FORBIDDEN: You can't write in this chat.
+//	400 FROM_MESSAGE_BOT_DISABLED: Bots can't use fromMessage min constructors.
+//	400 MSG_ID_INVALID: Invalid message ID provided.
+//	400 PERSISTENT_TIMESTAMP_EMPTY: Persistent timestamp empty.
+//	400 PERSISTENT_TIMESTAMP_INVALID: Persistent timestamp invalid.
+//	500 PERSISTENT_TIMESTAMP_OUTDATED: Channel internal replication issues, try again later (treat this like an RPC_CALL_FAIL).
+//	400 PINNED_DIALOGS_TOO_MUCH: Too many pinned dialogs.
+//	400 RANGES_INVALID: Invalid range provided.
+//	400 USER_BANNED_IN_CHANNEL: You're banned from sending messages in supergroups/channels.
+//
+// See https://core.telegram.org/method/updates.getChannelDifference for reference.
+// Can be used by bots.
 func (c *Client) UpdatesGetChannelDifference(ctx context.Context, request *UpdatesGetChannelDifferenceRequest) (UpdatesChannelDifferenceClass, error) {
 	var result UpdatesChannelDifferenceBox
 

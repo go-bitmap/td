@@ -32,18 +32,36 @@ var (
 )
 
 // BotBusinessConnection represents TL type `botBusinessConnection#8f34b2f5`.
+// Contains info about a bot business connection¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/business#connected-bots
+//
+// See https://core.telegram.org/constructor/botBusinessConnection for reference.
 type BotBusinessConnection struct {
-	// Flags field of BotBusinessConnection.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Disabled field of BotBusinessConnection.
+	// Whether this business connection is currently disabled
 	Disabled bool
-	// ConnectionID field of BotBusinessConnection.
+	// Business connection ID, used to identify messages coming from the connection and to
+	// reply to them as specified here »¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/business#connected-bots
 	ConnectionID string
-	// UserID field of BotBusinessConnection.
+	// ID of the user that the bot is connected to via this connection.
 	UserID int64
-	// DCID field of BotBusinessConnection.
+	// ID of the datacenter where to send queries wrapped in a invokeWithBusinessConnection¹
+	// as specified here »².
+	//
+	// Links:
+	//  1) https://core.telegram.org/method/invokeWithBusinessConnection
+	//  2) https://core.telegram.org/api/business#connected-bots
 	DCID int
-	// Date field of BotBusinessConnection.
+	// When was the connection created.
 	Date int
 	// Rights field of BotBusinessConnection.
 	//
@@ -98,6 +116,26 @@ func (b *BotBusinessConnection) String() string {
 	}
 	type Alias BotBusinessConnection
 	return fmt.Sprintf("BotBusinessConnection%+v", Alias(*b))
+}
+
+// FillFrom fills BotBusinessConnection from given interface.
+func (b *BotBusinessConnection) FillFrom(from interface {
+	GetDisabled() (value bool)
+	GetConnectionID() (value string)
+	GetUserID() (value int64)
+	GetDCID() (value int)
+	GetDate() (value int)
+	GetRights() (value BusinessBotRights, ok bool)
+}) {
+	b.Disabled = from.GetDisabled()
+	b.ConnectionID = from.GetConnectionID()
+	b.UserID = from.GetUserID()
+	b.DCID = from.GetDCID()
+	b.Date = from.GetDate()
+	if val, ok := from.GetRights(); ok {
+		b.Rights = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.

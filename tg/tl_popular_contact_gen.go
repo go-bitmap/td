@@ -32,10 +32,13 @@ var (
 )
 
 // PopularContact represents TL type `popularContact#5ce14175`.
+// Popular contact
+//
+// See https://core.telegram.org/constructor/popularContact for reference.
 type PopularContact struct {
-	// ClientID field of PopularContact.
+	// Contact identifier
 	ClientID int64
-	// Importers field of PopularContact.
+	// How many people imported this contact
 	Importers int
 }
 
@@ -71,6 +74,15 @@ func (p *PopularContact) String() string {
 	}
 	type Alias PopularContact
 	return fmt.Sprintf("PopularContact%+v", Alias(*p))
+}
+
+// FillFrom fills PopularContact from given interface.
+func (p *PopularContact) FillFrom(from interface {
+	GetClientID() (value int64)
+	GetImporters() (value int)
+}) {
+	p.ClientID = from.GetClientID()
+	p.Importers = from.GetImporters()
 }
 
 // TypeID returns type id in TL schema.

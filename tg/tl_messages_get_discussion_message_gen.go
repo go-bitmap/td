@@ -32,10 +32,21 @@ var (
 )
 
 // MessagesGetDiscussionMessageRequest represents TL type `messages.getDiscussionMessage#446972fd`.
+// Get discussion message¹ from the associated discussion group² of a channel to show
+// it on top of the comment section, without actually joining the group
+//
+// Links:
+//  1. https://core.telegram.org/api/threads
+//  2. https://core.telegram.org/api/discussion
+//
+// See https://core.telegram.org/method/messages.getDiscussionMessage for reference.
 type MessagesGetDiscussionMessageRequest struct {
-	// Peer field of MessagesGetDiscussionMessageRequest.
+	// Channel ID¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/channel
 	Peer InputPeerClass
-	// MsgID field of MessagesGetDiscussionMessageRequest.
+	// Message ID
 	MsgID int
 }
 
@@ -71,6 +82,15 @@ func (g *MessagesGetDiscussionMessageRequest) String() string {
 	}
 	type Alias MessagesGetDiscussionMessageRequest
 	return fmt.Sprintf("MessagesGetDiscussionMessageRequest%+v", Alias(*g))
+}
+
+// FillFrom fills MessagesGetDiscussionMessageRequest from given interface.
+func (g *MessagesGetDiscussionMessageRequest) FillFrom(from interface {
+	GetPeer() (value InputPeerClass)
+	GetMsgID() (value int)
+}) {
+	g.Peer = from.GetPeer()
+	g.MsgID = from.GetMsgID()
 }
 
 // TypeID returns type id in TL schema.
@@ -182,6 +202,22 @@ func (g *MessagesGetDiscussionMessageRequest) GetMsgID() (value int) {
 }
 
 // MessagesGetDiscussionMessage invokes method messages.getDiscussionMessage#446972fd returning error if any.
+// Get discussion message¹ from the associated discussion group² of a channel to show
+// it on top of the comment section, without actually joining the group
+//
+// Links:
+//  1. https://core.telegram.org/api/threads
+//  2. https://core.telegram.org/api/discussion
+//
+// Possible errors:
+//
+//	400 CHANNEL_INVALID: The provided channel is invalid.
+//	400 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
+//	400 MSG_ID_INVALID: Invalid message ID provided.
+//	400 PEER_ID_INVALID: The provided peer id is invalid.
+//	400 TOPIC_ID_INVALID: The specified topic ID is invalid.
+//
+// See https://core.telegram.org/method/messages.getDiscussionMessage for reference.
 func (c *Client) MessagesGetDiscussionMessage(ctx context.Context, request *MessagesGetDiscussionMessageRequest) (*MessagesDiscussionMessage, error) {
 	var result MessagesDiscussionMessage
 

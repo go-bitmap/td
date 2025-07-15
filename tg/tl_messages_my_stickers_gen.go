@@ -32,10 +32,16 @@ var (
 )
 
 // MessagesMyStickers represents TL type `messages.myStickers#faff629d`.
+// The list of stickersets owned by the current account »¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/stickers
+//
+// See https://core.telegram.org/constructor/messages.myStickers for reference.
 type MessagesMyStickers struct {
-	// Count field of MessagesMyStickers.
+	// Total number of owned stickersets.
 	Count int
-	// Sets field of MessagesMyStickers.
+	// Stickersets
 	Sets []StickerSetCoveredClass
 }
 
@@ -71,6 +77,15 @@ func (m *MessagesMyStickers) String() string {
 	}
 	type Alias MessagesMyStickers
 	return fmt.Sprintf("MessagesMyStickers%+v", Alias(*m))
+}
+
+// FillFrom fills MessagesMyStickers from given interface.
+func (m *MessagesMyStickers) FillFrom(from interface {
+	GetCount() (value int)
+	GetSets() (value []StickerSetCoveredClass)
+}) {
+	m.Count = from.GetCount()
+	m.Sets = from.GetSets()
 }
 
 // TypeID returns type id in TL schema.
@@ -192,4 +207,9 @@ func (m *MessagesMyStickers) GetSets() (value []StickerSetCoveredClass) {
 		return
 	}
 	return m.Sets
+}
+
+// MapSets returns field Sets wrapped in StickerSetCoveredClassArray helper.
+func (m *MessagesMyStickers) MapSets() (value StickerSetCoveredClassArray) {
+	return StickerSetCoveredClassArray(m.Sets)
 }

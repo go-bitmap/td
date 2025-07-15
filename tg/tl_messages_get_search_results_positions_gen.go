@@ -32,20 +32,43 @@ var (
 )
 
 // MessagesGetSearchResultsPositionsRequest represents TL type `messages.getSearchResultsPositions#9c7f2f10`.
+// Returns sparse positions of messages of the specified type in the chat to be used for
+// shared media scroll implementation.
+// Returns the results in reverse chronological order (i.e., in order of decreasing
+// message_id).
+//
+// See https://core.telegram.org/method/messages.getSearchResultsPositions for reference.
 type MessagesGetSearchResultsPositionsRequest struct {
-	// Flags field of MessagesGetSearchResultsPositionsRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Peer field of MessagesGetSearchResultsPositionsRequest.
+	// Peer where to search
 	Peer InputPeerClass
-	// SavedPeerID field of MessagesGetSearchResultsPositionsRequest.
+	// Search within the saved message dialog »¹ with this ID.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/saved-messages
 	//
 	// Use SetSavedPeerID and GetSavedPeerID helpers.
 	SavedPeerID InputPeerClass
-	// Filter field of MessagesGetSearchResultsPositionsRequest.
+	// Message filter, inputMessagesFilterEmpty¹, inputMessagesFilterMyMentions² filters
+	// are not supported by this method.
+	//
+	// Links:
+	//  1) https://core.telegram.org/constructor/inputMessagesFilterEmpty
+	//  2) https://core.telegram.org/constructor/inputMessagesFilterMyMentions
 	Filter MessagesFilterClass
-	// OffsetID field of MessagesGetSearchResultsPositionsRequest.
+	// Offsets for pagination, for more info click here¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets
 	OffsetID int
-	// Limit field of MessagesGetSearchResultsPositionsRequest.
+	// Maximum number of results to return, see pagination¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets
 	Limit int
 }
 
@@ -93,6 +116,24 @@ func (g *MessagesGetSearchResultsPositionsRequest) String() string {
 	}
 	type Alias MessagesGetSearchResultsPositionsRequest
 	return fmt.Sprintf("MessagesGetSearchResultsPositionsRequest%+v", Alias(*g))
+}
+
+// FillFrom fills MessagesGetSearchResultsPositionsRequest from given interface.
+func (g *MessagesGetSearchResultsPositionsRequest) FillFrom(from interface {
+	GetPeer() (value InputPeerClass)
+	GetSavedPeerID() (value InputPeerClass, ok bool)
+	GetFilter() (value MessagesFilterClass)
+	GetOffsetID() (value int)
+	GetLimit() (value int)
+}) {
+	g.Peer = from.GetPeer()
+	if val, ok := from.GetSavedPeerID(); ok {
+		g.SavedPeerID = val
+	}
+
+	g.Filter = from.GetFilter()
+	g.OffsetID = from.GetOffsetID()
+	g.Limit = from.GetLimit()
 }
 
 // TypeID returns type id in TL schema.
@@ -303,6 +344,16 @@ func (g *MessagesGetSearchResultsPositionsRequest) GetLimit() (value int) {
 }
 
 // MessagesGetSearchResultsPositions invokes method messages.getSearchResultsPositions#9c7f2f10 returning error if any.
+// Returns sparse positions of messages of the specified type in the chat to be used for
+// shared media scroll implementation.
+// Returns the results in reverse chronological order (i.e., in order of decreasing
+// message_id).
+//
+// Possible errors:
+//
+//	400 PEER_ID_INVALID: The provided peer id is invalid.
+//
+// See https://core.telegram.org/method/messages.getSearchResultsPositions for reference.
 func (c *Client) MessagesGetSearchResultsPositions(ctx context.Context, request *MessagesGetSearchResultsPositionsRequest) (*MessagesSearchResultsPositions, error) {
 	var result MessagesSearchResultsPositions
 

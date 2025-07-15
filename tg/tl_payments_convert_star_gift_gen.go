@@ -32,6 +32,21 @@ var (
 )
 
 // PaymentsConvertStarGiftRequest represents TL type `payments.convertStarGift#74bf076b`.
+// Convert a received gift »¹ into Telegram Stars: this will permanently destroy the
+// gift, converting it into starGift².convert_stars Telegram Stars³, added to the
+// user's balance.
+// Note that starGift¹.convert_stars will be less than the buying price (starGift²
+// stars) of the gift if it was originally bought using Telegram Stars bought a long time
+// ago.
+//
+// Links:
+//  1. https://core.telegram.org/api/gifts
+//  2. https://core.telegram.org/constructor/starGift
+//  3. https://core.telegram.org/api/stars
+//  4. https://core.telegram.org/constructor/starGift
+//  5. https://core.telegram.org/constructor/starGift
+//
+// See https://core.telegram.org/method/payments.convertStarGift for reference.
 type PaymentsConvertStarGiftRequest struct {
 	// Stargift field of PaymentsConvertStarGiftRequest.
 	Stargift InputSavedStarGiftClass
@@ -66,6 +81,13 @@ func (c *PaymentsConvertStarGiftRequest) String() string {
 	}
 	type Alias PaymentsConvertStarGiftRequest
 	return fmt.Sprintf("PaymentsConvertStarGiftRequest%+v", Alias(*c))
+}
+
+// FillFrom fills PaymentsConvertStarGiftRequest from given interface.
+func (c *PaymentsConvertStarGiftRequest) FillFrom(from interface {
+	GetStargift() (value InputSavedStarGiftClass)
+}) {
+	c.Stargift = from.GetStargift()
 }
 
 // TypeID returns type id in TL schema.
@@ -157,6 +179,25 @@ func (c *PaymentsConvertStarGiftRequest) GetStargift() (value InputSavedStarGift
 }
 
 // PaymentsConvertStarGift invokes method payments.convertStarGift#74bf076b returning error if any.
+// Convert a received gift »¹ into Telegram Stars: this will permanently destroy the
+// gift, converting it into starGift².convert_stars Telegram Stars³, added to the
+// user's balance.
+// Note that starGift¹.convert_stars will be less than the buying price (starGift²
+// stars) of the gift if it was originally bought using Telegram Stars bought a long time
+// ago.
+//
+// Links:
+//  1. https://core.telegram.org/api/gifts
+//  2. https://core.telegram.org/constructor/starGift
+//  3. https://core.telegram.org/api/stars
+//  4. https://core.telegram.org/constructor/starGift
+//  5. https://core.telegram.org/constructor/starGift
+//
+// Possible errors:
+//
+//	400 USER_ID_INVALID: The provided user ID is invalid.
+//
+// See https://core.telegram.org/method/payments.convertStarGift for reference.
 func (c *Client) PaymentsConvertStarGift(ctx context.Context, stargift InputSavedStarGiftClass) (bool, error) {
 	var result BoolBox
 

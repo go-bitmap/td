@@ -68,6 +68,13 @@ func (vec *BotPreviewMediaVector) String() string {
 	return fmt.Sprintf("BotPreviewMediaVector%+v", Alias(*vec))
 }
 
+// FillFrom fills BotPreviewMediaVector from given interface.
+func (vec *BotPreviewMediaVector) FillFrom(from interface {
+	GetElems() (value []BotPreviewMedia)
+}) {
+	vec.Elems = from.GetElems()
+}
+
 // TypeID returns type id in TL schema.
 //
 // See https://core.telegram.org/mtproto/TL-tl#remarks.

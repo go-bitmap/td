@@ -32,10 +32,16 @@ var (
 )
 
 // UploadReuploadCDNFileRequest represents TL type `upload.reuploadCdnFile#9b2754a8`.
+// Request a reupload of a certain file to a CDN DC¹.
+//
+// Links:
+//  1. https://core.telegram.org/cdn
+//
+// See https://core.telegram.org/method/upload.reuploadCdnFile for reference.
 type UploadReuploadCDNFileRequest struct {
-	// FileToken field of UploadReuploadCDNFileRequest.
+	// File token
 	FileToken []byte
-	// RequestToken field of UploadReuploadCDNFileRequest.
+	// Request token
 	RequestToken []byte
 }
 
@@ -71,6 +77,15 @@ func (r *UploadReuploadCDNFileRequest) String() string {
 	}
 	type Alias UploadReuploadCDNFileRequest
 	return fmt.Sprintf("UploadReuploadCDNFileRequest%+v", Alias(*r))
+}
+
+// FillFrom fills UploadReuploadCDNFileRequest from given interface.
+func (r *UploadReuploadCDNFileRequest) FillFrom(from interface {
+	GetFileToken() (value []byte)
+	GetRequestToken() (value []byte)
+}) {
+	r.FileToken = from.GetFileToken()
+	r.RequestToken = from.GetRequestToken()
 }
 
 // TypeID returns type id in TL schema.
@@ -177,6 +192,22 @@ func (r *UploadReuploadCDNFileRequest) GetRequestToken() (value []byte) {
 }
 
 // UploadReuploadCDNFile invokes method upload.reuploadCdnFile#9b2754a8 returning error if any.
+// Request a reupload of a certain file to a CDN DC¹.
+//
+// Links:
+//  1. https://core.telegram.org/cdn
+//
+// Possible errors:
+//
+//	400 CDN_METHOD_INVALID: You can't call this method in a CDN DC.
+//	500 CDN_UPLOAD_TIMEOUT: A server-side timeout occurred while reuploading the file to the CDN DC.
+//	400 FILE_TOKEN_INVALID: The master DC did not accept the file_token (e.g., the token has expired). Continue downloading the file from the master DC using upload.getFile.
+//	400 LOCATION_INVALID: The provided location is invalid.
+//	400 REQUEST_TOKEN_INVALID: The master DC did not accept the request_token from the CDN DC. Continue downloading the file from the master DC using upload.getFile.
+//	400 RSA_DECRYPT_FAILED: Internal RSA decryption failed.
+//
+// See https://core.telegram.org/method/upload.reuploadCdnFile for reference.
+// Can be used by bots.
 func (c *Client) UploadReuploadCDNFile(ctx context.Context, request *UploadReuploadCDNFileRequest) ([]FileHash, error) {
 	var result FileHashVector
 

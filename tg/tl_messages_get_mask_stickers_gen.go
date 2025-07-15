@@ -32,8 +32,14 @@ var (
 )
 
 // MessagesGetMaskStickersRequest represents TL type `messages.getMaskStickers#640f82b8`.
+// Get installed mask stickers
+//
+// See https://core.telegram.org/method/messages.getMaskStickers for reference.
 type MessagesGetMaskStickersRequest struct {
-	// Hash field of MessagesGetMaskStickersRequest.
+	// Hash used for caching, for more info click here¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets#hash-generation
 	Hash int64
 }
 
@@ -66,6 +72,13 @@ func (g *MessagesGetMaskStickersRequest) String() string {
 	}
 	type Alias MessagesGetMaskStickersRequest
 	return fmt.Sprintf("MessagesGetMaskStickersRequest%+v", Alias(*g))
+}
+
+// FillFrom fills MessagesGetMaskStickersRequest from given interface.
+func (g *MessagesGetMaskStickersRequest) FillFrom(from interface {
+	GetHash() (value int64)
+}) {
+	g.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -152,6 +165,9 @@ func (g *MessagesGetMaskStickersRequest) GetHash() (value int64) {
 }
 
 // MessagesGetMaskStickers invokes method messages.getMaskStickers#640f82b8 returning error if any.
+// Get installed mask stickers
+//
+// See https://core.telegram.org/method/messages.getMaskStickers for reference.
 func (c *Client) MessagesGetMaskStickers(ctx context.Context, hash int64) (MessagesAllStickersClass, error) {
 	var result MessagesAllStickersBox
 

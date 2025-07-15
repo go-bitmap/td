@@ -32,10 +32,22 @@ var (
 )
 
 // DialogFilterSuggested represents TL type `dialogFilterSuggested#77744d4a`.
+// Suggested folders¹
+//
+// Links:
+//  1. https://core.telegram.org/api/folders
+//
+// See https://core.telegram.org/constructor/dialogFilterSuggested for reference.
 type DialogFilterSuggested struct {
-	// Filter field of DialogFilterSuggested.
+	// Folder info¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/folders
 	Filter DialogFilterClass
-	// Description field of DialogFilterSuggested.
+	// Folder¹ description
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/folders
 	Description string
 }
 
@@ -71,6 +83,15 @@ func (d *DialogFilterSuggested) String() string {
 	}
 	type Alias DialogFilterSuggested
 	return fmt.Sprintf("DialogFilterSuggested%+v", Alias(*d))
+}
+
+// FillFrom fills DialogFilterSuggested from given interface.
+func (d *DialogFilterSuggested) FillFrom(from interface {
+	GetFilter() (value DialogFilterClass)
+	GetDescription() (value string)
+}) {
+	d.Filter = from.GetFilter()
+	d.Description = from.GetDescription()
 }
 
 // TypeID returns type id in TL schema.

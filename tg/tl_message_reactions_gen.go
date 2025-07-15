@@ -32,22 +32,49 @@ var (
 )
 
 // MessageReactions represents TL type `messageReactions#a339f0b`.
+// Message reactions »¹
+//
+// Links:
+//  1. https://core.telegram.org/api/reactions
+//
+// See https://core.telegram.org/constructor/messageReactions for reference.
 type MessageReactions struct {
-	// Flags field of MessageReactions.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Min field of MessageReactions.
+	// Similar to min¹ objects, used for message reaction »² constructors that are the
+	// same for all users so they don't have the reactions sent by the current user (you can
+	// use messages.getMessagesReactions³ to get the full reaction info).
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/min
+	//  2) https://core.telegram.org/api/reactions
+	//  3) https://core.telegram.org/method/messages.getMessagesReactions
 	Min bool
-	// CanSeeList field of MessageReactions.
+	// Whether messages.getMessageReactionsList¹ can be used to see how each specific peer
+	// reacted to the message
+	//
+	// Links:
+	//  1) https://core.telegram.org/method/messages.getMessageReactionsList
 	CanSeeList bool
-	// ReactionsAsTags field of MessageReactions.
+	// If set or if there are no reactions, all present and future reactions should be
+	// treated as message tags, see here » for more info¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/saved-messages#tags
 	ReactionsAsTags bool
-	// Results field of MessageReactions.
+	// Reactions
 	Results []ReactionCount
-	// RecentReactions field of MessageReactions.
+	// List of recent peers and their reactions
 	//
 	// Use SetRecentReactions and GetRecentReactions helpers.
 	RecentReactions []MessagePeerReaction
-	// TopReactors field of MessageReactions.
+	// Paid Telegram Star reactions leaderboard »¹ for this message.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/reactions#paid-reactions
 	//
 	// Use SetTopReactors and GetTopReactors helpers.
 	TopReactors []MessageReactor
@@ -100,6 +127,29 @@ func (m *MessageReactions) String() string {
 	}
 	type Alias MessageReactions
 	return fmt.Sprintf("MessageReactions%+v", Alias(*m))
+}
+
+// FillFrom fills MessageReactions from given interface.
+func (m *MessageReactions) FillFrom(from interface {
+	GetMin() (value bool)
+	GetCanSeeList() (value bool)
+	GetReactionsAsTags() (value bool)
+	GetResults() (value []ReactionCount)
+	GetRecentReactions() (value []MessagePeerReaction, ok bool)
+	GetTopReactors() (value []MessageReactor, ok bool)
+}) {
+	m.Min = from.GetMin()
+	m.CanSeeList = from.GetCanSeeList()
+	m.ReactionsAsTags = from.GetReactionsAsTags()
+	m.Results = from.GetResults()
+	if val, ok := from.GetRecentReactions(); ok {
+		m.RecentReactions = val
+	}
+
+	if val, ok := from.GetTopReactors(); ok {
+		m.TopReactors = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.

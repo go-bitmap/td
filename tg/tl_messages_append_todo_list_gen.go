@@ -32,6 +32,8 @@ var (
 )
 
 // MessagesAppendTodoListRequest represents TL type `messages.appendTodoList#21a61057`.
+//
+// See https://core.telegram.org/method/messages.appendTodoList for reference.
 type MessagesAppendTodoListRequest struct {
 	// Peer field of MessagesAppendTodoListRequest.
 	Peer InputPeerClass
@@ -76,6 +78,17 @@ func (a *MessagesAppendTodoListRequest) String() string {
 	}
 	type Alias MessagesAppendTodoListRequest
 	return fmt.Sprintf("MessagesAppendTodoListRequest%+v", Alias(*a))
+}
+
+// FillFrom fills MessagesAppendTodoListRequest from given interface.
+func (a *MessagesAppendTodoListRequest) FillFrom(from interface {
+	GetPeer() (value InputPeerClass)
+	GetMsgID() (value int)
+	GetList() (value []TodoItem)
+}) {
+	a.Peer = from.GetPeer()
+	a.MsgID = from.GetMsgID()
+	a.List = from.GetList()
 }
 
 // TypeID returns type id in TL schema.
@@ -222,6 +235,8 @@ func (a *MessagesAppendTodoListRequest) GetList() (value []TodoItem) {
 }
 
 // MessagesAppendTodoList invokes method messages.appendTodoList#21a61057 returning error if any.
+//
+// See https://core.telegram.org/method/messages.appendTodoList for reference.
 func (c *Client) MessagesAppendTodoList(ctx context.Context, request *MessagesAppendTodoListRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

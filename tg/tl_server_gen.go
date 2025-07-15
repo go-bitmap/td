@@ -2613,9 +2613,26 @@ func (s *ServerDispatcher) OnAccountGetCollectibleEmojiStatuses(f func(ctx conte
 	s.handlers[AccountGetCollectibleEmojiStatusesRequestTypeID] = handler
 }
 
-func (s *ServerDispatcher) OnAccountAddNoPaidMessagesException(f func(ctx context.Context, request *AccountAddNoPaidMessagesExceptionRequest) (bool, error)) {
+func (s *ServerDispatcher) OnAccountGetPaidMessagesRevenue(f func(ctx context.Context, request *AccountGetPaidMessagesRevenueRequest) (*AccountPaidMessagesRevenue, error)) {
 	handler := func(ctx context.Context, b *bin.Buffer) (bin.Encoder, error) {
-		var request AccountAddNoPaidMessagesExceptionRequest
+		var request AccountGetPaidMessagesRevenueRequest
+		if err := request.Decode(b); err != nil {
+			return nil, err
+		}
+
+		response, err := f(ctx, &request)
+		if err != nil {
+			return nil, err
+		}
+		return response, nil
+	}
+
+	s.handlers[AccountGetPaidMessagesRevenueRequestTypeID] = handler
+}
+
+func (s *ServerDispatcher) OnAccountToggleNoPaidMessagesException(f func(ctx context.Context, request *AccountToggleNoPaidMessagesExceptionRequest) (bool, error)) {
+	handler := func(ctx context.Context, b *bin.Buffer) (bin.Encoder, error) {
+		var request AccountToggleNoPaidMessagesExceptionRequest
 		if err := request.Decode(b); err != nil {
 			return nil, err
 		}
@@ -2631,24 +2648,7 @@ func (s *ServerDispatcher) OnAccountAddNoPaidMessagesException(f func(ctx contex
 		return &BoolBox{Bool: &BoolFalse{}}, nil
 	}
 
-	s.handlers[AccountAddNoPaidMessagesExceptionRequestTypeID] = handler
-}
-
-func (s *ServerDispatcher) OnAccountGetPaidMessagesRevenue(f func(ctx context.Context, userid InputUserClass) (*AccountPaidMessagesRevenue, error)) {
-	handler := func(ctx context.Context, b *bin.Buffer) (bin.Encoder, error) {
-		var request AccountGetPaidMessagesRevenueRequest
-		if err := request.Decode(b); err != nil {
-			return nil, err
-		}
-
-		response, err := f(ctx, request.UserID)
-		if err != nil {
-			return nil, err
-		}
-		return response, nil
-	}
-
-	s.handlers[AccountGetPaidMessagesRevenueRequestTypeID] = handler
+	s.handlers[AccountToggleNoPaidMessagesExceptionRequestTypeID] = handler
 }
 
 func (s *ServerDispatcher) OnUsersGetUsers(f func(ctx context.Context, id []InputUserClass) ([]UserClass, error)) {
@@ -7174,14 +7174,14 @@ func (s *ServerDispatcher) OnMessagesReportSponsoredMessage(f func(ctx context.C
 	s.handlers[MessagesReportSponsoredMessageRequestTypeID] = handler
 }
 
-func (s *ServerDispatcher) OnMessagesGetSponsoredMessages(f func(ctx context.Context, peer InputPeerClass) (MessagesSponsoredMessagesClass, error)) {
+func (s *ServerDispatcher) OnMessagesGetSponsoredMessages(f func(ctx context.Context, request *MessagesGetSponsoredMessagesRequest) (MessagesSponsoredMessagesClass, error)) {
 	handler := func(ctx context.Context, b *bin.Buffer) (bin.Encoder, error) {
 		var request MessagesGetSponsoredMessagesRequest
 		if err := request.Decode(b); err != nil {
 			return nil, err
 		}
 
-		response, err := f(ctx, request.Peer)
+		response, err := f(ctx, &request)
 		if err != nil {
 			return nil, err
 		}
@@ -7299,6 +7299,40 @@ func (s *ServerDispatcher) OnMessagesReadSavedHistory(f func(ctx context.Context
 	}
 
 	s.handlers[MessagesReadSavedHistoryRequestTypeID] = handler
+}
+
+func (s *ServerDispatcher) OnMessagesToggleTodoCompleted(f func(ctx context.Context, request *MessagesToggleTodoCompletedRequest) (UpdatesClass, error)) {
+	handler := func(ctx context.Context, b *bin.Buffer) (bin.Encoder, error) {
+		var request MessagesToggleTodoCompletedRequest
+		if err := request.Decode(b); err != nil {
+			return nil, err
+		}
+
+		response, err := f(ctx, &request)
+		if err != nil {
+			return nil, err
+		}
+		return &UpdatesBox{Updates: response}, nil
+	}
+
+	s.handlers[MessagesToggleTodoCompletedRequestTypeID] = handler
+}
+
+func (s *ServerDispatcher) OnMessagesAppendTodoList(f func(ctx context.Context, request *MessagesAppendTodoListRequest) (UpdatesClass, error)) {
+	handler := func(ctx context.Context, b *bin.Buffer) (bin.Encoder, error) {
+		var request MessagesAppendTodoListRequest
+		if err := request.Decode(b); err != nil {
+			return nil, err
+		}
+
+		response, err := f(ctx, &request)
+		if err != nil {
+			return nil, err
+		}
+		return &UpdatesBox{Updates: response}, nil
+	}
+
+	s.handlers[MessagesAppendTodoListRequestTypeID] = handler
 }
 
 func (s *ServerDispatcher) OnUpdatesGetState(f func(ctx context.Context) (*UpdatesState, error)) {

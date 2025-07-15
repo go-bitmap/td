@@ -32,10 +32,18 @@ var (
 )
 
 // MessagesInvitedUsers represents TL type `messages.invitedUsers#7f5defa6`.
+// Contains info about successfully or unsuccessfully invited »¹ users.
+//
+// Links:
+//  1. https://core.telegram.org/api/invites#direct-invites
+//
+// See https://core.telegram.org/constructor/messages.invitedUsers for reference.
 type MessagesInvitedUsers struct {
-	// Updates field of MessagesInvitedUsers.
+	// List of updates about successfully invited users (and eventually info about the
+	// created group)
 	Updates UpdatesClass
-	// MissingInvitees field of MessagesInvitedUsers.
+	// A list of users that could not be invited, along with the reason why they couldn't be
+	// invited.
 	MissingInvitees []MissingInvitee
 }
 
@@ -71,6 +79,15 @@ func (i *MessagesInvitedUsers) String() string {
 	}
 	type Alias MessagesInvitedUsers
 	return fmt.Sprintf("MessagesInvitedUsers%+v", Alias(*i))
+}
+
+// FillFrom fills MessagesInvitedUsers from given interface.
+func (i *MessagesInvitedUsers) FillFrom(from interface {
+	GetUpdates() (value UpdatesClass)
+	GetMissingInvitees() (value []MissingInvitee)
+}) {
+	i.Updates = from.GetUpdates()
+	i.MissingInvitees = from.GetMissingInvitees()
 }
 
 // TypeID returns type id in TL schema.

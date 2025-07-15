@@ -32,10 +32,19 @@ var (
 )
 
 // AuthResetLoginEmailRequest represents TL type `auth.resetLoginEmail#7e960193`.
+// Reset the login email »¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/auth#email-verification
+//
+// See https://core.telegram.org/method/auth.resetLoginEmail for reference.
 type AuthResetLoginEmailRequest struct {
-	// PhoneNumber field of AuthResetLoginEmailRequest.
+	// Phone number of the account
 	PhoneNumber string
-	// PhoneCodeHash field of AuthResetLoginEmailRequest.
+	// Phone code hash, obtained as described in the documentation »¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/auth
 	PhoneCodeHash string
 }
 
@@ -71,6 +80,15 @@ func (r *AuthResetLoginEmailRequest) String() string {
 	}
 	type Alias AuthResetLoginEmailRequest
 	return fmt.Sprintf("AuthResetLoginEmailRequest%+v", Alias(*r))
+}
+
+// FillFrom fills AuthResetLoginEmailRequest from given interface.
+func (r *AuthResetLoginEmailRequest) FillFrom(from interface {
+	GetPhoneNumber() (value string)
+	GetPhoneCodeHash() (value string)
+}) {
+	r.PhoneNumber = from.GetPhoneNumber()
+	r.PhoneCodeHash = from.GetPhoneCodeHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -177,6 +195,17 @@ func (r *AuthResetLoginEmailRequest) GetPhoneCodeHash() (value string) {
 }
 
 // AuthResetLoginEmail invokes method auth.resetLoginEmail#7e960193 returning error if any.
+// Reset the login email »¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/auth#email-verification
+//
+// Possible errors:
+//
+//	400 PHONE_NUMBER_INVALID: The phone number is invalid.
+//	400 TASK_ALREADY_EXISTS: An email reset was already requested.
+//
+// See https://core.telegram.org/method/auth.resetLoginEmail for reference.
 func (c *Client) AuthResetLoginEmail(ctx context.Context, request *AuthResetLoginEmailRequest) (AuthSentCodeClass, error) {
 	var result AuthSentCodeBox
 

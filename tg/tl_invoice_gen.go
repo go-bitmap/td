@@ -32,44 +32,68 @@ var (
 )
 
 // Invoice represents TL type `invoice#49ee584`.
+// Invoice
+//
+// See https://core.telegram.org/constructor/invoice for reference.
 type Invoice struct {
-	// Flags field of Invoice.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Test field of Invoice.
+	// Test invoice
 	Test bool
-	// NameRequested field of Invoice.
+	// Set this flag if you require the user's full name to complete the order
 	NameRequested bool
-	// PhoneRequested field of Invoice.
+	// Set this flag if you require the user's phone number to complete the order
 	PhoneRequested bool
-	// EmailRequested field of Invoice.
+	// Set this flag if you require the user's email address to complete the order
 	EmailRequested bool
-	// ShippingAddressRequested field of Invoice.
+	// Set this flag if you require the user's shipping address to complete the order
 	ShippingAddressRequested bool
-	// Flexible field of Invoice.
+	// Set this flag if the final price depends on the shipping method
 	Flexible bool
-	// PhoneToProvider field of Invoice.
+	// Set this flag if user's phone number should be sent to provider
 	PhoneToProvider bool
-	// EmailToProvider field of Invoice.
+	// Set this flag if user's email address should be sent to provider
 	EmailToProvider bool
-	// Recurring field of Invoice.
+	// Whether this is a recurring payment
 	Recurring bool
-	// Currency field of Invoice.
+	// Three-letter ISO 4217 currency¹ code, or XTR for Telegram Stars².
+	//
+	// Links:
+	//  1) https://core.telegram.org/bots/payments#supported-currencies
+	//  2) https://core.telegram.org/api/stars
 	Currency string
-	// Prices field of Invoice.
+	// Price breakdown, a list of components (e.g. product price, tax, discount, delivery
+	// cost, delivery tax, bonus, etc.)
 	Prices []LabeledPrice
-	// MaxTipAmount field of Invoice.
+	// The maximum accepted amount for tips in the smallest units of the currency (integer,
+	// not float/double). For example, for a price of US$ 1.45 pass amount = 145. See the exp
+	// parameter in currencies.json¹, it shows the number of digits past the decimal point
+	// for each currency (2 for the majority of currencies).
+	//
+	// Links:
+	//  1) https://core.telegram.org/bots/payments/currencies.json
 	//
 	// Use SetMaxTipAmount and GetMaxTipAmount helpers.
 	MaxTipAmount int64
-	// SuggestedTipAmounts field of Invoice.
+	// A vector of suggested amounts of tips in the smallest units of the currency (integer,
+	// not float/double). At most 4 suggested tip amounts can be specified. The suggested tip
+	// amounts must be positive, passed in a strictly increased order and must not exceed
+	// max_tip_amount.
 	//
 	// Use SetSuggestedTipAmounts and GetSuggestedTipAmounts helpers.
 	SuggestedTipAmounts []int64
-	// TermsURL field of Invoice.
+	// Terms of service URL
 	//
 	// Use SetTermsURL and GetTermsURL helpers.
 	TermsURL string
-	// SubscriptionPeriod field of Invoice.
+	// The number of seconds between consecutive Telegram Star debiting for bot
+	// subscription¹ invoices
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/subscriptions#bot-subscriptions
 	//
 	// Use SetSubscriptionPeriod and GetSubscriptionPeriod helpers.
 	SubscriptionPeriod int
@@ -149,6 +173,53 @@ func (i *Invoice) String() string {
 	}
 	type Alias Invoice
 	return fmt.Sprintf("Invoice%+v", Alias(*i))
+}
+
+// FillFrom fills Invoice from given interface.
+func (i *Invoice) FillFrom(from interface {
+	GetTest() (value bool)
+	GetNameRequested() (value bool)
+	GetPhoneRequested() (value bool)
+	GetEmailRequested() (value bool)
+	GetShippingAddressRequested() (value bool)
+	GetFlexible() (value bool)
+	GetPhoneToProvider() (value bool)
+	GetEmailToProvider() (value bool)
+	GetRecurring() (value bool)
+	GetCurrency() (value string)
+	GetPrices() (value []LabeledPrice)
+	GetMaxTipAmount() (value int64, ok bool)
+	GetSuggestedTipAmounts() (value []int64, ok bool)
+	GetTermsURL() (value string, ok bool)
+	GetSubscriptionPeriod() (value int, ok bool)
+}) {
+	i.Test = from.GetTest()
+	i.NameRequested = from.GetNameRequested()
+	i.PhoneRequested = from.GetPhoneRequested()
+	i.EmailRequested = from.GetEmailRequested()
+	i.ShippingAddressRequested = from.GetShippingAddressRequested()
+	i.Flexible = from.GetFlexible()
+	i.PhoneToProvider = from.GetPhoneToProvider()
+	i.EmailToProvider = from.GetEmailToProvider()
+	i.Recurring = from.GetRecurring()
+	i.Currency = from.GetCurrency()
+	i.Prices = from.GetPrices()
+	if val, ok := from.GetMaxTipAmount(); ok {
+		i.MaxTipAmount = val
+	}
+
+	if val, ok := from.GetSuggestedTipAmounts(); ok {
+		i.SuggestedTipAmounts = val
+	}
+
+	if val, ok := from.GetTermsURL(); ok {
+		i.TermsURL = val
+	}
+
+	if val, ok := from.GetSubscriptionPeriod(); ok {
+		i.SubscriptionPeriod = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.

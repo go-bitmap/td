@@ -32,8 +32,11 @@ var (
 )
 
 // ContactsDeleteByPhonesRequest represents TL type `contacts.deleteByPhones#1013fd9e`.
+// Delete contacts by phone number
+//
+// See https://core.telegram.org/method/contacts.deleteByPhones for reference.
 type ContactsDeleteByPhonesRequest struct {
-	// Phones field of ContactsDeleteByPhonesRequest.
+	// Phone numbers
 	Phones []string
 }
 
@@ -66,6 +69,13 @@ func (d *ContactsDeleteByPhonesRequest) String() string {
 	}
 	type Alias ContactsDeleteByPhonesRequest
 	return fmt.Sprintf("ContactsDeleteByPhonesRequest%+v", Alias(*d))
+}
+
+// FillFrom fills ContactsDeleteByPhonesRequest from given interface.
+func (d *ContactsDeleteByPhonesRequest) FillFrom(from interface {
+	GetPhones() (value []string)
+}) {
+	d.Phones = from.GetPhones()
 }
 
 // TypeID returns type id in TL schema.
@@ -165,6 +175,9 @@ func (d *ContactsDeleteByPhonesRequest) GetPhones() (value []string) {
 }
 
 // ContactsDeleteByPhones invokes method contacts.deleteByPhones#1013fd9e returning error if any.
+// Delete contacts by phone number
+//
+// See https://core.telegram.org/method/contacts.deleteByPhones for reference.
 func (c *Client) ContactsDeleteByPhones(ctx context.Context, phones []string) (bool, error) {
 	var result BoolBox
 

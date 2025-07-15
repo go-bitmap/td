@@ -32,10 +32,21 @@ var (
 )
 
 // ReplyKeyboardHide represents TL type `replyKeyboardHide#a03e5b85`.
+// Hide sent bot keyboard
+//
+// See https://core.telegram.org/constructor/replyKeyboardHide for reference.
 type ReplyKeyboardHide struct {
-	// Flags field of ReplyKeyboardHide.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Selective field of ReplyKeyboardHide.
+	// Use this flag if you want to remove the keyboard for specific users only. Targets: 1)
+	// users that are @mentioned in the text of the Message object; 2) if the bot's message
+	// is a reply (has reply_to_message_id), sender of the original message.Example: A user
+	// votes in a poll, bot returns confirmation message in reply to the vote and removes the
+	// keyboard for that user, while still showing the keyboard with poll options to users
+	// who haven't voted yet
 	Selective bool
 }
 
@@ -76,6 +87,13 @@ func (r *ReplyKeyboardHide) String() string {
 	}
 	type Alias ReplyKeyboardHide
 	return fmt.Sprintf("ReplyKeyboardHide%+v", Alias(*r))
+}
+
+// FillFrom fills ReplyKeyboardHide from given interface.
+func (r *ReplyKeyboardHide) FillFrom(from interface {
+	GetSelective() (value bool)
+}) {
+	r.Selective = from.GetSelective()
 }
 
 // TypeID returns type id in TL schema.
@@ -183,14 +201,28 @@ func (r *ReplyKeyboardHide) GetSelective() (value bool) {
 }
 
 // ReplyKeyboardForceReply represents TL type `replyKeyboardForceReply#86b40b08`.
+// Force the user to send a reply
+//
+// See https://core.telegram.org/constructor/replyKeyboardForceReply for reference.
 type ReplyKeyboardForceReply struct {
-	// Flags field of ReplyKeyboardForceReply.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// SingleUse field of ReplyKeyboardForceReply.
+	// Requests clients to hide the keyboard as soon as it's been used. The keyboard will
+	// still be available, but clients will automatically display the usual letter-keyboard
+	// in the chat – the user can press a special button in the input field to see the
+	// custom keyboard again.
 	SingleUse bool
-	// Selective field of ReplyKeyboardForceReply.
+	// Use this parameter if you want to show the keyboard to specific users only. Targets:
+	// 1) users that are @mentioned in the text of the Message object; 2) if the bot's
+	// message is a reply (has reply_to_message_id), sender of the original message. Example:
+	// A user requests to change the bot's language, bot replies to the request with a
+	// keyboard to select the new language. Other users in the group don't see the keyboard.
 	Selective bool
-	// Placeholder field of ReplyKeyboardForceReply.
+	// The placeholder to be shown in the input field when the keyboard is active; 1-64
+	// characters.
 	//
 	// Use SetPlaceholder and GetPlaceholder helpers.
 	Placeholder string
@@ -239,6 +271,20 @@ func (r *ReplyKeyboardForceReply) String() string {
 	}
 	type Alias ReplyKeyboardForceReply
 	return fmt.Sprintf("ReplyKeyboardForceReply%+v", Alias(*r))
+}
+
+// FillFrom fills ReplyKeyboardForceReply from given interface.
+func (r *ReplyKeyboardForceReply) FillFrom(from interface {
+	GetSingleUse() (value bool)
+	GetSelective() (value bool)
+	GetPlaceholder() (value string, ok bool)
+}) {
+	r.SingleUse = from.GetSingleUse()
+	r.Selective = from.GetSelective()
+	if val, ok := from.GetPlaceholder(); ok {
+		r.Placeholder = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -410,20 +456,36 @@ func (r *ReplyKeyboardForceReply) GetPlaceholder() (value string, ok bool) {
 }
 
 // ReplyKeyboardMarkup represents TL type `replyKeyboardMarkup#85dd99d1`.
+// Bot keyboard
+//
+// See https://core.telegram.org/constructor/replyKeyboardMarkup for reference.
 type ReplyKeyboardMarkup struct {
-	// Flags field of ReplyKeyboardMarkup.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Resize field of ReplyKeyboardMarkup.
+	// Requests clients to resize the keyboard vertically for optimal fit (e.g., make the
+	// keyboard smaller if there are just two rows of buttons). If not set, the custom
+	// keyboard is always of the same height as the app's standard keyboard.
 	Resize bool
-	// SingleUse field of ReplyKeyboardMarkup.
+	// Requests clients to hide the keyboard as soon as it's been used. The keyboard will
+	// still be available, but clients will automatically display the usual letter-keyboard
+	// in the chat – the user can press a special button in the input field to see the
+	// custom keyboard again.
 	SingleUse bool
-	// Selective field of ReplyKeyboardMarkup.
+	// Use this parameter if you want to show the keyboard to specific users only. Targets:
+	// 1) users that are @mentioned in the text of the Message object; 2) if the bot's
+	// message is a reply (has reply_to_message_id), sender of the original message.Example:
+	// A user requests to change the bot's language, bot replies to the request with a
+	// keyboard to select the new language. Other users in the group don't see the keyboard.
 	Selective bool
-	// Persistent field of ReplyKeyboardMarkup.
+	// Requests clients to always show the keyboard when the regular keyboard is hidden.
 	Persistent bool
-	// Rows field of ReplyKeyboardMarkup.
+	// Button row
 	Rows []KeyboardButtonRow
-	// Placeholder field of ReplyKeyboardMarkup.
+	// The placeholder to be shown in the input field when the keyboard is active; 1-64
+	// characters.
 	//
 	// Use SetPlaceholder and GetPlaceholder helpers.
 	Placeholder string
@@ -481,6 +543,26 @@ func (r *ReplyKeyboardMarkup) String() string {
 	}
 	type Alias ReplyKeyboardMarkup
 	return fmt.Sprintf("ReplyKeyboardMarkup%+v", Alias(*r))
+}
+
+// FillFrom fills ReplyKeyboardMarkup from given interface.
+func (r *ReplyKeyboardMarkup) FillFrom(from interface {
+	GetResize() (value bool)
+	GetSingleUse() (value bool)
+	GetSelective() (value bool)
+	GetPersistent() (value bool)
+	GetRows() (value []KeyboardButtonRow)
+	GetPlaceholder() (value string, ok bool)
+}) {
+	r.Resize = from.GetResize()
+	r.SingleUse = from.GetSingleUse()
+	r.Selective = from.GetSelective()
+	r.Persistent = from.GetPersistent()
+	r.Rows = from.GetRows()
+	if val, ok := from.GetPlaceholder(); ok {
+		r.Placeholder = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -743,8 +825,11 @@ func (r *ReplyKeyboardMarkup) GetPlaceholder() (value string, ok bool) {
 }
 
 // ReplyInlineMarkup represents TL type `replyInlineMarkup#48a30254`.
+// Bot or inline keyboard
+//
+// See https://core.telegram.org/constructor/replyInlineMarkup for reference.
 type ReplyInlineMarkup struct {
-	// Rows field of ReplyInlineMarkup.
+	// Bot or inline keyboard rows
 	Rows []KeyboardButtonRow
 }
 
@@ -782,6 +867,13 @@ func (r *ReplyInlineMarkup) String() string {
 	}
 	type Alias ReplyInlineMarkup
 	return fmt.Sprintf("ReplyInlineMarkup%+v", Alias(*r))
+}
+
+// FillFrom fills ReplyInlineMarkup from given interface.
+func (r *ReplyInlineMarkup) FillFrom(from interface {
+	GetRows() (value []KeyboardButtonRow)
+}) {
+	r.Rows = from.GetRows()
 }
 
 // TypeID returns type id in TL schema.
@@ -886,6 +978,8 @@ func (r *ReplyInlineMarkup) GetRows() (value []KeyboardButtonRow) {
 const ReplyMarkupClassName = "ReplyMarkup"
 
 // ReplyMarkupClass represents ReplyMarkup generic type.
+//
+// See https://core.telegram.org/type/ReplyMarkup for reference.
 //
 // Constructors:
 //   - [ReplyKeyboardHide]

@@ -32,10 +32,13 @@ var (
 )
 
 // MessagesDeleteScheduledMessagesRequest represents TL type `messages.deleteScheduledMessages#59ae2b16`.
+// Delete scheduled messages
+//
+// See https://core.telegram.org/method/messages.deleteScheduledMessages for reference.
 type MessagesDeleteScheduledMessagesRequest struct {
-	// Peer field of MessagesDeleteScheduledMessagesRequest.
+	// Peer
 	Peer InputPeerClass
-	// ID field of MessagesDeleteScheduledMessagesRequest.
+	// Scheduled message IDs
 	ID []int
 }
 
@@ -71,6 +74,15 @@ func (d *MessagesDeleteScheduledMessagesRequest) String() string {
 	}
 	type Alias MessagesDeleteScheduledMessagesRequest
 	return fmt.Sprintf("MessagesDeleteScheduledMessagesRequest%+v", Alias(*d))
+}
+
+// FillFrom fills MessagesDeleteScheduledMessagesRequest from given interface.
+func (d *MessagesDeleteScheduledMessagesRequest) FillFrom(from interface {
+	GetPeer() (value InputPeerClass)
+	GetID() (value []int)
+}) {
+	d.Peer = from.GetPeer()
+	d.ID = from.GetID()
 }
 
 // TypeID returns type id in TL schema.
@@ -195,6 +207,14 @@ func (d *MessagesDeleteScheduledMessagesRequest) GetID() (value []int) {
 }
 
 // MessagesDeleteScheduledMessages invokes method messages.deleteScheduledMessages#59ae2b16 returning error if any.
+// Delete scheduled messages
+//
+// Possible errors:
+//
+//	403 MESSAGE_DELETE_FORBIDDEN: You can't delete one of the messages you tried to delete, most likely because it is a service message.
+//	400 PEER_ID_INVALID: The provided peer id is invalid.
+//
+// See https://core.telegram.org/method/messages.deleteScheduledMessages for reference.
 func (c *Client) MessagesDeleteScheduledMessages(ctx context.Context, request *MessagesDeleteScheduledMessagesRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

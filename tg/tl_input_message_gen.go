@@ -32,8 +32,11 @@ var (
 )
 
 // InputMessageID represents TL type `inputMessageID#a676a322`.
+// Message by ID
+//
+// See https://core.telegram.org/constructor/inputMessageID for reference.
 type InputMessageID struct {
-	// ID field of InputMessageID.
+	// Message ID
 	ID int
 }
 
@@ -71,6 +74,13 @@ func (i *InputMessageID) String() string {
 	}
 	type Alias InputMessageID
 	return fmt.Sprintf("InputMessageID%+v", Alias(*i))
+}
+
+// FillFrom fills InputMessageID from given interface.
+func (i *InputMessageID) FillFrom(from interface {
+	GetID() (value int)
+}) {
+	i.ID = from.GetID()
 }
 
 // TypeID returns type id in TL schema.
@@ -157,8 +167,11 @@ func (i *InputMessageID) GetID() (value int) {
 }
 
 // InputMessageReplyTo represents TL type `inputMessageReplyTo#bad88395`.
+// Message to which the specified message replies to
+//
+// See https://core.telegram.org/constructor/inputMessageReplyTo for reference.
 type InputMessageReplyTo struct {
-	// ID field of InputMessageReplyTo.
+	// ID of the message that replies to the message we need
 	ID int
 }
 
@@ -196,6 +209,13 @@ func (i *InputMessageReplyTo) String() string {
 	}
 	type Alias InputMessageReplyTo
 	return fmt.Sprintf("InputMessageReplyTo%+v", Alias(*i))
+}
+
+// FillFrom fills InputMessageReplyTo from given interface.
+func (i *InputMessageReplyTo) FillFrom(from interface {
+	GetID() (value int)
+}) {
+	i.ID = from.GetID()
 }
 
 // TypeID returns type id in TL schema.
@@ -282,6 +302,9 @@ func (i *InputMessageReplyTo) GetID() (value int) {
 }
 
 // InputMessagePinned represents TL type `inputMessagePinned#86872538`.
+// Pinned message
+//
+// See https://core.telegram.org/constructor/inputMessagePinned for reference.
 type InputMessagePinned struct {
 }
 
@@ -381,10 +404,14 @@ func (i *InputMessagePinned) DecodeBare(b *bin.Buffer) error {
 }
 
 // InputMessageCallbackQuery represents TL type `inputMessageCallbackQuery#acfa1a7e`.
+// Used by bots for fetching information about the message that originated a callback
+// query
+//
+// See https://core.telegram.org/constructor/inputMessageCallbackQuery for reference.
 type InputMessageCallbackQuery struct {
-	// ID field of InputMessageCallbackQuery.
+	// Message ID
 	ID int
-	// QueryID field of InputMessageCallbackQuery.
+	// Callback query ID
 	QueryID int64
 }
 
@@ -425,6 +452,15 @@ func (i *InputMessageCallbackQuery) String() string {
 	}
 	type Alias InputMessageCallbackQuery
 	return fmt.Sprintf("InputMessageCallbackQuery%+v", Alias(*i))
+}
+
+// FillFrom fills InputMessageCallbackQuery from given interface.
+func (i *InputMessageCallbackQuery) FillFrom(from interface {
+	GetID() (value int)
+	GetQueryID() (value int64)
+}) {
+	i.ID = from.GetID()
+	i.QueryID = from.GetQueryID()
 }
 
 // TypeID returns type id in TL schema.
@@ -534,6 +570,8 @@ func (i *InputMessageCallbackQuery) GetQueryID() (value int64) {
 const InputMessageClassName = "InputMessage"
 
 // InputMessageClass represents InputMessage generic type.
+//
+// See https://core.telegram.org/type/InputMessage for reference.
 //
 // Constructors:
 //   - [InputMessageID]

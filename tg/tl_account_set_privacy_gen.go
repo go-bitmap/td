@@ -32,10 +32,13 @@ var (
 )
 
 // AccountSetPrivacyRequest represents TL type `account.setPrivacy#c9f81ce8`.
+// Change privacy settings of current account
+//
+// See https://core.telegram.org/method/account.setPrivacy for reference.
 type AccountSetPrivacyRequest struct {
-	// Key field of AccountSetPrivacyRequest.
+	// New privacy rule
 	Key InputPrivacyKeyClass
-	// Rules field of AccountSetPrivacyRequest.
+	// Peers to which the privacy rule will apply.
 	Rules []InputPrivacyRuleClass
 }
 
@@ -71,6 +74,15 @@ func (s *AccountSetPrivacyRequest) String() string {
 	}
 	type Alias AccountSetPrivacyRequest
 	return fmt.Sprintf("AccountSetPrivacyRequest%+v", Alias(*s))
+}
+
+// FillFrom fills AccountSetPrivacyRequest from given interface.
+func (s *AccountSetPrivacyRequest) FillFrom(from interface {
+	GetKey() (value InputPrivacyKeyClass)
+	GetRules() (value []InputPrivacyRuleClass)
+}) {
+	s.Key = from.GetKey()
+	s.Rules = from.GetRules()
 }
 
 // TypeID returns type id in TL schema.
@@ -199,7 +211,21 @@ func (s *AccountSetPrivacyRequest) GetRules() (value []InputPrivacyRuleClass) {
 	return s.Rules
 }
 
+// MapRules returns field Rules wrapped in InputPrivacyRuleClassArray helper.
+func (s *AccountSetPrivacyRequest) MapRules() (value InputPrivacyRuleClassArray) {
+	return InputPrivacyRuleClassArray(s.Rules)
+}
+
 // AccountSetPrivacy invokes method account.setPrivacy#c9f81ce8 returning error if any.
+// Change privacy settings of current account
+//
+// Possible errors:
+//
+//	400 PRIVACY_KEY_INVALID: The privacy key is invalid.
+//	400 PRIVACY_TOO_LONG: Too many privacy rules were specified, the current limit is 1000.
+//	400 PRIVACY_VALUE_INVALID: The specified privacy rule combination is invalid.
+//
+// See https://core.telegram.org/method/account.setPrivacy for reference.
 func (c *Client) AccountSetPrivacy(ctx context.Context, request *AccountSetPrivacyRequest) (*AccountPrivacyRules, error) {
 	var result AccountPrivacyRules
 

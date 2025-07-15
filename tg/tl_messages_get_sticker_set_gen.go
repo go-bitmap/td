@@ -32,10 +32,16 @@ var (
 )
 
 // MessagesGetStickerSetRequest represents TL type `messages.getStickerSet#c8a0ec74`.
+// Get info about a stickerset
+//
+// See https://core.telegram.org/method/messages.getStickerSet for reference.
 type MessagesGetStickerSetRequest struct {
-	// Stickerset field of MessagesGetStickerSetRequest.
+	// Stickerset
 	Stickerset InputStickerSetClass
-	// Hash field of MessagesGetStickerSetRequest.
+	// Hash used for caching, for more info click here¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets#hash-generation
 	Hash int
 }
 
@@ -71,6 +77,15 @@ func (g *MessagesGetStickerSetRequest) String() string {
 	}
 	type Alias MessagesGetStickerSetRequest
 	return fmt.Sprintf("MessagesGetStickerSetRequest%+v", Alias(*g))
+}
+
+// FillFrom fills MessagesGetStickerSetRequest from given interface.
+func (g *MessagesGetStickerSetRequest) FillFrom(from interface {
+	GetStickerset() (value InputStickerSetClass)
+	GetHash() (value int)
+}) {
+	g.Stickerset = from.GetStickerset()
+	g.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -182,6 +197,15 @@ func (g *MessagesGetStickerSetRequest) GetHash() (value int) {
 }
 
 // MessagesGetStickerSet invokes method messages.getStickerSet#c8a0ec74 returning error if any.
+// Get info about a stickerset
+//
+// Possible errors:
+//
+//	400 EMOTICON_STICKERPACK_MISSING: inputStickerSetDice.emoji cannot be empty.
+//	406 STICKERSET_INVALID: The provided sticker set is invalid.
+//
+// See https://core.telegram.org/method/messages.getStickerSet for reference.
+// Can be used by bots.
 func (c *Client) MessagesGetStickerSet(ctx context.Context, request *MessagesGetStickerSetRequest) (MessagesStickerSetClass, error) {
 	var result MessagesStickerSetBox
 

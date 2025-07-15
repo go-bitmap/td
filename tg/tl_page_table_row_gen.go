@@ -32,8 +32,11 @@ var (
 )
 
 // PageTableRow represents TL type `pageTableRow#e0c0c5e5`.
+// Table row
+//
+// See https://core.telegram.org/constructor/pageTableRow for reference.
 type PageTableRow struct {
-	// Cells field of PageTableRow.
+	// Table cells
 	Cells []PageTableCell
 }
 
@@ -66,6 +69,13 @@ func (p *PageTableRow) String() string {
 	}
 	type Alias PageTableRow
 	return fmt.Sprintf("PageTableRow%+v", Alias(*p))
+}
+
+// FillFrom fills PageTableRow from given interface.
+func (p *PageTableRow) FillFrom(from interface {
+	GetCells() (value []PageTableCell)
+}) {
+	p.Cells = from.GetCells()
 }
 
 // TypeID returns type id in TL schema.

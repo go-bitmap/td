@@ -32,38 +32,96 @@ var (
 )
 
 // ChatAdminRights represents TL type `chatAdminRights#5fb224d5`.
+// Represents the rights of an admin in a channel/supergroup¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/channel
+//
+// See https://core.telegram.org/constructor/chatAdminRights for reference.
 type ChatAdminRights struct {
-	// Flags field of ChatAdminRights.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// ChangeInfo field of ChatAdminRights.
+	// If set, allows the admin to modify the description of the channel/supergroup¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/channel
 	ChangeInfo bool
-	// PostMessages field of ChatAdminRights.
+	// If set, allows the admin to post messages in the channel¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/channel
 	PostMessages bool
-	// EditMessages field of ChatAdminRights.
+	// If set, allows the admin to also edit messages from other admins in the channel¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/channel
 	EditMessages bool
-	// DeleteMessages field of ChatAdminRights.
+	// If set, allows the admin to also delete messages from other admins in the channel¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/channel
 	DeleteMessages bool
-	// BanUsers field of ChatAdminRights.
+	// If set, allows the admin to ban users from the channel/supergroup¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/channel
 	BanUsers bool
-	// InviteUsers field of ChatAdminRights.
+	// If set, allows the admin to invite users in the channel/supergroup¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/channel
 	InviteUsers bool
-	// PinMessages field of ChatAdminRights.
+	// If set, allows the admin to pin messages in the channel/supergroup¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/channel
 	PinMessages bool
-	// AddAdmins field of ChatAdminRights.
+	// If set, allows the admin to add other admins with the same (or more limited)
+	// permissions in the channel/supergroup¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/channel
 	AddAdmins bool
-	// Anonymous field of ChatAdminRights.
+	// Whether this admin is anonymous
 	Anonymous bool
-	// ManageCall field of ChatAdminRights.
+	// If set, allows the admin to change group call/livestream settings
 	ManageCall bool
-	// Other field of ChatAdminRights.
+	// Set this flag if none of the other flags are set, but you still want the user to be an
+	// admin: if this or any of the other flags are set, the admin can get the chat admin
+	// log¹, get chat statistics², get message statistics in channels³, get channel
+	// members, see anonymous administrators in supergroups and ignore slow mode.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/recent-actions
+	//  2) https://core.telegram.org/api/stats
+	//  3) https://core.telegram.org/api/stats
 	Other bool
-	// ManageTopics field of ChatAdminRights.
+	// If set, allows the admin to create, delete or modify forum topics »¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/forum#forum-topics
 	ManageTopics bool
-	// PostStories field of ChatAdminRights.
+	// If set, allows the admin to post stories¹ as the channel².
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/stories
+	//  2) https://core.telegram.org/api/channel
 	PostStories bool
-	// EditStories field of ChatAdminRights.
+	// If set, allows the admin to edit stories¹ posted by the other admins of the channel².
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/stories
+	//  2) https://core.telegram.org/api/channel
 	EditStories bool
-	// DeleteStories field of ChatAdminRights.
+	// If set, allows the admin to delete stories¹ posted by the other admins of the
+	// channel².
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/stories
+	//  2) https://core.telegram.org/api/channel
 	DeleteStories bool
 }
 
@@ -141,6 +199,41 @@ func (c *ChatAdminRights) String() string {
 	}
 	type Alias ChatAdminRights
 	return fmt.Sprintf("ChatAdminRights%+v", Alias(*c))
+}
+
+// FillFrom fills ChatAdminRights from given interface.
+func (c *ChatAdminRights) FillFrom(from interface {
+	GetChangeInfo() (value bool)
+	GetPostMessages() (value bool)
+	GetEditMessages() (value bool)
+	GetDeleteMessages() (value bool)
+	GetBanUsers() (value bool)
+	GetInviteUsers() (value bool)
+	GetPinMessages() (value bool)
+	GetAddAdmins() (value bool)
+	GetAnonymous() (value bool)
+	GetManageCall() (value bool)
+	GetOther() (value bool)
+	GetManageTopics() (value bool)
+	GetPostStories() (value bool)
+	GetEditStories() (value bool)
+	GetDeleteStories() (value bool)
+}) {
+	c.ChangeInfo = from.GetChangeInfo()
+	c.PostMessages = from.GetPostMessages()
+	c.EditMessages = from.GetEditMessages()
+	c.DeleteMessages = from.GetDeleteMessages()
+	c.BanUsers = from.GetBanUsers()
+	c.InviteUsers = from.GetInviteUsers()
+	c.PinMessages = from.GetPinMessages()
+	c.AddAdmins = from.GetAddAdmins()
+	c.Anonymous = from.GetAnonymous()
+	c.ManageCall = from.GetManageCall()
+	c.Other = from.GetOther()
+	c.ManageTopics = from.GetManageTopics()
+	c.PostStories = from.GetPostStories()
+	c.EditStories = from.GetEditStories()
+	c.DeleteStories = from.GetDeleteStories()
 }
 
 // TypeID returns type id in TL schema.

@@ -32,12 +32,19 @@ var (
 )
 
 // InputStorePaymentPremiumSubscription represents TL type `inputStorePaymentPremiumSubscription#a6751e66`.
+// Info about a Telegram Premium purchase
+//
+// See https://core.telegram.org/constructor/inputStorePaymentPremiumSubscription for reference.
 type InputStorePaymentPremiumSubscription struct {
-	// Flags field of InputStorePaymentPremiumSubscription.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Restore field of InputStorePaymentPremiumSubscription.
+	// Pass true if this is a restore of a Telegram Premium purchase; only for the App Store
 	Restore bool
-	// Upgrade field of InputStorePaymentPremiumSubscription.
+	// Pass true if this is an upgrade from a monthly subscription to a yearly subscription;
+	// only for App Store
 	Upgrade bool
 }
 
@@ -81,6 +88,15 @@ func (i *InputStorePaymentPremiumSubscription) String() string {
 	}
 	type Alias InputStorePaymentPremiumSubscription
 	return fmt.Sprintf("InputStorePaymentPremiumSubscription%+v", Alias(*i))
+}
+
+// FillFrom fills InputStorePaymentPremiumSubscription from given interface.
+func (i *InputStorePaymentPremiumSubscription) FillFrom(from interface {
+	GetRestore() (value bool)
+	GetUpgrade() (value bool)
+}) {
+	i.Restore = from.GetRestore()
+	i.Upgrade = from.GetUpgrade()
 }
 
 // TypeID returns type id in TL schema.
@@ -216,12 +232,24 @@ func (i *InputStorePaymentPremiumSubscription) GetUpgrade() (value bool) {
 }
 
 // InputStorePaymentGiftPremium represents TL type `inputStorePaymentGiftPremium#616f7fe8`.
+// Info about a gifted Telegram Premium purchase
+//
+// See https://core.telegram.org/constructor/inputStorePaymentGiftPremium for reference.
 type InputStorePaymentGiftPremium struct {
-	// UserID field of InputStorePaymentGiftPremium.
+	// The user to which the Telegram Premium subscription was gifted
 	UserID InputUserClass
-	// Currency field of InputStorePaymentGiftPremium.
+	// Three-letter ISO 4217 currency¹ code
+	//
+	// Links:
+	//  1) https://core.telegram.org/bots/payments#supported-currencies
 	Currency string
-	// Amount field of InputStorePaymentGiftPremium.
+	// Price of the product in the smallest units of the currency (integer, not float/double)
+	// For example, for a price of US$ 1.45 pass amount = 145. See the exp parameter in
+	// currencies.json¹, it shows the number of digits past the decimal point for each
+	// currency (2 for the majority of currencies).
+	//
+	// Links:
+	//  1) https://core.telegram.org/bots/payments/currencies.json
 	Amount int64
 }
 
@@ -265,6 +293,17 @@ func (i *InputStorePaymentGiftPremium) String() string {
 	}
 	type Alias InputStorePaymentGiftPremium
 	return fmt.Sprintf("InputStorePaymentGiftPremium%+v", Alias(*i))
+}
+
+// FillFrom fills InputStorePaymentGiftPremium from given interface.
+func (i *InputStorePaymentGiftPremium) FillFrom(from interface {
+	GetUserID() (value InputUserClass)
+	GetCurrency() (value string)
+	GetAmount() (value int64)
+}) {
+	i.UserID = from.GetUserID()
+	i.Currency = from.GetCurrency()
+	i.Amount = from.GetAmount()
 }
 
 // TypeID returns type id in TL schema.
@@ -396,20 +435,52 @@ func (i *InputStorePaymentGiftPremium) GetAmount() (value int64) {
 }
 
 // InputStorePaymentPremiumGiftCode represents TL type `inputStorePaymentPremiumGiftCode#fb790393`.
+// Used to gift Telegram Premium¹ subscriptions only to some specific subscribers of a
+// channel/supergroup or to some of our contacts, see here »² for more info on
+// giveaways and gifts.
+//
+// Links:
+//  1. https://core.telegram.org/api/premium
+//  2. https://core.telegram.org/api/giveaways
+//
+// See https://core.telegram.org/constructor/inputStorePaymentPremiumGiftCode for reference.
 type InputStorePaymentPremiumGiftCode struct {
-	// Flags field of InputStorePaymentPremiumGiftCode.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Users field of InputStorePaymentPremiumGiftCode.
+	// The users that will receive the Telegram Premium¹ subscriptions.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/premium
 	Users []InputUserClass
-	// BoostPeer field of InputStorePaymentPremiumGiftCode.
+	// If set, the gifts will be sent on behalf of a channel/supergroup we are an admin of,
+	// which will also assign some boosts¹ to it. Otherwise, the gift will be sent directly
+	// from the currently logged in user, and we will gain some extra boost slots². See here
+	// »³ for more info on giveaways and gifts.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/boost
+	//  2) https://core.telegram.org/api/boost
+	//  3) https://core.telegram.org/api/giveaways
 	//
 	// Use SetBoostPeer and GetBoostPeer helpers.
 	BoostPeer InputPeerClass
-	// Currency field of InputStorePaymentPremiumGiftCode.
+	// Three-letter ISO 4217 currency¹ code
+	//
+	// Links:
+	//  1) https://core.telegram.org/bots/payments#supported-currencies
 	Currency string
-	// Amount field of InputStorePaymentPremiumGiftCode.
+	// Total price in the smallest units of the currency (integer, not float/double). For
+	// example, for a price of US$ 1.45 pass amount = 145. See the exp parameter in
+	// currencies.json¹, it shows the number of digits past the decimal point for each
+	// currency (2 for the majority of currencies).
+	//
+	// Links:
+	//  1) https://core.telegram.org/bots/payments/currencies.json
 	Amount int64
-	// Message field of InputStorePaymentPremiumGiftCode.
+	// Message attached with the gift
 	//
 	// Use SetMessage and GetMessage helpers.
 	Message TextWithEntities
@@ -464,6 +535,27 @@ func (i *InputStorePaymentPremiumGiftCode) String() string {
 	}
 	type Alias InputStorePaymentPremiumGiftCode
 	return fmt.Sprintf("InputStorePaymentPremiumGiftCode%+v", Alias(*i))
+}
+
+// FillFrom fills InputStorePaymentPremiumGiftCode from given interface.
+func (i *InputStorePaymentPremiumGiftCode) FillFrom(from interface {
+	GetUsers() (value []InputUserClass)
+	GetBoostPeer() (value InputPeerClass, ok bool)
+	GetCurrency() (value string)
+	GetAmount() (value int64)
+	GetMessage() (value TextWithEntities, ok bool)
+}) {
+	i.Users = from.GetUsers()
+	if val, ok := from.GetBoostPeer(); ok {
+		i.BoostPeer = val
+	}
+
+	i.Currency = from.GetCurrency()
+	i.Amount = from.GetAmount()
+	if val, ok := from.GetMessage(); ok {
+		i.Message = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -697,35 +789,80 @@ func (i *InputStorePaymentPremiumGiftCode) GetMessage() (value TextWithEntities,
 	return i.Message, true
 }
 
+// MapUsers returns field Users wrapped in InputUserClassArray helper.
+func (i *InputStorePaymentPremiumGiftCode) MapUsers() (value InputUserClassArray) {
+	return InputUserClassArray(i.Users)
+}
+
 // InputStorePaymentPremiumGiveaway represents TL type `inputStorePaymentPremiumGiveaway#160544ca`.
+// Used to pay for a giveaway, see here »¹ for more info.
+//
+// Links:
+//  1. https://core.telegram.org/api/giveaways
+//
+// See https://core.telegram.org/constructor/inputStorePaymentPremiumGiveaway for reference.
 type InputStorePaymentPremiumGiveaway struct {
-	// Flags field of InputStorePaymentPremiumGiveaway.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// OnlyNewSubscribers field of InputStorePaymentPremiumGiveaway.
+	// If set, only new subscribers starting from the giveaway creation date will be able to
+	// participate to the giveaway.
 	OnlyNewSubscribers bool
-	// WinnersAreVisible field of InputStorePaymentPremiumGiveaway.
+	// If set, giveaway winners are public and will be listed in a
+	// messageMediaGiveawayResults¹ message that will be automatically sent to the channel
+	// once the giveaway ends.
+	//
+	// Links:
+	//  1) https://core.telegram.org/constructor/messageMediaGiveawayResults
 	WinnersAreVisible bool
-	// BoostPeer field of InputStorePaymentPremiumGiveaway.
+	// The channel/supergroup starting the giveaway, that the user must join to participate,
+	// that will receive the giveaway boosts¹; see here »² for more info on giveaways.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/boost
+	//  2) https://core.telegram.org/api/giveaways
 	BoostPeer InputPeerClass
-	// AdditionalPeers field of InputStorePaymentPremiumGiveaway.
+	// Additional channels that the user must join to participate to the giveaway can be
+	// specified here.
 	//
 	// Use SetAdditionalPeers and GetAdditionalPeers helpers.
 	AdditionalPeers []InputPeerClass
-	// CountriesISO2 field of InputStorePaymentPremiumGiveaway.
+	// The set of users that can participate to the giveaway can be restricted by passing
+	// here an explicit whitelist of up to giveaway_countries_max¹ countries, specified as
+	// two-letter ISO 3166-1 alpha-2 country codes.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/config#giveaway-countries-max
 	//
 	// Use SetCountriesISO2 and GetCountriesISO2 helpers.
 	CountriesISO2 []string
-	// PrizeDescription field of InputStorePaymentPremiumGiveaway.
+	// Can contain a textual description of additional giveaway prizes.
 	//
 	// Use SetPrizeDescription and GetPrizeDescription helpers.
 	PrizeDescription string
-	// RandomID field of InputStorePaymentPremiumGiveaway.
+	// Random ID to avoid resending the giveaway
 	RandomID int64
-	// UntilDate field of InputStorePaymentPremiumGiveaway.
+	// The end date of the giveaway, must be at most giveaway_period_max¹ seconds in the
+	// future; see here »² for more info on giveaways.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/config#giveaway-period-max
+	//  2) https://core.telegram.org/api/giveaways
 	UntilDate int
-	// Currency field of InputStorePaymentPremiumGiveaway.
+	// Three-letter ISO 4217 currency¹ code
+	//
+	// Links:
+	//  1) https://core.telegram.org/bots/payments#supported-currencies
 	Currency string
-	// Amount field of InputStorePaymentPremiumGiveaway.
+	// Total price in the smallest units of the currency (integer, not float/double). For
+	// example, for a price of US$ 1.45 pass amount = 145. See the exp parameter in
+	// currencies.json¹, it shows the number of digits past the decimal point for each
+	// currency (2 for the majority of currencies).
+	//
+	// Links:
+	//  1) https://core.telegram.org/bots/payments/currencies.json
 	Amount int64
 }
 
@@ -793,6 +930,40 @@ func (i *InputStorePaymentPremiumGiveaway) String() string {
 	}
 	type Alias InputStorePaymentPremiumGiveaway
 	return fmt.Sprintf("InputStorePaymentPremiumGiveaway%+v", Alias(*i))
+}
+
+// FillFrom fills InputStorePaymentPremiumGiveaway from given interface.
+func (i *InputStorePaymentPremiumGiveaway) FillFrom(from interface {
+	GetOnlyNewSubscribers() (value bool)
+	GetWinnersAreVisible() (value bool)
+	GetBoostPeer() (value InputPeerClass)
+	GetAdditionalPeers() (value []InputPeerClass, ok bool)
+	GetCountriesISO2() (value []string, ok bool)
+	GetPrizeDescription() (value string, ok bool)
+	GetRandomID() (value int64)
+	GetUntilDate() (value int)
+	GetCurrency() (value string)
+	GetAmount() (value int64)
+}) {
+	i.OnlyNewSubscribers = from.GetOnlyNewSubscribers()
+	i.WinnersAreVisible = from.GetWinnersAreVisible()
+	i.BoostPeer = from.GetBoostPeer()
+	if val, ok := from.GetAdditionalPeers(); ok {
+		i.AdditionalPeers = val
+	}
+
+	if val, ok := from.GetCountriesISO2(); ok {
+		i.CountriesISO2 = val
+	}
+
+	if val, ok := from.GetPrizeDescription(); ok {
+		i.PrizeDescription = val
+	}
+
+	i.RandomID = from.GetRandomID()
+	i.UntilDate = from.GetUntilDate()
+	i.Currency = from.GetCurrency()
+	i.Amount = from.GetAmount()
 }
 
 // TypeID returns type id in TL schema.
@@ -1171,13 +1342,36 @@ func (i *InputStorePaymentPremiumGiveaway) GetAmount() (value int64) {
 	return i.Amount
 }
 
+// MapAdditionalPeers returns field AdditionalPeers wrapped in InputPeerClassArray helper.
+func (i *InputStorePaymentPremiumGiveaway) MapAdditionalPeers() (value InputPeerClassArray, ok bool) {
+	if !i.Flags.Has(1) {
+		return value, false
+	}
+	return InputPeerClassArray(i.AdditionalPeers), true
+}
+
 // InputStorePaymentStarsTopup represents TL type `inputStorePaymentStarsTopup#dddd0f56`.
+// Used to top up the Telegram Stars balance¹ of the current account.
+//
+// Links:
+//  1. https://core.telegram.org/api/stars
+//
+// See https://core.telegram.org/constructor/inputStorePaymentStarsTopup for reference.
 type InputStorePaymentStarsTopup struct {
-	// Stars field of InputStorePaymentStarsTopup.
+	// Amount of stars to topup
 	Stars int64
-	// Currency field of InputStorePaymentStarsTopup.
+	// Three-letter ISO 4217 currency¹ code
+	//
+	// Links:
+	//  1) https://core.telegram.org/bots/payments#supported-currencies
 	Currency string
-	// Amount field of InputStorePaymentStarsTopup.
+	// Total price in the smallest units of the currency (integer, not float/double). For
+	// example, for a price of US$ 1.45 pass amount = 145. See the exp parameter in
+	// currencies.json¹, it shows the number of digits past the decimal point for each
+	// currency (2 for the majority of currencies).
+	//
+	// Links:
+	//  1) https://core.telegram.org/bots/payments/currencies.json
 	Amount int64
 }
 
@@ -1221,6 +1415,17 @@ func (i *InputStorePaymentStarsTopup) String() string {
 	}
 	type Alias InputStorePaymentStarsTopup
 	return fmt.Sprintf("InputStorePaymentStarsTopup%+v", Alias(*i))
+}
+
+// FillFrom fills InputStorePaymentStarsTopup from given interface.
+func (i *InputStorePaymentStarsTopup) FillFrom(from interface {
+	GetStars() (value int64)
+	GetCurrency() (value string)
+	GetAmount() (value int64)
+}) {
+	i.Stars = from.GetStars()
+	i.Currency = from.GetCurrency()
+	i.Amount = from.GetAmount()
 }
 
 // TypeID returns type id in TL schema.
@@ -1347,14 +1552,29 @@ func (i *InputStorePaymentStarsTopup) GetAmount() (value int64) {
 }
 
 // InputStorePaymentStarsGift represents TL type `inputStorePaymentStarsGift#1d741ef7`.
+// Used to gift Telegram Stars¹ to a friend.
+//
+// Links:
+//  1. https://core.telegram.org/api/stars
+//
+// See https://core.telegram.org/constructor/inputStorePaymentStarsGift for reference.
 type InputStorePaymentStarsGift struct {
-	// UserID field of InputStorePaymentStarsGift.
+	// The user to which the stars should be gifted.
 	UserID InputUserClass
-	// Stars field of InputStorePaymentStarsGift.
+	// Amount of stars to gift
 	Stars int64
-	// Currency field of InputStorePaymentStarsGift.
+	// Three-letter ISO 4217 currency¹ code
+	//
+	// Links:
+	//  1) https://core.telegram.org/bots/payments#supported-currencies
 	Currency string
-	// Amount field of InputStorePaymentStarsGift.
+	// Total price in the smallest units of the currency (integer, not float/double). For
+	// example, for a price of US$ 1.45 pass amount = 145. See the exp parameter in
+	// currencies.json¹, it shows the number of digits past the decimal point for each
+	// currency (2 for the majority of currencies).
+	//
+	// Links:
+	//  1) https://core.telegram.org/bots/payments/currencies.json
 	Amount int64
 }
 
@@ -1401,6 +1621,19 @@ func (i *InputStorePaymentStarsGift) String() string {
 	}
 	type Alias InputStorePaymentStarsGift
 	return fmt.Sprintf("InputStorePaymentStarsGift%+v", Alias(*i))
+}
+
+// FillFrom fills InputStorePaymentStarsGift from given interface.
+func (i *InputStorePaymentStarsGift) FillFrom(from interface {
+	GetUserID() (value InputUserClass)
+	GetStars() (value int64)
+	GetCurrency() (value string)
+	GetAmount() (value int64)
+}) {
+	i.UserID = from.GetUserID()
+	i.Stars = from.GetStars()
+	i.Currency = from.GetCurrency()
+	i.Amount = from.GetAmount()
 }
 
 // TypeID returns type id in TL schema.
@@ -1552,38 +1785,79 @@ func (i *InputStorePaymentStarsGift) GetAmount() (value int64) {
 }
 
 // InputStorePaymentStarsGiveaway represents TL type `inputStorePaymentStarsGiveaway#751f08fa`.
+// Used to pay for a star giveaway, see here »¹ for more info.
+//
+// Links:
+//  1. https://core.telegram.org/api/giveaways#star-giveaways
+//
+// See https://core.telegram.org/constructor/inputStorePaymentStarsGiveaway for reference.
 type InputStorePaymentStarsGiveaway struct {
-	// Flags field of InputStorePaymentStarsGiveaway.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// OnlyNewSubscribers field of InputStorePaymentStarsGiveaway.
+	// If set, only new subscribers starting from the giveaway creation date will be able to
+	// participate to the giveaway.
 	OnlyNewSubscribers bool
-	// WinnersAreVisible field of InputStorePaymentStarsGiveaway.
+	// If set, giveaway winners are public and will be listed in a
+	// messageMediaGiveawayResults¹ message that will be automatically sent to the channel
+	// once the giveaway ends.
+	//
+	// Links:
+	//  1) https://core.telegram.org/constructor/messageMediaGiveawayResults
 	WinnersAreVisible bool
-	// Stars field of InputStorePaymentStarsGiveaway.
+	// Total number of Telegram Stars being given away (each user will receive stars/users
+	// stars).
 	Stars int64
-	// BoostPeer field of InputStorePaymentStarsGiveaway.
+	// The channel/supergroup starting the giveaway, that the user must join to participate,
+	// that will receive the giveaway boosts¹; see here »² for more info on giveaways.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/boost
+	//  2) https://core.telegram.org/api/giveaways
 	BoostPeer InputPeerClass
-	// AdditionalPeers field of InputStorePaymentStarsGiveaway.
+	// Additional channels that the user must join to participate to the giveaway can be
+	// specified here.
 	//
 	// Use SetAdditionalPeers and GetAdditionalPeers helpers.
 	AdditionalPeers []InputPeerClass
-	// CountriesISO2 field of InputStorePaymentStarsGiveaway.
+	// The set of users that can participate to the giveaway can be restricted by passing
+	// here an explicit whitelist of up to giveaway_countries_max¹ countries, specified as
+	// two-letter ISO 3166-1 alpha-2 country codes.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/config#giveaway-countries-max
 	//
 	// Use SetCountriesISO2 and GetCountriesISO2 helpers.
 	CountriesISO2 []string
-	// PrizeDescription field of InputStorePaymentStarsGiveaway.
+	// Can contain a textual description of additional giveaway prizes.
 	//
 	// Use SetPrizeDescription and GetPrizeDescription helpers.
 	PrizeDescription string
-	// RandomID field of InputStorePaymentStarsGiveaway.
+	// Random ID to avoid resending the giveaway
 	RandomID int64
-	// UntilDate field of InputStorePaymentStarsGiveaway.
+	// The end date of the giveaway, must be at most giveaway_period_max¹ seconds in the
+	// future; see here »² for more info on giveaways.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/config#giveaway-period-max
+	//  2) https://core.telegram.org/api/giveaways
 	UntilDate int
-	// Currency field of InputStorePaymentStarsGiveaway.
+	// Three-letter ISO 4217 currency¹ code
+	//
+	// Links:
+	//  1) https://core.telegram.org/bots/payments#supported-currencies
 	Currency string
-	// Amount field of InputStorePaymentStarsGiveaway.
+	// Total price in the smallest units of the currency (integer, not float/double). For
+	// example, for a price of US$ 1.45 pass amount = 145. See the exp parameter in
+	// currencies.json¹, it shows the number of digits past the decimal point for each
+	// currency (2 for the majority of currencies).
+	//
+	// Links:
+	//  1) https://core.telegram.org/bots/payments/currencies.json
 	Amount int64
-	// Users field of InputStorePaymentStarsGiveaway.
+	// Number of winners.
 	Users int
 }
 
@@ -1657,6 +1931,44 @@ func (i *InputStorePaymentStarsGiveaway) String() string {
 	}
 	type Alias InputStorePaymentStarsGiveaway
 	return fmt.Sprintf("InputStorePaymentStarsGiveaway%+v", Alias(*i))
+}
+
+// FillFrom fills InputStorePaymentStarsGiveaway from given interface.
+func (i *InputStorePaymentStarsGiveaway) FillFrom(from interface {
+	GetOnlyNewSubscribers() (value bool)
+	GetWinnersAreVisible() (value bool)
+	GetStars() (value int64)
+	GetBoostPeer() (value InputPeerClass)
+	GetAdditionalPeers() (value []InputPeerClass, ok bool)
+	GetCountriesISO2() (value []string, ok bool)
+	GetPrizeDescription() (value string, ok bool)
+	GetRandomID() (value int64)
+	GetUntilDate() (value int)
+	GetCurrency() (value string)
+	GetAmount() (value int64)
+	GetUsers() (value int)
+}) {
+	i.OnlyNewSubscribers = from.GetOnlyNewSubscribers()
+	i.WinnersAreVisible = from.GetWinnersAreVisible()
+	i.Stars = from.GetStars()
+	i.BoostPeer = from.GetBoostPeer()
+	if val, ok := from.GetAdditionalPeers(); ok {
+		i.AdditionalPeers = val
+	}
+
+	if val, ok := from.GetCountriesISO2(); ok {
+		i.CountriesISO2 = val
+	}
+
+	if val, ok := from.GetPrizeDescription(); ok {
+		i.PrizeDescription = val
+	}
+
+	i.RandomID = from.GetRandomID()
+	i.UntilDate = from.GetUntilDate()
+	i.Currency = from.GetCurrency()
+	i.Amount = from.GetAmount()
+	i.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -2075,7 +2387,17 @@ func (i *InputStorePaymentStarsGiveaway) GetUsers() (value int) {
 	return i.Users
 }
 
+// MapAdditionalPeers returns field AdditionalPeers wrapped in InputPeerClassArray helper.
+func (i *InputStorePaymentStarsGiveaway) MapAdditionalPeers() (value InputPeerClassArray, ok bool) {
+	if !i.Flags.Has(1) {
+		return value, false
+	}
+	return InputPeerClassArray(i.AdditionalPeers), true
+}
+
 // InputStorePaymentAuthCode represents TL type `inputStorePaymentAuthCode#9bb2636d`.
+//
+// See https://core.telegram.org/constructor/inputStorePaymentAuthCode for reference.
 type InputStorePaymentAuthCode struct {
 	// Flags field of InputStorePaymentAuthCode.
 	Flags bin.Fields
@@ -2140,6 +2462,21 @@ func (i *InputStorePaymentAuthCode) String() string {
 	}
 	type Alias InputStorePaymentAuthCode
 	return fmt.Sprintf("InputStorePaymentAuthCode%+v", Alias(*i))
+}
+
+// FillFrom fills InputStorePaymentAuthCode from given interface.
+func (i *InputStorePaymentAuthCode) FillFrom(from interface {
+	GetRestore() (value bool)
+	GetPhoneNumber() (value string)
+	GetPhoneCodeHash() (value string)
+	GetCurrency() (value string)
+	GetAmount() (value int64)
+}) {
+	i.Restore = from.GetRestore()
+	i.PhoneNumber = from.GetPhoneNumber()
+	i.PhoneCodeHash = from.GetPhoneCodeHash()
+	i.Currency = from.GetCurrency()
+	i.Amount = from.GetAmount()
 }
 
 // TypeID returns type id in TL schema.
@@ -2330,6 +2667,8 @@ func (i *InputStorePaymentAuthCode) GetAmount() (value int64) {
 const InputStorePaymentPurposeClassName = "InputStorePaymentPurpose"
 
 // InputStorePaymentPurposeClass represents InputStorePaymentPurpose generic type.
+//
+// See https://core.telegram.org/type/InputStorePaymentPurpose for reference.
 //
 // Constructors:
 //   - [InputStorePaymentPremiumSubscription]

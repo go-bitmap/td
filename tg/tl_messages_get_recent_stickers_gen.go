@@ -32,12 +32,21 @@ var (
 )
 
 // MessagesGetRecentStickersRequest represents TL type `messages.getRecentStickers#9da9403b`.
+// Get recent stickers
+//
+// See https://core.telegram.org/method/messages.getRecentStickers for reference.
 type MessagesGetRecentStickersRequest struct {
-	// Flags field of MessagesGetRecentStickersRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Attached field of MessagesGetRecentStickersRequest.
+	// Get stickers recently attached to photo or video files
 	Attached bool
-	// Hash field of MessagesGetRecentStickersRequest.
+	// Hash used for caching, for more info click here¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets#hash-generation
 	Hash int64
 }
 
@@ -76,6 +85,15 @@ func (g *MessagesGetRecentStickersRequest) String() string {
 	}
 	type Alias MessagesGetRecentStickersRequest
 	return fmt.Sprintf("MessagesGetRecentStickersRequest%+v", Alias(*g))
+}
+
+// FillFrom fills MessagesGetRecentStickersRequest from given interface.
+func (g *MessagesGetRecentStickersRequest) FillFrom(from interface {
+	GetAttached() (value bool)
+	GetHash() (value int64)
+}) {
+	g.Attached = from.GetAttached()
+	g.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -203,6 +221,9 @@ func (g *MessagesGetRecentStickersRequest) GetHash() (value int64) {
 }
 
 // MessagesGetRecentStickers invokes method messages.getRecentStickers#9da9403b returning error if any.
+// Get recent stickers
+//
+// See https://core.telegram.org/method/messages.getRecentStickers for reference.
 func (c *Client) MessagesGetRecentStickers(ctx context.Context, request *MessagesGetRecentStickersRequest) (MessagesRecentStickersClass, error) {
 	var result MessagesRecentStickersBox
 

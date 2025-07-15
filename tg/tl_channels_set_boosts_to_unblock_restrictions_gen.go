@@ -32,10 +32,22 @@ var (
 )
 
 // ChannelsSetBoostsToUnblockRestrictionsRequest represents TL type `channels.setBoostsToUnblockRestrictions#ad399cee`.
+// Admins with ban_users admin rights »¹ may allow users that apply a certain number of
+// booosts »² to the group to bypass slow mode »³ and other »⁴ supergroup
+// restrictions, see here »⁵ for more info.
+//
+// Links:
+//  1. https://core.telegram.org/constructor/chatAdminRights
+//  2. https://core.telegram.org/api/boost
+//  3. https://core.telegram.org/method/channels.toggleSlowMode
+//  4. https://core.telegram.org/api/rights#default-rights
+//  5. https://core.telegram.org/api/boost#bypass-slowmode-and-chat-restrictions
+//
+// See https://core.telegram.org/method/channels.setBoostsToUnblockRestrictions for reference.
 type ChannelsSetBoostsToUnblockRestrictionsRequest struct {
-	// Channel field of ChannelsSetBoostsToUnblockRestrictionsRequest.
+	// The supergroup.
 	Channel InputChannelClass
-	// Boosts field of ChannelsSetBoostsToUnblockRestrictionsRequest.
+	// The number of required boosts (1-8, 0 to disable).
 	Boosts int
 }
 
@@ -71,6 +83,15 @@ func (s *ChannelsSetBoostsToUnblockRestrictionsRequest) String() string {
 	}
 	type Alias ChannelsSetBoostsToUnblockRestrictionsRequest
 	return fmt.Sprintf("ChannelsSetBoostsToUnblockRestrictionsRequest%+v", Alias(*s))
+}
+
+// FillFrom fills ChannelsSetBoostsToUnblockRestrictionsRequest from given interface.
+func (s *ChannelsSetBoostsToUnblockRestrictionsRequest) FillFrom(from interface {
+	GetChannel() (value InputChannelClass)
+	GetBoosts() (value int)
+}) {
+	s.Channel = from.GetChannel()
+	s.Boosts = from.GetBoosts()
 }
 
 // TypeID returns type id in TL schema.
@@ -181,7 +202,28 @@ func (s *ChannelsSetBoostsToUnblockRestrictionsRequest) GetBoosts() (value int) 
 	return s.Boosts
 }
 
+// GetChannelAsNotEmpty returns mapped value of Channel field.
+func (s *ChannelsSetBoostsToUnblockRestrictionsRequest) GetChannelAsNotEmpty() (NotEmptyInputChannel, bool) {
+	return s.Channel.AsNotEmpty()
+}
+
 // ChannelsSetBoostsToUnblockRestrictions invokes method channels.setBoostsToUnblockRestrictions#ad399cee returning error if any.
+// Admins with ban_users admin rights »¹ may allow users that apply a certain number of
+// booosts »² to the group to bypass slow mode »³ and other »⁴ supergroup
+// restrictions, see here »⁵ for more info.
+//
+// Links:
+//  1. https://core.telegram.org/constructor/chatAdminRights
+//  2. https://core.telegram.org/api/boost
+//  3. https://core.telegram.org/method/channels.toggleSlowMode
+//  4. https://core.telegram.org/api/rights#default-rights
+//  5. https://core.telegram.org/api/boost#bypass-slowmode-and-chat-restrictions
+//
+// Possible errors:
+//
+//	400 CHANNEL_INVALID: The provided channel is invalid.
+//
+// See https://core.telegram.org/method/channels.setBoostsToUnblockRestrictions for reference.
 func (c *Client) ChannelsSetBoostsToUnblockRestrictions(ctx context.Context, request *ChannelsSetBoostsToUnblockRestrictionsRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

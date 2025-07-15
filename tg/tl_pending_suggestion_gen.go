@@ -32,6 +32,8 @@ var (
 )
 
 // PendingSuggestion represents TL type `pendingSuggestion#e7e82e12`.
+//
+// See https://core.telegram.org/constructor/pendingSuggestion for reference.
 type PendingSuggestion struct {
 	// Suggestion field of PendingSuggestion.
 	Suggestion string
@@ -81,6 +83,19 @@ func (p *PendingSuggestion) String() string {
 	}
 	type Alias PendingSuggestion
 	return fmt.Sprintf("PendingSuggestion%+v", Alias(*p))
+}
+
+// FillFrom fills PendingSuggestion from given interface.
+func (p *PendingSuggestion) FillFrom(from interface {
+	GetSuggestion() (value string)
+	GetTitle() (value TextWithEntities)
+	GetDescription() (value TextWithEntities)
+	GetURL() (value string)
+}) {
+	p.Suggestion = from.GetSuggestion()
+	p.Title = from.GetTitle()
+	p.Description = from.GetDescription()
+	p.URL = from.GetURL()
 }
 
 // TypeID returns type id in TL schema.

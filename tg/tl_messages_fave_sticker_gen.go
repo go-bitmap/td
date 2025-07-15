@@ -32,10 +32,13 @@ var (
 )
 
 // MessagesFaveStickerRequest represents TL type `messages.faveSticker#b9ffc55b`.
+// Mark or unmark a sticker as favorite
+//
+// See https://core.telegram.org/method/messages.faveSticker for reference.
 type MessagesFaveStickerRequest struct {
-	// ID field of MessagesFaveStickerRequest.
+	// Sticker in question
 	ID InputDocumentClass
-	// Unfave field of MessagesFaveStickerRequest.
+	// Whether to add or remove a sticker from favorites
 	Unfave bool
 }
 
@@ -71,6 +74,15 @@ func (f *MessagesFaveStickerRequest) String() string {
 	}
 	type Alias MessagesFaveStickerRequest
 	return fmt.Sprintf("MessagesFaveStickerRequest%+v", Alias(*f))
+}
+
+// FillFrom fills MessagesFaveStickerRequest from given interface.
+func (f *MessagesFaveStickerRequest) FillFrom(from interface {
+	GetID() (value InputDocumentClass)
+	GetUnfave() (value bool)
+}) {
+	f.ID = from.GetID()
+	f.Unfave = from.GetUnfave()
 }
 
 // TypeID returns type id in TL schema.
@@ -181,7 +193,19 @@ func (f *MessagesFaveStickerRequest) GetUnfave() (value bool) {
 	return f.Unfave
 }
 
+// GetIDAsNotEmpty returns mapped value of ID field.
+func (f *MessagesFaveStickerRequest) GetIDAsNotEmpty() (*InputDocument, bool) {
+	return f.ID.AsNotEmpty()
+}
+
 // MessagesFaveSticker invokes method messages.faveSticker#b9ffc55b returning error if any.
+// Mark or unmark a sticker as favorite
+//
+// Possible errors:
+//
+//	400 STICKER_ID_INVALID: The provided sticker ID is invalid.
+//
+// See https://core.telegram.org/method/messages.faveSticker for reference.
 func (c *Client) MessagesFaveSticker(ctx context.Context, request *MessagesFaveStickerRequest) (bool, error) {
 	var result BoolBox
 

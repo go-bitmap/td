@@ -32,20 +32,39 @@ var (
 )
 
 // AccountRegisterDeviceRequest represents TL type `account.registerDevice#ec86017a`.
+// Register device to receive PUSH notifications¹
+//
+// Links:
+//  1. https://core.telegram.org/api/push-updates
+//
+// See https://core.telegram.org/method/account.registerDevice for reference.
 type AccountRegisterDeviceRequest struct {
-	// Flags field of AccountRegisterDeviceRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// NoMuted field of AccountRegisterDeviceRequest.
+	// Avoid receiving (silent and invisible background) notifications. Useful to save
+	// battery.
 	NoMuted bool
-	// TokenType field of AccountRegisterDeviceRequest.
+	// Device token type, see PUSH updates¹ for the possible values.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/push-updates#subscribing-to-notifications
 	TokenType int
-	// Token field of AccountRegisterDeviceRequest.
+	// Device token, see PUSH updates¹ for the possible values.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/push-updates#subscribing-to-notifications
 	Token string
-	// AppSandbox field of AccountRegisterDeviceRequest.
+	// If (boolTrue)¹ is transmitted, a sandbox-certificate will be used during transmission.
+	//
+	// Links:
+	//  1) https://core.telegram.org/constructor/boolTrue
 	AppSandbox bool
-	// Secret field of AccountRegisterDeviceRequest.
+	// For FCM and APNS VoIP, optional encryption key used to encrypt push notifications
 	Secret []byte
-	// OtherUIDs field of AccountRegisterDeviceRequest.
+	// List of user identifiers of other users currently using the client
 	OtherUIDs []int64
 }
 
@@ -96,6 +115,23 @@ func (r *AccountRegisterDeviceRequest) String() string {
 	}
 	type Alias AccountRegisterDeviceRequest
 	return fmt.Sprintf("AccountRegisterDeviceRequest%+v", Alias(*r))
+}
+
+// FillFrom fills AccountRegisterDeviceRequest from given interface.
+func (r *AccountRegisterDeviceRequest) FillFrom(from interface {
+	GetNoMuted() (value bool)
+	GetTokenType() (value int)
+	GetToken() (value string)
+	GetAppSandbox() (value bool)
+	GetSecret() (value []byte)
+	GetOtherUIDs() (value []int64)
+}) {
+	r.NoMuted = from.GetNoMuted()
+	r.TokenType = from.GetTokenType()
+	r.Token = from.GetToken()
+	r.AppSandbox = from.GetAppSandbox()
+	r.Secret = from.GetSecret()
+	r.OtherUIDs = from.GetOtherUIDs()
 }
 
 // TypeID returns type id in TL schema.
@@ -316,6 +352,21 @@ func (r *AccountRegisterDeviceRequest) GetOtherUIDs() (value []int64) {
 }
 
 // AccountRegisterDevice invokes method account.registerDevice#ec86017a returning error if any.
+// Register device to receive PUSH notifications¹
+//
+// Links:
+//  1. https://core.telegram.org/api/push-updates
+//
+// Possible errors:
+//
+//	400 TOKEN_EMPTY: The specified token is empty.
+//	400 TOKEN_INVALID: The provided token is invalid.
+//	400 TOKEN_TYPE_INVALID: The specified token type is invalid.
+//	400 WEBPUSH_AUTH_INVALID: The specified web push authentication secret is invalid.
+//	400 WEBPUSH_KEY_INVALID: The specified web push elliptic curve Diffie-Hellman public key is invalid.
+//	400 WEBPUSH_TOKEN_INVALID: The specified web push token is invalid.
+//
+// See https://core.telegram.org/method/account.registerDevice for reference.
 func (c *Client) AccountRegisterDevice(ctx context.Context, request *AccountRegisterDeviceRequest) (bool, error) {
 	var result BoolBox
 

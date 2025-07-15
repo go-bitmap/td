@@ -32,10 +32,16 @@ var (
 )
 
 // MessagesGetSponsoredMessagesRequest represents TL type `messages.getSponsoredMessages#3d6ce850`.
+// Get a list of sponsored messages for a peer, see here »¹ for more info.
+//
+// Links:
+//  1. https://core.telegram.org/api/sponsored-messages
+//
+// See https://core.telegram.org/method/messages.getSponsoredMessages for reference.
 type MessagesGetSponsoredMessagesRequest struct {
 	// Flags field of MessagesGetSponsoredMessagesRequest.
 	Flags bin.Fields
-	// Peer field of MessagesGetSponsoredMessagesRequest.
+	// The currently open channel/bot.
 	Peer InputPeerClass
 	// MsgID field of MessagesGetSponsoredMessagesRequest.
 	//
@@ -78,6 +84,18 @@ func (g *MessagesGetSponsoredMessagesRequest) String() string {
 	}
 	type Alias MessagesGetSponsoredMessagesRequest
 	return fmt.Sprintf("MessagesGetSponsoredMessagesRequest%+v", Alias(*g))
+}
+
+// FillFrom fills MessagesGetSponsoredMessagesRequest from given interface.
+func (g *MessagesGetSponsoredMessagesRequest) FillFrom(from interface {
+	GetPeer() (value InputPeerClass)
+	GetMsgID() (value int, ok bool)
+}) {
+	g.Peer = from.GetPeer()
+	if val, ok := from.GetMsgID(); ok {
+		g.MsgID = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -218,6 +236,12 @@ func (g *MessagesGetSponsoredMessagesRequest) GetMsgID() (value int, ok bool) {
 }
 
 // MessagesGetSponsoredMessages invokes method messages.getSponsoredMessages#3d6ce850 returning error if any.
+// Get a list of sponsored messages for a peer, see here »¹ for more info.
+//
+// Links:
+//  1. https://core.telegram.org/api/sponsored-messages
+//
+// See https://core.telegram.org/method/messages.getSponsoredMessages for reference.
 func (c *Client) MessagesGetSponsoredMessages(ctx context.Context, request *MessagesGetSponsoredMessagesRequest) (MessagesSponsoredMessagesClass, error) {
 	var result MessagesSponsoredMessagesBox
 

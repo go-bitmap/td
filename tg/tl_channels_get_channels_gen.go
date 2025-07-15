@@ -32,8 +32,14 @@ var (
 )
 
 // ChannelsGetChannelsRequest represents TL type `channels.getChannels#a7f6bbb`.
+// Get info about channels/supergroups¹
+//
+// Links:
+//  1. https://core.telegram.org/api/channel
+//
+// See https://core.telegram.org/method/channels.getChannels for reference.
 type ChannelsGetChannelsRequest struct {
-	// ID field of ChannelsGetChannelsRequest.
+	// IDs of channels/supergroups to get info about
 	ID []InputChannelClass
 }
 
@@ -66,6 +72,13 @@ func (g *ChannelsGetChannelsRequest) String() string {
 	}
 	type Alias ChannelsGetChannelsRequest
 	return fmt.Sprintf("ChannelsGetChannelsRequest%+v", Alias(*g))
+}
+
+// FillFrom fills ChannelsGetChannelsRequest from given interface.
+func (g *ChannelsGetChannelsRequest) FillFrom(from interface {
+	GetID() (value []InputChannelClass)
+}) {
+	g.ID = from.GetID()
 }
 
 // TypeID returns type id in TL schema.
@@ -169,7 +182,26 @@ func (g *ChannelsGetChannelsRequest) GetID() (value []InputChannelClass) {
 	return g.ID
 }
 
+// MapID returns field ID wrapped in InputChannelClassArray helper.
+func (g *ChannelsGetChannelsRequest) MapID() (value InputChannelClassArray) {
+	return InputChannelClassArray(g.ID)
+}
+
 // ChannelsGetChannels invokes method channels.getChannels#a7f6bbb returning error if any.
+// Get info about channels/supergroups¹
+//
+// Links:
+//  1. https://core.telegram.org/api/channel
+//
+// Possible errors:
+//
+//	400 CHANNEL_INVALID: The provided channel is invalid.
+//	406 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
+//	400 MSG_ID_INVALID: Invalid message ID provided.
+//	400 USER_BANNED_IN_CHANNEL: You're banned from sending messages in supergroups/channels.
+//
+// See https://core.telegram.org/method/channels.getChannels for reference.
+// Can be used by bots.
 func (c *Client) ChannelsGetChannels(ctx context.Context, id []InputChannelClass) (MessagesChatsClass, error) {
 	var result MessagesChatsBox
 

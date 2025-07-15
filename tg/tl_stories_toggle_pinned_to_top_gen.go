@@ -32,10 +32,19 @@ var (
 )
 
 // StoriesTogglePinnedToTopRequest represents TL type `stories.togglePinnedToTop#b297e9b`.
+// Pin some stories to the top of the profile, see here »¹ for more info.
+//
+// Links:
+//  1. https://core.telegram.org/api/stories#pinned-or-archived-stories
+//
+// See https://core.telegram.org/method/stories.togglePinnedToTop for reference.
 type StoriesTogglePinnedToTopRequest struct {
-	// Peer field of StoriesTogglePinnedToTopRequest.
+	// Peer where to pin stories.
 	Peer InputPeerClass
-	// ID field of StoriesTogglePinnedToTopRequest.
+	// IDs of the stories to pin (max stories_pinned_to_top_count_max¹).
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/config#stories-pinned-to-top-count-max
 	ID []int
 }
 
@@ -71,6 +80,15 @@ func (t *StoriesTogglePinnedToTopRequest) String() string {
 	}
 	type Alias StoriesTogglePinnedToTopRequest
 	return fmt.Sprintf("StoriesTogglePinnedToTopRequest%+v", Alias(*t))
+}
+
+// FillFrom fills StoriesTogglePinnedToTopRequest from given interface.
+func (t *StoriesTogglePinnedToTopRequest) FillFrom(from interface {
+	GetPeer() (value InputPeerClass)
+	GetID() (value []int)
+}) {
+	t.Peer = from.GetPeer()
+	t.ID = from.GetID()
 }
 
 // TypeID returns type id in TL schema.
@@ -195,6 +213,17 @@ func (t *StoriesTogglePinnedToTopRequest) GetID() (value []int) {
 }
 
 // StoriesTogglePinnedToTop invokes method stories.togglePinnedToTop#b297e9b returning error if any.
+// Pin some stories to the top of the profile, see here »¹ for more info.
+//
+// Links:
+//  1. https://core.telegram.org/api/stories#pinned-or-archived-stories
+//
+// Possible errors:
+//
+//	400 PEER_ID_INVALID: The provided peer id is invalid.
+//	400 STORY_ID_INVALID: The specified story ID is invalid.
+//
+// See https://core.telegram.org/method/stories.togglePinnedToTop for reference.
 func (c *Client) StoriesTogglePinnedToTop(ctx context.Context, request *StoriesTogglePinnedToTopRequest) (bool, error) {
 	var result BoolBox
 

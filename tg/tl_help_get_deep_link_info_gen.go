@@ -32,8 +32,14 @@ var (
 )
 
 // HelpGetDeepLinkInfoRequest represents TL type `help.getDeepLinkInfo#3fedc75f`.
+// Get info about an unsupported deep link, see here for more info »¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/links#unsupported-links
+//
+// See https://core.telegram.org/method/help.getDeepLinkInfo for reference.
 type HelpGetDeepLinkInfoRequest struct {
-	// Path field of HelpGetDeepLinkInfoRequest.
+	// Path component of a tg: link
 	Path string
 }
 
@@ -66,6 +72,13 @@ func (g *HelpGetDeepLinkInfoRequest) String() string {
 	}
 	type Alias HelpGetDeepLinkInfoRequest
 	return fmt.Sprintf("HelpGetDeepLinkInfoRequest%+v", Alias(*g))
+}
+
+// FillFrom fills HelpGetDeepLinkInfoRequest from given interface.
+func (g *HelpGetDeepLinkInfoRequest) FillFrom(from interface {
+	GetPath() (value string)
+}) {
+	g.Path = from.GetPath()
 }
 
 // TypeID returns type id in TL schema.
@@ -152,6 +165,12 @@ func (g *HelpGetDeepLinkInfoRequest) GetPath() (value string) {
 }
 
 // HelpGetDeepLinkInfo invokes method help.getDeepLinkInfo#3fedc75f returning error if any.
+// Get info about an unsupported deep link, see here for more info »¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/links#unsupported-links
+//
+// See https://core.telegram.org/method/help.getDeepLinkInfo for reference.
 func (c *Client) HelpGetDeepLinkInfo(ctx context.Context, path string) (HelpDeepLinkInfoClass, error) {
 	var result HelpDeepLinkInfoBox
 

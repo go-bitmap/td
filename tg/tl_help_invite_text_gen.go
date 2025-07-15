@@ -32,8 +32,11 @@ var (
 )
 
 // HelpInviteText represents TL type `help.inviteText#18cb9f78`.
+// Text of a text message with an invitation to install Telegram.
+//
+// See https://core.telegram.org/constructor/help.inviteText for reference.
 type HelpInviteText struct {
-	// Message field of HelpInviteText.
+	// Text of the message
 	Message string
 }
 
@@ -66,6 +69,13 @@ func (i *HelpInviteText) String() string {
 	}
 	type Alias HelpInviteText
 	return fmt.Sprintf("HelpInviteText%+v", Alias(*i))
+}
+
+// FillFrom fills HelpInviteText from given interface.
+func (i *HelpInviteText) FillFrom(from interface {
+	GetMessage() (value string)
+}) {
+	i.Message = from.GetMessage()
 }
 
 // TypeID returns type id in TL schema.

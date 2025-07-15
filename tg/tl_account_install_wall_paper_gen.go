@@ -32,10 +32,22 @@ var (
 )
 
 // AccountInstallWallPaperRequest represents TL type `account.installWallPaper#feed5769`.
+// Install wallpaper¹
+//
+// Links:
+//  1. https://core.telegram.org/api/wallpapers
+//
+// See https://core.telegram.org/method/account.installWallPaper for reference.
 type AccountInstallWallPaperRequest struct {
-	// Wallpaper field of AccountInstallWallPaperRequest.
+	// Wallpaper¹ to install
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/wallpapers
 	Wallpaper InputWallPaperClass
-	// Settings field of AccountInstallWallPaperRequest.
+	// Wallpaper¹ settings
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/wallpapers
 	Settings WallPaperSettings
 }
 
@@ -71,6 +83,15 @@ func (i *AccountInstallWallPaperRequest) String() string {
 	}
 	type Alias AccountInstallWallPaperRequest
 	return fmt.Sprintf("AccountInstallWallPaperRequest%+v", Alias(*i))
+}
+
+// FillFrom fills AccountInstallWallPaperRequest from given interface.
+func (i *AccountInstallWallPaperRequest) FillFrom(from interface {
+	GetWallpaper() (value InputWallPaperClass)
+	GetSettings() (value WallPaperSettings)
+}) {
+	i.Wallpaper = from.GetWallpaper()
+	i.Settings = from.GetSettings()
 }
 
 // TypeID returns type id in TL schema.
@@ -182,6 +203,16 @@ func (i *AccountInstallWallPaperRequest) GetSettings() (value WallPaperSettings)
 }
 
 // AccountInstallWallPaper invokes method account.installWallPaper#feed5769 returning error if any.
+// Install wallpaper¹
+//
+// Links:
+//  1. https://core.telegram.org/api/wallpapers
+//
+// Possible errors:
+//
+//	400 WALLPAPER_INVALID: The specified wallpaper is invalid.
+//
+// See https://core.telegram.org/method/account.installWallPaper for reference.
 func (c *Client) AccountInstallWallPaper(ctx context.Context, request *AccountInstallWallPaperRequest) (bool, error) {
 	var result BoolBox
 

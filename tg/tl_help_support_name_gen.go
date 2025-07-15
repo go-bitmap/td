@@ -32,8 +32,11 @@ var (
 )
 
 // HelpSupportName represents TL type `help.supportName#8c05f1c9`.
+// Localized name for telegram support
+//
+// See https://core.telegram.org/constructor/help.supportName for reference.
 type HelpSupportName struct {
-	// Name field of HelpSupportName.
+	// Localized name
 	Name string
 }
 
@@ -66,6 +69,13 @@ func (s *HelpSupportName) String() string {
 	}
 	type Alias HelpSupportName
 	return fmt.Sprintf("HelpSupportName%+v", Alias(*s))
+}
+
+// FillFrom fills HelpSupportName from given interface.
+func (s *HelpSupportName) FillFrom(from interface {
+	GetName() (value string)
+}) {
+	s.Name = from.GetName()
 }
 
 // TypeID returns type id in TL schema.

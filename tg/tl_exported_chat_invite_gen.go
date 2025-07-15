@@ -32,50 +32,66 @@ var (
 )
 
 // ChatInviteExported represents TL type `chatInviteExported#a22cbd96`.
+// Exported chat invite
+//
+// See https://core.telegram.org/constructor/chatInviteExported for reference.
 type ChatInviteExported struct {
-	// Flags field of ChatInviteExported.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Revoked field of ChatInviteExported.
+	// Whether this chat invite was revoked
 	Revoked bool
-	// Permanent field of ChatInviteExported.
+	// Whether this chat invite has no expiration
 	Permanent bool
-	// RequestNeeded field of ChatInviteExported.
+	// Whether users importing this invite link will have to be approved to join the channel
+	// or group
 	RequestNeeded bool
-	// Link field of ChatInviteExported.
+	// Chat invitation link
 	Link string
-	// AdminID field of ChatInviteExported.
+	// ID of the admin that created this chat invite
 	AdminID int64
-	// Date field of ChatInviteExported.
+	// When was this chat invite created
 	Date int
-	// StartDate field of ChatInviteExported.
+	// When was this chat invite last modified
 	//
 	// Use SetStartDate and GetStartDate helpers.
 	StartDate int
-	// ExpireDate field of ChatInviteExported.
+	// When does this chat invite expire
 	//
 	// Use SetExpireDate and GetExpireDate helpers.
 	ExpireDate int
-	// UsageLimit field of ChatInviteExported.
+	// Maximum number of users that can join using this link
 	//
 	// Use SetUsageLimit and GetUsageLimit helpers.
 	UsageLimit int
-	// Usage field of ChatInviteExported.
+	// How many users joined using this link
 	//
 	// Use SetUsage and GetUsage helpers.
 	Usage int
-	// Requested field of ChatInviteExported.
+	// Number of users that have already used this link to join
 	//
 	// Use SetRequested and GetRequested helpers.
 	Requested int
-	// SubscriptionExpired field of ChatInviteExported.
+	// For Telegram Star subscriptions »¹, contains the number of chat members which have
+	// already joined the chat using the link, but have already left due to expiration of
+	// their subscription.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/stars#star-subscriptions
 	//
 	// Use SetSubscriptionExpired and GetSubscriptionExpired helpers.
 	SubscriptionExpired int
-	// Title field of ChatInviteExported.
+	// Custom description for the invite link, visible only to admins
 	//
 	// Use SetTitle and GetTitle helpers.
 	Title string
-	// SubscriptionPricing field of ChatInviteExported.
+	// For Telegram Star subscriptions »¹, contains the pricing of the subscription the
+	// user must activate to join the private channel.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/stars#star-subscriptions
 	//
 	// Use SetSubscriptionPricing and GetSubscriptionPricing helpers.
 	SubscriptionPricing StarsSubscriptionPricing
@@ -157,6 +173,63 @@ func (c *ChatInviteExported) String() string {
 	}
 	type Alias ChatInviteExported
 	return fmt.Sprintf("ChatInviteExported%+v", Alias(*c))
+}
+
+// FillFrom fills ChatInviteExported from given interface.
+func (c *ChatInviteExported) FillFrom(from interface {
+	GetRevoked() (value bool)
+	GetPermanent() (value bool)
+	GetRequestNeeded() (value bool)
+	GetLink() (value string)
+	GetAdminID() (value int64)
+	GetDate() (value int)
+	GetStartDate() (value int, ok bool)
+	GetExpireDate() (value int, ok bool)
+	GetUsageLimit() (value int, ok bool)
+	GetUsage() (value int, ok bool)
+	GetRequested() (value int, ok bool)
+	GetSubscriptionExpired() (value int, ok bool)
+	GetTitle() (value string, ok bool)
+	GetSubscriptionPricing() (value StarsSubscriptionPricing, ok bool)
+}) {
+	c.Revoked = from.GetRevoked()
+	c.Permanent = from.GetPermanent()
+	c.RequestNeeded = from.GetRequestNeeded()
+	c.Link = from.GetLink()
+	c.AdminID = from.GetAdminID()
+	c.Date = from.GetDate()
+	if val, ok := from.GetStartDate(); ok {
+		c.StartDate = val
+	}
+
+	if val, ok := from.GetExpireDate(); ok {
+		c.ExpireDate = val
+	}
+
+	if val, ok := from.GetUsageLimit(); ok {
+		c.UsageLimit = val
+	}
+
+	if val, ok := from.GetUsage(); ok {
+		c.Usage = val
+	}
+
+	if val, ok := from.GetRequested(); ok {
+		c.Requested = val
+	}
+
+	if val, ok := from.GetSubscriptionExpired(); ok {
+		c.SubscriptionExpired = val
+	}
+
+	if val, ok := from.GetTitle(); ok {
+		c.Title = val
+	}
+
+	if val, ok := from.GetSubscriptionPricing(); ok {
+		c.SubscriptionPricing = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -668,6 +741,13 @@ func (c *ChatInviteExported) GetSubscriptionPricing() (value StarsSubscriptionPr
 }
 
 // ChatInvitePublicJoinRequests represents TL type `chatInvitePublicJoinRequests#ed107ab7`.
+// Used in updates and in the channel log to indicate when a user is requesting to join
+// or has joined a discussion group¹
+//
+// Links:
+//  1. https://core.telegram.org/api/discussion#requiring-users-to-join-the-group
+//
+// See https://core.telegram.org/constructor/chatInvitePublicJoinRequests for reference.
 type ChatInvitePublicJoinRequests struct {
 }
 
@@ -770,6 +850,8 @@ func (c *ChatInvitePublicJoinRequests) DecodeBare(b *bin.Buffer) error {
 const ExportedChatInviteClassName = "ExportedChatInvite"
 
 // ExportedChatInviteClass represents ExportedChatInvite generic type.
+//
+// See https://core.telegram.org/type/ExportedChatInvite for reference.
 //
 // Constructors:
 //   - [ChatInviteExported]

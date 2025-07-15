@@ -68,6 +68,13 @@ func (vec *PremiumGiftCodeOptionVector) String() string {
 	return fmt.Sprintf("PremiumGiftCodeOptionVector%+v", Alias(*vec))
 }
 
+// FillFrom fills PremiumGiftCodeOptionVector from given interface.
+func (vec *PremiumGiftCodeOptionVector) FillFrom(from interface {
+	GetElems() (value []PremiumGiftCodeOption)
+}) {
+	vec.Elems = from.GetElems()
+}
+
 // TypeID returns type id in TL schema.
 //
 // See https://core.telegram.org/mtproto/TL-tl#remarks.

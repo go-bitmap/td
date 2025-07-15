@@ -32,10 +32,16 @@ var (
 )
 
 // InvokeWithLayerRequest represents TL type `invokeWithLayer#da9b0d0d`.
+// Invoke the specified query using the specified API layer¹
+//
+// Links:
+//  1. https://core.telegram.org/api/invoking#layers
+//
+// See https://core.telegram.org/constructor/invokeWithLayer for reference.
 type InvokeWithLayerRequest struct {
-	// Layer field of InvokeWithLayerRequest.
+	// The layer to use
 	Layer int
-	// Query field of InvokeWithLayerRequest.
+	// The query
 	Query bin.Object
 }
 
@@ -71,6 +77,15 @@ func (i *InvokeWithLayerRequest) String() string {
 	}
 	type Alias InvokeWithLayerRequest
 	return fmt.Sprintf("InvokeWithLayerRequest%+v", Alias(*i))
+}
+
+// FillFrom fills InvokeWithLayerRequest from given interface.
+func (i *InvokeWithLayerRequest) FillFrom(from interface {
+	GetLayer() (value int)
+	GetQuery() (value bin.Object)
+}) {
+	i.Layer = from.GetLayer()
+	i.Query = from.GetQuery()
 }
 
 // TypeID returns type id in TL schema.

@@ -32,34 +32,49 @@ var (
 )
 
 // PaymentsCheckedGiftCode represents TL type `payments.checkedGiftCode#284a1096`.
+// Contains info about a Telegram Premium giftcode link¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/links#premium-giftcode-links
+//
+// See https://core.telegram.org/constructor/payments.checkedGiftCode for reference.
 type PaymentsCheckedGiftCode struct {
-	// Flags field of PaymentsCheckedGiftCode.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// ViaGiveaway field of PaymentsCheckedGiftCode.
+	// Whether this giftcode was created by a giveaway¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/giveaways
 	ViaGiveaway bool
-	// FromID field of PaymentsCheckedGiftCode.
+	// The peer that created the gift code.
 	//
 	// Use SetFromID and GetFromID helpers.
 	FromID PeerClass
-	// GiveawayMsgID field of PaymentsCheckedGiftCode.
+	// Message ID of the giveaway in the channel specified in from_id.
 	//
 	// Use SetGiveawayMsgID and GetGiveawayMsgID helpers.
 	GiveawayMsgID int
-	// ToID field of PaymentsCheckedGiftCode.
+	// The destination user of the gift.
 	//
 	// Use SetToID and GetToID helpers.
 	ToID int64
-	// Date field of PaymentsCheckedGiftCode.
+	// Creation date of the gift code.
 	Date int
-	// Months field of PaymentsCheckedGiftCode.
+	// Duration in months of the gifted Telegram Premium¹ subscription.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/premium
 	Months int
-	// UsedDate field of PaymentsCheckedGiftCode.
+	// When was the giftcode imported, if it was imported.
 	//
 	// Use SetUsedDate and GetUsedDate helpers.
 	UsedDate int
-	// Chats field of PaymentsCheckedGiftCode.
+	// Mentioned chats
 	Chats []ChatClass
-	// Users field of PaymentsCheckedGiftCode.
+	// Mentioned users
 	Users []UserClass
 }
 
@@ -119,6 +134,41 @@ func (c *PaymentsCheckedGiftCode) String() string {
 	}
 	type Alias PaymentsCheckedGiftCode
 	return fmt.Sprintf("PaymentsCheckedGiftCode%+v", Alias(*c))
+}
+
+// FillFrom fills PaymentsCheckedGiftCode from given interface.
+func (c *PaymentsCheckedGiftCode) FillFrom(from interface {
+	GetViaGiveaway() (value bool)
+	GetFromID() (value PeerClass, ok bool)
+	GetGiveawayMsgID() (value int, ok bool)
+	GetToID() (value int64, ok bool)
+	GetDate() (value int)
+	GetMonths() (value int)
+	GetUsedDate() (value int, ok bool)
+	GetChats() (value []ChatClass)
+	GetUsers() (value []UserClass)
+}) {
+	c.ViaGiveaway = from.GetViaGiveaway()
+	if val, ok := from.GetFromID(); ok {
+		c.FromID = val
+	}
+
+	if val, ok := from.GetGiveawayMsgID(); ok {
+		c.GiveawayMsgID = val
+	}
+
+	if val, ok := from.GetToID(); ok {
+		c.ToID = val
+	}
+
+	c.Date = from.GetDate()
+	c.Months = from.GetMonths()
+	if val, ok := from.GetUsedDate(); ok {
+		c.UsedDate = val
+	}
+
+	c.Chats = from.GetChats()
+	c.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -488,4 +538,14 @@ func (c *PaymentsCheckedGiftCode) GetUsers() (value []UserClass) {
 		return
 	}
 	return c.Users
+}
+
+// MapChats returns field Chats wrapped in ChatClassArray helper.
+func (c *PaymentsCheckedGiftCode) MapChats() (value ChatClassArray) {
+	return ChatClassArray(c.Chats)
+}
+
+// MapUsers returns field Users wrapped in UserClassArray helper.
+func (c *PaymentsCheckedGiftCode) MapUsers() (value UserClassArray) {
+	return UserClassArray(c.Users)
 }

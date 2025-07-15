@@ -32,6 +32,8 @@ var (
 )
 
 // ContactsGetSponsoredPeersRequest represents TL type `contacts.getSponsoredPeers#b6c8c393`.
+//
+// See https://core.telegram.org/method/contacts.getSponsoredPeers for reference.
 type ContactsGetSponsoredPeersRequest struct {
 	// Q field of ContactsGetSponsoredPeersRequest.
 	Q string
@@ -66,6 +68,13 @@ func (g *ContactsGetSponsoredPeersRequest) String() string {
 	}
 	type Alias ContactsGetSponsoredPeersRequest
 	return fmt.Sprintf("ContactsGetSponsoredPeersRequest%+v", Alias(*g))
+}
+
+// FillFrom fills ContactsGetSponsoredPeersRequest from given interface.
+func (g *ContactsGetSponsoredPeersRequest) FillFrom(from interface {
+	GetQ() (value string)
+}) {
+	g.Q = from.GetQ()
 }
 
 // TypeID returns type id in TL schema.
@@ -152,6 +161,8 @@ func (g *ContactsGetSponsoredPeersRequest) GetQ() (value string) {
 }
 
 // ContactsGetSponsoredPeers invokes method contacts.getSponsoredPeers#b6c8c393 returning error if any.
+//
+// See https://core.telegram.org/method/contacts.getSponsoredPeers for reference.
 func (c *Client) ContactsGetSponsoredPeers(ctx context.Context, q string) (ContactsSponsoredPeersClass, error) {
 	var result ContactsSponsoredPeersBox
 

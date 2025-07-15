@@ -32,10 +32,13 @@ var (
 )
 
 // AutoSaveException represents TL type `autoSaveException#81602d47`.
+// Peer-specific media autosave settings
+//
+// See https://core.telegram.org/constructor/autoSaveException for reference.
 type AutoSaveException struct {
-	// Peer field of AutoSaveException.
+	// The peer
 	Peer PeerClass
-	// Settings field of AutoSaveException.
+	// Media autosave settings
 	Settings AutoSaveSettings
 }
 
@@ -71,6 +74,15 @@ func (a *AutoSaveException) String() string {
 	}
 	type Alias AutoSaveException
 	return fmt.Sprintf("AutoSaveException%+v", Alias(*a))
+}
+
+// FillFrom fills AutoSaveException from given interface.
+func (a *AutoSaveException) FillFrom(from interface {
+	GetPeer() (value PeerClass)
+	GetSettings() (value AutoSaveSettings)
+}) {
+	a.Peer = from.GetPeer()
+	a.Settings = from.GetSettings()
 }
 
 // TypeID returns type id in TL schema.

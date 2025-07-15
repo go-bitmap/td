@@ -32,6 +32,8 @@ var (
 )
 
 // TodoCompletion represents TL type `todoCompletion#4cc120b7`.
+//
+// See https://core.telegram.org/constructor/todoCompletion for reference.
 type TodoCompletion struct {
 	// ID field of TodoCompletion.
 	ID int
@@ -76,6 +78,17 @@ func (t *TodoCompletion) String() string {
 	}
 	type Alias TodoCompletion
 	return fmt.Sprintf("TodoCompletion%+v", Alias(*t))
+}
+
+// FillFrom fills TodoCompletion from given interface.
+func (t *TodoCompletion) FillFrom(from interface {
+	GetID() (value int)
+	GetCompletedBy() (value int64)
+	GetDate() (value int)
+}) {
+	t.ID = from.GetID()
+	t.CompletedBy = from.GetCompletedBy()
+	t.Date = from.GetDate()
 }
 
 // TypeID returns type id in TL schema.

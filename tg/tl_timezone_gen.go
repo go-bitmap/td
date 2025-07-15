@@ -32,12 +32,16 @@ var (
 )
 
 // Timezone represents TL type `timezone#ff9289f5`.
+// Timezone information.
+//
+// See https://core.telegram.org/constructor/timezone for reference.
 type Timezone struct {
-	// ID field of Timezone.
+	// Unique timezone ID.
 	ID string
-	// Name field of Timezone.
+	// Human-readable and localized timezone name.
 	Name string
-	// UtcOffset field of Timezone.
+	// UTC offset in seconds, which may be displayed in hh:mm format by the client together
+	// with the human-readable name (i.e. $name UTC -01:00).
 	UtcOffset int
 }
 
@@ -76,6 +80,17 @@ func (t *Timezone) String() string {
 	}
 	type Alias Timezone
 	return fmt.Sprintf("Timezone%+v", Alias(*t))
+}
+
+// FillFrom fills Timezone from given interface.
+func (t *Timezone) FillFrom(from interface {
+	GetID() (value string)
+	GetName() (value string)
+	GetUtcOffset() (value int)
+}) {
+	t.ID = from.GetID()
+	t.Name = from.GetName()
+	t.UtcOffset = from.GetUtcOffset()
 }
 
 // TypeID returns type id in TL schema.

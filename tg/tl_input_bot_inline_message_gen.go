@@ -32,18 +32,28 @@ var (
 )
 
 // InputBotInlineMessageMediaAuto represents TL type `inputBotInlineMessageMediaAuto#3380c786`.
+// A media
+//
+// See https://core.telegram.org/constructor/inputBotInlineMessageMediaAuto for reference.
 type InputBotInlineMessageMediaAuto struct {
-	// Flags field of InputBotInlineMessageMediaAuto.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// InvertMedia field of InputBotInlineMessageMediaAuto.
+	// If set, any eventual webpage preview will be shown on top of the message instead of at
+	// the bottom.
 	InvertMedia bool
-	// Message field of InputBotInlineMessageMediaAuto.
+	// Caption
 	Message string
-	// Entities field of InputBotInlineMessageMediaAuto.
+	// Message entities for styled text¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities
 	//
 	// Use SetEntities and GetEntities helpers.
 	Entities []MessageEntityClass
-	// ReplyMarkup field of InputBotInlineMessageMediaAuto.
+	// Inline keyboard
 	//
 	// Use SetReplyMarkup and GetReplyMarkup helpers.
 	ReplyMarkup ReplyMarkupClass
@@ -95,6 +105,25 @@ func (i *InputBotInlineMessageMediaAuto) String() string {
 	}
 	type Alias InputBotInlineMessageMediaAuto
 	return fmt.Sprintf("InputBotInlineMessageMediaAuto%+v", Alias(*i))
+}
+
+// FillFrom fills InputBotInlineMessageMediaAuto from given interface.
+func (i *InputBotInlineMessageMediaAuto) FillFrom(from interface {
+	GetInvertMedia() (value bool)
+	GetMessage() (value string)
+	GetEntities() (value []MessageEntityClass, ok bool)
+	GetReplyMarkup() (value ReplyMarkupClass, ok bool)
+}) {
+	i.InvertMedia = from.GetInvertMedia()
+	i.Message = from.GetMessage()
+	if val, ok := from.GetEntities(); ok {
+		i.Entities = val
+	}
+
+	if val, ok := from.GetReplyMarkup(); ok {
+		i.ReplyMarkup = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -316,21 +345,39 @@ func (i *InputBotInlineMessageMediaAuto) GetReplyMarkup() (value ReplyMarkupClas
 	return i.ReplyMarkup, true
 }
 
+// MapEntities returns field Entities wrapped in MessageEntityClassArray helper.
+func (i *InputBotInlineMessageMediaAuto) MapEntities() (value MessageEntityClassArray, ok bool) {
+	if !i.Flags.Has(1) {
+		return value, false
+	}
+	return MessageEntityClassArray(i.Entities), true
+}
+
 // InputBotInlineMessageText represents TL type `inputBotInlineMessageText#3dcd7a87`.
+// Simple text message
+//
+// See https://core.telegram.org/constructor/inputBotInlineMessageText for reference.
 type InputBotInlineMessageText struct {
-	// Flags field of InputBotInlineMessageText.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// NoWebpage field of InputBotInlineMessageText.
+	// Disable webpage preview
 	NoWebpage bool
-	// InvertMedia field of InputBotInlineMessageText.
+	// If set, any eventual webpage preview will be shown on top of the message instead of at
+	// the bottom.
 	InvertMedia bool
-	// Message field of InputBotInlineMessageText.
+	// Message
 	Message string
-	// Entities field of InputBotInlineMessageText.
+	// Message entities for styled text¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities
 	//
 	// Use SetEntities and GetEntities helpers.
 	Entities []MessageEntityClass
-	// ReplyMarkup field of InputBotInlineMessageText.
+	// Inline keyboard
 	//
 	// Use SetReplyMarkup and GetReplyMarkup helpers.
 	ReplyMarkup ReplyMarkupClass
@@ -385,6 +432,27 @@ func (i *InputBotInlineMessageText) String() string {
 	}
 	type Alias InputBotInlineMessageText
 	return fmt.Sprintf("InputBotInlineMessageText%+v", Alias(*i))
+}
+
+// FillFrom fills InputBotInlineMessageText from given interface.
+func (i *InputBotInlineMessageText) FillFrom(from interface {
+	GetNoWebpage() (value bool)
+	GetInvertMedia() (value bool)
+	GetMessage() (value string)
+	GetEntities() (value []MessageEntityClass, ok bool)
+	GetReplyMarkup() (value ReplyMarkupClass, ok bool)
+}) {
+	i.NoWebpage = from.GetNoWebpage()
+	i.InvertMedia = from.GetInvertMedia()
+	i.Message = from.GetMessage()
+	if val, ok := from.GetEntities(); ok {
+		i.Entities = val
+	}
+
+	if val, ok := from.GetReplyMarkup(); ok {
+		i.ReplyMarkup = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -634,25 +702,46 @@ func (i *InputBotInlineMessageText) GetReplyMarkup() (value ReplyMarkupClass, ok
 	return i.ReplyMarkup, true
 }
 
+// MapEntities returns field Entities wrapped in MessageEntityClassArray helper.
+func (i *InputBotInlineMessageText) MapEntities() (value MessageEntityClassArray, ok bool) {
+	if !i.Flags.Has(1) {
+		return value, false
+	}
+	return MessageEntityClassArray(i.Entities), true
+}
+
 // InputBotInlineMessageMediaGeo represents TL type `inputBotInlineMessageMediaGeo#96929a85`.
+// Geolocation
+//
+// See https://core.telegram.org/constructor/inputBotInlineMessageMediaGeo for reference.
 type InputBotInlineMessageMediaGeo struct {
-	// Flags field of InputBotInlineMessageMediaGeo.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// GeoPoint field of InputBotInlineMessageMediaGeo.
+	// Geolocation
 	GeoPoint InputGeoPointClass
-	// Heading field of InputBotInlineMessageMediaGeo.
+	// For live locations¹, a direction in which the location moves, in degrees; 1-360
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/live-location
 	//
 	// Use SetHeading and GetHeading helpers.
 	Heading int
-	// Period field of InputBotInlineMessageMediaGeo.
+	// Validity period
 	//
 	// Use SetPeriod and GetPeriod helpers.
 	Period int
-	// ProximityNotificationRadius field of InputBotInlineMessageMediaGeo.
+	// For live locations¹, a maximum distance to another chat member for proximity alerts,
+	// in meters (0-100000)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/live-location
 	//
 	// Use SetProximityNotificationRadius and GetProximityNotificationRadius helpers.
 	ProximityNotificationRadius int
-	// ReplyMarkup field of InputBotInlineMessageMediaGeo.
+	// Reply markup for bot/inline keyboards
 	//
 	// Use SetReplyMarkup and GetReplyMarkup helpers.
 	ReplyMarkup ReplyMarkupClass
@@ -707,6 +796,33 @@ func (i *InputBotInlineMessageMediaGeo) String() string {
 	}
 	type Alias InputBotInlineMessageMediaGeo
 	return fmt.Sprintf("InputBotInlineMessageMediaGeo%+v", Alias(*i))
+}
+
+// FillFrom fills InputBotInlineMessageMediaGeo from given interface.
+func (i *InputBotInlineMessageMediaGeo) FillFrom(from interface {
+	GetGeoPoint() (value InputGeoPointClass)
+	GetHeading() (value int, ok bool)
+	GetPeriod() (value int, ok bool)
+	GetProximityNotificationRadius() (value int, ok bool)
+	GetReplyMarkup() (value ReplyMarkupClass, ok bool)
+}) {
+	i.GeoPoint = from.GetGeoPoint()
+	if val, ok := from.GetHeading(); ok {
+		i.Heading = val
+	}
+
+	if val, ok := from.GetPeriod(); ok {
+		i.Period = val
+	}
+
+	if val, ok := from.GetProximityNotificationRadius(); ok {
+		i.ProximityNotificationRadius = val
+	}
+
+	if val, ok := from.GetReplyMarkup(); ok {
+		i.ReplyMarkup = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -960,22 +1076,29 @@ func (i *InputBotInlineMessageMediaGeo) GetReplyMarkup() (value ReplyMarkupClass
 }
 
 // InputBotInlineMessageMediaVenue represents TL type `inputBotInlineMessageMediaVenue#417bbf11`.
+// Venue
+//
+// See https://core.telegram.org/constructor/inputBotInlineMessageMediaVenue for reference.
 type InputBotInlineMessageMediaVenue struct {
-	// Flags field of InputBotInlineMessageMediaVenue.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// GeoPoint field of InputBotInlineMessageMediaVenue.
+	// Geolocation
 	GeoPoint InputGeoPointClass
-	// Title field of InputBotInlineMessageMediaVenue.
+	// Venue name
 	Title string
-	// Address field of InputBotInlineMessageMediaVenue.
+	// Address
 	Address string
-	// Provider field of InputBotInlineMessageMediaVenue.
+	// Venue provider: currently only "foursquare" and "gplaces" (Google Places) need to be
+	// supported
 	Provider string
-	// VenueID field of InputBotInlineMessageMediaVenue.
+	// Venue ID in the provider's database
 	VenueID string
-	// VenueType field of InputBotInlineMessageMediaVenue.
+	// Venue type in the provider's database
 	VenueType string
-	// ReplyMarkup field of InputBotInlineMessageMediaVenue.
+	// Inline keyboard
 	//
 	// Use SetReplyMarkup and GetReplyMarkup helpers.
 	ReplyMarkup ReplyMarkupClass
@@ -1036,6 +1159,28 @@ func (i *InputBotInlineMessageMediaVenue) String() string {
 	}
 	type Alias InputBotInlineMessageMediaVenue
 	return fmt.Sprintf("InputBotInlineMessageMediaVenue%+v", Alias(*i))
+}
+
+// FillFrom fills InputBotInlineMessageMediaVenue from given interface.
+func (i *InputBotInlineMessageMediaVenue) FillFrom(from interface {
+	GetGeoPoint() (value InputGeoPointClass)
+	GetTitle() (value string)
+	GetAddress() (value string)
+	GetProvider() (value string)
+	GetVenueID() (value string)
+	GetVenueType() (value string)
+	GetReplyMarkup() (value ReplyMarkupClass, ok bool)
+}) {
+	i.GeoPoint = from.GetGeoPoint()
+	i.Title = from.GetTitle()
+	i.Address = from.GetAddress()
+	i.Provider = from.GetProvider()
+	i.VenueID = from.GetVenueID()
+	i.VenueType = from.GetVenueType()
+	if val, ok := from.GetReplyMarkup(); ok {
+		i.ReplyMarkup = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -1281,18 +1426,24 @@ func (i *InputBotInlineMessageMediaVenue) GetReplyMarkup() (value ReplyMarkupCla
 }
 
 // InputBotInlineMessageMediaContact represents TL type `inputBotInlineMessageMediaContact#a6edbffd`.
+// A contact
+//
+// See https://core.telegram.org/constructor/inputBotInlineMessageMediaContact for reference.
 type InputBotInlineMessageMediaContact struct {
-	// Flags field of InputBotInlineMessageMediaContact.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// PhoneNumber field of InputBotInlineMessageMediaContact.
+	// Phone number
 	PhoneNumber string
-	// FirstName field of InputBotInlineMessageMediaContact.
+	// First name
 	FirstName string
-	// LastName field of InputBotInlineMessageMediaContact.
+	// Last name
 	LastName string
-	// Vcard field of InputBotInlineMessageMediaContact.
+	// VCard info
 	Vcard string
-	// ReplyMarkup field of InputBotInlineMessageMediaContact.
+	// Inline keyboard
 	//
 	// Use SetReplyMarkup and GetReplyMarkup helpers.
 	ReplyMarkup ReplyMarkupClass
@@ -1347,6 +1498,24 @@ func (i *InputBotInlineMessageMediaContact) String() string {
 	}
 	type Alias InputBotInlineMessageMediaContact
 	return fmt.Sprintf("InputBotInlineMessageMediaContact%+v", Alias(*i))
+}
+
+// FillFrom fills InputBotInlineMessageMediaContact from given interface.
+func (i *InputBotInlineMessageMediaContact) FillFrom(from interface {
+	GetPhoneNumber() (value string)
+	GetFirstName() (value string)
+	GetLastName() (value string)
+	GetVcard() (value string)
+	GetReplyMarkup() (value ReplyMarkupClass, ok bool)
+}) {
+	i.PhoneNumber = from.GetPhoneNumber()
+	i.FirstName = from.GetFirstName()
+	i.LastName = from.GetLastName()
+	i.Vcard = from.GetVcard()
+	if val, ok := from.GetReplyMarkup(); ok {
+		i.ReplyMarkup = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -1547,10 +1716,16 @@ func (i *InputBotInlineMessageMediaContact) GetReplyMarkup() (value ReplyMarkupC
 }
 
 // InputBotInlineMessageGame represents TL type `inputBotInlineMessageGame#4b425864`.
+// A game
+//
+// See https://core.telegram.org/constructor/inputBotInlineMessageGame for reference.
 type InputBotInlineMessageGame struct {
-	// Flags field of InputBotInlineMessageGame.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// ReplyMarkup field of InputBotInlineMessageGame.
+	// Inline keyboard
 	//
 	// Use SetReplyMarkup and GetReplyMarkup helpers.
 	ReplyMarkup ReplyMarkupClass
@@ -1593,6 +1768,16 @@ func (i *InputBotInlineMessageGame) String() string {
 	}
 	type Alias InputBotInlineMessageGame
 	return fmt.Sprintf("InputBotInlineMessageGame%+v", Alias(*i))
+}
+
+// FillFrom fills InputBotInlineMessageGame from given interface.
+func (i *InputBotInlineMessageGame) FillFrom(from interface {
+	GetReplyMarkup() (value ReplyMarkupClass, ok bool)
+}) {
+	if val, ok := from.GetReplyMarkup(); ok {
+		i.ReplyMarkup = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -1713,26 +1898,38 @@ func (i *InputBotInlineMessageGame) GetReplyMarkup() (value ReplyMarkupClass, ok
 }
 
 // InputBotInlineMessageMediaInvoice represents TL type `inputBotInlineMessageMediaInvoice#d7e78225`.
+// An invoice
+//
+// See https://core.telegram.org/constructor/inputBotInlineMessageMediaInvoice for reference.
 type InputBotInlineMessageMediaInvoice struct {
-	// Flags field of InputBotInlineMessageMediaInvoice.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Title field of InputBotInlineMessageMediaInvoice.
+	// Product name, 1-32 characters
 	Title string
-	// Description field of InputBotInlineMessageMediaInvoice.
+	// Product description, 1-255 characters
 	Description string
-	// Photo field of InputBotInlineMessageMediaInvoice.
+	// Invoice photo
 	//
 	// Use SetPhoto and GetPhoto helpers.
 	Photo InputWebDocument
-	// Invoice field of InputBotInlineMessageMediaInvoice.
+	// The invoice
 	Invoice Invoice
-	// Payload field of InputBotInlineMessageMediaInvoice.
+	// Bot-defined invoice payload, 1-128 bytes. This will not be displayed to the user, use
+	// for your internal processes.
 	Payload []byte
-	// Provider field of InputBotInlineMessageMediaInvoice.
+	// Payments provider token, obtained via Botfather¹
+	//
+	// Links:
+	//  1) https://t.me/botfather
 	Provider string
-	// ProviderData field of InputBotInlineMessageMediaInvoice.
+	// A JSON-serialized object for data about the invoice, which will be shared with the
+	// payment provider. A detailed description of the required fields should be provided by
+	// the payment provider.
 	ProviderData DataJSON
-	// ReplyMarkup field of InputBotInlineMessageMediaInvoice.
+	// Inline keyboard
 	//
 	// Use SetReplyMarkup and GetReplyMarkup helpers.
 	ReplyMarkup ReplyMarkupClass
@@ -1796,6 +1993,33 @@ func (i *InputBotInlineMessageMediaInvoice) String() string {
 	}
 	type Alias InputBotInlineMessageMediaInvoice
 	return fmt.Sprintf("InputBotInlineMessageMediaInvoice%+v", Alias(*i))
+}
+
+// FillFrom fills InputBotInlineMessageMediaInvoice from given interface.
+func (i *InputBotInlineMessageMediaInvoice) FillFrom(from interface {
+	GetTitle() (value string)
+	GetDescription() (value string)
+	GetPhoto() (value InputWebDocument, ok bool)
+	GetInvoice() (value Invoice)
+	GetPayload() (value []byte)
+	GetProvider() (value string)
+	GetProviderData() (value DataJSON)
+	GetReplyMarkup() (value ReplyMarkupClass, ok bool)
+}) {
+	i.Title = from.GetTitle()
+	i.Description = from.GetDescription()
+	if val, ok := from.GetPhoto(); ok {
+		i.Photo = val
+	}
+
+	i.Invoice = from.GetInvoice()
+	i.Payload = from.GetPayload()
+	i.Provider = from.GetProvider()
+	i.ProviderData = from.GetProviderData()
+	if val, ok := from.GetReplyMarkup(); ok {
+		i.ReplyMarkup = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -2072,26 +2296,40 @@ func (i *InputBotInlineMessageMediaInvoice) GetReplyMarkup() (value ReplyMarkupC
 }
 
 // InputBotInlineMessageMediaWebPage represents TL type `inputBotInlineMessageMediaWebPage#bddcc510`.
+// Specifies options that will be used to generate the link preview for the message, or
+// even a standalone link preview without an attached message.
+//
+// See https://core.telegram.org/constructor/inputBotInlineMessageMediaWebPage for reference.
 type InputBotInlineMessageMediaWebPage struct {
-	// Flags field of InputBotInlineMessageMediaWebPage.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// InvertMedia field of InputBotInlineMessageMediaWebPage.
+	// If set, any eventual webpage preview will be shown on top of the message instead of at
+	// the bottom.
 	InvertMedia bool
-	// ForceLargeMedia field of InputBotInlineMessageMediaWebPage.
+	// If set, specifies that a large media preview should be used.
 	ForceLargeMedia bool
-	// ForceSmallMedia field of InputBotInlineMessageMediaWebPage.
+	// If set, specifies that a small media preview should be used.
 	ForceSmallMedia bool
-	// Optional field of InputBotInlineMessageMediaWebPage.
+	// If not set, a WEBPAGE_NOT_FOUND RPC error will be emitted if a webpage preview cannot
+	// be generated for the specified url; otherwise, no error will be emitted (unless the
+	// provided message is also empty, in which case a MESSAGE_EMPTY will be emitted,
+	// instead).
 	Optional bool
-	// Message field of InputBotInlineMessageMediaWebPage.
+	// The message, can be empty.
 	Message string
-	// Entities field of InputBotInlineMessageMediaWebPage.
+	// Message entities for styled text¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities
 	//
 	// Use SetEntities and GetEntities helpers.
 	Entities []MessageEntityClass
-	// URL field of InputBotInlineMessageMediaWebPage.
+	// The URL to use for the link preview.
 	URL string
-	// ReplyMarkup field of InputBotInlineMessageMediaWebPage.
+	// Inline keyboard
 	//
 	// Use SetReplyMarkup and GetReplyMarkup helpers.
 	ReplyMarkup ReplyMarkupClass
@@ -2155,6 +2393,33 @@ func (i *InputBotInlineMessageMediaWebPage) String() string {
 	}
 	type Alias InputBotInlineMessageMediaWebPage
 	return fmt.Sprintf("InputBotInlineMessageMediaWebPage%+v", Alias(*i))
+}
+
+// FillFrom fills InputBotInlineMessageMediaWebPage from given interface.
+func (i *InputBotInlineMessageMediaWebPage) FillFrom(from interface {
+	GetInvertMedia() (value bool)
+	GetForceLargeMedia() (value bool)
+	GetForceSmallMedia() (value bool)
+	GetOptional() (value bool)
+	GetMessage() (value string)
+	GetEntities() (value []MessageEntityClass, ok bool)
+	GetURL() (value string)
+	GetReplyMarkup() (value ReplyMarkupClass, ok bool)
+}) {
+	i.InvertMedia = from.GetInvertMedia()
+	i.ForceLargeMedia = from.GetForceLargeMedia()
+	i.ForceSmallMedia = from.GetForceSmallMedia()
+	i.Optional = from.GetOptional()
+	i.Message = from.GetMessage()
+	if val, ok := from.GetEntities(); ok {
+		i.Entities = val
+	}
+
+	i.URL = from.GetURL()
+	if val, ok := from.GetReplyMarkup(); ok {
+		i.ReplyMarkup = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -2480,10 +2745,20 @@ func (i *InputBotInlineMessageMediaWebPage) GetReplyMarkup() (value ReplyMarkupC
 	return i.ReplyMarkup, true
 }
 
+// MapEntities returns field Entities wrapped in MessageEntityClassArray helper.
+func (i *InputBotInlineMessageMediaWebPage) MapEntities() (value MessageEntityClassArray, ok bool) {
+	if !i.Flags.Has(1) {
+		return value, false
+	}
+	return MessageEntityClassArray(i.Entities), true
+}
+
 // InputBotInlineMessageClassName is schema name of InputBotInlineMessageClass.
 const InputBotInlineMessageClassName = "InputBotInlineMessage"
 
 // InputBotInlineMessageClass represents InputBotInlineMessage generic type.
+//
+// See https://core.telegram.org/type/InputBotInlineMessage for reference.
 //
 // Constructors:
 //   - [InputBotInlineMessageMediaAuto]
@@ -2530,7 +2805,7 @@ type InputBotInlineMessageClass interface {
 	// Zero returns true if current object has a zero value.
 	Zero() bool
 
-	// ReplyMarkup field of InputBotInlineMessageMediaAuto.
+	// Inline keyboard
 	GetReplyMarkup() (value ReplyMarkupClass, ok bool)
 }
 

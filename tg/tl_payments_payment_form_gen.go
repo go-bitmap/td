@@ -32,52 +32,68 @@ var (
 )
 
 // PaymentsPaymentForm represents TL type `payments.paymentForm#a0058751`.
+// Payment form
+//
+// See https://core.telegram.org/constructor/payments.paymentForm for reference.
 type PaymentsPaymentForm struct {
-	// Flags field of PaymentsPaymentForm.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// CanSaveCredentials field of PaymentsPaymentForm.
+	// Whether the user can choose to save credentials.
 	CanSaveCredentials bool
-	// PasswordMissing field of PaymentsPaymentForm.
+	// Indicates that the user can save payment credentials, but only after setting up a 2FA
+	// password¹ (currently the account doesn't have a 2FA password²)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/srp
+	//  2) https://core.telegram.org/api/srp
 	PasswordMissing bool
-	// FormID field of PaymentsPaymentForm.
+	// Form ID
 	FormID int64
-	// BotID field of PaymentsPaymentForm.
+	// Bot ID
 	BotID int64
-	// Title field of PaymentsPaymentForm.
+	// Form title
 	Title string
-	// Description field of PaymentsPaymentForm.
+	// Description
 	Description string
-	// Photo field of PaymentsPaymentForm.
+	// Product photo
 	//
 	// Use SetPhoto and GetPhoto helpers.
 	Photo WebDocumentClass
-	// Invoice field of PaymentsPaymentForm.
+	// Invoice
 	Invoice Invoice
-	// ProviderID field of PaymentsPaymentForm.
+	// Payment provider ID.
 	ProviderID int64
-	// URL field of PaymentsPaymentForm.
+	// Payment form URL
 	URL string
-	// NativeProvider field of PaymentsPaymentForm.
+	// Payment provider name.One of the following:- stripe
 	//
 	// Use SetNativeProvider and GetNativeProvider helpers.
 	NativeProvider string
-	// NativeParams field of PaymentsPaymentForm.
+	// Contains information about the payment provider, if available, to support it natively
+	// without the need for opening the URL.A JSON object that can contain the following
+	// fields:- apple_pay_merchant_id: Apple Pay merchant ID- google_pay_public_key: Google
+	// Pay public key- need_country: True, if the user country must be provided,- need_zip:
+	// True, if the user ZIP/postal code must be provided,- need_cardholder_name: True, if
+	// the cardholder name must be provided
 	//
 	// Use SetNativeParams and GetNativeParams helpers.
 	NativeParams DataJSON
-	// AdditionalMethods field of PaymentsPaymentForm.
+	// Additional payment methods
 	//
 	// Use SetAdditionalMethods and GetAdditionalMethods helpers.
 	AdditionalMethods []PaymentFormMethod
-	// SavedInfo field of PaymentsPaymentForm.
+	// Saved server-side order information
 	//
 	// Use SetSavedInfo and GetSavedInfo helpers.
 	SavedInfo PaymentRequestedInfo
-	// SavedCredentials field of PaymentsPaymentForm.
+	// Contains information about saved card credentials
 	//
 	// Use SetSavedCredentials and GetSavedCredentials helpers.
 	SavedCredentials []PaymentSavedCredentialsCard
-	// Users field of PaymentsPaymentForm.
+	// Users
 	Users []UserClass
 }
 
@@ -163,6 +179,61 @@ func (p *PaymentsPaymentForm) String() string {
 	}
 	type Alias PaymentsPaymentForm
 	return fmt.Sprintf("PaymentsPaymentForm%+v", Alias(*p))
+}
+
+// FillFrom fills PaymentsPaymentForm from given interface.
+func (p *PaymentsPaymentForm) FillFrom(from interface {
+	GetCanSaveCredentials() (value bool)
+	GetPasswordMissing() (value bool)
+	GetFormID() (value int64)
+	GetBotID() (value int64)
+	GetTitle() (value string)
+	GetDescription() (value string)
+	GetPhoto() (value WebDocumentClass, ok bool)
+	GetInvoice() (value Invoice)
+	GetProviderID() (value int64)
+	GetURL() (value string)
+	GetNativeProvider() (value string, ok bool)
+	GetNativeParams() (value DataJSON, ok bool)
+	GetAdditionalMethods() (value []PaymentFormMethod, ok bool)
+	GetSavedInfo() (value PaymentRequestedInfo, ok bool)
+	GetSavedCredentials() (value []PaymentSavedCredentialsCard, ok bool)
+	GetUsers() (value []UserClass)
+}) {
+	p.CanSaveCredentials = from.GetCanSaveCredentials()
+	p.PasswordMissing = from.GetPasswordMissing()
+	p.FormID = from.GetFormID()
+	p.BotID = from.GetBotID()
+	p.Title = from.GetTitle()
+	p.Description = from.GetDescription()
+	if val, ok := from.GetPhoto(); ok {
+		p.Photo = val
+	}
+
+	p.Invoice = from.GetInvoice()
+	p.ProviderID = from.GetProviderID()
+	p.URL = from.GetURL()
+	if val, ok := from.GetNativeProvider(); ok {
+		p.NativeProvider = val
+	}
+
+	if val, ok := from.GetNativeParams(); ok {
+		p.NativeParams = val
+	}
+
+	if val, ok := from.GetAdditionalMethods(); ok {
+		p.AdditionalMethods = val
+	}
+
+	if val, ok := from.GetSavedInfo(); ok {
+		p.SavedInfo = val
+	}
+
+	if val, ok := from.GetSavedCredentials(); ok {
+		p.SavedCredentials = val
+	}
+
+	p.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -726,25 +797,40 @@ func (p *PaymentsPaymentForm) GetUsers() (value []UserClass) {
 	return p.Users
 }
 
+// MapUsers returns field Users wrapped in UserClassArray helper.
+func (p *PaymentsPaymentForm) MapUsers() (value UserClassArray) {
+	return UserClassArray(p.Users)
+}
+
 // PaymentsPaymentFormStars represents TL type `payments.paymentFormStars#7bf6b15c`.
+// Represents a payment form, for payments to be using Telegram Stars, see here »¹ for
+// more info.
+//
+// Links:
+//  1. https://core.telegram.org/api/stars
+//
+// See https://core.telegram.org/constructor/payments.paymentFormStars for reference.
 type PaymentsPaymentFormStars struct {
-	// Flags field of PaymentsPaymentFormStars.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// FormID field of PaymentsPaymentFormStars.
+	// Form ID.
 	FormID int64
-	// BotID field of PaymentsPaymentFormStars.
+	// Bot ID.
 	BotID int64
-	// Title field of PaymentsPaymentFormStars.
+	// Form title
 	Title string
-	// Description field of PaymentsPaymentFormStars.
+	// Description
 	Description string
-	// Photo field of PaymentsPaymentFormStars.
+	// Product photo
 	//
 	// Use SetPhoto and GetPhoto helpers.
 	Photo WebDocumentClass
-	// Invoice field of PaymentsPaymentFormStars.
+	// Invoice
 	Invoice Invoice
-	// Users field of PaymentsPaymentFormStars.
+	// Info about users mentioned in the other fields.
 	Users []UserClass
 }
 
@@ -803,6 +889,28 @@ func (p *PaymentsPaymentFormStars) String() string {
 	}
 	type Alias PaymentsPaymentFormStars
 	return fmt.Sprintf("PaymentsPaymentFormStars%+v", Alias(*p))
+}
+
+// FillFrom fills PaymentsPaymentFormStars from given interface.
+func (p *PaymentsPaymentFormStars) FillFrom(from interface {
+	GetFormID() (value int64)
+	GetBotID() (value int64)
+	GetTitle() (value string)
+	GetDescription() (value string)
+	GetPhoto() (value WebDocumentClass, ok bool)
+	GetInvoice() (value Invoice)
+	GetUsers() (value []UserClass)
+}) {
+	p.FormID = from.GetFormID()
+	p.BotID = from.GetBotID()
+	p.Title = from.GetTitle()
+	p.Description = from.GetDescription()
+	if val, ok := from.GetPhoto(); ok {
+		p.Photo = val
+	}
+
+	p.Invoice = from.GetInvoice()
+	p.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -1060,11 +1168,22 @@ func (p *PaymentsPaymentFormStars) GetUsers() (value []UserClass) {
 	return p.Users
 }
 
+// MapUsers returns field Users wrapped in UserClassArray helper.
+func (p *PaymentsPaymentFormStars) MapUsers() (value UserClassArray) {
+	return UserClassArray(p.Users)
+}
+
 // PaymentsPaymentFormStarGift represents TL type `payments.paymentFormStarGift#b425cfe1`.
+// Represents a payment form for a gift, see here »¹ for more info.
+//
+// Links:
+//  1. https://core.telegram.org/api/gifts
+//
+// See https://core.telegram.org/constructor/payments.paymentFormStarGift for reference.
 type PaymentsPaymentFormStarGift struct {
-	// FormID field of PaymentsPaymentFormStarGift.
+	// Form ID.
 	FormID int64
-	// Invoice field of PaymentsPaymentFormStarGift.
+	// Invoice
 	Invoice Invoice
 }
 
@@ -1105,6 +1224,15 @@ func (p *PaymentsPaymentFormStarGift) String() string {
 	}
 	type Alias PaymentsPaymentFormStarGift
 	return fmt.Sprintf("PaymentsPaymentFormStarGift%+v", Alias(*p))
+}
+
+// FillFrom fills PaymentsPaymentFormStarGift from given interface.
+func (p *PaymentsPaymentFormStarGift) FillFrom(from interface {
+	GetFormID() (value int64)
+	GetInvoice() (value Invoice)
+}) {
+	p.FormID = from.GetFormID()
+	p.Invoice = from.GetInvoice()
 }
 
 // TypeID returns type id in TL schema.
@@ -1215,6 +1343,8 @@ const PaymentsPaymentFormClassName = "payments.PaymentForm"
 
 // PaymentsPaymentFormClass represents payments.PaymentForm generic type.
 //
+// See https://core.telegram.org/type/payments.PaymentForm for reference.
+//
 // Constructors:
 //   - [PaymentsPaymentForm]
 //   - [PaymentsPaymentFormStars]
@@ -1250,9 +1380,10 @@ type PaymentsPaymentFormClass interface {
 	// Zero returns true if current object has a zero value.
 	Zero() bool
 
-	// FormID field of PaymentsPaymentForm.
+	// Form ID
 	GetFormID() (value int64)
-	// Invoice field of PaymentsPaymentForm.
+
+	// Invoice
 	GetInvoice() (value Invoice)
 }
 

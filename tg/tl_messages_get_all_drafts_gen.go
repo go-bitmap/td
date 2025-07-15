@@ -32,6 +32,14 @@ var (
 )
 
 // MessagesGetAllDraftsRequest represents TL type `messages.getAllDrafts#6a3f8d65`.
+// Return all message drafts¹.
+// Returns all the latest updateDraftMessage² updates related to all chats with drafts.
+//
+// Links:
+//  1. https://core.telegram.org/api/drafts
+//  2. https://core.telegram.org/constructor/updateDraftMessage
+//
+// See https://core.telegram.org/method/messages.getAllDrafts for reference.
 type MessagesGetAllDraftsRequest struct {
 }
 
@@ -126,6 +134,14 @@ func (g *MessagesGetAllDraftsRequest) DecodeBare(b *bin.Buffer) error {
 }
 
 // MessagesGetAllDrafts invokes method messages.getAllDrafts#6a3f8d65 returning error if any.
+// Return all message drafts¹.
+// Returns all the latest updateDraftMessage² updates related to all chats with drafts.
+//
+// Links:
+//  1. https://core.telegram.org/api/drafts
+//  2. https://core.telegram.org/constructor/updateDraftMessage
+//
+// See https://core.telegram.org/method/messages.getAllDrafts for reference.
 func (c *Client) MessagesGetAllDrafts(ctx context.Context) (UpdatesClass, error) {
 	var result UpdatesBox
 

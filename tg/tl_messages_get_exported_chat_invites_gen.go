@@ -32,24 +32,39 @@ var (
 )
 
 // MessagesGetExportedChatInvitesRequest represents TL type `messages.getExportedChatInvites#a2b5a3f6`.
+// Get info about the chat invites of a specific chat
+//
+// See https://core.telegram.org/method/messages.getExportedChatInvites for reference.
 type MessagesGetExportedChatInvitesRequest struct {
-	// Flags field of MessagesGetExportedChatInvitesRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Revoked field of MessagesGetExportedChatInvitesRequest.
+	// Whether to fetch revoked chat invites
 	Revoked bool
-	// Peer field of MessagesGetExportedChatInvitesRequest.
+	// Chat
 	Peer InputPeerClass
-	// AdminID field of MessagesGetExportedChatInvitesRequest.
+	// Whether to only fetch chat invites from this admin
 	AdminID InputUserClass
-	// OffsetDate field of MessagesGetExportedChatInvitesRequest.
+	// Offsets for pagination, for more info click here¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets
 	//
 	// Use SetOffsetDate and GetOffsetDate helpers.
 	OffsetDate int
-	// OffsetLink field of MessagesGetExportedChatInvitesRequest.
+	// Offsets for pagination, for more info click here¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets
 	//
 	// Use SetOffsetLink and GetOffsetLink helpers.
 	OffsetLink string
-	// Limit field of MessagesGetExportedChatInvitesRequest.
+	// Maximum number of results to return, see pagination¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets
 	Limit int
 }
 
@@ -100,6 +115,29 @@ func (g *MessagesGetExportedChatInvitesRequest) String() string {
 	}
 	type Alias MessagesGetExportedChatInvitesRequest
 	return fmt.Sprintf("MessagesGetExportedChatInvitesRequest%+v", Alias(*g))
+}
+
+// FillFrom fills MessagesGetExportedChatInvitesRequest from given interface.
+func (g *MessagesGetExportedChatInvitesRequest) FillFrom(from interface {
+	GetRevoked() (value bool)
+	GetPeer() (value InputPeerClass)
+	GetAdminID() (value InputUserClass)
+	GetOffsetDate() (value int, ok bool)
+	GetOffsetLink() (value string, ok bool)
+	GetLimit() (value int)
+}) {
+	g.Revoked = from.GetRevoked()
+	g.Peer = from.GetPeer()
+	g.AdminID = from.GetAdminID()
+	if val, ok := from.GetOffsetDate(); ok {
+		g.OffsetDate = val
+	}
+
+	if val, ok := from.GetOffsetLink(); ok {
+		g.OffsetLink = val
+	}
+
+	g.Limit = from.GetLimit()
 }
 
 // TypeID returns type id in TL schema.
@@ -349,6 +387,18 @@ func (g *MessagesGetExportedChatInvitesRequest) GetLimit() (value int) {
 }
 
 // MessagesGetExportedChatInvites invokes method messages.getExportedChatInvites#a2b5a3f6 returning error if any.
+// Get info about the chat invites of a specific chat
+//
+// Possible errors:
+//
+//	400 ADMIN_ID_INVALID: The specified admin ID is invalid.
+//	400 CHANNEL_INVALID: The provided channel is invalid.
+//	400 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
+//	400 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
+//	403 CHAT_WRITE_FORBIDDEN: You can't write in this chat.
+//	400 PEER_ID_INVALID: The provided peer id is invalid.
+//
+// See https://core.telegram.org/method/messages.getExportedChatInvites for reference.
 func (c *Client) MessagesGetExportedChatInvites(ctx context.Context, request *MessagesGetExportedChatInvitesRequest) (*MessagesExportedChatInvites, error) {
 	var result MessagesExportedChatInvites
 

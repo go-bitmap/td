@@ -32,8 +32,17 @@ var (
 )
 
 // MessagesGetFullChatRequest represents TL type `messages.getFullChat#aeb00b34`.
+// Get full info about a basic group¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/channel#basic-groups
+//
+// See https://core.telegram.org/method/messages.getFullChat for reference.
 type MessagesGetFullChatRequest struct {
-	// ChatID field of MessagesGetFullChatRequest.
+	// Basic group¹ ID.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/channel#basic-groups
 	ChatID int64
 }
 
@@ -66,6 +75,13 @@ func (g *MessagesGetFullChatRequest) String() string {
 	}
 	type Alias MessagesGetFullChatRequest
 	return fmt.Sprintf("MessagesGetFullChatRequest%+v", Alias(*g))
+}
+
+// FillFrom fills MessagesGetFullChatRequest from given interface.
+func (g *MessagesGetFullChatRequest) FillFrom(from interface {
+	GetChatID() (value int64)
+}) {
+	g.ChatID = from.GetChatID()
 }
 
 // TypeID returns type id in TL schema.
@@ -152,6 +168,18 @@ func (g *MessagesGetFullChatRequest) GetChatID() (value int64) {
 }
 
 // MessagesGetFullChat invokes method messages.getFullChat#aeb00b34 returning error if any.
+// Get full info about a basic group¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/channel#basic-groups
+//
+// Possible errors:
+//
+//	400 CHAT_ID_INVALID: The provided chat id is invalid.
+//	400 PEER_ID_INVALID: The provided peer id is invalid.
+//
+// See https://core.telegram.org/method/messages.getFullChat for reference.
+// Can be used by bots.
 func (c *Client) MessagesGetFullChat(ctx context.Context, chatid int64) (*MessagesChatFull, error) {
 	var result MessagesChatFull
 

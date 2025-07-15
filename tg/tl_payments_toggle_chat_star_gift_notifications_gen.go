@@ -32,6 +32,8 @@ var (
 )
 
 // PaymentsToggleChatStarGiftNotificationsRequest represents TL type `payments.toggleChatStarGiftNotifications#60eaefa1`.
+//
+// See https://core.telegram.org/method/payments.toggleChatStarGiftNotifications for reference.
 type PaymentsToggleChatStarGiftNotificationsRequest struct {
 	// Flags field of PaymentsToggleChatStarGiftNotificationsRequest.
 	Flags bin.Fields
@@ -76,6 +78,15 @@ func (t *PaymentsToggleChatStarGiftNotificationsRequest) String() string {
 	}
 	type Alias PaymentsToggleChatStarGiftNotificationsRequest
 	return fmt.Sprintf("PaymentsToggleChatStarGiftNotificationsRequest%+v", Alias(*t))
+}
+
+// FillFrom fills PaymentsToggleChatStarGiftNotificationsRequest from given interface.
+func (t *PaymentsToggleChatStarGiftNotificationsRequest) FillFrom(from interface {
+	GetEnabled() (value bool)
+	GetPeer() (value InputPeerClass)
+}) {
+	t.Enabled = from.GetEnabled()
+	t.Peer = from.GetPeer()
 }
 
 // TypeID returns type id in TL schema.
@@ -208,6 +219,8 @@ func (t *PaymentsToggleChatStarGiftNotificationsRequest) GetPeer() (value InputP
 }
 
 // PaymentsToggleChatStarGiftNotifications invokes method payments.toggleChatStarGiftNotifications#60eaefa1 returning error if any.
+//
+// See https://core.telegram.org/method/payments.toggleChatStarGiftNotifications for reference.
 func (c *Client) PaymentsToggleChatStarGiftNotifications(ctx context.Context, request *PaymentsToggleChatStarGiftNotificationsRequest) (bool, error) {
 	var result BoolBox
 

@@ -32,10 +32,17 @@ var (
 )
 
 // StatsPercentValue represents TL type `statsPercentValue#cbce2fe0`.
+// Channel statistics percentage¹.
+// Compute the percentage simply by doing part * total / 100
+//
+// Links:
+//  1. https://core.telegram.org/api/stats
+//
+// See https://core.telegram.org/constructor/statsPercentValue for reference.
 type StatsPercentValue struct {
-	// Part field of StatsPercentValue.
+	// Partial value
 	Part float64
-	// Total field of StatsPercentValue.
+	// Total value
 	Total float64
 }
 
@@ -71,6 +78,15 @@ func (s *StatsPercentValue) String() string {
 	}
 	type Alias StatsPercentValue
 	return fmt.Sprintf("StatsPercentValue%+v", Alias(*s))
+}
+
+// FillFrom fills StatsPercentValue from given interface.
+func (s *StatsPercentValue) FillFrom(from interface {
+	GetPart() (value float64)
+	GetTotal() (value float64)
+}) {
+	s.Part = from.GetPart()
+	s.Total = from.GetTotal()
 }
 
 // TypeID returns type id in TL schema.

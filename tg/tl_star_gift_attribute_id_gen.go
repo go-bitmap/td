@@ -32,6 +32,8 @@ var (
 )
 
 // StarGiftAttributeIDModel represents TL type `starGiftAttributeIdModel#48aaae3c`.
+//
+// See https://core.telegram.org/constructor/starGiftAttributeIdModel for reference.
 type StarGiftAttributeIDModel struct {
 	// DocumentID field of StarGiftAttributeIDModel.
 	DocumentID int64
@@ -71,6 +73,13 @@ func (s *StarGiftAttributeIDModel) String() string {
 	}
 	type Alias StarGiftAttributeIDModel
 	return fmt.Sprintf("StarGiftAttributeIDModel%+v", Alias(*s))
+}
+
+// FillFrom fills StarGiftAttributeIDModel from given interface.
+func (s *StarGiftAttributeIDModel) FillFrom(from interface {
+	GetDocumentID() (value int64)
+}) {
+	s.DocumentID = from.GetDocumentID()
 }
 
 // TypeID returns type id in TL schema.
@@ -157,6 +166,8 @@ func (s *StarGiftAttributeIDModel) GetDocumentID() (value int64) {
 }
 
 // StarGiftAttributeIDPattern represents TL type `starGiftAttributeIdPattern#4a162433`.
+//
+// See https://core.telegram.org/constructor/starGiftAttributeIdPattern for reference.
 type StarGiftAttributeIDPattern struct {
 	// DocumentID field of StarGiftAttributeIDPattern.
 	DocumentID int64
@@ -196,6 +207,13 @@ func (s *StarGiftAttributeIDPattern) String() string {
 	}
 	type Alias StarGiftAttributeIDPattern
 	return fmt.Sprintf("StarGiftAttributeIDPattern%+v", Alias(*s))
+}
+
+// FillFrom fills StarGiftAttributeIDPattern from given interface.
+func (s *StarGiftAttributeIDPattern) FillFrom(from interface {
+	GetDocumentID() (value int64)
+}) {
+	s.DocumentID = from.GetDocumentID()
 }
 
 // TypeID returns type id in TL schema.
@@ -282,6 +300,8 @@ func (s *StarGiftAttributeIDPattern) GetDocumentID() (value int64) {
 }
 
 // StarGiftAttributeIDBackdrop represents TL type `starGiftAttributeIdBackdrop#1f01c757`.
+//
+// See https://core.telegram.org/constructor/starGiftAttributeIdBackdrop for reference.
 type StarGiftAttributeIDBackdrop struct {
 	// BackdropID field of StarGiftAttributeIDBackdrop.
 	BackdropID int
@@ -321,6 +341,13 @@ func (s *StarGiftAttributeIDBackdrop) String() string {
 	}
 	type Alias StarGiftAttributeIDBackdrop
 	return fmt.Sprintf("StarGiftAttributeIDBackdrop%+v", Alias(*s))
+}
+
+// FillFrom fills StarGiftAttributeIDBackdrop from given interface.
+func (s *StarGiftAttributeIDBackdrop) FillFrom(from interface {
+	GetBackdropID() (value int)
+}) {
+	s.BackdropID = from.GetBackdropID()
 }
 
 // TypeID returns type id in TL schema.
@@ -410,6 +437,8 @@ func (s *StarGiftAttributeIDBackdrop) GetBackdropID() (value int) {
 const StarGiftAttributeIDClassName = "StarGiftAttributeId"
 
 // StarGiftAttributeIDClass represents StarGiftAttributeId generic type.
+//
+// See https://core.telegram.org/type/StarGiftAttributeId for reference.
 //
 // Constructors:
 //   - [StarGiftAttributeIDModel]

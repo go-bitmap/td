@@ -32,8 +32,11 @@ var (
 )
 
 // AuthExportAuthorizationRequest represents TL type `auth.exportAuthorization#e5bfffcd`.
+// Returns data for copying authorization to another data-center.
+//
+// See https://core.telegram.org/method/auth.exportAuthorization for reference.
 type AuthExportAuthorizationRequest struct {
-	// DCID field of AuthExportAuthorizationRequest.
+	// Number of a target data-center
 	DCID int
 }
 
@@ -66,6 +69,13 @@ func (e *AuthExportAuthorizationRequest) String() string {
 	}
 	type Alias AuthExportAuthorizationRequest
 	return fmt.Sprintf("AuthExportAuthorizationRequest%+v", Alias(*e))
+}
+
+// FillFrom fills AuthExportAuthorizationRequest from given interface.
+func (e *AuthExportAuthorizationRequest) FillFrom(from interface {
+	GetDCID() (value int)
+}) {
+	e.DCID = from.GetDCID()
 }
 
 // TypeID returns type id in TL schema.
@@ -152,6 +162,14 @@ func (e *AuthExportAuthorizationRequest) GetDCID() (value int) {
 }
 
 // AuthExportAuthorization invokes method auth.exportAuthorization#e5bfffcd returning error if any.
+// Returns data for copying authorization to another data-center.
+//
+// Possible errors:
+//
+//	400 DC_ID_INVALID: The provided DC ID is invalid.
+//
+// See https://core.telegram.org/method/auth.exportAuthorization for reference.
+// Can be used by bots.
 func (c *Client) AuthExportAuthorization(ctx context.Context, dcid int) (*AuthExportedAuthorization, error) {
 	var result AuthExportedAuthorization
 

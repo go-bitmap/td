@@ -32,12 +32,21 @@ var (
 )
 
 // ChatlistsExportedInvites represents TL type `chatlists.exportedInvites#10ab6dc7`.
+// Info about multiple chat folder deep links »¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/links#chat-folder-links
+//
+// See https://core.telegram.org/constructor/chatlists.exportedInvites for reference.
 type ChatlistsExportedInvites struct {
-	// Invites field of ChatlistsExportedInvites.
+	// The chat folder deep links »¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/links#chat-folder-links
 	Invites []ExportedChatlistInvite
-	// Chats field of ChatlistsExportedInvites.
+	// Related chat information
 	Chats []ChatClass
-	// Users field of ChatlistsExportedInvites.
+	// Related user information
 	Users []UserClass
 }
 
@@ -76,6 +85,17 @@ func (e *ChatlistsExportedInvites) String() string {
 	}
 	type Alias ChatlistsExportedInvites
 	return fmt.Sprintf("ChatlistsExportedInvites%+v", Alias(*e))
+}
+
+// FillFrom fills ChatlistsExportedInvites from given interface.
+func (e *ChatlistsExportedInvites) FillFrom(from interface {
+	GetInvites() (value []ExportedChatlistInvite)
+	GetChats() (value []ChatClass)
+	GetUsers() (value []UserClass)
+}) {
+	e.Invites = from.GetInvites()
+	e.Chats = from.GetChats()
+	e.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -250,4 +270,14 @@ func (e *ChatlistsExportedInvites) GetUsers() (value []UserClass) {
 		return
 	}
 	return e.Users
+}
+
+// MapChats returns field Chats wrapped in ChatClassArray helper.
+func (e *ChatlistsExportedInvites) MapChats() (value ChatClassArray) {
+	return ChatClassArray(e.Chats)
+}
+
+// MapUsers returns field Users wrapped in UserClassArray helper.
+func (e *ChatlistsExportedInvites) MapUsers() (value UserClassArray) {
+	return UserClassArray(e.Users)
 }

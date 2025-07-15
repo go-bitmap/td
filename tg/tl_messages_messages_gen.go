@@ -32,12 +32,15 @@ var (
 )
 
 // MessagesMessages represents TL type `messages.messages#8c718e87`.
+// Full list of messages with auxiliary data.
+//
+// See https://core.telegram.org/constructor/messages.messages for reference.
 type MessagesMessages struct {
-	// Messages field of MessagesMessages.
+	// List of messages
 	Messages []MessageClass
-	// Chats field of MessagesMessages.
+	// List of chats mentioned in dialogs
 	Chats []ChatClass
-	// Users field of MessagesMessages.
+	// List of users mentioned in messages and chats
 	Users []UserClass
 }
 
@@ -81,6 +84,17 @@ func (m *MessagesMessages) String() string {
 	}
 	type Alias MessagesMessages
 	return fmt.Sprintf("MessagesMessages%+v", Alias(*m))
+}
+
+// FillFrom fills MessagesMessages from given interface.
+func (m *MessagesMessages) FillFrom(from interface {
+	GetMessages() (value []MessageClass)
+	GetChats() (value []ChatClass)
+	GetUsers() (value []UserClass)
+}) {
+	m.Messages = from.GetMessages()
+	m.Chats = from.GetChats()
+	m.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -260,27 +274,54 @@ func (m *MessagesMessages) GetUsers() (value []UserClass) {
 	return m.Users
 }
 
+// MapMessages returns field Messages wrapped in MessageClassArray helper.
+func (m *MessagesMessages) MapMessages() (value MessageClassArray) {
+	return MessageClassArray(m.Messages)
+}
+
+// MapChats returns field Chats wrapped in ChatClassArray helper.
+func (m *MessagesMessages) MapChats() (value ChatClassArray) {
+	return ChatClassArray(m.Chats)
+}
+
+// MapUsers returns field Users wrapped in UserClassArray helper.
+func (m *MessagesMessages) MapUsers() (value UserClassArray) {
+	return UserClassArray(m.Users)
+}
+
 // MessagesMessagesSlice represents TL type `messages.messagesSlice#3a54685e`.
+// Incomplete list of messages and auxiliary data.
+//
+// See https://core.telegram.org/constructor/messages.messagesSlice for reference.
 type MessagesMessagesSlice struct {
-	// Flags field of MessagesMessagesSlice.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Inexact field of MessagesMessagesSlice.
+	// If set, indicates that the results may be inexact
 	Inexact bool
-	// Count field of MessagesMessagesSlice.
+	// Total number of messages in the list
 	Count int
-	// NextRate field of MessagesMessagesSlice.
+	// Rate to use in the offset_rate parameter in the next call to messages.searchGlobal¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/method/messages.searchGlobal
 	//
 	// Use SetNextRate and GetNextRate helpers.
 	NextRate int
-	// OffsetIDOffset field of MessagesMessagesSlice.
+	// Indicates the absolute position of messages[0] within the total result set with count
+	// count. This is useful, for example, if the result was fetched using offset_id, and we
+	// need to display a progress/total counter (like photo 134 of 200, for all media in a
+	// chat, we could simply use photo ${offset_id_offset} of ${count}.
 	//
 	// Use SetOffsetIDOffset and GetOffsetIDOffset helpers.
 	OffsetIDOffset int
-	// Messages field of MessagesMessagesSlice.
+	// List of messages
 	Messages []MessageClass
-	// Chats field of MessagesMessagesSlice.
+	// List of chats mentioned in messages
 	Chats []ChatClass
-	// Users field of MessagesMessagesSlice.
+	// List of users mentioned in messages and chats
 	Users []UserClass
 }
 
@@ -339,6 +380,31 @@ func (m *MessagesMessagesSlice) String() string {
 	}
 	type Alias MessagesMessagesSlice
 	return fmt.Sprintf("MessagesMessagesSlice%+v", Alias(*m))
+}
+
+// FillFrom fills MessagesMessagesSlice from given interface.
+func (m *MessagesMessagesSlice) FillFrom(from interface {
+	GetInexact() (value bool)
+	GetCount() (value int)
+	GetNextRate() (value int, ok bool)
+	GetOffsetIDOffset() (value int, ok bool)
+	GetMessages() (value []MessageClass)
+	GetChats() (value []ChatClass)
+	GetUsers() (value []UserClass)
+}) {
+	m.Inexact = from.GetInexact()
+	m.Count = from.GetCount()
+	if val, ok := from.GetNextRate(); ok {
+		m.NextRate = val
+	}
+
+	if val, ok := from.GetOffsetIDOffset(); ok {
+		m.OffsetIDOffset = val
+	}
+
+	m.Messages = from.GetMessages()
+	m.Chats = from.GetChats()
+	m.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -651,27 +717,57 @@ func (m *MessagesMessagesSlice) GetUsers() (value []UserClass) {
 	return m.Users
 }
 
+// MapMessages returns field Messages wrapped in MessageClassArray helper.
+func (m *MessagesMessagesSlice) MapMessages() (value MessageClassArray) {
+	return MessageClassArray(m.Messages)
+}
+
+// MapChats returns field Chats wrapped in ChatClassArray helper.
+func (m *MessagesMessagesSlice) MapChats() (value ChatClassArray) {
+	return ChatClassArray(m.Chats)
+}
+
+// MapUsers returns field Users wrapped in UserClassArray helper.
+func (m *MessagesMessagesSlice) MapUsers() (value UserClassArray) {
+	return UserClassArray(m.Users)
+}
+
 // MessagesChannelMessages represents TL type `messages.channelMessages#c776ba4e`.
+// Channel messages
+//
+// See https://core.telegram.org/constructor/messages.channelMessages for reference.
 type MessagesChannelMessages struct {
-	// Flags field of MessagesChannelMessages.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Inexact field of MessagesChannelMessages.
+	// If set, returned results may be inexact
 	Inexact bool
-	// Pts field of MessagesChannelMessages.
+	// Event count after generation¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/updates
 	Pts int
-	// Count field of MessagesChannelMessages.
+	// Total number of results were found server-side (may not be all included here)
 	Count int
-	// OffsetIDOffset field of MessagesChannelMessages.
+	// Indicates the absolute position of messages[0] within the total result set with count
+	// count. This is useful, for example, if the result was fetched using offset_id, and we
+	// need to display a progress/total counter (like photo 134 of 200, for all media in a
+	// chat, we could simply use photo ${offset_id_offset} of ${count}.
 	//
 	// Use SetOffsetIDOffset and GetOffsetIDOffset helpers.
 	OffsetIDOffset int
-	// Messages field of MessagesChannelMessages.
+	// Found messages
 	Messages []MessageClass
-	// Topics field of MessagesChannelMessages.
+	// Forum topic¹ information
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/forum#forum-topics
 	Topics []ForumTopicClass
-	// Chats field of MessagesChannelMessages.
+	// Chats
 	Chats []ChatClass
-	// Users field of MessagesChannelMessages.
+	// Users
 	Users []UserClass
 }
 
@@ -733,6 +829,30 @@ func (c *MessagesChannelMessages) String() string {
 	}
 	type Alias MessagesChannelMessages
 	return fmt.Sprintf("MessagesChannelMessages%+v", Alias(*c))
+}
+
+// FillFrom fills MessagesChannelMessages from given interface.
+func (c *MessagesChannelMessages) FillFrom(from interface {
+	GetInexact() (value bool)
+	GetPts() (value int)
+	GetCount() (value int)
+	GetOffsetIDOffset() (value int, ok bool)
+	GetMessages() (value []MessageClass)
+	GetTopics() (value []ForumTopicClass)
+	GetChats() (value []ChatClass)
+	GetUsers() (value []UserClass)
+}) {
+	c.Inexact = from.GetInexact()
+	c.Pts = from.GetPts()
+	c.Count = from.GetCount()
+	if val, ok := from.GetOffsetIDOffset(); ok {
+		c.OffsetIDOffset = val
+	}
+
+	c.Messages = from.GetMessages()
+	c.Topics = from.GetTopics()
+	c.Chats = from.GetChats()
+	c.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -1067,9 +1187,32 @@ func (c *MessagesChannelMessages) GetUsers() (value []UserClass) {
 	return c.Users
 }
 
+// MapMessages returns field Messages wrapped in MessageClassArray helper.
+func (c *MessagesChannelMessages) MapMessages() (value MessageClassArray) {
+	return MessageClassArray(c.Messages)
+}
+
+// MapTopics returns field Topics wrapped in ForumTopicClassArray helper.
+func (c *MessagesChannelMessages) MapTopics() (value ForumTopicClassArray) {
+	return ForumTopicClassArray(c.Topics)
+}
+
+// MapChats returns field Chats wrapped in ChatClassArray helper.
+func (c *MessagesChannelMessages) MapChats() (value ChatClassArray) {
+	return ChatClassArray(c.Chats)
+}
+
+// MapUsers returns field Users wrapped in UserClassArray helper.
+func (c *MessagesChannelMessages) MapUsers() (value UserClassArray) {
+	return UserClassArray(c.Users)
+}
+
 // MessagesMessagesNotModified represents TL type `messages.messagesNotModified#74535f21`.
+// No new messages matching the query were found
+//
+// See https://core.telegram.org/constructor/messages.messagesNotModified for reference.
 type MessagesMessagesNotModified struct {
-	// Count field of MessagesMessagesNotModified.
+	// Number of results found server-side by the given query
 	Count int
 }
 
@@ -1107,6 +1250,13 @@ func (m *MessagesMessagesNotModified) String() string {
 	}
 	type Alias MessagesMessagesNotModified
 	return fmt.Sprintf("MessagesMessagesNotModified%+v", Alias(*m))
+}
+
+// FillFrom fills MessagesMessagesNotModified from given interface.
+func (m *MessagesMessagesNotModified) FillFrom(from interface {
+	GetCount() (value int)
+}) {
+	m.Count = from.GetCount()
 }
 
 // TypeID returns type id in TL schema.
@@ -1197,6 +1347,8 @@ const MessagesMessagesClassName = "messages.Messages"
 
 // MessagesMessagesClass represents messages.Messages generic type.
 //
+// See https://core.telegram.org/type/messages.Messages for reference.
+//
 // Constructors:
 //   - [MessagesMessages]
 //   - [MessagesMessagesSlice]
@@ -1233,6 +1385,62 @@ type MessagesMessagesClass interface {
 	String() string
 	// Zero returns true if current object has a zero value.
 	Zero() bool
+
+	// AsModified tries to map MessagesMessagesClass to ModifiedMessagesMessages.
+	AsModified() (ModifiedMessagesMessages, bool)
+}
+
+// ModifiedMessagesMessages represents Modified subset of MessagesMessagesClass.
+type ModifiedMessagesMessages interface {
+	bin.Encoder
+	bin.Decoder
+	bin.BareEncoder
+	bin.BareDecoder
+	construct() MessagesMessagesClass
+
+	// TypeID returns type id in TL schema.
+	//
+	// See https://core.telegram.org/mtproto/TL-tl#remarks.
+	TypeID() uint32
+	// TypeName returns name of type in TL schema.
+	TypeName() string
+	// String implements fmt.Stringer.
+	String() string
+	// Zero returns true if current object has a zero value.
+	Zero() bool
+
+	// List of messages
+	GetMessages() (value []MessageClass)
+
+	// List of chats mentioned in dialogs
+	GetChats() (value []ChatClass)
+
+	// List of users mentioned in messages and chats
+	GetUsers() (value []UserClass)
+}
+
+// AsModified tries to map MessagesMessages to ModifiedMessagesMessages.
+func (m *MessagesMessages) AsModified() (ModifiedMessagesMessages, bool) {
+	value, ok := (MessagesMessagesClass(m)).(ModifiedMessagesMessages)
+	return value, ok
+}
+
+// AsModified tries to map MessagesMessagesSlice to ModifiedMessagesMessages.
+func (m *MessagesMessagesSlice) AsModified() (ModifiedMessagesMessages, bool) {
+	value, ok := (MessagesMessagesClass(m)).(ModifiedMessagesMessages)
+	return value, ok
+}
+
+// AsModified tries to map MessagesChannelMessages to ModifiedMessagesMessages.
+func (c *MessagesChannelMessages) AsModified() (ModifiedMessagesMessages, bool) {
+	value, ok := (MessagesMessagesClass(c)).(ModifiedMessagesMessages)
+	return value, ok
+}
+
+// AsModified tries to map MessagesMessagesNotModified to ModifiedMessagesMessages.
+func (m *MessagesMessagesNotModified) AsModified() (ModifiedMessagesMessages, bool) {
+	value, ok := (MessagesMessagesClass(m)).(ModifiedMessagesMessages)
+	return value, ok
 }
 
 // DecodeMessagesMessages implements binary de-serialization for MessagesMessagesClass.

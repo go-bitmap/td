@@ -32,8 +32,11 @@ var (
 )
 
 // PhotosDeletePhotosRequest represents TL type `photos.deletePhotos#87cf7f2f`.
+// Deletes profile photos. The method returns a list of successfully deleted photo IDs.
+//
+// See https://core.telegram.org/method/photos.deletePhotos for reference.
 type PhotosDeletePhotosRequest struct {
-	// ID field of PhotosDeletePhotosRequest.
+	// Input photos to delete
 	ID []InputPhotoClass
 }
 
@@ -66,6 +69,13 @@ func (d *PhotosDeletePhotosRequest) String() string {
 	}
 	type Alias PhotosDeletePhotosRequest
 	return fmt.Sprintf("PhotosDeletePhotosRequest%+v", Alias(*d))
+}
+
+// FillFrom fills PhotosDeletePhotosRequest from given interface.
+func (d *PhotosDeletePhotosRequest) FillFrom(from interface {
+	GetID() (value []InputPhotoClass)
+}) {
+	d.ID = from.GetID()
 }
 
 // TypeID returns type id in TL schema.
@@ -169,7 +179,15 @@ func (d *PhotosDeletePhotosRequest) GetID() (value []InputPhotoClass) {
 	return d.ID
 }
 
+// MapID returns field ID wrapped in InputPhotoClassArray helper.
+func (d *PhotosDeletePhotosRequest) MapID() (value InputPhotoClassArray) {
+	return InputPhotoClassArray(d.ID)
+}
+
 // PhotosDeletePhotos invokes method photos.deletePhotos#87cf7f2f returning error if any.
+// Deletes profile photos. The method returns a list of successfully deleted photo IDs.
+//
+// See https://core.telegram.org/method/photos.deletePhotos for reference.
 func (c *Client) PhotosDeletePhotos(ctx context.Context, id []InputPhotoClass) ([]int64, error) {
 	var result LongVector
 

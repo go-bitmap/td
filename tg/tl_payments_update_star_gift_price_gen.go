@@ -32,6 +32,8 @@ var (
 )
 
 // PaymentsUpdateStarGiftPriceRequest represents TL type `payments.updateStarGiftPrice#3baea4e1`.
+//
+// See https://core.telegram.org/method/payments.updateStarGiftPrice for reference.
 type PaymentsUpdateStarGiftPriceRequest struct {
 	// Stargift field of PaymentsUpdateStarGiftPriceRequest.
 	Stargift InputSavedStarGiftClass
@@ -71,6 +73,15 @@ func (u *PaymentsUpdateStarGiftPriceRequest) String() string {
 	}
 	type Alias PaymentsUpdateStarGiftPriceRequest
 	return fmt.Sprintf("PaymentsUpdateStarGiftPriceRequest%+v", Alias(*u))
+}
+
+// FillFrom fills PaymentsUpdateStarGiftPriceRequest from given interface.
+func (u *PaymentsUpdateStarGiftPriceRequest) FillFrom(from interface {
+	GetStargift() (value InputSavedStarGiftClass)
+	GetResellStars() (value int64)
+}) {
+	u.Stargift = from.GetStargift()
+	u.ResellStars = from.GetResellStars()
 }
 
 // TypeID returns type id in TL schema.
@@ -182,6 +193,8 @@ func (u *PaymentsUpdateStarGiftPriceRequest) GetResellStars() (value int64) {
 }
 
 // PaymentsUpdateStarGiftPrice invokes method payments.updateStarGiftPrice#3baea4e1 returning error if any.
+//
+// See https://core.telegram.org/method/payments.updateStarGiftPrice for reference.
 func (c *Client) PaymentsUpdateStarGiftPrice(ctx context.Context, request *PaymentsUpdateStarGiftPriceRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

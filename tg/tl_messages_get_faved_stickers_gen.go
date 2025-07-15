@@ -32,8 +32,14 @@ var (
 )
 
 // MessagesGetFavedStickersRequest represents TL type `messages.getFavedStickers#4f1aaa9`.
+// Get faved stickers
+//
+// See https://core.telegram.org/method/messages.getFavedStickers for reference.
 type MessagesGetFavedStickersRequest struct {
-	// Hash field of MessagesGetFavedStickersRequest.
+	// Hash used for caching, for more info click here¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets#hash-generation
 	Hash int64
 }
 
@@ -66,6 +72,13 @@ func (g *MessagesGetFavedStickersRequest) String() string {
 	}
 	type Alias MessagesGetFavedStickersRequest
 	return fmt.Sprintf("MessagesGetFavedStickersRequest%+v", Alias(*g))
+}
+
+// FillFrom fills MessagesGetFavedStickersRequest from given interface.
+func (g *MessagesGetFavedStickersRequest) FillFrom(from interface {
+	GetHash() (value int64)
+}) {
+	g.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -152,6 +165,9 @@ func (g *MessagesGetFavedStickersRequest) GetHash() (value int64) {
 }
 
 // MessagesGetFavedStickers invokes method messages.getFavedStickers#4f1aaa9 returning error if any.
+// Get faved stickers
+//
+// See https://core.telegram.org/method/messages.getFavedStickers for reference.
 func (c *Client) MessagesGetFavedStickers(ctx context.Context, hash int64) (MessagesFavedStickersClass, error) {
 	var result MessagesFavedStickersBox
 

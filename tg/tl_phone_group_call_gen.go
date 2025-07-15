@@ -32,16 +32,23 @@ var (
 )
 
 // PhoneGroupCall represents TL type `phone.groupCall#9e727aad`.
+// Contains info about a group call, and partial info about its participants.
+//
+// See https://core.telegram.org/constructor/phone.groupCall for reference.
 type PhoneGroupCall struct {
-	// Call field of PhoneGroupCall.
+	// Info about the group call
 	Call GroupCallClass
-	// Participants field of PhoneGroupCall.
+	// A partial list of participants.
 	Participants []GroupCallParticipant
-	// ParticipantsNextOffset field of PhoneGroupCall.
+	// Next offset to use when fetching the remaining participants using phone
+	// getGroupParticipants¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/method/phone.getGroupParticipants
 	ParticipantsNextOffset string
-	// Chats field of PhoneGroupCall.
+	// Chats mentioned in the participants vector
 	Chats []ChatClass
-	// Users field of PhoneGroupCall.
+	// Users mentioned in the participants vector
 	Users []UserClass
 }
 
@@ -86,6 +93,21 @@ func (g *PhoneGroupCall) String() string {
 	}
 	type Alias PhoneGroupCall
 	return fmt.Sprintf("PhoneGroupCall%+v", Alias(*g))
+}
+
+// FillFrom fills PhoneGroupCall from given interface.
+func (g *PhoneGroupCall) FillFrom(from interface {
+	GetCall() (value GroupCallClass)
+	GetParticipants() (value []GroupCallParticipant)
+	GetParticipantsNextOffset() (value string)
+	GetChats() (value []ChatClass)
+	GetUsers() (value []UserClass)
+}) {
+	g.Call = from.GetCall()
+	g.Participants = from.GetParticipants()
+	g.ParticipantsNextOffset = from.GetParticipantsNextOffset()
+	g.Chats = from.GetChats()
+	g.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -305,4 +327,14 @@ func (g *PhoneGroupCall) GetUsers() (value []UserClass) {
 		return
 	}
 	return g.Users
+}
+
+// MapChats returns field Chats wrapped in ChatClassArray helper.
+func (g *PhoneGroupCall) MapChats() (value ChatClassArray) {
+	return ChatClassArray(g.Chats)
+}
+
+// MapUsers returns field Users wrapped in UserClassArray helper.
+func (g *PhoneGroupCall) MapUsers() (value UserClassArray) {
+	return UserClassArray(g.Users)
 }

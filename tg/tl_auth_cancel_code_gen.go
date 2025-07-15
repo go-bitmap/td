@@ -32,10 +32,16 @@ var (
 )
 
 // AuthCancelCodeRequest represents TL type `auth.cancelCode#1f040578`.
+// Cancel the login verification code
+//
+// See https://core.telegram.org/method/auth.cancelCode for reference.
 type AuthCancelCodeRequest struct {
-	// PhoneNumber field of AuthCancelCodeRequest.
+	// Phone number
 	PhoneNumber string
-	// PhoneCodeHash field of AuthCancelCodeRequest.
+	// Phone code hash from auth.sendCode¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/method/auth.sendCode
 	PhoneCodeHash string
 }
 
@@ -71,6 +77,15 @@ func (c *AuthCancelCodeRequest) String() string {
 	}
 	type Alias AuthCancelCodeRequest
 	return fmt.Sprintf("AuthCancelCodeRequest%+v", Alias(*c))
+}
+
+// FillFrom fills AuthCancelCodeRequest from given interface.
+func (c *AuthCancelCodeRequest) FillFrom(from interface {
+	GetPhoneNumber() (value string)
+	GetPhoneCodeHash() (value string)
+}) {
+	c.PhoneNumber = from.GetPhoneNumber()
+	c.PhoneCodeHash = from.GetPhoneCodeHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -177,6 +192,14 @@ func (c *AuthCancelCodeRequest) GetPhoneCodeHash() (value string) {
 }
 
 // AuthCancelCode invokes method auth.cancelCode#1f040578 returning error if any.
+// Cancel the login verification code
+//
+// Possible errors:
+//
+//	400 PHONE_CODE_EXPIRED: The phone code you provided has expired.
+//	406 PHONE_NUMBER_INVALID: The phone number is invalid.
+//
+// See https://core.telegram.org/method/auth.cancelCode for reference.
 func (c *Client) AuthCancelCode(ctx context.Context, request *AuthCancelCodeRequest) (bool, error) {
 	var result BoolBox
 

@@ -32,16 +32,25 @@ var (
 )
 
 // PollAnswerVoters represents TL type `pollAnswerVoters#3b6ddad2`.
+// A poll answer, and how users voted on it
+//
+// See https://core.telegram.org/constructor/pollAnswerVoters for reference.
 type PollAnswerVoters struct {
-	// Flags field of PollAnswerVoters.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Chosen field of PollAnswerVoters.
+	// Whether we have chosen this answer
 	Chosen bool
-	// Correct field of PollAnswerVoters.
+	// For quizzes, whether the option we have chosen is correct
 	Correct bool
-	// Option field of PollAnswerVoters.
+	// The param that has to be passed to messages.sendVote¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/method/messages.sendVote
 	Option []byte
-	// Voters field of PollAnswerVoters.
+	// How many users voted for this option
 	Voters int
 }
 
@@ -86,6 +95,19 @@ func (p *PollAnswerVoters) String() string {
 	}
 	type Alias PollAnswerVoters
 	return fmt.Sprintf("PollAnswerVoters%+v", Alias(*p))
+}
+
+// FillFrom fills PollAnswerVoters from given interface.
+func (p *PollAnswerVoters) FillFrom(from interface {
+	GetChosen() (value bool)
+	GetCorrect() (value bool)
+	GetOption() (value []byte)
+	GetVoters() (value int)
+}) {
+	p.Chosen = from.GetChosen()
+	p.Correct = from.GetCorrect()
+	p.Option = from.GetOption()
+	p.Voters = from.GetVoters()
 }
 
 // TypeID returns type id in TL schema.

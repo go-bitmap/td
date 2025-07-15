@@ -32,12 +32,21 @@ var (
 )
 
 // MessagesGetWebPagePreviewRequest represents TL type `messages.getWebPagePreview#570d6f6f`.
+// Get preview of webpage
+//
+// See https://core.telegram.org/method/messages.getWebPagePreview for reference.
 type MessagesGetWebPagePreviewRequest struct {
-	// Flags field of MessagesGetWebPagePreviewRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Message field of MessagesGetWebPagePreviewRequest.
+	// Message from which to extract the preview
 	Message string
-	// Entities field of MessagesGetWebPagePreviewRequest.
+	// Message entities for styled text¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities
 	//
 	// Use SetEntities and GetEntities helpers.
 	Entities []MessageEntityClass
@@ -78,6 +87,18 @@ func (g *MessagesGetWebPagePreviewRequest) String() string {
 	}
 	type Alias MessagesGetWebPagePreviewRequest
 	return fmt.Sprintf("MessagesGetWebPagePreviewRequest%+v", Alias(*g))
+}
+
+// FillFrom fills MessagesGetWebPagePreviewRequest from given interface.
+func (g *MessagesGetWebPagePreviewRequest) FillFrom(from interface {
+	GetMessage() (value string)
+	GetEntities() (value []MessageEntityClass, ok bool)
+}) {
+	g.Message = from.GetMessage()
+	if val, ok := from.GetEntities(); ok {
+		g.Entities = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -230,7 +251,23 @@ func (g *MessagesGetWebPagePreviewRequest) GetEntities() (value []MessageEntityC
 	return g.Entities, true
 }
 
+// MapEntities returns field Entities wrapped in MessageEntityClassArray helper.
+func (g *MessagesGetWebPagePreviewRequest) MapEntities() (value MessageEntityClassArray, ok bool) {
+	if !g.Flags.Has(3) {
+		return value, false
+	}
+	return MessageEntityClassArray(g.Entities), true
+}
+
 // MessagesGetWebPagePreview invokes method messages.getWebPagePreview#570d6f6f returning error if any.
+// Get preview of webpage
+//
+// Possible errors:
+//
+//	400 ENTITY_BOUNDS_INVALID: A specified entity offset or length is invalid, see here » for info on how to properly compute the entity offset/length.
+//	400 MESSAGE_EMPTY: The provided message is empty.
+//
+// See https://core.telegram.org/method/messages.getWebPagePreview for reference.
 func (c *Client) MessagesGetWebPagePreview(ctx context.Context, request *MessagesGetWebPagePreviewRequest) (*MessagesWebPagePreview, error) {
 	var result MessagesWebPagePreview
 

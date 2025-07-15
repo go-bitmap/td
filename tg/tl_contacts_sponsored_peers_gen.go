@@ -32,6 +32,8 @@ var (
 )
 
 // ContactsSponsoredPeersEmpty represents TL type `contacts.sponsoredPeersEmpty#ea32b4b1`.
+//
+// See https://core.telegram.org/constructor/contacts.sponsoredPeersEmpty for reference.
 type ContactsSponsoredPeersEmpty struct {
 }
 
@@ -131,6 +133,8 @@ func (s *ContactsSponsoredPeersEmpty) DecodeBare(b *bin.Buffer) error {
 }
 
 // ContactsSponsoredPeers represents TL type `contacts.sponsoredPeers#eb032884`.
+//
+// See https://core.telegram.org/constructor/contacts.sponsoredPeers for reference.
 type ContactsSponsoredPeers struct {
 	// Peers field of ContactsSponsoredPeers.
 	Peers []SponsoredPeer
@@ -180,6 +184,17 @@ func (s *ContactsSponsoredPeers) String() string {
 	}
 	type Alias ContactsSponsoredPeers
 	return fmt.Sprintf("ContactsSponsoredPeers%+v", Alias(*s))
+}
+
+// FillFrom fills ContactsSponsoredPeers from given interface.
+func (s *ContactsSponsoredPeers) FillFrom(from interface {
+	GetPeers() (value []SponsoredPeer)
+	GetChats() (value []ChatClass)
+	GetUsers() (value []UserClass)
+}) {
+	s.Peers = from.GetPeers()
+	s.Chats = from.GetChats()
+	s.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -356,10 +371,22 @@ func (s *ContactsSponsoredPeers) GetUsers() (value []UserClass) {
 	return s.Users
 }
 
+// MapChats returns field Chats wrapped in ChatClassArray helper.
+func (s *ContactsSponsoredPeers) MapChats() (value ChatClassArray) {
+	return ChatClassArray(s.Chats)
+}
+
+// MapUsers returns field Users wrapped in UserClassArray helper.
+func (s *ContactsSponsoredPeers) MapUsers() (value UserClassArray) {
+	return UserClassArray(s.Users)
+}
+
 // ContactsSponsoredPeersClassName is schema name of ContactsSponsoredPeersClass.
 const ContactsSponsoredPeersClassName = "contacts.SponsoredPeers"
 
 // ContactsSponsoredPeersClass represents contacts.SponsoredPeers generic type.
+//
+// See https://core.telegram.org/type/contacts.SponsoredPeers for reference.
 //
 // Constructors:
 //   - [ContactsSponsoredPeersEmpty]
@@ -393,6 +420,19 @@ type ContactsSponsoredPeersClass interface {
 	String() string
 	// Zero returns true if current object has a zero value.
 	Zero() bool
+
+	// AsNotEmpty tries to map ContactsSponsoredPeersClass to ContactsSponsoredPeers.
+	AsNotEmpty() (*ContactsSponsoredPeers, bool)
+}
+
+// AsNotEmpty tries to map ContactsSponsoredPeersEmpty to ContactsSponsoredPeers.
+func (s *ContactsSponsoredPeersEmpty) AsNotEmpty() (*ContactsSponsoredPeers, bool) {
+	return nil, false
+}
+
+// AsNotEmpty tries to map ContactsSponsoredPeers to ContactsSponsoredPeers.
+func (s *ContactsSponsoredPeers) AsNotEmpty() (*ContactsSponsoredPeers, bool) {
+	return s, true
 }
 
 // DecodeContactsSponsoredPeers implements binary de-serialization for ContactsSponsoredPeersClass.

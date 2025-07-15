@@ -32,14 +32,30 @@ var (
 )
 
 // PeerColor represents TL type `peerColor#b54b5acf`.
+// Represents a color palette »¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/colors
+//
+// See https://core.telegram.org/constructor/peerColor for reference.
 type PeerColor struct {
-	// Flags field of PeerColor.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Color field of PeerColor.
+	// Color palette ID, see here »¹ for more info; if not set, the default palette should
+	// be used.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/colors
 	//
 	// Use SetColor and GetColor helpers.
 	Color int
-	// BackgroundEmojiID field of PeerColor.
+	// Optional custom emoji ID¹ used to generate the pattern.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/custom-emoji
 	//
 	// Use SetBackgroundEmojiID and GetBackgroundEmojiID helpers.
 	BackgroundEmojiID int64
@@ -80,6 +96,21 @@ func (p *PeerColor) String() string {
 	}
 	type Alias PeerColor
 	return fmt.Sprintf("PeerColor%+v", Alias(*p))
+}
+
+// FillFrom fills PeerColor from given interface.
+func (p *PeerColor) FillFrom(from interface {
+	GetColor() (value int, ok bool)
+	GetBackgroundEmojiID() (value int64, ok bool)
+}) {
+	if val, ok := from.GetColor(); ok {
+		p.Color = val
+	}
+
+	if val, ok := from.GetBackgroundEmojiID(); ok {
+		p.BackgroundEmojiID = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.

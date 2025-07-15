@@ -32,20 +32,36 @@ var (
 )
 
 // MessagesGetSearchCountersRequest represents TL type `messages.getSearchCounters#1bbcf300`.
+// Get the number of results that would be found by a messages.search¹ call with the
+// same parameters
+//
+// Links:
+//  1. https://core.telegram.org/method/messages.search
+//
+// See https://core.telegram.org/method/messages.getSearchCounters for reference.
 type MessagesGetSearchCountersRequest struct {
-	// Flags field of MessagesGetSearchCountersRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Peer field of MessagesGetSearchCountersRequest.
+	// Peer where to search
 	Peer InputPeerClass
-	// SavedPeerID field of MessagesGetSearchCountersRequest.
+	// Search within the saved message dialog »¹ with this ID.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/saved-messages
 	//
 	// Use SetSavedPeerID and GetSavedPeerID helpers.
 	SavedPeerID InputPeerClass
-	// TopMsgID field of MessagesGetSearchCountersRequest.
+	// If set, consider only messages within the specified forum topic¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/forum#forum-topics
 	//
 	// Use SetTopMsgID and GetTopMsgID helpers.
 	TopMsgID int
-	// Filters field of MessagesGetSearchCountersRequest.
+	// Search filters
 	Filters []MessagesFilterClass
 }
 
@@ -90,6 +106,25 @@ func (g *MessagesGetSearchCountersRequest) String() string {
 	}
 	type Alias MessagesGetSearchCountersRequest
 	return fmt.Sprintf("MessagesGetSearchCountersRequest%+v", Alias(*g))
+}
+
+// FillFrom fills MessagesGetSearchCountersRequest from given interface.
+func (g *MessagesGetSearchCountersRequest) FillFrom(from interface {
+	GetPeer() (value InputPeerClass)
+	GetSavedPeerID() (value InputPeerClass, ok bool)
+	GetTopMsgID() (value int, ok bool)
+	GetFilters() (value []MessagesFilterClass)
+}) {
+	g.Peer = from.GetPeer()
+	if val, ok := from.GetSavedPeerID(); ok {
+		g.SavedPeerID = val
+	}
+
+	if val, ok := from.GetTopMsgID(); ok {
+		g.TopMsgID = val
+	}
+
+	g.Filters = from.GetFilters()
 }
 
 // TypeID returns type id in TL schema.
@@ -308,7 +343,23 @@ func (g *MessagesGetSearchCountersRequest) GetFilters() (value []MessagesFilterC
 	return g.Filters
 }
 
+// MapFilters returns field Filters wrapped in MessagesFilterClassArray helper.
+func (g *MessagesGetSearchCountersRequest) MapFilters() (value MessagesFilterClassArray) {
+	return MessagesFilterClassArray(g.Filters)
+}
+
 // MessagesGetSearchCounters invokes method messages.getSearchCounters#1bbcf300 returning error if any.
+// Get the number of results that would be found by a messages.search¹ call with the
+// same parameters
+//
+// Links:
+//  1. https://core.telegram.org/method/messages.search
+//
+// Possible errors:
+//
+//	400 PEER_ID_INVALID: The provided peer id is invalid.
+//
+// See https://core.telegram.org/method/messages.getSearchCounters for reference.
 func (c *Client) MessagesGetSearchCounters(ctx context.Context, request *MessagesGetSearchCountersRequest) ([]MessagesSearchCounter, error) {
 	var result MessagesSearchCounterVector
 

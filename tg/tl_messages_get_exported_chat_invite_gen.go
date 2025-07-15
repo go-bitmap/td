@@ -32,10 +32,13 @@ var (
 )
 
 // MessagesGetExportedChatInviteRequest represents TL type `messages.getExportedChatInvite#73746f5c`.
+// Get info about a chat invite
+//
+// See https://core.telegram.org/method/messages.getExportedChatInvite for reference.
 type MessagesGetExportedChatInviteRequest struct {
-	// Peer field of MessagesGetExportedChatInviteRequest.
+	// Chat
 	Peer InputPeerClass
-	// Link field of MessagesGetExportedChatInviteRequest.
+	// Invite link
 	Link string
 }
 
@@ -71,6 +74,15 @@ func (g *MessagesGetExportedChatInviteRequest) String() string {
 	}
 	type Alias MessagesGetExportedChatInviteRequest
 	return fmt.Sprintf("MessagesGetExportedChatInviteRequest%+v", Alias(*g))
+}
+
+// FillFrom fills MessagesGetExportedChatInviteRequest from given interface.
+func (g *MessagesGetExportedChatInviteRequest) FillFrom(from interface {
+	GetPeer() (value InputPeerClass)
+	GetLink() (value string)
+}) {
+	g.Peer = from.GetPeer()
+	g.Link = from.GetLink()
 }
 
 // TypeID returns type id in TL schema.
@@ -182,6 +194,17 @@ func (g *MessagesGetExportedChatInviteRequest) GetLink() (value string) {
 }
 
 // MessagesGetExportedChatInvite invokes method messages.getExportedChatInvite#73746f5c returning error if any.
+// Get info about a chat invite
+//
+// Possible errors:
+//
+//	400 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
+//	400 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
+//	403 CHAT_WRITE_FORBIDDEN: You can't write in this chat.
+//	400 INVITE_HASH_EXPIRED: The invite link has expired.
+//	400 PEER_ID_INVALID: The provided peer id is invalid.
+//
+// See https://core.telegram.org/method/messages.getExportedChatInvite for reference.
 func (c *Client) MessagesGetExportedChatInvite(ctx context.Context, request *MessagesGetExportedChatInviteRequest) (MessagesExportedChatInviteClass, error) {
 	var result MessagesExportedChatInviteBox
 

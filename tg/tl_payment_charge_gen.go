@@ -32,10 +32,13 @@ var (
 )
 
 // PaymentCharge represents TL type `paymentCharge#ea02c27e`.
+// Payment identifier
+//
+// See https://core.telegram.org/constructor/paymentCharge for reference.
 type PaymentCharge struct {
-	// ID field of PaymentCharge.
+	// Telegram payment identifier
 	ID string
-	// ProviderChargeID field of PaymentCharge.
+	// Provider payment identifier
 	ProviderChargeID string
 }
 
@@ -71,6 +74,15 @@ func (p *PaymentCharge) String() string {
 	}
 	type Alias PaymentCharge
 	return fmt.Sprintf("PaymentCharge%+v", Alias(*p))
+}
+
+// FillFrom fills PaymentCharge from given interface.
+func (p *PaymentCharge) FillFrom(from interface {
+	GetID() (value string)
+	GetProviderChargeID() (value string)
+}) {
+	p.ID = from.GetID()
+	p.ProviderChargeID = from.GetProviderChargeID()
 }
 
 // TypeID returns type id in TL schema.

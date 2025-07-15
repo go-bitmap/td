@@ -32,14 +32,29 @@ var (
 )
 
 // BotsEditPreviewMediaRequest represents TL type `bots.editPreviewMedia#8525606f`.
+// Edit a main mini app preview, see here »¹ for more info.
+// Only owners of bots with a configured Main Mini App can use this method, see see here
+// »¹ for more info on how to check if you can invoke this method.
+//
+// Links:
+//  1. https://core.telegram.org/api/bots/webapps#main-mini-app-previews
+//  2. https://core.telegram.org/api/bots/webapps#main-mini-app-previews
+//
+// See https://core.telegram.org/method/bots.editPreviewMedia for reference.
 type BotsEditPreviewMediaRequest struct {
-	// Bot field of BotsEditPreviewMediaRequest.
+	// The bot that owns the Main Mini App.
 	Bot InputUserClass
-	// LangCode field of BotsEditPreviewMediaRequest.
+	// ISO 639-1 language code, indicating the localization of the preview to edit.
 	LangCode string
-	// Media field of BotsEditPreviewMediaRequest.
+	// The photo/video preview to replace, previously fetched as specified here »¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/bots/webapps#main-mini-app-previews
 	Media InputMediaClass
-	// NewMedia field of BotsEditPreviewMediaRequest.
+	// The new photo/video preview, uploaded using messages.uploadMedia¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/method/messages.uploadMedia
 	NewMedia InputMediaClass
 }
 
@@ -81,6 +96,19 @@ func (e *BotsEditPreviewMediaRequest) String() string {
 	}
 	type Alias BotsEditPreviewMediaRequest
 	return fmt.Sprintf("BotsEditPreviewMediaRequest%+v", Alias(*e))
+}
+
+// FillFrom fills BotsEditPreviewMediaRequest from given interface.
+func (e *BotsEditPreviewMediaRequest) FillFrom(from interface {
+	GetBot() (value InputUserClass)
+	GetLangCode() (value string)
+	GetMedia() (value InputMediaClass)
+	GetNewMedia() (value InputMediaClass)
+}) {
+	e.Bot = from.GetBot()
+	e.LangCode = from.GetLangCode()
+	e.Media = from.GetMedia()
+	e.NewMedia = from.GetNewMedia()
 }
 
 // TypeID returns type id in TL schema.
@@ -242,6 +270,19 @@ func (e *BotsEditPreviewMediaRequest) GetNewMedia() (value InputMediaClass) {
 }
 
 // BotsEditPreviewMedia invokes method bots.editPreviewMedia#8525606f returning error if any.
+// Edit a main mini app preview, see here »¹ for more info.
+// Only owners of bots with a configured Main Mini App can use this method, see see here
+// »¹ for more info on how to check if you can invoke this method.
+//
+// Links:
+//  1. https://core.telegram.org/api/bots/webapps#main-mini-app-previews
+//  2. https://core.telegram.org/api/bots/webapps#main-mini-app-previews
+//
+// Possible errors:
+//
+//	400 BOT_INVALID: This is not a valid bot.
+//
+// See https://core.telegram.org/method/bots.editPreviewMedia for reference.
 func (c *Client) BotsEditPreviewMedia(ctx context.Context, request *BotsEditPreviewMediaRequest) (*BotPreviewMedia, error) {
 	var result BotPreviewMedia
 

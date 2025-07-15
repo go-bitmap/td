@@ -32,28 +32,41 @@ var (
 )
 
 // MessagesExportChatInviteRequest represents TL type `messages.exportChatInvite#a455de90`.
+// Export an invite link for a chat
+//
+// See https://core.telegram.org/method/messages.exportChatInvite for reference.
 type MessagesExportChatInviteRequest struct {
-	// Flags field of MessagesExportChatInviteRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// LegacyRevokePermanent field of MessagesExportChatInviteRequest.
+	// Legacy flag, reproducing legacy behavior of this method: if set, revokes all previous
+	// links before creating a new one. Kept for bot API BC, should not be used by modern
+	// clients.
 	LegacyRevokePermanent bool
-	// RequestNeeded field of MessagesExportChatInviteRequest.
+	// Whether admin confirmation is required before admitting each separate user into the
+	// chat
 	RequestNeeded bool
-	// Peer field of MessagesExportChatInviteRequest.
+	// Chat
 	Peer InputPeerClass
-	// ExpireDate field of MessagesExportChatInviteRequest.
+	// Expiration date
 	//
 	// Use SetExpireDate and GetExpireDate helpers.
 	ExpireDate int
-	// UsageLimit field of MessagesExportChatInviteRequest.
+	// Maximum number of users that can join using this link
 	//
 	// Use SetUsageLimit and GetUsageLimit helpers.
 	UsageLimit int
-	// Title field of MessagesExportChatInviteRequest.
+	// Description of the invite link, visible only to administrators
 	//
 	// Use SetTitle and GetTitle helpers.
 	Title string
-	// SubscriptionPricing field of MessagesExportChatInviteRequest.
+	// For Telegram Star subscriptions »¹, contains the pricing of the subscription the
+	// user must activate to join the private channel.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/stars#star-subscriptions
 	//
 	// Use SetSubscriptionPricing and GetSubscriptionPricing helpers.
 	SubscriptionPricing StarsSubscriptionPricing
@@ -109,6 +122,37 @@ func (e *MessagesExportChatInviteRequest) String() string {
 	}
 	type Alias MessagesExportChatInviteRequest
 	return fmt.Sprintf("MessagesExportChatInviteRequest%+v", Alias(*e))
+}
+
+// FillFrom fills MessagesExportChatInviteRequest from given interface.
+func (e *MessagesExportChatInviteRequest) FillFrom(from interface {
+	GetLegacyRevokePermanent() (value bool)
+	GetRequestNeeded() (value bool)
+	GetPeer() (value InputPeerClass)
+	GetExpireDate() (value int, ok bool)
+	GetUsageLimit() (value int, ok bool)
+	GetTitle() (value string, ok bool)
+	GetSubscriptionPricing() (value StarsSubscriptionPricing, ok bool)
+}) {
+	e.LegacyRevokePermanent = from.GetLegacyRevokePermanent()
+	e.RequestNeeded = from.GetRequestNeeded()
+	e.Peer = from.GetPeer()
+	if val, ok := from.GetExpireDate(); ok {
+		e.ExpireDate = val
+	}
+
+	if val, ok := from.GetUsageLimit(); ok {
+		e.UsageLimit = val
+	}
+
+	if val, ok := from.GetTitle(); ok {
+		e.Title = val
+	}
+
+	if val, ok := from.GetSubscriptionPricing(); ok {
+		e.SubscriptionPricing = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -413,6 +457,24 @@ func (e *MessagesExportChatInviteRequest) GetSubscriptionPricing() (value StarsS
 }
 
 // MessagesExportChatInvite invokes method messages.exportChatInvite#a455de90 returning error if any.
+// Export an invite link for a chat
+//
+// Possible errors:
+//
+//	400 CHANNEL_INVALID: The provided channel is invalid.
+//	400 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
+//	400 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
+//	400 CHAT_ID_INVALID: The provided chat id is invalid.
+//	403 CHAT_WRITE_FORBIDDEN: You can't write in this chat.
+//	400 EXPIRE_DATE_INVALID: The specified expiration date is invalid.
+//	400 MSG_ID_INVALID: Invalid message ID provided.
+//	400 PEER_ID_INVALID: The provided peer id is invalid.
+//	400 PRICING_CHAT_INVALID: The pricing for the subscription is invalid, the maximum price is specified in the stars_subscription_amount_max config key ».
+//	400 SUBSCRIPTION_PERIOD_INVALID: The specified subscription_pricing.period is invalid.
+//	400 USAGE_LIMIT_INVALID: The specified usage limit is invalid.
+//
+// See https://core.telegram.org/method/messages.exportChatInvite for reference.
+// Can be used by bots.
 func (c *Client) MessagesExportChatInvite(ctx context.Context, request *MessagesExportChatInviteRequest) (ExportedChatInviteClass, error) {
 	var result ExportedChatInviteBox
 

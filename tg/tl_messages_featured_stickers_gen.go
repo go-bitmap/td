@@ -32,8 +32,11 @@ var (
 )
 
 // MessagesFeaturedStickersNotModified represents TL type `messages.featuredStickersNotModified#c6dc0c66`.
+// Featured stickers haven't changed
+//
+// See https://core.telegram.org/constructor/messages.featuredStickersNotModified for reference.
 type MessagesFeaturedStickersNotModified struct {
-	// Count field of MessagesFeaturedStickersNotModified.
+	// Total number of featured stickers
 	Count int
 }
 
@@ -71,6 +74,13 @@ func (f *MessagesFeaturedStickersNotModified) String() string {
 	}
 	type Alias MessagesFeaturedStickersNotModified
 	return fmt.Sprintf("MessagesFeaturedStickersNotModified%+v", Alias(*f))
+}
+
+// FillFrom fills MessagesFeaturedStickersNotModified from given interface.
+func (f *MessagesFeaturedStickersNotModified) FillFrom(from interface {
+	GetCount() (value int)
+}) {
+	f.Count = from.GetCount()
 }
 
 // TypeID returns type id in TL schema.
@@ -157,18 +167,27 @@ func (f *MessagesFeaturedStickersNotModified) GetCount() (value int) {
 }
 
 // MessagesFeaturedStickers represents TL type `messages.featuredStickers#be382906`.
+// Featured stickersets
+//
+// See https://core.telegram.org/constructor/messages.featuredStickers for reference.
 type MessagesFeaturedStickers struct {
-	// Flags field of MessagesFeaturedStickers.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Premium field of MessagesFeaturedStickers.
+	// Whether this is a premium stickerset
 	Premium bool
-	// Hash field of MessagesFeaturedStickers.
+	// Hash used for caching, for more info click here¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets#hash-generation
 	Hash int64
-	// Count field of MessagesFeaturedStickers.
+	// Total number of featured stickers
 	Count int
-	// Sets field of MessagesFeaturedStickers.
+	// Featured stickersets
 	Sets []StickerSetCoveredClass
-	// Unread field of MessagesFeaturedStickers.
+	// IDs of new featured stickersets
 	Unread []int64
 }
 
@@ -221,6 +240,21 @@ func (f *MessagesFeaturedStickers) String() string {
 	}
 	type Alias MessagesFeaturedStickers
 	return fmt.Sprintf("MessagesFeaturedStickers%+v", Alias(*f))
+}
+
+// FillFrom fills MessagesFeaturedStickers from given interface.
+func (f *MessagesFeaturedStickers) FillFrom(from interface {
+	GetPremium() (value bool)
+	GetHash() (value int64)
+	GetCount() (value int)
+	GetSets() (value []StickerSetCoveredClass)
+	GetUnread() (value []int64)
+}) {
+	f.Premium = from.GetPremium()
+	f.Hash = from.GetHash()
+	f.Count = from.GetCount()
+	f.Sets = from.GetSets()
+	f.Unread = from.GetUnread()
 }
 
 // TypeID returns type id in TL schema.
@@ -438,10 +472,17 @@ func (f *MessagesFeaturedStickers) GetUnread() (value []int64) {
 	return f.Unread
 }
 
+// MapSets returns field Sets wrapped in StickerSetCoveredClassArray helper.
+func (f *MessagesFeaturedStickers) MapSets() (value StickerSetCoveredClassArray) {
+	return StickerSetCoveredClassArray(f.Sets)
+}
+
 // MessagesFeaturedStickersClassName is schema name of MessagesFeaturedStickersClass.
 const MessagesFeaturedStickersClassName = "messages.FeaturedStickers"
 
 // MessagesFeaturedStickersClass represents messages.FeaturedStickers generic type.
+//
+// See https://core.telegram.org/type/messages.FeaturedStickers for reference.
 //
 // Constructors:
 //   - [MessagesFeaturedStickersNotModified]
@@ -476,8 +517,21 @@ type MessagesFeaturedStickersClass interface {
 	// Zero returns true if current object has a zero value.
 	Zero() bool
 
-	// Count field of MessagesFeaturedStickersNotModified.
+	// Total number of featured stickers
 	GetCount() (value int)
+
+	// AsModified tries to map MessagesFeaturedStickersClass to MessagesFeaturedStickers.
+	AsModified() (*MessagesFeaturedStickers, bool)
+}
+
+// AsModified tries to map MessagesFeaturedStickersNotModified to MessagesFeaturedStickers.
+func (f *MessagesFeaturedStickersNotModified) AsModified() (*MessagesFeaturedStickers, bool) {
+	return nil, false
+}
+
+// AsModified tries to map MessagesFeaturedStickers to MessagesFeaturedStickers.
+func (f *MessagesFeaturedStickers) AsModified() (*MessagesFeaturedStickers, bool) {
+	return f, true
 }
 
 // DecodeMessagesFeaturedStickers implements binary de-serialization for MessagesFeaturedStickersClass.

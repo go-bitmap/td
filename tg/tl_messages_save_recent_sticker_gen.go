@@ -32,14 +32,20 @@ var (
 )
 
 // MessagesSaveRecentStickerRequest represents TL type `messages.saveRecentSticker#392718f8`.
+// Add/remove sticker from recent stickers list
+//
+// See https://core.telegram.org/method/messages.saveRecentSticker for reference.
 type MessagesSaveRecentStickerRequest struct {
-	// Flags field of MessagesSaveRecentStickerRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Attached field of MessagesSaveRecentStickerRequest.
+	// Whether to add/remove stickers recently attached to photo or video files
 	Attached bool
-	// ID field of MessagesSaveRecentStickerRequest.
+	// Sticker
 	ID InputDocumentClass
-	// Unsave field of MessagesSaveRecentStickerRequest.
+	// Whether to save or unsave the sticker
 	Unsave bool
 }
 
@@ -81,6 +87,17 @@ func (s *MessagesSaveRecentStickerRequest) String() string {
 	}
 	type Alias MessagesSaveRecentStickerRequest
 	return fmt.Sprintf("MessagesSaveRecentStickerRequest%+v", Alias(*s))
+}
+
+// FillFrom fills MessagesSaveRecentStickerRequest from given interface.
+func (s *MessagesSaveRecentStickerRequest) FillFrom(from interface {
+	GetAttached() (value bool)
+	GetID() (value InputDocumentClass)
+	GetUnsave() (value bool)
+}) {
+	s.Attached = from.GetAttached()
+	s.ID = from.GetID()
+	s.Unsave = from.GetUnsave()
 }
 
 // TypeID returns type id in TL schema.
@@ -232,7 +249,19 @@ func (s *MessagesSaveRecentStickerRequest) GetUnsave() (value bool) {
 	return s.Unsave
 }
 
+// GetIDAsNotEmpty returns mapped value of ID field.
+func (s *MessagesSaveRecentStickerRequest) GetIDAsNotEmpty() (*InputDocument, bool) {
+	return s.ID.AsNotEmpty()
+}
+
 // MessagesSaveRecentSticker invokes method messages.saveRecentSticker#392718f8 returning error if any.
+// Add/remove sticker from recent stickers list
+//
+// Possible errors:
+//
+//	400 STICKER_ID_INVALID: The provided sticker ID is invalid.
+//
+// See https://core.telegram.org/method/messages.saveRecentSticker for reference.
 func (c *Client) MessagesSaveRecentSticker(ctx context.Context, request *MessagesSaveRecentStickerRequest) (bool, error) {
 	var result BoolBox
 

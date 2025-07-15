@@ -32,30 +32,36 @@ var (
 )
 
 // PageRelatedArticle represents TL type `pageRelatedArticle#b390dc08`.
+// Related article
+//
+// See https://core.telegram.org/constructor/pageRelatedArticle for reference.
 type PageRelatedArticle struct {
-	// Flags field of PageRelatedArticle.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// URL field of PageRelatedArticle.
+	// URL of article
 	URL string
-	// WebpageID field of PageRelatedArticle.
+	// Webpage ID of generated IV preview
 	WebpageID int64
-	// Title field of PageRelatedArticle.
+	// Title
 	//
 	// Use SetTitle and GetTitle helpers.
 	Title string
-	// Description field of PageRelatedArticle.
+	// Description
 	//
 	// Use SetDescription and GetDescription helpers.
 	Description string
-	// PhotoID field of PageRelatedArticle.
+	// ID of preview photo
 	//
 	// Use SetPhotoID and GetPhotoID helpers.
 	PhotoID int64
-	// Author field of PageRelatedArticle.
+	// Author name
 	//
 	// Use SetAuthor and GetAuthor helpers.
 	Author string
-	// PublishedDate field of PageRelatedArticle.
+	// Date of publication
 	//
 	// Use SetPublishedDate and GetPublishedDate helpers.
 	PublishedDate int
@@ -111,6 +117,40 @@ func (p *PageRelatedArticle) String() string {
 	}
 	type Alias PageRelatedArticle
 	return fmt.Sprintf("PageRelatedArticle%+v", Alias(*p))
+}
+
+// FillFrom fills PageRelatedArticle from given interface.
+func (p *PageRelatedArticle) FillFrom(from interface {
+	GetURL() (value string)
+	GetWebpageID() (value int64)
+	GetTitle() (value string, ok bool)
+	GetDescription() (value string, ok bool)
+	GetPhotoID() (value int64, ok bool)
+	GetAuthor() (value string, ok bool)
+	GetPublishedDate() (value int, ok bool)
+}) {
+	p.URL = from.GetURL()
+	p.WebpageID = from.GetWebpageID()
+	if val, ok := from.GetTitle(); ok {
+		p.Title = val
+	}
+
+	if val, ok := from.GetDescription(); ok {
+		p.Description = val
+	}
+
+	if val, ok := from.GetPhotoID(); ok {
+		p.PhotoID = val
+	}
+
+	if val, ok := from.GetAuthor(); ok {
+		p.Author = val
+	}
+
+	if val, ok := from.GetPublishedDate(); ok {
+		p.PublishedDate = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.

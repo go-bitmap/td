@@ -32,10 +32,13 @@ var (
 )
 
 // MessagesInstallStickerSetRequest represents TL type `messages.installStickerSet#c78fe460`.
+// Install a stickerset
+//
+// See https://core.telegram.org/method/messages.installStickerSet for reference.
 type MessagesInstallStickerSetRequest struct {
-	// Stickerset field of MessagesInstallStickerSetRequest.
+	// Stickerset to install
 	Stickerset InputStickerSetClass
-	// Archived field of MessagesInstallStickerSetRequest.
+	// Whether to archive stickerset
 	Archived bool
 }
 
@@ -71,6 +74,15 @@ func (i *MessagesInstallStickerSetRequest) String() string {
 	}
 	type Alias MessagesInstallStickerSetRequest
 	return fmt.Sprintf("MessagesInstallStickerSetRequest%+v", Alias(*i))
+}
+
+// FillFrom fills MessagesInstallStickerSetRequest from given interface.
+func (i *MessagesInstallStickerSetRequest) FillFrom(from interface {
+	GetStickerset() (value InputStickerSetClass)
+	GetArchived() (value bool)
+}) {
+	i.Stickerset = from.GetStickerset()
+	i.Archived = from.GetArchived()
 }
 
 // TypeID returns type id in TL schema.
@@ -182,6 +194,13 @@ func (i *MessagesInstallStickerSetRequest) GetArchived() (value bool) {
 }
 
 // MessagesInstallStickerSet invokes method messages.installStickerSet#c78fe460 returning error if any.
+// Install a stickerset
+//
+// Possible errors:
+//
+//	406 STICKERSET_INVALID: The provided sticker set is invalid.
+//
+// See https://core.telegram.org/method/messages.installStickerSet for reference.
 func (c *Client) MessagesInstallStickerSet(ctx context.Context, request *MessagesInstallStickerSetRequest) (MessagesStickerSetInstallResultClass, error) {
 	var result MessagesStickerSetInstallResultBox
 

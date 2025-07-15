@@ -32,10 +32,21 @@ var (
 )
 
 // ChannelsToggleAntiSpamRequest represents TL type `channels.toggleAntiSpam#68f3e4eb`.
+// Enable or disable the native antispam system¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/antispam
+//
+// See https://core.telegram.org/method/channels.toggleAntiSpam for reference.
 type ChannelsToggleAntiSpamRequest struct {
-	// Channel field of ChannelsToggleAntiSpamRequest.
+	// Supergroup ID. The specified supergroup must have at least
+	// telegram_antispam_group_size_min members to enable antispam functionality, as
+	// specified by the client configuration parameters¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/config#client-configuration
 	Channel InputChannelClass
-	// Enabled field of ChannelsToggleAntiSpamRequest.
+	// Enable or disable the native antispam system.
 	Enabled bool
 }
 
@@ -71,6 +82,15 @@ func (t *ChannelsToggleAntiSpamRequest) String() string {
 	}
 	type Alias ChannelsToggleAntiSpamRequest
 	return fmt.Sprintf("ChannelsToggleAntiSpamRequest%+v", Alias(*t))
+}
+
+// FillFrom fills ChannelsToggleAntiSpamRequest from given interface.
+func (t *ChannelsToggleAntiSpamRequest) FillFrom(from interface {
+	GetChannel() (value InputChannelClass)
+	GetEnabled() (value bool)
+}) {
+	t.Channel = from.GetChannel()
+	t.Enabled = from.GetEnabled()
 }
 
 // TypeID returns type id in TL schema.
@@ -181,7 +201,23 @@ func (t *ChannelsToggleAntiSpamRequest) GetEnabled() (value bool) {
 	return t.Enabled
 }
 
+// GetChannelAsNotEmpty returns mapped value of Channel field.
+func (t *ChannelsToggleAntiSpamRequest) GetChannelAsNotEmpty() (NotEmptyInputChannel, bool) {
+	return t.Channel.AsNotEmpty()
+}
+
 // ChannelsToggleAntiSpam invokes method channels.toggleAntiSpam#68f3e4eb returning error if any.
+// Enable or disable the native antispam system¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/antispam
+//
+// Possible errors:
+//
+//	400 CHANNEL_INVALID: The provided channel is invalid.
+//	400 CHAT_NOT_MODIFIED: No changes were made to chat information because the new information you passed is identical to the current information.
+//
+// See https://core.telegram.org/method/channels.toggleAntiSpam for reference.
 func (c *Client) ChannelsToggleAntiSpam(ctx context.Context, request *ChannelsToggleAntiSpamRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

@@ -32,8 +32,11 @@ var (
 )
 
 // LangpackGetLanguagesRequest represents TL type `langpack.getLanguages#42c6978f`.
+// Get information about all languages in a localization pack
+//
+// See https://core.telegram.org/method/langpack.getLanguages for reference.
 type LangpackGetLanguagesRequest struct {
-	// LangPack field of LangpackGetLanguagesRequest.
+	// Platform identifier (i.e. android, tdesktop, etc).
 	LangPack string
 }
 
@@ -66,6 +69,13 @@ func (g *LangpackGetLanguagesRequest) String() string {
 	}
 	type Alias LangpackGetLanguagesRequest
 	return fmt.Sprintf("LangpackGetLanguagesRequest%+v", Alias(*g))
+}
+
+// FillFrom fills LangpackGetLanguagesRequest from given interface.
+func (g *LangpackGetLanguagesRequest) FillFrom(from interface {
+	GetLangPack() (value string)
+}) {
+	g.LangPack = from.GetLangPack()
 }
 
 // TypeID returns type id in TL schema.
@@ -152,6 +162,13 @@ func (g *LangpackGetLanguagesRequest) GetLangPack() (value string) {
 }
 
 // LangpackGetLanguages invokes method langpack.getLanguages#42c6978f returning error if any.
+// Get information about all languages in a localization pack
+//
+// Possible errors:
+//
+//	400 LANG_PACK_INVALID: The provided language pack is invalid.
+//
+// See https://core.telegram.org/method/langpack.getLanguages for reference.
 func (c *Client) LangpackGetLanguages(ctx context.Context, langpack string) ([]LangPackLanguage, error) {
 	var result LangPackLanguageVector
 

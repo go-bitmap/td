@@ -32,10 +32,16 @@ var (
 )
 
 // ChannelsDeleteTopicHistoryRequest represents TL type `channels.deleteTopicHistory#34435f2d`.
+// Delete message history of a forum topic¹
+//
+// Links:
+//  1. https://core.telegram.org/api/forum
+//
+// See https://core.telegram.org/method/channels.deleteTopicHistory for reference.
 type ChannelsDeleteTopicHistoryRequest struct {
-	// Channel field of ChannelsDeleteTopicHistoryRequest.
+	// Forum
 	Channel InputChannelClass
-	// TopMsgID field of ChannelsDeleteTopicHistoryRequest.
+	// Topic ID
 	TopMsgID int
 }
 
@@ -71,6 +77,15 @@ func (d *ChannelsDeleteTopicHistoryRequest) String() string {
 	}
 	type Alias ChannelsDeleteTopicHistoryRequest
 	return fmt.Sprintf("ChannelsDeleteTopicHistoryRequest%+v", Alias(*d))
+}
+
+// FillFrom fills ChannelsDeleteTopicHistoryRequest from given interface.
+func (d *ChannelsDeleteTopicHistoryRequest) FillFrom(from interface {
+	GetChannel() (value InputChannelClass)
+	GetTopMsgID() (value int)
+}) {
+	d.Channel = from.GetChannel()
+	d.TopMsgID = from.GetTopMsgID()
 }
 
 // TypeID returns type id in TL schema.
@@ -181,7 +196,25 @@ func (d *ChannelsDeleteTopicHistoryRequest) GetTopMsgID() (value int) {
 	return d.TopMsgID
 }
 
+// GetChannelAsNotEmpty returns mapped value of Channel field.
+func (d *ChannelsDeleteTopicHistoryRequest) GetChannelAsNotEmpty() (NotEmptyInputChannel, bool) {
+	return d.Channel.AsNotEmpty()
+}
+
 // ChannelsDeleteTopicHistory invokes method channels.deleteTopicHistory#34435f2d returning error if any.
+// Delete message history of a forum topic¹
+//
+// Links:
+//  1. https://core.telegram.org/api/forum
+//
+// Possible errors:
+//
+//	400 CHANNEL_FORUM_MISSING: This supergroup is not a forum.
+//	400 CHANNEL_INVALID: The provided channel is invalid.
+//	400 TOPIC_ID_INVALID: The specified topic ID is invalid.
+//
+// See https://core.telegram.org/method/channels.deleteTopicHistory for reference.
+// Can be used by bots.
 func (c *Client) ChannelsDeleteTopicHistory(ctx context.Context, request *ChannelsDeleteTopicHistoryRequest) (*MessagesAffectedHistory, error) {
 	var result MessagesAffectedHistory
 

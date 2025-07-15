@@ -32,10 +32,19 @@ var (
 )
 
 // ChannelsToggleParticipantsHiddenRequest represents TL type `channels.toggleParticipantsHidden#6a6e7854`.
+// Hide or display the participants list in a supergroup¹.
+// The supergroup must have at least hidden_members_group_size_min participants in order
+// to use this method, as specified by the client configuration parameters »¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/channel
+//  2. https://core.telegram.org/api/config#client-configuration
+//
+// See https://core.telegram.org/method/channels.toggleParticipantsHidden for reference.
 type ChannelsToggleParticipantsHiddenRequest struct {
-	// Channel field of ChannelsToggleParticipantsHiddenRequest.
+	// Supergroup ID
 	Channel InputChannelClass
-	// Enabled field of ChannelsToggleParticipantsHiddenRequest.
+	// If true, will hide the participants list; otherwise will unhide it.
 	Enabled bool
 }
 
@@ -71,6 +80,15 @@ func (t *ChannelsToggleParticipantsHiddenRequest) String() string {
 	}
 	type Alias ChannelsToggleParticipantsHiddenRequest
 	return fmt.Sprintf("ChannelsToggleParticipantsHiddenRequest%+v", Alias(*t))
+}
+
+// FillFrom fills ChannelsToggleParticipantsHiddenRequest from given interface.
+func (t *ChannelsToggleParticipantsHiddenRequest) FillFrom(from interface {
+	GetChannel() (value InputChannelClass)
+	GetEnabled() (value bool)
+}) {
+	t.Channel = from.GetChannel()
+	t.Enabled = from.GetEnabled()
 }
 
 // TypeID returns type id in TL schema.
@@ -181,7 +199,29 @@ func (t *ChannelsToggleParticipantsHiddenRequest) GetEnabled() (value bool) {
 	return t.Enabled
 }
 
+// GetChannelAsNotEmpty returns mapped value of Channel field.
+func (t *ChannelsToggleParticipantsHiddenRequest) GetChannelAsNotEmpty() (NotEmptyInputChannel, bool) {
+	return t.Channel.AsNotEmpty()
+}
+
 // ChannelsToggleParticipantsHidden invokes method channels.toggleParticipantsHidden#6a6e7854 returning error if any.
+// Hide or display the participants list in a supergroup¹.
+// The supergroup must have at least hidden_members_group_size_min participants in order
+// to use this method, as specified by the client configuration parameters »¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/channel
+//  2. https://core.telegram.org/api/config#client-configuration
+//
+// Possible errors:
+//
+//	400 CHANNEL_INVALID: The provided channel is invalid.
+//	400 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
+//	400 CHAT_ID_INVALID: The provided chat id is invalid.
+//	400 CHAT_NOT_MODIFIED: No changes were made to chat information because the new information you passed is identical to the current information.
+//	400 PARTICIPANTS_TOO_FEW: Not enough participants.
+//
+// See https://core.telegram.org/method/channels.toggleParticipantsHidden for reference.
 func (c *Client) ChannelsToggleParticipantsHidden(ctx context.Context, request *ChannelsToggleParticipantsHiddenRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

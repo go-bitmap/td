@@ -32,12 +32,19 @@ var (
 )
 
 // AccountUploadRingtoneRequest represents TL type `account.uploadRingtone#831a83a2`.
+// Upload notification sound, use account.saveRingtone¹ to convert it and add it to the
+// list of saved notification sounds.
+//
+// Links:
+//  1. https://core.telegram.org/method/account.saveRingtone
+//
+// See https://core.telegram.org/method/account.uploadRingtone for reference.
 type AccountUploadRingtoneRequest struct {
-	// File field of AccountUploadRingtoneRequest.
+	// Notification sound
 	File InputFileClass
-	// FileName field of AccountUploadRingtoneRequest.
+	// File name
 	FileName string
-	// MimeType field of AccountUploadRingtoneRequest.
+	// MIME type of file
 	MimeType string
 }
 
@@ -76,6 +83,17 @@ func (u *AccountUploadRingtoneRequest) String() string {
 	}
 	type Alias AccountUploadRingtoneRequest
 	return fmt.Sprintf("AccountUploadRingtoneRequest%+v", Alias(*u))
+}
+
+// FillFrom fills AccountUploadRingtoneRequest from given interface.
+func (u *AccountUploadRingtoneRequest) FillFrom(from interface {
+	GetFile() (value InputFileClass)
+	GetFileName() (value string)
+	GetMimeType() (value string)
+}) {
+	u.File = from.GetFile()
+	u.FileName = from.GetFileName()
+	u.MimeType = from.GetMimeType()
 }
 
 // TypeID returns type id in TL schema.
@@ -207,6 +225,17 @@ func (u *AccountUploadRingtoneRequest) GetMimeType() (value string) {
 }
 
 // AccountUploadRingtone invokes method account.uploadRingtone#831a83a2 returning error if any.
+// Upload notification sound, use account.saveRingtone¹ to convert it and add it to the
+// list of saved notification sounds.
+//
+// Links:
+//  1. https://core.telegram.org/method/account.saveRingtone
+//
+// Possible errors:
+//
+//	400 RINGTONE_MIME_INVALID: The MIME type for the ringtone is invalid.
+//
+// See https://core.telegram.org/method/account.uploadRingtone for reference.
 func (c *Client) AccountUploadRingtone(ctx context.Context, request *AccountUploadRingtoneRequest) (DocumentClass, error) {
 	var result DocumentBox
 

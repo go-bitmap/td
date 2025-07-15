@@ -32,8 +32,17 @@ var (
 )
 
 // AccountGetMultiWallPapersRequest represents TL type `account.getMultiWallPapers#65ad71dc`.
+// Get info about multiple wallpapers¹
+//
+// Links:
+//  1. https://core.telegram.org/api/wallpapers
+//
+// See https://core.telegram.org/method/account.getMultiWallPapers for reference.
 type AccountGetMultiWallPapersRequest struct {
-	// Wallpapers field of AccountGetMultiWallPapersRequest.
+	// Wallpapers¹ to fetch info about
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/wallpapers
 	Wallpapers []InputWallPaperClass
 }
 
@@ -66,6 +75,13 @@ func (g *AccountGetMultiWallPapersRequest) String() string {
 	}
 	type Alias AccountGetMultiWallPapersRequest
 	return fmt.Sprintf("AccountGetMultiWallPapersRequest%+v", Alias(*g))
+}
+
+// FillFrom fills AccountGetMultiWallPapersRequest from given interface.
+func (g *AccountGetMultiWallPapersRequest) FillFrom(from interface {
+	GetWallpapers() (value []InputWallPaperClass)
+}) {
+	g.Wallpapers = from.GetWallpapers()
 }
 
 // TypeID returns type id in TL schema.
@@ -169,7 +185,22 @@ func (g *AccountGetMultiWallPapersRequest) GetWallpapers() (value []InputWallPap
 	return g.Wallpapers
 }
 
+// MapWallpapers returns field Wallpapers wrapped in InputWallPaperClassArray helper.
+func (g *AccountGetMultiWallPapersRequest) MapWallpapers() (value InputWallPaperClassArray) {
+	return InputWallPaperClassArray(g.Wallpapers)
+}
+
 // AccountGetMultiWallPapers invokes method account.getMultiWallPapers#65ad71dc returning error if any.
+// Get info about multiple wallpapers¹
+//
+// Links:
+//  1. https://core.telegram.org/api/wallpapers
+//
+// Possible errors:
+//
+//	400 WALLPAPER_INVALID: The specified wallpaper is invalid.
+//
+// See https://core.telegram.org/method/account.getMultiWallPapers for reference.
 func (c *Client) AccountGetMultiWallPapers(ctx context.Context, wallpapers []InputWallPaperClass) ([]WallPaperClass, error) {
 	var result WallPaperClassVector
 

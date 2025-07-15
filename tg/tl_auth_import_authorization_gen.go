@@ -32,10 +32,13 @@ var (
 )
 
 // AuthImportAuthorizationRequest represents TL type `auth.importAuthorization#a57a7dad`.
+// Logs in a user using a key transmitted from his native data-center.
+//
+// See https://core.telegram.org/method/auth.importAuthorization for reference.
 type AuthImportAuthorizationRequest struct {
-	// ID field of AuthImportAuthorizationRequest.
+	// User ID
 	ID int64
-	// Bytes field of AuthImportAuthorizationRequest.
+	// Authorization key
 	Bytes []byte
 }
 
@@ -71,6 +74,15 @@ func (i *AuthImportAuthorizationRequest) String() string {
 	}
 	type Alias AuthImportAuthorizationRequest
 	return fmt.Sprintf("AuthImportAuthorizationRequest%+v", Alias(*i))
+}
+
+// FillFrom fills AuthImportAuthorizationRequest from given interface.
+func (i *AuthImportAuthorizationRequest) FillFrom(from interface {
+	GetID() (value int64)
+	GetBytes() (value []byte)
+}) {
+	i.ID = from.GetID()
+	i.Bytes = from.GetBytes()
 }
 
 // TypeID returns type id in TL schema.
@@ -177,6 +189,15 @@ func (i *AuthImportAuthorizationRequest) GetBytes() (value []byte) {
 }
 
 // AuthImportAuthorization invokes method auth.importAuthorization#a57a7dad returning error if any.
+// Logs in a user using a key transmitted from his native data-center.
+//
+// Possible errors:
+//
+//	400 AUTH_BYTES_INVALID: The provided authorization is invalid.
+//	400 USER_ID_INVALID: The provided user ID is invalid.
+//
+// See https://core.telegram.org/method/auth.importAuthorization for reference.
+// Can be used by bots.
 func (c *Client) AuthImportAuthorization(ctx context.Context, request *AuthImportAuthorizationRequest) (AuthAuthorizationClass, error) {
 	var result AuthAuthorizationBox
 

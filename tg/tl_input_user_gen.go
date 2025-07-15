@@ -32,6 +32,9 @@ var (
 )
 
 // InputUserEmpty represents TL type `inputUserEmpty#b98886cf`.
+// Empty constructor, does not define a user.
+//
+// See https://core.telegram.org/constructor/inputUserEmpty for reference.
 type InputUserEmpty struct {
 }
 
@@ -131,6 +134,9 @@ func (i *InputUserEmpty) DecodeBare(b *bin.Buffer) error {
 }
 
 // InputUserSelf represents TL type `inputUserSelf#f7c1b13f`.
+// Defines the current user.
+//
+// See https://core.telegram.org/constructor/inputUserSelf for reference.
 type InputUserSelf struct {
 }
 
@@ -230,10 +236,16 @@ func (i *InputUserSelf) DecodeBare(b *bin.Buffer) error {
 }
 
 // InputUser represents TL type `inputUser#f21158c6`.
+// Defines a user for further interaction.
+//
+// See https://core.telegram.org/constructor/inputUser for reference.
 type InputUser struct {
-	// UserID field of InputUser.
+	// User identifier
 	UserID int64
-	// AccessHash field of InputUser.
+	// access_hash value from the user¹ constructor
+	//
+	// Links:
+	//  1) https://core.telegram.org/constructor/user
 	AccessHash int64
 }
 
@@ -274,6 +286,15 @@ func (i *InputUser) String() string {
 	}
 	type Alias InputUser
 	return fmt.Sprintf("InputUser%+v", Alias(*i))
+}
+
+// FillFrom fills InputUser from given interface.
+func (i *InputUser) FillFrom(from interface {
+	GetUserID() (value int64)
+	GetAccessHash() (value int64)
+}) {
+	i.UserID = from.GetUserID()
+	i.AccessHash = from.GetAccessHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -380,12 +401,18 @@ func (i *InputUser) GetAccessHash() (value int64) {
 }
 
 // InputUserFromMessage represents TL type `inputUserFromMessage#1da448e2`.
+// Defines a min¹ user that was seen in a certain message of a certain chat.
+//
+// Links:
+//  1. https://core.telegram.org/api/min
+//
+// See https://core.telegram.org/constructor/inputUserFromMessage for reference.
 type InputUserFromMessage struct {
-	// Peer field of InputUserFromMessage.
+	// The chat where the user was seen
 	Peer InputPeerClass
-	// MsgID field of InputUserFromMessage.
+	// The message ID
 	MsgID int
-	// UserID field of InputUserFromMessage.
+	// The identifier of the user that was seen
 	UserID int64
 }
 
@@ -429,6 +456,17 @@ func (i *InputUserFromMessage) String() string {
 	}
 	type Alias InputUserFromMessage
 	return fmt.Sprintf("InputUserFromMessage%+v", Alias(*i))
+}
+
+// FillFrom fills InputUserFromMessage from given interface.
+func (i *InputUserFromMessage) FillFrom(from interface {
+	GetPeer() (value InputPeerClass)
+	GetMsgID() (value int)
+	GetUserID() (value int64)
+}) {
+	i.Peer = from.GetPeer()
+	i.MsgID = from.GetMsgID()
+	i.UserID = from.GetUserID()
 }
 
 // TypeID returns type id in TL schema.
@@ -563,6 +601,8 @@ func (i *InputUserFromMessage) GetUserID() (value int64) {
 const InputUserClassName = "InputUser"
 
 // InputUserClass represents InputUser generic type.
+//
+// See https://core.telegram.org/type/InputUser for reference.
 //
 // Constructors:
 //   - [InputUserEmpty]

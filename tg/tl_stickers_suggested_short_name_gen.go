@@ -32,8 +32,11 @@ var (
 )
 
 // StickersSuggestedShortName represents TL type `stickers.suggestedShortName#85fea03f`.
+// A suggested short name for a stickerpack
+//
+// See https://core.telegram.org/constructor/stickers.suggestedShortName for reference.
 type StickersSuggestedShortName struct {
-	// ShortName field of StickersSuggestedShortName.
+	// Suggested short name
 	ShortName string
 }
 
@@ -66,6 +69,13 @@ func (s *StickersSuggestedShortName) String() string {
 	}
 	type Alias StickersSuggestedShortName
 	return fmt.Sprintf("StickersSuggestedShortName%+v", Alias(*s))
+}
+
+// FillFrom fills StickersSuggestedShortName from given interface.
+func (s *StickersSuggestedShortName) FillFrom(from interface {
+	GetShortName() (value string)
+}) {
+	s.ShortName = from.GetShortName()
 }
 
 // TypeID returns type id in TL schema.

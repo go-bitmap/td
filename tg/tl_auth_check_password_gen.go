@@ -32,8 +32,17 @@ var (
 )
 
 // AuthCheckPasswordRequest represents TL type `auth.checkPassword#d18b4d16`.
+// Try logging to an account protected by a 2FA password¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/srp
+//
+// See https://core.telegram.org/method/auth.checkPassword for reference.
 type AuthCheckPasswordRequest struct {
-	// Password field of AuthCheckPasswordRequest.
+	// The account's password (see SRP¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/srp
 	Password InputCheckPasswordSRPClass
 }
 
@@ -66,6 +75,13 @@ func (c *AuthCheckPasswordRequest) String() string {
 	}
 	type Alias AuthCheckPasswordRequest
 	return fmt.Sprintf("AuthCheckPasswordRequest%+v", Alias(*c))
+}
+
+// FillFrom fills AuthCheckPasswordRequest from given interface.
+func (c *AuthCheckPasswordRequest) FillFrom(from interface {
+	GetPassword() (value InputCheckPasswordSRPClass)
+}) {
+	c.Password = from.GetPassword()
 }
 
 // TypeID returns type id in TL schema.
@@ -156,7 +172,25 @@ func (c *AuthCheckPasswordRequest) GetPassword() (value InputCheckPasswordSRPCla
 	return c.Password
 }
 
+// GetPasswordAsNotEmpty returns mapped value of Password field.
+func (c *AuthCheckPasswordRequest) GetPasswordAsNotEmpty() (*InputCheckPasswordSRP, bool) {
+	return c.Password.AsNotEmpty()
+}
+
 // AuthCheckPassword invokes method auth.checkPassword#d18b4d16 returning error if any.
+// Try logging to an account protected by a 2FA password¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/srp
+//
+// Possible errors:
+//
+//	500 AUTH_KEY_UNSYNCHRONIZED: Internal error, please repeat the method call.
+//	400 PASSWORD_HASH_INVALID: The provided password hash is invalid.
+//	400 SRP_ID_INVALID: Invalid SRP ID provided.
+//	400 SRP_PASSWORD_CHANGED: Password has changed.
+//
+// See https://core.telegram.org/method/auth.checkPassword for reference.
 func (c *Client) AuthCheckPassword(ctx context.Context, password InputCheckPasswordSRPClass) (AuthAuthorizationClass, error) {
 	var result AuthAuthorizationBox
 

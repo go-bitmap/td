@@ -32,10 +32,19 @@ var (
 )
 
 // MessageEntityUnknown represents TL type `messageEntityUnknown#bb92ba95`.
+// Unknown message entity
+//
+// See https://core.telegram.org/constructor/messageEntityUnknown for reference.
 type MessageEntityUnknown struct {
-	// Offset field of MessageEntityUnknown.
+	// Offset of message entity within message (in UTF-16 code units¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities#entity-length
 	Offset int
-	// Length field of MessageEntityUnknown.
+	// Length of message entity within message (in UTF-16 code units¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities#entity-length
 	Length int
 }
 
@@ -76,6 +85,15 @@ func (m *MessageEntityUnknown) String() string {
 	}
 	type Alias MessageEntityUnknown
 	return fmt.Sprintf("MessageEntityUnknown%+v", Alias(*m))
+}
+
+// FillFrom fills MessageEntityUnknown from given interface.
+func (m *MessageEntityUnknown) FillFrom(from interface {
+	GetOffset() (value int)
+	GetLength() (value int)
+}) {
+	m.Offset = from.GetOffset()
+	m.Length = from.GetLength()
 }
 
 // TypeID returns type id in TL schema.
@@ -182,10 +200,24 @@ func (m *MessageEntityUnknown) GetLength() (value int) {
 }
 
 // MessageEntityMention represents TL type `messageEntityMention#fa04579d`.
+// Message entity mentioning¹ a user by @username; messageEntityMentionName² can also
+// be used to mention users by their ID.
+//
+// Links:
+//  1. https://core.telegram.org/api/mentions
+//  2. https://core.telegram.org/constructor/messageEntityMentionName
+//
+// See https://core.telegram.org/constructor/messageEntityMention for reference.
 type MessageEntityMention struct {
-	// Offset field of MessageEntityMention.
+	// Offset of message entity within message (in UTF-16 code units¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities#entity-length
 	Offset int
-	// Length field of MessageEntityMention.
+	// Length of message entity within message (in UTF-16 code units¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities#entity-length
 	Length int
 }
 
@@ -226,6 +258,15 @@ func (m *MessageEntityMention) String() string {
 	}
 	type Alias MessageEntityMention
 	return fmt.Sprintf("MessageEntityMention%+v", Alias(*m))
+}
+
+// FillFrom fills MessageEntityMention from given interface.
+func (m *MessageEntityMention) FillFrom(from interface {
+	GetOffset() (value int)
+	GetLength() (value int)
+}) {
+	m.Offset = from.GetOffset()
+	m.Length = from.GetLength()
 }
 
 // TypeID returns type id in TL schema.
@@ -332,10 +373,19 @@ func (m *MessageEntityMention) GetLength() (value int) {
 }
 
 // MessageEntityHashtag represents TL type `messageEntityHashtag#6f635b0d`.
+// #hashtag message entity
+//
+// See https://core.telegram.org/constructor/messageEntityHashtag for reference.
 type MessageEntityHashtag struct {
-	// Offset field of MessageEntityHashtag.
+	// Offset of message entity within message (in UTF-16 code units¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities#entity-length
 	Offset int
-	// Length field of MessageEntityHashtag.
+	// Length of message entity within message (in UTF-16 code units¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities#entity-length
 	Length int
 }
 
@@ -376,6 +426,15 @@ func (m *MessageEntityHashtag) String() string {
 	}
 	type Alias MessageEntityHashtag
 	return fmt.Sprintf("MessageEntityHashtag%+v", Alias(*m))
+}
+
+// FillFrom fills MessageEntityHashtag from given interface.
+func (m *MessageEntityHashtag) FillFrom(from interface {
+	GetOffset() (value int)
+	GetLength() (value int)
+}) {
+	m.Offset = from.GetOffset()
+	m.Length = from.GetLength()
 }
 
 // TypeID returns type id in TL schema.
@@ -482,10 +541,19 @@ func (m *MessageEntityHashtag) GetLength() (value int) {
 }
 
 // MessageEntityBotCommand represents TL type `messageEntityBotCommand#6cef8ac7`.
+// Message entity representing a bot /command
+//
+// See https://core.telegram.org/constructor/messageEntityBotCommand for reference.
 type MessageEntityBotCommand struct {
-	// Offset field of MessageEntityBotCommand.
+	// Offset of message entity within message (in UTF-16 code units¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities#entity-length
 	Offset int
-	// Length field of MessageEntityBotCommand.
+	// Length of message entity within message (in UTF-16 code units¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities#entity-length
 	Length int
 }
 
@@ -526,6 +594,15 @@ func (m *MessageEntityBotCommand) String() string {
 	}
 	type Alias MessageEntityBotCommand
 	return fmt.Sprintf("MessageEntityBotCommand%+v", Alias(*m))
+}
+
+// FillFrom fills MessageEntityBotCommand from given interface.
+func (m *MessageEntityBotCommand) FillFrom(from interface {
+	GetOffset() (value int)
+	GetLength() (value int)
+}) {
+	m.Offset = from.GetOffset()
+	m.Length = from.GetLength()
 }
 
 // TypeID returns type id in TL schema.
@@ -632,10 +709,25 @@ func (m *MessageEntityBotCommand) GetLength() (value int) {
 }
 
 // MessageEntityURL represents TL type `messageEntityUrl#6ed02538`.
+// Message entity representing an in-text url: https://google.com¹; for text urls², use
+// messageEntityTextUrl³.
+//
+// Links:
+//  1. https://google.com
+//  2. https://google.com
+//  3. https://core.telegram.org/constructor/messageEntityTextUrl
+//
+// See https://core.telegram.org/constructor/messageEntityUrl for reference.
 type MessageEntityURL struct {
-	// Offset field of MessageEntityURL.
+	// Offset of message entity within message (in UTF-16 code units¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities#entity-length
 	Offset int
-	// Length field of MessageEntityURL.
+	// Length of message entity within message (in UTF-16 code units¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities#entity-length
 	Length int
 }
 
@@ -676,6 +768,15 @@ func (m *MessageEntityURL) String() string {
 	}
 	type Alias MessageEntityURL
 	return fmt.Sprintf("MessageEntityURL%+v", Alias(*m))
+}
+
+// FillFrom fills MessageEntityURL from given interface.
+func (m *MessageEntityURL) FillFrom(from interface {
+	GetOffset() (value int)
+	GetLength() (value int)
+}) {
+	m.Offset = from.GetOffset()
+	m.Length = from.GetLength()
 }
 
 // TypeID returns type id in TL schema.
@@ -782,10 +883,22 @@ func (m *MessageEntityURL) GetLength() (value int) {
 }
 
 // MessageEntityEmail represents TL type `messageEntityEmail#64e475c2`.
+// Message entity representing an email@example.com¹.
+//
+// Links:
+//  1. https://core.telegram.orgmailto:email@example.com
+//
+// See https://core.telegram.org/constructor/messageEntityEmail for reference.
 type MessageEntityEmail struct {
-	// Offset field of MessageEntityEmail.
+	// Offset of message entity within message (in UTF-16 code units¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities#entity-length
 	Offset int
-	// Length field of MessageEntityEmail.
+	// Length of message entity within message (in UTF-16 code units¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities#entity-length
 	Length int
 }
 
@@ -826,6 +939,15 @@ func (m *MessageEntityEmail) String() string {
 	}
 	type Alias MessageEntityEmail
 	return fmt.Sprintf("MessageEntityEmail%+v", Alias(*m))
+}
+
+// FillFrom fills MessageEntityEmail from given interface.
+func (m *MessageEntityEmail) FillFrom(from interface {
+	GetOffset() (value int)
+	GetLength() (value int)
+}) {
+	m.Offset = from.GetOffset()
+	m.Length = from.GetLength()
 }
 
 // TypeID returns type id in TL schema.
@@ -932,10 +1054,19 @@ func (m *MessageEntityEmail) GetLength() (value int) {
 }
 
 // MessageEntityBold represents TL type `messageEntityBold#bd610bc9`.
+// Message entity representing bold text.
+//
+// See https://core.telegram.org/constructor/messageEntityBold for reference.
 type MessageEntityBold struct {
-	// Offset field of MessageEntityBold.
+	// Offset of message entity within message (in UTF-16 code units¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities#entity-length
 	Offset int
-	// Length field of MessageEntityBold.
+	// Length of message entity within message (in UTF-16 code units¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities#entity-length
 	Length int
 }
 
@@ -976,6 +1107,15 @@ func (m *MessageEntityBold) String() string {
 	}
 	type Alias MessageEntityBold
 	return fmt.Sprintf("MessageEntityBold%+v", Alias(*m))
+}
+
+// FillFrom fills MessageEntityBold from given interface.
+func (m *MessageEntityBold) FillFrom(from interface {
+	GetOffset() (value int)
+	GetLength() (value int)
+}) {
+	m.Offset = from.GetOffset()
+	m.Length = from.GetLength()
 }
 
 // TypeID returns type id in TL schema.
@@ -1082,10 +1222,19 @@ func (m *MessageEntityBold) GetLength() (value int) {
 }
 
 // MessageEntityItalic represents TL type `messageEntityItalic#826f8b60`.
+// Message entity representing italic text.
+//
+// See https://core.telegram.org/constructor/messageEntityItalic for reference.
 type MessageEntityItalic struct {
-	// Offset field of MessageEntityItalic.
+	// Offset of message entity within message (in UTF-16 code units¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities#entity-length
 	Offset int
-	// Length field of MessageEntityItalic.
+	// Length of message entity within message (in UTF-16 code units¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities#entity-length
 	Length int
 }
 
@@ -1126,6 +1275,15 @@ func (m *MessageEntityItalic) String() string {
 	}
 	type Alias MessageEntityItalic
 	return fmt.Sprintf("MessageEntityItalic%+v", Alias(*m))
+}
+
+// FillFrom fills MessageEntityItalic from given interface.
+func (m *MessageEntityItalic) FillFrom(from interface {
+	GetOffset() (value int)
+	GetLength() (value int)
+}) {
+	m.Offset = from.GetOffset()
+	m.Length = from.GetLength()
 }
 
 // TypeID returns type id in TL schema.
@@ -1232,10 +1390,19 @@ func (m *MessageEntityItalic) GetLength() (value int) {
 }
 
 // MessageEntityCode represents TL type `messageEntityCode#28a20571`.
+// Message entity representing a codeblock.
+//
+// See https://core.telegram.org/constructor/messageEntityCode for reference.
 type MessageEntityCode struct {
-	// Offset field of MessageEntityCode.
+	// Offset of message entity within message (in UTF-16 code units¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities#entity-length
 	Offset int
-	// Length field of MessageEntityCode.
+	// Length of message entity within message (in UTF-16 code units¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities#entity-length
 	Length int
 }
 
@@ -1276,6 +1443,15 @@ func (m *MessageEntityCode) String() string {
 	}
 	type Alias MessageEntityCode
 	return fmt.Sprintf("MessageEntityCode%+v", Alias(*m))
+}
+
+// FillFrom fills MessageEntityCode from given interface.
+func (m *MessageEntityCode) FillFrom(from interface {
+	GetOffset() (value int)
+	GetLength() (value int)
+}) {
+	m.Offset = from.GetOffset()
+	m.Length = from.GetLength()
 }
 
 // TypeID returns type id in TL schema.
@@ -1382,12 +1558,22 @@ func (m *MessageEntityCode) GetLength() (value int) {
 }
 
 // MessageEntityPre represents TL type `messageEntityPre#73924be0`.
+// Message entity representing a preformatted codeblock, allowing the user to specify a
+// programming language for the codeblock.
+//
+// See https://core.telegram.org/constructor/messageEntityPre for reference.
 type MessageEntityPre struct {
-	// Offset field of MessageEntityPre.
+	// Offset of message entity within message (in UTF-16 code units¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities#entity-length
 	Offset int
-	// Length field of MessageEntityPre.
+	// Length of message entity within message (in UTF-16 code units¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities#entity-length
 	Length int
-	// Language field of MessageEntityPre.
+	// Programming language of the code
 	Language string
 }
 
@@ -1431,6 +1617,17 @@ func (m *MessageEntityPre) String() string {
 	}
 	type Alias MessageEntityPre
 	return fmt.Sprintf("MessageEntityPre%+v", Alias(*m))
+}
+
+// FillFrom fills MessageEntityPre from given interface.
+func (m *MessageEntityPre) FillFrom(from interface {
+	GetOffset() (value int)
+	GetLength() (value int)
+	GetLanguage() (value string)
+}) {
+	m.Offset = from.GetOffset()
+	m.Length = from.GetLength()
+	m.Language = from.GetLanguage()
 }
 
 // TypeID returns type id in TL schema.
@@ -1557,12 +1754,31 @@ func (m *MessageEntityPre) GetLanguage() (value string) {
 }
 
 // MessageEntityTextURL represents TL type `messageEntityTextUrl#76a6d327`.
+// Message entity representing a text url¹: for in-text urls like https://google.com²
+// use messageEntityUrl³.
+// Note that an additional confirmation popup with the full URL must be displayed to the
+// user before opening this link, unless the domain satisfies the conditions specified in
+// the domain whitelist documentation »¹.
+//
+// Links:
+//  1. https://google.com
+//  2. https://google.com
+//  3. https://core.telegram.org/constructor/messageEntityUrl
+//  4. https://core.telegram.org/api/config#whitelisted-domains
+//
+// See https://core.telegram.org/constructor/messageEntityTextUrl for reference.
 type MessageEntityTextURL struct {
-	// Offset field of MessageEntityTextURL.
+	// Offset of message entity within message (in UTF-16 code units¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities#entity-length
 	Offset int
-	// Length field of MessageEntityTextURL.
+	// Length of message entity within message (in UTF-16 code units¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities#entity-length
 	Length int
-	// URL field of MessageEntityTextURL.
+	// The actual URL
 	URL string
 }
 
@@ -1606,6 +1822,17 @@ func (m *MessageEntityTextURL) String() string {
 	}
 	type Alias MessageEntityTextURL
 	return fmt.Sprintf("MessageEntityTextURL%+v", Alias(*m))
+}
+
+// FillFrom fills MessageEntityTextURL from given interface.
+func (m *MessageEntityTextURL) FillFrom(from interface {
+	GetOffset() (value int)
+	GetLength() (value int)
+	GetURL() (value string)
+}) {
+	m.Offset = from.GetOffset()
+	m.Length = from.GetLength()
+	m.URL = from.GetURL()
 }
 
 // TypeID returns type id in TL schema.
@@ -1732,12 +1959,26 @@ func (m *MessageEntityTextURL) GetURL() (value string) {
 }
 
 // MessageEntityMentionName represents TL type `messageEntityMentionName#dc7b1140`.
+// Message entity representing a user mention¹: for creating a mention use
+// inputMessageEntityMentionName².
+//
+// Links:
+//  1. https://core.telegram.org/api/mentions
+//  2. https://core.telegram.org/constructor/inputMessageEntityMentionName
+//
+// See https://core.telegram.org/constructor/messageEntityMentionName for reference.
 type MessageEntityMentionName struct {
-	// Offset field of MessageEntityMentionName.
+	// Offset of message entity within message (in UTF-16 code units¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities#entity-length
 	Offset int
-	// Length field of MessageEntityMentionName.
+	// Length of message entity within message (in UTF-16 code units¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities#entity-length
 	Length int
-	// UserID field of MessageEntityMentionName.
+	// Identifier of the user that was mentioned
 	UserID int64
 }
 
@@ -1781,6 +2022,17 @@ func (m *MessageEntityMentionName) String() string {
 	}
 	type Alias MessageEntityMentionName
 	return fmt.Sprintf("MessageEntityMentionName%+v", Alias(*m))
+}
+
+// FillFrom fills MessageEntityMentionName from given interface.
+func (m *MessageEntityMentionName) FillFrom(from interface {
+	GetOffset() (value int)
+	GetLength() (value int)
+	GetUserID() (value int64)
+}) {
+	m.Offset = from.GetOffset()
+	m.Length = from.GetLength()
+	m.UserID = from.GetUserID()
 }
 
 // TypeID returns type id in TL schema.
@@ -1907,12 +2159,26 @@ func (m *MessageEntityMentionName) GetUserID() (value int64) {
 }
 
 // InputMessageEntityMentionName represents TL type `inputMessageEntityMentionName#208e68c9`.
+// Message entity that can be used to create a user user mention¹: received mentions use
+// the messageEntityMentionName² constructor, instead.
+//
+// Links:
+//  1. https://core.telegram.org/api/mentions
+//  2. https://core.telegram.org/constructor/messageEntityMentionName
+//
+// See https://core.telegram.org/constructor/inputMessageEntityMentionName for reference.
 type InputMessageEntityMentionName struct {
-	// Offset field of InputMessageEntityMentionName.
+	// Offset of message entity within message (in UTF-16 code units¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities#entity-length
 	Offset int
-	// Length field of InputMessageEntityMentionName.
+	// Length of message entity within message (in UTF-16 code units¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities#entity-length
 	Length int
-	// UserID field of InputMessageEntityMentionName.
+	// Identifier of the user that was mentioned
 	UserID InputUserClass
 }
 
@@ -1956,6 +2222,17 @@ func (i *InputMessageEntityMentionName) String() string {
 	}
 	type Alias InputMessageEntityMentionName
 	return fmt.Sprintf("InputMessageEntityMentionName%+v", Alias(*i))
+}
+
+// FillFrom fills InputMessageEntityMentionName from given interface.
+func (i *InputMessageEntityMentionName) FillFrom(from interface {
+	GetOffset() (value int)
+	GetLength() (value int)
+	GetUserID() (value InputUserClass)
+}) {
+	i.Offset = from.GetOffset()
+	i.Length = from.GetLength()
+	i.UserID = from.GetUserID()
 }
 
 // TypeID returns type id in TL schema.
@@ -2087,10 +2364,19 @@ func (i *InputMessageEntityMentionName) GetUserID() (value InputUserClass) {
 }
 
 // MessageEntityPhone represents TL type `messageEntityPhone#9b69e34b`.
+// Message entity representing a phone number.
+//
+// See https://core.telegram.org/constructor/messageEntityPhone for reference.
 type MessageEntityPhone struct {
-	// Offset field of MessageEntityPhone.
+	// Offset of message entity within message (in UTF-16 code units¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities#entity-length
 	Offset int
-	// Length field of MessageEntityPhone.
+	// Length of message entity within message (in UTF-16 code units¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities#entity-length
 	Length int
 }
 
@@ -2131,6 +2417,15 @@ func (m *MessageEntityPhone) String() string {
 	}
 	type Alias MessageEntityPhone
 	return fmt.Sprintf("MessageEntityPhone%+v", Alias(*m))
+}
+
+// FillFrom fills MessageEntityPhone from given interface.
+func (m *MessageEntityPhone) FillFrom(from interface {
+	GetOffset() (value int)
+	GetLength() (value int)
+}) {
+	m.Offset = from.GetOffset()
+	m.Length = from.GetLength()
 }
 
 // TypeID returns type id in TL schema.
@@ -2237,10 +2532,19 @@ func (m *MessageEntityPhone) GetLength() (value int) {
 }
 
 // MessageEntityCashtag represents TL type `messageEntityCashtag#4c4e743f`.
+// Message entity representing a $cashtag.
+//
+// See https://core.telegram.org/constructor/messageEntityCashtag for reference.
 type MessageEntityCashtag struct {
-	// Offset field of MessageEntityCashtag.
+	// Offset of message entity within message (in UTF-16 code units¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities#entity-length
 	Offset int
-	// Length field of MessageEntityCashtag.
+	// Length of message entity within message (in UTF-16 code units¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities#entity-length
 	Length int
 }
 
@@ -2281,6 +2585,15 @@ func (m *MessageEntityCashtag) String() string {
 	}
 	type Alias MessageEntityCashtag
 	return fmt.Sprintf("MessageEntityCashtag%+v", Alias(*m))
+}
+
+// FillFrom fills MessageEntityCashtag from given interface.
+func (m *MessageEntityCashtag) FillFrom(from interface {
+	GetOffset() (value int)
+	GetLength() (value int)
+}) {
+	m.Offset = from.GetOffset()
+	m.Length = from.GetLength()
 }
 
 // TypeID returns type id in TL schema.
@@ -2387,10 +2700,19 @@ func (m *MessageEntityCashtag) GetLength() (value int) {
 }
 
 // MessageEntityUnderline represents TL type `messageEntityUnderline#9c4e7e8b`.
+// Message entity representing underlined text.
+//
+// See https://core.telegram.org/constructor/messageEntityUnderline for reference.
 type MessageEntityUnderline struct {
-	// Offset field of MessageEntityUnderline.
+	// Offset of message entity within message (in UTF-16 code units¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities#entity-length
 	Offset int
-	// Length field of MessageEntityUnderline.
+	// Length of message entity within message (in UTF-16 code units¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities#entity-length
 	Length int
 }
 
@@ -2431,6 +2753,15 @@ func (m *MessageEntityUnderline) String() string {
 	}
 	type Alias MessageEntityUnderline
 	return fmt.Sprintf("MessageEntityUnderline%+v", Alias(*m))
+}
+
+// FillFrom fills MessageEntityUnderline from given interface.
+func (m *MessageEntityUnderline) FillFrom(from interface {
+	GetOffset() (value int)
+	GetLength() (value int)
+}) {
+	m.Offset = from.GetOffset()
+	m.Length = from.GetLength()
 }
 
 // TypeID returns type id in TL schema.
@@ -2537,10 +2868,19 @@ func (m *MessageEntityUnderline) GetLength() (value int) {
 }
 
 // MessageEntityStrike represents TL type `messageEntityStrike#bf0693d4`.
+// Message entity representing strikethrough text.
+//
+// See https://core.telegram.org/constructor/messageEntityStrike for reference.
 type MessageEntityStrike struct {
-	// Offset field of MessageEntityStrike.
+	// Offset of message entity within message (in UTF-16 code units¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities#entity-length
 	Offset int
-	// Length field of MessageEntityStrike.
+	// Length of message entity within message (in UTF-16 code units¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities#entity-length
 	Length int
 }
 
@@ -2581,6 +2921,15 @@ func (m *MessageEntityStrike) String() string {
 	}
 	type Alias MessageEntityStrike
 	return fmt.Sprintf("MessageEntityStrike%+v", Alias(*m))
+}
+
+// FillFrom fills MessageEntityStrike from given interface.
+func (m *MessageEntityStrike) FillFrom(from interface {
+	GetOffset() (value int)
+	GetLength() (value int)
+}) {
+	m.Offset = from.GetOffset()
+	m.Length = from.GetLength()
 }
 
 // TypeID returns type id in TL schema.
@@ -2687,10 +3036,19 @@ func (m *MessageEntityStrike) GetLength() (value int) {
 }
 
 // MessageEntityBankCard represents TL type `messageEntityBankCard#761e6af4`.
+// Indicates a credit card number
+//
+// See https://core.telegram.org/constructor/messageEntityBankCard for reference.
 type MessageEntityBankCard struct {
-	// Offset field of MessageEntityBankCard.
+	// Offset of message entity within message (in UTF-16 code units¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities#entity-length
 	Offset int
-	// Length field of MessageEntityBankCard.
+	// Length of message entity within message (in UTF-16 code units¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities#entity-length
 	Length int
 }
 
@@ -2731,6 +3089,15 @@ func (m *MessageEntityBankCard) String() string {
 	}
 	type Alias MessageEntityBankCard
 	return fmt.Sprintf("MessageEntityBankCard%+v", Alias(*m))
+}
+
+// FillFrom fills MessageEntityBankCard from given interface.
+func (m *MessageEntityBankCard) FillFrom(from interface {
+	GetOffset() (value int)
+	GetLength() (value int)
+}) {
+	m.Offset = from.GetOffset()
+	m.Length = from.GetLength()
 }
 
 // TypeID returns type id in TL schema.
@@ -2837,10 +3204,19 @@ func (m *MessageEntityBankCard) GetLength() (value int) {
 }
 
 // MessageEntitySpoiler represents TL type `messageEntitySpoiler#32ca960f`.
+// Message entity representing a spoiler
+//
+// See https://core.telegram.org/constructor/messageEntitySpoiler for reference.
 type MessageEntitySpoiler struct {
-	// Offset field of MessageEntitySpoiler.
+	// Offset of message entity within message (in UTF-16 code units¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities#entity-length
 	Offset int
-	// Length field of MessageEntitySpoiler.
+	// Length of message entity within message (in UTF-16 code units¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities#entity-length
 	Length int
 }
 
@@ -2881,6 +3257,15 @@ func (m *MessageEntitySpoiler) String() string {
 	}
 	type Alias MessageEntitySpoiler
 	return fmt.Sprintf("MessageEntitySpoiler%+v", Alias(*m))
+}
+
+// FillFrom fills MessageEntitySpoiler from given interface.
+func (m *MessageEntitySpoiler) FillFrom(from interface {
+	GetOffset() (value int)
+	GetLength() (value int)
+}) {
+	m.Offset = from.GetOffset()
+	m.Length = from.GetLength()
 }
 
 // TypeID returns type id in TL schema.
@@ -2987,12 +3372,32 @@ func (m *MessageEntitySpoiler) GetLength() (value int) {
 }
 
 // MessageEntityCustomEmoji represents TL type `messageEntityCustomEmoji#c8cf05f8`.
+// Represents a custom emoji.
+// Note that this entity must wrap exactly one regular emoji (the one contained in
+// documentAttributeCustomEmoji¹.alt) in the related text, otherwise the server will
+// ignore it.
+//
+// Links:
+//  1. https://core.telegram.org/constructor/documentAttributeCustomEmoji
+//
+// See https://core.telegram.org/constructor/messageEntityCustomEmoji for reference.
 type MessageEntityCustomEmoji struct {
-	// Offset field of MessageEntityCustomEmoji.
+	// Offset of message entity within message (in UTF-16 code units¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities#entity-length
 	Offset int
-	// Length field of MessageEntityCustomEmoji.
+	// Length of message entity within message (in UTF-16 code units¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities#entity-length
 	Length int
-	// DocumentID field of MessageEntityCustomEmoji.
+	// Document ID of the custom emoji¹, use messages.getCustomEmojiDocuments² to fetch the
+	// emoji animation and the actual emoji it represents.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/custom-emoji
+	//  2) https://core.telegram.org/method/messages.getCustomEmojiDocuments
 	DocumentID int64
 }
 
@@ -3036,6 +3441,17 @@ func (m *MessageEntityCustomEmoji) String() string {
 	}
 	type Alias MessageEntityCustomEmoji
 	return fmt.Sprintf("MessageEntityCustomEmoji%+v", Alias(*m))
+}
+
+// FillFrom fills MessageEntityCustomEmoji from given interface.
+func (m *MessageEntityCustomEmoji) FillFrom(from interface {
+	GetOffset() (value int)
+	GetLength() (value int)
+	GetDocumentID() (value int64)
+}) {
+	m.Offset = from.GetOffset()
+	m.Length = from.GetLength()
+	m.DocumentID = from.GetDocumentID()
 }
 
 // TypeID returns type id in TL schema.
@@ -3162,14 +3578,26 @@ func (m *MessageEntityCustomEmoji) GetDocumentID() (value int64) {
 }
 
 // MessageEntityBlockquote represents TL type `messageEntityBlockquote#f1ccaaac`.
+// Message entity representing a block quote.
+//
+// See https://core.telegram.org/constructor/messageEntityBlockquote for reference.
 type MessageEntityBlockquote struct {
-	// Flags field of MessageEntityBlockquote.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Collapsed field of MessageEntityBlockquote.
+	// Whether the quote is collapsed by default.
 	Collapsed bool
-	// Offset field of MessageEntityBlockquote.
+	// Offset of message entity within message (in UTF-16 code units¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities#entity-length
 	Offset int
-	// Length field of MessageEntityBlockquote.
+	// Length of message entity within message (in UTF-16 code units¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities#entity-length
 	Length int
 }
 
@@ -3216,6 +3644,17 @@ func (m *MessageEntityBlockquote) String() string {
 	}
 	type Alias MessageEntityBlockquote
 	return fmt.Sprintf("MessageEntityBlockquote%+v", Alias(*m))
+}
+
+// FillFrom fills MessageEntityBlockquote from given interface.
+func (m *MessageEntityBlockquote) FillFrom(from interface {
+	GetCollapsed() (value bool)
+	GetOffset() (value int)
+	GetLength() (value int)
+}) {
+	m.Collapsed = from.GetCollapsed()
+	m.Offset = from.GetOffset()
+	m.Length = from.GetLength()
 }
 
 // TypeID returns type id in TL schema.
@@ -3367,6 +3806,8 @@ const MessageEntityClassName = "MessageEntity"
 
 // MessageEntityClass represents MessageEntity generic type.
 //
+// See https://core.telegram.org/type/MessageEntity for reference.
+//
 // Constructors:
 //   - [MessageEntityUnknown]
 //   - [MessageEntityMention]
@@ -3438,9 +3879,16 @@ type MessageEntityClass interface {
 	// Zero returns true if current object has a zero value.
 	Zero() bool
 
-	// Offset field of MessageEntityUnknown.
+	// Offset of message entity within message (in UTF-16 code units¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities#entity-length
 	GetOffset() (value int)
-	// Length field of MessageEntityUnknown.
+
+	// Length of message entity within message (in UTF-16 code units¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities#entity-length
 	GetLength() (value int)
 }
 

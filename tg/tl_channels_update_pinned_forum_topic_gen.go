@@ -32,12 +32,21 @@ var (
 )
 
 // ChannelsUpdatePinnedForumTopicRequest represents TL type `channels.updatePinnedForumTopic#6c2d9026`.
+// Pin or unpin forum topics¹
+//
+// Links:
+//  1. https://core.telegram.org/api/forum
+//
+// See https://core.telegram.org/method/channels.updatePinnedForumTopic for reference.
 type ChannelsUpdatePinnedForumTopicRequest struct {
-	// Channel field of ChannelsUpdatePinnedForumTopicRequest.
+	// Supergroup ID
 	Channel InputChannelClass
-	// TopicID field of ChannelsUpdatePinnedForumTopicRequest.
+	// Forum topic ID¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/forum
 	TopicID int
-	// Pinned field of ChannelsUpdatePinnedForumTopicRequest.
+	// Whether to pin or unpin the topic
 	Pinned bool
 }
 
@@ -76,6 +85,17 @@ func (u *ChannelsUpdatePinnedForumTopicRequest) String() string {
 	}
 	type Alias ChannelsUpdatePinnedForumTopicRequest
 	return fmt.Sprintf("ChannelsUpdatePinnedForumTopicRequest%+v", Alias(*u))
+}
+
+// FillFrom fills ChannelsUpdatePinnedForumTopicRequest from given interface.
+func (u *ChannelsUpdatePinnedForumTopicRequest) FillFrom(from interface {
+	GetChannel() (value InputChannelClass)
+	GetTopicID() (value int)
+	GetPinned() (value bool)
+}) {
+	u.Channel = from.GetChannel()
+	u.TopicID = from.GetTopicID()
+	u.Pinned = from.GetPinned()
 }
 
 // TypeID returns type id in TL schema.
@@ -206,7 +226,23 @@ func (u *ChannelsUpdatePinnedForumTopicRequest) GetPinned() (value bool) {
 	return u.Pinned
 }
 
+// GetChannelAsNotEmpty returns mapped value of Channel field.
+func (u *ChannelsUpdatePinnedForumTopicRequest) GetChannelAsNotEmpty() (NotEmptyInputChannel, bool) {
+	return u.Channel.AsNotEmpty()
+}
+
 // ChannelsUpdatePinnedForumTopic invokes method channels.updatePinnedForumTopic#6c2d9026 returning error if any.
+// Pin or unpin forum topics¹
+//
+// Links:
+//  1. https://core.telegram.org/api/forum
+//
+// Possible errors:
+//
+//	400 CHANNEL_INVALID: The provided channel is invalid.
+//	400 TOPIC_ID_INVALID: The specified topic ID is invalid.
+//
+// See https://core.telegram.org/method/channels.updatePinnedForumTopic for reference.
 func (c *Client) ChannelsUpdatePinnedForumTopic(ctx context.Context, request *ChannelsUpdatePinnedForumTopicRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

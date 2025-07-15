@@ -32,6 +32,8 @@ var (
 )
 
 // RequirementToContactEmpty represents TL type `requirementToContactEmpty#50a9839`.
+//
+// See https://core.telegram.org/constructor/requirementToContactEmpty for reference.
 type RequirementToContactEmpty struct {
 }
 
@@ -131,6 +133,8 @@ func (r *RequirementToContactEmpty) DecodeBare(b *bin.Buffer) error {
 }
 
 // RequirementToContactPremium represents TL type `requirementToContactPremium#e581e4e9`.
+//
+// See https://core.telegram.org/constructor/requirementToContactPremium for reference.
 type RequirementToContactPremium struct {
 }
 
@@ -230,6 +234,8 @@ func (r *RequirementToContactPremium) DecodeBare(b *bin.Buffer) error {
 }
 
 // RequirementToContactPaidMessages represents TL type `requirementToContactPaidMessages#b4f67e93`.
+//
+// See https://core.telegram.org/constructor/requirementToContactPaidMessages for reference.
 type RequirementToContactPaidMessages struct {
 	// StarsAmount field of RequirementToContactPaidMessages.
 	StarsAmount int64
@@ -269,6 +275,13 @@ func (r *RequirementToContactPaidMessages) String() string {
 	}
 	type Alias RequirementToContactPaidMessages
 	return fmt.Sprintf("RequirementToContactPaidMessages%+v", Alias(*r))
+}
+
+// FillFrom fills RequirementToContactPaidMessages from given interface.
+func (r *RequirementToContactPaidMessages) FillFrom(from interface {
+	GetStarsAmount() (value int64)
+}) {
+	r.StarsAmount = from.GetStarsAmount()
 }
 
 // TypeID returns type id in TL schema.
@@ -358,6 +371,8 @@ func (r *RequirementToContactPaidMessages) GetStarsAmount() (value int64) {
 const RequirementToContactClassName = "RequirementToContact"
 
 // RequirementToContactClass represents RequirementToContact generic type.
+//
+// See https://core.telegram.org/type/RequirementToContact for reference.
 //
 // Constructors:
 //   - [RequirementToContactEmpty]

@@ -31,6 +31,9 @@ var (
 	_ = tdjson.Encoder{}
 )
 
+// Layer version of schema.
+const Layer = 205
+
 // TypesMap returns mapping from type ids to TL type names.
 func TypesMap() map[uint32]string {
 	return map[uint32]string{
@@ -119,7 +122,7 @@ func TypesMap() map[uint32]string {
 		ChannelTypeID:                                            "channel#fe685355",
 		ChannelForbiddenTypeID:                                   "channelForbidden#17d493d5",
 		ChatFullTypeID:                                           "chatFull#2633421b",
-		ChannelFullTypeID:                                        "channelFull#e07429de",
+		ChannelFullTypeID:                                        "channelFull#52d6806b",
 		ChatParticipantTypeID:                                    "chatParticipant#c02d4007",
 		ChatParticipantCreatorTypeID:                             "chatParticipantCreator#e46bcee4",
 		ChatParticipantAdminTypeID:                               "chatParticipantAdmin#a0933f5b",
@@ -2188,6 +2191,19 @@ func TypesMap() map[uint32]string {
 		SMSJobsGetSMSJobRequestTypeID:                                           "smsjobs.getSmsJob#778d902f",
 		SMSJobsFinishJobRequestTypeID:                                           "smsjobs.finishJob#4f1ebf24",
 		FragmentGetCollectibleInfoRequestTypeID:                                 "fragment.getCollectibleInfo#be1e85ba",
+		IntTypeID:                                                               "int#a8509bda",
+		LongTypeID:                                                              "long#22076cba",
+		DoubleTypeID:                                                            "double#2210c154",
+		StringTypeID:                                                            "string#b5286e24",
+		BytesTypeID:                                                             "bytes#e937bb82",
+		IPPortTypeID:                                                            "ipPort#d433ad73",
+		IPPortSecretTypeID:                                                      "ipPortSecret#37982646",
+		AccessPointRuleTypeID:                                                   "accessPointRule#4679b65f",
+		HelpConfigSimpleTypeID:                                                  "help.configSimple#5a592a6c",
+		InputPeerPhotoFileLocationLegacyTypeID:                                  "inputPeerPhotoFileLocationLegacy#27d69997",
+		InputStickerSetThumbLegacyTypeID:                                        "inputStickerSetThumbLegacy#dbaeae9",
+		TestUseErrorRequestTypeID:                                               "test.useError#ee75af01",
+		TestUseConfigSimpleRequestTypeID:                                        "test.useConfigSimple#f9b7b23d",
 	}
 }
 
@@ -4348,6 +4364,19 @@ func NamesMap() map[string]uint32 {
 		"smsjobs.getSmsJob":                                                 SMSJobsGetSMSJobRequestTypeID,
 		"smsjobs.finishJob":                                                 SMSJobsFinishJobRequestTypeID,
 		"fragment.getCollectibleInfo":                                       FragmentGetCollectibleInfoRequestTypeID,
+		"int":                                                               IntTypeID,
+		"long":                                                              LongTypeID,
+		"double":                                                            DoubleTypeID,
+		"string":                                                            StringTypeID,
+		"bytes":                                                             BytesTypeID,
+		"ipPort":                                                            IPPortTypeID,
+		"ipPortSecret":                                                      IPPortSecretTypeID,
+		"accessPointRule":                                                   AccessPointRuleTypeID,
+		"help.configSimple":                                                 HelpConfigSimpleTypeID,
+		"inputPeerPhotoFileLocationLegacy":                                  InputPeerPhotoFileLocationLegacyTypeID,
+		"inputStickerSetThumbLegacy":                                        InputStickerSetThumbLegacyTypeID,
+		"test.useError":                                                     TestUseErrorRequestTypeID,
+		"test.useConfigSimple":                                              TestUseConfigSimpleRequestTypeID,
 	}
 }
 
@@ -6508,6 +6537,19 @@ func TypesConstructorMap() map[uint32]func() bin.Object {
 		SMSJobsGetSMSJobRequestTypeID:                                           func() bin.Object { return &SMSJobsGetSMSJobRequest{} },
 		SMSJobsFinishJobRequestTypeID:                                           func() bin.Object { return &SMSJobsFinishJobRequest{} },
 		FragmentGetCollectibleInfoRequestTypeID:                                 func() bin.Object { return &FragmentGetCollectibleInfoRequest{} },
+		IntTypeID:                                                               func() bin.Object { return &Int{} },
+		LongTypeID:                                                              func() bin.Object { return &Long{} },
+		DoubleTypeID:                                                            func() bin.Object { return &Double{} },
+		StringTypeID:                                                            func() bin.Object { return &String{} },
+		BytesTypeID:                                                             func() bin.Object { return &Bytes{} },
+		IPPortTypeID:                                                            func() bin.Object { return &IPPort{} },
+		IPPortSecretTypeID:                                                      func() bin.Object { return &IPPortSecret{} },
+		AccessPointRuleTypeID:                                                   func() bin.Object { return &AccessPointRule{} },
+		HelpConfigSimpleTypeID:                                                  func() bin.Object { return &HelpConfigSimple{} },
+		InputPeerPhotoFileLocationLegacyTypeID:                                  func() bin.Object { return &InputPeerPhotoFileLocationLegacy{} },
+		InputStickerSetThumbLegacyTypeID:                                        func() bin.Object { return &InputStickerSetThumbLegacy{} },
+		TestUseErrorRequestTypeID:                                               func() bin.Object { return &TestUseErrorRequest{} },
+		TestUseConfigSimpleRequestTypeID:                                        func() bin.Object { return &TestUseConfigSimpleRequest{} },
 	}
 }
 
@@ -6918,6 +6960,10 @@ func ClassConstructorsMap() map[string][]uint32 {
 			HelpUserInfoEmptyTypeID,
 			HelpUserInfoTypeID,
 		},
+		IPPortClassName: {
+			IPPortTypeID,
+			IPPortSecretTypeID,
+		},
 		InlineQueryPeerTypeClassName: {
 			InlineQueryPeerTypeSameBotPMTypeID,
 			InlineQueryPeerTypePMTypeID,
@@ -6998,6 +7044,8 @@ func ClassConstructorsMap() map[string][]uint32 {
 			InputPeerPhotoFileLocationTypeID,
 			InputStickerSetThumbTypeID,
 			InputGroupCallStreamTypeID,
+			InputPeerPhotoFileLocationLegacyTypeID,
+			InputStickerSetThumbLegacyTypeID,
 		},
 		InputGameClassName: {
 			InputGameIDTypeID,

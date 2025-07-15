@@ -32,14 +32,24 @@ var (
 )
 
 // ContactsGetBlockedRequest represents TL type `contacts.getBlocked#9a868f80`.
+// Returns the list of blocked users.
+//
+// See https://core.telegram.org/method/contacts.getBlocked for reference.
 type ContactsGetBlockedRequest struct {
-	// Flags field of ContactsGetBlockedRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// MyStoriesFrom field of ContactsGetBlockedRequest.
+	// Whether to fetch the story blocklist; if not set, will fetch the main blocklist. See
+	// here »¹ for differences between the two.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/block
 	MyStoriesFrom bool
-	// Offset field of ContactsGetBlockedRequest.
+	// The number of list elements to be skipped
 	Offset int
-	// Limit field of ContactsGetBlockedRequest.
+	// The number of list elements to be returned
 	Limit int
 }
 
@@ -81,6 +91,17 @@ func (g *ContactsGetBlockedRequest) String() string {
 	}
 	type Alias ContactsGetBlockedRequest
 	return fmt.Sprintf("ContactsGetBlockedRequest%+v", Alias(*g))
+}
+
+// FillFrom fills ContactsGetBlockedRequest from given interface.
+func (g *ContactsGetBlockedRequest) FillFrom(from interface {
+	GetMyStoriesFrom() (value bool)
+	GetOffset() (value int)
+	GetLimit() (value int)
+}) {
+	g.MyStoriesFrom = from.GetMyStoriesFrom()
+	g.Offset = from.GetOffset()
+	g.Limit = from.GetLimit()
 }
 
 // TypeID returns type id in TL schema.
@@ -228,6 +249,9 @@ func (g *ContactsGetBlockedRequest) GetLimit() (value int) {
 }
 
 // ContactsGetBlocked invokes method contacts.getBlocked#9a868f80 returning error if any.
+// Returns the list of blocked users.
+//
+// See https://core.telegram.org/method/contacts.getBlocked for reference.
 func (c *Client) ContactsGetBlocked(ctx context.Context, request *ContactsGetBlockedRequest) (ContactsBlockedClass, error) {
 	var result ContactsBlockedBox
 

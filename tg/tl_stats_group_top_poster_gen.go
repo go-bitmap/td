@@ -32,12 +32,18 @@ var (
 )
 
 // StatsGroupTopPoster represents TL type `statsGroupTopPoster#9d04af9b`.
+// Information about an active user in a supergroup
+//
+// See https://core.telegram.org/constructor/statsGroupTopPoster for reference.
 type StatsGroupTopPoster struct {
-	// UserID field of StatsGroupTopPoster.
+	// User ID
 	UserID int64
-	// Messages field of StatsGroupTopPoster.
+	// Number of messages for statistics¹ period in consideration
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/stats
 	Messages int
-	// AvgChars field of StatsGroupTopPoster.
+	// Average number of characters per message
 	AvgChars int
 }
 
@@ -76,6 +82,17 @@ func (s *StatsGroupTopPoster) String() string {
 	}
 	type Alias StatsGroupTopPoster
 	return fmt.Sprintf("StatsGroupTopPoster%+v", Alias(*s))
+}
+
+// FillFrom fills StatsGroupTopPoster from given interface.
+func (s *StatsGroupTopPoster) FillFrom(from interface {
+	GetUserID() (value int64)
+	GetMessages() (value int)
+	GetAvgChars() (value int)
+}) {
+	s.UserID = from.GetUserID()
+	s.Messages = from.GetMessages()
+	s.AvgChars = from.GetAvgChars()
 }
 
 // TypeID returns type id in TL schema.

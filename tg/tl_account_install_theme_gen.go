@@ -32,20 +32,26 @@ var (
 )
 
 // AccountInstallThemeRequest represents TL type `account.installTheme#c727bb3b`.
+// Install a theme
+//
+// See https://core.telegram.org/method/account.installTheme for reference.
 type AccountInstallThemeRequest struct {
-	// Flags field of AccountInstallThemeRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Dark field of AccountInstallThemeRequest.
+	// Whether to install the dark version
 	Dark bool
-	// Theme field of AccountInstallThemeRequest.
+	// Theme to install
 	//
 	// Use SetTheme and GetTheme helpers.
 	Theme InputThemeClass
-	// Format field of AccountInstallThemeRequest.
+	// Theme format, a string that identifies the theming engines supported by the client
 	//
 	// Use SetFormat and GetFormat helpers.
 	Format string
-	// BaseTheme field of AccountInstallThemeRequest.
+	// Indicates a basic theme provided by all clients
 	//
 	// Use SetBaseTheme and GetBaseTheme helpers.
 	BaseTheme BaseThemeClass
@@ -92,6 +98,28 @@ func (i *AccountInstallThemeRequest) String() string {
 	}
 	type Alias AccountInstallThemeRequest
 	return fmt.Sprintf("AccountInstallThemeRequest%+v", Alias(*i))
+}
+
+// FillFrom fills AccountInstallThemeRequest from given interface.
+func (i *AccountInstallThemeRequest) FillFrom(from interface {
+	GetDark() (value bool)
+	GetTheme() (value InputThemeClass, ok bool)
+	GetFormat() (value string, ok bool)
+	GetBaseTheme() (value BaseThemeClass, ok bool)
+}) {
+	i.Dark = from.GetDark()
+	if val, ok := from.GetTheme(); ok {
+		i.Theme = val
+	}
+
+	if val, ok := from.GetFormat(); ok {
+		i.Format = val
+	}
+
+	if val, ok := from.GetBaseTheme(); ok {
+		i.BaseTheme = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -317,6 +345,9 @@ func (i *AccountInstallThemeRequest) GetBaseTheme() (value BaseThemeClass, ok bo
 }
 
 // AccountInstallTheme invokes method account.installTheme#c727bb3b returning error if any.
+// Install a theme
+//
+// See https://core.telegram.org/method/account.installTheme for reference.
 func (c *Client) AccountInstallTheme(ctx context.Context, request *AccountInstallThemeRequest) (bool, error) {
 	var result BoolBox
 

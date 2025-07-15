@@ -32,18 +32,65 @@ var (
 )
 
 // GlobalPrivacySettings represents TL type `globalPrivacySettings#fe41b34f`.
+// Global privacy settings
+//
+// See https://core.telegram.org/constructor/globalPrivacySettings for reference.
 type GlobalPrivacySettings struct {
-	// Flags field of GlobalPrivacySettings.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// ArchiveAndMuteNewNoncontactPeers field of GlobalPrivacySettings.
+	// Whether to archive and mute new chats from non-contacts
 	ArchiveAndMuteNewNoncontactPeers bool
-	// KeepArchivedUnmuted field of GlobalPrivacySettings.
+	// Whether unmuted chats will be kept in the Archive chat list when they get a new
+	// message.
 	KeepArchivedUnmuted bool
-	// KeepArchivedFolders field of GlobalPrivacySettings.
+	// Whether unmuted chats that are always included or pinned in a folder¹, will be kept
+	// in the Archive chat list when they get a new message. Ignored if keep_archived_unmuted
+	// is set.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/folders
 	KeepArchivedFolders bool
-	// HideReadMarks field of GlobalPrivacySettings.
+	// If this flag is set, the inputPrivacyKeyStatusTimestamp¹ key will also apply to the
+	// ability to use messages.getOutboxReadDate² on messages sent to us. Meaning, users
+	// that cannot see our exact last online date due to the current value of the
+	// inputPrivacyKeyStatusTimestamp³ key will receive a 403 USER_PRIVACY_RESTRICTED error
+	// when invoking messages.getOutboxReadDate⁴ to fetch the exact read date of a message
+	// they sent to us. The userFull⁵.read_dates_private flag will be set for users that
+	// have this flag enabled.
+	//
+	// Links:
+	//  1) https://core.telegram.org/constructor/inputPrivacyKeyStatusTimestamp
+	//  2) https://core.telegram.org/method/messages.getOutboxReadDate
+	//  3) https://core.telegram.org/constructor/inputPrivacyKeyStatusTimestamp
+	//  4) https://core.telegram.org/method/messages.getOutboxReadDate
+	//  5) https://core.telegram.org/constructor/userFull
 	HideReadMarks bool
-	// NewNoncontactPeersRequirePremium field of GlobalPrivacySettings.
+	// If set, only users that have a premium account, are in our contact list, or already
+	// have a private chat with us can write to us; a 403 PRIVACY_PREMIUM_REQUIRED error will
+	// be emitted otherwise.  The userFull¹.contact_require_premium flag will be set for
+	// users that have this flag enabled.  To check whether we can write to a user with this
+	// flag enabled, if we haven't yet cached all the required information (for example we
+	// don't have the userFull² or history of all users while displaying the chat list in
+	// the sharing UI) the users.getIsPremiumRequiredToContact³ method may be invoked,
+	// passing the list of users currently visible in the UI, returning a list of booleans
+	// that directly specify whether we can or cannot write to each user. This option may be
+	// enabled by both non-Premium⁴ and Premium⁵ users only if the
+	// new_noncontact_peers_require_premium_without_ownpremium client configuration flag
+	// »⁶ is equal to true, otherwise it may be enabled only by Premium⁷ users and
+	// non-Premium users will receive a PREMIUM_ACCOUNT_REQUIRED error when trying to enable
+	// this flag.
+	//
+	// Links:
+	//  1) https://core.telegram.org/constructor/userFull
+	//  2) https://core.telegram.org/constructor/userFull
+	//  3) https://core.telegram.org/method/users.getIsPremiumRequiredToContact
+	//  4) https://core.telegram.org/api/premium
+	//  5) https://core.telegram.org/api/premium
+	//  6) https://core.telegram.org/api/config#new-noncontact-peers-require-premium-without-ownpremium
+	//  7) https://core.telegram.org/api/premium
 	NewNoncontactPeersRequirePremium bool
 	// DisplayGiftsButton field of GlobalPrivacySettings.
 	DisplayGiftsButton bool
@@ -110,6 +157,33 @@ func (g *GlobalPrivacySettings) String() string {
 	}
 	type Alias GlobalPrivacySettings
 	return fmt.Sprintf("GlobalPrivacySettings%+v", Alias(*g))
+}
+
+// FillFrom fills GlobalPrivacySettings from given interface.
+func (g *GlobalPrivacySettings) FillFrom(from interface {
+	GetArchiveAndMuteNewNoncontactPeers() (value bool)
+	GetKeepArchivedUnmuted() (value bool)
+	GetKeepArchivedFolders() (value bool)
+	GetHideReadMarks() (value bool)
+	GetNewNoncontactPeersRequirePremium() (value bool)
+	GetDisplayGiftsButton() (value bool)
+	GetNoncontactPeersPaidStars() (value int64, ok bool)
+	GetDisallowedGifts() (value DisallowedGiftsSettings, ok bool)
+}) {
+	g.ArchiveAndMuteNewNoncontactPeers = from.GetArchiveAndMuteNewNoncontactPeers()
+	g.KeepArchivedUnmuted = from.GetKeepArchivedUnmuted()
+	g.KeepArchivedFolders = from.GetKeepArchivedFolders()
+	g.HideReadMarks = from.GetHideReadMarks()
+	g.NewNoncontactPeersRequirePremium = from.GetNewNoncontactPeersRequirePremium()
+	g.DisplayGiftsButton = from.GetDisplayGiftsButton()
+	if val, ok := from.GetNoncontactPeersPaidStars(); ok {
+		g.NoncontactPeersPaidStars = val
+	}
+
+	if val, ok := from.GetDisallowedGifts(); ok {
+		g.DisallowedGifts = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.

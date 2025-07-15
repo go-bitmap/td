@@ -32,8 +32,11 @@ var (
 )
 
 // AccountSetGlobalPrivacySettingsRequest represents TL type `account.setGlobalPrivacySettings#1edaaac2`.
+// Set global privacy settings
+//
+// See https://core.telegram.org/method/account.setGlobalPrivacySettings for reference.
 type AccountSetGlobalPrivacySettingsRequest struct {
-	// Settings field of AccountSetGlobalPrivacySettingsRequest.
+	// Global privacy settings
 	Settings GlobalPrivacySettings
 }
 
@@ -66,6 +69,13 @@ func (s *AccountSetGlobalPrivacySettingsRequest) String() string {
 	}
 	type Alias AccountSetGlobalPrivacySettingsRequest
 	return fmt.Sprintf("AccountSetGlobalPrivacySettingsRequest%+v", Alias(*s))
+}
+
+// FillFrom fills AccountSetGlobalPrivacySettingsRequest from given interface.
+func (s *AccountSetGlobalPrivacySettingsRequest) FillFrom(from interface {
+	GetSettings() (value GlobalPrivacySettings)
+}) {
+	s.Settings = from.GetSettings()
 }
 
 // TypeID returns type id in TL schema.
@@ -152,6 +162,14 @@ func (s *AccountSetGlobalPrivacySettingsRequest) GetSettings() (value GlobalPriv
 }
 
 // AccountSetGlobalPrivacySettings invokes method account.setGlobalPrivacySettings#1edaaac2 returning error if any.
+// Set global privacy settings
+//
+// Possible errors:
+//
+//	400 AUTOARCHIVE_NOT_AVAILABLE: The autoarchive setting is not available at this time: please check the value of the autoarchive_setting_available field in client config » before calling this method.
+//	403 PREMIUM_ACCOUNT_REQUIRED: A premium account is required to execute this action.
+//
+// See https://core.telegram.org/method/account.setGlobalPrivacySettings for reference.
 func (c *Client) AccountSetGlobalPrivacySettings(ctx context.Context, settings GlobalPrivacySettings) (*GlobalPrivacySettings, error) {
 	var result GlobalPrivacySettings
 

@@ -32,8 +32,14 @@ var (
 )
 
 // AccountSetReactionsNotifySettingsRequest represents TL type `account.setReactionsNotifySettings#316ce548`.
+// Change the reaction notification settings »¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/reactions#notifications-about-reactions
+//
+// See https://core.telegram.org/method/account.setReactionsNotifySettings for reference.
 type AccountSetReactionsNotifySettingsRequest struct {
-	// Settings field of AccountSetReactionsNotifySettingsRequest.
+	// New reaction notification settings.
 	Settings ReactionsNotifySettings
 }
 
@@ -66,6 +72,13 @@ func (s *AccountSetReactionsNotifySettingsRequest) String() string {
 	}
 	type Alias AccountSetReactionsNotifySettingsRequest
 	return fmt.Sprintf("AccountSetReactionsNotifySettingsRequest%+v", Alias(*s))
+}
+
+// FillFrom fills AccountSetReactionsNotifySettingsRequest from given interface.
+func (s *AccountSetReactionsNotifySettingsRequest) FillFrom(from interface {
+	GetSettings() (value ReactionsNotifySettings)
+}) {
+	s.Settings = from.GetSettings()
 }
 
 // TypeID returns type id in TL schema.
@@ -152,6 +165,12 @@ func (s *AccountSetReactionsNotifySettingsRequest) GetSettings() (value Reaction
 }
 
 // AccountSetReactionsNotifySettings invokes method account.setReactionsNotifySettings#316ce548 returning error if any.
+// Change the reaction notification settings »¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/reactions#notifications-about-reactions
+//
+// See https://core.telegram.org/method/account.setReactionsNotifySettings for reference.
 func (c *Client) AccountSetReactionsNotifySettings(ctx context.Context, settings ReactionsNotifySettings) (*ReactionsNotifySettings, error) {
 	var result ReactionsNotifySettings
 

@@ -32,6 +32,8 @@ var (
 )
 
 // PaymentsStarGiftUpgradePreview represents TL type `payments.starGiftUpgradePreview#167bd90b`.
+//
+// See https://core.telegram.org/constructor/payments.starGiftUpgradePreview for reference.
 type PaymentsStarGiftUpgradePreview struct {
 	// SampleAttributes field of PaymentsStarGiftUpgradePreview.
 	SampleAttributes []StarGiftAttributeClass
@@ -66,6 +68,13 @@ func (s *PaymentsStarGiftUpgradePreview) String() string {
 	}
 	type Alias PaymentsStarGiftUpgradePreview
 	return fmt.Sprintf("PaymentsStarGiftUpgradePreview%+v", Alias(*s))
+}
+
+// FillFrom fills PaymentsStarGiftUpgradePreview from given interface.
+func (s *PaymentsStarGiftUpgradePreview) FillFrom(from interface {
+	GetSampleAttributes() (value []StarGiftAttributeClass)
+}) {
+	s.SampleAttributes = from.GetSampleAttributes()
 }
 
 // TypeID returns type id in TL schema.
@@ -167,4 +176,9 @@ func (s *PaymentsStarGiftUpgradePreview) GetSampleAttributes() (value []StarGift
 		return
 	}
 	return s.SampleAttributes
+}
+
+// MapSampleAttributes returns field SampleAttributes wrapped in StarGiftAttributeClassArray helper.
+func (s *PaymentsStarGiftUpgradePreview) MapSampleAttributes() (value StarGiftAttributeClassArray) {
+	return StarGiftAttributeClassArray(s.SampleAttributes)
 }

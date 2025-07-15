@@ -32,10 +32,16 @@ var (
 )
 
 // PaymentsSendStarsFormRequest represents TL type `payments.sendStarsForm#7998c914`.
+// Make a payment using Telegram Stars, see here »¹ for more info.
+//
+// Links:
+//  1. https://core.telegram.org/api/stars#using-stars
+//
+// See https://core.telegram.org/method/payments.sendStarsForm for reference.
 type PaymentsSendStarsFormRequest struct {
-	// FormID field of PaymentsSendStarsFormRequest.
+	// Payment form ID
 	FormID int64
-	// Invoice field of PaymentsSendStarsFormRequest.
+	// Invoice
 	Invoice InputInvoiceClass
 }
 
@@ -71,6 +77,15 @@ func (s *PaymentsSendStarsFormRequest) String() string {
 	}
 	type Alias PaymentsSendStarsFormRequest
 	return fmt.Sprintf("PaymentsSendStarsFormRequest%+v", Alias(*s))
+}
+
+// FillFrom fills PaymentsSendStarsFormRequest from given interface.
+func (s *PaymentsSendStarsFormRequest) FillFrom(from interface {
+	GetFormID() (value int64)
+	GetInvoice() (value InputInvoiceClass)
+}) {
+	s.FormID = from.GetFormID()
+	s.Invoice = from.GetInvoice()
 }
 
 // TypeID returns type id in TL schema.
@@ -182,6 +197,22 @@ func (s *PaymentsSendStarsFormRequest) GetInvoice() (value InputInvoiceClass) {
 }
 
 // PaymentsSendStarsForm invokes method payments.sendStarsForm#7998c914 returning error if any.
+// Make a payment using Telegram Stars, see here »¹ for more info.
+//
+// Links:
+//  1. https://core.telegram.org/api/stars#using-stars
+//
+// Possible errors:
+//
+//	400 BALANCE_TOO_LOW: The transaction cannot be completed because the current Telegram Stars balance is too low.
+//	400 BOT_INVOICE_INVALID: The specified invoice is invalid.
+//	400 FORM_EXPIRED: The form was generated more than 10 minutes ago and has expired, please re-generate it using payments.getPaymentForm and pass the new form_id.
+//	400 FORM_ID_EMPTY: The specified form ID is empty.
+//	400 FORM_UNSUPPORTED: Please update your client.
+//	400 PEER_ID_INVALID: The provided peer id is invalid.
+//	400 STARGIFT_USAGE_LIMITED: The gift is sold out.
+//
+// See https://core.telegram.org/method/payments.sendStarsForm for reference.
 func (c *Client) PaymentsSendStarsForm(ctx context.Context, request *PaymentsSendStarsFormRequest) (PaymentsPaymentResultClass, error) {
 	var result PaymentsPaymentResultBox
 

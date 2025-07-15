@@ -32,22 +32,37 @@ var (
 )
 
 // AuthRequestFirebaseSMSRequest represents TL type `auth.requestFirebaseSms#8e39261e`.
+// Request an SMS code via Firebase.
+//
+// See https://core.telegram.org/method/auth.requestFirebaseSms for reference.
 type AuthRequestFirebaseSMSRequest struct {
-	// Flags field of AuthRequestFirebaseSMSRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// PhoneNumber field of AuthRequestFirebaseSMSRequest.
+	// Phone number
 	PhoneNumber string
-	// PhoneCodeHash field of AuthRequestFirebaseSMSRequest.
+	// Phone code hash returned by auth.sendCode¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/method/auth.sendCode
 	PhoneCodeHash string
-	// SafetyNetToken field of AuthRequestFirebaseSMSRequest.
+	// On Android, a JWS object obtained as described in the auth documentation »¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/auth
 	//
 	// Use SetSafetyNetToken and GetSafetyNetToken helpers.
 	SafetyNetToken string
-	// PlayIntegrityToken field of AuthRequestFirebaseSMSRequest.
+	// On Android, an object obtained as described in the auth documentation »¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/auth
 	//
 	// Use SetPlayIntegrityToken and GetPlayIntegrityToken helpers.
 	PlayIntegrityToken string
-	// IosPushSecret field of AuthRequestFirebaseSMSRequest.
+	// Secret token received via an apple push notification
 	//
 	// Use SetIosPushSecret and GetIosPushSecret helpers.
 	IosPushSecret string
@@ -97,6 +112,30 @@ func (r *AuthRequestFirebaseSMSRequest) String() string {
 	}
 	type Alias AuthRequestFirebaseSMSRequest
 	return fmt.Sprintf("AuthRequestFirebaseSMSRequest%+v", Alias(*r))
+}
+
+// FillFrom fills AuthRequestFirebaseSMSRequest from given interface.
+func (r *AuthRequestFirebaseSMSRequest) FillFrom(from interface {
+	GetPhoneNumber() (value string)
+	GetPhoneCodeHash() (value string)
+	GetSafetyNetToken() (value string, ok bool)
+	GetPlayIntegrityToken() (value string, ok bool)
+	GetIosPushSecret() (value string, ok bool)
+}) {
+	r.PhoneNumber = from.GetPhoneNumber()
+	r.PhoneCodeHash = from.GetPhoneCodeHash()
+	if val, ok := from.GetSafetyNetToken(); ok {
+		r.SafetyNetToken = val
+	}
+
+	if val, ok := from.GetPlayIntegrityToken(); ok {
+		r.PlayIntegrityToken = val
+	}
+
+	if val, ok := from.GetIosPushSecret(); ok {
+		r.IosPushSecret = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -324,6 +363,14 @@ func (r *AuthRequestFirebaseSMSRequest) GetIosPushSecret() (value string, ok boo
 }
 
 // AuthRequestFirebaseSMS invokes method auth.requestFirebaseSms#8e39261e returning error if any.
+// Request an SMS code via Firebase.
+//
+// Possible errors:
+//
+//	400 PHONE_CODE_EMPTY: phone_code is missing.
+//	400 PHONE_NUMBER_INVALID: The phone number is invalid.
+//
+// See https://core.telegram.org/method/auth.requestFirebaseSms for reference.
 func (c *Client) AuthRequestFirebaseSMS(ctx context.Context, request *AuthRequestFirebaseSMSRequest) (bool, error) {
 	var result BoolBox
 

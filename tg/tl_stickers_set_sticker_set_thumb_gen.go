@@ -32,16 +32,26 @@ var (
 )
 
 // StickersSetStickerSetThumbRequest represents TL type `stickers.setStickerSetThumb#a76a5392`.
+// Set stickerset thumbnail
+//
+// See https://core.telegram.org/method/stickers.setStickerSetThumb for reference.
 type StickersSetStickerSetThumbRequest struct {
-	// Flags field of StickersSetStickerSetThumbRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Stickerset field of StickersSetStickerSetThumbRequest.
+	// Stickerset
 	Stickerset InputStickerSetClass
-	// Thumb field of StickersSetStickerSetThumbRequest.
+	// Thumbnail (only for normal stickersets, not custom emoji stickersets).
 	//
 	// Use SetThumb and GetThumb helpers.
 	Thumb InputDocumentClass
-	// ThumbDocumentID field of StickersSetStickerSetThumbRequest.
+	// Only for custom emoji stickersets¹, ID of a custom emoji present in the set to use as
+	// thumbnail; pass 0 to fallback to the first custom emoji of the set.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/custom-emoji
 	//
 	// Use SetThumbDocumentID and GetThumbDocumentID helpers.
 	ThumbDocumentID int64
@@ -85,6 +95,23 @@ func (s *StickersSetStickerSetThumbRequest) String() string {
 	}
 	type Alias StickersSetStickerSetThumbRequest
 	return fmt.Sprintf("StickersSetStickerSetThumbRequest%+v", Alias(*s))
+}
+
+// FillFrom fills StickersSetStickerSetThumbRequest from given interface.
+func (s *StickersSetStickerSetThumbRequest) FillFrom(from interface {
+	GetStickerset() (value InputStickerSetClass)
+	GetThumb() (value InputDocumentClass, ok bool)
+	GetThumbDocumentID() (value int64, ok bool)
+}) {
+	s.Stickerset = from.GetStickerset()
+	if val, ok := from.GetThumb(); ok {
+		s.Thumb = val
+	}
+
+	if val, ok := from.GetThumbDocumentID(); ok {
+		s.ThumbDocumentID = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -265,7 +292,26 @@ func (s *StickersSetStickerSetThumbRequest) GetThumbDocumentID() (value int64, o
 	return s.ThumbDocumentID, true
 }
 
+// GetThumbAsNotEmpty returns mapped value of Thumb conditional field and
+// boolean which is true if field was set.
+func (s *StickersSetStickerSetThumbRequest) GetThumbAsNotEmpty() (*InputDocument, bool) {
+	if value, ok := s.GetThumb(); ok {
+		return value.AsNotEmpty()
+	}
+	return nil, false
+}
+
 // StickersSetStickerSetThumb invokes method stickers.setStickerSetThumb#a76a5392 returning error if any.
+// Set stickerset thumbnail
+//
+// Possible errors:
+//
+//	400 STICKERSET_INVALID: The provided sticker set is invalid.
+//	400 STICKER_THUMB_PNG_NOPNG: Incorrect stickerset thumb file provided, PNG / WEBP expected.
+//	400 STICKER_THUMB_TGS_NOTGS: Incorrect stickerset TGS thumb file provided.
+//
+// See https://core.telegram.org/method/stickers.setStickerSetThumb for reference.
+// Can be used by bots.
 func (c *Client) StickersSetStickerSetThumb(ctx context.Context, request *StickersSetStickerSetThumbRequest) (MessagesStickerSetClass, error) {
 	var result MessagesStickerSetBox
 

@@ -32,14 +32,28 @@ var (
 )
 
 // AccountUpdateBusinessLocationRequest represents TL type `account.updateBusinessLocation#9e6b131a`.
+// Businesses »¹ may advertise their location using this method, see here »² for more
+// info.
+// To remove business location information invoke the method without setting any of the
+// parameters.
+//
+// Links:
+//  1. https://core.telegram.org/api/business#location
+//  2. https://core.telegram.org/api/business#location
+//
+// See https://core.telegram.org/method/account.updateBusinessLocation for reference.
 type AccountUpdateBusinessLocationRequest struct {
-	// Flags field of AccountUpdateBusinessLocationRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// GeoPoint field of AccountUpdateBusinessLocationRequest.
+	// Optional, contains a set of geographical coordinates.
 	//
 	// Use SetGeoPoint and GetGeoPoint helpers.
 	GeoPoint InputGeoPointClass
-	// Address field of AccountUpdateBusinessLocationRequest.
+	// Mandatory when setting/updating the location, contains a textual description of the
+	// address (max 96 UTF-8 chars).
 	//
 	// Use SetAddress and GetAddress helpers.
 	Address string
@@ -80,6 +94,21 @@ func (u *AccountUpdateBusinessLocationRequest) String() string {
 	}
 	type Alias AccountUpdateBusinessLocationRequest
 	return fmt.Sprintf("AccountUpdateBusinessLocationRequest%+v", Alias(*u))
+}
+
+// FillFrom fills AccountUpdateBusinessLocationRequest from given interface.
+func (u *AccountUpdateBusinessLocationRequest) FillFrom(from interface {
+	GetGeoPoint() (value InputGeoPointClass, ok bool)
+	GetAddress() (value string, ok bool)
+}) {
+	if val, ok := from.GetGeoPoint(); ok {
+		u.GeoPoint = val
+	}
+
+	if val, ok := from.GetAddress(); ok {
+		u.Address = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -235,7 +264,26 @@ func (u *AccountUpdateBusinessLocationRequest) GetAddress() (value string, ok bo
 	return u.Address, true
 }
 
+// GetGeoPointAsNotEmpty returns mapped value of GeoPoint conditional field and
+// boolean which is true if field was set.
+func (u *AccountUpdateBusinessLocationRequest) GetGeoPointAsNotEmpty() (*InputGeoPoint, bool) {
+	if value, ok := u.GetGeoPoint(); ok {
+		return value.AsNotEmpty()
+	}
+	return nil, false
+}
+
 // AccountUpdateBusinessLocation invokes method account.updateBusinessLocation#9e6b131a returning error if any.
+// Businesses »¹ may advertise their location using this method, see here »² for more
+// info.
+// To remove business location information invoke the method without setting any of the
+// parameters.
+//
+// Links:
+//  1. https://core.telegram.org/api/business#location
+//  2. https://core.telegram.org/api/business#location
+//
+// See https://core.telegram.org/method/account.updateBusinessLocation for reference.
 func (c *Client) AccountUpdateBusinessLocation(ctx context.Context, request *AccountUpdateBusinessLocationRequest) (bool, error) {
 	var result BoolBox
 

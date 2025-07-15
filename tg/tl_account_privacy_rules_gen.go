@@ -32,12 +32,15 @@ var (
 )
 
 // AccountPrivacyRules represents TL type `account.privacyRules#50a04e45`.
+// Privacy rules
+//
+// See https://core.telegram.org/constructor/account.privacyRules for reference.
 type AccountPrivacyRules struct {
-	// Rules field of AccountPrivacyRules.
+	// Privacy rules
 	Rules []PrivacyRuleClass
-	// Chats field of AccountPrivacyRules.
+	// Chats to which the rules apply
 	Chats []ChatClass
-	// Users field of AccountPrivacyRules.
+	// Users to which the rules apply
 	Users []UserClass
 }
 
@@ -76,6 +79,17 @@ func (p *AccountPrivacyRules) String() string {
 	}
 	type Alias AccountPrivacyRules
 	return fmt.Sprintf("AccountPrivacyRules%+v", Alias(*p))
+}
+
+// FillFrom fills AccountPrivacyRules from given interface.
+func (p *AccountPrivacyRules) FillFrom(from interface {
+	GetRules() (value []PrivacyRuleClass)
+	GetChats() (value []ChatClass)
+	GetUsers() (value []UserClass)
+}) {
+	p.Rules = from.GetRules()
+	p.Chats = from.GetChats()
+	p.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -253,4 +267,19 @@ func (p *AccountPrivacyRules) GetUsers() (value []UserClass) {
 		return
 	}
 	return p.Users
+}
+
+// MapRules returns field Rules wrapped in PrivacyRuleClassArray helper.
+func (p *AccountPrivacyRules) MapRules() (value PrivacyRuleClassArray) {
+	return PrivacyRuleClassArray(p.Rules)
+}
+
+// MapChats returns field Chats wrapped in ChatClassArray helper.
+func (p *AccountPrivacyRules) MapChats() (value ChatClassArray) {
+	return ChatClassArray(p.Chats)
+}
+
+// MapUsers returns field Users wrapped in UserClassArray helper.
+func (p *AccountPrivacyRules) MapUsers() (value UserClassArray) {
+	return UserClassArray(p.Users)
 }

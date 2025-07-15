@@ -32,6 +32,9 @@ var (
 )
 
 // AuthLogOutRequest represents TL type `auth.logOut#3e72ba19`.
+// Logs out the user.
+//
+// See https://core.telegram.org/method/auth.logOut for reference.
 type AuthLogOutRequest struct {
 }
 
@@ -126,6 +129,10 @@ func (l *AuthLogOutRequest) DecodeBare(b *bin.Buffer) error {
 }
 
 // AuthLogOut invokes method auth.logOut#3e72ba19 returning error if any.
+// Logs out the user.
+//
+// See https://core.telegram.org/method/auth.logOut for reference.
+// Can be used by bots.
 func (c *Client) AuthLogOut(ctx context.Context) (*AuthLoggedOut, error) {
 	var result AuthLoggedOut
 

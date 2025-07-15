@@ -32,10 +32,13 @@ var (
 )
 
 // PaymentsBankCardData represents TL type `payments.bankCardData#3e24e573`.
+// Credit card info, provided by the card's bank(s)
+//
+// See https://core.telegram.org/constructor/payments.bankCardData for reference.
 type PaymentsBankCardData struct {
-	// Title field of PaymentsBankCardData.
+	// Credit card title
 	Title string
-	// OpenURLs field of PaymentsBankCardData.
+	// Info URL(s) provided by the card's bank(s)
 	OpenURLs []BankCardOpenURL
 }
 
@@ -71,6 +74,15 @@ func (b *PaymentsBankCardData) String() string {
 	}
 	type Alias PaymentsBankCardData
 	return fmt.Sprintf("PaymentsBankCardData%+v", Alias(*b))
+}
+
+// FillFrom fills PaymentsBankCardData from given interface.
+func (b *PaymentsBankCardData) FillFrom(from interface {
+	GetTitle() (value string)
+	GetOpenURLs() (value []BankCardOpenURL)
+}) {
+	b.Title = from.GetTitle()
+	b.OpenURLs = from.GetOpenURLs()
 }
 
 // TypeID returns type id in TL schema.

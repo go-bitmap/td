@@ -32,10 +32,13 @@ var (
 )
 
 // InputGroupCall represents TL type `inputGroupCall#d8aa840f`.
+// Points to a specific group call
+//
+// See https://core.telegram.org/constructor/inputGroupCall for reference.
 type InputGroupCall struct {
-	// ID field of InputGroupCall.
+	// Group call ID
 	ID int64
-	// AccessHash field of InputGroupCall.
+	// Group call access hash
 	AccessHash int64
 }
 
@@ -76,6 +79,15 @@ func (i *InputGroupCall) String() string {
 	}
 	type Alias InputGroupCall
 	return fmt.Sprintf("InputGroupCall%+v", Alias(*i))
+}
+
+// FillFrom fills InputGroupCall from given interface.
+func (i *InputGroupCall) FillFrom(from interface {
+	GetID() (value int64)
+	GetAccessHash() (value int64)
+}) {
+	i.ID = from.GetID()
+	i.AccessHash = from.GetAccessHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -182,6 +194,8 @@ func (i *InputGroupCall) GetAccessHash() (value int64) {
 }
 
 // InputGroupCallSlug represents TL type `inputGroupCallSlug#fe06823f`.
+//
+// See https://core.telegram.org/constructor/inputGroupCallSlug for reference.
 type InputGroupCallSlug struct {
 	// Slug field of InputGroupCallSlug.
 	Slug string
@@ -221,6 +235,13 @@ func (i *InputGroupCallSlug) String() string {
 	}
 	type Alias InputGroupCallSlug
 	return fmt.Sprintf("InputGroupCallSlug%+v", Alias(*i))
+}
+
+// FillFrom fills InputGroupCallSlug from given interface.
+func (i *InputGroupCallSlug) FillFrom(from interface {
+	GetSlug() (value string)
+}) {
+	i.Slug = from.GetSlug()
 }
 
 // TypeID returns type id in TL schema.
@@ -307,6 +328,8 @@ func (i *InputGroupCallSlug) GetSlug() (value string) {
 }
 
 // InputGroupCallInviteMessage represents TL type `inputGroupCallInviteMessage#8c10603f`.
+//
+// See https://core.telegram.org/constructor/inputGroupCallInviteMessage for reference.
 type InputGroupCallInviteMessage struct {
 	// MsgID field of InputGroupCallInviteMessage.
 	MsgID int
@@ -346,6 +369,13 @@ func (i *InputGroupCallInviteMessage) String() string {
 	}
 	type Alias InputGroupCallInviteMessage
 	return fmt.Sprintf("InputGroupCallInviteMessage%+v", Alias(*i))
+}
+
+// FillFrom fills InputGroupCallInviteMessage from given interface.
+func (i *InputGroupCallInviteMessage) FillFrom(from interface {
+	GetMsgID() (value int)
+}) {
+	i.MsgID = from.GetMsgID()
 }
 
 // TypeID returns type id in TL schema.
@@ -435,6 +465,8 @@ func (i *InputGroupCallInviteMessage) GetMsgID() (value int) {
 const InputGroupCallClassName = "InputGroupCall"
 
 // InputGroupCallClass represents InputGroupCall generic type.
+//
+// See https://core.telegram.org/type/InputGroupCall for reference.
 //
 // Constructors:
 //   - [InputGroupCall]

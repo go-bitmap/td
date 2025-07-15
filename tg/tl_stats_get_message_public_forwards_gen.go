@@ -32,14 +32,30 @@ var (
 )
 
 // StatsGetMessagePublicForwardsRequest represents TL type `stats.getMessagePublicForwards#5f150144`.
+// Obtains a list of messages, indicating to which other public channels was a channel
+// message forwarded.
+// Will return a list of messages¹ with peer_id equal to the public channel to which
+// this message was forwarded.
+//
+// Links:
+//  1. https://core.telegram.org/constructor/message
+//
+// See https://core.telegram.org/method/stats.getMessagePublicForwards for reference.
 type StatsGetMessagePublicForwardsRequest struct {
-	// Channel field of StatsGetMessagePublicForwardsRequest.
+	// Source channel
 	Channel InputChannelClass
-	// MsgID field of StatsGetMessagePublicForwardsRequest.
+	// Source message ID
 	MsgID int
-	// Offset field of StatsGetMessagePublicForwardsRequest.
+	// Offset for pagination¹, empty string on first call, then use the next_offset field of
+	// the returned constructor (if present, otherwise no more results are available).
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets
 	Offset string
-	// Limit field of StatsGetMessagePublicForwardsRequest.
+	// Maximum number of results to return, see pagination¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets
 	Limit int
 }
 
@@ -81,6 +97,19 @@ func (g *StatsGetMessagePublicForwardsRequest) String() string {
 	}
 	type Alias StatsGetMessagePublicForwardsRequest
 	return fmt.Sprintf("StatsGetMessagePublicForwardsRequest%+v", Alias(*g))
+}
+
+// FillFrom fills StatsGetMessagePublicForwardsRequest from given interface.
+func (g *StatsGetMessagePublicForwardsRequest) FillFrom(from interface {
+	GetChannel() (value InputChannelClass)
+	GetMsgID() (value int)
+	GetOffset() (value string)
+	GetLimit() (value int)
+}) {
+	g.Channel = from.GetChannel()
+	g.MsgID = from.GetMsgID()
+	g.Offset = from.GetOffset()
+	g.Limit = from.GetLimit()
 }
 
 // TypeID returns type id in TL schema.
@@ -231,7 +260,28 @@ func (g *StatsGetMessagePublicForwardsRequest) GetLimit() (value int) {
 	return g.Limit
 }
 
+// GetChannelAsNotEmpty returns mapped value of Channel field.
+func (g *StatsGetMessagePublicForwardsRequest) GetChannelAsNotEmpty() (NotEmptyInputChannel, bool) {
+	return g.Channel.AsNotEmpty()
+}
+
 // StatsGetMessagePublicForwards invokes method stats.getMessagePublicForwards#5f150144 returning error if any.
+// Obtains a list of messages, indicating to which other public channels was a channel
+// message forwarded.
+// Will return a list of messages¹ with peer_id equal to the public channel to which
+// this message was forwarded.
+//
+// Links:
+//  1. https://core.telegram.org/constructor/message
+//
+// Possible errors:
+//
+//	400 CHANNEL_INVALID: The provided channel is invalid.
+//	400 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
+//	400 MESSAGE_ID_INVALID: The provided message id is invalid.
+//	400 PEER_ID_INVALID: The provided peer id is invalid.
+//
+// See https://core.telegram.org/method/stats.getMessagePublicForwards for reference.
 func (c *Client) StatsGetMessagePublicForwards(ctx context.Context, request *StatsGetMessagePublicForwardsRequest) (*StatsPublicForwards, error) {
 	var result StatsPublicForwards
 

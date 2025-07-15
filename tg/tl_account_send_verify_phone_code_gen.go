@@ -32,10 +32,16 @@ var (
 )
 
 // AccountSendVerifyPhoneCodeRequest represents TL type `account.sendVerifyPhoneCode#a5a356f9`.
+// Send the verification phone code for telegram passport¹.
+//
+// Links:
+//  1. https://core.telegram.org/passport
+//
+// See https://core.telegram.org/method/account.sendVerifyPhoneCode for reference.
 type AccountSendVerifyPhoneCodeRequest struct {
-	// PhoneNumber field of AccountSendVerifyPhoneCodeRequest.
+	// The phone number to verify
 	PhoneNumber string
-	// Settings field of AccountSendVerifyPhoneCodeRequest.
+	// Phone code settings
 	Settings CodeSettings
 }
 
@@ -71,6 +77,15 @@ func (s *AccountSendVerifyPhoneCodeRequest) String() string {
 	}
 	type Alias AccountSendVerifyPhoneCodeRequest
 	return fmt.Sprintf("AccountSendVerifyPhoneCodeRequest%+v", Alias(*s))
+}
+
+// FillFrom fills AccountSendVerifyPhoneCodeRequest from given interface.
+func (s *AccountSendVerifyPhoneCodeRequest) FillFrom(from interface {
+	GetPhoneNumber() (value string)
+	GetSettings() (value CodeSettings)
+}) {
+	s.PhoneNumber = from.GetPhoneNumber()
+	s.Settings = from.GetSettings()
 }
 
 // TypeID returns type id in TL schema.
@@ -177,6 +192,16 @@ func (s *AccountSendVerifyPhoneCodeRequest) GetSettings() (value CodeSettings) {
 }
 
 // AccountSendVerifyPhoneCode invokes method account.sendVerifyPhoneCode#a5a356f9 returning error if any.
+// Send the verification phone code for telegram passport¹.
+//
+// Links:
+//  1. https://core.telegram.org/passport
+//
+// Possible errors:
+//
+//	400 PHONE_NUMBER_INVALID: The phone number is invalid.
+//
+// See https://core.telegram.org/method/account.sendVerifyPhoneCode for reference.
 func (c *Client) AccountSendVerifyPhoneCode(ctx context.Context, request *AccountSendVerifyPhoneCodeRequest) (AuthSentCodeClass, error) {
 	var result AuthSentCodeBox
 

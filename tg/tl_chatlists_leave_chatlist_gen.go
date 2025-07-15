@@ -32,10 +32,16 @@ var (
 )
 
 // ChatlistsLeaveChatlistRequest represents TL type `chatlists.leaveChatlist#74fae13a`.
+// Delete a folder imported using a chat folder deep link »¹
+//
+// Links:
+//  1. https://core.telegram.org/api/links#chat-folder-links
+//
+// See https://core.telegram.org/method/chatlists.leaveChatlist for reference.
 type ChatlistsLeaveChatlistRequest struct {
-	// Chatlist field of ChatlistsLeaveChatlistRequest.
+	// Folder ID
 	Chatlist InputChatlistDialogFilter
-	// Peers field of ChatlistsLeaveChatlistRequest.
+	// Also leave the specified channels and groups
 	Peers []InputPeerClass
 }
 
@@ -71,6 +77,15 @@ func (l *ChatlistsLeaveChatlistRequest) String() string {
 	}
 	type Alias ChatlistsLeaveChatlistRequest
 	return fmt.Sprintf("ChatlistsLeaveChatlistRequest%+v", Alias(*l))
+}
+
+// FillFrom fills ChatlistsLeaveChatlistRequest from given interface.
+func (l *ChatlistsLeaveChatlistRequest) FillFrom(from interface {
+	GetChatlist() (value InputChatlistDialogFilter)
+	GetPeers() (value []InputPeerClass)
+}) {
+	l.Chatlist = from.GetChatlist()
+	l.Peers = from.GetPeers()
 }
 
 // TypeID returns type id in TL schema.
@@ -194,7 +209,22 @@ func (l *ChatlistsLeaveChatlistRequest) GetPeers() (value []InputPeerClass) {
 	return l.Peers
 }
 
+// MapPeers returns field Peers wrapped in InputPeerClassArray helper.
+func (l *ChatlistsLeaveChatlistRequest) MapPeers() (value InputPeerClassArray) {
+	return InputPeerClassArray(l.Peers)
+}
+
 // ChatlistsLeaveChatlist invokes method chatlists.leaveChatlist#74fae13a returning error if any.
+// Delete a folder imported using a chat folder deep link »¹
+//
+// Links:
+//  1. https://core.telegram.org/api/links#chat-folder-links
+//
+// Possible errors:
+//
+//	400 FILTER_ID_INVALID: The specified filter ID is invalid.
+//
+// See https://core.telegram.org/method/chatlists.leaveChatlist for reference.
 func (c *Client) ChatlistsLeaveChatlist(ctx context.Context, request *ChatlistsLeaveChatlistRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

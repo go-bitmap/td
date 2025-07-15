@@ -32,10 +32,13 @@ var (
 )
 
 // SMSJobsEligibleToJoin represents TL type `smsjobs.eligibleToJoin#dc8b44cf`.
+// SMS jobs eligibility
+//
+// See https://core.telegram.org/constructor/smsjobs.eligibleToJoin for reference.
 type SMSJobsEligibleToJoin struct {
-	// TermsURL field of SMSJobsEligibleToJoin.
+	// Terms of service URL
 	TermsURL string
-	// MonthlySentSMS field of SMSJobsEligibleToJoin.
+	// Monthly sent SMSes
 	MonthlySentSMS int
 }
 
@@ -71,6 +74,15 @@ func (e *SMSJobsEligibleToJoin) String() string {
 	}
 	type Alias SMSJobsEligibleToJoin
 	return fmt.Sprintf("SMSJobsEligibleToJoin%+v", Alias(*e))
+}
+
+// FillFrom fills SMSJobsEligibleToJoin from given interface.
+func (e *SMSJobsEligibleToJoin) FillFrom(from interface {
+	GetTermsURL() (value string)
+	GetMonthlySentSMS() (value int)
+}) {
+	e.TermsURL = from.GetTermsURL()
+	e.MonthlySentSMS = from.GetMonthlySentSMS()
 }
 
 // TypeID returns type id in TL schema.

@@ -32,12 +32,15 @@ var (
 )
 
 // ChannelsAdminLogResults represents TL type `channels.adminLogResults#ed8af74d`.
+// Admin log events
+//
+// See https://core.telegram.org/constructor/channels.adminLogResults for reference.
 type ChannelsAdminLogResults struct {
-	// Events field of ChannelsAdminLogResults.
+	// Admin log events
 	Events []ChannelAdminLogEvent
-	// Chats field of ChannelsAdminLogResults.
+	// Chats mentioned in events
 	Chats []ChatClass
-	// Users field of ChannelsAdminLogResults.
+	// Users mentioned in events
 	Users []UserClass
 }
 
@@ -76,6 +79,17 @@ func (a *ChannelsAdminLogResults) String() string {
 	}
 	type Alias ChannelsAdminLogResults
 	return fmt.Sprintf("ChannelsAdminLogResults%+v", Alias(*a))
+}
+
+// FillFrom fills ChannelsAdminLogResults from given interface.
+func (a *ChannelsAdminLogResults) FillFrom(from interface {
+	GetEvents() (value []ChannelAdminLogEvent)
+	GetChats() (value []ChatClass)
+	GetUsers() (value []UserClass)
+}) {
+	a.Events = from.GetEvents()
+	a.Chats = from.GetChats()
+	a.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -250,4 +264,14 @@ func (a *ChannelsAdminLogResults) GetUsers() (value []UserClass) {
 		return
 	}
 	return a.Users
+}
+
+// MapChats returns field Chats wrapped in ChatClassArray helper.
+func (a *ChannelsAdminLogResults) MapChats() (value ChatClassArray) {
+	return ChatClassArray(a.Chats)
+}
+
+// MapUsers returns field Users wrapped in UserClassArray helper.
+func (a *ChannelsAdminLogResults) MapUsers() (value UserClassArray) {
+	return UserClassArray(a.Users)
 }

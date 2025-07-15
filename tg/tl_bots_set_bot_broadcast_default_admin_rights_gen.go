@@ -32,8 +32,16 @@ var (
 )
 
 // BotsSetBotBroadcastDefaultAdminRightsRequest represents TL type `bots.setBotBroadcastDefaultAdminRights#788464e1`.
+// Set the default suggested admin rights¹ for bots being added as admins to channels,
+// see here for more info on how to handle them »².
+//
+// Links:
+//  1. https://core.telegram.org/api/rights#suggested-bot-rights
+//  2. https://core.telegram.org/api/rights#suggested-bot-rights
+//
+// See https://core.telegram.org/method/bots.setBotBroadcastDefaultAdminRights for reference.
 type BotsSetBotBroadcastDefaultAdminRightsRequest struct {
-	// AdminRights field of BotsSetBotBroadcastDefaultAdminRightsRequest.
+	// Admin rights
 	AdminRights ChatAdminRights
 }
 
@@ -66,6 +74,13 @@ func (s *BotsSetBotBroadcastDefaultAdminRightsRequest) String() string {
 	}
 	type Alias BotsSetBotBroadcastDefaultAdminRightsRequest
 	return fmt.Sprintf("BotsSetBotBroadcastDefaultAdminRightsRequest%+v", Alias(*s))
+}
+
+// FillFrom fills BotsSetBotBroadcastDefaultAdminRightsRequest from given interface.
+func (s *BotsSetBotBroadcastDefaultAdminRightsRequest) FillFrom(from interface {
+	GetAdminRights() (value ChatAdminRights)
+}) {
+	s.AdminRights = from.GetAdminRights()
 }
 
 // TypeID returns type id in TL schema.
@@ -152,6 +167,20 @@ func (s *BotsSetBotBroadcastDefaultAdminRightsRequest) GetAdminRights() (value C
 }
 
 // BotsSetBotBroadcastDefaultAdminRights invokes method bots.setBotBroadcastDefaultAdminRights#788464e1 returning error if any.
+// Set the default suggested admin rights¹ for bots being added as admins to channels,
+// see here for more info on how to handle them »².
+//
+// Links:
+//  1. https://core.telegram.org/api/rights#suggested-bot-rights
+//  2. https://core.telegram.org/api/rights#suggested-bot-rights
+//
+// Possible errors:
+//
+//	400 RIGHTS_NOT_MODIFIED: The new admin rights are equal to the old rights, no change was made.
+//	400 USER_BOT_REQUIRED: This method can only be called by a bot.
+//
+// See https://core.telegram.org/method/bots.setBotBroadcastDefaultAdminRights for reference.
+// Can be used by bots.
 func (c *Client) BotsSetBotBroadcastDefaultAdminRights(ctx context.Context, adminrights ChatAdminRights) (bool, error) {
 	var result BoolBox
 

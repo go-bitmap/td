@@ -32,10 +32,18 @@ var (
 )
 
 // ChannelsToggleSlowModeRequest represents TL type `channels.toggleSlowMode#edd49ef0`.
+// Toggle supergroup slow mode: if enabled, users will only be able to send one message
+// every seconds seconds
+//
+// See https://core.telegram.org/method/channels.toggleSlowMode for reference.
 type ChannelsToggleSlowModeRequest struct {
-	// Channel field of ChannelsToggleSlowModeRequest.
+	// The supergroup¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/channel
 	Channel InputChannelClass
-	// Seconds field of ChannelsToggleSlowModeRequest.
+	// Users will only be able to send one message every seconds seconds, 0 to disable the
+	// limitation
 	Seconds int
 }
 
@@ -71,6 +79,15 @@ func (t *ChannelsToggleSlowModeRequest) String() string {
 	}
 	type Alias ChannelsToggleSlowModeRequest
 	return fmt.Sprintf("ChannelsToggleSlowModeRequest%+v", Alias(*t))
+}
+
+// FillFrom fills ChannelsToggleSlowModeRequest from given interface.
+func (t *ChannelsToggleSlowModeRequest) FillFrom(from interface {
+	GetChannel() (value InputChannelClass)
+	GetSeconds() (value int)
+}) {
+	t.Channel = from.GetChannel()
+	t.Seconds = from.GetSeconds()
 }
 
 // TypeID returns type id in TL schema.
@@ -181,7 +198,24 @@ func (t *ChannelsToggleSlowModeRequest) GetSeconds() (value int) {
 	return t.Seconds
 }
 
+// GetChannelAsNotEmpty returns mapped value of Channel field.
+func (t *ChannelsToggleSlowModeRequest) GetChannelAsNotEmpty() (NotEmptyInputChannel, bool) {
+	return t.Channel.AsNotEmpty()
+}
+
 // ChannelsToggleSlowMode invokes method channels.toggleSlowMode#edd49ef0 returning error if any.
+// Toggle supergroup slow mode: if enabled, users will only be able to send one message
+// every seconds seconds
+//
+// Possible errors:
+//
+//	400 CHANNEL_INVALID: The provided channel is invalid.
+//	400 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
+//	400 CHAT_ID_INVALID: The provided chat id is invalid.
+//	400 CHAT_NOT_MODIFIED: No changes were made to chat information because the new information you passed is identical to the current information.
+//	400 SECONDS_INVALID: Invalid duration provided.
+//
+// See https://core.telegram.org/method/channels.toggleSlowMode for reference.
 func (c *Client) ChannelsToggleSlowMode(ctx context.Context, request *ChannelsToggleSlowModeRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

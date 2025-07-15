@@ -32,8 +32,15 @@ var (
 )
 
 // AccountUpdateStatusRequest represents TL type `account.updateStatus#6628562c`.
+// Updates online user status.
+//
+// See https://core.telegram.org/method/account.updateStatus for reference.
 type AccountUpdateStatusRequest struct {
-	// Offline field of AccountUpdateStatusRequest.
+	// If (boolTrue)¹ is transmitted, user status will change to (userStatusOffline)².
+	//
+	// Links:
+	//  1) https://core.telegram.org/constructor/boolTrue
+	//  2) https://core.telegram.org/constructor/userStatusOffline
 	Offline bool
 }
 
@@ -66,6 +73,13 @@ func (u *AccountUpdateStatusRequest) String() string {
 	}
 	type Alias AccountUpdateStatusRequest
 	return fmt.Sprintf("AccountUpdateStatusRequest%+v", Alias(*u))
+}
+
+// FillFrom fills AccountUpdateStatusRequest from given interface.
+func (u *AccountUpdateStatusRequest) FillFrom(from interface {
+	GetOffline() (value bool)
+}) {
+	u.Offline = from.GetOffline()
 }
 
 // TypeID returns type id in TL schema.
@@ -152,6 +166,9 @@ func (u *AccountUpdateStatusRequest) GetOffline() (value bool) {
 }
 
 // AccountUpdateStatus invokes method account.updateStatus#6628562c returning error if any.
+// Updates online user status.
+//
+// See https://core.telegram.org/method/account.updateStatus for reference.
 func (c *Client) AccountUpdateStatus(ctx context.Context, offline bool) (bool, error) {
 	var result BoolBox
 

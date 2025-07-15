@@ -32,12 +32,15 @@ var (
 )
 
 // MessagesChatInviteImporters represents TL type `messages.chatInviteImporters#81b6b00a`.
+// Info about the users that joined the chat using a specific chat invite
+//
+// See https://core.telegram.org/constructor/messages.chatInviteImporters for reference.
 type MessagesChatInviteImporters struct {
-	// Count field of MessagesChatInviteImporters.
+	// Number of users that joined
 	Count int
-	// Importers field of MessagesChatInviteImporters.
+	// The users that joined
 	Importers []ChatInviteImporter
-	// Users field of MessagesChatInviteImporters.
+	// The users that joined
 	Users []UserClass
 }
 
@@ -76,6 +79,17 @@ func (c *MessagesChatInviteImporters) String() string {
 	}
 	type Alias MessagesChatInviteImporters
 	return fmt.Sprintf("MessagesChatInviteImporters%+v", Alias(*c))
+}
+
+// FillFrom fills MessagesChatInviteImporters from given interface.
+func (c *MessagesChatInviteImporters) FillFrom(from interface {
+	GetCount() (value int)
+	GetImporters() (value []ChatInviteImporter)
+	GetUsers() (value []UserClass)
+}) {
+	c.Count = from.GetCount()
+	c.Importers = from.GetImporters()
+	c.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -232,4 +246,9 @@ func (c *MessagesChatInviteImporters) GetUsers() (value []UserClass) {
 		return
 	}
 	return c.Users
+}
+
+// MapUsers returns field Users wrapped in UserClassArray helper.
+func (c *MessagesChatInviteImporters) MapUsers() (value UserClassArray) {
+	return UserClassArray(c.Users)
 }

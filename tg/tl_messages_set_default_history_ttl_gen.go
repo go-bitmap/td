@@ -32,8 +32,11 @@ var (
 )
 
 // MessagesSetDefaultHistoryTTLRequest represents TL type `messages.setDefaultHistoryTTL#9eb51445`.
+// Changes the default value of the Time-To-Live setting, applied to all new chats.
+//
+// See https://core.telegram.org/method/messages.setDefaultHistoryTTL for reference.
 type MessagesSetDefaultHistoryTTLRequest struct {
-	// Period field of MessagesSetDefaultHistoryTTLRequest.
+	// The new default Time-To-Live of all messages sent in new chats, in seconds.
 	Period int
 }
 
@@ -66,6 +69,13 @@ func (s *MessagesSetDefaultHistoryTTLRequest) String() string {
 	}
 	type Alias MessagesSetDefaultHistoryTTLRequest
 	return fmt.Sprintf("MessagesSetDefaultHistoryTTLRequest%+v", Alias(*s))
+}
+
+// FillFrom fills MessagesSetDefaultHistoryTTLRequest from given interface.
+func (s *MessagesSetDefaultHistoryTTLRequest) FillFrom(from interface {
+	GetPeriod() (value int)
+}) {
+	s.Period = from.GetPeriod()
 }
 
 // TypeID returns type id in TL schema.
@@ -152,6 +162,13 @@ func (s *MessagesSetDefaultHistoryTTLRequest) GetPeriod() (value int) {
 }
 
 // MessagesSetDefaultHistoryTTL invokes method messages.setDefaultHistoryTTL#9eb51445 returning error if any.
+// Changes the default value of the Time-To-Live setting, applied to all new chats.
+//
+// Possible errors:
+//
+//	400 TTL_PERIOD_INVALID: The specified TTL period is invalid.
+//
+// See https://core.telegram.org/method/messages.setDefaultHistoryTTL for reference.
 func (c *Client) MessagesSetDefaultHistoryTTL(ctx context.Context, period int) (bool, error) {
 	var result BoolBox
 

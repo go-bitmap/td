@@ -32,6 +32,9 @@ var (
 )
 
 // MessagesGetDialogUnreadMarksRequest represents TL type `messages.getDialogUnreadMarks#21202222`.
+// Get dialogs manually marked as unread
+//
+// See https://core.telegram.org/method/messages.getDialogUnreadMarks for reference.
 type MessagesGetDialogUnreadMarksRequest struct {
 	// Flags field of MessagesGetDialogUnreadMarksRequest.
 	Flags bin.Fields
@@ -73,6 +76,16 @@ func (g *MessagesGetDialogUnreadMarksRequest) String() string {
 	}
 	type Alias MessagesGetDialogUnreadMarksRequest
 	return fmt.Sprintf("MessagesGetDialogUnreadMarksRequest%+v", Alias(*g))
+}
+
+// FillFrom fills MessagesGetDialogUnreadMarksRequest from given interface.
+func (g *MessagesGetDialogUnreadMarksRequest) FillFrom(from interface {
+	GetParentPeer() (value InputPeerClass, ok bool)
+}) {
+	if val, ok := from.GetParentPeer(); ok {
+		g.ParentPeer = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -193,6 +206,9 @@ func (g *MessagesGetDialogUnreadMarksRequest) GetParentPeer() (value InputPeerCl
 }
 
 // MessagesGetDialogUnreadMarks invokes method messages.getDialogUnreadMarks#21202222 returning error if any.
+// Get dialogs manually marked as unread
+//
+// See https://core.telegram.org/method/messages.getDialogUnreadMarks for reference.
 func (c *Client) MessagesGetDialogUnreadMarks(ctx context.Context, request *MessagesGetDialogUnreadMarksRequest) ([]DialogPeerClass, error) {
 	var result DialogPeerClassVector
 

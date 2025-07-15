@@ -32,16 +32,23 @@ var (
 )
 
 // ReactionCount represents TL type `reactionCount#a3d1cb80`.
+// Reactions
+//
+// See https://core.telegram.org/constructor/reactionCount for reference.
 type ReactionCount struct {
-	// Flags field of ReactionCount.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// ChosenOrder field of ReactionCount.
+	// If set, indicates that the current user also sent this reaction. The integer value
+	// indicates when was the reaction added: the bigger the value, the newer the reaction.
 	//
 	// Use SetChosenOrder and GetChosenOrder helpers.
 	ChosenOrder int
-	// Reaction field of ReactionCount.
+	// The reaction.
 	Reaction ReactionClass
-	// Count field of ReactionCount.
+	// Number of users that reacted with this emoji.
 	Count int
 }
 
@@ -83,6 +90,20 @@ func (r *ReactionCount) String() string {
 	}
 	type Alias ReactionCount
 	return fmt.Sprintf("ReactionCount%+v", Alias(*r))
+}
+
+// FillFrom fills ReactionCount from given interface.
+func (r *ReactionCount) FillFrom(from interface {
+	GetChosenOrder() (value int, ok bool)
+	GetReaction() (value ReactionClass)
+	GetCount() (value int)
+}) {
+	if val, ok := from.GetChosenOrder(); ok {
+		r.ChosenOrder = val
+	}
+
+	r.Reaction = from.GetReaction()
+	r.Count = from.GetCount()
 }
 
 // TypeID returns type id in TL schema.

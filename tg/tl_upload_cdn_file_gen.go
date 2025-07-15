@@ -32,8 +32,18 @@ var (
 )
 
 // UploadCDNFileReuploadNeeded represents TL type `upload.cdnFileReuploadNeeded#eea8e46e`.
+// The file was cleared from the temporary RAM cache of the CDN¹ and has to be
+// re-uploaded.
+//
+// Links:
+//  1. https://core.telegram.org/cdn
+//
+// See https://core.telegram.org/constructor/upload.cdnFileReuploadNeeded for reference.
 type UploadCDNFileReuploadNeeded struct {
-	// RequestToken field of UploadCDNFileReuploadNeeded.
+	// Request token (see CDN¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/cdn
 	RequestToken []byte
 }
 
@@ -71,6 +81,13 @@ func (c *UploadCDNFileReuploadNeeded) String() string {
 	}
 	type Alias UploadCDNFileReuploadNeeded
 	return fmt.Sprintf("UploadCDNFileReuploadNeeded%+v", Alias(*c))
+}
+
+// FillFrom fills UploadCDNFileReuploadNeeded from given interface.
+func (c *UploadCDNFileReuploadNeeded) FillFrom(from interface {
+	GetRequestToken() (value []byte)
+}) {
+	c.RequestToken = from.GetRequestToken()
 }
 
 // TypeID returns type id in TL schema.
@@ -157,8 +174,14 @@ func (c *UploadCDNFileReuploadNeeded) GetRequestToken() (value []byte) {
 }
 
 // UploadCDNFile represents TL type `upload.cdnFile#a99fca4f`.
+// Represent a chunk of a CDN¹ file.
+//
+// Links:
+//  1. https://core.telegram.org/cdn
+//
+// See https://core.telegram.org/constructor/upload.cdnFile for reference.
 type UploadCDNFile struct {
-	// Bytes field of UploadCDNFile.
+	// The data
 	Bytes []byte
 }
 
@@ -196,6 +219,13 @@ func (c *UploadCDNFile) String() string {
 	}
 	type Alias UploadCDNFile
 	return fmt.Sprintf("UploadCDNFile%+v", Alias(*c))
+}
+
+// FillFrom fills UploadCDNFile from given interface.
+func (c *UploadCDNFile) FillFrom(from interface {
+	GetBytes() (value []byte)
+}) {
+	c.Bytes = from.GetBytes()
 }
 
 // TypeID returns type id in TL schema.
@@ -285,6 +315,8 @@ func (c *UploadCDNFile) GetBytes() (value []byte) {
 const UploadCDNFileClassName = "upload.CdnFile"
 
 // UploadCDNFileClass represents upload.CdnFile generic type.
+//
+// See https://core.telegram.org/type/upload.CdnFile for reference.
 //
 // Constructors:
 //   - [UploadCDNFileReuploadNeeded]

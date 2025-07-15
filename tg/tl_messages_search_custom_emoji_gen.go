@@ -32,10 +32,19 @@ var (
 )
 
 // MessagesSearchCustomEmojiRequest represents TL type `messages.searchCustomEmoji#2c11c0d7`.
+// Look for custom emojis¹ associated to a UTF8 emoji
+//
+// Links:
+//  1. https://core.telegram.org/api/custom-emoji
+//
+// See https://core.telegram.org/method/messages.searchCustomEmoji for reference.
 type MessagesSearchCustomEmojiRequest struct {
-	// Emoticon field of MessagesSearchCustomEmojiRequest.
+	// The emoji
 	Emoticon string
-	// Hash field of MessagesSearchCustomEmojiRequest.
+	// Hash used for caching, for more info click here¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets#hash-generation
 	Hash int64
 }
 
@@ -71,6 +80,15 @@ func (s *MessagesSearchCustomEmojiRequest) String() string {
 	}
 	type Alias MessagesSearchCustomEmojiRequest
 	return fmt.Sprintf("MessagesSearchCustomEmojiRequest%+v", Alias(*s))
+}
+
+// FillFrom fills MessagesSearchCustomEmojiRequest from given interface.
+func (s *MessagesSearchCustomEmojiRequest) FillFrom(from interface {
+	GetEmoticon() (value string)
+	GetHash() (value int64)
+}) {
+	s.Emoticon = from.GetEmoticon()
+	s.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -177,6 +195,16 @@ func (s *MessagesSearchCustomEmojiRequest) GetHash() (value int64) {
 }
 
 // MessagesSearchCustomEmoji invokes method messages.searchCustomEmoji#2c11c0d7 returning error if any.
+// Look for custom emojis¹ associated to a UTF8 emoji
+//
+// Links:
+//  1. https://core.telegram.org/api/custom-emoji
+//
+// Possible errors:
+//
+//	400 EMOTICON_EMPTY: The emoji is empty.
+//
+// See https://core.telegram.org/method/messages.searchCustomEmoji for reference.
 func (c *Client) MessagesSearchCustomEmoji(ctx context.Context, request *MessagesSearchCustomEmojiRequest) (EmojiListClass, error) {
 	var result EmojiListBox
 

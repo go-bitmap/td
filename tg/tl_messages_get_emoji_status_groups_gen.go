@@ -32,8 +32,19 @@ var (
 )
 
 // MessagesGetEmojiStatusGroupsRequest represents TL type `messages.getEmojiStatusGroups#2ecd56cd`.
+// Represents a list of emoji categories¹, to be used when selecting custom emojis to
+// set as custom emoji status².
+//
+// Links:
+//  1. https://core.telegram.org/api/emoji-categories
+//  2. https://core.telegram.org/api
+//
+// See https://core.telegram.org/method/messages.getEmojiStatusGroups for reference.
 type MessagesGetEmojiStatusGroupsRequest struct {
-	// Hash field of MessagesGetEmojiStatusGroupsRequest.
+	// Hash used for caching, for more info click here¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets#hash-generation
 	Hash int
 }
 
@@ -66,6 +77,13 @@ func (g *MessagesGetEmojiStatusGroupsRequest) String() string {
 	}
 	type Alias MessagesGetEmojiStatusGroupsRequest
 	return fmt.Sprintf("MessagesGetEmojiStatusGroupsRequest%+v", Alias(*g))
+}
+
+// FillFrom fills MessagesGetEmojiStatusGroupsRequest from given interface.
+func (g *MessagesGetEmojiStatusGroupsRequest) FillFrom(from interface {
+	GetHash() (value int)
+}) {
+	g.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -152,6 +170,14 @@ func (g *MessagesGetEmojiStatusGroupsRequest) GetHash() (value int) {
 }
 
 // MessagesGetEmojiStatusGroups invokes method messages.getEmojiStatusGroups#2ecd56cd returning error if any.
+// Represents a list of emoji categories¹, to be used when selecting custom emojis to
+// set as custom emoji status².
+//
+// Links:
+//  1. https://core.telegram.org/api/emoji-categories
+//  2. https://core.telegram.org/api
+//
+// See https://core.telegram.org/method/messages.getEmojiStatusGroups for reference.
 func (c *Client) MessagesGetEmojiStatusGroups(ctx context.Context, hash int) (MessagesEmojiGroupsClass, error) {
 	var result MessagesEmojiGroupsBox
 

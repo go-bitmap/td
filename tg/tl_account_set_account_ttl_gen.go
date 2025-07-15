@@ -32,8 +32,11 @@ var (
 )
 
 // AccountSetAccountTTLRequest represents TL type `account.setAccountTTL#2442485e`.
+// Set account self-destruction period
+//
+// See https://core.telegram.org/method/account.setAccountTTL for reference.
 type AccountSetAccountTTLRequest struct {
-	// TTL field of AccountSetAccountTTLRequest.
+	// Time to live in days
 	TTL AccountDaysTTL
 }
 
@@ -66,6 +69,13 @@ func (s *AccountSetAccountTTLRequest) String() string {
 	}
 	type Alias AccountSetAccountTTLRequest
 	return fmt.Sprintf("AccountSetAccountTTLRequest%+v", Alias(*s))
+}
+
+// FillFrom fills AccountSetAccountTTLRequest from given interface.
+func (s *AccountSetAccountTTLRequest) FillFrom(from interface {
+	GetTTL() (value AccountDaysTTL)
+}) {
+	s.TTL = from.GetTTL()
 }
 
 // TypeID returns type id in TL schema.
@@ -152,6 +162,13 @@ func (s *AccountSetAccountTTLRequest) GetTTL() (value AccountDaysTTL) {
 }
 
 // AccountSetAccountTTL invokes method account.setAccountTTL#2442485e returning error if any.
+// Set account self-destruction period
+//
+// Possible errors:
+//
+//	400 TTL_DAYS_INVALID: The provided TTL is invalid.
+//
+// See https://core.telegram.org/method/account.setAccountTTL for reference.
 func (c *Client) AccountSetAccountTTL(ctx context.Context, ttl AccountDaysTTL) (bool, error) {
 	var result BoolBox
 

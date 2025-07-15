@@ -32,30 +32,58 @@ var (
 )
 
 // CodeSettings represents TL type `codeSettings#ad253d78`.
+// Settings used by telegram servers for sending the confirm code.
+// Example implementations: telegram for android¹, tdlib².
+//
+// Links:
+//  1. https://github.com/DrKLO/Telegram/blob/master/TMessagesProj/src/main/java/org/telegram/ui/LoginActivity.java
+//  2. https://github.com/tdlib/td/tree/master/td/telegram/SendCodeHelper.cpp
+//
+// See https://core.telegram.org/constructor/codeSettings for reference.
 type CodeSettings struct {
-	// Flags field of CodeSettings.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// AllowFlashcall field of CodeSettings.
+	// Whether to allow phone verification via phone calls¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/auth
 	AllowFlashcall bool
-	// CurrentNumber field of CodeSettings.
+	// Pass true if the phone number is used on the current device. Ignored if
+	// allow_flashcall is not set.
 	CurrentNumber bool
-	// AllowAppHash field of CodeSettings.
+	// If a token that will be included in eventually sent SMSs is required: required in
+	// newer versions of android, to use the android SMS receiver APIs¹
+	//
+	// Links:
+	//  1) https://developers.google.com/identity/sms-retriever/overview
 	AllowAppHash bool
-	// AllowMissedCall field of CodeSettings.
+	// Whether this device supports receiving the code using the auth.codeTypeMissedCall¹
+	// method
+	//
+	// Links:
+	//  1) https://core.telegram.org/constructor/auth.codeTypeMissedCall
 	AllowMissedCall bool
-	// AllowFirebase field of CodeSettings.
+	// Whether Firebase auth is supported
 	AllowFirebase bool
-	// UnknownNumber field of CodeSettings.
+	// Set this flag if there is a SIM card in the current device, but it is not possible to
+	// check whether the specified phone number matches the SIM's phone number.
 	UnknownNumber bool
-	// LogoutTokens field of CodeSettings.
+	// Previously stored future auth tokens, see the documentation for more info »¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/auth#future-auth-tokens
 	//
 	// Use SetLogoutTokens and GetLogoutTokens helpers.
 	LogoutTokens [][]byte
-	// Token field of CodeSettings.
+	// Used only by official iOS apps for Firebase auth: device token for apple push.
 	//
 	// Use SetToken and GetToken helpers.
 	Token string
-	// AppSandbox field of CodeSettings.
+	// Used only by official iOS apps for firebase auth: whether a sandbox-certificate will
+	// be used during transmission of the push notification.
 	//
 	// Use SetAppSandbox and GetAppSandbox helpers.
 	AppSandbox bool
@@ -117,6 +145,38 @@ func (c *CodeSettings) String() string {
 	}
 	type Alias CodeSettings
 	return fmt.Sprintf("CodeSettings%+v", Alias(*c))
+}
+
+// FillFrom fills CodeSettings from given interface.
+func (c *CodeSettings) FillFrom(from interface {
+	GetAllowFlashcall() (value bool)
+	GetCurrentNumber() (value bool)
+	GetAllowAppHash() (value bool)
+	GetAllowMissedCall() (value bool)
+	GetAllowFirebase() (value bool)
+	GetUnknownNumber() (value bool)
+	GetLogoutTokens() (value [][]byte, ok bool)
+	GetToken() (value string, ok bool)
+	GetAppSandbox() (value bool, ok bool)
+}) {
+	c.AllowFlashcall = from.GetAllowFlashcall()
+	c.CurrentNumber = from.GetCurrentNumber()
+	c.AllowAppHash = from.GetAllowAppHash()
+	c.AllowMissedCall = from.GetAllowMissedCall()
+	c.AllowFirebase = from.GetAllowFirebase()
+	c.UnknownNumber = from.GetUnknownNumber()
+	if val, ok := from.GetLogoutTokens(); ok {
+		c.LogoutTokens = val
+	}
+
+	if val, ok := from.GetToken(); ok {
+		c.Token = val
+	}
+
+	if val, ok := from.GetAppSandbox(); ok {
+		c.AppSandbox = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.

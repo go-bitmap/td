@@ -32,24 +32,51 @@ var (
 )
 
 // StoriesSearchPostsRequest represents TL type `stories.searchPosts#d1810907`.
+// Globally search for stories¹ using a hashtag or a location media area², see here
+// »³ for more info on the full flow.
+// Either hashtag or area must be set when invoking the method.
+//
+// Links:
+//  1. https://core.telegram.org/api/stories
+//  2. https://core.telegram.org/api/stories#location-tags
+//  3. https://core.telegram.org/api/stories#searching-stories
+//
+// See https://core.telegram.org/method/stories.searchPosts for reference.
 type StoriesSearchPostsRequest struct {
-	// Flags field of StoriesSearchPostsRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Hashtag field of StoriesSearchPostsRequest.
+	// Hashtag (without the #)
 	//
 	// Use SetHashtag and GetHashtag helpers.
 	Hashtag string
-	// Area field of StoriesSearchPostsRequest.
+	// A mediaAreaGeoPoint¹ or a mediaAreaVenue².  Note mediaAreaGeoPoint³ areas may be
+	// searched only if they have an associated address.
+	//
+	// Links:
+	//  1) https://core.telegram.org/constructor/mediaAreaGeoPoint
+	//  2) https://core.telegram.org/constructor/mediaAreaVenue
+	//  3) https://core.telegram.org/constructor/mediaAreaGeoPoint
 	//
 	// Use SetArea and GetArea helpers.
 	Area MediaAreaClass
-	// Peer field of StoriesSearchPostsRequest.
+	// If set, returns only stories posted by this peer.
 	//
 	// Use SetPeer and GetPeer helpers.
 	Peer InputPeerClass
-	// Offset field of StoriesSearchPostsRequest.
+	// Offset for pagination¹: initially an empty string, then the next_offset from the
+	// previously returned stories.foundStories².
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets
+	//  2) https://core.telegram.org/constructor/stories.foundStories
 	Offset string
-	// Limit field of StoriesSearchPostsRequest.
+	// Maximum number of results to return, see pagination¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets
 	Limit int
 }
 
@@ -97,6 +124,30 @@ func (s *StoriesSearchPostsRequest) String() string {
 	}
 	type Alias StoriesSearchPostsRequest
 	return fmt.Sprintf("StoriesSearchPostsRequest%+v", Alias(*s))
+}
+
+// FillFrom fills StoriesSearchPostsRequest from given interface.
+func (s *StoriesSearchPostsRequest) FillFrom(from interface {
+	GetHashtag() (value string, ok bool)
+	GetArea() (value MediaAreaClass, ok bool)
+	GetPeer() (value InputPeerClass, ok bool)
+	GetOffset() (value string)
+	GetLimit() (value int)
+}) {
+	if val, ok := from.GetHashtag(); ok {
+		s.Hashtag = val
+	}
+
+	if val, ok := from.GetArea(); ok {
+		s.Area = val
+	}
+
+	if val, ok := from.GetPeer(); ok {
+		s.Peer = val
+	}
+
+	s.Offset = from.GetOffset()
+	s.Limit = from.GetLimit()
 }
 
 // TypeID returns type id in TL schema.
@@ -334,6 +385,20 @@ func (s *StoriesSearchPostsRequest) GetLimit() (value int) {
 }
 
 // StoriesSearchPosts invokes method stories.searchPosts#d1810907 returning error if any.
+// Globally search for stories¹ using a hashtag or a location media area², see here
+// »³ for more info on the full flow.
+// Either hashtag or area must be set when invoking the method.
+//
+// Links:
+//  1. https://core.telegram.org/api/stories
+//  2. https://core.telegram.org/api/stories#location-tags
+//  3. https://core.telegram.org/api/stories#searching-stories
+//
+// Possible errors:
+//
+//	400 HASHTAG_INVALID: The specified hashtag is invalid.
+//
+// See https://core.telegram.org/method/stories.searchPosts for reference.
 func (c *Client) StoriesSearchPosts(ctx context.Context, request *StoriesSearchPostsRequest) (*StoriesFoundStories, error) {
 	var result StoriesFoundStories
 

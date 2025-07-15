@@ -32,6 +32,8 @@ var (
 )
 
 // BotVerifierSettings represents TL type `botVerifierSettings#b0cd6617`.
+//
+// See https://core.telegram.org/constructor/botVerifierSettings for reference.
 type BotVerifierSettings struct {
 	// Flags field of BotVerifierSettings.
 	Flags bin.Fields
@@ -88,6 +90,22 @@ func (b *BotVerifierSettings) String() string {
 	}
 	type Alias BotVerifierSettings
 	return fmt.Sprintf("BotVerifierSettings%+v", Alias(*b))
+}
+
+// FillFrom fills BotVerifierSettings from given interface.
+func (b *BotVerifierSettings) FillFrom(from interface {
+	GetCanModifyCustomDescription() (value bool)
+	GetIcon() (value int64)
+	GetCompany() (value string)
+	GetCustomDescription() (value string, ok bool)
+}) {
+	b.CanModifyCustomDescription = from.GetCanModifyCustomDescription()
+	b.Icon = from.GetIcon()
+	b.Company = from.GetCompany()
+	if val, ok := from.GetCustomDescription(); ok {
+		b.CustomDescription = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.

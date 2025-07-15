@@ -32,14 +32,30 @@ var (
 )
 
 // MessagesSendBotRequestedPeerRequest represents TL type `messages.sendBotRequestedPeer#91b2d060`.
+// Send one or more chosen peers, as requested by a keyboardButtonRequestPeer¹ button.
+//
+// Links:
+//  1. https://core.telegram.org/constructor/keyboardButtonRequestPeer
+//
+// See https://core.telegram.org/method/messages.sendBotRequestedPeer for reference.
 type MessagesSendBotRequestedPeerRequest struct {
-	// Peer field of MessagesSendBotRequestedPeerRequest.
+	// The bot that sent the keyboardButtonRequestPeer¹ button.
+	//
+	// Links:
+	//  1) https://core.telegram.org/constructor/keyboardButtonRequestPeer
 	Peer InputPeerClass
-	// MsgID field of MessagesSendBotRequestedPeerRequest.
+	// ID of the message that contained the reply keyboard with the
+	// keyboardButtonRequestPeer¹ button.
+	//
+	// Links:
+	//  1) https://core.telegram.org/constructor/keyboardButtonRequestPeer
 	MsgID int
-	// ButtonID field of MessagesSendBotRequestedPeerRequest.
+	// The button_id field from the keyboardButtonRequestPeer¹ constructor.
+	//
+	// Links:
+	//  1) https://core.telegram.org/constructor/keyboardButtonRequestPeer
 	ButtonID int
-	// RequestedPeers field of MessagesSendBotRequestedPeerRequest.
+	// The chosen peers.
 	RequestedPeers []InputPeerClass
 }
 
@@ -81,6 +97,19 @@ func (s *MessagesSendBotRequestedPeerRequest) String() string {
 	}
 	type Alias MessagesSendBotRequestedPeerRequest
 	return fmt.Sprintf("MessagesSendBotRequestedPeerRequest%+v", Alias(*s))
+}
+
+// FillFrom fills MessagesSendBotRequestedPeerRequest from given interface.
+func (s *MessagesSendBotRequestedPeerRequest) FillFrom(from interface {
+	GetPeer() (value InputPeerClass)
+	GetMsgID() (value int)
+	GetButtonID() (value int)
+	GetRequestedPeers() (value []InputPeerClass)
+}) {
+	s.Peer = from.GetPeer()
+	s.MsgID = from.GetMsgID()
+	s.ButtonID = from.GetButtonID()
+	s.RequestedPeers = from.GetRequestedPeers()
 }
 
 // TypeID returns type id in TL schema.
@@ -249,7 +278,23 @@ func (s *MessagesSendBotRequestedPeerRequest) GetRequestedPeers() (value []Input
 	return s.RequestedPeers
 }
 
+// MapRequestedPeers returns field RequestedPeers wrapped in InputPeerClassArray helper.
+func (s *MessagesSendBotRequestedPeerRequest) MapRequestedPeers() (value InputPeerClassArray) {
+	return InputPeerClassArray(s.RequestedPeers)
+}
+
 // MessagesSendBotRequestedPeer invokes method messages.sendBotRequestedPeer#91b2d060 returning error if any.
+// Send one or more chosen peers, as requested by a keyboardButtonRequestPeer¹ button.
+//
+// Links:
+//  1. https://core.telegram.org/constructor/keyboardButtonRequestPeer
+//
+// Possible errors:
+//
+//	400 MESSAGE_ID_INVALID: The provided message id is invalid.
+//	400 PEER_ID_INVALID: The provided peer id is invalid.
+//
+// See https://core.telegram.org/method/messages.sendBotRequestedPeer for reference.
 func (c *Client) MessagesSendBotRequestedPeer(ctx context.Context, request *MessagesSendBotRequestedPeerRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

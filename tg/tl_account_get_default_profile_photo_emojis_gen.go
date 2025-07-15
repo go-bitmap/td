@@ -32,8 +32,18 @@ var (
 )
 
 // AccountGetDefaultProfilePhotoEmojisRequest represents TL type `account.getDefaultProfilePhotoEmojis#e2750328`.
+// Get a set of suggested custom emoji stickers¹ that can be used as profile picture²
+//
+// Links:
+//  1. https://core.telegram.org/api/custom-emoji
+//  2. https://core.telegram.org/api/files#sticker-profile-pictures
+//
+// See https://core.telegram.org/method/account.getDefaultProfilePhotoEmojis for reference.
 type AccountGetDefaultProfilePhotoEmojisRequest struct {
-	// Hash field of AccountGetDefaultProfilePhotoEmojisRequest.
+	// Hash used for caching, for more info click here¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets#hash-generation
 	Hash int64
 }
 
@@ -66,6 +76,13 @@ func (g *AccountGetDefaultProfilePhotoEmojisRequest) String() string {
 	}
 	type Alias AccountGetDefaultProfilePhotoEmojisRequest
 	return fmt.Sprintf("AccountGetDefaultProfilePhotoEmojisRequest%+v", Alias(*g))
+}
+
+// FillFrom fills AccountGetDefaultProfilePhotoEmojisRequest from given interface.
+func (g *AccountGetDefaultProfilePhotoEmojisRequest) FillFrom(from interface {
+	GetHash() (value int64)
+}) {
+	g.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -152,6 +169,13 @@ func (g *AccountGetDefaultProfilePhotoEmojisRequest) GetHash() (value int64) {
 }
 
 // AccountGetDefaultProfilePhotoEmojis invokes method account.getDefaultProfilePhotoEmojis#e2750328 returning error if any.
+// Get a set of suggested custom emoji stickers¹ that can be used as profile picture²
+//
+// Links:
+//  1. https://core.telegram.org/api/custom-emoji
+//  2. https://core.telegram.org/api/files#sticker-profile-pictures
+//
+// See https://core.telegram.org/method/account.getDefaultProfilePhotoEmojis for reference.
 func (c *Client) AccountGetDefaultProfilePhotoEmojis(ctx context.Context, hash int64) (EmojiListClass, error) {
 	var result EmojiListBox
 

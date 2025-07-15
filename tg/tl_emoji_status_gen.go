@@ -32,6 +32,9 @@ var (
 )
 
 // EmojiStatusEmpty represents TL type `emojiStatusEmpty#2de11aae`.
+// No emoji status is set
+//
+// See https://core.telegram.org/constructor/emojiStatusEmpty for reference.
 type EmojiStatusEmpty struct {
 }
 
@@ -131,10 +134,19 @@ func (e *EmojiStatusEmpty) DecodeBare(b *bin.Buffer) error {
 }
 
 // EmojiStatus represents TL type `emojiStatus#e7ff068a`.
+// An emoji status¹
+//
+// Links:
+//  1. https://core.telegram.org/api/emoji-status
+//
+// See https://core.telegram.org/constructor/emojiStatus for reference.
 type EmojiStatus struct {
 	// Flags field of EmojiStatus.
 	Flags bin.Fields
-	// DocumentID field of EmojiStatus.
+	// Custom emoji document ID¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/custom-emoji
 	DocumentID int64
 	// Until field of EmojiStatus.
 	//
@@ -182,6 +194,18 @@ func (e *EmojiStatus) String() string {
 	}
 	type Alias EmojiStatus
 	return fmt.Sprintf("EmojiStatus%+v", Alias(*e))
+}
+
+// FillFrom fills EmojiStatus from given interface.
+func (e *EmojiStatus) FillFrom(from interface {
+	GetDocumentID() (value int64)
+	GetUntil() (value int, ok bool)
+}) {
+	e.DocumentID = from.GetDocumentID()
+	if val, ok := from.GetUntil(); ok {
+		e.Until = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -317,6 +341,8 @@ func (e *EmojiStatus) GetUntil() (value int, ok bool) {
 }
 
 // EmojiStatusCollectible represents TL type `emojiStatusCollectible#7184603b`.
+//
+// See https://core.telegram.org/constructor/emojiStatusCollectible for reference.
 type EmojiStatusCollectible struct {
 	// Flags field of EmojiStatusCollectible.
 	Flags bin.Fields
@@ -408,6 +434,34 @@ func (e *EmojiStatusCollectible) String() string {
 	}
 	type Alias EmojiStatusCollectible
 	return fmt.Sprintf("EmojiStatusCollectible%+v", Alias(*e))
+}
+
+// FillFrom fills EmojiStatusCollectible from given interface.
+func (e *EmojiStatusCollectible) FillFrom(from interface {
+	GetCollectibleID() (value int64)
+	GetDocumentID() (value int64)
+	GetTitle() (value string)
+	GetSlug() (value string)
+	GetPatternDocumentID() (value int64)
+	GetCenterColor() (value int)
+	GetEdgeColor() (value int)
+	GetPatternColor() (value int)
+	GetTextColor() (value int)
+	GetUntil() (value int, ok bool)
+}) {
+	e.CollectibleID = from.GetCollectibleID()
+	e.DocumentID = from.GetDocumentID()
+	e.Title = from.GetTitle()
+	e.Slug = from.GetSlug()
+	e.PatternDocumentID = from.GetPatternDocumentID()
+	e.CenterColor = from.GetCenterColor()
+	e.EdgeColor = from.GetEdgeColor()
+	e.PatternColor = from.GetPatternColor()
+	e.TextColor = from.GetTextColor()
+	if val, ok := from.GetUntil(); ok {
+		e.Until = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -703,6 +757,8 @@ func (e *EmojiStatusCollectible) GetUntil() (value int, ok bool) {
 }
 
 // InputEmojiStatusCollectible represents TL type `inputEmojiStatusCollectible#7141dbf`.
+//
+// See https://core.telegram.org/constructor/inputEmojiStatusCollectible for reference.
 type InputEmojiStatusCollectible struct {
 	// Flags field of InputEmojiStatusCollectible.
 	Flags bin.Fields
@@ -754,6 +810,18 @@ func (i *InputEmojiStatusCollectible) String() string {
 	}
 	type Alias InputEmojiStatusCollectible
 	return fmt.Sprintf("InputEmojiStatusCollectible%+v", Alias(*i))
+}
+
+// FillFrom fills InputEmojiStatusCollectible from given interface.
+func (i *InputEmojiStatusCollectible) FillFrom(from interface {
+	GetCollectibleID() (value int64)
+	GetUntil() (value int, ok bool)
+}) {
+	i.CollectibleID = from.GetCollectibleID()
+	if val, ok := from.GetUntil(); ok {
+		i.Until = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -893,6 +961,8 @@ const EmojiStatusClassName = "EmojiStatus"
 
 // EmojiStatusClass represents EmojiStatus generic type.
 //
+// See https://core.telegram.org/type/EmojiStatus for reference.
+//
 // Constructors:
 //   - [EmojiStatusEmpty]
 //   - [EmojiStatus]
@@ -929,6 +999,56 @@ type EmojiStatusClass interface {
 	String() string
 	// Zero returns true if current object has a zero value.
 	Zero() bool
+
+	// AsNotEmpty tries to map EmojiStatusClass to NotEmptyEmojiStatus.
+	AsNotEmpty() (NotEmptyEmojiStatus, bool)
+}
+
+// NotEmptyEmojiStatus represents NotEmpty subset of EmojiStatusClass.
+type NotEmptyEmojiStatus interface {
+	bin.Encoder
+	bin.Decoder
+	bin.BareEncoder
+	bin.BareDecoder
+	construct() EmojiStatusClass
+
+	// TypeID returns type id in TL schema.
+	//
+	// See https://core.telegram.org/mtproto/TL-tl#remarks.
+	TypeID() uint32
+	// TypeName returns name of type in TL schema.
+	TypeName() string
+	// String implements fmt.Stringer.
+	String() string
+	// Zero returns true if current object has a zero value.
+	Zero() bool
+
+	// Until field of EmojiStatus.
+	GetUntil() (value int, ok bool)
+}
+
+// AsNotEmpty tries to map EmojiStatusEmpty to NotEmptyEmojiStatus.
+func (e *EmojiStatusEmpty) AsNotEmpty() (NotEmptyEmojiStatus, bool) {
+	value, ok := (EmojiStatusClass(e)).(NotEmptyEmojiStatus)
+	return value, ok
+}
+
+// AsNotEmpty tries to map EmojiStatus to NotEmptyEmojiStatus.
+func (e *EmojiStatus) AsNotEmpty() (NotEmptyEmojiStatus, bool) {
+	value, ok := (EmojiStatusClass(e)).(NotEmptyEmojiStatus)
+	return value, ok
+}
+
+// AsNotEmpty tries to map EmojiStatusCollectible to NotEmptyEmojiStatus.
+func (e *EmojiStatusCollectible) AsNotEmpty() (NotEmptyEmojiStatus, bool) {
+	value, ok := (EmojiStatusClass(e)).(NotEmptyEmojiStatus)
+	return value, ok
+}
+
+// AsNotEmpty tries to map InputEmojiStatusCollectible to NotEmptyEmojiStatus.
+func (i *InputEmojiStatusCollectible) AsNotEmpty() (NotEmptyEmojiStatus, bool) {
+	value, ok := (EmojiStatusClass(i)).(NotEmptyEmojiStatus)
+	return value, ok
 }
 
 // DecodeEmojiStatus implements binary de-serialization for EmojiStatusClass.

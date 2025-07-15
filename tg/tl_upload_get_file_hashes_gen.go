@@ -32,10 +32,13 @@ var (
 )
 
 // UploadGetFileHashesRequest represents TL type `upload.getFileHashes#9156982a`.
+// Get SHA256 hashes for verifying downloaded files
+//
+// See https://core.telegram.org/method/upload.getFileHashes for reference.
 type UploadGetFileHashesRequest struct {
-	// Location field of UploadGetFileHashesRequest.
+	// File
 	Location InputFileLocationClass
-	// Offset field of UploadGetFileHashesRequest.
+	// Offset from which to get file hashes
 	Offset int64
 }
 
@@ -71,6 +74,15 @@ func (g *UploadGetFileHashesRequest) String() string {
 	}
 	type Alias UploadGetFileHashesRequest
 	return fmt.Sprintf("UploadGetFileHashesRequest%+v", Alias(*g))
+}
+
+// FillFrom fills UploadGetFileHashesRequest from given interface.
+func (g *UploadGetFileHashesRequest) FillFrom(from interface {
+	GetLocation() (value InputFileLocationClass)
+	GetOffset() (value int64)
+}) {
+	g.Location = from.GetLocation()
+	g.Offset = from.GetOffset()
 }
 
 // TypeID returns type id in TL schema.
@@ -182,6 +194,14 @@ func (g *UploadGetFileHashesRequest) GetOffset() (value int64) {
 }
 
 // UploadGetFileHashes invokes method upload.getFileHashes#9156982a returning error if any.
+// Get SHA256 hashes for verifying downloaded files
+//
+// Possible errors:
+//
+//	400 LOCATION_INVALID: The provided location is invalid.
+//
+// See https://core.telegram.org/method/upload.getFileHashes for reference.
+// Can be used by bots.
 func (c *Client) UploadGetFileHashes(ctx context.Context, request *UploadGetFileHashesRequest) ([]FileHash, error) {
 	var result FileHashVector
 

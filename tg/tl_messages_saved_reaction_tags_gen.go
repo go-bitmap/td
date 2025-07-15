@@ -32,6 +32,12 @@ var (
 )
 
 // MessagesSavedReactionTagsNotModified represents TL type `messages.savedReactionTagsNotModified#889b59ef`.
+// The list of reaction tag »¹ names assigned by the user hasn't changed.
+//
+// Links:
+//  1. https://core.telegram.org/api/saved-messages#tags
+//
+// See https://core.telegram.org/constructor/messages.savedReactionTagsNotModified for reference.
 type MessagesSavedReactionTagsNotModified struct {
 }
 
@@ -131,10 +137,19 @@ func (s *MessagesSavedReactionTagsNotModified) DecodeBare(b *bin.Buffer) error {
 }
 
 // MessagesSavedReactionTags represents TL type `messages.savedReactionTags#3259950a`.
+// List of reaction tag »¹ names assigned by the user.
+//
+// Links:
+//  1. https://core.telegram.org/api/saved-messages#tags
+//
+// See https://core.telegram.org/constructor/messages.savedReactionTags for reference.
 type MessagesSavedReactionTags struct {
-	// Tags field of MessagesSavedReactionTags.
+	// Saved reaction tags.
 	Tags []SavedReactionTag
-	// Hash field of MessagesSavedReactionTags.
+	// Hash used for caching, for more info click here¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets#hash-generation
 	Hash int64
 }
 
@@ -175,6 +190,15 @@ func (s *MessagesSavedReactionTags) String() string {
 	}
 	type Alias MessagesSavedReactionTags
 	return fmt.Sprintf("MessagesSavedReactionTags%+v", Alias(*s))
+}
+
+// FillFrom fills MessagesSavedReactionTags from given interface.
+func (s *MessagesSavedReactionTags) FillFrom(from interface {
+	GetTags() (value []SavedReactionTag)
+	GetHash() (value int64)
+}) {
+	s.Tags = from.GetTags()
+	s.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -300,6 +324,8 @@ const MessagesSavedReactionTagsClassName = "messages.SavedReactionTags"
 
 // MessagesSavedReactionTagsClass represents messages.SavedReactionTags generic type.
 //
+// See https://core.telegram.org/type/messages.SavedReactionTags for reference.
+//
 // Constructors:
 //   - [MessagesSavedReactionTagsNotModified]
 //   - [MessagesSavedReactionTags]
@@ -332,6 +358,19 @@ type MessagesSavedReactionTagsClass interface {
 	String() string
 	// Zero returns true if current object has a zero value.
 	Zero() bool
+
+	// AsModified tries to map MessagesSavedReactionTagsClass to MessagesSavedReactionTags.
+	AsModified() (*MessagesSavedReactionTags, bool)
+}
+
+// AsModified tries to map MessagesSavedReactionTagsNotModified to MessagesSavedReactionTags.
+func (s *MessagesSavedReactionTagsNotModified) AsModified() (*MessagesSavedReactionTags, bool) {
+	return nil, false
+}
+
+// AsModified tries to map MessagesSavedReactionTags to MessagesSavedReactionTags.
+func (s *MessagesSavedReactionTags) AsModified() (*MessagesSavedReactionTags, bool) {
+	return s, true
 }
 
 // DecodeMessagesSavedReactionTags implements binary de-serialization for MessagesSavedReactionTagsClass.

@@ -32,10 +32,16 @@ var (
 )
 
 // WebViewMessageSent represents TL type `webViewMessageSent#c94511c`.
+// Info about a sent inline webview message
+//
+// See https://core.telegram.org/constructor/webViewMessageSent for reference.
 type WebViewMessageSent struct {
-	// Flags field of WebViewMessageSent.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// MsgID field of WebViewMessageSent.
+	// Message ID
 	//
 	// Use SetMsgID and GetMsgID helpers.
 	MsgID InputBotInlineMessageIDClass
@@ -73,6 +79,16 @@ func (w *WebViewMessageSent) String() string {
 	}
 	type Alias WebViewMessageSent
 	return fmt.Sprintf("WebViewMessageSent%+v", Alias(*w))
+}
+
+// FillFrom fills WebViewMessageSent from given interface.
+func (w *WebViewMessageSent) FillFrom(from interface {
+	GetMsgID() (value InputBotInlineMessageIDClass, ok bool)
+}) {
+	if val, ok := from.GetMsgID(); ok {
+		w.MsgID = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.

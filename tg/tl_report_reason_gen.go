@@ -32,6 +32,9 @@ var (
 )
 
 // InputReportReasonSpam represents TL type `inputReportReasonSpam#58dbcab8`.
+// Report for spam
+//
+// See https://core.telegram.org/constructor/inputReportReasonSpam for reference.
 type InputReportReasonSpam struct {
 }
 
@@ -131,6 +134,9 @@ func (i *InputReportReasonSpam) DecodeBare(b *bin.Buffer) error {
 }
 
 // InputReportReasonViolence represents TL type `inputReportReasonViolence#1e22c78d`.
+// Report for violence
+//
+// See https://core.telegram.org/constructor/inputReportReasonViolence for reference.
 type InputReportReasonViolence struct {
 }
 
@@ -230,6 +236,9 @@ func (i *InputReportReasonViolence) DecodeBare(b *bin.Buffer) error {
 }
 
 // InputReportReasonPornography represents TL type `inputReportReasonPornography#2e59d922`.
+// Report for pornography
+//
+// See https://core.telegram.org/constructor/inputReportReasonPornography for reference.
 type InputReportReasonPornography struct {
 }
 
@@ -329,6 +338,9 @@ func (i *InputReportReasonPornography) DecodeBare(b *bin.Buffer) error {
 }
 
 // InputReportReasonChildAbuse represents TL type `inputReportReasonChildAbuse#adf44ee3`.
+// Report for child abuse
+//
+// See https://core.telegram.org/constructor/inputReportReasonChildAbuse for reference.
 type InputReportReasonChildAbuse struct {
 }
 
@@ -428,6 +440,9 @@ func (i *InputReportReasonChildAbuse) DecodeBare(b *bin.Buffer) error {
 }
 
 // InputReportReasonOther represents TL type `inputReportReasonOther#c1e4a2b1`.
+// Other
+//
+// See https://core.telegram.org/constructor/inputReportReasonOther for reference.
 type InputReportReasonOther struct {
 }
 
@@ -527,6 +542,9 @@ func (i *InputReportReasonOther) DecodeBare(b *bin.Buffer) error {
 }
 
 // InputReportReasonCopyright represents TL type `inputReportReasonCopyright#9b89f93a`.
+// Report for copyrighted content
+//
+// See https://core.telegram.org/constructor/inputReportReasonCopyright for reference.
 type InputReportReasonCopyright struct {
 }
 
@@ -626,6 +644,9 @@ func (i *InputReportReasonCopyright) DecodeBare(b *bin.Buffer) error {
 }
 
 // InputReportReasonGeoIrrelevant represents TL type `inputReportReasonGeoIrrelevant#dbd4feed`.
+// Report an irrelevant geogroup
+//
+// See https://core.telegram.org/constructor/inputReportReasonGeoIrrelevant for reference.
 type InputReportReasonGeoIrrelevant struct {
 }
 
@@ -725,6 +746,9 @@ func (i *InputReportReasonGeoIrrelevant) DecodeBare(b *bin.Buffer) error {
 }
 
 // InputReportReasonFake represents TL type `inputReportReasonFake#f5ddd6e7`.
+// Report for impersonation
+//
+// See https://core.telegram.org/constructor/inputReportReasonFake for reference.
 type InputReportReasonFake struct {
 }
 
@@ -824,6 +848,9 @@ func (i *InputReportReasonFake) DecodeBare(b *bin.Buffer) error {
 }
 
 // InputReportReasonIllegalDrugs represents TL type `inputReportReasonIllegalDrugs#a8eb2be`.
+// Report for illegal drugs
+//
+// See https://core.telegram.org/constructor/inputReportReasonIllegalDrugs for reference.
 type InputReportReasonIllegalDrugs struct {
 }
 
@@ -923,6 +950,9 @@ func (i *InputReportReasonIllegalDrugs) DecodeBare(b *bin.Buffer) error {
 }
 
 // InputReportReasonPersonalDetails represents TL type `inputReportReasonPersonalDetails#9ec7863d`.
+// Report for divulgation of personal details
+//
+// See https://core.telegram.org/constructor/inputReportReasonPersonalDetails for reference.
 type InputReportReasonPersonalDetails struct {
 }
 
@@ -1025,6 +1055,8 @@ func (i *InputReportReasonPersonalDetails) DecodeBare(b *bin.Buffer) error {
 const ReportReasonClassName = "ReportReason"
 
 // ReportReasonClass represents ReportReason generic type.
+//
+// See https://core.telegram.org/type/ReportReason for reference.
 //
 // Constructors:
 //   - [InputReportReasonSpam]

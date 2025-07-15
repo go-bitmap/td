@@ -32,20 +32,34 @@ var (
 )
 
 // PaymentsGetConnectedStarRefBotsRequest represents TL type `payments.getConnectedStarRefBots#5869a553`.
+// Fetch all affiliations we have created for a certain peer
+//
+// See https://core.telegram.org/method/payments.getConnectedStarRefBots for reference.
 type PaymentsGetConnectedStarRefBotsRequest struct {
-	// Flags field of PaymentsGetConnectedStarRefBotsRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Peer field of PaymentsGetConnectedStarRefBotsRequest.
+	// The affiliated peer
 	Peer InputPeerClass
-	// OffsetDate field of PaymentsGetConnectedStarRefBotsRequest.
+	// If set, returns only results older than the specified unixtime
 	//
 	// Use SetOffsetDate and GetOffsetDate helpers.
 	OffsetDate int
-	// OffsetLink field of PaymentsGetConnectedStarRefBotsRequest.
+	// Offset for pagination¹, taken from the last returned connectedBotStarRef².url
+	// (initially empty)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets
+	//  2) https://core.telegram.org/constructor/connectedBotStarRef
 	//
 	// Use SetOffsetLink and GetOffsetLink helpers.
 	OffsetLink string
-	// Limit field of PaymentsGetConnectedStarRefBotsRequest.
+	// Maximum number of results to return, see pagination¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets
 	Limit int
 }
 
@@ -90,6 +104,25 @@ func (g *PaymentsGetConnectedStarRefBotsRequest) String() string {
 	}
 	type Alias PaymentsGetConnectedStarRefBotsRequest
 	return fmt.Sprintf("PaymentsGetConnectedStarRefBotsRequest%+v", Alias(*g))
+}
+
+// FillFrom fills PaymentsGetConnectedStarRefBotsRequest from given interface.
+func (g *PaymentsGetConnectedStarRefBotsRequest) FillFrom(from interface {
+	GetPeer() (value InputPeerClass)
+	GetOffsetDate() (value int, ok bool)
+	GetOffsetLink() (value string, ok bool)
+	GetLimit() (value int)
+}) {
+	g.Peer = from.GetPeer()
+	if val, ok := from.GetOffsetDate(); ok {
+		g.OffsetDate = val
+	}
+
+	if val, ok := from.GetOffsetLink(); ok {
+		g.OffsetLink = val
+	}
+
+	g.Limit = from.GetLimit()
 }
 
 // TypeID returns type id in TL schema.
@@ -286,6 +319,9 @@ func (g *PaymentsGetConnectedStarRefBotsRequest) GetLimit() (value int) {
 }
 
 // PaymentsGetConnectedStarRefBots invokes method payments.getConnectedStarRefBots#5869a553 returning error if any.
+// Fetch all affiliations we have created for a certain peer
+//
+// See https://core.telegram.org/method/payments.getConnectedStarRefBots for reference.
 func (c *Client) PaymentsGetConnectedStarRefBots(ctx context.Context, request *PaymentsGetConnectedStarRefBotsRequest) (*PaymentsConnectedStarRefBots, error) {
 	var result PaymentsConnectedStarRefBots
 

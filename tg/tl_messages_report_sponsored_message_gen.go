@@ -32,10 +32,21 @@ var (
 )
 
 // MessagesReportSponsoredMessageRequest represents TL type `messages.reportSponsoredMessage#12cbf0c4`.
+// Report a sponsored message »¹, see here »² for more info on the full flow.
+//
+// Links:
+//  1. https://core.telegram.org/api/sponsored-messages
+//  2. https://core.telegram.org/api/sponsored-messages#reporting-sponsored-messages
+//
+// See https://core.telegram.org/method/messages.reportSponsoredMessage for reference.
 type MessagesReportSponsoredMessageRequest struct {
-	// RandomID field of MessagesReportSponsoredMessageRequest.
+	// The ad's unique ID.
 	RandomID []byte
-	// Option field of MessagesReportSponsoredMessageRequest.
+	// Chosen report option, initially an empty string, see here »¹ for more info on the
+	// full flow.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/sponsored-messages#reporting-sponsored-messages
 	Option []byte
 }
 
@@ -71,6 +82,15 @@ func (r *MessagesReportSponsoredMessageRequest) String() string {
 	}
 	type Alias MessagesReportSponsoredMessageRequest
 	return fmt.Sprintf("MessagesReportSponsoredMessageRequest%+v", Alias(*r))
+}
+
+// FillFrom fills MessagesReportSponsoredMessageRequest from given interface.
+func (r *MessagesReportSponsoredMessageRequest) FillFrom(from interface {
+	GetRandomID() (value []byte)
+	GetOption() (value []byte)
+}) {
+	r.RandomID = from.GetRandomID()
+	r.Option = from.GetOption()
 }
 
 // TypeID returns type id in TL schema.
@@ -177,6 +197,13 @@ func (r *MessagesReportSponsoredMessageRequest) GetOption() (value []byte) {
 }
 
 // MessagesReportSponsoredMessage invokes method messages.reportSponsoredMessage#12cbf0c4 returning error if any.
+// Report a sponsored message »¹, see here »² for more info on the full flow.
+//
+// Links:
+//  1. https://core.telegram.org/api/sponsored-messages
+//  2. https://core.telegram.org/api/sponsored-messages#reporting-sponsored-messages
+//
+// See https://core.telegram.org/method/messages.reportSponsoredMessage for reference.
 func (c *Client) MessagesReportSponsoredMessage(ctx context.Context, request *MessagesReportSponsoredMessageRequest) (ChannelsSponsoredMessageReportResultClass, error) {
 	var result ChannelsSponsoredMessageReportResultBox
 

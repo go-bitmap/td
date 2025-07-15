@@ -32,28 +32,37 @@ var (
 )
 
 // HelpAppUpdate represents TL type `help.appUpdate#ccbbce30`.
+// An update is available for the application.
+//
+// See https://core.telegram.org/constructor/help.appUpdate for reference.
 type HelpAppUpdate struct {
-	// Flags field of HelpAppUpdate.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// CanNotSkip field of HelpAppUpdate.
+	// Unskippable, the new info must be shown to the user (with a popup or something else)
 	CanNotSkip bool
-	// ID field of HelpAppUpdate.
+	// Update ID
 	ID int
-	// Version field of HelpAppUpdate.
+	// New version name
 	Version string
-	// Text field of HelpAppUpdate.
+	// Text description of the update
 	Text string
-	// Entities field of HelpAppUpdate.
+	// Message entities for styled text¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities
 	Entities []MessageEntityClass
-	// Document field of HelpAppUpdate.
+	// Application binary
 	//
 	// Use SetDocument and GetDocument helpers.
 	Document DocumentClass
-	// URL field of HelpAppUpdate.
+	// Application download URL
 	//
 	// Use SetURL and GetURL helpers.
 	URL string
-	// Sticker field of HelpAppUpdate.
+	// Associated sticker
 	//
 	// Use SetSticker and GetSticker helpers.
 	Sticker DocumentClass
@@ -117,6 +126,36 @@ func (a *HelpAppUpdate) String() string {
 	}
 	type Alias HelpAppUpdate
 	return fmt.Sprintf("HelpAppUpdate%+v", Alias(*a))
+}
+
+// FillFrom fills HelpAppUpdate from given interface.
+func (a *HelpAppUpdate) FillFrom(from interface {
+	GetCanNotSkip() (value bool)
+	GetID() (value int)
+	GetVersion() (value string)
+	GetText() (value string)
+	GetEntities() (value []MessageEntityClass)
+	GetDocument() (value DocumentClass, ok bool)
+	GetURL() (value string, ok bool)
+	GetSticker() (value DocumentClass, ok bool)
+}) {
+	a.CanNotSkip = from.GetCanNotSkip()
+	a.ID = from.GetID()
+	a.Version = from.GetVersion()
+	a.Text = from.GetText()
+	a.Entities = from.GetEntities()
+	if val, ok := from.GetDocument(); ok {
+		a.Document = val
+	}
+
+	if val, ok := from.GetURL(); ok {
+		a.URL = val
+	}
+
+	if val, ok := from.GetSticker(); ok {
+		a.Sticker = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -439,7 +478,15 @@ func (a *HelpAppUpdate) GetSticker() (value DocumentClass, ok bool) {
 	return a.Sticker, true
 }
 
+// MapEntities returns field Entities wrapped in MessageEntityClassArray helper.
+func (a *HelpAppUpdate) MapEntities() (value MessageEntityClassArray) {
+	return MessageEntityClassArray(a.Entities)
+}
+
 // HelpNoAppUpdate represents TL type `help.noAppUpdate#c45a6536`.
+// No updates are available for the application.
+//
+// See https://core.telegram.org/constructor/help.noAppUpdate for reference.
 type HelpNoAppUpdate struct {
 }
 
@@ -542,6 +589,8 @@ func (n *HelpNoAppUpdate) DecodeBare(b *bin.Buffer) error {
 const HelpAppUpdateClassName = "help.AppUpdate"
 
 // HelpAppUpdateClass represents help.AppUpdate generic type.
+//
+// See https://core.telegram.org/type/help.AppUpdate for reference.
 //
 // Constructors:
 //   - [HelpAppUpdate]

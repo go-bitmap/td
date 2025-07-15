@@ -32,20 +32,29 @@ var (
 )
 
 // StoryFwdHeader represents TL type `storyFwdHeader#b826e150`.
+// Contains info about the original poster of a reposted story.
+//
+// See https://core.telegram.org/constructor/storyFwdHeader for reference.
 type StoryFwdHeader struct {
-	// Flags field of StoryFwdHeader.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Modified field of StoryFwdHeader.
+	// Whether the story media was modified before reposting it (for example by overlaying a
+	// round video with a reaction).
 	Modified bool
-	// From field of StoryFwdHeader.
+	// Peer that originally posted the story; will be empty for stories forwarded from a user
+	// with forwards privacy enabled, in which case from_name will be set, instead.
 	//
 	// Use SetFrom and GetFrom helpers.
 	From PeerClass
-	// FromName field of StoryFwdHeader.
+	// Will be set for stories forwarded from a user with forwards privacy enabled, in which
+	// case from will also be empty.
 	//
 	// Use SetFromName and GetFromName helpers.
 	FromName string
-	// StoryID field of StoryFwdHeader.
+	// , contains the story ID
 	//
 	// Use SetStoryID and GetStoryID helpers.
 	StoryID int
@@ -92,6 +101,28 @@ func (s *StoryFwdHeader) String() string {
 	}
 	type Alias StoryFwdHeader
 	return fmt.Sprintf("StoryFwdHeader%+v", Alias(*s))
+}
+
+// FillFrom fills StoryFwdHeader from given interface.
+func (s *StoryFwdHeader) FillFrom(from interface {
+	GetModified() (value bool)
+	GetFrom() (value PeerClass, ok bool)
+	GetFromName() (value string, ok bool)
+	GetStoryID() (value int, ok bool)
+}) {
+	s.Modified = from.GetModified()
+	if val, ok := from.GetFrom(); ok {
+		s.From = val
+	}
+
+	if val, ok := from.GetFromName(); ok {
+		s.FromName = val
+	}
+
+	if val, ok := from.GetStoryID(); ok {
+		s.StoryID = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.

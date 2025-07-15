@@ -32,44 +32,71 @@ var (
 )
 
 // MessageReplyHeader represents TL type `messageReplyHeader#afbc09db`.
+// Message replies and thread¹ information
+//
+// Links:
+//  1. https://core.telegram.org/api/threads
+//
+// See https://core.telegram.org/constructor/messageReplyHeader for reference.
 type MessageReplyHeader struct {
-	// Flags field of MessageReplyHeader.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// ReplyToScheduled field of MessageReplyHeader.
+	// This is a reply to a scheduled message.
 	ReplyToScheduled bool
-	// ForumTopic field of MessageReplyHeader.
+	// Whether this message was sent in a forum topic¹ (except for the General topic).
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/forum#forum-topics
 	ForumTopic bool
-	// Quote field of MessageReplyHeader.
+	// Whether this message is quoting a part of another message.
 	Quote bool
-	// ReplyToMsgID field of MessageReplyHeader.
+	// ID of message to which this message is replying
 	//
 	// Use SetReplyToMsgID and GetReplyToMsgID helpers.
 	ReplyToMsgID int
-	// ReplyToPeerID field of MessageReplyHeader.
+	// For replies sent in channel discussion threads¹ of which the current user is not a
+	// member, the discussion group ID
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/threads
 	//
 	// Use SetReplyToPeerID and GetReplyToPeerID helpers.
 	ReplyToPeerID PeerClass
-	// ReplyFrom field of MessageReplyHeader.
+	// When replying to a message sent by a certain peer to another chat, contains info about
+	// the peer that originally sent the message to that other chat.
 	//
 	// Use SetReplyFrom and GetReplyFrom helpers.
 	ReplyFrom MessageFwdHeader
-	// ReplyMedia field of MessageReplyHeader.
+	// When replying to a media sent by a certain peer to another chat, contains the media of
+	// the replied-to message.
 	//
 	// Use SetReplyMedia and GetReplyMedia helpers.
 	ReplyMedia MessageMediaClass
-	// ReplyToTopID field of MessageReplyHeader.
+	// ID of the message that started this message thread¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/threads
 	//
 	// Use SetReplyToTopID and GetReplyToTopID helpers.
 	ReplyToTopID int
-	// QuoteText field of MessageReplyHeader.
+	// Used to quote-reply to only a certain section (specified here) of the original message.
 	//
 	// Use SetQuoteText and GetQuoteText helpers.
 	QuoteText string
-	// QuoteEntities field of MessageReplyHeader.
+	// Message entities for styled text¹ from the quote_text field.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities
 	//
 	// Use SetQuoteEntities and GetQuoteEntities helpers.
 	QuoteEntities []MessageEntityClass
-	// QuoteOffset field of MessageReplyHeader.
+	// Offset of the message quote_text within the original message (in UTF-16 code units¹).
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities#entity-length
 	//
 	// Use SetQuoteOffset and GetQuoteOffset helpers.
 	QuoteOffset int
@@ -142,6 +169,57 @@ func (m *MessageReplyHeader) String() string {
 	}
 	type Alias MessageReplyHeader
 	return fmt.Sprintf("MessageReplyHeader%+v", Alias(*m))
+}
+
+// FillFrom fills MessageReplyHeader from given interface.
+func (m *MessageReplyHeader) FillFrom(from interface {
+	GetReplyToScheduled() (value bool)
+	GetForumTopic() (value bool)
+	GetQuote() (value bool)
+	GetReplyToMsgID() (value int, ok bool)
+	GetReplyToPeerID() (value PeerClass, ok bool)
+	GetReplyFrom() (value MessageFwdHeader, ok bool)
+	GetReplyMedia() (value MessageMediaClass, ok bool)
+	GetReplyToTopID() (value int, ok bool)
+	GetQuoteText() (value string, ok bool)
+	GetQuoteEntities() (value []MessageEntityClass, ok bool)
+	GetQuoteOffset() (value int, ok bool)
+}) {
+	m.ReplyToScheduled = from.GetReplyToScheduled()
+	m.ForumTopic = from.GetForumTopic()
+	m.Quote = from.GetQuote()
+	if val, ok := from.GetReplyToMsgID(); ok {
+		m.ReplyToMsgID = val
+	}
+
+	if val, ok := from.GetReplyToPeerID(); ok {
+		m.ReplyToPeerID = val
+	}
+
+	if val, ok := from.GetReplyFrom(); ok {
+		m.ReplyFrom = val
+	}
+
+	if val, ok := from.GetReplyMedia(); ok {
+		m.ReplyMedia = val
+	}
+
+	if val, ok := from.GetReplyToTopID(); ok {
+		m.ReplyToTopID = val
+	}
+
+	if val, ok := from.GetQuoteText(); ok {
+		m.QuoteText = val
+	}
+
+	if val, ok := from.GetQuoteEntities(); ok {
+		m.QuoteEntities = val
+	}
+
+	if val, ok := from.GetQuoteOffset(); ok {
+		m.QuoteOffset = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -620,11 +698,25 @@ func (m *MessageReplyHeader) GetQuoteOffset() (value int, ok bool) {
 	return m.QuoteOffset, true
 }
 
+// MapQuoteEntities returns field QuoteEntities wrapped in MessageEntityClassArray helper.
+func (m *MessageReplyHeader) MapQuoteEntities() (value MessageEntityClassArray, ok bool) {
+	if !m.Flags.Has(7) {
+		return value, false
+	}
+	return MessageEntityClassArray(m.QuoteEntities), true
+}
+
 // MessageReplyStoryHeader represents TL type `messageReplyStoryHeader#e5af939`.
+// Represents a reply to a story¹
+//
+// Links:
+//  1. https://core.telegram.org/api/stories
+//
+// See https://core.telegram.org/constructor/messageReplyStoryHeader for reference.
 type MessageReplyStoryHeader struct {
-	// Peer field of MessageReplyStoryHeader.
+	// Sender of the story.
 	Peer PeerClass
-	// StoryID field of MessageReplyStoryHeader.
+	// Story ID
 	StoryID int
 }
 
@@ -665,6 +757,15 @@ func (m *MessageReplyStoryHeader) String() string {
 	}
 	type Alias MessageReplyStoryHeader
 	return fmt.Sprintf("MessageReplyStoryHeader%+v", Alias(*m))
+}
+
+// FillFrom fills MessageReplyStoryHeader from given interface.
+func (m *MessageReplyStoryHeader) FillFrom(from interface {
+	GetPeer() (value PeerClass)
+	GetStoryID() (value int)
+}) {
+	m.Peer = from.GetPeer()
+	m.StoryID = from.GetStoryID()
 }
 
 // TypeID returns type id in TL schema.
@@ -779,6 +880,8 @@ func (m *MessageReplyStoryHeader) GetStoryID() (value int) {
 const MessageReplyHeaderClassName = "MessageReplyHeader"
 
 // MessageReplyHeaderClass represents MessageReplyHeader generic type.
+//
+// See https://core.telegram.org/type/MessageReplyHeader for reference.
 //
 // Constructors:
 //   - [MessageReplyHeader]

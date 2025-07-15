@@ -32,8 +32,23 @@ var (
 )
 
 // MessagesGetCustomEmojiDocumentsRequest represents TL type `messages.getCustomEmojiDocuments#d9ab0f54`.
+// Fetch custom emoji stickers »¹.
+// Returns a list of documents¹ with the animated custom emoji in TGS format, and a
+// documentAttributeCustomEmoji² attribute with the original emoji and info about the
+// emoji stickerset this custom emoji belongs to.
+//
+// Links:
+//  1. https://core.telegram.org/api/custom-emoji
+//  2. https://core.telegram.org/constructor/document
+//  3. https://core.telegram.org/constructor/documentAttributeCustomEmoji
+//
+// See https://core.telegram.org/method/messages.getCustomEmojiDocuments for reference.
 type MessagesGetCustomEmojiDocumentsRequest struct {
-	// DocumentID field of MessagesGetCustomEmojiDocumentsRequest.
+	// Custom emoji¹ IDs from a messageEntityCustomEmoji².
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/custom-emoji
+	//  2) https://core.telegram.org/constructor/messageEntityCustomEmoji
 	DocumentID []int64
 }
 
@@ -66,6 +81,13 @@ func (g *MessagesGetCustomEmojiDocumentsRequest) String() string {
 	}
 	type Alias MessagesGetCustomEmojiDocumentsRequest
 	return fmt.Sprintf("MessagesGetCustomEmojiDocumentsRequest%+v", Alias(*g))
+}
+
+// FillFrom fills MessagesGetCustomEmojiDocumentsRequest from given interface.
+func (g *MessagesGetCustomEmojiDocumentsRequest) FillFrom(from interface {
+	GetDocumentID() (value []int64)
+}) {
+	g.DocumentID = from.GetDocumentID()
 }
 
 // TypeID returns type id in TL schema.
@@ -165,6 +187,18 @@ func (g *MessagesGetCustomEmojiDocumentsRequest) GetDocumentID() (value []int64)
 }
 
 // MessagesGetCustomEmojiDocuments invokes method messages.getCustomEmojiDocuments#d9ab0f54 returning error if any.
+// Fetch custom emoji stickers »¹.
+// Returns a list of documents¹ with the animated custom emoji in TGS format, and a
+// documentAttributeCustomEmoji² attribute with the original emoji and info about the
+// emoji stickerset this custom emoji belongs to.
+//
+// Links:
+//  1. https://core.telegram.org/api/custom-emoji
+//  2. https://core.telegram.org/constructor/document
+//  3. https://core.telegram.org/constructor/documentAttributeCustomEmoji
+//
+// See https://core.telegram.org/method/messages.getCustomEmojiDocuments for reference.
+// Can be used by bots.
 func (c *Client) MessagesGetCustomEmojiDocuments(ctx context.Context, documentid []int64) ([]DocumentClass, error) {
 	var result DocumentClassVector
 

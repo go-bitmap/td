@@ -32,10 +32,13 @@ var (
 )
 
 // PhoneInviteToGroupCallRequest represents TL type `phone.inviteToGroupCall#7b393160`.
+// Invite a set of users to a group call.
+//
+// See https://core.telegram.org/method/phone.inviteToGroupCall for reference.
 type PhoneInviteToGroupCallRequest struct {
-	// Call field of PhoneInviteToGroupCallRequest.
+	// The group call
 	Call InputGroupCallClass
-	// Users field of PhoneInviteToGroupCallRequest.
+	// The users to invite.
 	Users []InputUserClass
 }
 
@@ -71,6 +74,15 @@ func (i *PhoneInviteToGroupCallRequest) String() string {
 	}
 	type Alias PhoneInviteToGroupCallRequest
 	return fmt.Sprintf("PhoneInviteToGroupCallRequest%+v", Alias(*i))
+}
+
+// FillFrom fills PhoneInviteToGroupCallRequest from given interface.
+func (i *PhoneInviteToGroupCallRequest) FillFrom(from interface {
+	GetCall() (value InputGroupCallClass)
+	GetUsers() (value []InputUserClass)
+}) {
+	i.Call = from.GetCall()
+	i.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -199,7 +211,24 @@ func (i *PhoneInviteToGroupCallRequest) GetUsers() (value []InputUserClass) {
 	return i.Users
 }
 
+// MapUsers returns field Users wrapped in InputUserClassArray helper.
+func (i *PhoneInviteToGroupCallRequest) MapUsers() (value InputUserClassArray) {
+	return InputUserClassArray(i.Users)
+}
+
 // PhoneInviteToGroupCall invokes method phone.inviteToGroupCall#7b393160 returning error if any.
+// Invite a set of users to a group call.
+//
+// Possible errors:
+//
+//	403 CHAT_TYPE_INVALID: The specified user type is invalid.
+//	403 GROUPCALL_FORBIDDEN: The group call has already ended.
+//	400 GROUPCALL_INVALID: The specified group call is invalid.
+//	400 INVITE_FORBIDDEN_WITH_JOINAS: If the user has anonymously joined a group call as a channel, they can't invite other users to the group call because that would cause deanonymization, because the invite would be sent using the original user ID, not the anonymized channel ID.
+//	400 USER_ALREADY_INVITED: You have already invited this user.
+//	403 USER_NOT_PARTICIPANT: You're not a member of this supergroup/channel.
+//
+// See https://core.telegram.org/method/phone.inviteToGroupCall for reference.
 func (c *Client) PhoneInviteToGroupCall(ctx context.Context, request *PhoneInviteToGroupCallRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

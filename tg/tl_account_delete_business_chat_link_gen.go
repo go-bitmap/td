@@ -32,8 +32,17 @@ var (
 )
 
 // AccountDeleteBusinessChatLinkRequest represents TL type `account.deleteBusinessChatLink#60073674`.
+// Delete a business chat deep link »¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/business#business-chat-links
+//
+// See https://core.telegram.org/method/account.deleteBusinessChatLink for reference.
 type AccountDeleteBusinessChatLinkRequest struct {
-	// Slug field of AccountDeleteBusinessChatLinkRequest.
+	// Slug of the link, obtained as specified here »¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/links#business-chat-links
 	Slug string
 }
 
@@ -66,6 +75,13 @@ func (d *AccountDeleteBusinessChatLinkRequest) String() string {
 	}
 	type Alias AccountDeleteBusinessChatLinkRequest
 	return fmt.Sprintf("AccountDeleteBusinessChatLinkRequest%+v", Alias(*d))
+}
+
+// FillFrom fills AccountDeleteBusinessChatLinkRequest from given interface.
+func (d *AccountDeleteBusinessChatLinkRequest) FillFrom(from interface {
+	GetSlug() (value string)
+}) {
+	d.Slug = from.GetSlug()
 }
 
 // TypeID returns type id in TL schema.
@@ -152,6 +168,17 @@ func (d *AccountDeleteBusinessChatLinkRequest) GetSlug() (value string) {
 }
 
 // AccountDeleteBusinessChatLink invokes method account.deleteBusinessChatLink#60073674 returning error if any.
+// Delete a business chat deep link »¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/business#business-chat-links
+//
+// Possible errors:
+//
+//	400 CHATLINK_SLUG_EMPTY: The specified slug is empty.
+//	400 CHATLINK_SLUG_EXPIRED: The specified business chat link has expired.
+//
+// See https://core.telegram.org/method/account.deleteBusinessChatLink for reference.
 func (c *Client) AccountDeleteBusinessChatLink(ctx context.Context, slug string) (bool, error) {
 	var result BoolBox
 

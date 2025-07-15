@@ -32,30 +32,43 @@ var (
 )
 
 // AutoDownloadSettings represents TL type `autoDownloadSettings#baa57628`.
+// Autodownload settings
+//
+// See https://core.telegram.org/constructor/autoDownloadSettings for reference.
 type AutoDownloadSettings struct {
-	// Flags field of AutoDownloadSettings.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Disabled field of AutoDownloadSettings.
+	// Disable automatic media downloads?
 	Disabled bool
-	// VideoPreloadLarge field of AutoDownloadSettings.
+	// Whether to preload the first seconds of videos larger than the specified limit
 	VideoPreloadLarge bool
-	// AudioPreloadNext field of AutoDownloadSettings.
+	// Whether to preload the next audio track when you're listening to music
 	AudioPreloadNext bool
-	// PhonecallsLessData field of AutoDownloadSettings.
+	// Whether to enable data saving mode in phone calls
 	PhonecallsLessData bool
-	// StoriesPreload field of AutoDownloadSettings.
+	// Whether to preload stories¹; in particular, the first documentAttributeVideo²
+	// preload_prefix_size bytes of story videos should be preloaded.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/stories
+	//  2) https://core.telegram.org/constructor/documentAttributeVideo
 	StoriesPreload bool
-	// PhotoSizeMax field of AutoDownloadSettings.
+	// Maximum size of photos to preload
 	PhotoSizeMax int
-	// VideoSizeMax field of AutoDownloadSettings.
+	// Maximum size of videos to preload
 	VideoSizeMax int64
-	// FileSizeMax field of AutoDownloadSettings.
+	// Maximum size of other files to preload
 	FileSizeMax int64
-	// VideoUploadMaxbitrate field of AutoDownloadSettings.
+	// Maximum suggested bitrate for uploading videos
 	VideoUploadMaxbitrate int
-	// SmallQueueActiveOperationsMax field of AutoDownloadSettings.
+	// A limit, specifying the maximum number of files that should be downloaded in parallel
+	// from the same DC, for files smaller than 20MB.
 	SmallQueueActiveOperationsMax int
-	// LargeQueueActiveOperationsMax field of AutoDownloadSettings.
+	// A limit, specifying the maximum number of files that should be downloaded in parallel
+	// from the same DC, for files bigger than 20MB.
 	LargeQueueActiveOperationsMax int
 }
 
@@ -121,6 +134,33 @@ func (a *AutoDownloadSettings) String() string {
 	}
 	type Alias AutoDownloadSettings
 	return fmt.Sprintf("AutoDownloadSettings%+v", Alias(*a))
+}
+
+// FillFrom fills AutoDownloadSettings from given interface.
+func (a *AutoDownloadSettings) FillFrom(from interface {
+	GetDisabled() (value bool)
+	GetVideoPreloadLarge() (value bool)
+	GetAudioPreloadNext() (value bool)
+	GetPhonecallsLessData() (value bool)
+	GetStoriesPreload() (value bool)
+	GetPhotoSizeMax() (value int)
+	GetVideoSizeMax() (value int64)
+	GetFileSizeMax() (value int64)
+	GetVideoUploadMaxbitrate() (value int)
+	GetSmallQueueActiveOperationsMax() (value int)
+	GetLargeQueueActiveOperationsMax() (value int)
+}) {
+	a.Disabled = from.GetDisabled()
+	a.VideoPreloadLarge = from.GetVideoPreloadLarge()
+	a.AudioPreloadNext = from.GetAudioPreloadNext()
+	a.PhonecallsLessData = from.GetPhonecallsLessData()
+	a.StoriesPreload = from.GetStoriesPreload()
+	a.PhotoSizeMax = from.GetPhotoSizeMax()
+	a.VideoSizeMax = from.GetVideoSizeMax()
+	a.FileSizeMax = from.GetFileSizeMax()
+	a.VideoUploadMaxbitrate = from.GetVideoUploadMaxbitrate()
+	a.SmallQueueActiveOperationsMax = from.GetSmallQueueActiveOperationsMax()
+	a.LargeQueueActiveOperationsMax = from.GetLargeQueueActiveOperationsMax()
 }
 
 // TypeID returns type id in TL schema.

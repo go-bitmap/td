@@ -32,6 +32,9 @@ var (
 )
 
 // HelpGetTermsOfServiceUpdateRequest represents TL type `help.getTermsOfServiceUpdate#2ca51fd1`.
+// Look for updates of telegram's terms of service
+//
+// See https://core.telegram.org/method/help.getTermsOfServiceUpdate for reference.
 type HelpGetTermsOfServiceUpdateRequest struct {
 }
 
@@ -126,6 +129,9 @@ func (g *HelpGetTermsOfServiceUpdateRequest) DecodeBare(b *bin.Buffer) error {
 }
 
 // HelpGetTermsOfServiceUpdate invokes method help.getTermsOfServiceUpdate#2ca51fd1 returning error if any.
+// Look for updates of telegram's terms of service
+//
+// See https://core.telegram.org/method/help.getTermsOfServiceUpdate for reference.
 func (c *Client) HelpGetTermsOfServiceUpdate(ctx context.Context) (HelpTermsOfServiceUpdateClass, error) {
 	var result HelpTermsOfServiceUpdateBox
 

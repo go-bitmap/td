@@ -32,6 +32,8 @@ var (
 )
 
 // PaymentsSavedStarGifts represents TL type `payments.savedStarGifts#95f389b1`.
+//
+// See https://core.telegram.org/constructor/payments.savedStarGifts for reference.
 type PaymentsSavedStarGifts struct {
 	// Flags field of PaymentsSavedStarGifts.
 	Flags bin.Fields
@@ -100,6 +102,29 @@ func (s *PaymentsSavedStarGifts) String() string {
 	}
 	type Alias PaymentsSavedStarGifts
 	return fmt.Sprintf("PaymentsSavedStarGifts%+v", Alias(*s))
+}
+
+// FillFrom fills PaymentsSavedStarGifts from given interface.
+func (s *PaymentsSavedStarGifts) FillFrom(from interface {
+	GetCount() (value int)
+	GetChatNotificationsEnabled() (value bool, ok bool)
+	GetGifts() (value []SavedStarGift)
+	GetNextOffset() (value string, ok bool)
+	GetChats() (value []ChatClass)
+	GetUsers() (value []UserClass)
+}) {
+	s.Count = from.GetCount()
+	if val, ok := from.GetChatNotificationsEnabled(); ok {
+		s.ChatNotificationsEnabled = val
+	}
+
+	s.Gifts = from.GetGifts()
+	if val, ok := from.GetNextOffset(); ok {
+		s.NextOffset = val
+	}
+
+	s.Chats = from.GetChats()
+	s.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -379,4 +404,14 @@ func (s *PaymentsSavedStarGifts) GetUsers() (value []UserClass) {
 		return
 	}
 	return s.Users
+}
+
+// MapChats returns field Chats wrapped in ChatClassArray helper.
+func (s *PaymentsSavedStarGifts) MapChats() (value ChatClassArray) {
+	return ChatClassArray(s.Chats)
+}
+
+// MapUsers returns field Users wrapped in UserClassArray helper.
+func (s *PaymentsSavedStarGifts) MapUsers() (value UserClassArray) {
+	return UserClassArray(s.Users)
 }

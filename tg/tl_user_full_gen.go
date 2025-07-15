@@ -32,146 +32,263 @@ var (
 )
 
 // UserFull represents TL type `userFull#99e78045`.
+// Extended user info
+// When updating the local peer database »¹, all fields from the newly received
+// constructor take priority over the old constructor cached locally (including by
+// removing fields that aren't set in the new constructor).
+//
+// Links:
+//  1. https://core.telegram.org/api/peers
+//
+// See https://core.telegram.org/constructor/userFull for reference.
 type UserFull struct {
-	// Flags field of UserFull.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Blocked field of UserFull.
+	// Whether you have blocked this user
 	Blocked bool
-	// PhoneCallsAvailable field of UserFull.
+	// Whether this user can make VoIP calls
 	PhoneCallsAvailable bool
-	// PhoneCallsPrivate field of UserFull.
+	// Whether this user's privacy settings allow you to call them
 	PhoneCallsPrivate bool
-	// CanPinMessage field of UserFull.
+	// Whether you can pin messages in the chat with this user, you can do this only for a
+	// chat with yourself
 	CanPinMessage bool
-	// HasScheduled field of UserFull.
+	// Whether scheduled messages¹ are available
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/scheduled-messages
 	HasScheduled bool
-	// VideoCallsAvailable field of UserFull.
+	// Whether the user can receive video calls
 	VideoCallsAvailable bool
-	// VoiceMessagesForbidden field of UserFull.
+	// Whether this user doesn't allow sending voice messages in a private chat with them
 	VoiceMessagesForbidden bool
-	// TranslationsDisabled field of UserFull.
+	// Whether the real-time chat translation popup¹ should be hidden.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/translation
 	TranslationsDisabled bool
-	// StoriesPinnedAvailable field of UserFull.
+	// Whether this user has some pinned stories¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/stories#pinned-or-archived-stories
 	StoriesPinnedAvailable bool
-	// BlockedMyStoriesFrom field of UserFull.
+	// Whether we've blocked this user, preventing them from seeing our stories »¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/block
 	BlockedMyStoriesFrom bool
-	// WallpaperOverridden field of UserFull.
+	// Whether the other user has chosen a custom wallpaper for us using messages
+	// setChatWallPaper¹ and the for_both flag, see here »² for more info.
+	//
+	// Links:
+	//  1) https://core.telegram.org/method/messages.setChatWallPaper
+	//  2) https://core.telegram.org/api/wallpapers#installing-wallpapers-in-a-specific-chat-or-channel
 	WallpaperOverridden bool
-	// ContactRequirePremium field of UserFull.
+	// If set, we cannot write to this user: subscribe to Telegram Premium¹ to get
+	// permission to write to this user. To set this flag for ourselves invoke account
+	// setGlobalPrivacySettings², setting the settings.new_noncontact_peers_require_premium
+	// flag, see here »³ for more info.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/premium
+	//  2) https://core.telegram.org/method/account.setGlobalPrivacySettings
+	//  3) https://core.telegram.org/api/privacy#require-premium-for-new-non-contact-users
 	ContactRequirePremium bool
-	// ReadDatesPrivate field of UserFull.
+	// If set, we cannot fetch the exact read date of messages we send to this user using
+	// messages.getOutboxReadDate¹.  The exact read date of messages might still be
+	// unavailable for other reasons, see here »² for more info.  To set this flag for
+	// ourselves invoke account.setGlobalPrivacySettings³, setting the settings
+	// hide_read_marks flag.
+	//
+	// Links:
+	//  1) https://core.telegram.org/method/messages.getOutboxReadDate
+	//  2) https://core.telegram.org/method/messages.getOutboxReadDate
+	//  3) https://core.telegram.org/method/account.setGlobalPrivacySettings
 	ReadDatesPrivate bool
-	// Flags2 field of UserFull.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags2 bin.Fields
-	// SponsoredEnabled field of UserFull.
+	// Whether ads were re-enabled for the current account (only accessible to the currently
+	// logged-in user), see here »¹ for more info.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/business#re-enable-ads
 	SponsoredEnabled bool
-	// CanViewRevenue field of UserFull.
+	// If set, this user can view ad revenue statistics »¹ for this bot.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/revenue#revenue-statistics
 	CanViewRevenue bool
-	// BotCanManageEmojiStatus field of UserFull.
+	// If set, this is a bot that can change our emoji status »¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/emoji-status#setting-an-emoji-status-from-a-bot
 	BotCanManageEmojiStatus bool
 	// DisplayGiftsButton field of UserFull.
 	DisplayGiftsButton bool
-	// ID field of UserFull.
+	// User ID
 	ID int64
-	// About field of UserFull.
+	// Bio of the user
 	//
 	// Use SetAbout and GetAbout helpers.
 	About string
-	// Settings field of UserFull.
+	// Peer settings
 	Settings PeerSettings
-	// PersonalPhoto field of UserFull.
+	// Personal profile photo, to be shown instead of profile_photo.
 	//
 	// Use SetPersonalPhoto and GetPersonalPhoto helpers.
 	PersonalPhoto PhotoClass
-	// ProfilePhoto field of UserFull.
+	// Profile photo
 	//
 	// Use SetProfilePhoto and GetProfilePhoto helpers.
 	ProfilePhoto PhotoClass
-	// FallbackPhoto field of UserFull.
+	// Fallback profile photo, displayed if no photo is present in profile_photo or
+	// personal_photo, due to privacy settings.
 	//
 	// Use SetFallbackPhoto and GetFallbackPhoto helpers.
 	FallbackPhoto PhotoClass
-	// NotifySettings field of UserFull.
+	// Notification settings
 	NotifySettings PeerNotifySettings
-	// BotInfo field of UserFull.
+	// For bots, info about the bot (bot commands, etc)
 	//
 	// Use SetBotInfo and GetBotInfo helpers.
 	BotInfo BotInfo
-	// PinnedMsgID field of UserFull.
+	// Message ID of the last pinned message¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/pin
 	//
 	// Use SetPinnedMsgID and GetPinnedMsgID helpers.
 	PinnedMsgID int
-	// CommonChatsCount field of UserFull.
+	// Chats in common with this user
 	CommonChatsCount int
-	// FolderID field of UserFull.
+	// Peer folder ID, for more info click here¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/folders#peer-folders
 	//
 	// Use SetFolderID and GetFolderID helpers.
 	FolderID int
-	// TTLPeriod field of UserFull.
+	// Time To Live of all messages in this chat; once a message is this many seconds old, it
+	// must be deleted.
 	//
 	// Use SetTTLPeriod and GetTTLPeriod helpers.
 	TTLPeriod int
-	// ThemeEmoticon field of UserFull.
+	// Emoji associated with chat theme
 	//
 	// Use SetThemeEmoticon and GetThemeEmoticon helpers.
 	ThemeEmoticon string
-	// PrivateForwardName field of UserFull.
+	// Anonymized text to be shown instead of the user's name on forwarded messages
 	//
 	// Use SetPrivateForwardName and GetPrivateForwardName helpers.
 	PrivateForwardName string
-	// BotGroupAdminRights field of UserFull.
+	// A suggested set of administrator rights¹ for the bot, to be shown when adding the bot
+	// as admin to a group, see here for more info on how to handle them »².
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/rights#suggested-bot-rights
+	//  2) https://core.telegram.org/api/rights#suggested-bot-rights
 	//
 	// Use SetBotGroupAdminRights and GetBotGroupAdminRights helpers.
 	BotGroupAdminRights ChatAdminRights
-	// BotBroadcastAdminRights field of UserFull.
+	// A suggested set of administrator rights¹ for the bot, to be shown when adding the bot
+	// as admin to a channel, see here for more info on how to handle them »².
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/rights#suggested-bot-rights
+	//  2) https://core.telegram.org/api/rights#suggested-bot-rights
 	//
 	// Use SetBotBroadcastAdminRights and GetBotBroadcastAdminRights helpers.
 	BotBroadcastAdminRights ChatAdminRights
-	// Wallpaper field of UserFull.
+	// Wallpaper¹ to use in the private chat with the user.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/wallpapers
 	//
 	// Use SetWallpaper and GetWallpaper helpers.
 	Wallpaper WallPaperClass
-	// Stories field of UserFull.
+	// Active stories »¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/stories
 	//
 	// Use SetStories and GetStories helpers.
 	Stories PeerStories
-	// BusinessWorkHours field of UserFull.
+	// Telegram Business working hours »¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/business#opening-hours
 	//
 	// Use SetBusinessWorkHours and GetBusinessWorkHours helpers.
 	BusinessWorkHours BusinessWorkHours
-	// BusinessLocation field of UserFull.
+	// Telegram Business location »¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/business#location
 	//
 	// Use SetBusinessLocation and GetBusinessLocation helpers.
 	BusinessLocation BusinessLocation
-	// BusinessGreetingMessage field of UserFull.
+	// Telegram Business greeting message »¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/business#greeting-messages
 	//
 	// Use SetBusinessGreetingMessage and GetBusinessGreetingMessage helpers.
 	BusinessGreetingMessage BusinessGreetingMessage
-	// BusinessAwayMessage field of UserFull.
+	// Telegram Business away message »¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/business#away-messages
 	//
 	// Use SetBusinessAwayMessage and GetBusinessAwayMessage helpers.
 	BusinessAwayMessage BusinessAwayMessage
-	// BusinessIntro field of UserFull.
+	// Specifies a custom Telegram Business profile introduction »¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/business#business-introduction
 	//
 	// Use SetBusinessIntro and GetBusinessIntro helpers.
 	BusinessIntro BusinessIntro
-	// Birthday field of UserFull.
+	// Contains info about the user's birthday »¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/profile#birthday
 	//
 	// Use SetBirthday and GetBirthday helpers.
 	Birthday Birthday
-	// PersonalChannelID field of UserFull.
+	// ID of the associated personal channel »¹, that should be shown in the profile page².
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/channel
+	//  2) https://core.telegram.org/api/profile#personal-channel
 	//
 	// Use SetPersonalChannelID and GetPersonalChannelID helpers.
 	PersonalChannelID int64
-	// PersonalChannelMessage field of UserFull.
+	// ID of the latest message of the associated personal channel »¹, that should be
+	// previewed in the profile page².
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/channel
+	//  2) https://core.telegram.org/api/profile#personal-channel
 	//
 	// Use SetPersonalChannelMessage and GetPersonalChannelMessage helpers.
 	PersonalChannelMessage int
-	// StargiftsCount field of UserFull.
+	// Number of gifts¹ the user has chosen to display on their profile
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/gifts
 	//
 	// Use SetStargiftsCount and GetStargiftsCount helpers.
 	StargiftsCount int
-	// StarrefProgram field of UserFull.
+	// This bot has an active referral program »¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/bots/referrals
 	//
 	// Use SetStarrefProgram and GetStarrefProgram helpers.
 	StarrefProgram StarRefProgram
@@ -365,6 +482,188 @@ func (u *UserFull) String() string {
 	}
 	type Alias UserFull
 	return fmt.Sprintf("UserFull%+v", Alias(*u))
+}
+
+// FillFrom fills UserFull from given interface.
+func (u *UserFull) FillFrom(from interface {
+	GetBlocked() (value bool)
+	GetPhoneCallsAvailable() (value bool)
+	GetPhoneCallsPrivate() (value bool)
+	GetCanPinMessage() (value bool)
+	GetHasScheduled() (value bool)
+	GetVideoCallsAvailable() (value bool)
+	GetVoiceMessagesForbidden() (value bool)
+	GetTranslationsDisabled() (value bool)
+	GetStoriesPinnedAvailable() (value bool)
+	GetBlockedMyStoriesFrom() (value bool)
+	GetWallpaperOverridden() (value bool)
+	GetContactRequirePremium() (value bool)
+	GetReadDatesPrivate() (value bool)
+	GetSponsoredEnabled() (value bool)
+	GetCanViewRevenue() (value bool)
+	GetBotCanManageEmojiStatus() (value bool)
+	GetDisplayGiftsButton() (value bool)
+	GetID() (value int64)
+	GetAbout() (value string, ok bool)
+	GetSettings() (value PeerSettings)
+	GetPersonalPhoto() (value PhotoClass, ok bool)
+	GetProfilePhoto() (value PhotoClass, ok bool)
+	GetFallbackPhoto() (value PhotoClass, ok bool)
+	GetNotifySettings() (value PeerNotifySettings)
+	GetBotInfo() (value BotInfo, ok bool)
+	GetPinnedMsgID() (value int, ok bool)
+	GetCommonChatsCount() (value int)
+	GetFolderID() (value int, ok bool)
+	GetTTLPeriod() (value int, ok bool)
+	GetThemeEmoticon() (value string, ok bool)
+	GetPrivateForwardName() (value string, ok bool)
+	GetBotGroupAdminRights() (value ChatAdminRights, ok bool)
+	GetBotBroadcastAdminRights() (value ChatAdminRights, ok bool)
+	GetWallpaper() (value WallPaperClass, ok bool)
+	GetStories() (value PeerStories, ok bool)
+	GetBusinessWorkHours() (value BusinessWorkHours, ok bool)
+	GetBusinessLocation() (value BusinessLocation, ok bool)
+	GetBusinessGreetingMessage() (value BusinessGreetingMessage, ok bool)
+	GetBusinessAwayMessage() (value BusinessAwayMessage, ok bool)
+	GetBusinessIntro() (value BusinessIntro, ok bool)
+	GetBirthday() (value Birthday, ok bool)
+	GetPersonalChannelID() (value int64, ok bool)
+	GetPersonalChannelMessage() (value int, ok bool)
+	GetStargiftsCount() (value int, ok bool)
+	GetStarrefProgram() (value StarRefProgram, ok bool)
+	GetBotVerification() (value BotVerification, ok bool)
+	GetSendPaidMessagesStars() (value int64, ok bool)
+	GetDisallowedGifts() (value DisallowedGiftsSettings, ok bool)
+}) {
+	u.Blocked = from.GetBlocked()
+	u.PhoneCallsAvailable = from.GetPhoneCallsAvailable()
+	u.PhoneCallsPrivate = from.GetPhoneCallsPrivate()
+	u.CanPinMessage = from.GetCanPinMessage()
+	u.HasScheduled = from.GetHasScheduled()
+	u.VideoCallsAvailable = from.GetVideoCallsAvailable()
+	u.VoiceMessagesForbidden = from.GetVoiceMessagesForbidden()
+	u.TranslationsDisabled = from.GetTranslationsDisabled()
+	u.StoriesPinnedAvailable = from.GetStoriesPinnedAvailable()
+	u.BlockedMyStoriesFrom = from.GetBlockedMyStoriesFrom()
+	u.WallpaperOverridden = from.GetWallpaperOverridden()
+	u.ContactRequirePremium = from.GetContactRequirePremium()
+	u.ReadDatesPrivate = from.GetReadDatesPrivate()
+	u.SponsoredEnabled = from.GetSponsoredEnabled()
+	u.CanViewRevenue = from.GetCanViewRevenue()
+	u.BotCanManageEmojiStatus = from.GetBotCanManageEmojiStatus()
+	u.DisplayGiftsButton = from.GetDisplayGiftsButton()
+	u.ID = from.GetID()
+	if val, ok := from.GetAbout(); ok {
+		u.About = val
+	}
+
+	u.Settings = from.GetSettings()
+	if val, ok := from.GetPersonalPhoto(); ok {
+		u.PersonalPhoto = val
+	}
+
+	if val, ok := from.GetProfilePhoto(); ok {
+		u.ProfilePhoto = val
+	}
+
+	if val, ok := from.GetFallbackPhoto(); ok {
+		u.FallbackPhoto = val
+	}
+
+	u.NotifySettings = from.GetNotifySettings()
+	if val, ok := from.GetBotInfo(); ok {
+		u.BotInfo = val
+	}
+
+	if val, ok := from.GetPinnedMsgID(); ok {
+		u.PinnedMsgID = val
+	}
+
+	u.CommonChatsCount = from.GetCommonChatsCount()
+	if val, ok := from.GetFolderID(); ok {
+		u.FolderID = val
+	}
+
+	if val, ok := from.GetTTLPeriod(); ok {
+		u.TTLPeriod = val
+	}
+
+	if val, ok := from.GetThemeEmoticon(); ok {
+		u.ThemeEmoticon = val
+	}
+
+	if val, ok := from.GetPrivateForwardName(); ok {
+		u.PrivateForwardName = val
+	}
+
+	if val, ok := from.GetBotGroupAdminRights(); ok {
+		u.BotGroupAdminRights = val
+	}
+
+	if val, ok := from.GetBotBroadcastAdminRights(); ok {
+		u.BotBroadcastAdminRights = val
+	}
+
+	if val, ok := from.GetWallpaper(); ok {
+		u.Wallpaper = val
+	}
+
+	if val, ok := from.GetStories(); ok {
+		u.Stories = val
+	}
+
+	if val, ok := from.GetBusinessWorkHours(); ok {
+		u.BusinessWorkHours = val
+	}
+
+	if val, ok := from.GetBusinessLocation(); ok {
+		u.BusinessLocation = val
+	}
+
+	if val, ok := from.GetBusinessGreetingMessage(); ok {
+		u.BusinessGreetingMessage = val
+	}
+
+	if val, ok := from.GetBusinessAwayMessage(); ok {
+		u.BusinessAwayMessage = val
+	}
+
+	if val, ok := from.GetBusinessIntro(); ok {
+		u.BusinessIntro = val
+	}
+
+	if val, ok := from.GetBirthday(); ok {
+		u.Birthday = val
+	}
+
+	if val, ok := from.GetPersonalChannelID(); ok {
+		u.PersonalChannelID = val
+	}
+
+	if val, ok := from.GetPersonalChannelMessage(); ok {
+		u.PersonalChannelMessage = val
+	}
+
+	if val, ok := from.GetStargiftsCount(); ok {
+		u.StargiftsCount = val
+	}
+
+	if val, ok := from.GetStarrefProgram(); ok {
+		u.StarrefProgram = val
+	}
+
+	if val, ok := from.GetBotVerification(); ok {
+		u.BotVerification = val
+	}
+
+	if val, ok := from.GetSendPaidMessagesStars(); ok {
+		u.SendPaidMessagesStars = val
+	}
+
+	if val, ok := from.GetDisallowedGifts(); ok {
+		u.DisallowedGifts = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -1997,4 +2296,31 @@ func (u *UserFull) GetDisallowedGifts() (value DisallowedGiftsSettings, ok bool)
 		return value, false
 	}
 	return u.DisallowedGifts, true
+}
+
+// GetPersonalPhotoAsNotEmpty returns mapped value of PersonalPhoto conditional field and
+// boolean which is true if field was set.
+func (u *UserFull) GetPersonalPhotoAsNotEmpty() (*Photo, bool) {
+	if value, ok := u.GetPersonalPhoto(); ok {
+		return value.AsNotEmpty()
+	}
+	return nil, false
+}
+
+// GetProfilePhotoAsNotEmpty returns mapped value of ProfilePhoto conditional field and
+// boolean which is true if field was set.
+func (u *UserFull) GetProfilePhotoAsNotEmpty() (*Photo, bool) {
+	if value, ok := u.GetProfilePhoto(); ok {
+		return value.AsNotEmpty()
+	}
+	return nil, false
+}
+
+// GetFallbackPhotoAsNotEmpty returns mapped value of FallbackPhoto conditional field and
+// boolean which is true if field was set.
+func (u *UserFull) GetFallbackPhotoAsNotEmpty() (*Photo, bool) {
+	if value, ok := u.GetFallbackPhoto(); ok {
+		return value.AsNotEmpty()
+	}
+	return nil, false
 }

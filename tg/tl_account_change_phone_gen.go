@@ -32,12 +32,21 @@ var (
 )
 
 // AccountChangePhoneRequest represents TL type `account.changePhone#70c32edb`.
+// Change the phone number of the current account
+//
+// See https://core.telegram.org/method/account.changePhone for reference.
 type AccountChangePhoneRequest struct {
-	// PhoneNumber field of AccountChangePhoneRequest.
+	// New phone number
 	PhoneNumber string
-	// PhoneCodeHash field of AccountChangePhoneRequest.
+	// Phone code hash received when calling account.sendChangePhoneCode¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/method/account.sendChangePhoneCode
 	PhoneCodeHash string
-	// PhoneCode field of AccountChangePhoneRequest.
+	// Phone code received when calling account.sendChangePhoneCode¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/method/account.sendChangePhoneCode
 	PhoneCode string
 }
 
@@ -76,6 +85,17 @@ func (c *AccountChangePhoneRequest) String() string {
 	}
 	type Alias AccountChangePhoneRequest
 	return fmt.Sprintf("AccountChangePhoneRequest%+v", Alias(*c))
+}
+
+// FillFrom fills AccountChangePhoneRequest from given interface.
+func (c *AccountChangePhoneRequest) FillFrom(from interface {
+	GetPhoneNumber() (value string)
+	GetPhoneCodeHash() (value string)
+	GetPhoneCode() (value string)
+}) {
+	c.PhoneNumber = from.GetPhoneNumber()
+	c.PhoneCodeHash = from.GetPhoneCodeHash()
+	c.PhoneCode = from.GetPhoneCode()
 }
 
 // TypeID returns type id in TL schema.
@@ -202,6 +222,16 @@ func (c *AccountChangePhoneRequest) GetPhoneCode() (value string) {
 }
 
 // AccountChangePhone invokes method account.changePhone#70c32edb returning error if any.
+// Change the phone number of the current account
+//
+// Possible errors:
+//
+//	400 PHONE_CODE_EMPTY: phone_code is missing.
+//	400 PHONE_CODE_EXPIRED: The phone code you provided has expired.
+//	406 PHONE_NUMBER_INVALID: The phone number is invalid.
+//	400 PHONE_NUMBER_OCCUPIED: The phone number is already in use.
+//
+// See https://core.telegram.org/method/account.changePhone for reference.
 func (c *Client) AccountChangePhone(ctx context.Context, request *AccountChangePhoneRequest) (UserClass, error) {
 	var result UserBox
 

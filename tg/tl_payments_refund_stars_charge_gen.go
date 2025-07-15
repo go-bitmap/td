@@ -32,10 +32,17 @@ var (
 )
 
 // PaymentsRefundStarsChargeRequest represents TL type `payments.refundStarsCharge#25ae8f4a`.
+// Refund a Telegram Stars¹ transaction, see here »² for more info.
+//
+// Links:
+//  1. https://core.telegram.org/api/stars
+//  2. https://core.telegram.org/api/payments#6-refunds
+//
+// See https://core.telegram.org/method/payments.refundStarsCharge for reference.
 type PaymentsRefundStarsChargeRequest struct {
-	// UserID field of PaymentsRefundStarsChargeRequest.
+	// User to refund.
 	UserID InputUserClass
-	// ChargeID field of PaymentsRefundStarsChargeRequest.
+	// Transaction ID.
 	ChargeID string
 }
 
@@ -71,6 +78,15 @@ func (r *PaymentsRefundStarsChargeRequest) String() string {
 	}
 	type Alias PaymentsRefundStarsChargeRequest
 	return fmt.Sprintf("PaymentsRefundStarsChargeRequest%+v", Alias(*r))
+}
+
+// FillFrom fills PaymentsRefundStarsChargeRequest from given interface.
+func (r *PaymentsRefundStarsChargeRequest) FillFrom(from interface {
+	GetUserID() (value InputUserClass)
+	GetChargeID() (value string)
+}) {
+	r.UserID = from.GetUserID()
+	r.ChargeID = from.GetChargeID()
 }
 
 // TypeID returns type id in TL schema.
@@ -182,6 +198,20 @@ func (r *PaymentsRefundStarsChargeRequest) GetChargeID() (value string) {
 }
 
 // PaymentsRefundStarsCharge invokes method payments.refundStarsCharge#25ae8f4a returning error if any.
+// Refund a Telegram Stars¹ transaction, see here »² for more info.
+//
+// Links:
+//  1. https://core.telegram.org/api/stars
+//  2. https://core.telegram.org/api/payments#6-refunds
+//
+// Possible errors:
+//
+//	400 CHARGE_ALREADY_REFUNDED: The transaction was already refunded.
+//	400 USER_BOT_REQUIRED: This method can only be called by a bot.
+//	400 USER_ID_INVALID: The provided user ID is invalid.
+//
+// See https://core.telegram.org/method/payments.refundStarsCharge for reference.
+// Can be used by bots.
 func (c *Client) PaymentsRefundStarsCharge(ctx context.Context, request *PaymentsRefundStarsChargeRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

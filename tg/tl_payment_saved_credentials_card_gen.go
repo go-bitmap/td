@@ -32,10 +32,13 @@ var (
 )
 
 // PaymentSavedCredentialsCard represents TL type `paymentSavedCredentialsCard#cdc27a1f`.
+// Saved credit card
+//
+// See https://core.telegram.org/constructor/paymentSavedCredentialsCard for reference.
 type PaymentSavedCredentialsCard struct {
-	// ID field of PaymentSavedCredentialsCard.
+	// Card ID
 	ID string
-	// Title field of PaymentSavedCredentialsCard.
+	// Title
 	Title string
 }
 
@@ -71,6 +74,15 @@ func (p *PaymentSavedCredentialsCard) String() string {
 	}
 	type Alias PaymentSavedCredentialsCard
 	return fmt.Sprintf("PaymentSavedCredentialsCard%+v", Alias(*p))
+}
+
+// FillFrom fills PaymentSavedCredentialsCard from given interface.
+func (p *PaymentSavedCredentialsCard) FillFrom(from interface {
+	GetID() (value string)
+	GetTitle() (value string)
+}) {
+	p.ID = from.GetID()
+	p.Title = from.GetTitle()
 }
 
 // TypeID returns type id in TL schema.

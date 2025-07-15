@@ -32,12 +32,15 @@ var (
 )
 
 // ContactsResolvedPeer represents TL type `contacts.resolvedPeer#7f077ad9`.
+// Resolved peer
+//
+// See https://core.telegram.org/constructor/contacts.resolvedPeer for reference.
 type ContactsResolvedPeer struct {
-	// Peer field of ContactsResolvedPeer.
+	// The peer
 	Peer PeerClass
-	// Chats field of ContactsResolvedPeer.
+	// Chats
 	Chats []ChatClass
-	// Users field of ContactsResolvedPeer.
+	// Users
 	Users []UserClass
 }
 
@@ -76,6 +79,17 @@ func (r *ContactsResolvedPeer) String() string {
 	}
 	type Alias ContactsResolvedPeer
 	return fmt.Sprintf("ContactsResolvedPeer%+v", Alias(*r))
+}
+
+// FillFrom fills ContactsResolvedPeer from given interface.
+func (r *ContactsResolvedPeer) FillFrom(from interface {
+	GetPeer() (value PeerClass)
+	GetChats() (value []ChatClass)
+	GetUsers() (value []UserClass)
+}) {
+	r.Peer = from.GetPeer()
+	r.Chats = from.GetChats()
+	r.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -240,4 +254,14 @@ func (r *ContactsResolvedPeer) GetUsers() (value []UserClass) {
 		return
 	}
 	return r.Users
+}
+
+// MapChats returns field Chats wrapped in ChatClassArray helper.
+func (r *ContactsResolvedPeer) MapChats() (value ChatClassArray) {
+	return ChatClassArray(r.Chats)
+}
+
+// MapUsers returns field Users wrapped in UserClassArray helper.
+func (r *ContactsResolvedPeer) MapUsers() (value UserClassArray) {
+	return UserClassArray(r.Users)
 }

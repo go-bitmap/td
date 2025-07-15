@@ -32,10 +32,13 @@ var (
 )
 
 // PhoneEditGroupCallTitleRequest represents TL type `phone.editGroupCallTitle#1ca6ac0a`.
+// Edit the title of a group call or livestream
+//
+// See https://core.telegram.org/method/phone.editGroupCallTitle for reference.
 type PhoneEditGroupCallTitleRequest struct {
-	// Call field of PhoneEditGroupCallTitleRequest.
+	// Group call
 	Call InputGroupCallClass
-	// Title field of PhoneEditGroupCallTitleRequest.
+	// New title
 	Title string
 }
 
@@ -71,6 +74,15 @@ func (e *PhoneEditGroupCallTitleRequest) String() string {
 	}
 	type Alias PhoneEditGroupCallTitleRequest
 	return fmt.Sprintf("PhoneEditGroupCallTitleRequest%+v", Alias(*e))
+}
+
+// FillFrom fills PhoneEditGroupCallTitleRequest from given interface.
+func (e *PhoneEditGroupCallTitleRequest) FillFrom(from interface {
+	GetCall() (value InputGroupCallClass)
+	GetTitle() (value string)
+}) {
+	e.Call = from.GetCall()
+	e.Title = from.GetTitle()
 }
 
 // TypeID returns type id in TL schema.
@@ -182,6 +194,14 @@ func (e *PhoneEditGroupCallTitleRequest) GetTitle() (value string) {
 }
 
 // PhoneEditGroupCallTitle invokes method phone.editGroupCallTitle#1ca6ac0a returning error if any.
+// Edit the title of a group call or livestream
+//
+// Possible errors:
+//
+//	403 GROUPCALL_FORBIDDEN: The group call has already ended.
+//	400 GROUPCALL_INVALID: The specified group call is invalid.
+//
+// See https://core.telegram.org/method/phone.editGroupCallTitle for reference.
 func (c *Client) PhoneEditGroupCallTitle(ctx context.Context, request *PhoneEditGroupCallTitleRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

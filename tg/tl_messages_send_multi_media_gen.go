@@ -32,44 +32,80 @@ var (
 )
 
 // MessagesSendMultiMediaRequest represents TL type `messages.sendMultiMedia#1bf89d74`.
+// Send an album or grouped media¹
+//
+// Links:
+//  1. https://core.telegram.org/api/files#albums-grouped-media
+//
+// See https://core.telegram.org/method/messages.sendMultiMedia for reference.
 type MessagesSendMultiMediaRequest struct {
-	// Flags field of MessagesSendMultiMediaRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Silent field of MessagesSendMultiMediaRequest.
+	// Whether to send the album silently (no notification triggered)
 	Silent bool
-	// Background field of MessagesSendMultiMediaRequest.
+	// Send in background?
 	Background bool
-	// ClearDraft field of MessagesSendMultiMediaRequest.
+	// Whether to clear drafts¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/drafts
 	ClearDraft bool
-	// Noforwards field of MessagesSendMultiMediaRequest.
+	// Only for bots, disallows forwarding and saving of the messages, even if the
+	// destination chat doesn't have content protection¹ enabled
+	//
+	// Links:
+	//  1) https://telegram.org/blog/protected-content-delete-by-date-and-more
 	Noforwards bool
-	// UpdateStickersetsOrder field of MessagesSendMultiMediaRequest.
+	// Whether to move used stickersets to top, see here for more info on this flag »¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/stickers#recent-stickersets
 	UpdateStickersetsOrder bool
-	// InvertMedia field of MessagesSendMultiMediaRequest.
+	// If set, any eventual webpage preview will be shown on top of the message instead of at
+	// the bottom.
 	InvertMedia bool
-	// AllowPaidFloodskip field of MessagesSendMultiMediaRequest.
+	// Bots only: if set, allows sending up to 1000 messages per second, ignoring
+	// broadcasting limits¹ for a fee of 0.1 Telegram Stars per message. The relevant Stars
+	// will be withdrawn from the bot's balance.
+	//
+	// Links:
+	//  1) https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once
 	AllowPaidFloodskip bool
-	// Peer field of MessagesSendMultiMediaRequest.
+	// The destination chat
 	Peer InputPeerClass
-	// ReplyTo field of MessagesSendMultiMediaRequest.
+	// If set, indicates that the message should be sent in reply to the specified message or
+	// story.
 	//
 	// Use SetReplyTo and GetReplyTo helpers.
 	ReplyTo InputReplyToClass
-	// MultiMedia field of MessagesSendMultiMediaRequest.
+	// The medias to send: note that they must be separately uploaded using messages
+	// uploadMedia¹ first, using raw inputMediaUploaded* constructors is not supported.
+	//
+	// Links:
+	//  1) https://core.telegram.org/method/messages.uploadMedia
 	MultiMedia []InputSingleMedia
-	// ScheduleDate field of MessagesSendMultiMediaRequest.
+	// Scheduled message date for scheduled messages
 	//
 	// Use SetScheduleDate and GetScheduleDate helpers.
 	ScheduleDate int
-	// SendAs field of MessagesSendMultiMediaRequest.
+	// Send this message as the specified peer
 	//
 	// Use SetSendAs and GetSendAs helpers.
 	SendAs InputPeerClass
-	// QuickReplyShortcut field of MessagesSendMultiMediaRequest.
+	// Add the message to the specified quick reply shortcut »¹, instead.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/business#quick-reply-shortcuts
 	//
 	// Use SetQuickReplyShortcut and GetQuickReplyShortcut helpers.
 	QuickReplyShortcut InputQuickReplyShortcutClass
-	// Effect field of MessagesSendMultiMediaRequest.
+	// Specifies a message effect »¹ to use for the message.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/effects
 	//
 	// Use SetEffect and GetEffect helpers.
 	Effect int64
@@ -153,6 +189,59 @@ func (s *MessagesSendMultiMediaRequest) String() string {
 	}
 	type Alias MessagesSendMultiMediaRequest
 	return fmt.Sprintf("MessagesSendMultiMediaRequest%+v", Alias(*s))
+}
+
+// FillFrom fills MessagesSendMultiMediaRequest from given interface.
+func (s *MessagesSendMultiMediaRequest) FillFrom(from interface {
+	GetSilent() (value bool)
+	GetBackground() (value bool)
+	GetClearDraft() (value bool)
+	GetNoforwards() (value bool)
+	GetUpdateStickersetsOrder() (value bool)
+	GetInvertMedia() (value bool)
+	GetAllowPaidFloodskip() (value bool)
+	GetPeer() (value InputPeerClass)
+	GetReplyTo() (value InputReplyToClass, ok bool)
+	GetMultiMedia() (value []InputSingleMedia)
+	GetScheduleDate() (value int, ok bool)
+	GetSendAs() (value InputPeerClass, ok bool)
+	GetQuickReplyShortcut() (value InputQuickReplyShortcutClass, ok bool)
+	GetEffect() (value int64, ok bool)
+	GetAllowPaidStars() (value int64, ok bool)
+}) {
+	s.Silent = from.GetSilent()
+	s.Background = from.GetBackground()
+	s.ClearDraft = from.GetClearDraft()
+	s.Noforwards = from.GetNoforwards()
+	s.UpdateStickersetsOrder = from.GetUpdateStickersetsOrder()
+	s.InvertMedia = from.GetInvertMedia()
+	s.AllowPaidFloodskip = from.GetAllowPaidFloodskip()
+	s.Peer = from.GetPeer()
+	if val, ok := from.GetReplyTo(); ok {
+		s.ReplyTo = val
+	}
+
+	s.MultiMedia = from.GetMultiMedia()
+	if val, ok := from.GetScheduleDate(); ok {
+		s.ScheduleDate = val
+	}
+
+	if val, ok := from.GetSendAs(); ok {
+		s.SendAs = val
+	}
+
+	if val, ok := from.GetQuickReplyShortcut(); ok {
+		s.QuickReplyShortcut = val
+	}
+
+	if val, ok := from.GetEffect(); ok {
+		s.Effect = val
+	}
+
+	if val, ok := from.GetAllowPaidStars(); ok {
+		s.AllowPaidStars = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -719,6 +808,46 @@ func (s *MessagesSendMultiMediaRequest) GetAllowPaidStars() (value int64, ok boo
 }
 
 // MessagesSendMultiMedia invokes method messages.sendMultiMedia#1bf89d74 returning error if any.
+// Send an album or grouped media¹
+//
+// Links:
+//  1. https://core.telegram.org/api/files#albums-grouped-media
+//
+// Possible errors:
+//
+//	400 BUSINESS_PEER_INVALID: Messages can't be set to the specified peer through the current business connection.
+//	400 CHANNEL_INVALID: The provided channel is invalid.
+//	400 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
+//	400 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
+//	400 CHAT_FORWARDS_RESTRICTED: You can't forward messages from a protected chat.
+//	403 CHAT_SEND_MEDIA_FORBIDDEN: You can't send media in this chat.
+//	403 CHAT_SEND_PHOTOS_FORBIDDEN: You can't send photos in this chat.
+//	403 CHAT_SEND_VIDEOS_FORBIDDEN: You can't send videos in this chat.
+//	403 CHAT_WRITE_FORBIDDEN: You can't write in this chat.
+//	400 ENTITY_BOUNDS_INVALID: A specified entity offset or length is invalid, see here » for info on how to properly compute the entity offset/length.
+//	400 FILE_REFERENCE_%d_EXPIRED: The file reference of the media file at index %d in the passed media array expired, it must be refreshed.
+//	400 FILE_REFERENCE_%d_INVALID: The file reference of the media file at index %d in the passed media array is invalid.
+//	400 MEDIA_CAPTION_TOO_LONG: The caption is too long.
+//	400 MEDIA_EMPTY: The provided media object is invalid.
+//	400 MEDIA_INVALID: Media invalid.
+//	400 MSG_ID_INVALID: Invalid message ID provided.
+//	400 MULTI_MEDIA_TOO_LONG: Too many media files for album.
+//	400 PEER_ID_INVALID: The provided peer id is invalid.
+//	400 QUICK_REPLIES_TOO_MUCH: A maximum of appConfig.quick_replies_limit shortcuts may be created, the limit was reached.
+//	500 RANDOM_ID_DUPLICATE: You provided a random ID that was already used.
+//	400 RANDOM_ID_EMPTY: Random ID empty.
+//	400 REPLY_MESSAGES_TOO_MUCH: Each shortcut can contain a maximum of appConfig.quick_reply_messages_limit messages, the limit was reached.
+//	400 REPLY_TO_INVALID: The specified reply_to field is invalid.
+//	400 SCHEDULE_DATE_TOO_LATE: You can't schedule a message this far in the future.
+//	400 SCHEDULE_TOO_MUCH: There are too many scheduled messages.
+//	400 SEND_AS_PEER_INVALID: You can't send messages as the specified peer.
+//	420 SLOWMODE_WAIT_%d: Slowmode is enabled in this chat: wait %d seconds before sending another message to this chat.
+//	400 TOPIC_CLOSED: This topic was closed, you can't send messages to it anymore.
+//	400 TOPIC_DELETED: The specified topic was deleted.
+//	400 USER_BANNED_IN_CHANNEL: You're banned from sending messages in supergroups/channels.
+//
+// See https://core.telegram.org/method/messages.sendMultiMedia for reference.
+// Can be used by bots.
 func (c *Client) MessagesSendMultiMedia(ctx context.Context, request *MessagesSendMultiMediaRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

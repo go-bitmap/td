@@ -32,10 +32,16 @@ var (
 )
 
 // EmailVerifyPurposeLoginSetup represents TL type `emailVerifyPurposeLoginSetup#4345be73`.
+// Email verification purpose: setup login email
+//
+// See https://core.telegram.org/constructor/emailVerifyPurposeLoginSetup for reference.
 type EmailVerifyPurposeLoginSetup struct {
-	// PhoneNumber field of EmailVerifyPurposeLoginSetup.
+	// Phone number
 	PhoneNumber string
-	// PhoneCodeHash field of EmailVerifyPurposeLoginSetup.
+	// Phone code hash as specified by the documentation¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/auth#email-verification
 	PhoneCodeHash string
 }
 
@@ -76,6 +82,15 @@ func (e *EmailVerifyPurposeLoginSetup) String() string {
 	}
 	type Alias EmailVerifyPurposeLoginSetup
 	return fmt.Sprintf("EmailVerifyPurposeLoginSetup%+v", Alias(*e))
+}
+
+// FillFrom fills EmailVerifyPurposeLoginSetup from given interface.
+func (e *EmailVerifyPurposeLoginSetup) FillFrom(from interface {
+	GetPhoneNumber() (value string)
+	GetPhoneCodeHash() (value string)
+}) {
+	e.PhoneNumber = from.GetPhoneNumber()
+	e.PhoneCodeHash = from.GetPhoneCodeHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -182,6 +197,9 @@ func (e *EmailVerifyPurposeLoginSetup) GetPhoneCodeHash() (value string) {
 }
 
 // EmailVerifyPurposeLoginChange represents TL type `emailVerifyPurposeLoginChange#527d22eb`.
+// Email verification purpose: change login email
+//
+// See https://core.telegram.org/constructor/emailVerifyPurposeLoginChange for reference.
 type EmailVerifyPurposeLoginChange struct {
 }
 
@@ -281,6 +299,12 @@ func (e *EmailVerifyPurposeLoginChange) DecodeBare(b *bin.Buffer) error {
 }
 
 // EmailVerifyPurposePassport represents TL type `emailVerifyPurposePassport#bbf51685`.
+// Verify an email for use in telegram passport¹
+//
+// Links:
+//  1. https://core.telegram.org/api/passport
+//
+// See https://core.telegram.org/constructor/emailVerifyPurposePassport for reference.
 type EmailVerifyPurposePassport struct {
 }
 
@@ -383,6 +407,8 @@ func (e *EmailVerifyPurposePassport) DecodeBare(b *bin.Buffer) error {
 const EmailVerifyPurposeClassName = "EmailVerifyPurpose"
 
 // EmailVerifyPurposeClass represents EmailVerifyPurpose generic type.
+//
+// See https://core.telegram.org/type/EmailVerifyPurpose for reference.
 //
 // Constructors:
 //   - [EmailVerifyPurposeLoginSetup]

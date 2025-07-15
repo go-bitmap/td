@@ -32,22 +32,38 @@ var (
 )
 
 // BusinessChatLink represents TL type `businessChatLink#b4ae666f`.
+// Contains info about a business chat deep link »¹ created by the current account.
+//
+// Links:
+//  1. https://core.telegram.org/api/business#business-chat-links
+//
+// See https://core.telegram.org/constructor/businessChatLink for reference.
 type BusinessChatLink struct {
-	// Flags field of BusinessChatLink.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Link field of BusinessChatLink.
+	// Business chat deep link¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/links#business-chat-links
 	Link string
-	// Message field of BusinessChatLink.
+	// Message to pre-fill in the message input field.
 	Message string
-	// Entities field of BusinessChatLink.
+	// Message entities for styled text¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities
 	//
 	// Use SetEntities and GetEntities helpers.
 	Entities []MessageEntityClass
-	// Title field of BusinessChatLink.
+	// Human-readable name of the link, to simplify management in the UI (only visible to the
+	// creator of the link).
 	//
 	// Use SetTitle and GetTitle helpers.
 	Title string
-	// Views field of BusinessChatLink.
+	// Number of times the link was resolved (clicked/scanned/etc...).
 	Views int
 }
 
@@ -95,6 +111,27 @@ func (b *BusinessChatLink) String() string {
 	}
 	type Alias BusinessChatLink
 	return fmt.Sprintf("BusinessChatLink%+v", Alias(*b))
+}
+
+// FillFrom fills BusinessChatLink from given interface.
+func (b *BusinessChatLink) FillFrom(from interface {
+	GetLink() (value string)
+	GetMessage() (value string)
+	GetEntities() (value []MessageEntityClass, ok bool)
+	GetTitle() (value string, ok bool)
+	GetViews() (value int)
+}) {
+	b.Link = from.GetLink()
+	b.Message = from.GetMessage()
+	if val, ok := from.GetEntities(); ok {
+		b.Entities = val
+	}
+
+	if val, ok := from.GetTitle(); ok {
+		b.Title = val
+	}
+
+	b.Views = from.GetViews()
 }
 
 // TypeID returns type id in TL schema.
@@ -321,4 +358,12 @@ func (b *BusinessChatLink) GetViews() (value int) {
 		return
 	}
 	return b.Views
+}
+
+// MapEntities returns field Entities wrapped in MessageEntityClassArray helper.
+func (b *BusinessChatLink) MapEntities() (value MessageEntityClassArray, ok bool) {
+	if !b.Flags.Has(0) {
+		return value, false
+	}
+	return MessageEntityClassArray(b.Entities), true
 }

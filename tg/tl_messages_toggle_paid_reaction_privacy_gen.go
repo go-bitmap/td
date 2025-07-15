@@ -32,12 +32,19 @@ var (
 )
 
 // MessagesTogglePaidReactionPrivacyRequest represents TL type `messages.togglePaidReactionPrivacy#435885b5`.
+// Changes the privacy of already sent paid reactions¹ on a specific message.
+//
+// Links:
+//  1. https://core.telegram.org/api/reactions#paid-reactions
+//
+// See https://core.telegram.org/method/messages.togglePaidReactionPrivacy for reference.
 type MessagesTogglePaidReactionPrivacyRequest struct {
-	// Peer field of MessagesTogglePaidReactionPrivacyRequest.
+	// The channel
 	Peer InputPeerClass
-	// MsgID field of MessagesTogglePaidReactionPrivacyRequest.
+	// The ID of the message to which we sent the paid reactions
 	MsgID int
-	// Private field of MessagesTogglePaidReactionPrivacyRequest.
+	// If true, makes the current anonymous in the top sender leaderboard for this message;
+	// otherwise, does the opposite.
 	Private PaidReactionPrivacyClass
 }
 
@@ -76,6 +83,17 @@ func (t *MessagesTogglePaidReactionPrivacyRequest) String() string {
 	}
 	type Alias MessagesTogglePaidReactionPrivacyRequest
 	return fmt.Sprintf("MessagesTogglePaidReactionPrivacyRequest%+v", Alias(*t))
+}
+
+// FillFrom fills MessagesTogglePaidReactionPrivacyRequest from given interface.
+func (t *MessagesTogglePaidReactionPrivacyRequest) FillFrom(from interface {
+	GetPeer() (value InputPeerClass)
+	GetMsgID() (value int)
+	GetPrivate() (value PaidReactionPrivacyClass)
+}) {
+	t.Peer = from.GetPeer()
+	t.MsgID = from.GetMsgID()
+	t.Private = from.GetPrivate()
 }
 
 // TypeID returns type id in TL schema.
@@ -212,6 +230,16 @@ func (t *MessagesTogglePaidReactionPrivacyRequest) GetPrivate() (value PaidReact
 }
 
 // MessagesTogglePaidReactionPrivacy invokes method messages.togglePaidReactionPrivacy#435885b5 returning error if any.
+// Changes the privacy of already sent paid reactions¹ on a specific message.
+//
+// Links:
+//  1. https://core.telegram.org/api/reactions#paid-reactions
+//
+// Possible errors:
+//
+//	400 PEER_ID_INVALID: The provided peer id is invalid.
+//
+// See https://core.telegram.org/method/messages.togglePaidReactionPrivacy for reference.
 func (c *Client) MessagesTogglePaidReactionPrivacy(ctx context.Context, request *MessagesTogglePaidReactionPrivacyRequest) (bool, error) {
 	var result BoolBox
 

@@ -32,8 +32,14 @@ var (
 )
 
 // MessagesGetPinnedDialogsRequest represents TL type `messages.getPinnedDialogs#d6b94df2`.
+// Get pinned dialogs
+//
+// See https://core.telegram.org/method/messages.getPinnedDialogs for reference.
 type MessagesGetPinnedDialogsRequest struct {
-	// FolderID field of MessagesGetPinnedDialogsRequest.
+	// Peer folder ID, for more info click here¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/folders#peer-folders
 	FolderID int
 }
 
@@ -66,6 +72,13 @@ func (g *MessagesGetPinnedDialogsRequest) String() string {
 	}
 	type Alias MessagesGetPinnedDialogsRequest
 	return fmt.Sprintf("MessagesGetPinnedDialogsRequest%+v", Alias(*g))
+}
+
+// FillFrom fills MessagesGetPinnedDialogsRequest from given interface.
+func (g *MessagesGetPinnedDialogsRequest) FillFrom(from interface {
+	GetFolderID() (value int)
+}) {
+	g.FolderID = from.GetFolderID()
 }
 
 // TypeID returns type id in TL schema.
@@ -152,6 +165,13 @@ func (g *MessagesGetPinnedDialogsRequest) GetFolderID() (value int) {
 }
 
 // MessagesGetPinnedDialogs invokes method messages.getPinnedDialogs#d6b94df2 returning error if any.
+// Get pinned dialogs
+//
+// Possible errors:
+//
+//	400 FOLDER_ID_INVALID: Invalid folder ID.
+//
+// See https://core.telegram.org/method/messages.getPinnedDialogs for reference.
 func (c *Client) MessagesGetPinnedDialogs(ctx context.Context, folderid int) (*MessagesPeerDialogs, error) {
 	var result MessagesPeerDialogs
 

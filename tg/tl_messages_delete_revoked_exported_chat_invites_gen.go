@@ -32,10 +32,13 @@ var (
 )
 
 // MessagesDeleteRevokedExportedChatInvitesRequest represents TL type `messages.deleteRevokedExportedChatInvites#56987bd5`.
+// Delete all revoked chat invites
+//
+// See https://core.telegram.org/method/messages.deleteRevokedExportedChatInvites for reference.
 type MessagesDeleteRevokedExportedChatInvitesRequest struct {
-	// Peer field of MessagesDeleteRevokedExportedChatInvitesRequest.
+	// Chat
 	Peer InputPeerClass
-	// AdminID field of MessagesDeleteRevokedExportedChatInvitesRequest.
+	// ID of the admin that originally generated the revoked chat invites
 	AdminID InputUserClass
 }
 
@@ -71,6 +74,15 @@ func (d *MessagesDeleteRevokedExportedChatInvitesRequest) String() string {
 	}
 	type Alias MessagesDeleteRevokedExportedChatInvitesRequest
 	return fmt.Sprintf("MessagesDeleteRevokedExportedChatInvitesRequest%+v", Alias(*d))
+}
+
+// FillFrom fills MessagesDeleteRevokedExportedChatInvitesRequest from given interface.
+func (d *MessagesDeleteRevokedExportedChatInvitesRequest) FillFrom(from interface {
+	GetPeer() (value InputPeerClass)
+	GetAdminID() (value InputUserClass)
+}) {
+	d.Peer = from.GetPeer()
+	d.AdminID = from.GetAdminID()
 }
 
 // TypeID returns type id in TL schema.
@@ -187,6 +199,14 @@ func (d *MessagesDeleteRevokedExportedChatInvitesRequest) GetAdminID() (value In
 }
 
 // MessagesDeleteRevokedExportedChatInvites invokes method messages.deleteRevokedExportedChatInvites#56987bd5 returning error if any.
+// Delete all revoked chat invites
+//
+// Possible errors:
+//
+//	400 ADMIN_ID_INVALID: The specified admin ID is invalid.
+//	400 PEER_ID_INVALID: The provided peer id is invalid.
+//
+// See https://core.telegram.org/method/messages.deleteRevokedExportedChatInvites for reference.
 func (c *Client) MessagesDeleteRevokedExportedChatInvites(ctx context.Context, request *MessagesDeleteRevokedExportedChatInvitesRequest) (bool, error) {
 	var result BoolBox
 

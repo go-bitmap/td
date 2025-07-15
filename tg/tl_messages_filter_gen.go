@@ -32,6 +32,9 @@ var (
 )
 
 // InputMessagesFilterEmpty represents TL type `inputMessagesFilterEmpty#57e2f66c`.
+// Filter is absent.
+//
+// See https://core.telegram.org/constructor/inputMessagesFilterEmpty for reference.
 type InputMessagesFilterEmpty struct {
 }
 
@@ -131,6 +134,9 @@ func (i *InputMessagesFilterEmpty) DecodeBare(b *bin.Buffer) error {
 }
 
 // InputMessagesFilterPhotos represents TL type `inputMessagesFilterPhotos#9609a51c`.
+// Filter for messages containing photos.
+//
+// See https://core.telegram.org/constructor/inputMessagesFilterPhotos for reference.
 type InputMessagesFilterPhotos struct {
 }
 
@@ -230,6 +236,9 @@ func (i *InputMessagesFilterPhotos) DecodeBare(b *bin.Buffer) error {
 }
 
 // InputMessagesFilterVideo represents TL type `inputMessagesFilterVideo#9fc00e65`.
+// Filter for messages containing videos.
+//
+// See https://core.telegram.org/constructor/inputMessagesFilterVideo for reference.
 type InputMessagesFilterVideo struct {
 }
 
@@ -329,6 +338,9 @@ func (i *InputMessagesFilterVideo) DecodeBare(b *bin.Buffer) error {
 }
 
 // InputMessagesFilterPhotoVideo represents TL type `inputMessagesFilterPhotoVideo#56e9f0e4`.
+// Filter for messages containing photos or videos.
+//
+// See https://core.telegram.org/constructor/inputMessagesFilterPhotoVideo for reference.
 type InputMessagesFilterPhotoVideo struct {
 }
 
@@ -428,6 +440,9 @@ func (i *InputMessagesFilterPhotoVideo) DecodeBare(b *bin.Buffer) error {
 }
 
 // InputMessagesFilterDocument represents TL type `inputMessagesFilterDocument#9eddf188`.
+// Filter for messages containing documents.
+//
+// See https://core.telegram.org/constructor/inputMessagesFilterDocument for reference.
 type InputMessagesFilterDocument struct {
 }
 
@@ -527,6 +542,9 @@ func (i *InputMessagesFilterDocument) DecodeBare(b *bin.Buffer) error {
 }
 
 // InputMessagesFilterURL represents TL type `inputMessagesFilterUrl#7ef0dd87`.
+// Return only messages containing URLs
+//
+// See https://core.telegram.org/constructor/inputMessagesFilterUrl for reference.
 type InputMessagesFilterURL struct {
 }
 
@@ -626,6 +644,9 @@ func (i *InputMessagesFilterURL) DecodeBare(b *bin.Buffer) error {
 }
 
 // InputMessagesFilterGif represents TL type `inputMessagesFilterGif#ffc86587`.
+// Return only messages containing gifs
+//
+// See https://core.telegram.org/constructor/inputMessagesFilterGif for reference.
 type InputMessagesFilterGif struct {
 }
 
@@ -725,6 +746,9 @@ func (i *InputMessagesFilterGif) DecodeBare(b *bin.Buffer) error {
 }
 
 // InputMessagesFilterVoice represents TL type `inputMessagesFilterVoice#50f5c392`.
+// Return only messages containing voice notes
+//
+// See https://core.telegram.org/constructor/inputMessagesFilterVoice for reference.
 type InputMessagesFilterVoice struct {
 }
 
@@ -824,6 +848,9 @@ func (i *InputMessagesFilterVoice) DecodeBare(b *bin.Buffer) error {
 }
 
 // InputMessagesFilterMusic represents TL type `inputMessagesFilterMusic#3751b49e`.
+// Return only messages containing audio files
+//
+// See https://core.telegram.org/constructor/inputMessagesFilterMusic for reference.
 type InputMessagesFilterMusic struct {
 }
 
@@ -923,6 +950,9 @@ func (i *InputMessagesFilterMusic) DecodeBare(b *bin.Buffer) error {
 }
 
 // InputMessagesFilterChatPhotos represents TL type `inputMessagesFilterChatPhotos#3a20ecb8`.
+// Return only chat photo changes
+//
+// See https://core.telegram.org/constructor/inputMessagesFilterChatPhotos for reference.
 type InputMessagesFilterChatPhotos struct {
 }
 
@@ -1022,10 +1052,16 @@ func (i *InputMessagesFilterChatPhotos) DecodeBare(b *bin.Buffer) error {
 }
 
 // InputMessagesFilterPhoneCalls represents TL type `inputMessagesFilterPhoneCalls#80c99768`.
+// Return only phone calls
+//
+// See https://core.telegram.org/constructor/inputMessagesFilterPhoneCalls for reference.
 type InputMessagesFilterPhoneCalls struct {
-	// Flags field of InputMessagesFilterPhoneCalls.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Missed field of InputMessagesFilterPhoneCalls.
+	// Return only missed phone calls
 	Missed bool
 }
 
@@ -1066,6 +1102,13 @@ func (i *InputMessagesFilterPhoneCalls) String() string {
 	}
 	type Alias InputMessagesFilterPhoneCalls
 	return fmt.Sprintf("InputMessagesFilterPhoneCalls%+v", Alias(*i))
+}
+
+// FillFrom fills InputMessagesFilterPhoneCalls from given interface.
+func (i *InputMessagesFilterPhoneCalls) FillFrom(from interface {
+	GetMissed() (value bool)
+}) {
+	i.Missed = from.GetMissed()
 }
 
 // TypeID returns type id in TL schema.
@@ -1173,6 +1216,9 @@ func (i *InputMessagesFilterPhoneCalls) GetMissed() (value bool) {
 }
 
 // InputMessagesFilterRoundVoice represents TL type `inputMessagesFilterRoundVoice#7a7c17a4`.
+// Return only round videos and voice notes
+//
+// See https://core.telegram.org/constructor/inputMessagesFilterRoundVoice for reference.
 type InputMessagesFilterRoundVoice struct {
 }
 
@@ -1272,6 +1318,9 @@ func (i *InputMessagesFilterRoundVoice) DecodeBare(b *bin.Buffer) error {
 }
 
 // InputMessagesFilterRoundVideo represents TL type `inputMessagesFilterRoundVideo#b549da53`.
+// Return only round videos
+//
+// See https://core.telegram.org/constructor/inputMessagesFilterRoundVideo for reference.
 type InputMessagesFilterRoundVideo struct {
 }
 
@@ -1371,6 +1420,12 @@ func (i *InputMessagesFilterRoundVideo) DecodeBare(b *bin.Buffer) error {
 }
 
 // InputMessagesFilterMyMentions represents TL type `inputMessagesFilterMyMentions#c1f8e69a`.
+// Return only messages where the current user was mentioned¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/mentions
+//
+// See https://core.telegram.org/constructor/inputMessagesFilterMyMentions for reference.
 type InputMessagesFilterMyMentions struct {
 }
 
@@ -1470,6 +1525,9 @@ func (i *InputMessagesFilterMyMentions) DecodeBare(b *bin.Buffer) error {
 }
 
 // InputMessagesFilterGeo represents TL type `inputMessagesFilterGeo#e7026d0d`.
+// Return only messages containing geolocations
+//
+// See https://core.telegram.org/constructor/inputMessagesFilterGeo for reference.
 type InputMessagesFilterGeo struct {
 }
 
@@ -1569,6 +1627,9 @@ func (i *InputMessagesFilterGeo) DecodeBare(b *bin.Buffer) error {
 }
 
 // InputMessagesFilterContacts represents TL type `inputMessagesFilterContacts#e062db83`.
+// Return only messages containing contacts
+//
+// See https://core.telegram.org/constructor/inputMessagesFilterContacts for reference.
 type InputMessagesFilterContacts struct {
 }
 
@@ -1668,6 +1729,9 @@ func (i *InputMessagesFilterContacts) DecodeBare(b *bin.Buffer) error {
 }
 
 // InputMessagesFilterPinned represents TL type `inputMessagesFilterPinned#1bb00451`.
+// Fetch only pinned messages
+//
+// See https://core.telegram.org/constructor/inputMessagesFilterPinned for reference.
 type InputMessagesFilterPinned struct {
 }
 
@@ -1770,6 +1834,8 @@ func (i *InputMessagesFilterPinned) DecodeBare(b *bin.Buffer) error {
 const MessagesFilterClassName = "MessagesFilter"
 
 // MessagesFilterClass represents MessagesFilter generic type.
+//
+// See https://core.telegram.org/type/MessagesFilter for reference.
 //
 // Constructors:
 //   - [InputMessagesFilterEmpty]

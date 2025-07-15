@@ -32,6 +32,8 @@ var (
 )
 
 // StarGiftAttributeCounter represents TL type `starGiftAttributeCounter#2eb1b658`.
+//
+// See https://core.telegram.org/constructor/starGiftAttributeCounter for reference.
 type StarGiftAttributeCounter struct {
 	// Attribute field of StarGiftAttributeCounter.
 	Attribute StarGiftAttributeIDClass
@@ -71,6 +73,15 @@ func (s *StarGiftAttributeCounter) String() string {
 	}
 	type Alias StarGiftAttributeCounter
 	return fmt.Sprintf("StarGiftAttributeCounter%+v", Alias(*s))
+}
+
+// FillFrom fills StarGiftAttributeCounter from given interface.
+func (s *StarGiftAttributeCounter) FillFrom(from interface {
+	GetAttribute() (value StarGiftAttributeIDClass)
+	GetCount() (value int)
+}) {
+	s.Attribute = from.GetAttribute()
+	s.Count = from.GetCount()
 }
 
 // TypeID returns type id in TL schema.

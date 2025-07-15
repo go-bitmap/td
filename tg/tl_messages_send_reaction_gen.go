@@ -32,18 +32,32 @@ var (
 )
 
 // MessagesSendReactionRequest represents TL type `messages.sendReaction#d30d78d4`.
+// React to message.
+// Starting from layer 159, the reaction will be sent from the peer specified using
+// messages.saveDefaultSendAs¹.
+//
+// Links:
+//  1. https://core.telegram.org/method/messages.saveDefaultSendAs
+//
+// See https://core.telegram.org/method/messages.sendReaction for reference.
 type MessagesSendReactionRequest struct {
-	// Flags field of MessagesSendReactionRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Big field of MessagesSendReactionRequest.
+	// Whether a bigger and longer reaction should be shown
 	Big bool
-	// AddToRecent field of MessagesSendReactionRequest.
+	// Whether to add this reaction to the recent reactions list »¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/reactions#recent-reactions
 	AddToRecent bool
-	// Peer field of MessagesSendReactionRequest.
+	// Peer
 	Peer InputPeerClass
-	// MsgID field of MessagesSendReactionRequest.
+	// Message ID to react to
 	MsgID int
-	// Reaction field of MessagesSendReactionRequest.
+	// A list of reactions
 	//
 	// Use SetReaction and GetReaction helpers.
 	Reaction []ReactionClass
@@ -93,6 +107,24 @@ func (s *MessagesSendReactionRequest) String() string {
 	}
 	type Alias MessagesSendReactionRequest
 	return fmt.Sprintf("MessagesSendReactionRequest%+v", Alias(*s))
+}
+
+// FillFrom fills MessagesSendReactionRequest from given interface.
+func (s *MessagesSendReactionRequest) FillFrom(from interface {
+	GetBig() (value bool)
+	GetAddToRecent() (value bool)
+	GetPeer() (value InputPeerClass)
+	GetMsgID() (value int)
+	GetReaction() (value []ReactionClass, ok bool)
+}) {
+	s.Big = from.GetBig()
+	s.AddToRecent = from.GetAddToRecent()
+	s.Peer = from.GetPeer()
+	s.MsgID = from.GetMsgID()
+	if val, ok := from.GetReaction(); ok {
+		s.Reaction = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -326,7 +358,41 @@ func (s *MessagesSendReactionRequest) GetReaction() (value []ReactionClass, ok b
 	return s.Reaction, true
 }
 
+// MapReaction returns field Reaction wrapped in ReactionClassArray helper.
+func (s *MessagesSendReactionRequest) MapReaction() (value ReactionClassArray, ok bool) {
+	if !s.Flags.Has(0) {
+		return value, false
+	}
+	return ReactionClassArray(s.Reaction), true
+}
+
 // MessagesSendReaction invokes method messages.sendReaction#d30d78d4 returning error if any.
+// React to message.
+// Starting from layer 159, the reaction will be sent from the peer specified using
+// messages.saveDefaultSendAs¹.
+//
+// Links:
+//  1. https://core.telegram.org/method/messages.saveDefaultSendAs
+//
+// Possible errors:
+//
+//	403 ANONYMOUS_REACTIONS_DISABLED: Sorry, anonymous administrators cannot leave reactions or participate in polls.
+//	400 CHANNEL_INVALID: The provided channel is invalid.
+//	400 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
+//	403 CHAT_WRITE_FORBIDDEN: You can't write in this chat.
+//	400 CUSTOM_REACTIONS_TOO_MANY: Too many custom reactions were specified.
+//	400 DOCUMENT_INVALID: The specified document is invalid.
+//	400 MESSAGE_ID_INVALID: The provided message id is invalid.
+//	400 MESSAGE_NOT_MODIFIED: The provided message data is identical to the previous message data, the message wasn't modified.
+//	400 MSG_ID_INVALID: Invalid message ID provided.
+//	400 PEER_ID_INVALID: The provided peer id is invalid.
+//	403 PREMIUM_ACCOUNT_REQUIRED: A premium account is required to execute this action.
+//	400 REACTIONS_TOO_MANY: The message already has exactly reactions_uniq_max reaction emojis, you can't react with a new emoji, see the docs for more info ».
+//	400 REACTION_EMPTY: Empty reaction provided.
+//	400 REACTION_INVALID: The specified reaction is invalid.
+//	400 USER_BANNED_IN_CHANNEL: You're banned from sending messages in supergroups/channels.
+//
+// See https://core.telegram.org/method/messages.sendReaction for reference.
 func (c *Client) MessagesSendReaction(ctx context.Context, request *MessagesSendReactionRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

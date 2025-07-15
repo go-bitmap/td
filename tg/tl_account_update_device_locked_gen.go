@@ -32,8 +32,18 @@ var (
 )
 
 // AccountUpdateDeviceLockedRequest represents TL type `account.updateDeviceLocked#38df3532`.
+// When client-side passcode lock feature is enabled, will not show message texts in
+// incoming PUSH notifications¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/push-updates
+//
+// See https://core.telegram.org/method/account.updateDeviceLocked for reference.
 type AccountUpdateDeviceLockedRequest struct {
-	// Period field of AccountUpdateDeviceLockedRequest.
+	// Inactivity period after which to start hiding message texts in PUSH notifications¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/push-updates
 	Period int
 }
 
@@ -66,6 +76,13 @@ func (u *AccountUpdateDeviceLockedRequest) String() string {
 	}
 	type Alias AccountUpdateDeviceLockedRequest
 	return fmt.Sprintf("AccountUpdateDeviceLockedRequest%+v", Alias(*u))
+}
+
+// FillFrom fills AccountUpdateDeviceLockedRequest from given interface.
+func (u *AccountUpdateDeviceLockedRequest) FillFrom(from interface {
+	GetPeriod() (value int)
+}) {
+	u.Period = from.GetPeriod()
 }
 
 // TypeID returns type id in TL schema.
@@ -152,6 +169,13 @@ func (u *AccountUpdateDeviceLockedRequest) GetPeriod() (value int) {
 }
 
 // AccountUpdateDeviceLocked invokes method account.updateDeviceLocked#38df3532 returning error if any.
+// When client-side passcode lock feature is enabled, will not show message texts in
+// incoming PUSH notifications¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/push-updates
+//
+// See https://core.telegram.org/method/account.updateDeviceLocked for reference.
 func (c *Client) AccountUpdateDeviceLocked(ctx context.Context, period int) (bool, error) {
 	var result BoolBox
 

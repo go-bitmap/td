@@ -32,10 +32,13 @@ var (
 )
 
 // MessagesReadEncryptedHistoryRequest represents TL type `messages.readEncryptedHistory#7f4b690a`.
+// Marks message history within a secret chat as read.
+//
+// See https://core.telegram.org/method/messages.readEncryptedHistory for reference.
 type MessagesReadEncryptedHistoryRequest struct {
-	// Peer field of MessagesReadEncryptedHistoryRequest.
+	// Secret chat ID
 	Peer InputEncryptedChat
-	// MaxDate field of MessagesReadEncryptedHistoryRequest.
+	// Maximum date value for received messages in history
 	MaxDate int
 }
 
@@ -71,6 +74,15 @@ func (r *MessagesReadEncryptedHistoryRequest) String() string {
 	}
 	type Alias MessagesReadEncryptedHistoryRequest
 	return fmt.Sprintf("MessagesReadEncryptedHistoryRequest%+v", Alias(*r))
+}
+
+// FillFrom fills MessagesReadEncryptedHistoryRequest from given interface.
+func (r *MessagesReadEncryptedHistoryRequest) FillFrom(from interface {
+	GetPeer() (value InputEncryptedChat)
+	GetMaxDate() (value int)
+}) {
+	r.Peer = from.GetPeer()
+	r.MaxDate = from.GetMaxDate()
 }
 
 // TypeID returns type id in TL schema.
@@ -177,6 +189,15 @@ func (r *MessagesReadEncryptedHistoryRequest) GetMaxDate() (value int) {
 }
 
 // MessagesReadEncryptedHistory invokes method messages.readEncryptedHistory#7f4b690a returning error if any.
+// Marks message history within a secret chat as read.
+//
+// Possible errors:
+//
+//	400 CHAT_ID_INVALID: The provided chat id is invalid.
+//	400 MAX_DATE_INVALID: The specified maximum date is invalid.
+//	400 MSG_WAIT_FAILED: A waiting call returned an error.
+//
+// See https://core.telegram.org/method/messages.readEncryptedHistory for reference.
 func (c *Client) MessagesReadEncryptedHistory(ctx context.Context, request *MessagesReadEncryptedHistoryRequest) (bool, error) {
 	var result BoolBox
 

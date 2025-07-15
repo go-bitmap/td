@@ -32,12 +32,18 @@ var (
 )
 
 // MessagesReportReactionRequest represents TL type `messages.reportReaction#3f64c076`.
+// Report a message reaction¹
+//
+// Links:
+//  1. https://core.telegram.org/api/reactions
+//
+// See https://core.telegram.org/method/messages.reportReaction for reference.
 type MessagesReportReactionRequest struct {
-	// Peer field of MessagesReportReactionRequest.
+	// Peer where the message was sent
 	Peer InputPeerClass
-	// ID field of MessagesReportReactionRequest.
+	// Message ID
 	ID int
-	// ReactionPeer field of MessagesReportReactionRequest.
+	// Peer that sent the reaction
 	ReactionPeer InputPeerClass
 }
 
@@ -76,6 +82,17 @@ func (r *MessagesReportReactionRequest) String() string {
 	}
 	type Alias MessagesReportReactionRequest
 	return fmt.Sprintf("MessagesReportReactionRequest%+v", Alias(*r))
+}
+
+// FillFrom fills MessagesReportReactionRequest from given interface.
+func (r *MessagesReportReactionRequest) FillFrom(from interface {
+	GetPeer() (value InputPeerClass)
+	GetID() (value int)
+	GetReactionPeer() (value InputPeerClass)
+}) {
+	r.Peer = from.GetPeer()
+	r.ID = from.GetID()
+	r.ReactionPeer = from.GetReactionPeer()
 }
 
 // TypeID returns type id in TL schema.
@@ -212,6 +229,18 @@ func (r *MessagesReportReactionRequest) GetReactionPeer() (value InputPeerClass)
 }
 
 // MessagesReportReaction invokes method messages.reportReaction#3f64c076 returning error if any.
+// Report a message reaction¹
+//
+// Links:
+//  1. https://core.telegram.org/api/reactions
+//
+// Possible errors:
+//
+//	400 MSG_ID_INVALID: Invalid message ID provided.
+//	400 PEER_ID_INVALID: The provided peer id is invalid.
+//	400 USER_ID_INVALID: The provided user ID is invalid.
+//
+// See https://core.telegram.org/method/messages.reportReaction for reference.
 func (c *Client) MessagesReportReaction(ctx context.Context, request *MessagesReportReactionRequest) (bool, error) {
 	var result BoolBox
 

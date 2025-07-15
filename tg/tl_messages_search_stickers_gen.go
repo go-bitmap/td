@@ -32,22 +32,43 @@ var (
 )
 
 // MessagesSearchStickersRequest represents TL type `messages.searchStickers#29b1c66a`.
+// Search for stickers using AI-powered keyword search
+//
+// See https://core.telegram.org/method/messages.searchStickers for reference.
 type MessagesSearchStickersRequest struct {
-	// Flags field of MessagesSearchStickersRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Emojis field of MessagesSearchStickersRequest.
+	// If set, returns custom emoji stickers¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/custom-emoji
 	Emojis bool
-	// Q field of MessagesSearchStickersRequest.
+	// The search term
 	Q string
-	// Emoticon field of MessagesSearchStickersRequest.
+	// Space-separated list of emojis to search for
 	Emoticon string
-	// LangCode field of MessagesSearchStickersRequest.
+	// List of possible IETF language tags of the user's input language; may be empty if
+	// unknown
 	LangCode []string
-	// Offset field of MessagesSearchStickersRequest.
+	// Offset for pagination¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets
 	Offset int
-	// Limit field of MessagesSearchStickersRequest.
+	// Maximum number of results to return, see pagination¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets
 	Limit int
-	// Hash field of MessagesSearchStickersRequest.
+	// Hash used for caching, for more info click here¹. The hash may be generated locally
+	// by using the ids of the returned or stored sticker document²s.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets#hash-generation
+	//  2) https://core.telegram.org/constructor/document
 	Hash int64
 }
 
@@ -101,6 +122,25 @@ func (s *MessagesSearchStickersRequest) String() string {
 	}
 	type Alias MessagesSearchStickersRequest
 	return fmt.Sprintf("MessagesSearchStickersRequest%+v", Alias(*s))
+}
+
+// FillFrom fills MessagesSearchStickersRequest from given interface.
+func (s *MessagesSearchStickersRequest) FillFrom(from interface {
+	GetEmojis() (value bool)
+	GetQ() (value string)
+	GetEmoticon() (value string)
+	GetLangCode() (value []string)
+	GetOffset() (value int)
+	GetLimit() (value int)
+	GetHash() (value int64)
+}) {
+	s.Emojis = from.GetEmojis()
+	s.Q = from.GetQ()
+	s.Emoticon = from.GetEmoticon()
+	s.LangCode = from.GetLangCode()
+	s.Offset = from.GetOffset()
+	s.Limit = from.GetLimit()
+	s.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -341,6 +381,9 @@ func (s *MessagesSearchStickersRequest) GetHash() (value int64) {
 }
 
 // MessagesSearchStickers invokes method messages.searchStickers#29b1c66a returning error if any.
+// Search for stickers using AI-powered keyword search
+//
+// See https://core.telegram.org/method/messages.searchStickers for reference.
 func (c *Client) MessagesSearchStickers(ctx context.Context, request *MessagesSearchStickersRequest) (MessagesFoundStickersClass, error) {
 	var result MessagesFoundStickersBox
 

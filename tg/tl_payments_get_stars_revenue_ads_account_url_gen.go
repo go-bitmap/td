@@ -32,8 +32,16 @@ var (
 )
 
 // PaymentsGetStarsRevenueAdsAccountURLRequest represents TL type `payments.getStarsRevenueAdsAccountUrl#d1d7efc5`.
+// Returns a URL for a Telegram Ad platform account that can be used to set up
+// advertisements for channel/bot in peer, paid using the Telegram Stars owned by the
+// specified peer, see here »¹ for more info.
+//
+// Links:
+//  1. https://core.telegram.org/api/stars#paying-for-ads
+//
+// See https://core.telegram.org/method/payments.getStarsRevenueAdsAccountUrl for reference.
 type PaymentsGetStarsRevenueAdsAccountURLRequest struct {
-	// Peer field of PaymentsGetStarsRevenueAdsAccountURLRequest.
+	// Channel or bot that owns the stars.
 	Peer InputPeerClass
 }
 
@@ -66,6 +74,13 @@ func (g *PaymentsGetStarsRevenueAdsAccountURLRequest) String() string {
 	}
 	type Alias PaymentsGetStarsRevenueAdsAccountURLRequest
 	return fmt.Sprintf("PaymentsGetStarsRevenueAdsAccountURLRequest%+v", Alias(*g))
+}
+
+// FillFrom fills PaymentsGetStarsRevenueAdsAccountURLRequest from given interface.
+func (g *PaymentsGetStarsRevenueAdsAccountURLRequest) FillFrom(from interface {
+	GetPeer() (value InputPeerClass)
+}) {
+	g.Peer = from.GetPeer()
 }
 
 // TypeID returns type id in TL schema.
@@ -157,6 +172,19 @@ func (g *PaymentsGetStarsRevenueAdsAccountURLRequest) GetPeer() (value InputPeer
 }
 
 // PaymentsGetStarsRevenueAdsAccountURL invokes method payments.getStarsRevenueAdsAccountUrl#d1d7efc5 returning error if any.
+// Returns a URL for a Telegram Ad platform account that can be used to set up
+// advertisements for channel/bot in peer, paid using the Telegram Stars owned by the
+// specified peer, see here »¹ for more info.
+//
+// Links:
+//  1. https://core.telegram.org/api/stars#paying-for-ads
+//
+// Possible errors:
+//
+//	403 CHAT_WRITE_FORBIDDEN: You can't write in this chat.
+//	400 PEER_ID_INVALID: The provided peer id is invalid.
+//
+// See https://core.telegram.org/method/payments.getStarsRevenueAdsAccountUrl for reference.
 func (c *Client) PaymentsGetStarsRevenueAdsAccountURL(ctx context.Context, peer InputPeerClass) (*PaymentsStarsRevenueAdsAccountURL, error) {
 	var result PaymentsStarsRevenueAdsAccountURL
 

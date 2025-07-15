@@ -32,14 +32,22 @@ var (
 )
 
 // MessagesSendQuickReplyMessagesRequest represents TL type `messages.sendQuickReplyMessages#6c750de1`.
+// Send a quick reply shortcut »¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/business#quick-reply-shortcuts
+//
+// See https://core.telegram.org/method/messages.sendQuickReplyMessages for reference.
 type MessagesSendQuickReplyMessagesRequest struct {
-	// Peer field of MessagesSendQuickReplyMessagesRequest.
+	// The peer where to send the shortcut (users only, for now).
 	Peer InputPeerClass
-	// ShortcutID field of MessagesSendQuickReplyMessagesRequest.
+	// The ID of the quick reply shortcut to send.
 	ShortcutID int
-	// ID field of MessagesSendQuickReplyMessagesRequest.
+	// Specify a subset of messages from the shortcut to send; if empty, defaults to all of
+	// them.
 	ID []int
-	// RandomID field of MessagesSendQuickReplyMessagesRequest.
+	// Unique client IDs required to prevent message resending, one for each message we're
+	// sending, may be empty (but not recommended).
 	RandomID []int64
 }
 
@@ -81,6 +89,19 @@ func (s *MessagesSendQuickReplyMessagesRequest) String() string {
 	}
 	type Alias MessagesSendQuickReplyMessagesRequest
 	return fmt.Sprintf("MessagesSendQuickReplyMessagesRequest%+v", Alias(*s))
+}
+
+// FillFrom fills MessagesSendQuickReplyMessagesRequest from given interface.
+func (s *MessagesSendQuickReplyMessagesRequest) FillFrom(from interface {
+	GetPeer() (value InputPeerClass)
+	GetShortcutID() (value int)
+	GetID() (value []int)
+	GetRandomID() (value []int64)
+}) {
+	s.Peer = from.GetPeer()
+	s.ShortcutID = from.GetShortcutID()
+	s.ID = from.GetID()
+	s.RandomID = from.GetRandomID()
 }
 
 // TypeID returns type id in TL schema.
@@ -258,6 +279,17 @@ func (s *MessagesSendQuickReplyMessagesRequest) GetRandomID() (value []int64) {
 }
 
 // MessagesSendQuickReplyMessages invokes method messages.sendQuickReplyMessages#6c750de1 returning error if any.
+// Send a quick reply shortcut »¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/business#quick-reply-shortcuts
+//
+// Possible errors:
+//
+//	400 PEER_ID_INVALID: The provided peer id is invalid.
+//	403 PREMIUM_ACCOUNT_REQUIRED: A premium account is required to execute this action.
+//
+// See https://core.telegram.org/method/messages.sendQuickReplyMessages for reference.
 func (c *Client) MessagesSendQuickReplyMessages(ctx context.Context, request *MessagesSendQuickReplyMessagesRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

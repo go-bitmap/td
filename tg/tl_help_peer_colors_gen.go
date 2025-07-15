@@ -32,6 +32,9 @@ var (
 )
 
 // HelpPeerColorsNotModified represents TL type `help.peerColorsNotModified#2ba1f5ce`.
+// The list of color palettes has not changed.
+//
+// See https://core.telegram.org/constructor/help.peerColorsNotModified for reference.
 type HelpPeerColorsNotModified struct {
 }
 
@@ -131,10 +134,22 @@ func (p *HelpPeerColorsNotModified) DecodeBare(b *bin.Buffer) error {
 }
 
 // HelpPeerColors represents TL type `help.peerColors#f8ed08`.
+// Contains info about multiple color palettes »¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/colors
+//
+// See https://core.telegram.org/constructor/help.peerColors for reference.
 type HelpPeerColors struct {
-	// Hash field of HelpPeerColors.
+	// Hash used for caching, for more info click here¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets#hash-generation
 	Hash int
-	// Colors field of HelpPeerColors.
+	// Usable color palettes¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/colors
 	Colors []HelpPeerColorOption
 }
 
@@ -175,6 +190,15 @@ func (p *HelpPeerColors) String() string {
 	}
 	type Alias HelpPeerColors
 	return fmt.Sprintf("HelpPeerColors%+v", Alias(*p))
+}
+
+// FillFrom fills HelpPeerColors from given interface.
+func (p *HelpPeerColors) FillFrom(from interface {
+	GetHash() (value int)
+	GetColors() (value []HelpPeerColorOption)
+}) {
+	p.Hash = from.GetHash()
+	p.Colors = from.GetColors()
 }
 
 // TypeID returns type id in TL schema.
@@ -300,6 +324,8 @@ const HelpPeerColorsClassName = "help.PeerColors"
 
 // HelpPeerColorsClass represents help.PeerColors generic type.
 //
+// See https://core.telegram.org/type/help.PeerColors for reference.
+//
 // Constructors:
 //   - [HelpPeerColorsNotModified]
 //   - [HelpPeerColors]
@@ -332,6 +358,19 @@ type HelpPeerColorsClass interface {
 	String() string
 	// Zero returns true if current object has a zero value.
 	Zero() bool
+
+	// AsModified tries to map HelpPeerColorsClass to HelpPeerColors.
+	AsModified() (*HelpPeerColors, bool)
+}
+
+// AsModified tries to map HelpPeerColorsNotModified to HelpPeerColors.
+func (p *HelpPeerColorsNotModified) AsModified() (*HelpPeerColors, bool) {
+	return nil, false
+}
+
+// AsModified tries to map HelpPeerColors to HelpPeerColors.
+func (p *HelpPeerColors) AsModified() (*HelpPeerColors, bool) {
+	return p, true
 }
 
 // DecodeHelpPeerColors implements binary de-serialization for HelpPeerColorsClass.

@@ -32,10 +32,14 @@ var (
 )
 
 // AccountGetTmpPasswordRequest represents TL type `account.getTmpPassword#449e0b51`.
+// Get temporary payment password
+//
+// See https://core.telegram.org/method/account.getTmpPassword for reference.
 type AccountGetTmpPasswordRequest struct {
-	// Password field of AccountGetTmpPasswordRequest.
+	// SRP password parameters
 	Password InputCheckPasswordSRPClass
-	// Period field of AccountGetTmpPasswordRequest.
+	// Time during which the temporary password will be valid, in seconds; should be between
+	// 60 and 86400
 	Period int
 }
 
@@ -71,6 +75,15 @@ func (g *AccountGetTmpPasswordRequest) String() string {
 	}
 	type Alias AccountGetTmpPasswordRequest
 	return fmt.Sprintf("AccountGetTmpPasswordRequest%+v", Alias(*g))
+}
+
+// FillFrom fills AccountGetTmpPasswordRequest from given interface.
+func (g *AccountGetTmpPasswordRequest) FillFrom(from interface {
+	GetPassword() (value InputCheckPasswordSRPClass)
+	GetPeriod() (value int)
+}) {
+	g.Password = from.GetPassword()
+	g.Period = from.GetPeriod()
 }
 
 // TypeID returns type id in TL schema.
@@ -181,7 +194,21 @@ func (g *AccountGetTmpPasswordRequest) GetPeriod() (value int) {
 	return g.Period
 }
 
+// GetPasswordAsNotEmpty returns mapped value of Password field.
+func (g *AccountGetTmpPasswordRequest) GetPasswordAsNotEmpty() (*InputCheckPasswordSRP, bool) {
+	return g.Password.AsNotEmpty()
+}
+
 // AccountGetTmpPassword invokes method account.getTmpPassword#449e0b51 returning error if any.
+// Get temporary payment password
+//
+// Possible errors:
+//
+//	400 PASSWORD_HASH_INVALID: The provided password hash is invalid.
+//	400 SRP_A_INVALID: The specified inputCheckPasswordSRP.A value is invalid.
+//	400 TMP_PASSWORD_DISABLED: The temporary password is disabled.
+//
+// See https://core.telegram.org/method/account.getTmpPassword for reference.
 func (c *Client) AccountGetTmpPassword(ctx context.Context, request *AccountGetTmpPasswordRequest) (*AccountTmpPassword, error) {
 	var result AccountTmpPassword
 

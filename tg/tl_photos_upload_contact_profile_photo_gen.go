@@ -32,28 +32,57 @@ var (
 )
 
 // PhotosUploadContactProfilePhotoRequest represents TL type `photos.uploadContactProfilePhoto#e14c4a71`.
+// Upload a custom profile picture for a contact, or suggest a new profile picture to a
+// contact.
+// The file, video and video_emoji_markup flags are mutually exclusive.
+//
+// See https://core.telegram.org/method/photos.uploadContactProfilePhoto for reference.
 type PhotosUploadContactProfilePhotoRequest struct {
-	// Flags field of PhotosUploadContactProfilePhotoRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Suggest field of PhotosUploadContactProfilePhotoRequest.
+	// If set, will send a messageActionSuggestProfilePhoto¹ service message to user_id,
+	// suggesting them to use the specified profile picture; otherwise, will set a personal
+	// profile picture for the user (only visible to the current user).
+	//
+	// Links:
+	//  1) https://core.telegram.org/constructor/messageActionSuggestProfilePhoto
 	Suggest bool
-	// Save field of PhotosUploadContactProfilePhotoRequest.
+	// If set, removes a previously set personal profile picture (does not affect suggested
+	// profile pictures, to remove them simply deleted the messageActionSuggestProfilePhoto¹
+	// service message with messages.deleteMessages²).
+	//
+	// Links:
+	//  1) https://core.telegram.org/constructor/messageActionSuggestProfilePhoto
+	//  2) https://core.telegram.org/method/messages.deleteMessages
 	Save bool
-	// UserID field of PhotosUploadContactProfilePhotoRequest.
+	// The contact
 	UserID InputUserClass
-	// File field of PhotosUploadContactProfilePhotoRequest.
+	// Profile photo
 	//
 	// Use SetFile and GetFile helpers.
 	File InputFileClass
-	// Video field of PhotosUploadContactProfilePhotoRequest.
+	// Animated profile picture¹ video
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/files#animated-profile-pictures
 	//
 	// Use SetVideo and GetVideo helpers.
 	Video InputFileClass
-	// VideoStartTs field of PhotosUploadContactProfilePhotoRequest.
+	// Floating point UNIX timestamp in seconds, indicating the frame of the video/sticker
+	// that should be used as static preview; can only be used if video or video_emoji_markup
+	// is set.
 	//
 	// Use SetVideoStartTs and GetVideoStartTs helpers.
 	VideoStartTs float64
-	// VideoEmojiMarkup field of PhotosUploadContactProfilePhotoRequest.
+	// Animated sticker profile picture, must contain either a videoSizeEmojiMarkup¹ or a
+	// videoSizeStickerMarkup² constructor.
+	//
+	// Links:
+	//  1) https://core.telegram.org/constructor/videoSizeEmojiMarkup
+	//  2) https://core.telegram.org/constructor/videoSizeStickerMarkup
 	//
 	// Use SetVideoEmojiMarkup and GetVideoEmojiMarkup helpers.
 	VideoEmojiMarkup VideoSizeClass
@@ -109,6 +138,37 @@ func (u *PhotosUploadContactProfilePhotoRequest) String() string {
 	}
 	type Alias PhotosUploadContactProfilePhotoRequest
 	return fmt.Sprintf("PhotosUploadContactProfilePhotoRequest%+v", Alias(*u))
+}
+
+// FillFrom fills PhotosUploadContactProfilePhotoRequest from given interface.
+func (u *PhotosUploadContactProfilePhotoRequest) FillFrom(from interface {
+	GetSuggest() (value bool)
+	GetSave() (value bool)
+	GetUserID() (value InputUserClass)
+	GetFile() (value InputFileClass, ok bool)
+	GetVideo() (value InputFileClass, ok bool)
+	GetVideoStartTs() (value float64, ok bool)
+	GetVideoEmojiMarkup() (value VideoSizeClass, ok bool)
+}) {
+	u.Suggest = from.GetSuggest()
+	u.Save = from.GetSave()
+	u.UserID = from.GetUserID()
+	if val, ok := from.GetFile(); ok {
+		u.File = val
+	}
+
+	if val, ok := from.GetVideo(); ok {
+		u.Video = val
+	}
+
+	if val, ok := from.GetVideoStartTs(); ok {
+		u.VideoStartTs = val
+	}
+
+	if val, ok := from.GetVideoEmojiMarkup(); ok {
+		u.VideoEmojiMarkup = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -428,6 +488,16 @@ func (u *PhotosUploadContactProfilePhotoRequest) GetVideoEmojiMarkup() (value Vi
 }
 
 // PhotosUploadContactProfilePhoto invokes method photos.uploadContactProfilePhoto#e14c4a71 returning error if any.
+// Upload a custom profile picture for a contact, or suggest a new profile picture to a
+// contact.
+// The file, video and video_emoji_markup flags are mutually exclusive.
+//
+// Possible errors:
+//
+//	400 CONTACT_MISSING: The specified user is not a contact.
+//	400 USER_ID_INVALID: The provided user ID is invalid.
+//
+// See https://core.telegram.org/method/photos.uploadContactProfilePhoto for reference.
 func (c *Client) PhotosUploadContactProfilePhoto(ctx context.Context, request *PhotosUploadContactProfilePhotoRequest) (*PhotosPhoto, error) {
 	var result PhotosPhoto
 

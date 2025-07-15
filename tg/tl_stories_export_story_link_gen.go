@@ -32,10 +32,16 @@ var (
 )
 
 // StoriesExportStoryLinkRequest represents TL type `stories.exportStoryLink#7b8def20`.
+// Generate a story deep link¹ for a specific story
+//
+// Links:
+//  1. https://core.telegram.org/api/links#story-links
+//
+// See https://core.telegram.org/method/stories.exportStoryLink for reference.
 type StoriesExportStoryLinkRequest struct {
-	// Peer field of StoriesExportStoryLinkRequest.
+	// Peer where the story was posted
 	Peer InputPeerClass
-	// ID field of StoriesExportStoryLinkRequest.
+	// Story ID
 	ID int
 }
 
@@ -71,6 +77,15 @@ func (e *StoriesExportStoryLinkRequest) String() string {
 	}
 	type Alias StoriesExportStoryLinkRequest
 	return fmt.Sprintf("StoriesExportStoryLinkRequest%+v", Alias(*e))
+}
+
+// FillFrom fills StoriesExportStoryLinkRequest from given interface.
+func (e *StoriesExportStoryLinkRequest) FillFrom(from interface {
+	GetPeer() (value InputPeerClass)
+	GetID() (value int)
+}) {
+	e.Peer = from.GetPeer()
+	e.ID = from.GetID()
 }
 
 // TypeID returns type id in TL schema.
@@ -182,6 +197,18 @@ func (e *StoriesExportStoryLinkRequest) GetID() (value int) {
 }
 
 // StoriesExportStoryLink invokes method stories.exportStoryLink#7b8def20 returning error if any.
+// Generate a story deep link¹ for a specific story
+//
+// Links:
+//  1. https://core.telegram.org/api/links#story-links
+//
+// Possible errors:
+//
+//	400 PEER_ID_INVALID: The provided peer id is invalid.
+//	400 STORY_ID_EMPTY: You specified no story IDs.
+//	400 USER_PUBLIC_MISSING: Cannot generate a link to stories posted by a peer without a username.
+//
+// See https://core.telegram.org/method/stories.exportStoryLink for reference.
 func (c *Client) StoriesExportStoryLink(ctx context.Context, request *StoriesExportStoryLinkRequest) (*ExportedStoryLink, error) {
 	var result ExportedStoryLink
 

@@ -32,8 +32,17 @@ var (
 )
 
 // AuthImportLoginTokenRequest represents TL type `auth.importLoginToken#95ac5ce4`.
+// Login using a redirected login token, generated in case of DC mismatch during QR code
+// login¹.
+// For more info, see login via QR code¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/qr-login
+//  2. https://core.telegram.org/api/qr-login
+//
+// See https://core.telegram.org/method/auth.importLoginToken for reference.
 type AuthImportLoginTokenRequest struct {
-	// Token field of AuthImportLoginTokenRequest.
+	// Login token
 	Token []byte
 }
 
@@ -66,6 +75,13 @@ func (i *AuthImportLoginTokenRequest) String() string {
 	}
 	type Alias AuthImportLoginTokenRequest
 	return fmt.Sprintf("AuthImportLoginTokenRequest%+v", Alias(*i))
+}
+
+// FillFrom fills AuthImportLoginTokenRequest from given interface.
+func (i *AuthImportLoginTokenRequest) FillFrom(from interface {
+	GetToken() (value []byte)
+}) {
+	i.Token = from.GetToken()
 }
 
 // TypeID returns type id in TL schema.
@@ -152,6 +168,22 @@ func (i *AuthImportLoginTokenRequest) GetToken() (value []byte) {
 }
 
 // AuthImportLoginToken invokes method auth.importLoginToken#95ac5ce4 returning error if any.
+// Login using a redirected login token, generated in case of DC mismatch during QR code
+// login¹.
+// For more info, see login via QR code¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/qr-login
+//  2. https://core.telegram.org/api/qr-login
+//
+// Possible errors:
+//
+//	400 AUTH_TOKEN_ALREADY_ACCEPTED: The specified auth token was already accepted.
+//	400 AUTH_TOKEN_EXPIRED: The authorization token has expired.
+//	400 AUTH_TOKEN_INVALID: The specified auth token is invalid.
+//	400 AUTH_TOKEN_INVALIDX: The specified auth token is invalid.
+//
+// See https://core.telegram.org/method/auth.importLoginToken for reference.
 func (c *Client) AuthImportLoginToken(ctx context.Context, token []byte) (AuthLoginTokenClass, error) {
 	var result AuthLoginTokenBox
 

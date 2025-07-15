@@ -32,12 +32,24 @@ var (
 )
 
 // MessagesDialogFilters represents TL type `messages.dialogFilters#2ad93719`.
+// Folder and folder tags¹ information
+//
+// Links:
+//  1. https://core.telegram.org/api/folders
+//
+// See https://core.telegram.org/constructor/messages.dialogFilters for reference.
 type MessagesDialogFilters struct {
-	// Flags field of MessagesDialogFilters.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// TagsEnabled field of MessagesDialogFilters.
+	// Whether folder tags¹ are enabled.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/folders#folder-tags
 	TagsEnabled bool
-	// Filters field of MessagesDialogFilters.
+	// Folders.
 	Filters []DialogFilterClass
 }
 
@@ -76,6 +88,15 @@ func (d *MessagesDialogFilters) String() string {
 	}
 	type Alias MessagesDialogFilters
 	return fmt.Sprintf("MessagesDialogFilters%+v", Alias(*d))
+}
+
+// FillFrom fills MessagesDialogFilters from given interface.
+func (d *MessagesDialogFilters) FillFrom(from interface {
+	GetTagsEnabled() (value bool)
+	GetFilters() (value []DialogFilterClass)
+}) {
+	d.TagsEnabled = from.GetTagsEnabled()
+	d.Filters = from.GetFilters()
 }
 
 // TypeID returns type id in TL schema.
@@ -218,4 +239,9 @@ func (d *MessagesDialogFilters) GetFilters() (value []DialogFilterClass) {
 		return
 	}
 	return d.Filters
+}
+
+// MapFilters returns field Filters wrapped in DialogFilterClassArray helper.
+func (d *MessagesDialogFilters) MapFilters() (value DialogFilterClassArray) {
+	return DialogFilterClassArray(d.Filters)
 }

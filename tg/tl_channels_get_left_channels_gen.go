@@ -32,8 +32,19 @@ var (
 )
 
 // ChannelsGetLeftChannelsRequest represents TL type `channels.getLeftChannels#8341ecc0`.
+// Get a list of channels/supergroups¹ we left, requires a takeout session, see here »
+// for more info².
+//
+// Links:
+//  1. https://core.telegram.org/api/channel
+//  2. https://core.telegram.org/api/takeout
+//
+// See https://core.telegram.org/method/channels.getLeftChannels for reference.
 type ChannelsGetLeftChannelsRequest struct {
-	// Offset field of ChannelsGetLeftChannelsRequest.
+	// Offset for pagination¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets
 	Offset int
 }
 
@@ -66,6 +77,13 @@ func (g *ChannelsGetLeftChannelsRequest) String() string {
 	}
 	type Alias ChannelsGetLeftChannelsRequest
 	return fmt.Sprintf("ChannelsGetLeftChannelsRequest%+v", Alias(*g))
+}
+
+// FillFrom fills ChannelsGetLeftChannelsRequest from given interface.
+func (g *ChannelsGetLeftChannelsRequest) FillFrom(from interface {
+	GetOffset() (value int)
+}) {
+	g.Offset = from.GetOffset()
 }
 
 // TypeID returns type id in TL schema.
@@ -152,6 +170,18 @@ func (g *ChannelsGetLeftChannelsRequest) GetOffset() (value int) {
 }
 
 // ChannelsGetLeftChannels invokes method channels.getLeftChannels#8341ecc0 returning error if any.
+// Get a list of channels/supergroups¹ we left, requires a takeout session, see here »
+// for more info².
+//
+// Links:
+//  1. https://core.telegram.org/api/channel
+//  2. https://core.telegram.org/api/takeout
+//
+// Possible errors:
+//
+//	403 TAKEOUT_REQUIRED: A takeout session needs to be initialized first, see here » for more info.
+//
+// See https://core.telegram.org/method/channels.getLeftChannels for reference.
 func (c *Client) ChannelsGetLeftChannels(ctx context.Context, offset int) (MessagesChatsClass, error) {
 	var result MessagesChatsBox
 

@@ -32,10 +32,18 @@ var (
 )
 
 // MessagesSetEncryptedTypingRequest represents TL type `messages.setEncryptedTyping#791451ed`.
+// Send typing event by the current user to a secret chat.
+//
+// See https://core.telegram.org/method/messages.setEncryptedTyping for reference.
 type MessagesSetEncryptedTypingRequest struct {
-	// Peer field of MessagesSetEncryptedTypingRequest.
+	// Secret chat ID
 	Peer InputEncryptedChat
-	// Typing field of MessagesSetEncryptedTypingRequest.
+	// Typing.Possible values:(boolTrue)¹, if the user started typing and more than 5
+	// seconds have passed since the last request(boolFalse)², if the user stopped typing
+	//
+	// Links:
+	//  1) https://core.telegram.org/constructor/boolTrue
+	//  2) https://core.telegram.org/constructor/boolFalse
 	Typing bool
 }
 
@@ -71,6 +79,15 @@ func (s *MessagesSetEncryptedTypingRequest) String() string {
 	}
 	type Alias MessagesSetEncryptedTypingRequest
 	return fmt.Sprintf("MessagesSetEncryptedTypingRequest%+v", Alias(*s))
+}
+
+// FillFrom fills MessagesSetEncryptedTypingRequest from given interface.
+func (s *MessagesSetEncryptedTypingRequest) FillFrom(from interface {
+	GetPeer() (value InputEncryptedChat)
+	GetTyping() (value bool)
+}) {
+	s.Peer = from.GetPeer()
+	s.Typing = from.GetTyping()
 }
 
 // TypeID returns type id in TL schema.
@@ -177,6 +194,13 @@ func (s *MessagesSetEncryptedTypingRequest) GetTyping() (value bool) {
 }
 
 // MessagesSetEncryptedTyping invokes method messages.setEncryptedTyping#791451ed returning error if any.
+// Send typing event by the current user to a secret chat.
+//
+// Possible errors:
+//
+//	400 CHAT_ID_INVALID: The provided chat id is invalid.
+//
+// See https://core.telegram.org/method/messages.setEncryptedTyping for reference.
 func (c *Client) MessagesSetEncryptedTyping(ctx context.Context, request *MessagesSetEncryptedTypingRequest) (bool, error) {
 	var result BoolBox
 

@@ -32,10 +32,13 @@ var (
 )
 
 // PhotosPhoto represents TL type `photos.photo#20212ca8`.
+// Photo with auxiliary data.
+//
+// See https://core.telegram.org/constructor/photos.photo for reference.
 type PhotosPhoto struct {
-	// Photo field of PhotosPhoto.
+	// Photo
 	Photo PhotoClass
-	// Users field of PhotosPhoto.
+	// Users
 	Users []UserClass
 }
 
@@ -71,6 +74,15 @@ func (p *PhotosPhoto) String() string {
 	}
 	type Alias PhotosPhoto
 	return fmt.Sprintf("PhotosPhoto%+v", Alias(*p))
+}
+
+// FillFrom fills PhotosPhoto from given interface.
+func (p *PhotosPhoto) FillFrom(from interface {
+	GetPhoto() (value PhotoClass)
+	GetUsers() (value []UserClass)
+}) {
+	p.Photo = from.GetPhoto()
+	p.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -197,4 +209,14 @@ func (p *PhotosPhoto) GetUsers() (value []UserClass) {
 		return
 	}
 	return p.Users
+}
+
+// GetPhotoAsNotEmpty returns mapped value of Photo field.
+func (p *PhotosPhoto) GetPhotoAsNotEmpty() (*Photo, bool) {
+	return p.Photo.AsNotEmpty()
+}
+
+// MapUsers returns field Users wrapped in UserClassArray helper.
+func (p *PhotosPhoto) MapUsers() (value UserClassArray) {
+	return UserClassArray(p.Users)
 }

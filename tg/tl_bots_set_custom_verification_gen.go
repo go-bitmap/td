@@ -32,6 +32,8 @@ var (
 )
 
 // BotsSetCustomVerificationRequest represents TL type `bots.setCustomVerification#8b89dfbd`.
+//
+// See https://core.telegram.org/method/bots.setCustomVerification for reference.
 type BotsSetCustomVerificationRequest struct {
 	// Flags field of BotsSetCustomVerificationRequest.
 	Flags bin.Fields
@@ -90,6 +92,25 @@ func (s *BotsSetCustomVerificationRequest) String() string {
 	}
 	type Alias BotsSetCustomVerificationRequest
 	return fmt.Sprintf("BotsSetCustomVerificationRequest%+v", Alias(*s))
+}
+
+// FillFrom fills BotsSetCustomVerificationRequest from given interface.
+func (s *BotsSetCustomVerificationRequest) FillFrom(from interface {
+	GetEnabled() (value bool)
+	GetBot() (value InputUserClass, ok bool)
+	GetPeer() (value InputPeerClass)
+	GetCustomDescription() (value string, ok bool)
+}) {
+	s.Enabled = from.GetEnabled()
+	if val, ok := from.GetBot(); ok {
+		s.Bot = val
+	}
+
+	s.Peer = from.GetPeer()
+	if val, ok := from.GetCustomDescription(); ok {
+		s.CustomDescription = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -299,6 +320,8 @@ func (s *BotsSetCustomVerificationRequest) GetCustomDescription() (value string,
 }
 
 // BotsSetCustomVerification invokes method bots.setCustomVerification#8b89dfbd returning error if any.
+//
+// See https://core.telegram.org/method/bots.setCustomVerification for reference.
 func (c *Client) BotsSetCustomVerification(ctx context.Context, request *BotsSetCustomVerificationRequest) (bool, error) {
 	var result BoolBox
 

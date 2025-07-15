@@ -68,6 +68,13 @@ func (vec *PeerClassVector) String() string {
 	return fmt.Sprintf("PeerClassVector%+v", Alias(*vec))
 }
 
+// FillFrom fills PeerClassVector from given interface.
+func (vec *PeerClassVector) FillFrom(from interface {
+	GetElems() (value []PeerClass)
+}) {
+	vec.Elems = from.GetElems()
+}
+
 // TypeID returns type id in TL schema.
 //
 // See https://core.telegram.org/mtproto/TL-tl#remarks.
@@ -165,4 +172,9 @@ func (vec *PeerClassVector) GetElems() (value []PeerClass) {
 		return
 	}
 	return vec.Elems
+}
+
+// MapElems returns field Elems wrapped in PeerClassArray helper.
+func (vec *PeerClassVector) MapElems() (value PeerClassArray) {
+	return PeerClassArray(vec.Elems)
 }

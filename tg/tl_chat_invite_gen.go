@@ -32,8 +32,11 @@ var (
 )
 
 // ChatInviteAlready represents TL type `chatInviteAlready#5a686d7c`.
+// The user has already joined this chat
+//
+// See https://core.telegram.org/constructor/chatInviteAlready for reference.
 type ChatInviteAlready struct {
-	// Chat field of ChatInviteAlready.
+	// The chat connected to the invite
 	Chat ChatClass
 }
 
@@ -71,6 +74,13 @@ func (c *ChatInviteAlready) String() string {
 	}
 	type Alias ChatInviteAlready
 	return fmt.Sprintf("ChatInviteAlready%+v", Alias(*c))
+}
+
+// FillFrom fills ChatInviteAlready from given interface.
+func (c *ChatInviteAlready) FillFrom(from interface {
+	GetChat() (value ChatClass)
+}) {
+	c.Chat = from.GetChat()
 }
 
 // TypeID returns type id in TL schema.
@@ -162,48 +172,87 @@ func (c *ChatInviteAlready) GetChat() (value ChatClass) {
 }
 
 // ChatInvite represents TL type `chatInvite#5c9d3702`.
+// Chat invite info
+//
+// See https://core.telegram.org/constructor/chatInvite for reference.
 type ChatInvite struct {
-	// Flags field of ChatInvite.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Channel field of ChatInvite.
+	// Whether this is a channel/supergroup¹ or a normal group²
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/channel
+	//  2) https://core.telegram.org/api/channel
 	Channel bool
-	// Broadcast field of ChatInvite.
+	// Whether this is a channel¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/channel
 	Broadcast bool
-	// Public field of ChatInvite.
+	// Whether this is a public channel/supergroup¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/channel
 	Public bool
-	// Megagroup field of ChatInvite.
+	// Whether this is a supergroup¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/channel
 	Megagroup bool
-	// RequestNeeded field of ChatInvite.
+	// Whether the join request »¹ must be first approved by an administrator
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/invites#join-requests
 	RequestNeeded bool
-	// Verified field of ChatInvite.
+	// Is this chat or channel verified by Telegram?
 	Verified bool
-	// Scam field of ChatInvite.
+	// This chat is probably a scam
 	Scam bool
-	// Fake field of ChatInvite.
+	// If set, this chat was reported by many users as a fake or scam: be careful when
+	// interacting with it.
 	Fake bool
-	// CanRefulfillSubscription field of ChatInvite.
+	// If set, indicates that the user has already paid for the associated Telegram Star
+	// subscriptions »¹ and it hasn't expired yet, so they may re-join the channel using
+	// messages.importChatInvite² without repeating the payment.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/stars#star-subscriptions
+	//  2) https://core.telegram.org/method/messages.importChatInvite
 	CanRefulfillSubscription bool
-	// Title field of ChatInvite.
+	// Chat/supergroup/channel title
 	Title string
-	// About field of ChatInvite.
+	// Description of the group of channel
 	//
 	// Use SetAbout and GetAbout helpers.
 	About string
-	// Photo field of ChatInvite.
+	// Chat/supergroup/channel photo
 	Photo PhotoClass
-	// ParticipantsCount field of ChatInvite.
+	// Participant count
 	ParticipantsCount int
-	// Participants field of ChatInvite.
+	// A few of the participants that are in the group
 	//
 	// Use SetParticipants and GetParticipants helpers.
 	Participants []UserClass
-	// Color field of ChatInvite.
+	// Profile color palette ID¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/colors
 	Color int
-	// SubscriptionPricing field of ChatInvite.
+	// For Telegram Star subscriptions »¹, contains the pricing of the subscription the
+	// user must activate to join the private channel.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/stars#star-subscriptions
 	//
 	// Use SetSubscriptionPricing and GetSubscriptionPricing helpers.
 	SubscriptionPricing StarsSubscriptionPricing
-	// SubscriptionFormID field of ChatInvite.
+	// For Telegram Star subscriptions »¹, the ID of the payment form for the subscription.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/stars#star-subscriptions
 	//
 	// Use SetSubscriptionFormID and GetSubscriptionFormID helpers.
 	SubscriptionFormID int64
@@ -301,6 +350,62 @@ func (c *ChatInvite) String() string {
 	}
 	type Alias ChatInvite
 	return fmt.Sprintf("ChatInvite%+v", Alias(*c))
+}
+
+// FillFrom fills ChatInvite from given interface.
+func (c *ChatInvite) FillFrom(from interface {
+	GetChannel() (value bool)
+	GetBroadcast() (value bool)
+	GetPublic() (value bool)
+	GetMegagroup() (value bool)
+	GetRequestNeeded() (value bool)
+	GetVerified() (value bool)
+	GetScam() (value bool)
+	GetFake() (value bool)
+	GetCanRefulfillSubscription() (value bool)
+	GetTitle() (value string)
+	GetAbout() (value string, ok bool)
+	GetPhoto() (value PhotoClass)
+	GetParticipantsCount() (value int)
+	GetParticipants() (value []UserClass, ok bool)
+	GetColor() (value int)
+	GetSubscriptionPricing() (value StarsSubscriptionPricing, ok bool)
+	GetSubscriptionFormID() (value int64, ok bool)
+	GetBotVerification() (value BotVerification, ok bool)
+}) {
+	c.Channel = from.GetChannel()
+	c.Broadcast = from.GetBroadcast()
+	c.Public = from.GetPublic()
+	c.Megagroup = from.GetMegagroup()
+	c.RequestNeeded = from.GetRequestNeeded()
+	c.Verified = from.GetVerified()
+	c.Scam = from.GetScam()
+	c.Fake = from.GetFake()
+	c.CanRefulfillSubscription = from.GetCanRefulfillSubscription()
+	c.Title = from.GetTitle()
+	if val, ok := from.GetAbout(); ok {
+		c.About = val
+	}
+
+	c.Photo = from.GetPhoto()
+	c.ParticipantsCount = from.GetParticipantsCount()
+	if val, ok := from.GetParticipants(); ok {
+		c.Participants = val
+	}
+
+	c.Color = from.GetColor()
+	if val, ok := from.GetSubscriptionPricing(); ok {
+		c.SubscriptionPricing = val
+	}
+
+	if val, ok := from.GetSubscriptionFormID(); ok {
+		c.SubscriptionFormID = val
+	}
+
+	if val, ok := from.GetBotVerification(); ok {
+		c.BotVerification = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -914,11 +1019,23 @@ func (c *ChatInvite) GetBotVerification() (value BotVerification, ok bool) {
 	return c.BotVerification, true
 }
 
+// MapParticipants returns field Participants wrapped in UserClassArray helper.
+func (c *ChatInvite) MapParticipants() (value UserClassArray, ok bool) {
+	if !c.Flags.Has(4) {
+		return value, false
+	}
+	return UserClassArray(c.Participants), true
+}
+
 // ChatInvitePeek represents TL type `chatInvitePeek#61695cb0`.
+// A chat invitation that also allows peeking into the group to read messages without
+// joining it.
+//
+// See https://core.telegram.org/constructor/chatInvitePeek for reference.
 type ChatInvitePeek struct {
-	// Chat field of ChatInvitePeek.
+	// Chat information
 	Chat ChatClass
-	// Expires field of ChatInvitePeek.
+	// Read-only anonymous access to this group will be revoked at this date
 	Expires int
 }
 
@@ -959,6 +1076,15 @@ func (c *ChatInvitePeek) String() string {
 	}
 	type Alias ChatInvitePeek
 	return fmt.Sprintf("ChatInvitePeek%+v", Alias(*c))
+}
+
+// FillFrom fills ChatInvitePeek from given interface.
+func (c *ChatInvitePeek) FillFrom(from interface {
+	GetChat() (value ChatClass)
+	GetExpires() (value int)
+}) {
+	c.Chat = from.GetChat()
+	c.Expires = from.GetExpires()
 }
 
 // TypeID returns type id in TL schema.
@@ -1073,6 +1199,8 @@ func (c *ChatInvitePeek) GetExpires() (value int) {
 const ChatInviteClassName = "ChatInvite"
 
 // ChatInviteClass represents ChatInvite generic type.
+//
+// See https://core.telegram.org/type/ChatInvite for reference.
 //
 // Constructors:
 //   - [ChatInviteAlready]

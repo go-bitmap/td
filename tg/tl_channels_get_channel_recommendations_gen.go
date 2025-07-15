@@ -32,10 +32,18 @@ var (
 )
 
 // ChannelsGetChannelRecommendationsRequest represents TL type `channels.getChannelRecommendations#25a71742`.
+// Obtain a list of similarly themed public channels, selected based on similarities in
+// their subscriber bases.
+//
+// See https://core.telegram.org/method/channels.getChannelRecommendations for reference.
 type ChannelsGetChannelRecommendationsRequest struct {
-	// Flags field of ChannelsGetChannelRecommendationsRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Channel field of ChannelsGetChannelRecommendationsRequest.
+	// The method will return channels related to the passed channel. If not set, the method
+	// will returns channels related to channels the user has joined.
 	//
 	// Use SetChannel and GetChannel helpers.
 	Channel InputChannelClass
@@ -73,6 +81,16 @@ func (g *ChannelsGetChannelRecommendationsRequest) String() string {
 	}
 	type Alias ChannelsGetChannelRecommendationsRequest
 	return fmt.Sprintf("ChannelsGetChannelRecommendationsRequest%+v", Alias(*g))
+}
+
+// FillFrom fills ChannelsGetChannelRecommendationsRequest from given interface.
+func (g *ChannelsGetChannelRecommendationsRequest) FillFrom(from interface {
+	GetChannel() (value InputChannelClass, ok bool)
+}) {
+	if val, ok := from.GetChannel(); ok {
+		g.Channel = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -192,7 +210,25 @@ func (g *ChannelsGetChannelRecommendationsRequest) GetChannel() (value InputChan
 	return g.Channel, true
 }
 
+// GetChannelAsNotEmpty returns mapped value of Channel conditional field and
+// boolean which is true if field was set.
+func (g *ChannelsGetChannelRecommendationsRequest) GetChannelAsNotEmpty() (NotEmptyInputChannel, bool) {
+	if value, ok := g.GetChannel(); ok {
+		return value.AsNotEmpty()
+	}
+	return nil, false
+}
+
 // ChannelsGetChannelRecommendations invokes method channels.getChannelRecommendations#25a71742 returning error if any.
+// Obtain a list of similarly themed public channels, selected based on similarities in
+// their subscriber bases.
+//
+// Possible errors:
+//
+//	400 CHANNEL_INVALID: The provided channel is invalid.
+//	400 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
+//
+// See https://core.telegram.org/method/channels.getChannelRecommendations for reference.
 func (c *Client) ChannelsGetChannelRecommendations(ctx context.Context, request *ChannelsGetChannelRecommendationsRequest) (MessagesChatsClass, error) {
 	var result MessagesChatsBox
 

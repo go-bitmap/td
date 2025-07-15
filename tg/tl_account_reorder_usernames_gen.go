@@ -32,8 +32,11 @@ var (
 )
 
 // AccountReorderUsernamesRequest represents TL type `account.reorderUsernames#ef500eab`.
+// Reorder usernames associated with the currently logged-in user.
+//
+// See https://core.telegram.org/method/account.reorderUsernames for reference.
 type AccountReorderUsernamesRequest struct {
-	// Order field of AccountReorderUsernamesRequest.
+	// The new order for active usernames. All active usernames must be specified.
 	Order []string
 }
 
@@ -66,6 +69,13 @@ func (r *AccountReorderUsernamesRequest) String() string {
 	}
 	type Alias AccountReorderUsernamesRequest
 	return fmt.Sprintf("AccountReorderUsernamesRequest%+v", Alias(*r))
+}
+
+// FillFrom fills AccountReorderUsernamesRequest from given interface.
+func (r *AccountReorderUsernamesRequest) FillFrom(from interface {
+	GetOrder() (value []string)
+}) {
+	r.Order = from.GetOrder()
 }
 
 // TypeID returns type id in TL schema.
@@ -165,6 +175,14 @@ func (r *AccountReorderUsernamesRequest) GetOrder() (value []string) {
 }
 
 // AccountReorderUsernames invokes method account.reorderUsernames#ef500eab returning error if any.
+// Reorder usernames associated with the currently logged-in user.
+//
+// Possible errors:
+//
+//	400 ORDER_INVALID: The specified username order is invalid.
+//	400 USERNAME_NOT_MODIFIED: The username was not modified.
+//
+// See https://core.telegram.org/method/account.reorderUsernames for reference.
 func (c *Client) AccountReorderUsernames(ctx context.Context, order []string) (bool, error) {
 	var result BoolBox
 

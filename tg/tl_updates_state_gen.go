@@ -32,16 +32,23 @@ var (
 )
 
 // UpdatesState represents TL type `updates.state#a56c2a3e`.
+// Updates state.
+//
+// See https://core.telegram.org/constructor/updates.state for reference.
 type UpdatesState struct {
-	// Pts field of UpdatesState.
+	// Number of events occurred in a text box
 	Pts int
-	// Qts field of UpdatesState.
+	// Position in a sequence of updates in secret chats. For further details refer to
+	// article secret chats¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/end-to-end
 	Qts int
-	// Date field of UpdatesState.
+	// Date of condition
 	Date int
-	// Seq field of UpdatesState.
+	// Number of sent updates
 	Seq int
-	// UnreadCount field of UpdatesState.
+	// Number of unread messages
 	UnreadCount int
 }
 
@@ -86,6 +93,21 @@ func (s *UpdatesState) String() string {
 	}
 	type Alias UpdatesState
 	return fmt.Sprintf("UpdatesState%+v", Alias(*s))
+}
+
+// FillFrom fills UpdatesState from given interface.
+func (s *UpdatesState) FillFrom(from interface {
+	GetPts() (value int)
+	GetQts() (value int)
+	GetDate() (value int)
+	GetSeq() (value int)
+	GetUnreadCount() (value int)
+}) {
+	s.Pts = from.GetPts()
+	s.Qts = from.GetQts()
+	s.Date = from.GetDate()
+	s.Seq = from.GetSeq()
+	s.UnreadCount = from.GetUnreadCount()
 }
 
 // TypeID returns type id in TL schema.

@@ -32,8 +32,11 @@ var (
 )
 
 // ChannelsDeactivateAllUsernamesRequest represents TL type `channels.deactivateAllUsernames#a245dd3`.
+// Disable all purchased usernames of a supergroup or channel
+//
+// See https://core.telegram.org/method/channels.deactivateAllUsernames for reference.
 type ChannelsDeactivateAllUsernamesRequest struct {
-	// Channel field of ChannelsDeactivateAllUsernamesRequest.
+	// Supergroup or channel
 	Channel InputChannelClass
 }
 
@@ -66,6 +69,13 @@ func (d *ChannelsDeactivateAllUsernamesRequest) String() string {
 	}
 	type Alias ChannelsDeactivateAllUsernamesRequest
 	return fmt.Sprintf("ChannelsDeactivateAllUsernamesRequest%+v", Alias(*d))
+}
+
+// FillFrom fills ChannelsDeactivateAllUsernamesRequest from given interface.
+func (d *ChannelsDeactivateAllUsernamesRequest) FillFrom(from interface {
+	GetChannel() (value InputChannelClass)
+}) {
+	d.Channel = from.GetChannel()
 }
 
 // TypeID returns type id in TL schema.
@@ -156,7 +166,19 @@ func (d *ChannelsDeactivateAllUsernamesRequest) GetChannel() (value InputChannel
 	return d.Channel
 }
 
+// GetChannelAsNotEmpty returns mapped value of Channel field.
+func (d *ChannelsDeactivateAllUsernamesRequest) GetChannelAsNotEmpty() (NotEmptyInputChannel, bool) {
+	return d.Channel.AsNotEmpty()
+}
+
 // ChannelsDeactivateAllUsernames invokes method channels.deactivateAllUsernames#a245dd3 returning error if any.
+// Disable all purchased usernames of a supergroup or channel
+//
+// Possible errors:
+//
+//	400 CHANNEL_INVALID: The provided channel is invalid.
+//
+// See https://core.telegram.org/method/channels.deactivateAllUsernames for reference.
 func (c *Client) ChannelsDeactivateAllUsernames(ctx context.Context, channel InputChannelClass) (bool, error) {
 	var result BoolBox
 

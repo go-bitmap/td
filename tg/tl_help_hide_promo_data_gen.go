@@ -32,8 +32,11 @@ var (
 )
 
 // HelpHidePromoDataRequest represents TL type `help.hidePromoData#1e251c95`.
+// Hide MTProxy/Public Service Announcement information
+//
+// See https://core.telegram.org/method/help.hidePromoData for reference.
 type HelpHidePromoDataRequest struct {
-	// Peer field of HelpHidePromoDataRequest.
+	// Peer to hide
 	Peer InputPeerClass
 }
 
@@ -66,6 +69,13 @@ func (h *HelpHidePromoDataRequest) String() string {
 	}
 	type Alias HelpHidePromoDataRequest
 	return fmt.Sprintf("HelpHidePromoDataRequest%+v", Alias(*h))
+}
+
+// FillFrom fills HelpHidePromoDataRequest from given interface.
+func (h *HelpHidePromoDataRequest) FillFrom(from interface {
+	GetPeer() (value InputPeerClass)
+}) {
+	h.Peer = from.GetPeer()
 }
 
 // TypeID returns type id in TL schema.
@@ -157,6 +167,9 @@ func (h *HelpHidePromoDataRequest) GetPeer() (value InputPeerClass) {
 }
 
 // HelpHidePromoData invokes method help.hidePromoData#1e251c95 returning error if any.
+// Hide MTProxy/Public Service Announcement information
+//
+// See https://core.telegram.org/method/help.hidePromoData for reference.
 func (c *Client) HelpHidePromoData(ctx context.Context, peer InputPeerClass) (bool, error) {
 	var result BoolBox
 

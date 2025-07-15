@@ -32,6 +32,9 @@ var (
 )
 
 // HelpPassportConfigNotModified represents TL type `help.passportConfigNotModified#bfb9f457`.
+// Password configuration not modified
+//
+// See https://core.telegram.org/constructor/help.passportConfigNotModified for reference.
 type HelpPassportConfigNotModified struct {
 }
 
@@ -131,10 +134,19 @@ func (p *HelpPassportConfigNotModified) DecodeBare(b *bin.Buffer) error {
 }
 
 // HelpPassportConfig represents TL type `help.passportConfig#a098d6af`.
+// Telegram passport¹ configuration
+//
+// Links:
+//  1. https://core.telegram.org/passport
+//
+// See https://core.telegram.org/constructor/help.passportConfig for reference.
 type HelpPassportConfig struct {
-	// Hash field of HelpPassportConfig.
+	// Hash used for caching, for more info click here¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets#hash-generation
 	Hash int
-	// CountriesLangs field of HelpPassportConfig.
+	// Localization
 	CountriesLangs DataJSON
 }
 
@@ -175,6 +187,15 @@ func (p *HelpPassportConfig) String() string {
 	}
 	type Alias HelpPassportConfig
 	return fmt.Sprintf("HelpPassportConfig%+v", Alias(*p))
+}
+
+// FillFrom fills HelpPassportConfig from given interface.
+func (p *HelpPassportConfig) FillFrom(from interface {
+	GetHash() (value int)
+	GetCountriesLangs() (value DataJSON)
+}) {
+	p.Hash = from.GetHash()
+	p.CountriesLangs = from.GetCountriesLangs()
 }
 
 // TypeID returns type id in TL schema.
@@ -285,6 +306,8 @@ const HelpPassportConfigClassName = "help.PassportConfig"
 
 // HelpPassportConfigClass represents help.PassportConfig generic type.
 //
+// See https://core.telegram.org/type/help.PassportConfig for reference.
+//
 // Constructors:
 //   - [HelpPassportConfigNotModified]
 //   - [HelpPassportConfig]
@@ -317,6 +340,19 @@ type HelpPassportConfigClass interface {
 	String() string
 	// Zero returns true if current object has a zero value.
 	Zero() bool
+
+	// AsModified tries to map HelpPassportConfigClass to HelpPassportConfig.
+	AsModified() (*HelpPassportConfig, bool)
+}
+
+// AsModified tries to map HelpPassportConfigNotModified to HelpPassportConfig.
+func (p *HelpPassportConfigNotModified) AsModified() (*HelpPassportConfig, bool) {
+	return nil, false
+}
+
+// AsModified tries to map HelpPassportConfig to HelpPassportConfig.
+func (p *HelpPassportConfig) AsModified() (*HelpPassportConfig, bool) {
+	return p, true
 }
 
 // DecodeHelpPassportConfig implements binary de-serialization for HelpPassportConfigClass.

@@ -32,10 +32,14 @@ var (
 )
 
 // StatsAbsValueAndPrev represents TL type `statsAbsValueAndPrev#cb43acde`.
+// Statistics value couple; initial and final value for period of time currently in
+// consideration
+//
+// See https://core.telegram.org/constructor/statsAbsValueAndPrev for reference.
 type StatsAbsValueAndPrev struct {
-	// Current field of StatsAbsValueAndPrev.
+	// Current value
 	Current float64
-	// Previous field of StatsAbsValueAndPrev.
+	// Previous value
 	Previous float64
 }
 
@@ -71,6 +75,15 @@ func (s *StatsAbsValueAndPrev) String() string {
 	}
 	type Alias StatsAbsValueAndPrev
 	return fmt.Sprintf("StatsAbsValueAndPrev%+v", Alias(*s))
+}
+
+// FillFrom fills StatsAbsValueAndPrev from given interface.
+func (s *StatsAbsValueAndPrev) FillFrom(from interface {
+	GetCurrent() (value float64)
+	GetPrevious() (value float64)
+}) {
+	s.Current = from.GetCurrent()
+	s.Previous = from.GetPrevious()
 }
 
 // TypeID returns type id in TL schema.

@@ -32,6 +32,12 @@ var (
 )
 
 // AccountGetConnectedBotsRequest represents TL type `account.getConnectedBots#4ea4c80f`.
+// List all currently connected business bots »¹
+//
+// Links:
+//  1. https://core.telegram.org/api/business#connected-bots
+//
+// See https://core.telegram.org/method/account.getConnectedBots for reference.
 type AccountGetConnectedBotsRequest struct {
 }
 
@@ -126,6 +132,12 @@ func (g *AccountGetConnectedBotsRequest) DecodeBare(b *bin.Buffer) error {
 }
 
 // AccountGetConnectedBots invokes method account.getConnectedBots#4ea4c80f returning error if any.
+// List all currently connected business bots »¹
+//
+// Links:
+//  1. https://core.telegram.org/api/business#connected-bots
+//
+// See https://core.telegram.org/method/account.getConnectedBots for reference.
 func (c *Client) AccountGetConnectedBots(ctx context.Context) (*AccountConnectedBots, error) {
 	var result AccountConnectedBots
 

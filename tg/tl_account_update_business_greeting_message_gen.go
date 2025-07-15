@@ -32,10 +32,19 @@ var (
 )
 
 // AccountUpdateBusinessGreetingMessageRequest represents TL type `account.updateBusinessGreetingMessage#66cdafc4`.
+// Set a list of Telegram Business greeting messages¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/business#greeting-messages
+//
+// See https://core.telegram.org/method/account.updateBusinessGreetingMessage for reference.
 type AccountUpdateBusinessGreetingMessageRequest struct {
-	// Flags field of AccountUpdateBusinessGreetingMessageRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Message field of AccountUpdateBusinessGreetingMessageRequest.
+	// Greeting message configuration and contents.
 	//
 	// Use SetMessage and GetMessage helpers.
 	Message InputBusinessGreetingMessage
@@ -73,6 +82,16 @@ func (u *AccountUpdateBusinessGreetingMessageRequest) String() string {
 	}
 	type Alias AccountUpdateBusinessGreetingMessageRequest
 	return fmt.Sprintf("AccountUpdateBusinessGreetingMessageRequest%+v", Alias(*u))
+}
+
+// FillFrom fills AccountUpdateBusinessGreetingMessageRequest from given interface.
+func (u *AccountUpdateBusinessGreetingMessageRequest) FillFrom(from interface {
+	GetMessage() (value InputBusinessGreetingMessage, ok bool)
+}) {
+	if val, ok := from.GetMessage(); ok {
+		u.Message = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -188,6 +207,12 @@ func (u *AccountUpdateBusinessGreetingMessageRequest) GetMessage() (value InputB
 }
 
 // AccountUpdateBusinessGreetingMessage invokes method account.updateBusinessGreetingMessage#66cdafc4 returning error if any.
+// Set a list of Telegram Business greeting messages¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/business#greeting-messages
+//
+// See https://core.telegram.org/method/account.updateBusinessGreetingMessage for reference.
 func (c *Client) AccountUpdateBusinessGreetingMessage(ctx context.Context, request *AccountUpdateBusinessGreetingMessageRequest) (bool, error) {
 	var result BoolBox
 

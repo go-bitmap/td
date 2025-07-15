@@ -32,38 +32,65 @@ var (
 )
 
 // Boost represents TL type `boost#4b3e14d6`.
+// Info about one or more boosts¹ applied by a specific user.
+//
+// Links:
+//  1. https://core.telegram.org/api/boost
+//
+// See https://core.telegram.org/constructor/boost for reference.
 type Boost struct {
-	// Flags field of Boost.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Gift field of Boost.
+	// Whether this boost was applied because the channel/supergroup directly gifted a
+	// subscription to the user¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/giveaways
 	Gift bool
-	// Giveaway field of Boost.
+	// Whether this boost was applied because the user was chosen in a giveaway started by
+	// the channel/supergroup¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/giveaways
 	Giveaway bool
-	// Unclaimed field of Boost.
+	// If set, the user hasn't yet invoked payments.applyGiftCode¹ to claim a subscription
+	// gifted directly or in a giveaway by the channel².
+	//
+	// Links:
+	//  1) https://core.telegram.org/method/payments.applyGiftCode
+	//  2) https://core.telegram.org/api/giveaways
 	Unclaimed bool
-	// ID field of Boost.
+	// Unique ID for this set of boosts.
 	ID string
-	// UserID field of Boost.
+	// ID of the user that applied the boost.
 	//
 	// Use SetUserID and GetUserID helpers.
 	UserID int64
-	// GiveawayMsgID field of Boost.
+	// The message ID of the giveaway¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/giveaways
 	//
 	// Use SetGiveawayMsgID and GetGiveawayMsgID helpers.
 	GiveawayMsgID int
-	// Date field of Boost.
+	// When was the boost applied
 	Date int
-	// Expires field of Boost.
+	// When does the boost expire
 	Expires int
-	// UsedGiftSlug field of Boost.
+	// The created Telegram Premium gift code, only set if either gift or giveaway are set
+	// AND it is either a gift code for the currently logged in user or if it was already
+	// claimed.
 	//
 	// Use SetUsedGiftSlug and GetUsedGiftSlug helpers.
 	UsedGiftSlug string
-	// Multiplier field of Boost.
+	// If set, this boost counts as multiplier boosts, otherwise it counts as a single boost.
 	//
 	// Use SetMultiplier and GetMultiplier helpers.
 	Multiplier int
-	// Stars field of Boost.
+	// Number of Telegram Stars distributed among the winners of the giveaway.
 	//
 	// Use SetStars and GetStars helpers.
 	Stars int64
@@ -131,6 +158,48 @@ func (b *Boost) String() string {
 	}
 	type Alias Boost
 	return fmt.Sprintf("Boost%+v", Alias(*b))
+}
+
+// FillFrom fills Boost from given interface.
+func (b *Boost) FillFrom(from interface {
+	GetGift() (value bool)
+	GetGiveaway() (value bool)
+	GetUnclaimed() (value bool)
+	GetID() (value string)
+	GetUserID() (value int64, ok bool)
+	GetGiveawayMsgID() (value int, ok bool)
+	GetDate() (value int)
+	GetExpires() (value int)
+	GetUsedGiftSlug() (value string, ok bool)
+	GetMultiplier() (value int, ok bool)
+	GetStars() (value int64, ok bool)
+}) {
+	b.Gift = from.GetGift()
+	b.Giveaway = from.GetGiveaway()
+	b.Unclaimed = from.GetUnclaimed()
+	b.ID = from.GetID()
+	if val, ok := from.GetUserID(); ok {
+		b.UserID = val
+	}
+
+	if val, ok := from.GetGiveawayMsgID(); ok {
+		b.GiveawayMsgID = val
+	}
+
+	b.Date = from.GetDate()
+	b.Expires = from.GetExpires()
+	if val, ok := from.GetUsedGiftSlug(); ok {
+		b.UsedGiftSlug = val
+	}
+
+	if val, ok := from.GetMultiplier(); ok {
+		b.Multiplier = val
+	}
+
+	if val, ok := from.GetStars(); ok {
+		b.Stars = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.

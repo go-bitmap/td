@@ -32,32 +32,51 @@ var (
 )
 
 // MessagesForwardMessagesRequest represents TL type `messages.forwardMessages#38f0188c`.
+// Forwards messages by their IDs.
+//
+// See https://core.telegram.org/method/messages.forwardMessages for reference.
 type MessagesForwardMessagesRequest struct {
-	// Flags field of MessagesForwardMessagesRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Silent field of MessagesForwardMessagesRequest.
+	// Whether to send messages silently (no notification will be triggered on the
+	// destination clients)
 	Silent bool
-	// Background field of MessagesForwardMessagesRequest.
+	// Whether to send the message in background
 	Background bool
-	// WithMyScore field of MessagesForwardMessagesRequest.
+	// When forwarding games, whether to include your score in the game
 	WithMyScore bool
-	// DropAuthor field of MessagesForwardMessagesRequest.
+	// Whether to forward messages without quoting the original author
 	DropAuthor bool
-	// DropMediaCaptions field of MessagesForwardMessagesRequest.
+	// Whether to strip captions from media
 	DropMediaCaptions bool
-	// Noforwards field of MessagesForwardMessagesRequest.
+	// Only for bots, disallows further re-forwarding and saving of the messages, even if the
+	// destination chat doesn't have content protection¹ enabled
+	//
+	// Links:
+	//  1) https://telegram.org/blog/protected-content-delete-by-date-and-more
 	Noforwards bool
-	// AllowPaidFloodskip field of MessagesForwardMessagesRequest.
+	// Bots only: if set, allows sending up to 1000 messages per second, ignoring
+	// broadcasting limits¹ for a fee of 0.1 Telegram Stars per message. The relevant Stars
+	// will be withdrawn from the bot's balance.
+	//
+	// Links:
+	//  1) https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once
 	AllowPaidFloodskip bool
-	// FromPeer field of MessagesForwardMessagesRequest.
+	// Source of messages
 	FromPeer InputPeerClass
-	// ID field of MessagesForwardMessagesRequest.
+	// IDs of messages
 	ID []int
-	// RandomID field of MessagesForwardMessagesRequest.
+	// Random ID to prevent resending of messages
 	RandomID []int64
-	// ToPeer field of MessagesForwardMessagesRequest.
+	// Destination peer
 	ToPeer InputPeerClass
-	// TopMsgID field of MessagesForwardMessagesRequest.
+	// Destination forum topic¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/forum#forum-topics
 	//
 	// Use SetTopMsgID and GetTopMsgID helpers.
 	TopMsgID int
@@ -65,15 +84,18 @@ type MessagesForwardMessagesRequest struct {
 	//
 	// Use SetReplyTo and GetReplyTo helpers.
 	ReplyTo InputReplyToClass
-	// ScheduleDate field of MessagesForwardMessagesRequest.
+	// Scheduled message date for scheduled messages
 	//
 	// Use SetScheduleDate and GetScheduleDate helpers.
 	ScheduleDate int
-	// SendAs field of MessagesForwardMessagesRequest.
+	// Forward the messages as the specified peer
 	//
 	// Use SetSendAs and GetSendAs helpers.
 	SendAs InputPeerClass
-	// QuickReplyShortcut field of MessagesForwardMessagesRequest.
+	// Add the messages to the specified quick reply shortcut »¹, instead.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/business#quick-reply-shortcuts
 	//
 	// Use SetQuickReplyShortcut and GetQuickReplyShortcut helpers.
 	QuickReplyShortcut InputQuickReplyShortcutClass
@@ -170,6 +192,68 @@ func (f *MessagesForwardMessagesRequest) String() string {
 	}
 	type Alias MessagesForwardMessagesRequest
 	return fmt.Sprintf("MessagesForwardMessagesRequest%+v", Alias(*f))
+}
+
+// FillFrom fills MessagesForwardMessagesRequest from given interface.
+func (f *MessagesForwardMessagesRequest) FillFrom(from interface {
+	GetSilent() (value bool)
+	GetBackground() (value bool)
+	GetWithMyScore() (value bool)
+	GetDropAuthor() (value bool)
+	GetDropMediaCaptions() (value bool)
+	GetNoforwards() (value bool)
+	GetAllowPaidFloodskip() (value bool)
+	GetFromPeer() (value InputPeerClass)
+	GetID() (value []int)
+	GetRandomID() (value []int64)
+	GetToPeer() (value InputPeerClass)
+	GetTopMsgID() (value int, ok bool)
+	GetReplyTo() (value InputReplyToClass, ok bool)
+	GetScheduleDate() (value int, ok bool)
+	GetSendAs() (value InputPeerClass, ok bool)
+	GetQuickReplyShortcut() (value InputQuickReplyShortcutClass, ok bool)
+	GetVideoTimestamp() (value int, ok bool)
+	GetAllowPaidStars() (value int64, ok bool)
+}) {
+	f.Silent = from.GetSilent()
+	f.Background = from.GetBackground()
+	f.WithMyScore = from.GetWithMyScore()
+	f.DropAuthor = from.GetDropAuthor()
+	f.DropMediaCaptions = from.GetDropMediaCaptions()
+	f.Noforwards = from.GetNoforwards()
+	f.AllowPaidFloodskip = from.GetAllowPaidFloodskip()
+	f.FromPeer = from.GetFromPeer()
+	f.ID = from.GetID()
+	f.RandomID = from.GetRandomID()
+	f.ToPeer = from.GetToPeer()
+	if val, ok := from.GetTopMsgID(); ok {
+		f.TopMsgID = val
+	}
+
+	if val, ok := from.GetReplyTo(); ok {
+		f.ReplyTo = val
+	}
+
+	if val, ok := from.GetScheduleDate(); ok {
+		f.ScheduleDate = val
+	}
+
+	if val, ok := from.GetSendAs(); ok {
+		f.SendAs = val
+	}
+
+	if val, ok := from.GetQuickReplyShortcut(); ok {
+		f.QuickReplyShortcut = val
+	}
+
+	if val, ok := from.GetVideoTimestamp(); ok {
+		f.VideoTimestamp = val
+	}
+
+	if val, ok := from.GetAllowPaidStars(); ok {
+		f.AllowPaidStars = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -828,6 +912,61 @@ func (f *MessagesForwardMessagesRequest) GetAllowPaidStars() (value int64, ok bo
 }
 
 // MessagesForwardMessages invokes method messages.forwardMessages#38f0188c returning error if any.
+// Forwards messages by their IDs.
+//
+// Possible errors:
+//
+//	400 BROADCAST_PUBLIC_VOTERS_FORBIDDEN: You can't forward polls with public voters.
+//	400 CHANNEL_INVALID: The provided channel is invalid.
+//	406 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
+//	403 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
+//	406 CHAT_FORWARDS_RESTRICTED: You can't forward messages from a protected chat.
+//	403 CHAT_GUEST_SEND_FORBIDDEN: You join the discussion group before commenting, see here » for more info.
+//	400 CHAT_ID_INVALID: The provided chat id is invalid.
+//	400 CHAT_RESTRICTED: You can't send messages in this chat, you were restricted.
+//	403 CHAT_SEND_AUDIOS_FORBIDDEN: You can't send audio messages in this chat.
+//	403 CHAT_SEND_DOCS_FORBIDDEN: You can't send documents in this chat.
+//	403 CHAT_SEND_GAME_FORBIDDEN: You can't send a game to this chat.
+//	403 CHAT_SEND_GIFS_FORBIDDEN: You can't send gifs in this chat.
+//	403 CHAT_SEND_MEDIA_FORBIDDEN: You can't send media in this chat.
+//	403 CHAT_SEND_PHOTOS_FORBIDDEN: You can't send photos in this chat.
+//	403 CHAT_SEND_PLAIN_FORBIDDEN: You can't send non-media (text) messages in this chat.
+//	403 CHAT_SEND_POLL_FORBIDDEN: You can't send polls in this chat.
+//	403 CHAT_SEND_STICKERS_FORBIDDEN: You can't send stickers in this chat.
+//	403 CHAT_SEND_VIDEOS_FORBIDDEN: You can't send videos in this chat.
+//	403 CHAT_SEND_VOICES_FORBIDDEN: You can't send voice recordings in this chat.
+//	403 CHAT_WRITE_FORBIDDEN: You can't write in this chat.
+//	400 GROUPED_MEDIA_INVALID: Invalid grouped media.
+//	400 INPUT_USER_DEACTIVATED: The specified user was deleted.
+//	400 MEDIA_EMPTY: The provided media object is invalid.
+//	400 MESSAGE_IDS_EMPTY: No message ids were provided.
+//	400 MESSAGE_ID_INVALID: The provided message id is invalid.
+//	400 MSG_ID_INVALID: Invalid message ID provided.
+//	406 PAYMENT_UNSUPPORTED: A detailed description of the error will be received separately as described here ».
+//	400 PEER_ID_INVALID: The provided peer id is invalid.
+//	403 PREMIUM_ACCOUNT_REQUIRED: A premium account is required to execute this action.
+//	406 PRIVACY_PREMIUM_REQUIRED: You need a Telegram Premium subscription to send a message to this user.
+//	400 QUICK_REPLIES_TOO_MUCH: A maximum of appConfig.quick_replies_limit shortcuts may be created, the limit was reached.
+//	400 QUIZ_ANSWER_MISSING: You can forward a quiz while hiding the original author only after choosing an option in the quiz.
+//	500 RANDOM_ID_DUPLICATE: You provided a random ID that was already used.
+//	400 RANDOM_ID_INVALID: A provided random ID is invalid.
+//	400 REPLY_MESSAGES_TOO_MUCH: Each shortcut can contain a maximum of appConfig.quick_reply_messages_limit messages, the limit was reached.
+//	400 SCHEDULE_BOT_NOT_ALLOWED: Bots cannot schedule messages.
+//	400 SCHEDULE_DATE_TOO_LATE: You can't schedule a message this far in the future.
+//	400 SCHEDULE_TOO_MUCH: There are too many scheduled messages.
+//	400 SEND_AS_PEER_INVALID: You can't send messages as the specified peer.
+//	400 SLOWMODE_MULTI_MSGS_DISABLED: Slowmode is enabled, you cannot forward multiple messages to this group.
+//	420 SLOWMODE_WAIT_%d: Slowmode is enabled in this chat: wait %d seconds before sending another message to this chat.
+//	406 TOPIC_CLOSED: This topic was closed, you can't send messages to it anymore.
+//	406 TOPIC_DELETED: The specified topic was deleted.
+//	400 USER_BANNED_IN_CHANNEL: You're banned from sending messages in supergroups/channels.
+//	403 USER_IS_BLOCKED: You were blocked by this user.
+//	400 USER_IS_BOT: Bots can't send messages to other bots.
+//	403 VOICE_MESSAGES_FORBIDDEN: This user's privacy settings forbid you from sending voice messages.
+//	400 YOU_BLOCKED_USER: You blocked this user.
+//
+// See https://core.telegram.org/method/messages.forwardMessages for reference.
+// Can be used by bots.
 func (c *Client) MessagesForwardMessages(ctx context.Context, request *MessagesForwardMessagesRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

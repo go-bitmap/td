@@ -32,6 +32,9 @@ var (
 )
 
 // SMSJobsJoinRequest represents TL type `smsjobs.join#a74ece2d`.
+// Enable SMS jobs (official clients only).
+//
+// See https://core.telegram.org/method/smsjobs.join for reference.
 type SMSJobsJoinRequest struct {
 }
 
@@ -126,6 +129,13 @@ func (j *SMSJobsJoinRequest) DecodeBare(b *bin.Buffer) error {
 }
 
 // SMSJobsJoin invokes method smsjobs.join#a74ece2d returning error if any.
+// Enable SMS jobs (official clients only).
+//
+// Possible errors:
+//
+//	400 NOT_ELIGIBLE: The current user is not eligible to join the Peer-to-Peer Login Program.
+//
+// See https://core.telegram.org/method/smsjobs.join for reference.
 func (c *Client) SMSJobsJoin(ctx context.Context) (bool, error) {
 	var result BoolBox
 

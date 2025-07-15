@@ -32,10 +32,13 @@ var (
 )
 
 // AccountSendChangePhoneCodeRequest represents TL type `account.sendChangePhoneCode#82574ae5`.
+// Verify a new phone number to associate to the current account
+//
+// See https://core.telegram.org/method/account.sendChangePhoneCode for reference.
 type AccountSendChangePhoneCodeRequest struct {
-	// PhoneNumber field of AccountSendChangePhoneCodeRequest.
+	// New phone number
 	PhoneNumber string
-	// Settings field of AccountSendChangePhoneCodeRequest.
+	// Phone code settings
 	Settings CodeSettings
 }
 
@@ -71,6 +74,15 @@ func (s *AccountSendChangePhoneCodeRequest) String() string {
 	}
 	type Alias AccountSendChangePhoneCodeRequest
 	return fmt.Sprintf("AccountSendChangePhoneCodeRequest%+v", Alias(*s))
+}
+
+// FillFrom fills AccountSendChangePhoneCodeRequest from given interface.
+func (s *AccountSendChangePhoneCodeRequest) FillFrom(from interface {
+	GetPhoneNumber() (value string)
+	GetSettings() (value CodeSettings)
+}) {
+	s.PhoneNumber = from.GetPhoneNumber()
+	s.Settings = from.GetSettings()
 }
 
 // TypeID returns type id in TL schema.
@@ -177,6 +189,16 @@ func (s *AccountSendChangePhoneCodeRequest) GetSettings() (value CodeSettings) {
 }
 
 // AccountSendChangePhoneCode invokes method account.sendChangePhoneCode#82574ae5 returning error if any.
+// Verify a new phone number to associate to the current account
+//
+// Possible errors:
+//
+//	406 FRESH_CHANGE_PHONE_FORBIDDEN: You can't change phone number right after logging in, please wait at least 24 hours.
+//	400 PHONE_NUMBER_BANNED: The provided phone number is banned from telegram.
+//	406 PHONE_NUMBER_INVALID: The phone number is invalid.
+//	400 PHONE_NUMBER_OCCUPIED: The phone number is already in use.
+//
+// See https://core.telegram.org/method/account.sendChangePhoneCode for reference.
 func (c *Client) AccountSendChangePhoneCode(ctx context.Context, request *AccountSendChangePhoneCodeRequest) (AuthSentCodeClass, error) {
 	var result AuthSentCodeBox
 

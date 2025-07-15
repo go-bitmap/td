@@ -32,6 +32,8 @@ var (
 )
 
 // MessagesGetSavedDialogsByIDRequest represents TL type `messages.getSavedDialogsByID#6f6f9c96`.
+//
+// See https://core.telegram.org/method/messages.getSavedDialogsByID for reference.
 type MessagesGetSavedDialogsByIDRequest struct {
 	// Flags field of MessagesGetSavedDialogsByIDRequest.
 	Flags bin.Fields
@@ -78,6 +80,18 @@ func (g *MessagesGetSavedDialogsByIDRequest) String() string {
 	}
 	type Alias MessagesGetSavedDialogsByIDRequest
 	return fmt.Sprintf("MessagesGetSavedDialogsByIDRequest%+v", Alias(*g))
+}
+
+// FillFrom fills MessagesGetSavedDialogsByIDRequest from given interface.
+func (g *MessagesGetSavedDialogsByIDRequest) FillFrom(from interface {
+	GetParentPeer() (value InputPeerClass, ok bool)
+	GetIDs() (value []InputPeerClass)
+}) {
+	if val, ok := from.GetParentPeer(); ok {
+		g.ParentPeer = val
+	}
+
+	g.IDs = from.GetIDs()
 }
 
 // TypeID returns type id in TL schema.
@@ -235,7 +249,14 @@ func (g *MessagesGetSavedDialogsByIDRequest) GetIDs() (value []InputPeerClass) {
 	return g.IDs
 }
 
+// MapIDs returns field IDs wrapped in InputPeerClassArray helper.
+func (g *MessagesGetSavedDialogsByIDRequest) MapIDs() (value InputPeerClassArray) {
+	return InputPeerClassArray(g.IDs)
+}
+
 // MessagesGetSavedDialogsByID invokes method messages.getSavedDialogsByID#6f6f9c96 returning error if any.
+//
+// See https://core.telegram.org/method/messages.getSavedDialogsByID for reference.
 func (c *Client) MessagesGetSavedDialogsByID(ctx context.Context, request *MessagesGetSavedDialogsByIDRequest) (MessagesSavedDialogsClass, error) {
 	var result MessagesSavedDialogsBox
 

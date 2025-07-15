@@ -32,16 +32,29 @@ var (
 )
 
 // MessagesSetTypingRequest represents TL type `messages.setTyping#58943ee2`.
+// Sends a current user typing event (see SendMessageAction¹ for all event types) to a
+// conversation partner or group.
+//
+// Links:
+//  1. https://core.telegram.org/type/SendMessageAction
+//
+// See https://core.telegram.org/method/messages.setTyping for reference.
 type MessagesSetTypingRequest struct {
-	// Flags field of MessagesSetTypingRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Peer field of MessagesSetTypingRequest.
+	// Target user or group
 	Peer InputPeerClass
-	// TopMsgID field of MessagesSetTypingRequest.
+	// Topic ID¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/threads
 	//
 	// Use SetTopMsgID and GetTopMsgID helpers.
 	TopMsgID int
-	// Action field of MessagesSetTypingRequest.
+	// Type of action
 	Action SendMessageActionClass
 }
 
@@ -83,6 +96,20 @@ func (s *MessagesSetTypingRequest) String() string {
 	}
 	type Alias MessagesSetTypingRequest
 	return fmt.Sprintf("MessagesSetTypingRequest%+v", Alias(*s))
+}
+
+// FillFrom fills MessagesSetTypingRequest from given interface.
+func (s *MessagesSetTypingRequest) FillFrom(from interface {
+	GetPeer() (value InputPeerClass)
+	GetTopMsgID() (value int, ok bool)
+	GetAction() (value SendMessageActionClass)
+}) {
+	s.Peer = from.GetPeer()
+	if val, ok := from.GetTopMsgID(); ok {
+		s.TopMsgID = val
+	}
+
+	s.Action = from.GetAction()
 }
 
 // TypeID returns type id in TL schema.
@@ -248,6 +275,31 @@ func (s *MessagesSetTypingRequest) GetAction() (value SendMessageActionClass) {
 }
 
 // MessagesSetTyping invokes method messages.setTyping#58943ee2 returning error if any.
+// Sends a current user typing event (see SendMessageAction¹ for all event types) to a
+// conversation partner or group.
+//
+// Links:
+//  1. https://core.telegram.org/type/SendMessageAction
+//
+// Possible errors:
+//
+//	400 BUSINESS_PEER_INVALID: Messages can't be set to the specified peer through the current business connection.
+//	400 BUSINESS_PEER_USAGE_MISSING: You cannot send a message to a user through a business connection if the user hasn't recently contacted us.
+//	400 CHANNEL_INVALID: The provided channel is invalid.
+//	406 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
+//	400 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
+//	400 CHAT_ID_INVALID: The provided chat id is invalid.
+//	403 CHAT_WRITE_FORBIDDEN: You can't write in this chat.
+//	403 GROUPCALL_FORBIDDEN: The group call has already ended.
+//	400 INPUT_USER_DEACTIVATED: The specified user was deleted.
+//	400 MSG_ID_INVALID: Invalid message ID provided.
+//	400 PEER_ID_INVALID: The provided peer id is invalid.
+//	400 USER_BANNED_IN_CHANNEL: You're banned from sending messages in supergroups/channels.
+//	403 USER_IS_BLOCKED: You were blocked by this user.
+//	400 USER_IS_BOT: Bots can't send messages to other bots.
+//
+// See https://core.telegram.org/method/messages.setTyping for reference.
+// Can be used by bots.
 func (c *Client) MessagesSetTyping(ctx context.Context, request *MessagesSetTypingRequest) (bool, error) {
 	var result BoolBox
 

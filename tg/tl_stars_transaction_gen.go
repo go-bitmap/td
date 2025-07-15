@@ -32,18 +32,30 @@ var (
 )
 
 // StarsTransaction represents TL type `starsTransaction#a39fd94a`.
+// Represents a Telegram Stars transaction »¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/stars
+//
+// See https://core.telegram.org/constructor/starsTransaction for reference.
 type StarsTransaction struct {
-	// Flags field of StarsTransaction.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Refund field of StarsTransaction.
+	// Whether this transaction is a refund.
 	Refund bool
-	// Pending field of StarsTransaction.
+	// The transaction is currently pending.
 	Pending bool
-	// Failed field of StarsTransaction.
+	// This transaction has failed.
 	Failed bool
-	// Gift field of StarsTransaction.
+	// This transaction was a gift from the user in peer.peer.
 	Gift bool
-	// Reaction field of StarsTransaction.
+	// This transaction is a paid reaction »¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/reactions#paid-reactions
 	Reaction bool
 	// StargiftUpgrade field of StarsTransaction.
 	StargiftUpgrade bool
@@ -51,71 +63,122 @@ type StarsTransaction struct {
 	BusinessTransfer bool
 	// StargiftResale field of StarsTransaction.
 	StargiftResale bool
-	// ID field of StarsTransaction.
+	// Transaction ID.
 	ID string
-	// Stars field of StarsTransaction.
+	// Amount of Stars (negative for outgoing transactions).
 	Stars StarsAmount
-	// Date field of StarsTransaction.
+	// Date of the transaction (unixtime).
 	Date int
-	// Peer field of StarsTransaction.
+	// Source of the incoming transaction, or its recipient for outgoing transactions.
 	Peer StarsTransactionPeerClass
-	// Title field of StarsTransaction.
+	// For transactions with bots, title of the bought product.
 	//
 	// Use SetTitle and GetTitle helpers.
 	Title string
-	// Description field of StarsTransaction.
+	// For transactions with bots, description of the bought product.
 	//
 	// Use SetDescription and GetDescription helpers.
 	Description string
-	// Photo field of StarsTransaction.
+	// For transactions with bots, photo of the bought product.
 	//
 	// Use SetPhoto and GetPhoto helpers.
 	Photo WebDocumentClass
-	// TransactionDate field of StarsTransaction.
+	// If neither pending nor failed are set, the transaction was completed successfully, and
+	// this field will contain the point in time (Unix timestamp) when the withdrawal was
+	// completed successfully.
 	//
 	// Use SetTransactionDate and GetTransactionDate helpers.
 	TransactionDate int
-	// TransactionURL field of StarsTransaction.
+	// If neither pending nor failed are set, the transaction was completed successfully, and
+	// this field will contain a URL where the withdrawal transaction can be viewed.
 	//
 	// Use SetTransactionURL and GetTransactionURL helpers.
 	TransactionURL string
-	// BotPayload field of StarsTransaction.
+	// Bot specified invoice payload (i.e. the payload passed to inputMediaInvoice¹ when
+	// creating the invoice²).
+	//
+	// Links:
+	//  1) https://core.telegram.org/constructor/inputMediaInvoice
+	//  2) https://core.telegram.org/api/payments
 	//
 	// Use SetBotPayload and GetBotPayload helpers.
 	BotPayload []byte
-	// MsgID field of StarsTransaction.
+	// For paid media transactions »¹, message ID of the paid media posted to peer.peer
+	// (can point to a deleted message; either way, extended_media will always contain the
+	// bought media).
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/paid-media
 	//
 	// Use SetMsgID and GetMsgID helpers.
 	MsgID int
-	// ExtendedMedia field of StarsTransaction.
+	// The purchased paid media »¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/paid-media
 	//
 	// Use SetExtendedMedia and GetExtendedMedia helpers.
 	ExtendedMedia []MessageMediaClass
-	// SubscriptionPeriod field of StarsTransaction.
+	// The number of seconds between consecutive Telegram Star debiting for Telegram Star
+	// subscriptions »¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/stars#star-subscriptions
 	//
 	// Use SetSubscriptionPeriod and GetSubscriptionPeriod helpers.
 	SubscriptionPeriod int
-	// GiveawayPostID field of StarsTransaction.
+	// ID of the message containing the messageMediaGiveaway¹, for incoming star giveaway
+	// prizes².
+	//
+	// Links:
+	//  1) https://core.telegram.org/constructor/messageMediaGiveaway
+	//  2) https://core.telegram.org/api/giveaways#star-giveaways
 	//
 	// Use SetGiveawayPostID and GetGiveawayPostID helpers.
 	GiveawayPostID int
-	// Stargift field of StarsTransaction.
+	// This transaction indicates a purchase or a sale (conversion back to Stars) of a gift
+	// »¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/stars
 	//
 	// Use SetStargift and GetStargift helpers.
 	Stargift StarGiftClass
-	// FloodskipNumber field of StarsTransaction.
+	// This transaction is payment for paid bot broadcasts¹.  Paid broadcasts are only
+	// allowed if the allow_paid_floodskip parameter of messages.sendMessage² and other
+	// message sending methods is set while trying to broadcast more than 30 messages per
+	// second to bot users. The integer value returned by this flag indicates the number of
+	// billed API calls.
+	//
+	// Links:
+	//  1) https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once
+	//  2) https://core.telegram.org/method/messages.sendMessage
 	//
 	// Use SetFloodskipNumber and GetFloodskipNumber helpers.
 	FloodskipNumber int
-	// StarrefCommissionPermille field of StarsTransaction.
+	// This transaction is the receival (or refund) of an affiliate commission¹ (i.e. this
+	// is the transaction received by the peer that created the referral link², flag 17 is
+	// for transactions made by users that imported the referral link).
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/bots/referrals
+	//  2) https://core.telegram.org/api/links#referral-links
 	//
 	// Use SetStarrefCommissionPermille and GetStarrefCommissionPermille helpers.
 	StarrefCommissionPermille int
-	// StarrefPeer field of StarsTransaction.
+	// For transactions made by referred users¹, the peer that received the affiliate
+	// commission.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/bots/referrals
 	//
 	// Use SetStarrefPeer and GetStarrefPeer helpers.
 	StarrefPeer PeerClass
-	// StarrefAmount field of StarsTransaction.
+	// For transactions made by referred users¹, the amount of Telegram Stars received by
+	// the affiliate, can be negative for refunds.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/bots/referrals
 	//
 	// Use SetStarrefAmount and GetStarrefAmount helpers.
 	StarrefAmount StarsAmount
@@ -245,6 +308,120 @@ func (s *StarsTransaction) String() string {
 	}
 	type Alias StarsTransaction
 	return fmt.Sprintf("StarsTransaction%+v", Alias(*s))
+}
+
+// FillFrom fills StarsTransaction from given interface.
+func (s *StarsTransaction) FillFrom(from interface {
+	GetRefund() (value bool)
+	GetPending() (value bool)
+	GetFailed() (value bool)
+	GetGift() (value bool)
+	GetReaction() (value bool)
+	GetStargiftUpgrade() (value bool)
+	GetBusinessTransfer() (value bool)
+	GetStargiftResale() (value bool)
+	GetID() (value string)
+	GetStars() (value StarsAmount)
+	GetDate() (value int)
+	GetPeer() (value StarsTransactionPeerClass)
+	GetTitle() (value string, ok bool)
+	GetDescription() (value string, ok bool)
+	GetPhoto() (value WebDocumentClass, ok bool)
+	GetTransactionDate() (value int, ok bool)
+	GetTransactionURL() (value string, ok bool)
+	GetBotPayload() (value []byte, ok bool)
+	GetMsgID() (value int, ok bool)
+	GetExtendedMedia() (value []MessageMediaClass, ok bool)
+	GetSubscriptionPeriod() (value int, ok bool)
+	GetGiveawayPostID() (value int, ok bool)
+	GetStargift() (value StarGiftClass, ok bool)
+	GetFloodskipNumber() (value int, ok bool)
+	GetStarrefCommissionPermille() (value int, ok bool)
+	GetStarrefPeer() (value PeerClass, ok bool)
+	GetStarrefAmount() (value StarsAmount, ok bool)
+	GetPaidMessages() (value int, ok bool)
+	GetPremiumGiftMonths() (value int, ok bool)
+}) {
+	s.Refund = from.GetRefund()
+	s.Pending = from.GetPending()
+	s.Failed = from.GetFailed()
+	s.Gift = from.GetGift()
+	s.Reaction = from.GetReaction()
+	s.StargiftUpgrade = from.GetStargiftUpgrade()
+	s.BusinessTransfer = from.GetBusinessTransfer()
+	s.StargiftResale = from.GetStargiftResale()
+	s.ID = from.GetID()
+	s.Stars = from.GetStars()
+	s.Date = from.GetDate()
+	s.Peer = from.GetPeer()
+	if val, ok := from.GetTitle(); ok {
+		s.Title = val
+	}
+
+	if val, ok := from.GetDescription(); ok {
+		s.Description = val
+	}
+
+	if val, ok := from.GetPhoto(); ok {
+		s.Photo = val
+	}
+
+	if val, ok := from.GetTransactionDate(); ok {
+		s.TransactionDate = val
+	}
+
+	if val, ok := from.GetTransactionURL(); ok {
+		s.TransactionURL = val
+	}
+
+	if val, ok := from.GetBotPayload(); ok {
+		s.BotPayload = val
+	}
+
+	if val, ok := from.GetMsgID(); ok {
+		s.MsgID = val
+	}
+
+	if val, ok := from.GetExtendedMedia(); ok {
+		s.ExtendedMedia = val
+	}
+
+	if val, ok := from.GetSubscriptionPeriod(); ok {
+		s.SubscriptionPeriod = val
+	}
+
+	if val, ok := from.GetGiveawayPostID(); ok {
+		s.GiveawayPostID = val
+	}
+
+	if val, ok := from.GetStargift(); ok {
+		s.Stargift = val
+	}
+
+	if val, ok := from.GetFloodskipNumber(); ok {
+		s.FloodskipNumber = val
+	}
+
+	if val, ok := from.GetStarrefCommissionPermille(); ok {
+		s.StarrefCommissionPermille = val
+	}
+
+	if val, ok := from.GetStarrefPeer(); ok {
+		s.StarrefPeer = val
+	}
+
+	if val, ok := from.GetStarrefAmount(); ok {
+		s.StarrefAmount = val
+	}
+
+	if val, ok := from.GetPaidMessages(); ok {
+		s.PaidMessages = val
+	}
+
+	if val, ok := from.GetPremiumGiftMonths(); ok {
+		s.PremiumGiftMonths = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -1275,4 +1452,12 @@ func (s *StarsTransaction) GetPremiumGiftMonths() (value int, ok bool) {
 		return value, false
 	}
 	return s.PremiumGiftMonths, true
+}
+
+// MapExtendedMedia returns field ExtendedMedia wrapped in MessageMediaClassArray helper.
+func (s *StarsTransaction) MapExtendedMedia() (value MessageMediaClassArray, ok bool) {
+	if !s.Flags.Has(9) {
+		return value, false
+	}
+	return MessageMediaClassArray(s.ExtendedMedia), true
 }

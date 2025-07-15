@@ -32,6 +32,12 @@ var (
 )
 
 // MessagesAvailableEffectsNotModified represents TL type `messages.availableEffectsNotModified#d1ed9a5b`.
+// The full list of usable animated message effects »¹ hasn't changed.
+//
+// Links:
+//  1. https://core.telegram.org/api/effects
+//
+// See https://core.telegram.org/constructor/messages.availableEffectsNotModified for reference.
 type MessagesAvailableEffectsNotModified struct {
 }
 
@@ -131,12 +137,21 @@ func (a *MessagesAvailableEffectsNotModified) DecodeBare(b *bin.Buffer) error {
 }
 
 // MessagesAvailableEffects represents TL type `messages.availableEffects#bddb616e`.
+// The full list of usable animated message effects »¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/effects
+//
+// See https://core.telegram.org/constructor/messages.availableEffects for reference.
 type MessagesAvailableEffects struct {
-	// Hash field of MessagesAvailableEffects.
+	// Hash used for caching, for more info click here¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets#hash-generation
 	Hash int
-	// Effects field of MessagesAvailableEffects.
+	// Message effects
 	Effects []AvailableEffect
-	// Documents field of MessagesAvailableEffects.
+	// Documents specified in the effects constructors.
 	Documents []DocumentClass
 }
 
@@ -180,6 +195,17 @@ func (a *MessagesAvailableEffects) String() string {
 	}
 	type Alias MessagesAvailableEffects
 	return fmt.Sprintf("MessagesAvailableEffects%+v", Alias(*a))
+}
+
+// FillFrom fills MessagesAvailableEffects from given interface.
+func (a *MessagesAvailableEffects) FillFrom(from interface {
+	GetHash() (value int)
+	GetEffects() (value []AvailableEffect)
+	GetDocuments() (value []DocumentClass)
+}) {
+	a.Hash = from.GetHash()
+	a.Effects = from.GetEffects()
+	a.Documents = from.GetDocuments()
 }
 
 // TypeID returns type id in TL schema.
@@ -338,10 +364,17 @@ func (a *MessagesAvailableEffects) GetDocuments() (value []DocumentClass) {
 	return a.Documents
 }
 
+// MapDocuments returns field Documents wrapped in DocumentClassArray helper.
+func (a *MessagesAvailableEffects) MapDocuments() (value DocumentClassArray) {
+	return DocumentClassArray(a.Documents)
+}
+
 // MessagesAvailableEffectsClassName is schema name of MessagesAvailableEffectsClass.
 const MessagesAvailableEffectsClassName = "messages.AvailableEffects"
 
 // MessagesAvailableEffectsClass represents messages.AvailableEffects generic type.
+//
+// See https://core.telegram.org/type/messages.AvailableEffects for reference.
 //
 // Constructors:
 //   - [MessagesAvailableEffectsNotModified]
@@ -375,6 +408,19 @@ type MessagesAvailableEffectsClass interface {
 	String() string
 	// Zero returns true if current object has a zero value.
 	Zero() bool
+
+	// AsModified tries to map MessagesAvailableEffectsClass to MessagesAvailableEffects.
+	AsModified() (*MessagesAvailableEffects, bool)
+}
+
+// AsModified tries to map MessagesAvailableEffectsNotModified to MessagesAvailableEffects.
+func (a *MessagesAvailableEffectsNotModified) AsModified() (*MessagesAvailableEffects, bool) {
+	return nil, false
+}
+
+// AsModified tries to map MessagesAvailableEffects to MessagesAvailableEffects.
+func (a *MessagesAvailableEffects) AsModified() (*MessagesAvailableEffects, bool) {
+	return a, true
 }
 
 // DecodeMessagesAvailableEffects implements binary de-serialization for MessagesAvailableEffectsClass.

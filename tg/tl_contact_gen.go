@@ -32,10 +32,13 @@ var (
 )
 
 // Contact represents TL type `contact#145ade0b`.
+// A contact of the current user that is registered in the system.
+//
+// See https://core.telegram.org/constructor/contact for reference.
 type Contact struct {
-	// UserID field of Contact.
+	// User identifier
 	UserID int64
-	// Mutual field of Contact.
+	// Current user is in the user's contact list
 	Mutual bool
 }
 
@@ -71,6 +74,15 @@ func (c *Contact) String() string {
 	}
 	type Alias Contact
 	return fmt.Sprintf("Contact%+v", Alias(*c))
+}
+
+// FillFrom fills Contact from given interface.
+func (c *Contact) FillFrom(from interface {
+	GetUserID() (value int64)
+	GetMutual() (value bool)
+}) {
+	c.UserID = from.GetUserID()
+	c.Mutual = from.GetMutual()
 }
 
 // TypeID returns type id in TL schema.

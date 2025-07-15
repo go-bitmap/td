@@ -32,10 +32,19 @@ var (
 )
 
 // AttachMenuBotsBot represents TL type `attachMenuBotsBot#93bf667f`.
+// Represents a bot mini app that can be launched from the attachment menu »¹
+//
+// Links:
+//  1. https://core.telegram.org/api/bots/attach
+//
+// See https://core.telegram.org/constructor/attachMenuBotsBot for reference.
 type AttachMenuBotsBot struct {
-	// Bot field of AttachMenuBotsBot.
+	// Represents a bot mini app that can be launched from the attachment menu »¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/bots/attach
 	Bot AttachMenuBot
-	// Users field of AttachMenuBotsBot.
+	// Info about related users and bots
 	Users []UserClass
 }
 
@@ -71,6 +80,15 @@ func (a *AttachMenuBotsBot) String() string {
 	}
 	type Alias AttachMenuBotsBot
 	return fmt.Sprintf("AttachMenuBotsBot%+v", Alias(*a))
+}
+
+// FillFrom fills AttachMenuBotsBot from given interface.
+func (a *AttachMenuBotsBot) FillFrom(from interface {
+	GetBot() (value AttachMenuBot)
+	GetUsers() (value []UserClass)
+}) {
+	a.Bot = from.GetBot()
+	a.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -192,4 +210,9 @@ func (a *AttachMenuBotsBot) GetUsers() (value []UserClass) {
 		return
 	}
 	return a.Users
+}
+
+// MapUsers returns field Users wrapped in UserClassArray helper.
+func (a *AttachMenuBotsBot) MapUsers() (value UserClassArray) {
+	return UserClassArray(a.Users)
 }

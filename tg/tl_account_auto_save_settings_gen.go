@@ -32,18 +32,27 @@ var (
 )
 
 // AccountAutoSaveSettings represents TL type `account.autoSaveSettings#4c3e069d`.
+// Contains media autosave settings
+//
+// See https://core.telegram.org/constructor/account.autoSaveSettings for reference.
 type AccountAutoSaveSettings struct {
-	// UsersSettings field of AccountAutoSaveSettings.
+	// Default media autosave settings for private chats
 	UsersSettings AutoSaveSettings
-	// ChatsSettings field of AccountAutoSaveSettings.
+	// Default media autosave settings for groups and supergroups¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/channel
 	ChatsSettings AutoSaveSettings
-	// BroadcastsSettings field of AccountAutoSaveSettings.
+	// Default media autosave settings for channels¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/channel
 	BroadcastsSettings AutoSaveSettings
-	// Exceptions field of AccountAutoSaveSettings.
+	// Peer-specific granular autosave settings
 	Exceptions []AutoSaveException
-	// Chats field of AccountAutoSaveSettings.
+	// Chats mentioned in the peer-specific granular autosave settings
 	Chats []ChatClass
-	// Users field of AccountAutoSaveSettings.
+	// Users mentioned in the peer-specific granular autosave settings
 	Users []UserClass
 }
 
@@ -91,6 +100,23 @@ func (a *AccountAutoSaveSettings) String() string {
 	}
 	type Alias AccountAutoSaveSettings
 	return fmt.Sprintf("AccountAutoSaveSettings%+v", Alias(*a))
+}
+
+// FillFrom fills AccountAutoSaveSettings from given interface.
+func (a *AccountAutoSaveSettings) FillFrom(from interface {
+	GetUsersSettings() (value AutoSaveSettings)
+	GetChatsSettings() (value AutoSaveSettings)
+	GetBroadcastsSettings() (value AutoSaveSettings)
+	GetExceptions() (value []AutoSaveException)
+	GetChats() (value []ChatClass)
+	GetUsers() (value []UserClass)
+}) {
+	a.UsersSettings = from.GetUsersSettings()
+	a.ChatsSettings = from.GetChatsSettings()
+	a.BroadcastsSettings = from.GetBroadcastsSettings()
+	a.Exceptions = from.GetExceptions()
+	a.Chats = from.GetChats()
+	a.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -325,4 +351,14 @@ func (a *AccountAutoSaveSettings) GetUsers() (value []UserClass) {
 		return
 	}
 	return a.Users
+}
+
+// MapChats returns field Chats wrapped in ChatClassArray helper.
+func (a *AccountAutoSaveSettings) MapChats() (value ChatClassArray) {
+	return ChatClassArray(a.Chats)
+}
+
+// MapUsers returns field Users wrapped in UserClassArray helper.
+func (a *AccountAutoSaveSettings) MapUsers() (value UserClassArray) {
+	return UserClassArray(a.Users)
 }

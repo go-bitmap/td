@@ -32,6 +32,9 @@ var (
 )
 
 // SecureValueTypePersonalDetails represents TL type `secureValueTypePersonalDetails#9d2a81e3`.
+// Personal details
+//
+// See https://core.telegram.org/constructor/secureValueTypePersonalDetails for reference.
 type SecureValueTypePersonalDetails struct {
 }
 
@@ -131,6 +134,9 @@ func (s *SecureValueTypePersonalDetails) DecodeBare(b *bin.Buffer) error {
 }
 
 // SecureValueTypePassport represents TL type `secureValueTypePassport#3dac6a00`.
+// Passport
+//
+// See https://core.telegram.org/constructor/secureValueTypePassport for reference.
 type SecureValueTypePassport struct {
 }
 
@@ -230,6 +236,9 @@ func (s *SecureValueTypePassport) DecodeBare(b *bin.Buffer) error {
 }
 
 // SecureValueTypeDriverLicense represents TL type `secureValueTypeDriverLicense#6e425c4`.
+// Driver's license
+//
+// See https://core.telegram.org/constructor/secureValueTypeDriverLicense for reference.
 type SecureValueTypeDriverLicense struct {
 }
 
@@ -329,6 +338,9 @@ func (s *SecureValueTypeDriverLicense) DecodeBare(b *bin.Buffer) error {
 }
 
 // SecureValueTypeIdentityCard represents TL type `secureValueTypeIdentityCard#a0d0744b`.
+// Identity card
+//
+// See https://core.telegram.org/constructor/secureValueTypeIdentityCard for reference.
 type SecureValueTypeIdentityCard struct {
 }
 
@@ -428,6 +440,12 @@ func (s *SecureValueTypeIdentityCard) DecodeBare(b *bin.Buffer) error {
 }
 
 // SecureValueTypeInternalPassport represents TL type `secureValueTypeInternalPassport#99a48f23`.
+// Internal passport¹
+//
+// Links:
+//  1. https://core.telegram.org/passport
+//
+// See https://core.telegram.org/constructor/secureValueTypeInternalPassport for reference.
 type SecureValueTypeInternalPassport struct {
 }
 
@@ -527,6 +545,9 @@ func (s *SecureValueTypeInternalPassport) DecodeBare(b *bin.Buffer) error {
 }
 
 // SecureValueTypeAddress represents TL type `secureValueTypeAddress#cbe31e26`.
+// Address
+//
+// See https://core.telegram.org/constructor/secureValueTypeAddress for reference.
 type SecureValueTypeAddress struct {
 }
 
@@ -626,6 +647,9 @@ func (s *SecureValueTypeAddress) DecodeBare(b *bin.Buffer) error {
 }
 
 // SecureValueTypeUtilityBill represents TL type `secureValueTypeUtilityBill#fc36954e`.
+// Utility bill
+//
+// See https://core.telegram.org/constructor/secureValueTypeUtilityBill for reference.
 type SecureValueTypeUtilityBill struct {
 }
 
@@ -725,6 +749,9 @@ func (s *SecureValueTypeUtilityBill) DecodeBare(b *bin.Buffer) error {
 }
 
 // SecureValueTypeBankStatement represents TL type `secureValueTypeBankStatement#89137c0d`.
+// Bank statement
+//
+// See https://core.telegram.org/constructor/secureValueTypeBankStatement for reference.
 type SecureValueTypeBankStatement struct {
 }
 
@@ -824,6 +851,9 @@ func (s *SecureValueTypeBankStatement) DecodeBare(b *bin.Buffer) error {
 }
 
 // SecureValueTypeRentalAgreement represents TL type `secureValueTypeRentalAgreement#8b883488`.
+// Rental agreement
+//
+// See https://core.telegram.org/constructor/secureValueTypeRentalAgreement for reference.
 type SecureValueTypeRentalAgreement struct {
 }
 
@@ -923,6 +953,12 @@ func (s *SecureValueTypeRentalAgreement) DecodeBare(b *bin.Buffer) error {
 }
 
 // SecureValueTypePassportRegistration represents TL type `secureValueTypePassportRegistration#99e3806a`.
+// Internal registration passport¹
+//
+// Links:
+//  1. https://core.telegram.org/passport
+//
+// See https://core.telegram.org/constructor/secureValueTypePassportRegistration for reference.
 type SecureValueTypePassportRegistration struct {
 }
 
@@ -1022,6 +1058,9 @@ func (s *SecureValueTypePassportRegistration) DecodeBare(b *bin.Buffer) error {
 }
 
 // SecureValueTypeTemporaryRegistration represents TL type `secureValueTypeTemporaryRegistration#ea02ec33`.
+// Temporary registration
+//
+// See https://core.telegram.org/constructor/secureValueTypeTemporaryRegistration for reference.
 type SecureValueTypeTemporaryRegistration struct {
 }
 
@@ -1121,6 +1160,9 @@ func (s *SecureValueTypeTemporaryRegistration) DecodeBare(b *bin.Buffer) error {
 }
 
 // SecureValueTypePhone represents TL type `secureValueTypePhone#b320aadb`.
+// Phone
+//
+// See https://core.telegram.org/constructor/secureValueTypePhone for reference.
 type SecureValueTypePhone struct {
 }
 
@@ -1220,6 +1262,9 @@ func (s *SecureValueTypePhone) DecodeBare(b *bin.Buffer) error {
 }
 
 // SecureValueTypeEmail represents TL type `secureValueTypeEmail#8e3ca7ee`.
+// Email
+//
+// See https://core.telegram.org/constructor/secureValueTypeEmail for reference.
 type SecureValueTypeEmail struct {
 }
 
@@ -1322,6 +1367,8 @@ func (s *SecureValueTypeEmail) DecodeBare(b *bin.Buffer) error {
 const SecureValueTypeClassName = "SecureValueType"
 
 // SecureValueTypeClass represents SecureValueType generic type.
+//
+// See https://core.telegram.org/type/SecureValueType for reference.
 //
 // Constructors:
 //   - [SecureValueTypePersonalDetails]

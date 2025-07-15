@@ -32,12 +32,15 @@ var (
 )
 
 // ChatParticipant represents TL type `chatParticipant#c02d4007`.
+// Group member.
+//
+// See https://core.telegram.org/constructor/chatParticipant for reference.
 type ChatParticipant struct {
-	// UserID field of ChatParticipant.
+	// Member user ID
 	UserID int64
-	// InviterID field of ChatParticipant.
+	// ID of the user that added the member to the group
 	InviterID int64
-	// Date field of ChatParticipant.
+	// Date added to the group
 	Date int
 }
 
@@ -81,6 +84,17 @@ func (c *ChatParticipant) String() string {
 	}
 	type Alias ChatParticipant
 	return fmt.Sprintf("ChatParticipant%+v", Alias(*c))
+}
+
+// FillFrom fills ChatParticipant from given interface.
+func (c *ChatParticipant) FillFrom(from interface {
+	GetUserID() (value int64)
+	GetInviterID() (value int64)
+	GetDate() (value int)
+}) {
+	c.UserID = from.GetUserID()
+	c.InviterID = from.GetInviterID()
+	c.Date = from.GetDate()
 }
 
 // TypeID returns type id in TL schema.
@@ -207,8 +221,11 @@ func (c *ChatParticipant) GetDate() (value int) {
 }
 
 // ChatParticipantCreator represents TL type `chatParticipantCreator#e46bcee4`.
+// Represents the creator of the group
+//
+// See https://core.telegram.org/constructor/chatParticipantCreator for reference.
 type ChatParticipantCreator struct {
-	// UserID field of ChatParticipantCreator.
+	// ID of the user that created the group
 	UserID int64
 }
 
@@ -246,6 +263,13 @@ func (c *ChatParticipantCreator) String() string {
 	}
 	type Alias ChatParticipantCreator
 	return fmt.Sprintf("ChatParticipantCreator%+v", Alias(*c))
+}
+
+// FillFrom fills ChatParticipantCreator from given interface.
+func (c *ChatParticipantCreator) FillFrom(from interface {
+	GetUserID() (value int64)
+}) {
+	c.UserID = from.GetUserID()
 }
 
 // TypeID returns type id in TL schema.
@@ -332,12 +356,15 @@ func (c *ChatParticipantCreator) GetUserID() (value int64) {
 }
 
 // ChatParticipantAdmin represents TL type `chatParticipantAdmin#a0933f5b`.
+// Chat admin
+//
+// See https://core.telegram.org/constructor/chatParticipantAdmin for reference.
 type ChatParticipantAdmin struct {
-	// UserID field of ChatParticipantAdmin.
+	// ID of a group member that is admin
 	UserID int64
-	// InviterID field of ChatParticipantAdmin.
+	// ID of the user that added the member to the group
 	InviterID int64
-	// Date field of ChatParticipantAdmin.
+	// Date when the user was added
 	Date int
 }
 
@@ -381,6 +408,17 @@ func (c *ChatParticipantAdmin) String() string {
 	}
 	type Alias ChatParticipantAdmin
 	return fmt.Sprintf("ChatParticipantAdmin%+v", Alias(*c))
+}
+
+// FillFrom fills ChatParticipantAdmin from given interface.
+func (c *ChatParticipantAdmin) FillFrom(from interface {
+	GetUserID() (value int64)
+	GetInviterID() (value int64)
+	GetDate() (value int)
+}) {
+	c.UserID = from.GetUserID()
+	c.InviterID = from.GetInviterID()
+	c.Date = from.GetDate()
 }
 
 // TypeID returns type id in TL schema.
@@ -511,6 +549,8 @@ const ChatParticipantClassName = "ChatParticipant"
 
 // ChatParticipantClass represents ChatParticipant generic type.
 //
+// See https://core.telegram.org/type/ChatParticipant for reference.
+//
 // Constructors:
 //   - [ChatParticipant]
 //   - [ChatParticipantCreator]
@@ -546,7 +586,7 @@ type ChatParticipantClass interface {
 	// Zero returns true if current object has a zero value.
 	Zero() bool
 
-	// UserID field of ChatParticipant.
+	// Member user ID
 	GetUserID() (value int64)
 }
 

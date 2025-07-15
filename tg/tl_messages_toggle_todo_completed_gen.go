@@ -32,6 +32,8 @@ var (
 )
 
 // MessagesToggleTodoCompletedRequest represents TL type `messages.toggleTodoCompleted#d3e03124`.
+//
+// See https://core.telegram.org/method/messages.toggleTodoCompleted for reference.
 type MessagesToggleTodoCompletedRequest struct {
 	// Peer field of MessagesToggleTodoCompletedRequest.
 	Peer InputPeerClass
@@ -81,6 +83,19 @@ func (t *MessagesToggleTodoCompletedRequest) String() string {
 	}
 	type Alias MessagesToggleTodoCompletedRequest
 	return fmt.Sprintf("MessagesToggleTodoCompletedRequest%+v", Alias(*t))
+}
+
+// FillFrom fills MessagesToggleTodoCompletedRequest from given interface.
+func (t *MessagesToggleTodoCompletedRequest) FillFrom(from interface {
+	GetPeer() (value InputPeerClass)
+	GetMsgID() (value int)
+	GetCompleted() (value []int)
+	GetIncompleted() (value []int)
+}) {
+	t.Peer = from.GetPeer()
+	t.MsgID = from.GetMsgID()
+	t.Completed = from.GetCompleted()
+	t.Incompleted = from.GetIncompleted()
 }
 
 // TypeID returns type id in TL schema.
@@ -258,6 +273,8 @@ func (t *MessagesToggleTodoCompletedRequest) GetIncompleted() (value []int) {
 }
 
 // MessagesToggleTodoCompleted invokes method messages.toggleTodoCompleted#d3e03124 returning error if any.
+//
+// See https://core.telegram.org/method/messages.toggleTodoCompleted for reference.
 func (c *Client) MessagesToggleTodoCompleted(ctx context.Context, request *MessagesToggleTodoCompletedRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

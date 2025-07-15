@@ -32,12 +32,21 @@ var (
 )
 
 // InputStarsTransaction represents TL type `inputStarsTransaction#206ae6d1`.
+// Used to fetch info about a Telegram Star transaction »¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/stars#balance-and-transaction-history
+//
+// See https://core.telegram.org/constructor/inputStarsTransaction for reference.
 type InputStarsTransaction struct {
-	// Flags field of InputStarsTransaction.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Refund field of InputStarsTransaction.
+	// If set, fetches info about the refund transaction for this transaction.
 	Refund bool
-	// ID field of InputStarsTransaction.
+	// Transaction ID.
 	ID string
 }
 
@@ -76,6 +85,15 @@ func (i *InputStarsTransaction) String() string {
 	}
 	type Alias InputStarsTransaction
 	return fmt.Sprintf("InputStarsTransaction%+v", Alias(*i))
+}
+
+// FillFrom fills InputStarsTransaction from given interface.
+func (i *InputStarsTransaction) FillFrom(from interface {
+	GetRefund() (value bool)
+	GetID() (value string)
+}) {
+	i.Refund = from.GetRefund()
+	i.ID = from.GetID()
 }
 
 // TypeID returns type id in TL schema.

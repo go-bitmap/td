@@ -32,8 +32,19 @@ var (
 )
 
 // AccountGetChannelRestrictedStatusEmojisRequest represents TL type `account.getChannelRestrictedStatusEmojis#35a9e0d5`.
+// Returns fetch the full list of custom emoji IDs »¹ that cannot be used in channel
+// emoji statuses »².
+//
+// Links:
+//  1. https://core.telegram.org/api/custom-emoji
+//  2. https://core.telegram.org/api/emoji-status
+//
+// See https://core.telegram.org/method/account.getChannelRestrictedStatusEmojis for reference.
 type AccountGetChannelRestrictedStatusEmojisRequest struct {
-	// Hash field of AccountGetChannelRestrictedStatusEmojisRequest.
+	// Hash used for caching, for more info click here¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets#hash-generation
 	Hash int64
 }
 
@@ -66,6 +77,13 @@ func (g *AccountGetChannelRestrictedStatusEmojisRequest) String() string {
 	}
 	type Alias AccountGetChannelRestrictedStatusEmojisRequest
 	return fmt.Sprintf("AccountGetChannelRestrictedStatusEmojisRequest%+v", Alias(*g))
+}
+
+// FillFrom fills AccountGetChannelRestrictedStatusEmojisRequest from given interface.
+func (g *AccountGetChannelRestrictedStatusEmojisRequest) FillFrom(from interface {
+	GetHash() (value int64)
+}) {
+	g.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -152,6 +170,14 @@ func (g *AccountGetChannelRestrictedStatusEmojisRequest) GetHash() (value int64)
 }
 
 // AccountGetChannelRestrictedStatusEmojis invokes method account.getChannelRestrictedStatusEmojis#35a9e0d5 returning error if any.
+// Returns fetch the full list of custom emoji IDs »¹ that cannot be used in channel
+// emoji statuses »².
+//
+// Links:
+//  1. https://core.telegram.org/api/custom-emoji
+//  2. https://core.telegram.org/api/emoji-status
+//
+// See https://core.telegram.org/method/account.getChannelRestrictedStatusEmojis for reference.
 func (c *Client) AccountGetChannelRestrictedStatusEmojis(ctx context.Context, hash int64) (EmojiListClass, error) {
 	var result EmojiListBox
 

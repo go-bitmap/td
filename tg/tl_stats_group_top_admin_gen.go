@@ -32,14 +32,26 @@ var (
 )
 
 // StatsGroupTopAdmin represents TL type `statsGroupTopAdmin#d7584c87`.
+// Information about an active admin in a supergroup
+//
+// See https://core.telegram.org/constructor/statsGroupTopAdmin for reference.
 type StatsGroupTopAdmin struct {
-	// UserID field of StatsGroupTopAdmin.
+	// User ID
 	UserID int64
-	// Deleted field of StatsGroupTopAdmin.
+	// Number of deleted messages for statistics¹ period in consideration
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/stats
 	Deleted int
-	// Kicked field of StatsGroupTopAdmin.
+	// Number of kicked users for statistics¹ period in consideration
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/stats
 	Kicked int
-	// Banned field of StatsGroupTopAdmin.
+	// Number of banned users for statistics¹ period in consideration
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/stats
 	Banned int
 }
 
@@ -81,6 +93,19 @@ func (s *StatsGroupTopAdmin) String() string {
 	}
 	type Alias StatsGroupTopAdmin
 	return fmt.Sprintf("StatsGroupTopAdmin%+v", Alias(*s))
+}
+
+// FillFrom fills StatsGroupTopAdmin from given interface.
+func (s *StatsGroupTopAdmin) FillFrom(from interface {
+	GetUserID() (value int64)
+	GetDeleted() (value int)
+	GetKicked() (value int)
+	GetBanned() (value int)
+}) {
+	s.UserID = from.GetUserID()
+	s.Deleted = from.GetDeleted()
+	s.Kicked = from.GetKicked()
+	s.Banned = from.GetBanned()
 }
 
 // TypeID returns type id in TL schema.

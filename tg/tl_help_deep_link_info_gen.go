@@ -32,6 +32,9 @@ var (
 )
 
 // HelpDeepLinkInfoEmpty represents TL type `help.deepLinkInfoEmpty#66afa166`.
+// Deep link info empty
+//
+// See https://core.telegram.org/constructor/help.deepLinkInfoEmpty for reference.
 type HelpDeepLinkInfoEmpty struct {
 }
 
@@ -131,14 +134,26 @@ func (d *HelpDeepLinkInfoEmpty) DecodeBare(b *bin.Buffer) error {
 }
 
 // HelpDeepLinkInfo represents TL type `help.deepLinkInfo#6a4ee832`.
+// Deep link info, see the here for more details¹
+//
+// Links:
+//  1. https://core.telegram.org/api/links#unsupported-links
+//
+// See https://core.telegram.org/constructor/help.deepLinkInfo for reference.
 type HelpDeepLinkInfo struct {
-	// Flags field of HelpDeepLinkInfo.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// UpdateApp field of HelpDeepLinkInfo.
+	// An update of the app is required to parse this link
 	UpdateApp bool
-	// Message field of HelpDeepLinkInfo.
+	// Message to show to the user
 	Message string
-	// Entities field of HelpDeepLinkInfo.
+	// Message entities for styled text¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities
 	//
 	// Use SetEntities and GetEntities helpers.
 	Entities []MessageEntityClass
@@ -187,6 +202,20 @@ func (d *HelpDeepLinkInfo) String() string {
 	}
 	type Alias HelpDeepLinkInfo
 	return fmt.Sprintf("HelpDeepLinkInfo%+v", Alias(*d))
+}
+
+// FillFrom fills HelpDeepLinkInfo from given interface.
+func (d *HelpDeepLinkInfo) FillFrom(from interface {
+	GetUpdateApp() (value bool)
+	GetMessage() (value string)
+	GetEntities() (value []MessageEntityClass, ok bool)
+}) {
+	d.UpdateApp = from.GetUpdateApp()
+	d.Message = from.GetMessage()
+	if val, ok := from.GetEntities(); ok {
+		d.Entities = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -367,10 +396,20 @@ func (d *HelpDeepLinkInfo) GetEntities() (value []MessageEntityClass, ok bool) {
 	return d.Entities, true
 }
 
+// MapEntities returns field Entities wrapped in MessageEntityClassArray helper.
+func (d *HelpDeepLinkInfo) MapEntities() (value MessageEntityClassArray, ok bool) {
+	if !d.Flags.Has(1) {
+		return value, false
+	}
+	return MessageEntityClassArray(d.Entities), true
+}
+
 // HelpDeepLinkInfoClassName is schema name of HelpDeepLinkInfoClass.
 const HelpDeepLinkInfoClassName = "help.DeepLinkInfo"
 
 // HelpDeepLinkInfoClass represents help.DeepLinkInfo generic type.
+//
+// See https://core.telegram.org/type/help.DeepLinkInfo for reference.
 //
 // Constructors:
 //   - [HelpDeepLinkInfoEmpty]
@@ -404,6 +443,19 @@ type HelpDeepLinkInfoClass interface {
 	String() string
 	// Zero returns true if current object has a zero value.
 	Zero() bool
+
+	// AsNotEmpty tries to map HelpDeepLinkInfoClass to HelpDeepLinkInfo.
+	AsNotEmpty() (*HelpDeepLinkInfo, bool)
+}
+
+// AsNotEmpty tries to map HelpDeepLinkInfoEmpty to HelpDeepLinkInfo.
+func (d *HelpDeepLinkInfoEmpty) AsNotEmpty() (*HelpDeepLinkInfo, bool) {
+	return nil, false
+}
+
+// AsNotEmpty tries to map HelpDeepLinkInfo to HelpDeepLinkInfo.
+func (d *HelpDeepLinkInfo) AsNotEmpty() (*HelpDeepLinkInfo, bool) {
+	return d, true
 }
 
 // DecodeHelpDeepLinkInfo implements binary de-serialization for HelpDeepLinkInfoClass.

@@ -32,20 +32,29 @@ var (
 )
 
 // StoriesFoundStories represents TL type `stories.foundStories#e2de7737`.
+// Stories found using global story search »¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/stories#searching-stories
+//
+// See https://core.telegram.org/constructor/stories.foundStories for reference.
 type StoriesFoundStories struct {
-	// Flags field of StoriesFoundStories.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Count field of StoriesFoundStories.
+	// Total number of results found for the query.
 	Count int
-	// Stories field of StoriesFoundStories.
+	// Matching stories.
 	Stories []FoundStory
-	// NextOffset field of StoriesFoundStories.
+	// Offset used to fetch the next page, if not set this is the final page.
 	//
 	// Use SetNextOffset and GetNextOffset helpers.
 	NextOffset string
-	// Chats field of StoriesFoundStories.
+	// Mentioned chats
 	Chats []ChatClass
-	// Users field of StoriesFoundStories.
+	// Mentioned users
 	Users []UserClass
 }
 
@@ -93,6 +102,24 @@ func (f *StoriesFoundStories) String() string {
 	}
 	type Alias StoriesFoundStories
 	return fmt.Sprintf("StoriesFoundStories%+v", Alias(*f))
+}
+
+// FillFrom fills StoriesFoundStories from given interface.
+func (f *StoriesFoundStories) FillFrom(from interface {
+	GetCount() (value int)
+	GetStories() (value []FoundStory)
+	GetNextOffset() (value string, ok bool)
+	GetChats() (value []ChatClass)
+	GetUsers() (value []UserClass)
+}) {
+	f.Count = from.GetCount()
+	f.Stories = from.GetStories()
+	if val, ok := from.GetNextOffset(); ok {
+		f.NextOffset = val
+	}
+
+	f.Chats = from.GetChats()
+	f.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -336,4 +363,14 @@ func (f *StoriesFoundStories) GetUsers() (value []UserClass) {
 		return
 	}
 	return f.Users
+}
+
+// MapChats returns field Chats wrapped in ChatClassArray helper.
+func (f *StoriesFoundStories) MapChats() (value ChatClassArray) {
+	return ChatClassArray(f.Chats)
+}
+
+// MapUsers returns field Users wrapped in UserClassArray helper.
+func (f *StoriesFoundStories) MapUsers() (value UserClassArray) {
+	return UserClassArray(f.Users)
 }

@@ -32,14 +32,17 @@ var (
 )
 
 // AccountReportProfilePhotoRequest represents TL type `account.reportProfilePhoto#fa8cc6f5`.
+// Report a profile photo of a dialog
+//
+// See https://core.telegram.org/method/account.reportProfilePhoto for reference.
 type AccountReportProfilePhotoRequest struct {
-	// Peer field of AccountReportProfilePhotoRequest.
+	// The dialog
 	Peer InputPeerClass
-	// PhotoID field of AccountReportProfilePhotoRequest.
+	// Dialog photo ID
 	PhotoID InputPhotoClass
-	// Reason field of AccountReportProfilePhotoRequest.
+	// Report reason
 	Reason ReportReasonClass
-	// Message field of AccountReportProfilePhotoRequest.
+	// Comment for report moderation
 	Message string
 }
 
@@ -81,6 +84,19 @@ func (r *AccountReportProfilePhotoRequest) String() string {
 	}
 	type Alias AccountReportProfilePhotoRequest
 	return fmt.Sprintf("AccountReportProfilePhotoRequest%+v", Alias(*r))
+}
+
+// FillFrom fills AccountReportProfilePhotoRequest from given interface.
+func (r *AccountReportProfilePhotoRequest) FillFrom(from interface {
+	GetPeer() (value InputPeerClass)
+	GetPhotoID() (value InputPhotoClass)
+	GetReason() (value ReportReasonClass)
+	GetMessage() (value string)
+}) {
+	r.Peer = from.GetPeer()
+	r.PhotoID = from.GetPhotoID()
+	r.Reason = from.GetReason()
+	r.Message = from.GetMessage()
 }
 
 // TypeID returns type id in TL schema.
@@ -241,7 +257,19 @@ func (r *AccountReportProfilePhotoRequest) GetMessage() (value string) {
 	return r.Message
 }
 
+// GetPhotoIDAsNotEmpty returns mapped value of PhotoID field.
+func (r *AccountReportProfilePhotoRequest) GetPhotoIDAsNotEmpty() (*InputPhoto, bool) {
+	return r.PhotoID.AsNotEmpty()
+}
+
 // AccountReportProfilePhoto invokes method account.reportProfilePhoto#fa8cc6f5 returning error if any.
+// Report a profile photo of a dialog
+//
+// Possible errors:
+//
+//	400 PEER_ID_INVALID: The provided peer id is invalid.
+//
+// See https://core.telegram.org/method/account.reportProfilePhoto for reference.
 func (c *Client) AccountReportProfilePhoto(ctx context.Context, request *AccountReportProfilePhotoRequest) (bool, error) {
 	var result BoolBox
 

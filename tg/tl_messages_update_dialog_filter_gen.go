@@ -32,12 +32,27 @@ var (
 )
 
 // MessagesUpdateDialogFilterRequest represents TL type `messages.updateDialogFilter#1ad4a04a`.
+// Update folder¹
+//
+// Links:
+//  1. https://core.telegram.org/api/folders
+//
+// See https://core.telegram.org/method/messages.updateDialogFilter for reference.
 type MessagesUpdateDialogFilterRequest struct {
-	// Flags field of MessagesUpdateDialogFilterRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// ID field of MessagesUpdateDialogFilterRequest.
+	// Folder¹ ID
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/folders
 	ID int
-	// Filter field of MessagesUpdateDialogFilterRequest.
+	// Folder¹ info
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/folders
 	//
 	// Use SetFilter and GetFilter helpers.
 	Filter DialogFilterClass
@@ -78,6 +93,18 @@ func (u *MessagesUpdateDialogFilterRequest) String() string {
 	}
 	type Alias MessagesUpdateDialogFilterRequest
 	return fmt.Sprintf("MessagesUpdateDialogFilterRequest%+v", Alias(*u))
+}
+
+// FillFrom fills MessagesUpdateDialogFilterRequest from given interface.
+func (u *MessagesUpdateDialogFilterRequest) FillFrom(from interface {
+	GetID() (value int)
+	GetFilter() (value DialogFilterClass, ok bool)
+}) {
+	u.ID = from.GetID()
+	if val, ok := from.GetFilter(); ok {
+		u.Filter = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -218,6 +245,22 @@ func (u *MessagesUpdateDialogFilterRequest) GetFilter() (value DialogFilterClass
 }
 
 // MessagesUpdateDialogFilter invokes method messages.updateDialogFilter#1ad4a04a returning error if any.
+// Update folder¹
+//
+// Links:
+//  1. https://core.telegram.org/api/folders
+//
+// Possible errors:
+//
+//	400 CHATLIST_EXCLUDE_INVALID: The specified exclude_peers are invalid.
+//	400 CHAT_ID_INVALID: The provided chat id is invalid.
+//	400 FILTER_ID_INVALID: The specified filter ID is invalid.
+//	400 FILTER_INCLUDE_EMPTY: The include_peers vector of the filter is empty.
+//	400 FILTER_TITLE_EMPTY: The title field of the filter is empty.
+//	400 MSG_ID_INVALID: Invalid message ID provided.
+//	400 PEER_ID_INVALID: The provided peer id is invalid.
+//
+// See https://core.telegram.org/method/messages.updateDialogFilter for reference.
 func (c *Client) MessagesUpdateDialogFilter(ctx context.Context, request *MessagesUpdateDialogFilterRequest) (bool, error) {
 	var result BoolBox
 

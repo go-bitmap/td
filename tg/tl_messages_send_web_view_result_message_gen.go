@@ -32,10 +32,20 @@ var (
 )
 
 // MessagesSendWebViewResultMessageRequest represents TL type `messages.sendWebViewResultMessage#a4314f5`.
+// Terminate webview interaction started with messages.requestWebView¹, sending the
+// specified message to the chat on behalf of the user.
+//
+// Links:
+//  1. https://core.telegram.org/method/messages.requestWebView
+//
+// See https://core.telegram.org/method/messages.sendWebViewResultMessage for reference.
 type MessagesSendWebViewResultMessageRequest struct {
-	// BotQueryID field of MessagesSendWebViewResultMessageRequest.
+	// Webview interaction ID obtained from messages.requestWebView¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/method/messages.requestWebView
 	BotQueryID string
-	// Result field of MessagesSendWebViewResultMessageRequest.
+	// Message to send
 	Result InputBotInlineResultClass
 }
 
@@ -71,6 +81,15 @@ func (s *MessagesSendWebViewResultMessageRequest) String() string {
 	}
 	type Alias MessagesSendWebViewResultMessageRequest
 	return fmt.Sprintf("MessagesSendWebViewResultMessageRequest%+v", Alias(*s))
+}
+
+// FillFrom fills MessagesSendWebViewResultMessageRequest from given interface.
+func (s *MessagesSendWebViewResultMessageRequest) FillFrom(from interface {
+	GetBotQueryID() (value string)
+	GetResult() (value InputBotInlineResultClass)
+}) {
+	s.BotQueryID = from.GetBotQueryID()
+	s.Result = from.GetResult()
 }
 
 // TypeID returns type id in TL schema.
@@ -182,6 +201,19 @@ func (s *MessagesSendWebViewResultMessageRequest) GetResult() (value InputBotInl
 }
 
 // MessagesSendWebViewResultMessage invokes method messages.sendWebViewResultMessage#a4314f5 returning error if any.
+// Terminate webview interaction started with messages.requestWebView¹, sending the
+// specified message to the chat on behalf of the user.
+//
+// Links:
+//  1. https://core.telegram.org/method/messages.requestWebView
+//
+// Possible errors:
+//
+//	400 QUERY_ID_INVALID: The query ID is invalid.
+//	400 USER_BOT_REQUIRED: This method can only be called by a bot.
+//
+// See https://core.telegram.org/method/messages.sendWebViewResultMessage for reference.
+// Can be used by bots.
 func (c *Client) MessagesSendWebViewResultMessage(ctx context.Context, request *MessagesSendWebViewResultMessageRequest) (*WebViewMessageSent, error) {
 	var result WebViewMessageSent
 

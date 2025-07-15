@@ -32,10 +32,17 @@ var (
 )
 
 // LangpackGetLanguageRequest represents TL type `langpack.getLanguage#6a596502`.
+// Get information about a language in a localization pack
+//
+// See https://core.telegram.org/method/langpack.getLanguage for reference.
 type LangpackGetLanguageRequest struct {
-	// LangPack field of LangpackGetLanguageRequest.
+	// Platform identifier (i.e. android, tdesktop, etc).
 	LangPack string
-	// LangCode field of LangpackGetLanguageRequest.
+	// Either an ISO 639-1 language code or a language pack name obtained from a language
+	// pack link¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/links#language-pack-links
 	LangCode string
 }
 
@@ -71,6 +78,15 @@ func (g *LangpackGetLanguageRequest) String() string {
 	}
 	type Alias LangpackGetLanguageRequest
 	return fmt.Sprintf("LangpackGetLanguageRequest%+v", Alias(*g))
+}
+
+// FillFrom fills LangpackGetLanguageRequest from given interface.
+func (g *LangpackGetLanguageRequest) FillFrom(from interface {
+	GetLangPack() (value string)
+	GetLangCode() (value string)
+}) {
+	g.LangPack = from.GetLangPack()
+	g.LangCode = from.GetLangCode()
 }
 
 // TypeID returns type id in TL schema.
@@ -177,6 +193,14 @@ func (g *LangpackGetLanguageRequest) GetLangCode() (value string) {
 }
 
 // LangpackGetLanguage invokes method langpack.getLanguage#6a596502 returning error if any.
+// Get information about a language in a localization pack
+//
+// Possible errors:
+//
+//	400 LANG_CODE_NOT_SUPPORTED: The specified language code is not supported.
+//	400 LANG_PACK_INVALID: The provided language pack is invalid.
+//
+// See https://core.telegram.org/method/langpack.getLanguage for reference.
 func (c *Client) LangpackGetLanguage(ctx context.Context, request *LangpackGetLanguageRequest) (*LangPackLanguage, error) {
 	var result LangPackLanguage
 

@@ -32,6 +32,8 @@ var (
 )
 
 // ChannelsToggleAutotranslationRequest represents TL type `channels.toggleAutotranslation#167fc0a1`.
+//
+// See https://core.telegram.org/method/channels.toggleAutotranslation for reference.
 type ChannelsToggleAutotranslationRequest struct {
 	// Channel field of ChannelsToggleAutotranslationRequest.
 	Channel InputChannelClass
@@ -71,6 +73,15 @@ func (t *ChannelsToggleAutotranslationRequest) String() string {
 	}
 	type Alias ChannelsToggleAutotranslationRequest
 	return fmt.Sprintf("ChannelsToggleAutotranslationRequest%+v", Alias(*t))
+}
+
+// FillFrom fills ChannelsToggleAutotranslationRequest from given interface.
+func (t *ChannelsToggleAutotranslationRequest) FillFrom(from interface {
+	GetChannel() (value InputChannelClass)
+	GetEnabled() (value bool)
+}) {
+	t.Channel = from.GetChannel()
+	t.Enabled = from.GetEnabled()
 }
 
 // TypeID returns type id in TL schema.
@@ -181,7 +192,14 @@ func (t *ChannelsToggleAutotranslationRequest) GetEnabled() (value bool) {
 	return t.Enabled
 }
 
+// GetChannelAsNotEmpty returns mapped value of Channel field.
+func (t *ChannelsToggleAutotranslationRequest) GetChannelAsNotEmpty() (NotEmptyInputChannel, bool) {
+	return t.Channel.AsNotEmpty()
+}
+
 // ChannelsToggleAutotranslation invokes method channels.toggleAutotranslation#167fc0a1 returning error if any.
+//
+// See https://core.telegram.org/method/channels.toggleAutotranslation for reference.
 func (c *Client) ChannelsToggleAutotranslation(ctx context.Context, request *ChannelsToggleAutotranslationRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

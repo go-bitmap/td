@@ -32,6 +32,9 @@ var (
 )
 
 // BaseThemeClassic represents TL type `baseThemeClassic#c3a12462`.
+// Classic theme
+//
+// See https://core.telegram.org/constructor/baseThemeClassic for reference.
 type BaseThemeClassic struct {
 }
 
@@ -131,6 +134,9 @@ func (b *BaseThemeClassic) DecodeBare(buf *bin.Buffer) error {
 }
 
 // BaseThemeDay represents TL type `baseThemeDay#fbd81688`.
+// Day theme
+//
+// See https://core.telegram.org/constructor/baseThemeDay for reference.
 type BaseThemeDay struct {
 }
 
@@ -230,6 +236,9 @@ func (b *BaseThemeDay) DecodeBare(buf *bin.Buffer) error {
 }
 
 // BaseThemeNight represents TL type `baseThemeNight#b7b31ea8`.
+// Night theme
+//
+// See https://core.telegram.org/constructor/baseThemeNight for reference.
 type BaseThemeNight struct {
 }
 
@@ -329,6 +338,9 @@ func (b *BaseThemeNight) DecodeBare(buf *bin.Buffer) error {
 }
 
 // BaseThemeTinted represents TL type `baseThemeTinted#6d5f77ee`.
+// Tinted theme
+//
+// See https://core.telegram.org/constructor/baseThemeTinted for reference.
 type BaseThemeTinted struct {
 }
 
@@ -428,6 +440,9 @@ func (b *BaseThemeTinted) DecodeBare(buf *bin.Buffer) error {
 }
 
 // BaseThemeArctic represents TL type `baseThemeArctic#5b11125a`.
+// Arctic theme
+//
+// See https://core.telegram.org/constructor/baseThemeArctic for reference.
 type BaseThemeArctic struct {
 }
 
@@ -530,6 +545,8 @@ func (b *BaseThemeArctic) DecodeBare(buf *bin.Buffer) error {
 const BaseThemeClassName = "BaseTheme"
 
 // BaseThemeClass represents BaseTheme generic type.
+//
+// See https://core.telegram.org/type/BaseTheme for reference.
 //
 // Constructors:
 //   - [BaseThemeClassic]

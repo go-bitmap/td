@@ -32,12 +32,30 @@ var (
 )
 
 // SecureCredentialsEncrypted represents TL type `secureCredentialsEncrypted#33f0ea47`.
+// Encrypted credentials required to decrypt telegram passport¹ data.
+//
+// Links:
+//  1. https://core.telegram.org/passport
+//
+// See https://core.telegram.org/constructor/secureCredentialsEncrypted for reference.
 type SecureCredentialsEncrypted struct {
-	// Data field of SecureCredentialsEncrypted.
+	// Encrypted JSON-serialized data with unique user's payload, data hashes and secrets
+	// required for EncryptedPassportElement decryption and authentication, as described in
+	// decrypting data »¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/passport#decrypting-data
 	Data []byte
-	// Hash field of SecureCredentialsEncrypted.
+	// Data hash for data authentication as described in decrypting data »¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/passport#decrypting-data
 	Hash []byte
-	// Secret field of SecureCredentialsEncrypted.
+	// Secret, encrypted with the bot's public RSA key, required for data decryption as
+	// described in decrypting data »¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/passport#decrypting-data
 	Secret []byte
 }
 
@@ -76,6 +94,17 @@ func (s *SecureCredentialsEncrypted) String() string {
 	}
 	type Alias SecureCredentialsEncrypted
 	return fmt.Sprintf("SecureCredentialsEncrypted%+v", Alias(*s))
+}
+
+// FillFrom fills SecureCredentialsEncrypted from given interface.
+func (s *SecureCredentialsEncrypted) FillFrom(from interface {
+	GetData() (value []byte)
+	GetHash() (value []byte)
+	GetSecret() (value []byte)
+}) {
+	s.Data = from.GetData()
+	s.Hash = from.GetHash()
+	s.Secret = from.GetSecret()
 }
 
 // TypeID returns type id in TL schema.

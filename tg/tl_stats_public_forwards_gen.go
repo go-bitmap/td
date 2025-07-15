@@ -32,20 +32,33 @@ var (
 )
 
 // StatsPublicForwards represents TL type `stats.publicForwards#93037e20`.
+// Contains info about the forwards of a story¹ as a message to public chats and reposts
+// by public channels.
+//
+// Links:
+//  1. https://core.telegram.org/api/stories
+//
+// See https://core.telegram.org/constructor/stats.publicForwards for reference.
 type StatsPublicForwards struct {
-	// Flags field of StatsPublicForwards.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Count field of StatsPublicForwards.
+	// Total number of results
 	Count int
-	// Forwards field of StatsPublicForwards.
+	// Info about the forwards of a story.
 	Forwards []PublicForwardClass
-	// NextOffset field of StatsPublicForwards.
+	// Offset used for pagination¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets
 	//
 	// Use SetNextOffset and GetNextOffset helpers.
 	NextOffset string
-	// Chats field of StatsPublicForwards.
+	// Mentioned chats
 	Chats []ChatClass
-	// Users field of StatsPublicForwards.
+	// Mentioned users
 	Users []UserClass
 }
 
@@ -93,6 +106,24 @@ func (p *StatsPublicForwards) String() string {
 	}
 	type Alias StatsPublicForwards
 	return fmt.Sprintf("StatsPublicForwards%+v", Alias(*p))
+}
+
+// FillFrom fills StatsPublicForwards from given interface.
+func (p *StatsPublicForwards) FillFrom(from interface {
+	GetCount() (value int)
+	GetForwards() (value []PublicForwardClass)
+	GetNextOffset() (value string, ok bool)
+	GetChats() (value []ChatClass)
+	GetUsers() (value []UserClass)
+}) {
+	p.Count = from.GetCount()
+	p.Forwards = from.GetForwards()
+	if val, ok := from.GetNextOffset(); ok {
+		p.NextOffset = val
+	}
+
+	p.Chats = from.GetChats()
+	p.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -339,4 +370,19 @@ func (p *StatsPublicForwards) GetUsers() (value []UserClass) {
 		return
 	}
 	return p.Users
+}
+
+// MapForwards returns field Forwards wrapped in PublicForwardClassArray helper.
+func (p *StatsPublicForwards) MapForwards() (value PublicForwardClassArray) {
+	return PublicForwardClassArray(p.Forwards)
+}
+
+// MapChats returns field Chats wrapped in ChatClassArray helper.
+func (p *StatsPublicForwards) MapChats() (value ChatClassArray) {
+	return ChatClassArray(p.Chats)
+}
+
+// MapUsers returns field Users wrapped in UserClassArray helper.
+func (p *StatsPublicForwards) MapUsers() (value UserClassArray) {
+	return UserClassArray(p.Users)
 }

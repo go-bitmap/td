@@ -32,14 +32,26 @@ var (
 )
 
 // ExportedChatlistInvite represents TL type `exportedChatlistInvite#c5181ac`.
+// Exported chat folder deep link »¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/links#chat-folder-links
+//
+// See https://core.telegram.org/constructor/exportedChatlistInvite for reference.
 type ExportedChatlistInvite struct {
-	// Flags field of ExportedChatlistInvite.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Title field of ExportedChatlistInvite.
+	// Name of the link
 	Title string
-	// URL field of ExportedChatlistInvite.
+	// The chat folder deep link »¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/links#chat-folder-links
 	URL string
-	// Peers field of ExportedChatlistInvite.
+	// Peers to import
 	Peers []PeerClass
 }
 
@@ -81,6 +93,17 @@ func (e *ExportedChatlistInvite) String() string {
 	}
 	type Alias ExportedChatlistInvite
 	return fmt.Sprintf("ExportedChatlistInvite%+v", Alias(*e))
+}
+
+// FillFrom fills ExportedChatlistInvite from given interface.
+func (e *ExportedChatlistInvite) FillFrom(from interface {
+	GetTitle() (value string)
+	GetURL() (value string)
+	GetPeers() (value []PeerClass)
+}) {
+	e.Title = from.GetTitle()
+	e.URL = from.GetURL()
+	e.Peers = from.GetPeers()
 }
 
 // TypeID returns type id in TL schema.
@@ -235,4 +258,9 @@ func (e *ExportedChatlistInvite) GetPeers() (value []PeerClass) {
 		return
 	}
 	return e.Peers
+}
+
+// MapPeers returns field Peers wrapped in PeerClassArray helper.
+func (e *ExportedChatlistInvite) MapPeers() (value PeerClassArray) {
+	return PeerClassArray(e.Peers)
 }

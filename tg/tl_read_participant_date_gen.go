@@ -32,10 +32,13 @@ var (
 )
 
 // ReadParticipantDate represents TL type `readParticipantDate#4a4ff172`.
+// Contains info about when a certain participant has read a message
+//
+// See https://core.telegram.org/constructor/readParticipantDate for reference.
 type ReadParticipantDate struct {
-	// UserID field of ReadParticipantDate.
+	// User ID
 	UserID int64
-	// Date field of ReadParticipantDate.
+	// When the user read the message
 	Date int
 }
 
@@ -71,6 +74,15 @@ func (r *ReadParticipantDate) String() string {
 	}
 	type Alias ReadParticipantDate
 	return fmt.Sprintf("ReadParticipantDate%+v", Alias(*r))
+}
+
+// FillFrom fills ReadParticipantDate from given interface.
+func (r *ReadParticipantDate) FillFrom(from interface {
+	GetUserID() (value int64)
+	GetDate() (value int)
+}) {
+	r.UserID = from.GetUserID()
+	r.Date = from.GetDate()
 }
 
 // TypeID returns type id in TL schema.

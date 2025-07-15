@@ -32,10 +32,22 @@ var (
 )
 
 // UsersSetSecureValueErrorsRequest represents TL type `users.setSecureValueErrors#90c894b5`.
+// Notify the user that the sent passport¹ data contains some errors The user will not
+// be able to re-submit their Passport data to you until the errors are fixed (the
+// contents of the field for which you returned the error must change).
+// Use this if the data submitted by the user doesn't satisfy the standards your service
+// requires for any reason. For example, if a birthday date seems invalid, a submitted
+// document is blurry, a scan shows evidence of tampering, etc. Supply some details in
+// the error message to make sure the user knows how to correct the issues.
+//
+// Links:
+//  1. https://core.telegram.org/passport
+//
+// See https://core.telegram.org/method/users.setSecureValueErrors for reference.
 type UsersSetSecureValueErrorsRequest struct {
-	// ID field of UsersSetSecureValueErrorsRequest.
+	// The user
 	ID InputUserClass
-	// Errors field of UsersSetSecureValueErrorsRequest.
+	// Errors
 	Errors []SecureValueErrorClass
 }
 
@@ -71,6 +83,15 @@ func (s *UsersSetSecureValueErrorsRequest) String() string {
 	}
 	type Alias UsersSetSecureValueErrorsRequest
 	return fmt.Sprintf("UsersSetSecureValueErrorsRequest%+v", Alias(*s))
+}
+
+// FillFrom fills UsersSetSecureValueErrorsRequest from given interface.
+func (s *UsersSetSecureValueErrorsRequest) FillFrom(from interface {
+	GetID() (value InputUserClass)
+	GetErrors() (value []SecureValueErrorClass)
+}) {
+	s.ID = from.GetID()
+	s.Errors = from.GetErrors()
 }
 
 // TypeID returns type id in TL schema.
@@ -199,7 +220,31 @@ func (s *UsersSetSecureValueErrorsRequest) GetErrors() (value []SecureValueError
 	return s.Errors
 }
 
+// MapErrors returns field Errors wrapped in SecureValueErrorClassArray helper.
+func (s *UsersSetSecureValueErrorsRequest) MapErrors() (value SecureValueErrorClassArray) {
+	return SecureValueErrorClassArray(s.Errors)
+}
+
 // UsersSetSecureValueErrors invokes method users.setSecureValueErrors#90c894b5 returning error if any.
+// Notify the user that the sent passport¹ data contains some errors The user will not
+// be able to re-submit their Passport data to you until the errors are fixed (the
+// contents of the field for which you returned the error must change).
+// Use this if the data submitted by the user doesn't satisfy the standards your service
+// requires for any reason. For example, if a birthday date seems invalid, a submitted
+// document is blurry, a scan shows evidence of tampering, etc. Supply some details in
+// the error message to make sure the user knows how to correct the issues.
+//
+// Links:
+//  1. https://core.telegram.org/passport
+//
+// Possible errors:
+//
+//	403 USER_BOT_INVALID: User accounts must provide the bot method parameter when calling this method. If there is no such method parameter, this method can only be invoked by bot accounts.
+//	400 USER_BOT_REQUIRED: This method can only be called by a bot.
+//	400 USER_ID_INVALID: The provided user ID is invalid.
+//
+// See https://core.telegram.org/method/users.setSecureValueErrors for reference.
+// Can be used by bots.
 func (c *Client) UsersSetSecureValueErrors(ctx context.Context, request *UsersSetSecureValueErrorsRequest) (bool, error) {
 	var result BoolBox
 

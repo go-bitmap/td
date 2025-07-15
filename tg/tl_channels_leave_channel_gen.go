@@ -32,8 +32,17 @@ var (
 )
 
 // ChannelsLeaveChannelRequest represents TL type `channels.leaveChannel#f836aa95`.
+// Leave a channel/supergroup¹
+//
+// Links:
+//  1. https://core.telegram.org/api/channel
+//
+// See https://core.telegram.org/method/channels.leaveChannel for reference.
 type ChannelsLeaveChannelRequest struct {
-	// Channel field of ChannelsLeaveChannelRequest.
+	// Channel/supergroup¹ to leave
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/channel
 	Channel InputChannelClass
 }
 
@@ -66,6 +75,13 @@ func (l *ChannelsLeaveChannelRequest) String() string {
 	}
 	type Alias ChannelsLeaveChannelRequest
 	return fmt.Sprintf("ChannelsLeaveChannelRequest%+v", Alias(*l))
+}
+
+// FillFrom fills ChannelsLeaveChannelRequest from given interface.
+func (l *ChannelsLeaveChannelRequest) FillFrom(from interface {
+	GetChannel() (value InputChannelClass)
+}) {
+	l.Channel = from.GetChannel()
 }
 
 // TypeID returns type id in TL schema.
@@ -156,7 +172,30 @@ func (l *ChannelsLeaveChannelRequest) GetChannel() (value InputChannelClass) {
 	return l.Channel
 }
 
+// GetChannelAsNotEmpty returns mapped value of Channel field.
+func (l *ChannelsLeaveChannelRequest) GetChannelAsNotEmpty() (NotEmptyInputChannel, bool) {
+	return l.Channel.AsNotEmpty()
+}
+
 // ChannelsLeaveChannel invokes method channels.leaveChannel#f836aa95 returning error if any.
+// Leave a channel/supergroup¹
+//
+// Links:
+//  1. https://core.telegram.org/api/channel
+//
+// Possible errors:
+//
+//	400 CHANNEL_INVALID: The provided channel is invalid.
+//	406 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
+//	403 CHANNEL_PUBLIC_GROUP_NA: channel/supergroup not available.
+//	400 CHAT_INVALID: Invalid chat.
+//	400 MSG_ID_INVALID: Invalid message ID provided.
+//	400 USER_BANNED_IN_CHANNEL: You're banned from sending messages in supergroups/channels.
+//	400 USER_CREATOR: For channels.editAdmin: you've tried to edit the admin rights of the owner, but you're not the owner; for channels.leaveChannel: you can't leave this channel, because you're its creator.
+//	400 USER_NOT_PARTICIPANT: You're not a member of this supergroup/channel.
+//
+// See https://core.telegram.org/method/channels.leaveChannel for reference.
+// Can be used by bots.
 func (c *Client) ChannelsLeaveChannel(ctx context.Context, channel InputChannelClass) (UpdatesClass, error) {
 	var result UpdatesBox
 

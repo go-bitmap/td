@@ -32,8 +32,11 @@ var (
 )
 
 // PaymentsPaymentResult represents TL type `payments.paymentResult#4e5f810d`.
+// Payment result
+//
+// See https://core.telegram.org/constructor/payments.paymentResult for reference.
 type PaymentsPaymentResult struct {
-	// Updates field of PaymentsPaymentResult.
+	// Info about the payment
 	Updates UpdatesClass
 }
 
@@ -71,6 +74,13 @@ func (p *PaymentsPaymentResult) String() string {
 	}
 	type Alias PaymentsPaymentResult
 	return fmt.Sprintf("PaymentsPaymentResult%+v", Alias(*p))
+}
+
+// FillFrom fills PaymentsPaymentResult from given interface.
+func (p *PaymentsPaymentResult) FillFrom(from interface {
+	GetUpdates() (value UpdatesClass)
+}) {
+	p.Updates = from.GetUpdates()
 }
 
 // TypeID returns type id in TL schema.
@@ -162,8 +172,11 @@ func (p *PaymentsPaymentResult) GetUpdates() (value UpdatesClass) {
 }
 
 // PaymentsPaymentVerificationNeeded represents TL type `payments.paymentVerificationNeeded#d8411139`.
+// Payment was not successful, additional verification is needed
+//
+// See https://core.telegram.org/constructor/payments.paymentVerificationNeeded for reference.
 type PaymentsPaymentVerificationNeeded struct {
-	// URL field of PaymentsPaymentVerificationNeeded.
+	// URL for additional payment credentials verification
 	URL string
 }
 
@@ -201,6 +214,13 @@ func (p *PaymentsPaymentVerificationNeeded) String() string {
 	}
 	type Alias PaymentsPaymentVerificationNeeded
 	return fmt.Sprintf("PaymentsPaymentVerificationNeeded%+v", Alias(*p))
+}
+
+// FillFrom fills PaymentsPaymentVerificationNeeded from given interface.
+func (p *PaymentsPaymentVerificationNeeded) FillFrom(from interface {
+	GetURL() (value string)
+}) {
+	p.URL = from.GetURL()
 }
 
 // TypeID returns type id in TL schema.
@@ -290,6 +310,8 @@ func (p *PaymentsPaymentVerificationNeeded) GetURL() (value string) {
 const PaymentsPaymentResultClassName = "payments.PaymentResult"
 
 // PaymentsPaymentResultClass represents payments.PaymentResult generic type.
+//
+// See https://core.telegram.org/type/payments.PaymentResult for reference.
 //
 // Constructors:
 //   - [PaymentsPaymentResult]

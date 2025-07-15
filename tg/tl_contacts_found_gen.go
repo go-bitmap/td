@@ -32,14 +32,17 @@ var (
 )
 
 // ContactsFound represents TL type `contacts.found#b3134d9d`.
+// Users found by name substring and auxiliary data.
+//
+// See https://core.telegram.org/constructor/contacts.found for reference.
 type ContactsFound struct {
-	// MyResults field of ContactsFound.
+	// Personalized results
 	MyResults []PeerClass
-	// Results field of ContactsFound.
+	// List of found user identifiers
 	Results []PeerClass
-	// Chats field of ContactsFound.
+	// Found chats
 	Chats []ChatClass
-	// Users field of ContactsFound.
+	// List of users
 	Users []UserClass
 }
 
@@ -81,6 +84,19 @@ func (f *ContactsFound) String() string {
 	}
 	type Alias ContactsFound
 	return fmt.Sprintf("ContactsFound%+v", Alias(*f))
+}
+
+// FillFrom fills ContactsFound from given interface.
+func (f *ContactsFound) FillFrom(from interface {
+	GetMyResults() (value []PeerClass)
+	GetResults() (value []PeerClass)
+	GetChats() (value []ChatClass)
+	GetUsers() (value []UserClass)
+}) {
+	f.MyResults = from.GetMyResults()
+	f.Results = from.GetResults()
+	f.Chats = from.GetChats()
+	f.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -296,4 +312,24 @@ func (f *ContactsFound) GetUsers() (value []UserClass) {
 		return
 	}
 	return f.Users
+}
+
+// MapMyResults returns field MyResults wrapped in PeerClassArray helper.
+func (f *ContactsFound) MapMyResults() (value PeerClassArray) {
+	return PeerClassArray(f.MyResults)
+}
+
+// MapResults returns field Results wrapped in PeerClassArray helper.
+func (f *ContactsFound) MapResults() (value PeerClassArray) {
+	return PeerClassArray(f.Results)
+}
+
+// MapChats returns field Chats wrapped in ChatClassArray helper.
+func (f *ContactsFound) MapChats() (value ChatClassArray) {
+	return ChatClassArray(f.Chats)
+}
+
+// MapUsers returns field Users wrapped in UserClassArray helper.
+func (f *ContactsFound) MapUsers() (value UserClassArray) {
+	return UserClassArray(f.Users)
 }

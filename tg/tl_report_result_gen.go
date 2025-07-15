@@ -32,10 +32,18 @@ var (
 )
 
 // ReportResultChooseOption represents TL type `reportResultChooseOption#f0e4e0b6`.
+// The user must choose one of the following options, and then messages.report¹ must be
+// re-invoked, passing the option's option identifier to messages.report².option.
+//
+// Links:
+//  1. https://core.telegram.org/method/messages.report
+//  2. https://core.telegram.org/method/messages.report
+//
+// See https://core.telegram.org/constructor/reportResultChooseOption for reference.
 type ReportResultChooseOption struct {
-	// Title field of ReportResultChooseOption.
+	// Title of the option popup
 	Title string
-	// Options field of ReportResultChooseOption.
+	// Available options, rendered as menu entries.
 	Options []MessageReportOption
 }
 
@@ -76,6 +84,15 @@ func (r *ReportResultChooseOption) String() string {
 	}
 	type Alias ReportResultChooseOption
 	return fmt.Sprintf("ReportResultChooseOption%+v", Alias(*r))
+}
+
+// FillFrom fills ReportResultChooseOption from given interface.
+func (r *ReportResultChooseOption) FillFrom(from interface {
+	GetTitle() (value string)
+	GetOptions() (value []MessageReportOption)
+}) {
+	r.Title = from.GetTitle()
+	r.Options = from.GetOptions()
 }
 
 // TypeID returns type id in TL schema.
@@ -197,12 +214,30 @@ func (r *ReportResultChooseOption) GetOptions() (value []MessageReportOption) {
 }
 
 // ReportResultAddComment represents TL type `reportResultAddComment#6f09ac31`.
+// The user should enter an additional comment for the moderators, and then messages
+// report¹ must be re-invoked, passing the comment to messages.report².message.
+//
+// Links:
+//  1. https://core.telegram.org/method/messages.report
+//  2. https://core.telegram.org/method/messages.report
+//
+// See https://core.telegram.org/constructor/reportResultAddComment for reference.
 type ReportResultAddComment struct {
-	// Flags field of ReportResultAddComment.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Optional field of ReportResultAddComment.
+	// Whether this step can be skipped by the user, passing an empty message to messages
+	// report¹, or if a non-empty message is mandatory.
+	//
+	// Links:
+	//  1) https://core.telegram.org/method/messages.report
 	Optional bool
-	// Option field of ReportResultAddComment.
+	// The messages.report¹ method must be re-invoked, passing this option to option
+	//
+	// Links:
+	//  1) https://core.telegram.org/method/messages.report
 	Option []byte
 }
 
@@ -246,6 +281,15 @@ func (r *ReportResultAddComment) String() string {
 	}
 	type Alias ReportResultAddComment
 	return fmt.Sprintf("ReportResultAddComment%+v", Alias(*r))
+}
+
+// FillFrom fills ReportResultAddComment from given interface.
+func (r *ReportResultAddComment) FillFrom(from interface {
+	GetOptional() (value bool)
+	GetOption() (value []byte)
+}) {
+	r.Optional = from.GetOptional()
+	r.Option = from.GetOption()
 }
 
 // TypeID returns type id in TL schema.
@@ -373,6 +417,9 @@ func (r *ReportResultAddComment) GetOption() (value []byte) {
 }
 
 // ReportResultReported represents TL type `reportResultReported#8db33c4b`.
+// The report was sent successfully, no further actions are required.
+//
+// See https://core.telegram.org/constructor/reportResultReported for reference.
 type ReportResultReported struct {
 }
 
@@ -475,6 +522,8 @@ func (r *ReportResultReported) DecodeBare(b *bin.Buffer) error {
 const ReportResultClassName = "ReportResult"
 
 // ReportResultClass represents ReportResult generic type.
+//
+// See https://core.telegram.org/type/ReportResult for reference.
 //
 // Constructors:
 //   - [ReportResultChooseOption]

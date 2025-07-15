@@ -32,12 +32,15 @@ var (
 )
 
 // MessagesWebPage represents TL type `messages.webPage#fd5e12bd`.
+// Represents an Instant View webpage.
+//
+// See https://core.telegram.org/constructor/messages.webPage for reference.
 type MessagesWebPage struct {
-	// Webpage field of MessagesWebPage.
+	// The instant view webpage.
 	Webpage WebPageClass
-	// Chats field of MessagesWebPage.
+	// Chats mentioned in the webpage.
 	Chats []ChatClass
-	// Users field of MessagesWebPage.
+	// Users mentioned in the webpage.
 	Users []UserClass
 }
 
@@ -76,6 +79,17 @@ func (w *MessagesWebPage) String() string {
 	}
 	type Alias MessagesWebPage
 	return fmt.Sprintf("MessagesWebPage%+v", Alias(*w))
+}
+
+// FillFrom fills MessagesWebPage from given interface.
+func (w *MessagesWebPage) FillFrom(from interface {
+	GetWebpage() (value WebPageClass)
+	GetChats() (value []ChatClass)
+	GetUsers() (value []UserClass)
+}) {
+	w.Webpage = from.GetWebpage()
+	w.Chats = from.GetChats()
+	w.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -240,4 +254,19 @@ func (w *MessagesWebPage) GetUsers() (value []UserClass) {
 		return
 	}
 	return w.Users
+}
+
+// GetWebpageAsModified returns mapped value of Webpage field.
+func (w *MessagesWebPage) GetWebpageAsModified() (ModifiedWebPage, bool) {
+	return w.Webpage.AsModified()
+}
+
+// MapChats returns field Chats wrapped in ChatClassArray helper.
+func (w *MessagesWebPage) MapChats() (value ChatClassArray) {
+	return ChatClassArray(w.Chats)
+}
+
+// MapUsers returns field Users wrapped in UserClassArray helper.
+func (w *MessagesWebPage) MapUsers() (value UserClassArray) {
+	return UserClassArray(w.Users)
 }

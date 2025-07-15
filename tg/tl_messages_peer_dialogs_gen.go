@@ -32,16 +32,22 @@ var (
 )
 
 // MessagesPeerDialogs represents TL type `messages.peerDialogs#3371c354`.
+// Dialog info of multiple peers
+//
+// See https://core.telegram.org/constructor/messages.peerDialogs for reference.
 type MessagesPeerDialogs struct {
-	// Dialogs field of MessagesPeerDialogs.
+	// Dialog info
 	Dialogs []DialogClass
-	// Messages field of MessagesPeerDialogs.
+	// Messages mentioned in dialog info
 	Messages []MessageClass
-	// Chats field of MessagesPeerDialogs.
+	// Chats
 	Chats []ChatClass
-	// Users field of MessagesPeerDialogs.
+	// Users
 	Users []UserClass
-	// State field of MessagesPeerDialogs.
+	// Current update state of dialog¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/updates
 	State UpdatesState
 }
 
@@ -86,6 +92,21 @@ func (p *MessagesPeerDialogs) String() string {
 	}
 	type Alias MessagesPeerDialogs
 	return fmt.Sprintf("MessagesPeerDialogs%+v", Alias(*p))
+}
+
+// FillFrom fills MessagesPeerDialogs from given interface.
+func (p *MessagesPeerDialogs) FillFrom(from interface {
+	GetDialogs() (value []DialogClass)
+	GetMessages() (value []MessageClass)
+	GetChats() (value []ChatClass)
+	GetUsers() (value []UserClass)
+	GetState() (value UpdatesState)
+}) {
+	p.Dialogs = from.GetDialogs()
+	p.Messages = from.GetMessages()
+	p.Chats = from.GetChats()
+	p.Users = from.GetUsers()
+	p.State = from.GetState()
 }
 
 // TypeID returns type id in TL schema.
@@ -321,4 +342,24 @@ func (p *MessagesPeerDialogs) GetState() (value UpdatesState) {
 		return
 	}
 	return p.State
+}
+
+// MapDialogs returns field Dialogs wrapped in DialogClassArray helper.
+func (p *MessagesPeerDialogs) MapDialogs() (value DialogClassArray) {
+	return DialogClassArray(p.Dialogs)
+}
+
+// MapMessages returns field Messages wrapped in MessageClassArray helper.
+func (p *MessagesPeerDialogs) MapMessages() (value MessageClassArray) {
+	return MessageClassArray(p.Messages)
+}
+
+// MapChats returns field Chats wrapped in ChatClassArray helper.
+func (p *MessagesPeerDialogs) MapChats() (value ChatClassArray) {
+	return ChatClassArray(p.Chats)
+}
+
+// MapUsers returns field Users wrapped in UserClassArray helper.
+func (p *MessagesPeerDialogs) MapUsers() (value UserClassArray) {
+	return UserClassArray(p.Users)
 }

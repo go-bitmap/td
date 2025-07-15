@@ -32,24 +32,30 @@ var (
 )
 
 // WebAuthorization represents TL type `webAuthorization#a6f8f452`.
+// Represents a bot logged in using the Telegram login widget¹
+//
+// Links:
+//  1. https://core.telegram.org/widgets/login
+//
+// See https://core.telegram.org/constructor/webAuthorization for reference.
 type WebAuthorization struct {
-	// Hash field of WebAuthorization.
+	// Authorization hash
 	Hash int64
-	// BotID field of WebAuthorization.
+	// Bot ID
 	BotID int64
-	// Domain field of WebAuthorization.
+	// The domain name of the website on which the user has logged in.
 	Domain string
-	// Browser field of WebAuthorization.
+	// Browser user-agent
 	Browser string
-	// Platform field of WebAuthorization.
+	// Platform
 	Platform string
-	// DateCreated field of WebAuthorization.
+	// When was the web session created
 	DateCreated int
-	// DateActive field of WebAuthorization.
+	// When was the web session last active
 	DateActive int
-	// IP field of WebAuthorization.
+	// IP address
 	IP string
-	// Region field of WebAuthorization.
+	// Region, determined from IP address
 	Region string
 }
 
@@ -106,6 +112,29 @@ func (w *WebAuthorization) String() string {
 	}
 	type Alias WebAuthorization
 	return fmt.Sprintf("WebAuthorization%+v", Alias(*w))
+}
+
+// FillFrom fills WebAuthorization from given interface.
+func (w *WebAuthorization) FillFrom(from interface {
+	GetHash() (value int64)
+	GetBotID() (value int64)
+	GetDomain() (value string)
+	GetBrowser() (value string)
+	GetPlatform() (value string)
+	GetDateCreated() (value int)
+	GetDateActive() (value int)
+	GetIP() (value string)
+	GetRegion() (value string)
+}) {
+	w.Hash = from.GetHash()
+	w.BotID = from.GetBotID()
+	w.Domain = from.GetDomain()
+	w.Browser = from.GetBrowser()
+	w.Platform = from.GetPlatform()
+	w.DateCreated = from.GetDateCreated()
+	w.DateActive = from.GetDateActive()
+	w.IP = from.GetIP()
+	w.Region = from.GetRegion()
 }
 
 // TypeID returns type id in TL schema.

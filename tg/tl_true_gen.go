@@ -32,6 +32,12 @@ var (
 )
 
 // True represents TL type `true#3fedd339`.
+// See predefined identifiers¹.
+//
+// Links:
+//  1. https://core.telegram.org/mtproto/TL-formal#predefined-identifiers
+//
+// See https://core.telegram.org/constructor/true for reference.
 type True struct {
 }
 

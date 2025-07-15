@@ -32,16 +32,32 @@ var (
 )
 
 // BroadcastRevenueBalances represents TL type `broadcastRevenueBalances#c3ff71e7`.
+// Describes channel ad revenue balances »¹.
+// Note that all balances are in the smallest unit of the chosen cryptocurrency
+// (currently nanotons for TONs, so to obtain a value in USD divide the chosen amount by
+// 10^9, and then divide by usd_rate).
+//
+// Links:
+//  1. https://core.telegram.org/api/revenue
+//
+// See https://core.telegram.org/constructor/broadcastRevenueBalances for reference.
 type BroadcastRevenueBalances struct {
-	// Flags field of BroadcastRevenueBalances.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// WithdrawalEnabled field of BroadcastRevenueBalances.
+	// If set, the available balance can be withdrawn »¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/revenue#withdrawing-revenue
 	WithdrawalEnabled bool
-	// CurrentBalance field of BroadcastRevenueBalances.
+	// Amount of not-yet-withdrawn cryptocurrency.
 	CurrentBalance int64
-	// AvailableBalance field of BroadcastRevenueBalances.
+	// Amount of withdrawable cryptocurrency, out of the currently available balance
+	// (available_balance <= current_balance).
 	AvailableBalance int64
-	// OverallRevenue field of BroadcastRevenueBalances.
+	// Total amount of earned cryptocurrency.
 	OverallRevenue int64
 }
 
@@ -86,6 +102,19 @@ func (b *BroadcastRevenueBalances) String() string {
 	}
 	type Alias BroadcastRevenueBalances
 	return fmt.Sprintf("BroadcastRevenueBalances%+v", Alias(*b))
+}
+
+// FillFrom fills BroadcastRevenueBalances from given interface.
+func (b *BroadcastRevenueBalances) FillFrom(from interface {
+	GetWithdrawalEnabled() (value bool)
+	GetCurrentBalance() (value int64)
+	GetAvailableBalance() (value int64)
+	GetOverallRevenue() (value int64)
+}) {
+	b.WithdrawalEnabled = from.GetWithdrawalEnabled()
+	b.CurrentBalance = from.GetCurrentBalance()
+	b.AvailableBalance = from.GetAvailableBalance()
+	b.OverallRevenue = from.GetOverallRevenue()
 }
 
 // TypeID returns type id in TL schema.

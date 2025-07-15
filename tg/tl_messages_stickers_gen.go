@@ -32,6 +32,9 @@ var (
 )
 
 // MessagesStickersNotModified represents TL type `messages.stickersNotModified#f1749a22`.
+// No new stickers were found for the given query
+//
+// See https://core.telegram.org/constructor/messages.stickersNotModified for reference.
 type MessagesStickersNotModified struct {
 }
 
@@ -131,10 +134,16 @@ func (s *MessagesStickersNotModified) DecodeBare(b *bin.Buffer) error {
 }
 
 // MessagesStickers represents TL type `messages.stickers#30a6ec7e`.
+// Found stickers
+//
+// See https://core.telegram.org/constructor/messages.stickers for reference.
 type MessagesStickers struct {
-	// Hash field of MessagesStickers.
+	// Hash used for caching, for more info click here¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets#hash-generation
 	Hash int64
-	// Stickers field of MessagesStickers.
+	// Stickers
 	Stickers []DocumentClass
 }
 
@@ -175,6 +184,15 @@ func (s *MessagesStickers) String() string {
 	}
 	type Alias MessagesStickers
 	return fmt.Sprintf("MessagesStickers%+v", Alias(*s))
+}
+
+// FillFrom fills MessagesStickers from given interface.
+func (s *MessagesStickers) FillFrom(from interface {
+	GetHash() (value int64)
+	GetStickers() (value []DocumentClass)
+}) {
+	s.Hash = from.GetHash()
+	s.Stickers = from.GetStickers()
 }
 
 // TypeID returns type id in TL schema.
@@ -298,10 +316,17 @@ func (s *MessagesStickers) GetStickers() (value []DocumentClass) {
 	return s.Stickers
 }
 
+// MapStickers returns field Stickers wrapped in DocumentClassArray helper.
+func (s *MessagesStickers) MapStickers() (value DocumentClassArray) {
+	return DocumentClassArray(s.Stickers)
+}
+
 // MessagesStickersClassName is schema name of MessagesStickersClass.
 const MessagesStickersClassName = "messages.Stickers"
 
 // MessagesStickersClass represents messages.Stickers generic type.
+//
+// See https://core.telegram.org/type/messages.Stickers for reference.
 //
 // Constructors:
 //   - [MessagesStickersNotModified]
@@ -335,6 +360,19 @@ type MessagesStickersClass interface {
 	String() string
 	// Zero returns true if current object has a zero value.
 	Zero() bool
+
+	// AsModified tries to map MessagesStickersClass to MessagesStickers.
+	AsModified() (*MessagesStickers, bool)
+}
+
+// AsModified tries to map MessagesStickersNotModified to MessagesStickers.
+func (s *MessagesStickersNotModified) AsModified() (*MessagesStickers, bool) {
+	return nil, false
+}
+
+// AsModified tries to map MessagesStickers to MessagesStickers.
+func (s *MessagesStickers) AsModified() (*MessagesStickers, bool) {
+	return s, true
 }
 
 // DecodeMessagesStickers implements binary de-serialization for MessagesStickersClass.

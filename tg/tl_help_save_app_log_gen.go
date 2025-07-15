@@ -32,8 +32,11 @@ var (
 )
 
 // HelpSaveAppLogRequest represents TL type `help.saveAppLog#6f02f748`.
+// Saves logs of application on the server.
+//
+// See https://core.telegram.org/method/help.saveAppLog for reference.
 type HelpSaveAppLogRequest struct {
-	// Events field of HelpSaveAppLogRequest.
+	// List of input events
 	Events []InputAppEvent
 }
 
@@ -66,6 +69,13 @@ func (s *HelpSaveAppLogRequest) String() string {
 	}
 	type Alias HelpSaveAppLogRequest
 	return fmt.Sprintf("HelpSaveAppLogRequest%+v", Alias(*s))
+}
+
+// FillFrom fills HelpSaveAppLogRequest from given interface.
+func (s *HelpSaveAppLogRequest) FillFrom(from interface {
+	GetEvents() (value []InputAppEvent)
+}) {
+	s.Events = from.GetEvents()
 }
 
 // TypeID returns type id in TL schema.
@@ -167,6 +177,9 @@ func (s *HelpSaveAppLogRequest) GetEvents() (value []InputAppEvent) {
 }
 
 // HelpSaveAppLog invokes method help.saveAppLog#6f02f748 returning error if any.
+// Saves logs of application on the server.
+//
+// See https://core.telegram.org/method/help.saveAppLog for reference.
 func (c *Client) HelpSaveAppLog(ctx context.Context, events []InputAppEvent) (bool, error) {
 	var result BoolBox
 

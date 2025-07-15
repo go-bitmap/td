@@ -32,14 +32,23 @@ var (
 )
 
 // AuthSendCodeRequest represents TL type `auth.sendCode#a677244f`.
+// Send the verification code for login
+//
+// See https://core.telegram.org/method/auth.sendCode for reference.
 type AuthSendCodeRequest struct {
-	// PhoneNumber field of AuthSendCodeRequest.
+	// Phone number in international format
 	PhoneNumber string
-	// APIID field of AuthSendCodeRequest.
+	// Application identifier (see App configuration¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/myapp
 	APIID int
-	// APIHash field of AuthSendCodeRequest.
+	// Application secret hash (see App configuration¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/myapp
 	APIHash string
-	// Settings field of AuthSendCodeRequest.
+	// Settings for the code type to send
 	Settings CodeSettings
 }
 
@@ -81,6 +90,19 @@ func (s *AuthSendCodeRequest) String() string {
 	}
 	type Alias AuthSendCodeRequest
 	return fmt.Sprintf("AuthSendCodeRequest%+v", Alias(*s))
+}
+
+// FillFrom fills AuthSendCodeRequest from given interface.
+func (s *AuthSendCodeRequest) FillFrom(from interface {
+	GetPhoneNumber() (value string)
+	GetAPIID() (value int)
+	GetAPIHash() (value string)
+	GetSettings() (value CodeSettings)
+}) {
+	s.PhoneNumber = from.GetPhoneNumber()
+	s.APIID = from.GetAPIID()
+	s.APIHash = from.GetAPIHash()
+	s.Settings = from.GetSettings()
 }
 
 // TypeID returns type id in TL schema.
@@ -227,6 +249,24 @@ func (s *AuthSendCodeRequest) GetSettings() (value CodeSettings) {
 }
 
 // AuthSendCode invokes method auth.sendCode#a677244f returning error if any.
+// Send the verification code for login
+//
+// Possible errors:
+//
+//	400 API_ID_INVALID: API ID invalid.
+//	400 API_ID_PUBLISHED_FLOOD: This API id was published somewhere, you can't use it now.
+//	500 AUTH_RESTART: Restart the authorization process.
+//	500 AUTH_RESTART_%d: Internal error (debug info %d), please repeat the method call.
+//	400 PHONE_NUMBER_APP_SIGNUP_FORBIDDEN: You can't sign up using this app.
+//	400 PHONE_NUMBER_BANNED: The provided phone number is banned from telegram.
+//	400 PHONE_NUMBER_FLOOD: You asked for the code too many times.
+//	406 PHONE_NUMBER_INVALID: The phone number is invalid.
+//	406 PHONE_PASSWORD_FLOOD: You have tried logging in too many times.
+//	400 PHONE_PASSWORD_PROTECTED: This phone is password protected.
+//	400 SMS_CODE_CREATE_FAILED: An error occurred while creating the SMS code.
+//	406 UPDATE_APP_TO_LOGIN: Please update your client to login.
+//
+// See https://core.telegram.org/method/auth.sendCode for reference.
 func (c *Client) AuthSendCode(ctx context.Context, request *AuthSendCodeRequest) (AuthSentCodeClass, error) {
 	var result AuthSentCodeBox
 

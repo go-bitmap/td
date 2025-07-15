@@ -32,12 +32,18 @@ var (
 )
 
 // ChatParticipantsForbidden represents TL type `chatParticipantsForbidden#8763d3e1`.
+// Info on members is unavailable
+//
+// See https://core.telegram.org/constructor/chatParticipantsForbidden for reference.
 type ChatParticipantsForbidden struct {
-	// Flags field of ChatParticipantsForbidden.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// ChatID field of ChatParticipantsForbidden.
+	// Group ID
 	ChatID int64
-	// SelfParticipant field of ChatParticipantsForbidden.
+	// Info about the group membership of the current user
 	//
 	// Use SetSelfParticipant and GetSelfParticipant helpers.
 	SelfParticipant ChatParticipantClass
@@ -83,6 +89,18 @@ func (c *ChatParticipantsForbidden) String() string {
 	}
 	type Alias ChatParticipantsForbidden
 	return fmt.Sprintf("ChatParticipantsForbidden%+v", Alias(*c))
+}
+
+// FillFrom fills ChatParticipantsForbidden from given interface.
+func (c *ChatParticipantsForbidden) FillFrom(from interface {
+	GetChatID() (value int64)
+	GetSelfParticipant() (value ChatParticipantClass, ok bool)
+}) {
+	c.ChatID = from.GetChatID()
+	if val, ok := from.GetSelfParticipant(); ok {
+		c.SelfParticipant = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -223,12 +241,15 @@ func (c *ChatParticipantsForbidden) GetSelfParticipant() (value ChatParticipantC
 }
 
 // ChatParticipants represents TL type `chatParticipants#3cbc93f8`.
+// Group members.
+//
+// See https://core.telegram.org/constructor/chatParticipants for reference.
 type ChatParticipants struct {
-	// ChatID field of ChatParticipants.
+	// Group identifier
 	ChatID int64
-	// Participants field of ChatParticipants.
+	// List of group members
 	Participants []ChatParticipantClass
-	// Version field of ChatParticipants.
+	// Group version number
 	Version int
 }
 
@@ -272,6 +293,17 @@ func (c *ChatParticipants) String() string {
 	}
 	type Alias ChatParticipants
 	return fmt.Sprintf("ChatParticipants%+v", Alias(*c))
+}
+
+// FillFrom fills ChatParticipants from given interface.
+func (c *ChatParticipants) FillFrom(from interface {
+	GetChatID() (value int64)
+	GetParticipants() (value []ChatParticipantClass)
+	GetVersion() (value int)
+}) {
+	c.ChatID = from.GetChatID()
+	c.Participants = from.GetParticipants()
+	c.Version = from.GetVersion()
 }
 
 // TypeID returns type id in TL schema.
@@ -415,10 +447,17 @@ func (c *ChatParticipants) GetVersion() (value int) {
 	return c.Version
 }
 
+// MapParticipants returns field Participants wrapped in ChatParticipantClassArray helper.
+func (c *ChatParticipants) MapParticipants() (value ChatParticipantClassArray) {
+	return ChatParticipantClassArray(c.Participants)
+}
+
 // ChatParticipantsClassName is schema name of ChatParticipantsClass.
 const ChatParticipantsClassName = "ChatParticipants"
 
 // ChatParticipantsClass represents ChatParticipants generic type.
+//
+// See https://core.telegram.org/type/ChatParticipants for reference.
 //
 // Constructors:
 //   - [ChatParticipantsForbidden]
@@ -453,8 +492,21 @@ type ChatParticipantsClass interface {
 	// Zero returns true if current object has a zero value.
 	Zero() bool
 
-	// ChatID field of ChatParticipantsForbidden.
+	// Group ID
 	GetChatID() (value int64)
+
+	// AsNotForbidden tries to map ChatParticipantsClass to ChatParticipants.
+	AsNotForbidden() (*ChatParticipants, bool)
+}
+
+// AsNotForbidden tries to map ChatParticipantsForbidden to ChatParticipants.
+func (c *ChatParticipantsForbidden) AsNotForbidden() (*ChatParticipants, bool) {
+	return nil, false
+}
+
+// AsNotForbidden tries to map ChatParticipants to ChatParticipants.
+func (c *ChatParticipants) AsNotForbidden() (*ChatParticipants, bool) {
+	return c, true
 }
 
 // DecodeChatParticipants implements binary de-serialization for ChatParticipantsClass.

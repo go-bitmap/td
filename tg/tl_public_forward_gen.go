@@ -32,8 +32,14 @@ var (
 )
 
 // PublicForwardMessage represents TL type `publicForwardMessage#1f2bf4a`.
+// Contains info about a forward of a story¹ as a message.
+//
+// Links:
+//  1. https://core.telegram.org/api/stories
+//
+// See https://core.telegram.org/constructor/publicForwardMessage for reference.
 type PublicForwardMessage struct {
-	// Message field of PublicForwardMessage.
+	// Info about the message with the reposted story.
 	Message MessageClass
 }
 
@@ -71,6 +77,13 @@ func (p *PublicForwardMessage) String() string {
 	}
 	type Alias PublicForwardMessage
 	return fmt.Sprintf("PublicForwardMessage%+v", Alias(*p))
+}
+
+// FillFrom fills PublicForwardMessage from given interface.
+func (p *PublicForwardMessage) FillFrom(from interface {
+	GetMessage() (value MessageClass)
+}) {
+	p.Message = from.GetMessage()
 }
 
 // TypeID returns type id in TL schema.
@@ -162,10 +175,16 @@ func (p *PublicForwardMessage) GetMessage() (value MessageClass) {
 }
 
 // PublicForwardStory represents TL type `publicForwardStory#edf3add0`.
+// Contains info about a forward of a story¹ as a repost by a public channel.
+//
+// Links:
+//  1. https://core.telegram.org/api/stories
+//
+// See https://core.telegram.org/constructor/publicForwardStory for reference.
 type PublicForwardStory struct {
-	// Peer field of PublicForwardStory.
+	// The channel that reposted the story.
 	Peer PeerClass
-	// Story field of PublicForwardStory.
+	// The reposted story (may be different from the original story).
 	Story StoryItemClass
 }
 
@@ -206,6 +225,15 @@ func (p *PublicForwardStory) String() string {
 	}
 	type Alias PublicForwardStory
 	return fmt.Sprintf("PublicForwardStory%+v", Alias(*p))
+}
+
+// FillFrom fills PublicForwardStory from given interface.
+func (p *PublicForwardStory) FillFrom(from interface {
+	GetPeer() (value PeerClass)
+	GetStory() (value StoryItemClass)
+}) {
+	p.Peer = from.GetPeer()
+	p.Story = from.GetStory()
 }
 
 // TypeID returns type id in TL schema.
@@ -325,6 +353,8 @@ func (p *PublicForwardStory) GetStory() (value StoryItemClass) {
 const PublicForwardClassName = "PublicForward"
 
 // PublicForwardClass represents PublicForward generic type.
+//
+// See https://core.telegram.org/type/PublicForward for reference.
 //
 // Constructors:
 //   - [PublicForwardMessage]

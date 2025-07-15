@@ -32,10 +32,16 @@ var (
 )
 
 // TopPeer represents TL type `topPeer#edcdc05b`.
+// Top peer
+//
+// See https://core.telegram.org/constructor/topPeer for reference.
 type TopPeer struct {
-	// Peer field of TopPeer.
+	// Peer
 	Peer PeerClass
-	// Rating field of TopPeer.
+	// Rating as computed in top peer rating »¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/top-rating
 	Rating float64
 }
 
@@ -71,6 +77,15 @@ func (t *TopPeer) String() string {
 	}
 	type Alias TopPeer
 	return fmt.Sprintf("TopPeer%+v", Alias(*t))
+}
+
+// FillFrom fills TopPeer from given interface.
+func (t *TopPeer) FillFrom(from interface {
+	GetPeer() (value PeerClass)
+	GetRating() (value float64)
+}) {
+	t.Peer = from.GetPeer()
+	t.Rating = from.GetRating()
 }
 
 // TypeID returns type id in TL schema.

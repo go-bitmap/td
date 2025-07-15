@@ -32,8 +32,14 @@ var (
 )
 
 // MessagesGetEmojiKeywordsRequest represents TL type `messages.getEmojiKeywords#35a0e062`.
+// Get localized emoji keywords »¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/custom-emoji#emoji-keywords
+//
+// See https://core.telegram.org/method/messages.getEmojiKeywords for reference.
 type MessagesGetEmojiKeywordsRequest struct {
-	// LangCode field of MessagesGetEmojiKeywordsRequest.
+	// Language code
 	LangCode string
 }
 
@@ -66,6 +72,13 @@ func (g *MessagesGetEmojiKeywordsRequest) String() string {
 	}
 	type Alias MessagesGetEmojiKeywordsRequest
 	return fmt.Sprintf("MessagesGetEmojiKeywordsRequest%+v", Alias(*g))
+}
+
+// FillFrom fills MessagesGetEmojiKeywordsRequest from given interface.
+func (g *MessagesGetEmojiKeywordsRequest) FillFrom(from interface {
+	GetLangCode() (value string)
+}) {
+	g.LangCode = from.GetLangCode()
 }
 
 // TypeID returns type id in TL schema.
@@ -152,6 +165,12 @@ func (g *MessagesGetEmojiKeywordsRequest) GetLangCode() (value string) {
 }
 
 // MessagesGetEmojiKeywords invokes method messages.getEmojiKeywords#35a0e062 returning error if any.
+// Get localized emoji keywords »¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/custom-emoji#emoji-keywords
+//
+// See https://core.telegram.org/method/messages.getEmojiKeywords for reference.
 func (c *Client) MessagesGetEmojiKeywords(ctx context.Context, langcode string) (*EmojiKeywordsDifference, error) {
 	var result EmojiKeywordsDifference
 

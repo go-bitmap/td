@@ -32,6 +32,9 @@ var (
 )
 
 // ChannelParticipantsRecent represents TL type `channelParticipantsRecent#de3f3c79`.
+// Fetch only recent participants
+//
+// See https://core.telegram.org/constructor/channelParticipantsRecent for reference.
 type ChannelParticipantsRecent struct {
 }
 
@@ -131,6 +134,9 @@ func (c *ChannelParticipantsRecent) DecodeBare(b *bin.Buffer) error {
 }
 
 // ChannelParticipantsAdmins represents TL type `channelParticipantsAdmins#b4608969`.
+// Fetch only admin participants
+//
+// See https://core.telegram.org/constructor/channelParticipantsAdmins for reference.
 type ChannelParticipantsAdmins struct {
 }
 
@@ -230,8 +236,11 @@ func (c *ChannelParticipantsAdmins) DecodeBare(b *bin.Buffer) error {
 }
 
 // ChannelParticipantsKicked represents TL type `channelParticipantsKicked#a3b54985`.
+// Fetch only kicked participants
+//
+// See https://core.telegram.org/constructor/channelParticipantsKicked for reference.
 type ChannelParticipantsKicked struct {
-	// Q field of ChannelParticipantsKicked.
+	// Optional filter for searching kicked participants by name (otherwise empty)
 	Q string
 }
 
@@ -269,6 +278,13 @@ func (c *ChannelParticipantsKicked) String() string {
 	}
 	type Alias ChannelParticipantsKicked
 	return fmt.Sprintf("ChannelParticipantsKicked%+v", Alias(*c))
+}
+
+// FillFrom fills ChannelParticipantsKicked from given interface.
+func (c *ChannelParticipantsKicked) FillFrom(from interface {
+	GetQ() (value string)
+}) {
+	c.Q = from.GetQ()
 }
 
 // TypeID returns type id in TL schema.
@@ -355,6 +371,9 @@ func (c *ChannelParticipantsKicked) GetQ() (value string) {
 }
 
 // ChannelParticipantsBots represents TL type `channelParticipantsBots#b0d1865b`.
+// Fetch only bot participants
+//
+// See https://core.telegram.org/constructor/channelParticipantsBots for reference.
 type ChannelParticipantsBots struct {
 }
 
@@ -454,8 +473,11 @@ func (c *ChannelParticipantsBots) DecodeBare(b *bin.Buffer) error {
 }
 
 // ChannelParticipantsBanned represents TL type `channelParticipantsBanned#1427a5e1`.
+// Fetch only banned participants
+//
+// See https://core.telegram.org/constructor/channelParticipantsBanned for reference.
 type ChannelParticipantsBanned struct {
-	// Q field of ChannelParticipantsBanned.
+	// Optional filter for searching banned participants by name (otherwise empty)
 	Q string
 }
 
@@ -493,6 +515,13 @@ func (c *ChannelParticipantsBanned) String() string {
 	}
 	type Alias ChannelParticipantsBanned
 	return fmt.Sprintf("ChannelParticipantsBanned%+v", Alias(*c))
+}
+
+// FillFrom fills ChannelParticipantsBanned from given interface.
+func (c *ChannelParticipantsBanned) FillFrom(from interface {
+	GetQ() (value string)
+}) {
+	c.Q = from.GetQ()
 }
 
 // TypeID returns type id in TL schema.
@@ -579,8 +608,11 @@ func (c *ChannelParticipantsBanned) GetQ() (value string) {
 }
 
 // ChannelParticipantsSearch represents TL type `channelParticipantsSearch#656ac4b`.
+// Query participants by name
+//
+// See https://core.telegram.org/constructor/channelParticipantsSearch for reference.
 type ChannelParticipantsSearch struct {
-	// Q field of ChannelParticipantsSearch.
+	// Search query
 	Q string
 }
 
@@ -618,6 +650,13 @@ func (c *ChannelParticipantsSearch) String() string {
 	}
 	type Alias ChannelParticipantsSearch
 	return fmt.Sprintf("ChannelParticipantsSearch%+v", Alias(*c))
+}
+
+// FillFrom fills ChannelParticipantsSearch from given interface.
+func (c *ChannelParticipantsSearch) FillFrom(from interface {
+	GetQ() (value string)
+}) {
+	c.Q = from.GetQ()
 }
 
 // TypeID returns type id in TL schema.
@@ -704,8 +743,11 @@ func (c *ChannelParticipantsSearch) GetQ() (value string) {
 }
 
 // ChannelParticipantsContacts represents TL type `channelParticipantsContacts#bb6ae88d`.
+// Fetch only participants that are also contacts
+//
+// See https://core.telegram.org/constructor/channelParticipantsContacts for reference.
 type ChannelParticipantsContacts struct {
-	// Q field of ChannelParticipantsContacts.
+	// Optional search query for searching contact participants by name
 	Q string
 }
 
@@ -743,6 +785,13 @@ func (c *ChannelParticipantsContacts) String() string {
 	}
 	type Alias ChannelParticipantsContacts
 	return fmt.Sprintf("ChannelParticipantsContacts%+v", Alias(*c))
+}
+
+// FillFrom fills ChannelParticipantsContacts from given interface.
+func (c *ChannelParticipantsContacts) FillFrom(from interface {
+	GetQ() (value string)
+}) {
+	c.Q = from.GetQ()
 }
 
 // TypeID returns type id in TL schema.
@@ -829,14 +878,30 @@ func (c *ChannelParticipantsContacts) GetQ() (value string) {
 }
 
 // ChannelParticipantsMentions represents TL type `channelParticipantsMentions#e04b5ceb`.
+// This filter is used when looking for supergroup members to mention.
+// This filter will automatically remove anonymous admins, and return even
+// non-participant users that replied to a specific thread¹ through the comment
+// section² of a channel.
+//
+// Links:
+//  1. https://core.telegram.org/api/threads
+//  2. https://core.telegram.org/api/threads#channel-comments
+//
+// See https://core.telegram.org/constructor/channelParticipantsMentions for reference.
 type ChannelParticipantsMentions struct {
-	// Flags field of ChannelParticipantsMentions.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Q field of ChannelParticipantsMentions.
+	// Filter by user name or username
 	//
 	// Use SetQ and GetQ helpers.
 	Q string
-	// TopMsgID field of ChannelParticipantsMentions.
+	// Look only for users that posted in this thread¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/threads
 	//
 	// Use SetTopMsgID and GetTopMsgID helpers.
 	TopMsgID int
@@ -882,6 +947,21 @@ func (c *ChannelParticipantsMentions) String() string {
 	}
 	type Alias ChannelParticipantsMentions
 	return fmt.Sprintf("ChannelParticipantsMentions%+v", Alias(*c))
+}
+
+// FillFrom fills ChannelParticipantsMentions from given interface.
+func (c *ChannelParticipantsMentions) FillFrom(from interface {
+	GetQ() (value string, ok bool)
+	GetTopMsgID() (value int, ok bool)
+}) {
+	if val, ok := from.GetQ(); ok {
+		c.Q = val
+	}
+
+	if val, ok := from.GetTopMsgID(); ok {
+		c.TopMsgID = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -1036,6 +1116,8 @@ func (c *ChannelParticipantsMentions) GetTopMsgID() (value int, ok bool) {
 const ChannelParticipantsFilterClassName = "ChannelParticipantsFilter"
 
 // ChannelParticipantsFilterClass represents ChannelParticipantsFilter generic type.
+//
+// See https://core.telegram.org/type/ChannelParticipantsFilter for reference.
 //
 // Constructors:
 //   - [ChannelParticipantsRecent]

@@ -32,6 +32,8 @@ var (
 )
 
 // UsersGetRequirementsToContactRequest represents TL type `users.getRequirementsToContact#d89a83a3`.
+//
+// See https://core.telegram.org/method/users.getRequirementsToContact for reference.
 type UsersGetRequirementsToContactRequest struct {
 	// ID field of UsersGetRequirementsToContactRequest.
 	ID []InputUserClass
@@ -66,6 +68,13 @@ func (g *UsersGetRequirementsToContactRequest) String() string {
 	}
 	type Alias UsersGetRequirementsToContactRequest
 	return fmt.Sprintf("UsersGetRequirementsToContactRequest%+v", Alias(*g))
+}
+
+// FillFrom fills UsersGetRequirementsToContactRequest from given interface.
+func (g *UsersGetRequirementsToContactRequest) FillFrom(from interface {
+	GetID() (value []InputUserClass)
+}) {
+	g.ID = from.GetID()
 }
 
 // TypeID returns type id in TL schema.
@@ -169,7 +178,14 @@ func (g *UsersGetRequirementsToContactRequest) GetID() (value []InputUserClass) 
 	return g.ID
 }
 
+// MapID returns field ID wrapped in InputUserClassArray helper.
+func (g *UsersGetRequirementsToContactRequest) MapID() (value InputUserClassArray) {
+	return InputUserClassArray(g.ID)
+}
+
 // UsersGetRequirementsToContact invokes method users.getRequirementsToContact#d89a83a3 returning error if any.
+//
+// See https://core.telegram.org/method/users.getRequirementsToContact for reference.
 func (c *Client) UsersGetRequirementsToContact(ctx context.Context, id []InputUserClass) ([]RequirementToContactClass, error) {
 	var result RequirementToContactClassVector
 

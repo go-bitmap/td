@@ -32,24 +32,33 @@ var (
 )
 
 // StoriesStoryViewsList represents TL type `stories.storyViewsList#59d78fc5`.
+// Reaction and view counters for a story¹
+//
+// Links:
+//  1. https://core.telegram.org/api/stories
+//
+// See https://core.telegram.org/constructor/stories.storyViewsList for reference.
 type StoriesStoryViewsList struct {
-	// Flags field of StoriesStoryViewsList.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Count field of StoriesStoryViewsList.
+	// Total number of results that can be fetched
 	Count int
-	// ViewsCount field of StoriesStoryViewsList.
+	// Total number of story views
 	ViewsCount int
-	// ForwardsCount field of StoriesStoryViewsList.
+	// Total number of story forwards/reposts
 	ForwardsCount int
-	// ReactionsCount field of StoriesStoryViewsList.
+	// Number of reactions that were added to the story
 	ReactionsCount int
-	// Views field of StoriesStoryViewsList.
+	// Story view date and reaction information
 	Views []StoryViewClass
-	// Chats field of StoriesStoryViewsList.
+	// Mentioned chats
 	Chats []ChatClass
-	// Users field of StoriesStoryViewsList.
+	// Mentioned users
 	Users []UserClass
-	// NextOffset field of StoriesStoryViewsList.
+	// Offset for pagination
 	//
 	// Use SetNextOffset and GetNextOffset helpers.
 	NextOffset string
@@ -108,6 +117,30 @@ func (s *StoriesStoryViewsList) String() string {
 	}
 	type Alias StoriesStoryViewsList
 	return fmt.Sprintf("StoriesStoryViewsList%+v", Alias(*s))
+}
+
+// FillFrom fills StoriesStoryViewsList from given interface.
+func (s *StoriesStoryViewsList) FillFrom(from interface {
+	GetCount() (value int)
+	GetViewsCount() (value int)
+	GetForwardsCount() (value int)
+	GetReactionsCount() (value int)
+	GetViews() (value []StoryViewClass)
+	GetChats() (value []ChatClass)
+	GetUsers() (value []UserClass)
+	GetNextOffset() (value string, ok bool)
+}) {
+	s.Count = from.GetCount()
+	s.ViewsCount = from.GetViewsCount()
+	s.ForwardsCount = from.GetForwardsCount()
+	s.ReactionsCount = from.GetReactionsCount()
+	s.Views = from.GetViews()
+	s.Chats = from.GetChats()
+	s.Users = from.GetUsers()
+	if val, ok := from.GetNextOffset(); ok {
+		s.NextOffset = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -414,4 +447,19 @@ func (s *StoriesStoryViewsList) GetNextOffset() (value string, ok bool) {
 		return value, false
 	}
 	return s.NextOffset, true
+}
+
+// MapViews returns field Views wrapped in StoryViewClassArray helper.
+func (s *StoriesStoryViewsList) MapViews() (value StoryViewClassArray) {
+	return StoryViewClassArray(s.Views)
+}
+
+// MapChats returns field Chats wrapped in ChatClassArray helper.
+func (s *StoriesStoryViewsList) MapChats() (value ChatClassArray) {
+	return ChatClassArray(s.Chats)
+}
+
+// MapUsers returns field Users wrapped in UserClassArray helper.
+func (s *StoriesStoryViewsList) MapUsers() (value UserClassArray) {
+	return UserClassArray(s.Users)
 }

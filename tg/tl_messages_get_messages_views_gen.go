@@ -32,12 +32,18 @@ var (
 )
 
 // MessagesGetMessagesViewsRequest represents TL type `messages.getMessagesViews#5784d3e1`.
+// Get and increase the view counter of a message sent or forwarded from a channel¹
+//
+// Links:
+//  1. https://core.telegram.org/api/channel
+//
+// See https://core.telegram.org/method/messages.getMessagesViews for reference.
 type MessagesGetMessagesViewsRequest struct {
-	// Peer field of MessagesGetMessagesViewsRequest.
+	// Peer where the message was found
 	Peer InputPeerClass
-	// ID field of MessagesGetMessagesViewsRequest.
+	// ID of message
 	ID []int
-	// Increment field of MessagesGetMessagesViewsRequest.
+	// Whether to mark the message as viewed and increment the view counter
 	Increment bool
 }
 
@@ -76,6 +82,17 @@ func (g *MessagesGetMessagesViewsRequest) String() string {
 	}
 	type Alias MessagesGetMessagesViewsRequest
 	return fmt.Sprintf("MessagesGetMessagesViewsRequest%+v", Alias(*g))
+}
+
+// FillFrom fills MessagesGetMessagesViewsRequest from given interface.
+func (g *MessagesGetMessagesViewsRequest) FillFrom(from interface {
+	GetPeer() (value InputPeerClass)
+	GetID() (value []int)
+	GetIncrement() (value bool)
+}) {
+	g.Peer = from.GetPeer()
+	g.ID = from.GetID()
+	g.Increment = from.GetIncrement()
 }
 
 // TypeID returns type id in TL schema.
@@ -220,6 +237,20 @@ func (g *MessagesGetMessagesViewsRequest) GetIncrement() (value bool) {
 }
 
 // MessagesGetMessagesViews invokes method messages.getMessagesViews#5784d3e1 returning error if any.
+// Get and increase the view counter of a message sent or forwarded from a channel¹
+//
+// Links:
+//  1. https://core.telegram.org/api/channel
+//
+// Possible errors:
+//
+//	400 CHANNEL_INVALID: The provided channel is invalid.
+//	406 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
+//	400 CHAT_ID_INVALID: The provided chat id is invalid.
+//	400 MSG_ID_INVALID: Invalid message ID provided.
+//	400 PEER_ID_INVALID: The provided peer id is invalid.
+//
+// See https://core.telegram.org/method/messages.getMessagesViews for reference.
 func (c *Client) MessagesGetMessagesViews(ctx context.Context, request *MessagesGetMessagesViewsRequest) (*MessagesMessageViews, error) {
 	var result MessagesMessageViews
 

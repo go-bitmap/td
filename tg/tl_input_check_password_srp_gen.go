@@ -32,6 +32,9 @@ var (
 )
 
 // InputCheckPasswordEmpty represents TL type `inputCheckPasswordEmpty#9880f658`.
+// There is no password
+//
+// See https://core.telegram.org/constructor/inputCheckPasswordEmpty for reference.
 type InputCheckPasswordEmpty struct {
 }
 
@@ -131,12 +134,27 @@ func (i *InputCheckPasswordEmpty) DecodeBare(b *bin.Buffer) error {
 }
 
 // InputCheckPasswordSRP represents TL type `inputCheckPasswordSRP#d27ff082`.
+// Constructor for checking the validity of a 2FA SRP password (see SRP¹)
+//
+// Links:
+//  1. https://core.telegram.org/api/srp
+//
+// See https://core.telegram.org/constructor/inputCheckPasswordSRP for reference.
 type InputCheckPasswordSRP struct {
-	// SRPID field of InputCheckPasswordSRP.
+	// SRP ID¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/srp
 	SRPID int64
-	// A field of InputCheckPasswordSRP.
+	// A parameter (see SRP¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/srp
 	A []byte
-	// M1 field of InputCheckPasswordSRP.
+	// M1 parameter (see SRP¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/srp
 	M1 []byte
 }
 
@@ -180,6 +198,17 @@ func (i *InputCheckPasswordSRP) String() string {
 	}
 	type Alias InputCheckPasswordSRP
 	return fmt.Sprintf("InputCheckPasswordSRP%+v", Alias(*i))
+}
+
+// FillFrom fills InputCheckPasswordSRP from given interface.
+func (i *InputCheckPasswordSRP) FillFrom(from interface {
+	GetSRPID() (value int64)
+	GetA() (value []byte)
+	GetM1() (value []byte)
+}) {
+	i.SRPID = from.GetSRPID()
+	i.A = from.GetA()
+	i.M1 = from.GetM1()
 }
 
 // TypeID returns type id in TL schema.
@@ -310,6 +339,8 @@ const InputCheckPasswordSRPClassName = "InputCheckPasswordSRP"
 
 // InputCheckPasswordSRPClass represents InputCheckPasswordSRP generic type.
 //
+// See https://core.telegram.org/type/InputCheckPasswordSRP for reference.
+//
 // Constructors:
 //   - [InputCheckPasswordEmpty]
 //   - [InputCheckPasswordSRP]
@@ -342,6 +373,19 @@ type InputCheckPasswordSRPClass interface {
 	String() string
 	// Zero returns true if current object has a zero value.
 	Zero() bool
+
+	// AsNotEmpty tries to map InputCheckPasswordSRPClass to InputCheckPasswordSRP.
+	AsNotEmpty() (*InputCheckPasswordSRP, bool)
+}
+
+// AsNotEmpty tries to map InputCheckPasswordEmpty to InputCheckPasswordSRP.
+func (i *InputCheckPasswordEmpty) AsNotEmpty() (*InputCheckPasswordSRP, bool) {
+	return nil, false
+}
+
+// AsNotEmpty tries to map InputCheckPasswordSRP to InputCheckPasswordSRP.
+func (i *InputCheckPasswordSRP) AsNotEmpty() (*InputCheckPasswordSRP, bool) {
+	return i, true
 }
 
 // DecodeInputCheckPasswordSRP implements binary de-serialization for InputCheckPasswordSRPClass.

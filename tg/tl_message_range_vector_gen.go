@@ -68,6 +68,13 @@ func (vec *MessageRangeVector) String() string {
 	return fmt.Sprintf("MessageRangeVector%+v", Alias(*vec))
 }
 
+// FillFrom fills MessageRangeVector from given interface.
+func (vec *MessageRangeVector) FillFrom(from interface {
+	GetElems() (value []MessageRange)
+}) {
+	vec.Elems = from.GetElems()
+}
+
 // TypeID returns type id in TL schema.
 //
 // See https://core.telegram.org/mtproto/TL-tl#remarks.

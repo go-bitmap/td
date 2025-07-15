@@ -32,10 +32,13 @@ var (
 )
 
 // GroupCallParticipantVideoSourceGroup represents TL type `groupCallParticipantVideoSourceGroup#dcb118b7`.
+// Describes a group of video synchronization source identifiers
+//
+// See https://core.telegram.org/constructor/groupCallParticipantVideoSourceGroup for reference.
 type GroupCallParticipantVideoSourceGroup struct {
-	// Semantics field of GroupCallParticipantVideoSourceGroup.
+	// SDP semantics
 	Semantics string
-	// Sources field of GroupCallParticipantVideoSourceGroup.
+	// Source IDs
 	Sources []int
 }
 
@@ -71,6 +74,15 @@ func (g *GroupCallParticipantVideoSourceGroup) String() string {
 	}
 	type Alias GroupCallParticipantVideoSourceGroup
 	return fmt.Sprintf("GroupCallParticipantVideoSourceGroup%+v", Alias(*g))
+}
+
+// FillFrom fills GroupCallParticipantVideoSourceGroup from given interface.
+func (g *GroupCallParticipantVideoSourceGroup) FillFrom(from interface {
+	GetSemantics() (value string)
+	GetSources() (value []int)
+}) {
+	g.Semantics = from.GetSemantics()
+	g.Sources = from.GetSources()
 }
 
 // TypeID returns type id in TL schema.

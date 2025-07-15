@@ -32,12 +32,15 @@ var (
 )
 
 // TopPeerCategoryPeers represents TL type `topPeerCategoryPeers#fb834291`.
+// Top peer category
+//
+// See https://core.telegram.org/constructor/topPeerCategoryPeers for reference.
 type TopPeerCategoryPeers struct {
-	// Category field of TopPeerCategoryPeers.
+	// Top peer category of peers
 	Category TopPeerCategoryClass
-	// Count field of TopPeerCategoryPeers.
+	// Count of peers
 	Count int
-	// Peers field of TopPeerCategoryPeers.
+	// Peers
 	Peers []TopPeer
 }
 
@@ -76,6 +79,17 @@ func (t *TopPeerCategoryPeers) String() string {
 	}
 	type Alias TopPeerCategoryPeers
 	return fmt.Sprintf("TopPeerCategoryPeers%+v", Alias(*t))
+}
+
+// FillFrom fills TopPeerCategoryPeers from given interface.
+func (t *TopPeerCategoryPeers) FillFrom(from interface {
+	GetCategory() (value TopPeerCategoryClass)
+	GetCount() (value int)
+	GetPeers() (value []TopPeer)
+}) {
+	t.Category = from.GetCategory()
+	t.Count = from.GetCount()
+	t.Peers = from.GetPeers()
 }
 
 // TypeID returns type id in TL schema.

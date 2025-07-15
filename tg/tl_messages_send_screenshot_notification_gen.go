@@ -32,12 +32,16 @@ var (
 )
 
 // MessagesSendScreenshotNotificationRequest represents TL type `messages.sendScreenshotNotification#a1405817`.
+// Notify the other user in a private chat that a screenshot of the chat was taken
+//
+// See https://core.telegram.org/method/messages.sendScreenshotNotification for reference.
 type MessagesSendScreenshotNotificationRequest struct {
-	// Peer field of MessagesSendScreenshotNotificationRequest.
+	// Other user
 	Peer InputPeerClass
-	// ReplyTo field of MessagesSendScreenshotNotificationRequest.
+	// Indicates the message that was screenshotted (the specified message ID can also be 0
+	// to avoid indicating any specific message).
 	ReplyTo InputReplyToClass
-	// RandomID field of MessagesSendScreenshotNotificationRequest.
+	// Random ID to avoid message resending
 	RandomID int64
 }
 
@@ -76,6 +80,17 @@ func (s *MessagesSendScreenshotNotificationRequest) String() string {
 	}
 	type Alias MessagesSendScreenshotNotificationRequest
 	return fmt.Sprintf("MessagesSendScreenshotNotificationRequest%+v", Alias(*s))
+}
+
+// FillFrom fills MessagesSendScreenshotNotificationRequest from given interface.
+func (s *MessagesSendScreenshotNotificationRequest) FillFrom(from interface {
+	GetPeer() (value InputPeerClass)
+	GetReplyTo() (value InputReplyToClass)
+	GetRandomID() (value int64)
+}) {
+	s.Peer = from.GetPeer()
+	s.ReplyTo = from.GetReplyTo()
+	s.RandomID = from.GetRandomID()
 }
 
 // TypeID returns type id in TL schema.
@@ -212,6 +227,17 @@ func (s *MessagesSendScreenshotNotificationRequest) GetRandomID() (value int64) 
 }
 
 // MessagesSendScreenshotNotification invokes method messages.sendScreenshotNotification#a1405817 returning error if any.
+// Notify the other user in a private chat that a screenshot of the chat was taken
+//
+// Possible errors:
+//
+//	400 INPUT_USER_DEACTIVATED: The specified user was deleted.
+//	400 PEER_ID_INVALID: The provided peer id is invalid.
+//	400 REPLY_MESSAGE_ID_INVALID: The specified reply-to message ID is invalid.
+//	400 STORY_ID_INVALID: The specified story ID is invalid.
+//	400 YOU_BLOCKED_USER: You blocked this user.
+//
+// See https://core.telegram.org/method/messages.sendScreenshotNotification for reference.
 func (c *Client) MessagesSendScreenshotNotification(ctx context.Context, request *MessagesSendScreenshotNotificationRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

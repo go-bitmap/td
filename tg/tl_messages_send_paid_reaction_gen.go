@@ -32,18 +32,46 @@ var (
 )
 
 // MessagesSendPaidReactionRequest represents TL type `messages.sendPaidReaction#58bbcb50`.
+// Sends one or more paid Telegram Star reactions »¹, transferring Telegram Stars »²
+// to a channel's balance.
+//
+// Links:
+//  1. https://core.telegram.org/api/reactions#paid-reactions
+//  2. https://core.telegram.org/api/stars
+//
+// See https://core.telegram.org/method/messages.sendPaidReaction for reference.
 type MessagesSendPaidReactionRequest struct {
-	// Flags field of MessagesSendPaidReactionRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Peer field of MessagesSendPaidReactionRequest.
+	// The channel
 	Peer InputPeerClass
-	// MsgID field of MessagesSendPaidReactionRequest.
+	// The message to react to
 	MsgID int
-	// Count field of MessagesSendPaidReactionRequest.
+	// The number of stars¹ to send (each will increment the reaction counter by one).
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/stars
 	Count int
-	// RandomID field of MessagesSendPaidReactionRequest.
+	// Unique client message ID required to prevent message resending
 	RandomID int64
-	// Private field of MessagesSendPaidReactionRequest.
+	// Each post with star reactions has a leaderboard with the top senders, but users can
+	// opt out of appearing there if they prefer more privacy.If the user explicitly chose to
+	// make their paid reaction(s) private, pass boolTrue¹ to messages.sendPaidReaction²
+	// private.If the user explicitly chose to make their paid reaction(s) not private, pass
+	// boolFalse³ to messages.sendPaidReaction⁴.private.If the user did not make any
+	// explicit choice about the privacy of their paid reaction(s) (i.e. when reacting by
+	// clicking on an existing star reaction on a message), do not populate the messages
+	// sendPaidReaction⁵.private flag.
+	//
+	// Links:
+	//  1) https://core.telegram.org/constructor/boolTrue
+	//  2) https://core.telegram.org/method/messages.sendPaidReaction
+	//  3) https://core.telegram.org/constructor/boolTrue
+	//  4) https://core.telegram.org/method/messages.sendPaidReaction
+	//  5) https://core.telegram.org/method/messages.sendPaidReaction
 	//
 	// Use SetPrivate and GetPrivate helpers.
 	Private PaidReactionPrivacyClass
@@ -93,6 +121,24 @@ func (s *MessagesSendPaidReactionRequest) String() string {
 	}
 	type Alias MessagesSendPaidReactionRequest
 	return fmt.Sprintf("MessagesSendPaidReactionRequest%+v", Alias(*s))
+}
+
+// FillFrom fills MessagesSendPaidReactionRequest from given interface.
+func (s *MessagesSendPaidReactionRequest) FillFrom(from interface {
+	GetPeer() (value InputPeerClass)
+	GetMsgID() (value int)
+	GetCount() (value int)
+	GetRandomID() (value int64)
+	GetPrivate() (value PaidReactionPrivacyClass, ok bool)
+}) {
+	s.Peer = from.GetPeer()
+	s.MsgID = from.GetMsgID()
+	s.Count = from.GetCount()
+	s.RandomID = from.GetRandomID()
+	if val, ok := from.GetPrivate(); ok {
+		s.Private = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -298,6 +344,18 @@ func (s *MessagesSendPaidReactionRequest) GetPrivate() (value PaidReactionPrivac
 }
 
 // MessagesSendPaidReaction invokes method messages.sendPaidReaction#58bbcb50 returning error if any.
+// Sends one or more paid Telegram Star reactions »¹, transferring Telegram Stars »²
+// to a channel's balance.
+//
+// Links:
+//  1. https://core.telegram.org/api/reactions#paid-reactions
+//  2. https://core.telegram.org/api/stars
+//
+// Possible errors:
+//
+//	400 MESSAGE_ID_INVALID: The provided message id is invalid.
+//
+// See https://core.telegram.org/method/messages.sendPaidReaction for reference.
 func (c *Client) MessagesSendPaidReaction(ctx context.Context, request *MessagesSendPaidReactionRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

@@ -32,28 +32,49 @@ var (
 )
 
 // InputReplyToMessage represents TL type `inputReplyToMessage#b07038b0`.
+// Reply to a message.
+//
+// See https://core.telegram.org/constructor/inputReplyToMessage for reference.
 type InputReplyToMessage struct {
-	// Flags field of InputReplyToMessage.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// ReplyToMsgID field of InputReplyToMessage.
+	// The message ID to reply to.
 	ReplyToMsgID int
-	// TopMsgID field of InputReplyToMessage.
+	// This field must contain the topic ID only when replying to messages in forum topics
+	// different from the "General" topic (i.e. reply_to_msg_id is set and reply_to_msg_id !=
+	// topicID and topicID != 1).  If the replied-to message is deleted before the method
+	// finishes execution, the value in this field will be used to send the message to the
+	// correct topic, instead of the "General" topic.
 	//
 	// Use SetTopMsgID and GetTopMsgID helpers.
 	TopMsgID int
-	// ReplyToPeerID field of InputReplyToMessage.
+	// Used to reply to messages sent to another chat (specified here), can only be used for
+	// non-protected chats and messages.
 	//
 	// Use SetReplyToPeerID and GetReplyToPeerID helpers.
 	ReplyToPeerID InputPeerClass
-	// QuoteText field of InputReplyToMessage.
+	// Used to quote-reply to only a certain section (specified here) of the original message
+	// The maximum UTF-8 length for quotes is specified in the quote_length_max¹ config key.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/config#quote-length-max
 	//
 	// Use SetQuoteText and GetQuoteText helpers.
 	QuoteText string
-	// QuoteEntities field of InputReplyToMessage.
+	// Message entities for styled text¹ from the quote_text field.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities
 	//
 	// Use SetQuoteEntities and GetQuoteEntities helpers.
 	QuoteEntities []MessageEntityClass
-	// QuoteOffset field of InputReplyToMessage.
+	// Offset of the message quote_text within the original message (in UTF-16 code units¹).
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/entities#entity-length
 	//
 	// Use SetQuoteOffset and GetQuoteOffset helpers.
 	QuoteOffset int
@@ -118,6 +139,43 @@ func (i *InputReplyToMessage) String() string {
 	}
 	type Alias InputReplyToMessage
 	return fmt.Sprintf("InputReplyToMessage%+v", Alias(*i))
+}
+
+// FillFrom fills InputReplyToMessage from given interface.
+func (i *InputReplyToMessage) FillFrom(from interface {
+	GetReplyToMsgID() (value int)
+	GetTopMsgID() (value int, ok bool)
+	GetReplyToPeerID() (value InputPeerClass, ok bool)
+	GetQuoteText() (value string, ok bool)
+	GetQuoteEntities() (value []MessageEntityClass, ok bool)
+	GetQuoteOffset() (value int, ok bool)
+	GetMonoforumPeerID() (value InputPeerClass, ok bool)
+}) {
+	i.ReplyToMsgID = from.GetReplyToMsgID()
+	if val, ok := from.GetTopMsgID(); ok {
+		i.TopMsgID = val
+	}
+
+	if val, ok := from.GetReplyToPeerID(); ok {
+		i.ReplyToPeerID = val
+	}
+
+	if val, ok := from.GetQuoteText(); ok {
+		i.QuoteText = val
+	}
+
+	if val, ok := from.GetQuoteEntities(); ok {
+		i.QuoteEntities = val
+	}
+
+	if val, ok := from.GetQuoteOffset(); ok {
+		i.QuoteOffset = val
+	}
+
+	if val, ok := from.GetMonoforumPeerID(); ok {
+		i.MonoforumPeerID = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -460,11 +518,22 @@ func (i *InputReplyToMessage) GetMonoforumPeerID() (value InputPeerClass, ok boo
 	return i.MonoforumPeerID, true
 }
 
+// MapQuoteEntities returns field QuoteEntities wrapped in MessageEntityClassArray helper.
+func (i *InputReplyToMessage) MapQuoteEntities() (value MessageEntityClassArray, ok bool) {
+	if !i.Flags.Has(3) {
+		return value, false
+	}
+	return MessageEntityClassArray(i.QuoteEntities), true
+}
+
 // InputReplyToStory represents TL type `inputReplyToStory#5881323a`.
+// Reply to a story.
+//
+// See https://core.telegram.org/constructor/inputReplyToStory for reference.
 type InputReplyToStory struct {
-	// Peer field of InputReplyToStory.
+	// Sender of the story
 	Peer InputPeerClass
-	// StoryID field of InputReplyToStory.
+	// ID of the story to reply to.
 	StoryID int
 }
 
@@ -505,6 +574,15 @@ func (i *InputReplyToStory) String() string {
 	}
 	type Alias InputReplyToStory
 	return fmt.Sprintf("InputReplyToStory%+v", Alias(*i))
+}
+
+// FillFrom fills InputReplyToStory from given interface.
+func (i *InputReplyToStory) FillFrom(from interface {
+	GetPeer() (value InputPeerClass)
+	GetStoryID() (value int)
+}) {
+	i.Peer = from.GetPeer()
+	i.StoryID = from.GetStoryID()
 }
 
 // TypeID returns type id in TL schema.
@@ -616,6 +694,8 @@ func (i *InputReplyToStory) GetStoryID() (value int) {
 }
 
 // InputReplyToMonoForum represents TL type `inputReplyToMonoForum#69d66c45`.
+//
+// See https://core.telegram.org/constructor/inputReplyToMonoForum for reference.
 type InputReplyToMonoForum struct {
 	// MonoforumPeerID field of InputReplyToMonoForum.
 	MonoforumPeerID InputPeerClass
@@ -655,6 +735,13 @@ func (i *InputReplyToMonoForum) String() string {
 	}
 	type Alias InputReplyToMonoForum
 	return fmt.Sprintf("InputReplyToMonoForum%+v", Alias(*i))
+}
+
+// FillFrom fills InputReplyToMonoForum from given interface.
+func (i *InputReplyToMonoForum) FillFrom(from interface {
+	GetMonoforumPeerID() (value InputPeerClass)
+}) {
+	i.MonoforumPeerID = from.GetMonoforumPeerID()
 }
 
 // TypeID returns type id in TL schema.
@@ -749,6 +836,8 @@ func (i *InputReplyToMonoForum) GetMonoforumPeerID() (value InputPeerClass) {
 const InputReplyToClassName = "InputReplyTo"
 
 // InputReplyToClass represents InputReplyTo generic type.
+//
+// See https://core.telegram.org/type/InputReplyTo for reference.
 //
 // Constructors:
 //   - [InputReplyToMessage]

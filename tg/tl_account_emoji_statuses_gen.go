@@ -32,6 +32,12 @@ var (
 )
 
 // AccountEmojiStatusesNotModified represents TL type `account.emojiStatusesNotModified#d08ce645`.
+// The server-side list of emoji statuses¹ hasn't changed
+//
+// Links:
+//  1. https://core.telegram.org/api/emoji-status
+//
+// See https://core.telegram.org/constructor/account.emojiStatusesNotModified for reference.
 type AccountEmojiStatusesNotModified struct {
 }
 
@@ -131,10 +137,22 @@ func (e *AccountEmojiStatusesNotModified) DecodeBare(b *bin.Buffer) error {
 }
 
 // AccountEmojiStatuses represents TL type `account.emojiStatuses#90c467d1`.
+// A list of emoji statuses¹
+//
+// Links:
+//  1. https://core.telegram.org/api/emoji-status
+//
+// See https://core.telegram.org/constructor/account.emojiStatuses for reference.
 type AccountEmojiStatuses struct {
-	// Hash field of AccountEmojiStatuses.
+	// Hash used for caching, for more info click here¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets#hash-generation
 	Hash int64
-	// Statuses field of AccountEmojiStatuses.
+	// Emoji statuses¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/emoji-status
 	Statuses []EmojiStatusClass
 }
 
@@ -175,6 +193,15 @@ func (e *AccountEmojiStatuses) String() string {
 	}
 	type Alias AccountEmojiStatuses
 	return fmt.Sprintf("AccountEmojiStatuses%+v", Alias(*e))
+}
+
+// FillFrom fills AccountEmojiStatuses from given interface.
+func (e *AccountEmojiStatuses) FillFrom(from interface {
+	GetHash() (value int64)
+	GetStatuses() (value []EmojiStatusClass)
+}) {
+	e.Hash = from.GetHash()
+	e.Statuses = from.GetStatuses()
 }
 
 // TypeID returns type id in TL schema.
@@ -298,10 +325,17 @@ func (e *AccountEmojiStatuses) GetStatuses() (value []EmojiStatusClass) {
 	return e.Statuses
 }
 
+// MapStatuses returns field Statuses wrapped in EmojiStatusClassArray helper.
+func (e *AccountEmojiStatuses) MapStatuses() (value EmojiStatusClassArray) {
+	return EmojiStatusClassArray(e.Statuses)
+}
+
 // AccountEmojiStatusesClassName is schema name of AccountEmojiStatusesClass.
 const AccountEmojiStatusesClassName = "account.EmojiStatuses"
 
 // AccountEmojiStatusesClass represents account.EmojiStatuses generic type.
+//
+// See https://core.telegram.org/type/account.EmojiStatuses for reference.
 //
 // Constructors:
 //   - [AccountEmojiStatusesNotModified]
@@ -335,6 +369,19 @@ type AccountEmojiStatusesClass interface {
 	String() string
 	// Zero returns true if current object has a zero value.
 	Zero() bool
+
+	// AsModified tries to map AccountEmojiStatusesClass to AccountEmojiStatuses.
+	AsModified() (*AccountEmojiStatuses, bool)
+}
+
+// AsModified tries to map AccountEmojiStatusesNotModified to AccountEmojiStatuses.
+func (e *AccountEmojiStatusesNotModified) AsModified() (*AccountEmojiStatuses, bool) {
+	return nil, false
+}
+
+// AsModified tries to map AccountEmojiStatuses to AccountEmojiStatuses.
+func (e *AccountEmojiStatuses) AsModified() (*AccountEmojiStatuses, bool) {
+	return e, true
 }
 
 // DecodeAccountEmojiStatuses implements binary de-serialization for AccountEmojiStatusesClass.

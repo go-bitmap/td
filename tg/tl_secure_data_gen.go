@@ -32,12 +32,19 @@ var (
 )
 
 // SecureData represents TL type `secureData#8aeabec3`.
+// Secure passport¹ data, for more info see the passport docs »²
+//
+// Links:
+//  1. https://core.telegram.org/passport
+//  2. https://core.telegram.org/passport/encryption#securedata
+//
+// See https://core.telegram.org/constructor/secureData for reference.
 type SecureData struct {
-	// Data field of SecureData.
+	// Data
 	Data []byte
-	// DataHash field of SecureData.
+	// Data hash
 	DataHash []byte
-	// Secret field of SecureData.
+	// Secret
 	Secret []byte
 }
 
@@ -76,6 +83,17 @@ func (s *SecureData) String() string {
 	}
 	type Alias SecureData
 	return fmt.Sprintf("SecureData%+v", Alias(*s))
+}
+
+// FillFrom fills SecureData from given interface.
+func (s *SecureData) FillFrom(from interface {
+	GetData() (value []byte)
+	GetDataHash() (value []byte)
+	GetSecret() (value []byte)
+}) {
+	s.Data = from.GetData()
+	s.DataHash = from.GetDataHash()
+	s.Secret = from.GetSecret()
 }
 
 // TypeID returns type id in TL schema.

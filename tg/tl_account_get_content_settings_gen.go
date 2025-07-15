@@ -32,6 +32,9 @@ var (
 )
 
 // AccountGetContentSettingsRequest represents TL type `account.getContentSettings#8b9b4dae`.
+// Get sensitive content settings
+//
+// See https://core.telegram.org/method/account.getContentSettings for reference.
 type AccountGetContentSettingsRequest struct {
 }
 
@@ -126,6 +129,9 @@ func (g *AccountGetContentSettingsRequest) DecodeBare(b *bin.Buffer) error {
 }
 
 // AccountGetContentSettings invokes method account.getContentSettings#8b9b4dae returning error if any.
+// Get sensitive content settings
+//
+// See https://core.telegram.org/method/account.getContentSettings for reference.
 func (c *Client) AccountGetContentSettings(ctx context.Context) (*AccountContentSettings, error) {
 	var result AccountContentSettings
 

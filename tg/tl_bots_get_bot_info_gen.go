@@ -32,14 +32,22 @@ var (
 )
 
 // BotsGetBotInfoRequest represents TL type `bots.getBotInfo#dcd914fd`.
+// Get localized name, about text and description of a bot (or of the current account, if
+// called by a bot).
+//
+// See https://core.telegram.org/method/bots.getBotInfo for reference.
 type BotsGetBotInfoRequest struct {
-	// Flags field of BotsGetBotInfoRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Bot field of BotsGetBotInfoRequest.
+	// If called by a user, must contain the peer of a bot we own.
 	//
 	// Use SetBot and GetBot helpers.
 	Bot InputUserClass
-	// LangCode field of BotsGetBotInfoRequest.
+	// Language code, if left empty this method will return the fallback about text and
+	// description.
 	LangCode string
 }
 
@@ -78,6 +86,18 @@ func (g *BotsGetBotInfoRequest) String() string {
 	}
 	type Alias BotsGetBotInfoRequest
 	return fmt.Sprintf("BotsGetBotInfoRequest%+v", Alias(*g))
+}
+
+// FillFrom fills BotsGetBotInfoRequest from given interface.
+func (g *BotsGetBotInfoRequest) FillFrom(from interface {
+	GetBot() (value InputUserClass, ok bool)
+	GetLangCode() (value string)
+}) {
+	if val, ok := from.GetBot(); ok {
+		g.Bot = val
+	}
+
+	g.LangCode = from.GetLangCode()
 }
 
 // TypeID returns type id in TL schema.
@@ -218,6 +238,17 @@ func (g *BotsGetBotInfoRequest) GetLangCode() (value string) {
 }
 
 // BotsGetBotInfo invokes method bots.getBotInfo#dcd914fd returning error if any.
+// Get localized name, about text and description of a bot (or of the current account, if
+// called by a bot).
+//
+// Possible errors:
+//
+//	400 BOT_INVALID: This is not a valid bot.
+//	400 LANG_CODE_INVALID: The specified language code is invalid.
+//	400 USER_BOT_INVALID: User accounts must provide the bot method parameter when calling this method. If there is no such method parameter, this method can only be invoked by bot accounts.
+//
+// See https://core.telegram.org/method/bots.getBotInfo for reference.
+// Can be used by bots.
 func (c *Client) BotsGetBotInfo(ctx context.Context, request *BotsGetBotInfoRequest) (*BotsBotInfo, error) {
 	var result BotsBotInfo
 

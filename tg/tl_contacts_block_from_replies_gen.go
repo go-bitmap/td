@@ -32,16 +32,28 @@ var (
 )
 
 // ContactsBlockFromRepliesRequest represents TL type `contacts.blockFromReplies#29a8962c`.
+// Stop getting notifications about discussion replies¹ of a certain user in @replies
+//
+// Links:
+//  1. https://core.telegram.org/api/discussion
+//
+// See https://core.telegram.org/method/contacts.blockFromReplies for reference.
 type ContactsBlockFromRepliesRequest struct {
-	// Flags field of ContactsBlockFromRepliesRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// DeleteMessage field of ContactsBlockFromRepliesRequest.
+	// Whether to delete the specified message as well
 	DeleteMessage bool
-	// DeleteHistory field of ContactsBlockFromRepliesRequest.
+	// Whether to delete all @replies messages from this user as well
 	DeleteHistory bool
-	// ReportSpam field of ContactsBlockFromRepliesRequest.
+	// Whether to also report this user for spam
 	ReportSpam bool
-	// MsgID field of ContactsBlockFromRepliesRequest.
+	// ID of the message in the @replies¹ chat
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/discussion#replies
 	MsgID int
 }
 
@@ -86,6 +98,19 @@ func (b *ContactsBlockFromRepliesRequest) String() string {
 	}
 	type Alias ContactsBlockFromRepliesRequest
 	return fmt.Sprintf("ContactsBlockFromRepliesRequest%+v", Alias(*b))
+}
+
+// FillFrom fills ContactsBlockFromRepliesRequest from given interface.
+func (b *ContactsBlockFromRepliesRequest) FillFrom(from interface {
+	GetDeleteMessage() (value bool)
+	GetDeleteHistory() (value bool)
+	GetReportSpam() (value bool)
+	GetMsgID() (value int)
+}) {
+	b.DeleteMessage = from.GetDeleteMessage()
+	b.DeleteHistory = from.GetDeleteHistory()
+	b.ReportSpam = from.GetReportSpam()
+	b.MsgID = from.GetMsgID()
 }
 
 // TypeID returns type id in TL schema.
@@ -269,6 +294,16 @@ func (b *ContactsBlockFromRepliesRequest) GetMsgID() (value int) {
 }
 
 // ContactsBlockFromReplies invokes method contacts.blockFromReplies#29a8962c returning error if any.
+// Stop getting notifications about discussion replies¹ of a certain user in @replies
+//
+// Links:
+//  1. https://core.telegram.org/api/discussion
+//
+// Possible errors:
+//
+//	400 MSG_ID_INVALID: Invalid message ID provided.
+//
+// See https://core.telegram.org/method/contacts.blockFromReplies for reference.
 func (c *Client) ContactsBlockFromReplies(ctx context.Context, request *ContactsBlockFromRepliesRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

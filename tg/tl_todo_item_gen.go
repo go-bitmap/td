@@ -32,6 +32,8 @@ var (
 )
 
 // TodoItem represents TL type `todoItem#cba9a52f`.
+//
+// See https://core.telegram.org/constructor/todoItem for reference.
 type TodoItem struct {
 	// ID field of TodoItem.
 	ID int
@@ -71,6 +73,15 @@ func (t *TodoItem) String() string {
 	}
 	type Alias TodoItem
 	return fmt.Sprintf("TodoItem%+v", Alias(*t))
+}
+
+// FillFrom fills TodoItem from given interface.
+func (t *TodoItem) FillFrom(from interface {
+	GetID() (value int)
+	GetTitle() (value TextWithEntities)
+}) {
+	t.ID = from.GetID()
+	t.Title = from.GetTitle()
 }
 
 // TypeID returns type id in TL schema.

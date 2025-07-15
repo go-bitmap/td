@@ -32,10 +32,16 @@ var (
 )
 
 // HelpGetCountriesListRequest represents TL type `help.getCountriesList#735787a8`.
+// Get name, ISO code, localized name and phone codes/patterns of all available countries
+//
+// See https://core.telegram.org/method/help.getCountriesList for reference.
 type HelpGetCountriesListRequest struct {
-	// LangCode field of HelpGetCountriesListRequest.
+	// Language code of the current user
 	LangCode string
-	// Hash field of HelpGetCountriesListRequest.
+	// Hash used for caching, for more info click here¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets#hash-generation
 	Hash int
 }
 
@@ -71,6 +77,15 @@ func (g *HelpGetCountriesListRequest) String() string {
 	}
 	type Alias HelpGetCountriesListRequest
 	return fmt.Sprintf("HelpGetCountriesListRequest%+v", Alias(*g))
+}
+
+// FillFrom fills HelpGetCountriesListRequest from given interface.
+func (g *HelpGetCountriesListRequest) FillFrom(from interface {
+	GetLangCode() (value string)
+	GetHash() (value int)
+}) {
+	g.LangCode = from.GetLangCode()
+	g.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -177,6 +192,9 @@ func (g *HelpGetCountriesListRequest) GetHash() (value int) {
 }
 
 // HelpGetCountriesList invokes method help.getCountriesList#735787a8 returning error if any.
+// Get name, ISO code, localized name and phone codes/patterns of all available countries
+//
+// See https://core.telegram.org/method/help.getCountriesList for reference.
 func (c *Client) HelpGetCountriesList(ctx context.Context, request *HelpGetCountriesListRequest) (HelpCountriesListClass, error) {
 	var result HelpCountriesListBox
 

@@ -32,18 +32,36 @@ var (
 )
 
 // FragmentCollectibleInfo represents TL type `fragment.collectibleInfo#6ebdff91`.
+// Info about a fragment collectible¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/fragment
+//
+// See https://core.telegram.org/constructor/fragment.collectibleInfo for reference.
 type FragmentCollectibleInfo struct {
-	// PurchaseDate field of FragmentCollectibleInfo.
+	// Purchase date (unixtime)
 	PurchaseDate int
-	// Currency field of FragmentCollectibleInfo.
+	// Three-letter ISO 4217 currency¹ code for amount
+	//
+	// Links:
+	//  1) https://core.telegram.org/bots/payments#supported-currencies
 	Currency string
-	// Amount field of FragmentCollectibleInfo.
+	// Total price in the smallest units of the currency (integer, not float/double). For
+	// example, for a price of US$ 1.45 pass amount = 145. See the exp parameter in
+	// currencies.json¹, it shows the number of digits past the decimal point for each
+	// currency (2 for the majority of currencies).
+	//
+	// Links:
+	//  1) https://core.telegram.org/bots/payments/currencies.json
 	Amount int64
-	// CryptoCurrency field of FragmentCollectibleInfo.
+	// Cryptocurrency name.
 	CryptoCurrency string
-	// CryptoAmount field of FragmentCollectibleInfo.
+	// Price, in the smallest units of the cryptocurrency.
 	CryptoAmount int64
-	// URL field of FragmentCollectibleInfo.
+	// Fragment¹ URL with more info about the collectible
+	//
+	// Links:
+	//  1) https://fragment.com
 	URL string
 }
 
@@ -91,6 +109,23 @@ func (c *FragmentCollectibleInfo) String() string {
 	}
 	type Alias FragmentCollectibleInfo
 	return fmt.Sprintf("FragmentCollectibleInfo%+v", Alias(*c))
+}
+
+// FillFrom fills FragmentCollectibleInfo from given interface.
+func (c *FragmentCollectibleInfo) FillFrom(from interface {
+	GetPurchaseDate() (value int)
+	GetCurrency() (value string)
+	GetAmount() (value int64)
+	GetCryptoCurrency() (value string)
+	GetCryptoAmount() (value int64)
+	GetURL() (value string)
+}) {
+	c.PurchaseDate = from.GetPurchaseDate()
+	c.Currency = from.GetCurrency()
+	c.Amount = from.GetAmount()
+	c.CryptoCurrency = from.GetCryptoCurrency()
+	c.CryptoAmount = from.GetCryptoAmount()
+	c.URL = from.GetURL()
 }
 
 // TypeID returns type id in TL schema.

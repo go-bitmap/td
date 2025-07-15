@@ -32,6 +32,9 @@ var (
 )
 
 // AccountGetAccountTTLRequest represents TL type `account.getAccountTTL#8fc711d`.
+// Get days to live of account
+//
+// See https://core.telegram.org/method/account.getAccountTTL for reference.
 type AccountGetAccountTTLRequest struct {
 }
 
@@ -126,6 +129,9 @@ func (g *AccountGetAccountTTLRequest) DecodeBare(b *bin.Buffer) error {
 }
 
 // AccountGetAccountTTL invokes method account.getAccountTTL#8fc711d returning error if any.
+// Get days to live of account
+//
+// See https://core.telegram.org/method/account.getAccountTTL for reference.
 func (c *Client) AccountGetAccountTTL(ctx context.Context) (*AccountDaysTTL, error) {
 	var result AccountDaysTTL
 

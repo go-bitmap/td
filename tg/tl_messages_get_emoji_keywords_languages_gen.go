@@ -32,8 +32,17 @@ var (
 )
 
 // MessagesGetEmojiKeywordsLanguagesRequest represents TL type `messages.getEmojiKeywordsLanguages#4e9963b2`.
+// Obtain a list of related languages that must be used when fetching emoji keyword lists
+// »¹.
+// Usually the method will return the passed language codes (if localized) + en + some
+// language codes for similar languages (if applicable).
+//
+// Links:
+//  1. https://core.telegram.org/api/custom-emoji#emoji-keywords
+//
+// See https://core.telegram.org/method/messages.getEmojiKeywordsLanguages for reference.
 type MessagesGetEmojiKeywordsLanguagesRequest struct {
-	// LangCodes field of MessagesGetEmojiKeywordsLanguagesRequest.
+	// The user's language codes
 	LangCodes []string
 }
 
@@ -66,6 +75,13 @@ func (g *MessagesGetEmojiKeywordsLanguagesRequest) String() string {
 	}
 	type Alias MessagesGetEmojiKeywordsLanguagesRequest
 	return fmt.Sprintf("MessagesGetEmojiKeywordsLanguagesRequest%+v", Alias(*g))
+}
+
+// FillFrom fills MessagesGetEmojiKeywordsLanguagesRequest from given interface.
+func (g *MessagesGetEmojiKeywordsLanguagesRequest) FillFrom(from interface {
+	GetLangCodes() (value []string)
+}) {
+	g.LangCodes = from.GetLangCodes()
 }
 
 // TypeID returns type id in TL schema.
@@ -165,6 +181,15 @@ func (g *MessagesGetEmojiKeywordsLanguagesRequest) GetLangCodes() (value []strin
 }
 
 // MessagesGetEmojiKeywordsLanguages invokes method messages.getEmojiKeywordsLanguages#4e9963b2 returning error if any.
+// Obtain a list of related languages that must be used when fetching emoji keyword lists
+// »¹.
+// Usually the method will return the passed language codes (if localized) + en + some
+// language codes for similar languages (if applicable).
+//
+// Links:
+//  1. https://core.telegram.org/api/custom-emoji#emoji-keywords
+//
+// See https://core.telegram.org/method/messages.getEmojiKeywordsLanguages for reference.
 func (c *Client) MessagesGetEmojiKeywordsLanguages(ctx context.Context, langcodes []string) ([]EmojiLanguage, error) {
 	var result EmojiLanguageVector
 

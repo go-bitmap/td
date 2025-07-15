@@ -32,8 +32,14 @@ var (
 )
 
 // MessagesGetFeaturedStickersRequest represents TL type `messages.getFeaturedStickers#64780b14`.
+// Get featured stickers
+//
+// See https://core.telegram.org/method/messages.getFeaturedStickers for reference.
 type MessagesGetFeaturedStickersRequest struct {
-	// Hash field of MessagesGetFeaturedStickersRequest.
+	// Hash used for caching, for more info click here¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets#hash-generation
 	Hash int64
 }
 
@@ -66,6 +72,13 @@ func (g *MessagesGetFeaturedStickersRequest) String() string {
 	}
 	type Alias MessagesGetFeaturedStickersRequest
 	return fmt.Sprintf("MessagesGetFeaturedStickersRequest%+v", Alias(*g))
+}
+
+// FillFrom fills MessagesGetFeaturedStickersRequest from given interface.
+func (g *MessagesGetFeaturedStickersRequest) FillFrom(from interface {
+	GetHash() (value int64)
+}) {
+	g.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -152,6 +165,9 @@ func (g *MessagesGetFeaturedStickersRequest) GetHash() (value int64) {
 }
 
 // MessagesGetFeaturedStickers invokes method messages.getFeaturedStickers#64780b14 returning error if any.
+// Get featured stickers
+//
+// See https://core.telegram.org/method/messages.getFeaturedStickers for reference.
 func (c *Client) MessagesGetFeaturedStickers(ctx context.Context, hash int64) (MessagesFeaturedStickersClass, error) {
 	var result MessagesFeaturedStickersBox
 

@@ -32,34 +32,43 @@ var (
 )
 
 // BotInlineResult represents TL type `botInlineResult#11965f3a`.
+// Generic result
+//
+// See https://core.telegram.org/constructor/botInlineResult for reference.
 type BotInlineResult struct {
-	// Flags field of BotInlineResult.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// ID field of BotInlineResult.
+	// Result ID
 	ID string
-	// Type field of BotInlineResult.
+	// Result type (see bot API docs¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/bots/api#inlinequeryresult
 	Type string
-	// Title field of BotInlineResult.
+	// Result title
 	//
 	// Use SetTitle and GetTitle helpers.
 	Title string
-	// Description field of BotInlineResult.
+	// Result description
 	//
 	// Use SetDescription and GetDescription helpers.
 	Description string
-	// URL field of BotInlineResult.
+	// URL of article or webpage
 	//
 	// Use SetURL and GetURL helpers.
 	URL string
-	// Thumb field of BotInlineResult.
+	// Thumbnail for the result
 	//
 	// Use SetThumb and GetThumb helpers.
 	Thumb WebDocumentClass
-	// Content field of BotInlineResult.
+	// Content of the result
 	//
 	// Use SetContent and GetContent helpers.
 	Content WebDocumentClass
-	// SendMessage field of BotInlineResult.
+	// Message to send
 	SendMessage BotInlineMessageClass
 }
 
@@ -121,6 +130,42 @@ func (b *BotInlineResult) String() string {
 	}
 	type Alias BotInlineResult
 	return fmt.Sprintf("BotInlineResult%+v", Alias(*b))
+}
+
+// FillFrom fills BotInlineResult from given interface.
+func (b *BotInlineResult) FillFrom(from interface {
+	GetID() (value string)
+	GetType() (value string)
+	GetTitle() (value string, ok bool)
+	GetDescription() (value string, ok bool)
+	GetURL() (value string, ok bool)
+	GetThumb() (value WebDocumentClass, ok bool)
+	GetContent() (value WebDocumentClass, ok bool)
+	GetSendMessage() (value BotInlineMessageClass)
+}) {
+	b.ID = from.GetID()
+	b.Type = from.GetType()
+	if val, ok := from.GetTitle(); ok {
+		b.Title = val
+	}
+
+	if val, ok := from.GetDescription(); ok {
+		b.Description = val
+	}
+
+	if val, ok := from.GetURL(); ok {
+		b.URL = val
+	}
+
+	if val, ok := from.GetThumb(); ok {
+		b.Thumb = val
+	}
+
+	if val, ok := from.GetContent(); ok {
+		b.Content = val
+	}
+
+	b.SendMessage = from.GetSendMessage()
 }
 
 // TypeID returns type id in TL schema.
@@ -455,30 +500,43 @@ func (b *BotInlineResult) GetSendMessage() (value BotInlineMessageClass) {
 }
 
 // BotInlineMediaResult represents TL type `botInlineMediaResult#17db940b`.
+// Media result
+//
+// See https://core.telegram.org/constructor/botInlineMediaResult for reference.
 type BotInlineMediaResult struct {
-	// Flags field of BotInlineMediaResult.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// ID field of BotInlineMediaResult.
+	// Result ID
 	ID string
-	// Type field of BotInlineMediaResult.
+	// Result type (see bot API docs¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/bots/api#inlinequeryresult
 	Type string
-	// Photo field of BotInlineMediaResult.
+	// If type is photo, the photo to send
 	//
 	// Use SetPhoto and GetPhoto helpers.
 	Photo PhotoClass
-	// Document field of BotInlineMediaResult.
+	// If type is document, the document to send
 	//
 	// Use SetDocument and GetDocument helpers.
 	Document DocumentClass
-	// Title field of BotInlineMediaResult.
+	// Result title
 	//
 	// Use SetTitle and GetTitle helpers.
 	Title string
-	// Description field of BotInlineMediaResult.
+	// Description
 	//
 	// Use SetDescription and GetDescription helpers.
 	Description string
-	// SendMessage field of BotInlineMediaResult.
+	// Depending on the type and on the constructor¹, contains the caption of the media or
+	// the content of the message to be sent instead of the media
+	//
+	// Links:
+	//  1) https://core.telegram.org/type/BotInlineMessage
 	SendMessage BotInlineMessageClass
 }
 
@@ -537,6 +595,37 @@ func (b *BotInlineMediaResult) String() string {
 	}
 	type Alias BotInlineMediaResult
 	return fmt.Sprintf("BotInlineMediaResult%+v", Alias(*b))
+}
+
+// FillFrom fills BotInlineMediaResult from given interface.
+func (b *BotInlineMediaResult) FillFrom(from interface {
+	GetID() (value string)
+	GetType() (value string)
+	GetPhoto() (value PhotoClass, ok bool)
+	GetDocument() (value DocumentClass, ok bool)
+	GetTitle() (value string, ok bool)
+	GetDescription() (value string, ok bool)
+	GetSendMessage() (value BotInlineMessageClass)
+}) {
+	b.ID = from.GetID()
+	b.Type = from.GetType()
+	if val, ok := from.GetPhoto(); ok {
+		b.Photo = val
+	}
+
+	if val, ok := from.GetDocument(); ok {
+		b.Document = val
+	}
+
+	if val, ok := from.GetTitle(); ok {
+		b.Title = val
+	}
+
+	if val, ok := from.GetDescription(); ok {
+		b.Description = val
+	}
+
+	b.SendMessage = from.GetSendMessage()
 }
 
 // TypeID returns type id in TL schema.
@@ -839,6 +928,8 @@ const BotInlineResultClassName = "BotInlineResult"
 
 // BotInlineResultClass represents BotInlineResult generic type.
 //
+// See https://core.telegram.org/type/BotInlineResult for reference.
+//
 // Constructors:
 //   - [BotInlineResult]
 //   - [BotInlineMediaResult]
@@ -872,15 +963,22 @@ type BotInlineResultClass interface {
 	// Zero returns true if current object has a zero value.
 	Zero() bool
 
-	// ID field of BotInlineResult.
+	// Result ID
 	GetID() (value string)
-	// Type field of BotInlineResult.
+
+	// Result type (see bot API docs¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/bots/api#inlinequeryresult
 	GetType() (value string)
-	// Title field of BotInlineResult.
+
+	// Result title
 	GetTitle() (value string, ok bool)
-	// Description field of BotInlineResult.
+
+	// Result description
 	GetDescription() (value string, ok bool)
-	// SendMessage field of BotInlineResult.
+
+	// Message to send
 	GetSendMessage() (value BotInlineMessageClass)
 }
 

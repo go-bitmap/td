@@ -32,10 +32,13 @@ var (
 )
 
 // AccountVerifyEmailRequest represents TL type `account.verifyEmail#32da4cf`.
+// Verify an email address.
+//
+// See https://core.telegram.org/method/account.verifyEmail for reference.
 type AccountVerifyEmailRequest struct {
-	// Purpose field of AccountVerifyEmailRequest.
+	// Verification purpose
 	Purpose EmailVerifyPurposeClass
-	// Verification field of AccountVerifyEmailRequest.
+	// Email verification code or token
 	Verification EmailVerificationClass
 }
 
@@ -71,6 +74,15 @@ func (v *AccountVerifyEmailRequest) String() string {
 	}
 	type Alias AccountVerifyEmailRequest
 	return fmt.Sprintf("AccountVerifyEmailRequest%+v", Alias(*v))
+}
+
+// FillFrom fills AccountVerifyEmailRequest from given interface.
+func (v *AccountVerifyEmailRequest) FillFrom(from interface {
+	GetPurpose() (value EmailVerifyPurposeClass)
+	GetVerification() (value EmailVerificationClass)
+}) {
+	v.Purpose = from.GetPurpose()
+	v.Verification = from.GetVerification()
 }
 
 // TypeID returns type id in TL schema.
@@ -187,6 +199,16 @@ func (v *AccountVerifyEmailRequest) GetVerification() (value EmailVerificationCl
 }
 
 // AccountVerifyEmail invokes method account.verifyEmail#32da4cf returning error if any.
+// Verify an email address.
+//
+// Possible errors:
+//
+//	400 EMAIL_INVALID: The specified email is invalid.
+//	400 EMAIL_NOT_ALLOWED: The specified email cannot be used to complete the operation.
+//	400 EMAIL_VERIFY_EXPIRED: The verification email has expired.
+//	400 PHONE_NUMBER_INVALID: The phone number is invalid.
+//
+// See https://core.telegram.org/method/account.verifyEmail for reference.
 func (c *Client) AccountVerifyEmail(ctx context.Context, request *AccountVerifyEmailRequest) (AccountEmailVerifiedClass, error) {
 	var result AccountEmailVerifiedBox
 

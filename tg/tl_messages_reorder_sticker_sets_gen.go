@@ -32,14 +32,23 @@ var (
 )
 
 // MessagesReorderStickerSetsRequest represents TL type `messages.reorderStickerSets#78337739`.
+// Reorder installed stickersets
+//
+// See https://core.telegram.org/method/messages.reorderStickerSets for reference.
 type MessagesReorderStickerSetsRequest struct {
-	// Flags field of MessagesReorderStickerSetsRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Masks field of MessagesReorderStickerSetsRequest.
+	// Reorder mask stickersets
 	Masks bool
-	// Emojis field of MessagesReorderStickerSetsRequest.
+	// Reorder custom emoji stickersets¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/custom-emoji
 	Emojis bool
-	// Order field of MessagesReorderStickerSetsRequest.
+	// New stickerset order by stickerset IDs
 	Order []int64
 }
 
@@ -81,6 +90,17 @@ func (r *MessagesReorderStickerSetsRequest) String() string {
 	}
 	type Alias MessagesReorderStickerSetsRequest
 	return fmt.Sprintf("MessagesReorderStickerSetsRequest%+v", Alias(*r))
+}
+
+// FillFrom fills MessagesReorderStickerSetsRequest from given interface.
+func (r *MessagesReorderStickerSetsRequest) FillFrom(from interface {
+	GetMasks() (value bool)
+	GetEmojis() (value bool)
+	GetOrder() (value []int64)
+}) {
+	r.Masks = from.GetMasks()
+	r.Emojis = from.GetEmojis()
+	r.Order = from.GetOrder()
 }
 
 // TypeID returns type id in TL schema.
@@ -249,6 +269,9 @@ func (r *MessagesReorderStickerSetsRequest) GetOrder() (value []int64) {
 }
 
 // MessagesReorderStickerSets invokes method messages.reorderStickerSets#78337739 returning error if any.
+// Reorder installed stickersets
+//
+// See https://core.telegram.org/method/messages.reorderStickerSets for reference.
 func (c *Client) MessagesReorderStickerSets(ctx context.Context, request *MessagesReorderStickerSetsRequest) (bool, error) {
 	var result BoolBox
 

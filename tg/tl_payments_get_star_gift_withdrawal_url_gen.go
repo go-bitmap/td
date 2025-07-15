@@ -32,6 +32,8 @@ var (
 )
 
 // PaymentsGetStarGiftWithdrawalURLRequest represents TL type `payments.getStarGiftWithdrawalUrl#d06e93a8`.
+//
+// See https://core.telegram.org/method/payments.getStarGiftWithdrawalUrl for reference.
 type PaymentsGetStarGiftWithdrawalURLRequest struct {
 	// Stargift field of PaymentsGetStarGiftWithdrawalURLRequest.
 	Stargift InputSavedStarGiftClass
@@ -71,6 +73,15 @@ func (g *PaymentsGetStarGiftWithdrawalURLRequest) String() string {
 	}
 	type Alias PaymentsGetStarGiftWithdrawalURLRequest
 	return fmt.Sprintf("PaymentsGetStarGiftWithdrawalURLRequest%+v", Alias(*g))
+}
+
+// FillFrom fills PaymentsGetStarGiftWithdrawalURLRequest from given interface.
+func (g *PaymentsGetStarGiftWithdrawalURLRequest) FillFrom(from interface {
+	GetStargift() (value InputSavedStarGiftClass)
+	GetPassword() (value InputCheckPasswordSRPClass)
+}) {
+	g.Stargift = from.GetStargift()
+	g.Password = from.GetPassword()
 }
 
 // TypeID returns type id in TL schema.
@@ -186,7 +197,14 @@ func (g *PaymentsGetStarGiftWithdrawalURLRequest) GetPassword() (value InputChec
 	return g.Password
 }
 
+// GetPasswordAsNotEmpty returns mapped value of Password field.
+func (g *PaymentsGetStarGiftWithdrawalURLRequest) GetPasswordAsNotEmpty() (*InputCheckPasswordSRP, bool) {
+	return g.Password.AsNotEmpty()
+}
+
 // PaymentsGetStarGiftWithdrawalURL invokes method payments.getStarGiftWithdrawalUrl#d06e93a8 returning error if any.
+//
+// See https://core.telegram.org/method/payments.getStarGiftWithdrawalUrl for reference.
 func (c *Client) PaymentsGetStarGiftWithdrawalURL(ctx context.Context, request *PaymentsGetStarGiftWithdrawalURLRequest) (*PaymentsStarGiftWithdrawalURL, error) {
 	var result PaymentsStarGiftWithdrawalURL
 

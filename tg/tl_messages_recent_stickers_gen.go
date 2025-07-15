@@ -32,6 +32,9 @@ var (
 )
 
 // MessagesRecentStickersNotModified represents TL type `messages.recentStickersNotModified#b17f890`.
+// No new recent sticker was found
+//
+// See https://core.telegram.org/constructor/messages.recentStickersNotModified for reference.
 type MessagesRecentStickersNotModified struct {
 }
 
@@ -131,14 +134,20 @@ func (r *MessagesRecentStickersNotModified) DecodeBare(b *bin.Buffer) error {
 }
 
 // MessagesRecentStickers represents TL type `messages.recentStickers#88d37c56`.
+// Recently used stickers
+//
+// See https://core.telegram.org/constructor/messages.recentStickers for reference.
 type MessagesRecentStickers struct {
-	// Hash field of MessagesRecentStickers.
+	// Hash used for caching, for more info click here¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets#hash-generation
 	Hash int64
-	// Packs field of MessagesRecentStickers.
+	// Emojis associated to stickers
 	Packs []StickerPack
-	// Stickers field of MessagesRecentStickers.
+	// Recent stickers
 	Stickers []DocumentClass
-	// Dates field of MessagesRecentStickers.
+	// When was each sticker last used
 	Dates []int
 }
 
@@ -185,6 +194,19 @@ func (r *MessagesRecentStickers) String() string {
 	}
 	type Alias MessagesRecentStickers
 	return fmt.Sprintf("MessagesRecentStickers%+v", Alias(*r))
+}
+
+// FillFrom fills MessagesRecentStickers from given interface.
+func (r *MessagesRecentStickers) FillFrom(from interface {
+	GetHash() (value int64)
+	GetPacks() (value []StickerPack)
+	GetStickers() (value []DocumentClass)
+	GetDates() (value []int)
+}) {
+	r.Hash = from.GetHash()
+	r.Packs = from.GetPacks()
+	r.Stickers = from.GetStickers()
+	r.Dates = from.GetDates()
 }
 
 // TypeID returns type id in TL schema.
@@ -376,10 +398,17 @@ func (r *MessagesRecentStickers) GetDates() (value []int) {
 	return r.Dates
 }
 
+// MapStickers returns field Stickers wrapped in DocumentClassArray helper.
+func (r *MessagesRecentStickers) MapStickers() (value DocumentClassArray) {
+	return DocumentClassArray(r.Stickers)
+}
+
 // MessagesRecentStickersClassName is schema name of MessagesRecentStickersClass.
 const MessagesRecentStickersClassName = "messages.RecentStickers"
 
 // MessagesRecentStickersClass represents messages.RecentStickers generic type.
+//
+// See https://core.telegram.org/type/messages.RecentStickers for reference.
 //
 // Constructors:
 //   - [MessagesRecentStickersNotModified]
@@ -413,6 +442,19 @@ type MessagesRecentStickersClass interface {
 	String() string
 	// Zero returns true if current object has a zero value.
 	Zero() bool
+
+	// AsModified tries to map MessagesRecentStickersClass to MessagesRecentStickers.
+	AsModified() (*MessagesRecentStickers, bool)
+}
+
+// AsModified tries to map MessagesRecentStickersNotModified to MessagesRecentStickers.
+func (r *MessagesRecentStickersNotModified) AsModified() (*MessagesRecentStickers, bool) {
+	return nil, false
+}
+
+// AsModified tries to map MessagesRecentStickers to MessagesRecentStickers.
+func (r *MessagesRecentStickers) AsModified() (*MessagesRecentStickers, bool) {
+	return r, true
 }
 
 // DecodeMessagesRecentStickers implements binary de-serialization for MessagesRecentStickersClass.

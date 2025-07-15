@@ -32,8 +32,17 @@ var (
 )
 
 // AccountConfirmPasswordEmailRequest represents TL type `account.confirmPasswordEmail#8fdf1920`.
+// Verify an email to use as 2FA recovery method¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/srp
+//
+// See https://core.telegram.org/method/account.confirmPasswordEmail for reference.
 type AccountConfirmPasswordEmailRequest struct {
-	// Code field of AccountConfirmPasswordEmailRequest.
+	// The phone code that was received after setting a recovery email¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/srp#email-verification
 	Code string
 }
 
@@ -66,6 +75,13 @@ func (c *AccountConfirmPasswordEmailRequest) String() string {
 	}
 	type Alias AccountConfirmPasswordEmailRequest
 	return fmt.Sprintf("AccountConfirmPasswordEmailRequest%+v", Alias(*c))
+}
+
+// FillFrom fills AccountConfirmPasswordEmailRequest from given interface.
+func (c *AccountConfirmPasswordEmailRequest) FillFrom(from interface {
+	GetCode() (value string)
+}) {
+	c.Code = from.GetCode()
 }
 
 // TypeID returns type id in TL schema.
@@ -152,6 +168,17 @@ func (c *AccountConfirmPasswordEmailRequest) GetCode() (value string) {
 }
 
 // AccountConfirmPasswordEmail invokes method account.confirmPasswordEmail#8fdf1920 returning error if any.
+// Verify an email to use as 2FA recovery method¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/srp
+//
+// Possible errors:
+//
+//	400 CODE_INVALID: Code invalid.
+//	400 EMAIL_HASH_EXPIRED: Email hash expired.
+//
+// See https://core.telegram.org/method/account.confirmPasswordEmail for reference.
 func (c *Client) AccountConfirmPasswordEmail(ctx context.Context, code string) (bool, error) {
 	var result BoolBox
 

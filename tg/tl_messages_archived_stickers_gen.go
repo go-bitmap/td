@@ -32,10 +32,13 @@ var (
 )
 
 // MessagesArchivedStickers represents TL type `messages.archivedStickers#4fcba9c8`.
+// Archived stickersets
+//
+// See https://core.telegram.org/constructor/messages.archivedStickers for reference.
 type MessagesArchivedStickers struct {
-	// Count field of MessagesArchivedStickers.
+	// Number of archived stickers
 	Count int
-	// Sets field of MessagesArchivedStickers.
+	// Archived stickersets
 	Sets []StickerSetCoveredClass
 }
 
@@ -71,6 +74,15 @@ func (a *MessagesArchivedStickers) String() string {
 	}
 	type Alias MessagesArchivedStickers
 	return fmt.Sprintf("MessagesArchivedStickers%+v", Alias(*a))
+}
+
+// FillFrom fills MessagesArchivedStickers from given interface.
+func (a *MessagesArchivedStickers) FillFrom(from interface {
+	GetCount() (value int)
+	GetSets() (value []StickerSetCoveredClass)
+}) {
+	a.Count = from.GetCount()
+	a.Sets = from.GetSets()
 }
 
 // TypeID returns type id in TL schema.
@@ -192,4 +204,9 @@ func (a *MessagesArchivedStickers) GetSets() (value []StickerSetCoveredClass) {
 		return
 	}
 	return a.Sets
+}
+
+// MapSets returns field Sets wrapped in StickerSetCoveredClassArray helper.
+func (a *MessagesArchivedStickers) MapSets() (value StickerSetCoveredClassArray) {
+	return StickerSetCoveredClassArray(a.Sets)
 }

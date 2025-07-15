@@ -32,12 +32,18 @@ var (
 )
 
 // SMSJobsFinishJobRequest represents TL type `smsjobs.finishJob#4f1ebf24`.
+// Finish an SMS job (official clients only).
+//
+// See https://core.telegram.org/method/smsjobs.finishJob for reference.
 type SMSJobsFinishJobRequest struct {
-	// Flags field of SMSJobsFinishJobRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// JobID field of SMSJobsFinishJobRequest.
+	// Job ID.
 	JobID string
-	// Error field of SMSJobsFinishJobRequest.
+	// If failed, the error.
 	//
 	// Use SetError and GetError helpers.
 	Error string
@@ -78,6 +84,18 @@ func (f *SMSJobsFinishJobRequest) String() string {
 	}
 	type Alias SMSJobsFinishJobRequest
 	return fmt.Sprintf("SMSJobsFinishJobRequest%+v", Alias(*f))
+}
+
+// FillFrom fills SMSJobsFinishJobRequest from given interface.
+func (f *SMSJobsFinishJobRequest) FillFrom(from interface {
+	GetJobID() (value string)
+	GetError() (value string, ok bool)
+}) {
+	f.JobID = from.GetJobID()
+	if val, ok := from.GetError(); ok {
+		f.Error = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -213,6 +231,13 @@ func (f *SMSJobsFinishJobRequest) GetError() (value string, ok bool) {
 }
 
 // SMSJobsFinishJob invokes method smsjobs.finishJob#4f1ebf24 returning error if any.
+// Finish an SMS job (official clients only).
+//
+// Possible errors:
+//
+//	400 SMSJOB_ID_INVALID: The specified job ID is invalid.
+//
+// See https://core.telegram.org/method/smsjobs.finishJob for reference.
 func (c *Client) SMSJobsFinishJob(ctx context.Context, request *SMSJobsFinishJobRequest) (bool, error) {
 	var result BoolBox
 

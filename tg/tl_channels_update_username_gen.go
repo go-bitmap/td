@@ -32,10 +32,13 @@ var (
 )
 
 // ChannelsUpdateUsernameRequest represents TL type `channels.updateUsername#3514b3de`.
+// Change or remove the username of a supergroup/channel
+//
+// See https://core.telegram.org/method/channels.updateUsername for reference.
 type ChannelsUpdateUsernameRequest struct {
-	// Channel field of ChannelsUpdateUsernameRequest.
+	// Channel
 	Channel InputChannelClass
-	// Username field of ChannelsUpdateUsernameRequest.
+	// New username, pass an empty string to remove the username
 	Username string
 }
 
@@ -71,6 +74,15 @@ func (u *ChannelsUpdateUsernameRequest) String() string {
 	}
 	type Alias ChannelsUpdateUsernameRequest
 	return fmt.Sprintf("ChannelsUpdateUsernameRequest%+v", Alias(*u))
+}
+
+// FillFrom fills ChannelsUpdateUsernameRequest from given interface.
+func (u *ChannelsUpdateUsernameRequest) FillFrom(from interface {
+	GetChannel() (value InputChannelClass)
+	GetUsername() (value string)
+}) {
+	u.Channel = from.GetChannel()
+	u.Username = from.GetUsername()
 }
 
 // TypeID returns type id in TL schema.
@@ -181,7 +193,28 @@ func (u *ChannelsUpdateUsernameRequest) GetUsername() (value string) {
 	return u.Username
 }
 
+// GetChannelAsNotEmpty returns mapped value of Channel field.
+func (u *ChannelsUpdateUsernameRequest) GetChannelAsNotEmpty() (NotEmptyInputChannel, bool) {
+	return u.Channel.AsNotEmpty()
+}
+
 // ChannelsUpdateUsername invokes method channels.updateUsername#3514b3de returning error if any.
+// Change or remove the username of a supergroup/channel
+//
+// Possible errors:
+//
+//	400 CHANNELS_ADMIN_PUBLIC_TOO_MUCH: You're admin of too many public channels, make some channels private to change the username of this channel.
+//	400 CHANNEL_INVALID: The provided channel is invalid.
+//	400 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
+//	403 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
+//	400 CHAT_NOT_MODIFIED: No changes were made to chat information because the new information you passed is identical to the current information.
+//	403 CHAT_WRITE_FORBIDDEN: You can't write in this chat.
+//	400 USERNAME_INVALID: The provided username is not valid.
+//	400 USERNAME_NOT_MODIFIED: The username was not modified.
+//	400 USERNAME_OCCUPIED: The provided username is already occupied.
+//	400 USERNAME_PURCHASE_AVAILABLE: The specified username can be purchased on https://fragment.com.
+//
+// See https://core.telegram.org/method/channels.updateUsername for reference.
 func (c *Client) ChannelsUpdateUsername(ctx context.Context, request *ChannelsUpdateUsernameRequest) (bool, error) {
 	var result BoolBox
 

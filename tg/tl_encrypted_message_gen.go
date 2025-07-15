@@ -32,16 +32,23 @@ var (
 )
 
 // EncryptedMessage represents TL type `encryptedMessage#ed18c118`.
+// Encrypted message.
+//
+// See https://core.telegram.org/constructor/encryptedMessage for reference.
 type EncryptedMessage struct {
-	// RandomID field of EncryptedMessage.
+	// Random message ID, assigned by the author of message
 	RandomID int64
-	// ChatID field of EncryptedMessage.
+	// ID of encrypted chat
 	ChatID int
-	// Date field of EncryptedMessage.
+	// Date of sending
 	Date int
-	// Bytes field of EncryptedMessage.
+	// TL-serialization of DecryptedMessage¹ type, encrypted with the key created at chat
+	// initialization
+	//
+	// Links:
+	//  1) https://core.telegram.org/type/DecryptedMessage
 	Bytes []byte
-	// File field of EncryptedMessage.
+	// Attached encrypted file
 	File EncryptedFileClass
 }
 
@@ -91,6 +98,21 @@ func (e *EncryptedMessage) String() string {
 	}
 	type Alias EncryptedMessage
 	return fmt.Sprintf("EncryptedMessage%+v", Alias(*e))
+}
+
+// FillFrom fills EncryptedMessage from given interface.
+func (e *EncryptedMessage) FillFrom(from interface {
+	GetRandomID() (value int64)
+	GetChatID() (value int)
+	GetDate() (value int)
+	GetBytes() (value []byte)
+	GetFile() (value EncryptedFileClass)
+}) {
+	e.RandomID = from.GetRandomID()
+	e.ChatID = from.GetChatID()
+	e.Date = from.GetDate()
+	e.Bytes = from.GetBytes()
+	e.File = from.GetFile()
 }
 
 // TypeID returns type id in TL schema.
@@ -262,14 +284,21 @@ func (e *EncryptedMessage) GetFile() (value EncryptedFileClass) {
 }
 
 // EncryptedMessageService represents TL type `encryptedMessageService#23734b06`.
+// Encrypted service message
+//
+// See https://core.telegram.org/constructor/encryptedMessageService for reference.
 type EncryptedMessageService struct {
-	// RandomID field of EncryptedMessageService.
+	// Random message ID, assigned by the author of message
 	RandomID int64
-	// ChatID field of EncryptedMessageService.
+	// ID of encrypted chat
 	ChatID int
-	// Date field of EncryptedMessageService.
+	// Date of sending
 	Date int
-	// Bytes field of EncryptedMessageService.
+	// TL-serialization of the DecryptedMessage¹ type, encrypted with the key created at
+	// chat initialization
+	//
+	// Links:
+	//  1) https://core.telegram.org/type/DecryptedMessage
 	Bytes []byte
 }
 
@@ -316,6 +345,19 @@ func (e *EncryptedMessageService) String() string {
 	}
 	type Alias EncryptedMessageService
 	return fmt.Sprintf("EncryptedMessageService%+v", Alias(*e))
+}
+
+// FillFrom fills EncryptedMessageService from given interface.
+func (e *EncryptedMessageService) FillFrom(from interface {
+	GetRandomID() (value int64)
+	GetChatID() (value int)
+	GetDate() (value int)
+	GetBytes() (value []byte)
+}) {
+	e.RandomID = from.GetRandomID()
+	e.ChatID = from.GetChatID()
+	e.Date = from.GetDate()
+	e.Bytes = from.GetBytes()
 }
 
 // TypeID returns type id in TL schema.
@@ -466,6 +508,8 @@ const EncryptedMessageClassName = "EncryptedMessage"
 
 // EncryptedMessageClass represents EncryptedMessage generic type.
 //
+// See https://core.telegram.org/type/EncryptedMessage for reference.
+//
 // Constructors:
 //   - [EncryptedMessage]
 //   - [EncryptedMessageService]
@@ -499,13 +543,20 @@ type EncryptedMessageClass interface {
 	// Zero returns true if current object has a zero value.
 	Zero() bool
 
-	// RandomID field of EncryptedMessage.
+	// Random message ID, assigned by the author of message
 	GetRandomID() (value int64)
-	// ChatID field of EncryptedMessage.
+
+	// ID of encrypted chat
 	GetChatID() (value int)
-	// Date field of EncryptedMessage.
+
+	// Date of sending
 	GetDate() (value int)
-	// Bytes field of EncryptedMessage.
+
+	// TL-serialization of DecryptedMessage¹ type, encrypted with the key created at chat
+	// initialization
+	//
+	// Links:
+	//  1) https://core.telegram.org/type/DecryptedMessage
 	GetBytes() (value []byte)
 }
 

@@ -32,10 +32,13 @@ var (
 )
 
 // StickerKeyword represents TL type `stickerKeyword#fcfeb29c`.
+// Keywords for a certain sticker
+//
+// See https://core.telegram.org/constructor/stickerKeyword for reference.
 type StickerKeyword struct {
-	// DocumentID field of StickerKeyword.
+	// Sticker ID
 	DocumentID int64
-	// Keyword field of StickerKeyword.
+	// Keywords
 	Keyword []string
 }
 
@@ -71,6 +74,15 @@ func (s *StickerKeyword) String() string {
 	}
 	type Alias StickerKeyword
 	return fmt.Sprintf("StickerKeyword%+v", Alias(*s))
+}
+
+// FillFrom fills StickerKeyword from given interface.
+func (s *StickerKeyword) FillFrom(from interface {
+	GetDocumentID() (value int64)
+	GetKeyword() (value []string)
+}) {
+	s.DocumentID = from.GetDocumentID()
+	s.Keyword = from.GetKeyword()
 }
 
 // TypeID returns type id in TL schema.

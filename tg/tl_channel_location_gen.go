@@ -32,6 +32,9 @@ var (
 )
 
 // ChannelLocationEmpty represents TL type `channelLocationEmpty#bfb5ad8b`.
+// No location (normal supergroup)
+//
+// See https://core.telegram.org/constructor/channelLocationEmpty for reference.
 type ChannelLocationEmpty struct {
 }
 
@@ -131,10 +134,13 @@ func (c *ChannelLocationEmpty) DecodeBare(b *bin.Buffer) error {
 }
 
 // ChannelLocation represents TL type `channelLocation#209b82db`.
+// Geographical location of supergroup (geogroups)
+//
+// See https://core.telegram.org/constructor/channelLocation for reference.
 type ChannelLocation struct {
-	// GeoPoint field of ChannelLocation.
+	// Geographical location of supergroup
 	GeoPoint GeoPointClass
-	// Address field of ChannelLocation.
+	// Textual description of the address
 	Address string
 }
 
@@ -175,6 +181,15 @@ func (c *ChannelLocation) String() string {
 	}
 	type Alias ChannelLocation
 	return fmt.Sprintf("ChannelLocation%+v", Alias(*c))
+}
+
+// FillFrom fills ChannelLocation from given interface.
+func (c *ChannelLocation) FillFrom(from interface {
+	GetGeoPoint() (value GeoPointClass)
+	GetAddress() (value string)
+}) {
+	c.GeoPoint = from.GetGeoPoint()
+	c.Address = from.GetAddress()
 }
 
 // TypeID returns type id in TL schema.
@@ -290,6 +305,8 @@ const ChannelLocationClassName = "ChannelLocation"
 
 // ChannelLocationClass represents ChannelLocation generic type.
 //
+// See https://core.telegram.org/type/ChannelLocation for reference.
+//
 // Constructors:
 //   - [ChannelLocationEmpty]
 //   - [ChannelLocation]
@@ -322,6 +339,19 @@ type ChannelLocationClass interface {
 	String() string
 	// Zero returns true if current object has a zero value.
 	Zero() bool
+
+	// AsNotEmpty tries to map ChannelLocationClass to ChannelLocation.
+	AsNotEmpty() (*ChannelLocation, bool)
+}
+
+// AsNotEmpty tries to map ChannelLocationEmpty to ChannelLocation.
+func (c *ChannelLocationEmpty) AsNotEmpty() (*ChannelLocation, bool) {
+	return nil, false
+}
+
+// AsNotEmpty tries to map ChannelLocation to ChannelLocation.
+func (c *ChannelLocation) AsNotEmpty() (*ChannelLocation, bool) {
+	return c, true
 }
 
 // DecodeChannelLocation implements binary de-serialization for ChannelLocationClass.

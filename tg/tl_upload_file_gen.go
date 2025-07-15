@@ -32,12 +32,15 @@ var (
 )
 
 // UploadFile represents TL type `upload.file#96a18d5`.
+// File content.
+//
+// See https://core.telegram.org/constructor/upload.file for reference.
 type UploadFile struct {
-	// Type field of UploadFile.
+	// File type
 	Type StorageFileTypeClass
-	// Mtime field of UploadFile.
+	// Modification time
 	Mtime int
-	// Bytes field of UploadFile.
+	// Binary data, file content
 	Bytes []byte
 }
 
@@ -81,6 +84,17 @@ func (f *UploadFile) String() string {
 	}
 	type Alias UploadFile
 	return fmt.Sprintf("UploadFile%+v", Alias(*f))
+}
+
+// FillFrom fills UploadFile from given interface.
+func (f *UploadFile) FillFrom(from interface {
+	GetType() (value StorageFileTypeClass)
+	GetMtime() (value int)
+	GetBytes() (value []byte)
+}) {
+	f.Type = from.GetType()
+	f.Mtime = from.GetMtime()
+	f.Bytes = from.GetBytes()
 }
 
 // TypeID returns type id in TL schema.
@@ -212,16 +226,37 @@ func (f *UploadFile) GetBytes() (value []byte) {
 }
 
 // UploadFileCDNRedirect represents TL type `upload.fileCdnRedirect#f18cda44`.
+// The file must be downloaded from a CDN DC¹.
+//
+// Links:
+//  1. https://core.telegram.org/cdn
+//
+// See https://core.telegram.org/constructor/upload.fileCdnRedirect for reference.
 type UploadFileCDNRedirect struct {
-	// DCID field of UploadFileCDNRedirect.
+	// CDN DC¹ ID
+	//
+	// Links:
+	//  1) https://core.telegram.org/cdn
 	DCID int
-	// FileToken field of UploadFileCDNRedirect.
+	// File token (see CDN files¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/cdn
 	FileToken []byte
-	// EncryptionKey field of UploadFileCDNRedirect.
+	// Encryption key (see CDN files¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/cdn
 	EncryptionKey []byte
-	// EncryptionIv field of UploadFileCDNRedirect.
+	// Encryption IV (see CDN files¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/cdn
 	EncryptionIv []byte
-	// FileHashes field of UploadFileCDNRedirect.
+	// File hashes (see CDN files¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/cdn
 	FileHashes []FileHash
 }
 
@@ -271,6 +306,21 @@ func (f *UploadFileCDNRedirect) String() string {
 	}
 	type Alias UploadFileCDNRedirect
 	return fmt.Sprintf("UploadFileCDNRedirect%+v", Alias(*f))
+}
+
+// FillFrom fills UploadFileCDNRedirect from given interface.
+func (f *UploadFileCDNRedirect) FillFrom(from interface {
+	GetDCID() (value int)
+	GetFileToken() (value []byte)
+	GetEncryptionKey() (value []byte)
+	GetEncryptionIv() (value []byte)
+	GetFileHashes() (value []FileHash)
+}) {
+	f.DCID = from.GetDCID()
+	f.FileToken = from.GetFileToken()
+	f.EncryptionKey = from.GetEncryptionKey()
+	f.EncryptionIv = from.GetEncryptionIv()
+	f.FileHashes = from.GetFileHashes()
 }
 
 // TypeID returns type id in TL schema.
@@ -455,6 +505,8 @@ func (f *UploadFileCDNRedirect) GetFileHashes() (value []FileHash) {
 const UploadFileClassName = "upload.File"
 
 // UploadFileClass represents upload.File generic type.
+//
+// See https://core.telegram.org/type/upload.File for reference.
 //
 // Constructors:
 //   - [UploadFile]

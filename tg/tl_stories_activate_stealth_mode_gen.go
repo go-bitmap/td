@@ -32,12 +32,34 @@ var (
 )
 
 // StoriesActivateStealthModeRequest represents TL type `stories.activateStealthMode#57bbd166`.
+// Activates stories stealth mode¹, see here »² for more info.
+// Will return an updateStoriesStealthMode¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/stories#stealth-mode
+//  2. https://core.telegram.org/api/stories#stealth-mode
+//  3. https://core.telegram.org/constructor/updateStoriesStealthMode
+//
+// See https://core.telegram.org/method/stories.activateStealthMode for reference.
 type StoriesActivateStealthModeRequest struct {
-	// Flags field of StoriesActivateStealthModeRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Past field of StoriesActivateStealthModeRequest.
+	// Whether to erase views from any stories opened in the past stories_stealth_past_period
+	// seconds »¹, as specified by the client configuration².
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/config#stories-stealth-past-period
+	//  2) https://core.telegram.org/api/config#client-configuration
 	Past bool
-	// Future field of StoriesActivateStealthModeRequest.
+	// Whether to hide future story views for the next stories_stealth_future_period seconds
+	// »¹, as specified by the client configuration².
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/config#stories-stealth-future-period
+	//  2) https://core.telegram.org/api/config#client-configuration
 	Future bool
 }
 
@@ -76,6 +98,15 @@ func (a *StoriesActivateStealthModeRequest) String() string {
 	}
 	type Alias StoriesActivateStealthModeRequest
 	return fmt.Sprintf("StoriesActivateStealthModeRequest%+v", Alias(*a))
+}
+
+// FillFrom fills StoriesActivateStealthModeRequest from given interface.
+func (a *StoriesActivateStealthModeRequest) FillFrom(from interface {
+	GetPast() (value bool)
+	GetFuture() (value bool)
+}) {
+	a.Past = from.GetPast()
+	a.Future = from.GetFuture()
 }
 
 // TypeID returns type id in TL schema.
@@ -211,6 +242,19 @@ func (a *StoriesActivateStealthModeRequest) GetFuture() (value bool) {
 }
 
 // StoriesActivateStealthMode invokes method stories.activateStealthMode#57bbd166 returning error if any.
+// Activates stories stealth mode¹, see here »² for more info.
+// Will return an updateStoriesStealthMode¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/stories#stealth-mode
+//  2. https://core.telegram.org/api/stories#stealth-mode
+//  3. https://core.telegram.org/constructor/updateStoriesStealthMode
+//
+// Possible errors:
+//
+//	400 PREMIUM_ACCOUNT_REQUIRED: A premium account is required to execute this action.
+//
+// See https://core.telegram.org/method/stories.activateStealthMode for reference.
 func (c *Client) StoriesActivateStealthMode(ctx context.Context, request *StoriesActivateStealthModeRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

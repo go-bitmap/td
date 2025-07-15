@@ -32,14 +32,23 @@ var (
 )
 
 // StoriesStealthMode represents TL type `storiesStealthMode#712e27fd`.
+// Information about the current stealth mode¹ session.
+//
+// Links:
+//  1. https://core.telegram.org/api/stories#stealth-mode
+//
+// See https://core.telegram.org/constructor/storiesStealthMode for reference.
 type StoriesStealthMode struct {
-	// Flags field of StoriesStealthMode.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// ActiveUntilDate field of StoriesStealthMode.
+	// The date up to which stealth mode will be active.
 	//
 	// Use SetActiveUntilDate and GetActiveUntilDate helpers.
 	ActiveUntilDate int
-	// CooldownUntilDate field of StoriesStealthMode.
+	// The date starting from which the user will be allowed to re-enable stealth mode again.
 	//
 	// Use SetCooldownUntilDate and GetCooldownUntilDate helpers.
 	CooldownUntilDate int
@@ -80,6 +89,21 @@ func (s *StoriesStealthMode) String() string {
 	}
 	type Alias StoriesStealthMode
 	return fmt.Sprintf("StoriesStealthMode%+v", Alias(*s))
+}
+
+// FillFrom fills StoriesStealthMode from given interface.
+func (s *StoriesStealthMode) FillFrom(from interface {
+	GetActiveUntilDate() (value int, ok bool)
+	GetCooldownUntilDate() (value int, ok bool)
+}) {
+	if val, ok := from.GetActiveUntilDate(); ok {
+		s.ActiveUntilDate = val
+	}
+
+	if val, ok := from.GetCooldownUntilDate(); ok {
+		s.CooldownUntilDate = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.

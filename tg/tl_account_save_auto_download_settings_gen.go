@@ -32,14 +32,20 @@ var (
 )
 
 // AccountSaveAutoDownloadSettingsRequest represents TL type `account.saveAutoDownloadSettings#76f36233`.
+// Change media autodownload settings
+//
+// See https://core.telegram.org/method/account.saveAutoDownloadSettings for reference.
 type AccountSaveAutoDownloadSettingsRequest struct {
-	// Flags field of AccountSaveAutoDownloadSettingsRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Low field of AccountSaveAutoDownloadSettingsRequest.
+	// Whether to save media in the low data usage preset
 	Low bool
-	// High field of AccountSaveAutoDownloadSettingsRequest.
+	// Whether to save media in the high data usage preset
 	High bool
-	// Settings field of AccountSaveAutoDownloadSettingsRequest.
+	// Media autodownload settings
 	Settings AutoDownloadSettings
 }
 
@@ -81,6 +87,17 @@ func (s *AccountSaveAutoDownloadSettingsRequest) String() string {
 	}
 	type Alias AccountSaveAutoDownloadSettingsRequest
 	return fmt.Sprintf("AccountSaveAutoDownloadSettingsRequest%+v", Alias(*s))
+}
+
+// FillFrom fills AccountSaveAutoDownloadSettingsRequest from given interface.
+func (s *AccountSaveAutoDownloadSettingsRequest) FillFrom(from interface {
+	GetLow() (value bool)
+	GetHigh() (value bool)
+	GetSettings() (value AutoDownloadSettings)
+}) {
+	s.Low = from.GetLow()
+	s.High = from.GetHigh()
+	s.Settings = from.GetSettings()
 }
 
 // TypeID returns type id in TL schema.
@@ -236,6 +253,9 @@ func (s *AccountSaveAutoDownloadSettingsRequest) GetSettings() (value AutoDownlo
 }
 
 // AccountSaveAutoDownloadSettings invokes method account.saveAutoDownloadSettings#76f36233 returning error if any.
+// Change media autodownload settings
+//
+// See https://core.telegram.org/method/account.saveAutoDownloadSettings for reference.
 func (c *Client) AccountSaveAutoDownloadSettings(ctx context.Context, request *AccountSaveAutoDownloadSettingsRequest) (bool, error) {
 	var result BoolBox
 

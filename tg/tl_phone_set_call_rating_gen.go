@@ -32,16 +32,22 @@ var (
 )
 
 // PhoneSetCallRatingRequest represents TL type `phone.setCallRating#59ead627`.
+// Rate a call, returns info about the rating message sent to the official VoIP bot.
+//
+// See https://core.telegram.org/method/phone.setCallRating for reference.
 type PhoneSetCallRatingRequest struct {
-	// Flags field of PhoneSetCallRatingRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// UserInitiative field of PhoneSetCallRatingRequest.
+	// Whether the user decided on their own initiative to rate the call
 	UserInitiative bool
-	// Peer field of PhoneSetCallRatingRequest.
+	// The call to rate
 	Peer InputPhoneCall
-	// Rating field of PhoneSetCallRatingRequest.
+	// Rating in 1-5 stars
 	Rating int
-	// Comment field of PhoneSetCallRatingRequest.
+	// An additional comment
 	Comment string
 }
 
@@ -86,6 +92,19 @@ func (s *PhoneSetCallRatingRequest) String() string {
 	}
 	type Alias PhoneSetCallRatingRequest
 	return fmt.Sprintf("PhoneSetCallRatingRequest%+v", Alias(*s))
+}
+
+// FillFrom fills PhoneSetCallRatingRequest from given interface.
+func (s *PhoneSetCallRatingRequest) FillFrom(from interface {
+	GetUserInitiative() (value bool)
+	GetPeer() (value InputPhoneCall)
+	GetRating() (value int)
+	GetComment() (value string)
+}) {
+	s.UserInitiative = from.GetUserInitiative()
+	s.Peer = from.GetPeer()
+	s.Rating = from.GetRating()
+	s.Comment = from.GetComment()
 }
 
 // TypeID returns type id in TL schema.
@@ -253,6 +272,13 @@ func (s *PhoneSetCallRatingRequest) GetComment() (value string) {
 }
 
 // PhoneSetCallRating invokes method phone.setCallRating#59ead627 returning error if any.
+// Rate a call, returns info about the rating message sent to the official VoIP bot.
+//
+// Possible errors:
+//
+//	400 CALL_PEER_INVALID: The provided call peer object is invalid.
+//
+// See https://core.telegram.org/method/phone.setCallRating for reference.
 func (c *Client) PhoneSetCallRating(ctx context.Context, request *PhoneSetCallRatingRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

@@ -32,6 +32,9 @@ var (
 )
 
 // GeoPointEmpty represents TL type `geoPointEmpty#1117dd5f`.
+// Empty constructor.
+//
+// See https://core.telegram.org/constructor/geoPointEmpty for reference.
 type GeoPointEmpty struct {
 }
 
@@ -131,16 +134,22 @@ func (g *GeoPointEmpty) DecodeBare(b *bin.Buffer) error {
 }
 
 // GeoPoint represents TL type `geoPoint#b2a2f663`.
+// GeoPoint.
+//
+// See https://core.telegram.org/constructor/geoPoint for reference.
 type GeoPoint struct {
-	// Flags field of GeoPoint.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Long field of GeoPoint.
+	// Longitude
 	Long float64
-	// Lat field of GeoPoint.
+	// Latitude
 	Lat float64
-	// AccessHash field of GeoPoint.
+	// Access hash
 	AccessHash int64
-	// AccuracyRadius field of GeoPoint.
+	// The estimated horizontal accuracy of the location, in meters; as defined by the sender.
 	//
 	// Use SetAccuracyRadius and GetAccuracyRadius helpers.
 	AccuracyRadius int
@@ -192,6 +201,22 @@ func (g *GeoPoint) String() string {
 	}
 	type Alias GeoPoint
 	return fmt.Sprintf("GeoPoint%+v", Alias(*g))
+}
+
+// FillFrom fills GeoPoint from given interface.
+func (g *GeoPoint) FillFrom(from interface {
+	GetLong() (value float64)
+	GetLat() (value float64)
+	GetAccessHash() (value int64)
+	GetAccuracyRadius() (value int, ok bool)
+}) {
+	g.Long = from.GetLong()
+	g.Lat = from.GetLat()
+	g.AccessHash = from.GetAccessHash()
+	if val, ok := from.GetAccuracyRadius(); ok {
+		g.AccuracyRadius = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -371,6 +396,8 @@ const GeoPointClassName = "GeoPoint"
 
 // GeoPointClass represents GeoPoint generic type.
 //
+// See https://core.telegram.org/type/GeoPoint for reference.
+//
 // Constructors:
 //   - [GeoPointEmpty]
 //   - [GeoPoint]
@@ -403,6 +430,19 @@ type GeoPointClass interface {
 	String() string
 	// Zero returns true if current object has a zero value.
 	Zero() bool
+
+	// AsNotEmpty tries to map GeoPointClass to GeoPoint.
+	AsNotEmpty() (*GeoPoint, bool)
+}
+
+// AsNotEmpty tries to map GeoPointEmpty to GeoPoint.
+func (g *GeoPointEmpty) AsNotEmpty() (*GeoPoint, bool) {
+	return nil, false
+}
+
+// AsNotEmpty tries to map GeoPoint to GeoPoint.
+func (g *GeoPoint) AsNotEmpty() (*GeoPoint, bool) {
+	return g, true
 }
 
 // DecodeGeoPoint implements binary de-serialization for GeoPointClass.

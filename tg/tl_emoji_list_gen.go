@@ -32,6 +32,12 @@ var (
 )
 
 // EmojiListNotModified represents TL type `emojiListNotModified#481eadfa`.
+// The list of custom emojis¹ hasn't changed.
+//
+// Links:
+//  1. https://core.telegram.org/api/custom-emoji
+//
+// See https://core.telegram.org/constructor/emojiListNotModified for reference.
 type EmojiListNotModified struct {
 }
 
@@ -131,10 +137,19 @@ func (e *EmojiListNotModified) DecodeBare(b *bin.Buffer) error {
 }
 
 // EmojiList represents TL type `emojiList#7a1e11d1`.
+// Represents a list of custom emojis¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/custom-emoji
+//
+// See https://core.telegram.org/constructor/emojiList for reference.
 type EmojiList struct {
-	// Hash field of EmojiList.
+	// Hash used for caching, for more info click here¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets#hash-generation
 	Hash int64
-	// DocumentID field of EmojiList.
+	// Custom emoji IDs
 	DocumentID []int64
 }
 
@@ -175,6 +190,15 @@ func (e *EmojiList) String() string {
 	}
 	type Alias EmojiList
 	return fmt.Sprintf("EmojiList%+v", Alias(*e))
+}
+
+// FillFrom fills EmojiList from given interface.
+func (e *EmojiList) FillFrom(from interface {
+	GetHash() (value int64)
+	GetDocumentID() (value []int64)
+}) {
+	e.Hash = from.GetHash()
+	e.DocumentID = from.GetDocumentID()
 }
 
 // TypeID returns type id in TL schema.
@@ -298,6 +322,8 @@ const EmojiListClassName = "EmojiList"
 
 // EmojiListClass represents EmojiList generic type.
 //
+// See https://core.telegram.org/type/EmojiList for reference.
+//
 // Constructors:
 //   - [EmojiListNotModified]
 //   - [EmojiList]
@@ -330,6 +356,19 @@ type EmojiListClass interface {
 	String() string
 	// Zero returns true if current object has a zero value.
 	Zero() bool
+
+	// AsModified tries to map EmojiListClass to EmojiList.
+	AsModified() (*EmojiList, bool)
+}
+
+// AsModified tries to map EmojiListNotModified to EmojiList.
+func (e *EmojiListNotModified) AsModified() (*EmojiList, bool) {
+	return nil, false
+}
+
+// AsModified tries to map EmojiList to EmojiList.
+func (e *EmojiList) AsModified() (*EmojiList, bool) {
+	return e, true
 }
 
 // DecodeEmojiList implements binary de-serialization for EmojiListClass.

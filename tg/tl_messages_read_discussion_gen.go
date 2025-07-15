@@ -32,12 +32,18 @@ var (
 )
 
 // MessagesReadDiscussionRequest represents TL type `messages.readDiscussion#f731a9f4`.
+// Mark a thread¹ as read
+//
+// Links:
+//  1. https://core.telegram.org/api/threads
+//
+// See https://core.telegram.org/method/messages.readDiscussion for reference.
 type MessagesReadDiscussionRequest struct {
-	// Peer field of MessagesReadDiscussionRequest.
+	// Group ID
 	Peer InputPeerClass
-	// MsgID field of MessagesReadDiscussionRequest.
+	// ID of message that started the thread
 	MsgID int
-	// ReadMaxID field of MessagesReadDiscussionRequest.
+	// ID up to which thread messages were read
 	ReadMaxID int
 }
 
@@ -76,6 +82,17 @@ func (r *MessagesReadDiscussionRequest) String() string {
 	}
 	type Alias MessagesReadDiscussionRequest
 	return fmt.Sprintf("MessagesReadDiscussionRequest%+v", Alias(*r))
+}
+
+// FillFrom fills MessagesReadDiscussionRequest from given interface.
+func (r *MessagesReadDiscussionRequest) FillFrom(from interface {
+	GetPeer() (value InputPeerClass)
+	GetMsgID() (value int)
+	GetReadMaxID() (value int)
+}) {
+	r.Peer = from.GetPeer()
+	r.MsgID = from.GetMsgID()
+	r.ReadMaxID = from.GetReadMaxID()
 }
 
 // TypeID returns type id in TL schema.
@@ -207,6 +224,18 @@ func (r *MessagesReadDiscussionRequest) GetReadMaxID() (value int) {
 }
 
 // MessagesReadDiscussion invokes method messages.readDiscussion#f731a9f4 returning error if any.
+// Mark a thread¹ as read
+//
+// Links:
+//  1. https://core.telegram.org/api/threads
+//
+// Possible errors:
+//
+//	400 CHAT_ID_INVALID: The provided chat id is invalid.
+//	400 MSG_ID_INVALID: Invalid message ID provided.
+//	400 PEER_ID_INVALID: The provided peer id is invalid.
+//
+// See https://core.telegram.org/method/messages.readDiscussion for reference.
 func (c *Client) MessagesReadDiscussion(ctx context.Context, request *MessagesReadDiscussionRequest) (bool, error) {
 	var result BoolBox
 

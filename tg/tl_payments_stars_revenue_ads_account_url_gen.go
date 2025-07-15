@@ -32,8 +32,15 @@ var (
 )
 
 // PaymentsStarsRevenueAdsAccountURL represents TL type `payments.starsRevenueAdsAccountUrl#394e7f21`.
+// Contains a URL leading to a page where the user will be able to place ads for the
+// channel/bot, paying using Telegram Stars¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/stars#paying-for-ads
+//
+// See https://core.telegram.org/constructor/payments.starsRevenueAdsAccountUrl for reference.
 type PaymentsStarsRevenueAdsAccountURL struct {
-	// URL field of PaymentsStarsRevenueAdsAccountURL.
+	// URL to open.
 	URL string
 }
 
@@ -66,6 +73,13 @@ func (s *PaymentsStarsRevenueAdsAccountURL) String() string {
 	}
 	type Alias PaymentsStarsRevenueAdsAccountURL
 	return fmt.Sprintf("PaymentsStarsRevenueAdsAccountURL%+v", Alias(*s))
+}
+
+// FillFrom fills PaymentsStarsRevenueAdsAccountURL from given interface.
+func (s *PaymentsStarsRevenueAdsAccountURL) FillFrom(from interface {
+	GetURL() (value string)
+}) {
+	s.URL = from.GetURL()
 }
 
 // TypeID returns type id in TL schema.

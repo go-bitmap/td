@@ -32,22 +32,49 @@ var (
 )
 
 // MessagesForumTopics represents TL type `messages.forumTopics#367617d3`.
+// Contains information about multiple forum topics¹
+//
+// Links:
+//  1. https://core.telegram.org/api/forum#forum-topics
+//
+// See https://core.telegram.org/constructor/messages.forumTopics for reference.
 type MessagesForumTopics struct {
-	// Flags field of MessagesForumTopics.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// OrderByCreateDate field of MessagesForumTopics.
+	// Whether the returned topics are ordered by creation date; if set, pagination by
+	// offset_date should use forumTopic¹.date; otherwise topics are ordered by the last
+	// message date, so paginate by the date of the message² referenced by forumTopic³
+	// top_message.
+	//
+	// Links:
+	//  1) https://core.telegram.org/constructor/forumTopic
+	//  2) https://core.telegram.org/type/Message
+	//  3) https://core.telegram.org/constructor/forumTopic
 	OrderByCreateDate bool
-	// Count field of MessagesForumTopics.
+	// Total number of topics matching query; may be more than the topics contained in topics
+	// in which case pagination¹ is required.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets
 	Count int
-	// Topics field of MessagesForumTopics.
+	// Forum topics
 	Topics []ForumTopicClass
-	// Messages field of MessagesForumTopics.
+	// Related messages (contains the messages mentioned by forumTopic¹.top_message).
+	//
+	// Links:
+	//  1) https://core.telegram.org/constructor/forumTopic
 	Messages []MessageClass
-	// Chats field of MessagesForumTopics.
+	// Related chats
 	Chats []ChatClass
-	// Users field of MessagesForumTopics.
+	// Related users
 	Users []UserClass
-	// Pts field of MessagesForumTopics.
+	// Event count after generation¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/updates
 	Pts int
 }
 
@@ -101,6 +128,25 @@ func (f *MessagesForumTopics) String() string {
 	}
 	type Alias MessagesForumTopics
 	return fmt.Sprintf("MessagesForumTopics%+v", Alias(*f))
+}
+
+// FillFrom fills MessagesForumTopics from given interface.
+func (f *MessagesForumTopics) FillFrom(from interface {
+	GetOrderByCreateDate() (value bool)
+	GetCount() (value int)
+	GetTopics() (value []ForumTopicClass)
+	GetMessages() (value []MessageClass)
+	GetChats() (value []ChatClass)
+	GetUsers() (value []UserClass)
+	GetPts() (value int)
+}) {
+	f.OrderByCreateDate = from.GetOrderByCreateDate()
+	f.Count = from.GetCount()
+	f.Topics = from.GetTopics()
+	f.Messages = from.GetMessages()
+	f.Chats = from.GetChats()
+	f.Users = from.GetUsers()
+	f.Pts = from.GetPts()
 }
 
 // TypeID returns type id in TL schema.
@@ -397,4 +443,24 @@ func (f *MessagesForumTopics) GetPts() (value int) {
 		return
 	}
 	return f.Pts
+}
+
+// MapTopics returns field Topics wrapped in ForumTopicClassArray helper.
+func (f *MessagesForumTopics) MapTopics() (value ForumTopicClassArray) {
+	return ForumTopicClassArray(f.Topics)
+}
+
+// MapMessages returns field Messages wrapped in MessageClassArray helper.
+func (f *MessagesForumTopics) MapMessages() (value MessageClassArray) {
+	return MessageClassArray(f.Messages)
+}
+
+// MapChats returns field Chats wrapped in ChatClassArray helper.
+func (f *MessagesForumTopics) MapChats() (value ChatClassArray) {
+	return ChatClassArray(f.Chats)
+}
+
+// MapUsers returns field Users wrapped in UserClassArray helper.
+func (f *MessagesForumTopics) MapUsers() (value UserClassArray) {
+	return UserClassArray(f.Users)
 }

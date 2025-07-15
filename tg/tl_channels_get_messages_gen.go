@@ -32,10 +32,16 @@ var (
 )
 
 // ChannelsGetMessagesRequest represents TL type `channels.getMessages#ad8c9a23`.
+// Get channel/supergroup¹ messages
+//
+// Links:
+//  1. https://core.telegram.org/api/channel
+//
+// See https://core.telegram.org/method/channels.getMessages for reference.
 type ChannelsGetMessagesRequest struct {
-	// Channel field of ChannelsGetMessagesRequest.
+	// Channel/supergroup
 	Channel InputChannelClass
-	// ID field of ChannelsGetMessagesRequest.
+	// IDs of messages to get
 	ID []InputMessageClass
 }
 
@@ -71,6 +77,15 @@ func (g *ChannelsGetMessagesRequest) String() string {
 	}
 	type Alias ChannelsGetMessagesRequest
 	return fmt.Sprintf("ChannelsGetMessagesRequest%+v", Alias(*g))
+}
+
+// FillFrom fills ChannelsGetMessagesRequest from given interface.
+func (g *ChannelsGetMessagesRequest) FillFrom(from interface {
+	GetChannel() (value InputChannelClass)
+	GetID() (value []InputMessageClass)
+}) {
+	g.Channel = from.GetChannel()
+	g.ID = from.GetID()
 }
 
 // TypeID returns type id in TL schema.
@@ -199,7 +214,32 @@ func (g *ChannelsGetMessagesRequest) GetID() (value []InputMessageClass) {
 	return g.ID
 }
 
+// GetChannelAsNotEmpty returns mapped value of Channel field.
+func (g *ChannelsGetMessagesRequest) GetChannelAsNotEmpty() (NotEmptyInputChannel, bool) {
+	return g.Channel.AsNotEmpty()
+}
+
+// MapID returns field ID wrapped in InputMessageClassArray helper.
+func (g *ChannelsGetMessagesRequest) MapID() (value InputMessageClassArray) {
+	return InputMessageClassArray(g.ID)
+}
+
 // ChannelsGetMessages invokes method channels.getMessages#ad8c9a23 returning error if any.
+// Get channel/supergroup¹ messages
+//
+// Links:
+//  1. https://core.telegram.org/api/channel
+//
+// Possible errors:
+//
+//	400 CHANNEL_INVALID: The provided channel is invalid.
+//	406 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
+//	400 MESSAGE_IDS_EMPTY: No message ids were provided.
+//	400 MSG_ID_INVALID: Invalid message ID provided.
+//	400 USER_BANNED_IN_CHANNEL: You're banned from sending messages in supergroups/channels.
+//
+// See https://core.telegram.org/method/channels.getMessages for reference.
+// Can be used by bots.
 func (c *Client) ChannelsGetMessages(ctx context.Context, request *ChannelsGetMessagesRequest) (MessagesMessagesClass, error) {
 	var result MessagesMessagesBox
 

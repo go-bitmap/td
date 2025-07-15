@@ -32,10 +32,16 @@ var (
 )
 
 // StoriesStoryViews represents TL type `stories.storyViews#de9eed1d`.
+// Reaction and view counters for a list of stories¹
+//
+// Links:
+//  1. https://core.telegram.org/api/stories
+//
+// See https://core.telegram.org/constructor/stories.storyViews for reference.
 type StoriesStoryViews struct {
-	// Views field of StoriesStoryViews.
+	// View date and reaction information of multiple stories
 	Views []StoryViews
-	// Users field of StoriesStoryViews.
+	// Mentioned users
 	Users []UserClass
 }
 
@@ -71,6 +77,15 @@ func (s *StoriesStoryViews) String() string {
 	}
 	type Alias StoriesStoryViews
 	return fmt.Sprintf("StoriesStoryViews%+v", Alias(*s))
+}
+
+// FillFrom fills StoriesStoryViews from given interface.
+func (s *StoriesStoryViews) FillFrom(from interface {
+	GetViews() (value []StoryViews)
+	GetUsers() (value []UserClass)
+}) {
+	s.Views = from.GetViews()
+	s.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -207,4 +222,9 @@ func (s *StoriesStoryViews) GetUsers() (value []UserClass) {
 		return
 	}
 	return s.Users
+}
+
+// MapUsers returns field Users wrapped in UserClassArray helper.
+func (s *StoriesStoryViews) MapUsers() (value UserClassArray) {
+	return UserClassArray(s.Users)
 }

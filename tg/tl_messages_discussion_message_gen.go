@@ -32,28 +32,47 @@ var (
 )
 
 // MessagesDiscussionMessage represents TL type `messages.discussionMessage#a6341782`.
+// Information about a message thread¹
+//
+// Links:
+//  1. https://core.telegram.org/api/threads
+//
+// See https://core.telegram.org/constructor/messages.discussionMessage for reference.
 type MessagesDiscussionMessage struct {
-	// Flags field of MessagesDiscussionMessage.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Messages field of MessagesDiscussionMessage.
+	// The messages from which the thread starts. The messages are returned in reverse
+	// chronological order (i.e., in order of decreasing message ID).
 	Messages []MessageClass
-	// MaxID field of MessagesDiscussionMessage.
+	// Message ID of latest reply in this thread¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/threads
 	//
 	// Use SetMaxID and GetMaxID helpers.
 	MaxID int
-	// ReadInboxMaxID field of MessagesDiscussionMessage.
+	// Message ID of latest read incoming message in this thread¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/threads
 	//
 	// Use SetReadInboxMaxID and GetReadInboxMaxID helpers.
 	ReadInboxMaxID int
-	// ReadOutboxMaxID field of MessagesDiscussionMessage.
+	// Message ID of latest read outgoing message in this thread¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/threads
 	//
 	// Use SetReadOutboxMaxID and GetReadOutboxMaxID helpers.
 	ReadOutboxMaxID int
-	// UnreadCount field of MessagesDiscussionMessage.
+	// Number of unread messages
 	UnreadCount int
-	// Chats field of MessagesDiscussionMessage.
+	// Chats mentioned in constructor
 	Chats []ChatClass
-	// Users field of MessagesDiscussionMessage.
+	// Users mentioned in constructor
 	Users []UserClass
 }
 
@@ -107,6 +126,34 @@ func (d *MessagesDiscussionMessage) String() string {
 	}
 	type Alias MessagesDiscussionMessage
 	return fmt.Sprintf("MessagesDiscussionMessage%+v", Alias(*d))
+}
+
+// FillFrom fills MessagesDiscussionMessage from given interface.
+func (d *MessagesDiscussionMessage) FillFrom(from interface {
+	GetMessages() (value []MessageClass)
+	GetMaxID() (value int, ok bool)
+	GetReadInboxMaxID() (value int, ok bool)
+	GetReadOutboxMaxID() (value int, ok bool)
+	GetUnreadCount() (value int)
+	GetChats() (value []ChatClass)
+	GetUsers() (value []UserClass)
+}) {
+	d.Messages = from.GetMessages()
+	if val, ok := from.GetMaxID(); ok {
+		d.MaxID = val
+	}
+
+	if val, ok := from.GetReadInboxMaxID(); ok {
+		d.ReadInboxMaxID = val
+	}
+
+	if val, ok := from.GetReadOutboxMaxID(); ok {
+		d.ReadOutboxMaxID = val
+	}
+
+	d.UnreadCount = from.GetUnreadCount()
+	d.Chats = from.GetChats()
+	d.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -425,4 +472,19 @@ func (d *MessagesDiscussionMessage) GetUsers() (value []UserClass) {
 		return
 	}
 	return d.Users
+}
+
+// MapMessages returns field Messages wrapped in MessageClassArray helper.
+func (d *MessagesDiscussionMessage) MapMessages() (value MessageClassArray) {
+	return MessageClassArray(d.Messages)
+}
+
+// MapChats returns field Chats wrapped in ChatClassArray helper.
+func (d *MessagesDiscussionMessage) MapChats() (value ChatClassArray) {
+	return ChatClassArray(d.Chats)
+}
+
+// MapUsers returns field Users wrapped in UserClassArray helper.
+func (d *MessagesDiscussionMessage) MapUsers() (value UserClassArray) {
+	return UserClassArray(d.Users)
 }

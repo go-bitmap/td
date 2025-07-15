@@ -32,8 +32,19 @@ var (
 )
 
 // MessagesGetEmojiProfilePhotoGroupsRequest represents TL type `messages.getEmojiProfilePhotoGroups#21a548f3`.
+// Represents a list of emoji categories¹, to be used when selecting custom emojis to
+// set as profile picture².
+//
+// Links:
+//  1. https://core.telegram.org/api/emoji-categories
+//  2. https://core.telegram.org/api/files#sticker-profile-pictures
+//
+// See https://core.telegram.org/method/messages.getEmojiProfilePhotoGroups for reference.
 type MessagesGetEmojiProfilePhotoGroupsRequest struct {
-	// Hash field of MessagesGetEmojiProfilePhotoGroupsRequest.
+	// Hash used for caching, for more info click here¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets#hash-generation
 	Hash int
 }
 
@@ -66,6 +77,13 @@ func (g *MessagesGetEmojiProfilePhotoGroupsRequest) String() string {
 	}
 	type Alias MessagesGetEmojiProfilePhotoGroupsRequest
 	return fmt.Sprintf("MessagesGetEmojiProfilePhotoGroupsRequest%+v", Alias(*g))
+}
+
+// FillFrom fills MessagesGetEmojiProfilePhotoGroupsRequest from given interface.
+func (g *MessagesGetEmojiProfilePhotoGroupsRequest) FillFrom(from interface {
+	GetHash() (value int)
+}) {
+	g.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -152,6 +170,14 @@ func (g *MessagesGetEmojiProfilePhotoGroupsRequest) GetHash() (value int) {
 }
 
 // MessagesGetEmojiProfilePhotoGroups invokes method messages.getEmojiProfilePhotoGroups#21a548f3 returning error if any.
+// Represents a list of emoji categories¹, to be used when selecting custom emojis to
+// set as profile picture².
+//
+// Links:
+//  1. https://core.telegram.org/api/emoji-categories
+//  2. https://core.telegram.org/api/files#sticker-profile-pictures
+//
+// See https://core.telegram.org/method/messages.getEmojiProfilePhotoGroups for reference.
 func (c *Client) MessagesGetEmojiProfilePhotoGroups(ctx context.Context, hash int) (MessagesEmojiGroupsClass, error) {
 	var result MessagesEmojiGroupsBox
 

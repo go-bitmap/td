@@ -32,6 +32,8 @@ var (
 )
 
 // PhoneCreateConferenceCallRequest represents TL type `phone.createConferenceCall#7d0444bb`.
+//
+// See https://core.telegram.org/method/phone.createConferenceCall for reference.
 type PhoneCreateConferenceCallRequest struct {
 	// Flags field of PhoneCreateConferenceCallRequest.
 	Flags bin.Fields
@@ -107,6 +109,34 @@ func (c *PhoneCreateConferenceCallRequest) String() string {
 	}
 	type Alias PhoneCreateConferenceCallRequest
 	return fmt.Sprintf("PhoneCreateConferenceCallRequest%+v", Alias(*c))
+}
+
+// FillFrom fills PhoneCreateConferenceCallRequest from given interface.
+func (c *PhoneCreateConferenceCallRequest) FillFrom(from interface {
+	GetMuted() (value bool)
+	GetVideoStopped() (value bool)
+	GetJoin() (value bool)
+	GetRandomID() (value int)
+	GetPublicKey() (value bin.Int256, ok bool)
+	GetBlock() (value []byte, ok bool)
+	GetParams() (value DataJSON, ok bool)
+}) {
+	c.Muted = from.GetMuted()
+	c.VideoStopped = from.GetVideoStopped()
+	c.Join = from.GetJoin()
+	c.RandomID = from.GetRandomID()
+	if val, ok := from.GetPublicKey(); ok {
+		c.PublicKey = val
+	}
+
+	if val, ok := from.GetBlock(); ok {
+		c.Block = val
+	}
+
+	if val, ok := from.GetParams(); ok {
+		c.Params = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -398,6 +428,8 @@ func (c *PhoneCreateConferenceCallRequest) GetParams() (value DataJSON, ok bool)
 }
 
 // PhoneCreateConferenceCall invokes method phone.createConferenceCall#7d0444bb returning error if any.
+//
+// See https://core.telegram.org/method/phone.createConferenceCall for reference.
 func (c *Client) PhoneCreateConferenceCall(ctx context.Context, request *PhoneCreateConferenceCallRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

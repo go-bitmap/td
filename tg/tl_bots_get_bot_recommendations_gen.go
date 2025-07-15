@@ -32,6 +32,8 @@ var (
 )
 
 // BotsGetBotRecommendationsRequest represents TL type `bots.getBotRecommendations#a1b70815`.
+//
+// See https://core.telegram.org/method/bots.getBotRecommendations for reference.
 type BotsGetBotRecommendationsRequest struct {
 	// Bot field of BotsGetBotRecommendationsRequest.
 	Bot InputUserClass
@@ -66,6 +68,13 @@ func (g *BotsGetBotRecommendationsRequest) String() string {
 	}
 	type Alias BotsGetBotRecommendationsRequest
 	return fmt.Sprintf("BotsGetBotRecommendationsRequest%+v", Alias(*g))
+}
+
+// FillFrom fills BotsGetBotRecommendationsRequest from given interface.
+func (g *BotsGetBotRecommendationsRequest) FillFrom(from interface {
+	GetBot() (value InputUserClass)
+}) {
+	g.Bot = from.GetBot()
 }
 
 // TypeID returns type id in TL schema.
@@ -157,6 +166,8 @@ func (g *BotsGetBotRecommendationsRequest) GetBot() (value InputUserClass) {
 }
 
 // BotsGetBotRecommendations invokes method bots.getBotRecommendations#a1b70815 returning error if any.
+//
+// See https://core.telegram.org/method/bots.getBotRecommendations for reference.
 func (c *Client) BotsGetBotRecommendations(ctx context.Context, bot InputUserClass) (UsersUsersClass, error) {
 	var result UsersUsersBox
 

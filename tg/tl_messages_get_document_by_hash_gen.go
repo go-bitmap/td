@@ -32,12 +32,15 @@ var (
 )
 
 // MessagesGetDocumentByHashRequest represents TL type `messages.getDocumentByHash#b1f2061f`.
+// Get a document by its SHA256 hash, mainly used for gifs
+//
+// See https://core.telegram.org/method/messages.getDocumentByHash for reference.
 type MessagesGetDocumentByHashRequest struct {
-	// SHA256 field of MessagesGetDocumentByHashRequest.
+	// SHA256 of file
 	SHA256 []byte
-	// Size field of MessagesGetDocumentByHashRequest.
+	// Size of the file in bytes
 	Size int64
-	// MimeType field of MessagesGetDocumentByHashRequest.
+	// Mime type
 	MimeType string
 }
 
@@ -76,6 +79,17 @@ func (g *MessagesGetDocumentByHashRequest) String() string {
 	}
 	type Alias MessagesGetDocumentByHashRequest
 	return fmt.Sprintf("MessagesGetDocumentByHashRequest%+v", Alias(*g))
+}
+
+// FillFrom fills MessagesGetDocumentByHashRequest from given interface.
+func (g *MessagesGetDocumentByHashRequest) FillFrom(from interface {
+	GetSHA256() (value []byte)
+	GetSize() (value int64)
+	GetMimeType() (value string)
+}) {
+	g.SHA256 = from.GetSHA256()
+	g.Size = from.GetSize()
+	g.MimeType = from.GetMimeType()
 }
 
 // TypeID returns type id in TL schema.
@@ -202,6 +216,14 @@ func (g *MessagesGetDocumentByHashRequest) GetMimeType() (value string) {
 }
 
 // MessagesGetDocumentByHash invokes method messages.getDocumentByHash#b1f2061f returning error if any.
+// Get a document by its SHA256 hash, mainly used for gifs
+//
+// Possible errors:
+//
+//	400 SHA256_HASH_INVALID: The provided SHA256 hash is invalid.
+//
+// See https://core.telegram.org/method/messages.getDocumentByHash for reference.
+// Can be used by bots.
 func (c *Client) MessagesGetDocumentByHash(ctx context.Context, request *MessagesGetDocumentByHashRequest) (DocumentClass, error) {
 	var result DocumentBox
 

@@ -32,8 +32,16 @@ var (
 )
 
 // ContactsGetContactIDsRequest represents TL type `contacts.getContactIDs#7adc669d`.
+// Get the telegram IDs of all contacts.
+// Returns an array of Telegram user IDs for all contacts (0 if a contact does not have
+// an associated Telegram account or have hidden their account using privacy settings).
+//
+// See https://core.telegram.org/method/contacts.getContactIDs for reference.
 type ContactsGetContactIDsRequest struct {
-	// Hash field of ContactsGetContactIDsRequest.
+	// Hash used for caching, for more info click here¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/offsets#hash-generation
 	Hash int64
 }
 
@@ -66,6 +74,13 @@ func (g *ContactsGetContactIDsRequest) String() string {
 	}
 	type Alias ContactsGetContactIDsRequest
 	return fmt.Sprintf("ContactsGetContactIDsRequest%+v", Alias(*g))
+}
+
+// FillFrom fills ContactsGetContactIDsRequest from given interface.
+func (g *ContactsGetContactIDsRequest) FillFrom(from interface {
+	GetHash() (value int64)
+}) {
+	g.Hash = from.GetHash()
 }
 
 // TypeID returns type id in TL schema.
@@ -152,6 +167,11 @@ func (g *ContactsGetContactIDsRequest) GetHash() (value int64) {
 }
 
 // ContactsGetContactIDs invokes method contacts.getContactIDs#7adc669d returning error if any.
+// Get the telegram IDs of all contacts.
+// Returns an array of Telegram user IDs for all contacts (0 if a contact does not have
+// an associated Telegram account or have hidden their account using privacy settings).
+//
+// See https://core.telegram.org/method/contacts.getContactIDs for reference.
 func (c *Client) ContactsGetContactIDs(ctx context.Context, hash int64) ([]int, error) {
 	var result IntVector
 

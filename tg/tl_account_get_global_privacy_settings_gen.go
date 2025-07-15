@@ -32,6 +32,9 @@ var (
 )
 
 // AccountGetGlobalPrivacySettingsRequest represents TL type `account.getGlobalPrivacySettings#eb2b4cf6`.
+// Get global privacy settings
+//
+// See https://core.telegram.org/method/account.getGlobalPrivacySettings for reference.
 type AccountGetGlobalPrivacySettingsRequest struct {
 }
 
@@ -126,6 +129,9 @@ func (g *AccountGetGlobalPrivacySettingsRequest) DecodeBare(b *bin.Buffer) error
 }
 
 // AccountGetGlobalPrivacySettings invokes method account.getGlobalPrivacySettings#eb2b4cf6 returning error if any.
+// Get global privacy settings
+//
+// See https://core.telegram.org/method/account.getGlobalPrivacySettings for reference.
 func (c *Client) AccountGetGlobalPrivacySettings(ctx context.Context) (*GlobalPrivacySettings, error) {
 	var result GlobalPrivacySettings
 

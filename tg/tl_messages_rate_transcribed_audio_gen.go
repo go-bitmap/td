@@ -32,14 +32,20 @@ var (
 )
 
 // MessagesRateTranscribedAudioRequest represents TL type `messages.rateTranscribedAudio#7f1d072f`.
+// Rate transcribed voice message¹
+//
+// Links:
+//  1. https://core.telegram.org/api/transcribe
+//
+// See https://core.telegram.org/method/messages.rateTranscribedAudio for reference.
 type MessagesRateTranscribedAudioRequest struct {
-	// Peer field of MessagesRateTranscribedAudioRequest.
+	// Peer where the voice message was sent
 	Peer InputPeerClass
-	// MsgID field of MessagesRateTranscribedAudioRequest.
+	// Message ID
 	MsgID int
-	// TranscriptionID field of MessagesRateTranscribedAudioRequest.
+	// Transcription ID
 	TranscriptionID int64
-	// Good field of MessagesRateTranscribedAudioRequest.
+	// Whether the transcription was correct
 	Good bool
 }
 
@@ -81,6 +87,19 @@ func (r *MessagesRateTranscribedAudioRequest) String() string {
 	}
 	type Alias MessagesRateTranscribedAudioRequest
 	return fmt.Sprintf("MessagesRateTranscribedAudioRequest%+v", Alias(*r))
+}
+
+// FillFrom fills MessagesRateTranscribedAudioRequest from given interface.
+func (r *MessagesRateTranscribedAudioRequest) FillFrom(from interface {
+	GetPeer() (value InputPeerClass)
+	GetMsgID() (value int)
+	GetTranscriptionID() (value int64)
+	GetGood() (value bool)
+}) {
+	r.Peer = from.GetPeer()
+	r.MsgID = from.GetMsgID()
+	r.TranscriptionID = from.GetTranscriptionID()
+	r.Good = from.GetGood()
 }
 
 // TypeID returns type id in TL schema.
@@ -232,6 +251,12 @@ func (r *MessagesRateTranscribedAudioRequest) GetGood() (value bool) {
 }
 
 // MessagesRateTranscribedAudio invokes method messages.rateTranscribedAudio#7f1d072f returning error if any.
+// Rate transcribed voice message¹
+//
+// Links:
+//  1. https://core.telegram.org/api/transcribe
+//
+// See https://core.telegram.org/method/messages.rateTranscribedAudio for reference.
 func (c *Client) MessagesRateTranscribedAudio(ctx context.Context, request *MessagesRateTranscribedAudioRequest) (bool, error) {
 	var result BoolBox
 

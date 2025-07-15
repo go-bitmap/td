@@ -32,8 +32,11 @@ var (
 )
 
 // ChatOnlines represents TL type `chatOnlines#f041e250`.
+// Number of online users in a chat
+//
+// See https://core.telegram.org/constructor/chatOnlines for reference.
 type ChatOnlines struct {
-	// Onlines field of ChatOnlines.
+	// Number of online users
 	Onlines int
 }
 
@@ -66,6 +69,13 @@ func (c *ChatOnlines) String() string {
 	}
 	type Alias ChatOnlines
 	return fmt.Sprintf("ChatOnlines%+v", Alias(*c))
+}
+
+// FillFrom fills ChatOnlines from given interface.
+func (c *ChatOnlines) FillFrom(from interface {
+	GetOnlines() (value int)
+}) {
+	c.Onlines = from.GetOnlines()
 }
 
 // TypeID returns type id in TL schema.

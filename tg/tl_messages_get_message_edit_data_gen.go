@@ -32,10 +32,13 @@ var (
 )
 
 // MessagesGetMessageEditDataRequest represents TL type `messages.getMessageEditData#fda68d36`.
+// Find out if a media message's caption can be edited
+//
+// See https://core.telegram.org/method/messages.getMessageEditData for reference.
 type MessagesGetMessageEditDataRequest struct {
-	// Peer field of MessagesGetMessageEditDataRequest.
+	// Peer where the media was sent
 	Peer InputPeerClass
-	// ID field of MessagesGetMessageEditDataRequest.
+	// ID of message
 	ID int
 }
 
@@ -71,6 +74,15 @@ func (g *MessagesGetMessageEditDataRequest) String() string {
 	}
 	type Alias MessagesGetMessageEditDataRequest
 	return fmt.Sprintf("MessagesGetMessageEditDataRequest%+v", Alias(*g))
+}
+
+// FillFrom fills MessagesGetMessageEditDataRequest from given interface.
+func (g *MessagesGetMessageEditDataRequest) FillFrom(from interface {
+	GetPeer() (value InputPeerClass)
+	GetID() (value int)
+}) {
+	g.Peer = from.GetPeer()
+	g.ID = from.GetID()
 }
 
 // TypeID returns type id in TL schema.
@@ -182,6 +194,17 @@ func (g *MessagesGetMessageEditDataRequest) GetID() (value int) {
 }
 
 // MessagesGetMessageEditData invokes method messages.getMessageEditData#fda68d36 returning error if any.
+// Find out if a media message's caption can be edited
+//
+// Possible errors:
+//
+//	400 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
+//	403 CHAT_WRITE_FORBIDDEN: You can't write in this chat.
+//	403 MESSAGE_AUTHOR_REQUIRED: Message author required.
+//	400 MESSAGE_ID_INVALID: The provided message id is invalid.
+//	400 PEER_ID_INVALID: The provided peer id is invalid.
+//
+// See https://core.telegram.org/method/messages.getMessageEditData for reference.
 func (c *Client) MessagesGetMessageEditData(ctx context.Context, request *MessagesGetMessageEditDataRequest) (*MessagesMessageEditData, error) {
 	var result MessagesMessageEditData
 

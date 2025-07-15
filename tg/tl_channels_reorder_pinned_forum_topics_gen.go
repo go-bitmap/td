@@ -32,14 +32,28 @@ var (
 )
 
 // ChannelsReorderPinnedForumTopicsRequest represents TL type `channels.reorderPinnedForumTopics#2950a18f`.
+// Reorder pinned forum topics
+//
+// See https://core.telegram.org/method/channels.reorderPinnedForumTopics for reference.
 type ChannelsReorderPinnedForumTopicsRequest struct {
-	// Flags field of ChannelsReorderPinnedForumTopicsRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Force field of ChannelsReorderPinnedForumTopicsRequest.
+	// If not set, the order of only the topics present both server-side and in order will be
+	// changed (i.e. mentioning topics not pinned server-side in order will not pin them, and
+	// not mentioning topics pinned server-side will not unpin them).  If set, the entire
+	// server-side pinned topic list will be replaced with order (i.e. mentioning topics not
+	// pinned server-side in order will pin them, and not mentioning topics pinned
+	// server-side will unpin them)
 	Force bool
-	// Channel field of ChannelsReorderPinnedForumTopicsRequest.
+	// Supergroup ID
 	Channel InputChannelClass
-	// Order field of ChannelsReorderPinnedForumTopicsRequest.
+	// Topic IDs »¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/forum
 	Order []int
 }
 
@@ -81,6 +95,17 @@ func (r *ChannelsReorderPinnedForumTopicsRequest) String() string {
 	}
 	type Alias ChannelsReorderPinnedForumTopicsRequest
 	return fmt.Sprintf("ChannelsReorderPinnedForumTopicsRequest%+v", Alias(*r))
+}
+
+// FillFrom fills ChannelsReorderPinnedForumTopicsRequest from given interface.
+func (r *ChannelsReorderPinnedForumTopicsRequest) FillFrom(from interface {
+	GetForce() (value bool)
+	GetChannel() (value InputChannelClass)
+	GetOrder() (value []int)
+}) {
+	r.Force = from.GetForce()
+	r.Channel = from.GetChannel()
+	r.Order = from.GetOrder()
 }
 
 // TypeID returns type id in TL schema.
@@ -245,7 +270,19 @@ func (r *ChannelsReorderPinnedForumTopicsRequest) GetOrder() (value []int) {
 	return r.Order
 }
 
+// GetChannelAsNotEmpty returns mapped value of Channel field.
+func (r *ChannelsReorderPinnedForumTopicsRequest) GetChannelAsNotEmpty() (NotEmptyInputChannel, bool) {
+	return r.Channel.AsNotEmpty()
+}
+
 // ChannelsReorderPinnedForumTopics invokes method channels.reorderPinnedForumTopics#2950a18f returning error if any.
+// Reorder pinned forum topics
+//
+// Possible errors:
+//
+//	400 CHANNEL_INVALID: The provided channel is invalid.
+//
+// See https://core.telegram.org/method/channels.reorderPinnedForumTopics for reference.
 func (c *Client) ChannelsReorderPinnedForumTopics(ctx context.Context, request *ChannelsReorderPinnedForumTopicsRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

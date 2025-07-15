@@ -32,14 +32,24 @@ var (
 )
 
 // StatsGetStoryStatsRequest represents TL type `stats.getStoryStats#374fef40`.
+// Get statistics¹ for a certain story².
+//
+// Links:
+//  1. https://core.telegram.org/api/stats
+//  2. https://core.telegram.org/api/stories
+//
+// See https://core.telegram.org/method/stats.getStoryStats for reference.
 type StatsGetStoryStatsRequest struct {
-	// Flags field of StatsGetStoryStatsRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Dark field of StatsGetStoryStatsRequest.
+	// Whether to enable the dark theme for graph colors
 	Dark bool
-	// Peer field of StatsGetStoryStatsRequest.
+	// The peer that posted the story
 	Peer InputPeerClass
-	// ID field of StatsGetStoryStatsRequest.
+	// Story ID
 	ID int
 }
 
@@ -81,6 +91,17 @@ func (g *StatsGetStoryStatsRequest) String() string {
 	}
 	type Alias StatsGetStoryStatsRequest
 	return fmt.Sprintf("StatsGetStoryStatsRequest%+v", Alias(*g))
+}
+
+// FillFrom fills StatsGetStoryStatsRequest from given interface.
+func (g *StatsGetStoryStatsRequest) FillFrom(from interface {
+	GetDark() (value bool)
+	GetPeer() (value InputPeerClass)
+	GetID() (value int)
+}) {
+	g.Dark = from.GetDark()
+	g.Peer = from.GetPeer()
+	g.ID = from.GetID()
 }
 
 // TypeID returns type id in TL schema.
@@ -233,6 +254,18 @@ func (g *StatsGetStoryStatsRequest) GetID() (value int) {
 }
 
 // StatsGetStoryStats invokes method stats.getStoryStats#374fef40 returning error if any.
+// Get statistics¹ for a certain story².
+//
+// Links:
+//  1. https://core.telegram.org/api/stats
+//  2. https://core.telegram.org/api/stories
+//
+// Possible errors:
+//
+//	400 PEER_ID_INVALID: The provided peer id is invalid.
+//	400 STORIES_NEVER_CREATED: This peer hasn't ever posted any stories.
+//
+// See https://core.telegram.org/method/stats.getStoryStats for reference.
 func (c *Client) StatsGetStoryStats(ctx context.Context, request *StatsGetStoryStatsRequest) (*StatsStoryStats, error) {
 	var result StatsStoryStats
 

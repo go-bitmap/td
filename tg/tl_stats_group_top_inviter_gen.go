@@ -32,10 +32,16 @@ var (
 )
 
 // StatsGroupTopInviter represents TL type `statsGroupTopInviter#535f779d`.
+// Information about an active supergroup inviter
+//
+// See https://core.telegram.org/constructor/statsGroupTopInviter for reference.
 type StatsGroupTopInviter struct {
-	// UserID field of StatsGroupTopInviter.
+	// User ID
 	UserID int64
-	// Invitations field of StatsGroupTopInviter.
+	// Number of invitations for statistics¹ period in consideration
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/stats
 	Invitations int
 }
 
@@ -71,6 +77,15 @@ func (s *StatsGroupTopInviter) String() string {
 	}
 	type Alias StatsGroupTopInviter
 	return fmt.Sprintf("StatsGroupTopInviter%+v", Alias(*s))
+}
+
+// FillFrom fills StatsGroupTopInviter from given interface.
+func (s *StatsGroupTopInviter) FillFrom(from interface {
+	GetUserID() (value int64)
+	GetInvitations() (value int)
+}) {
+	s.UserID = from.GetUserID()
+	s.Invitations = from.GetInvitations()
 }
 
 // TypeID returns type id in TL schema.

@@ -32,12 +32,26 @@ var (
 )
 
 // MessagesInitHistoryImportRequest represents TL type `messages.initHistoryImport#34090c3b`.
+// Import chat history from a foreign chat app into a specific Telegram chat, click here
+// for more info about imported chats »¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/import
+//
+// See https://core.telegram.org/method/messages.initHistoryImport for reference.
 type MessagesInitHistoryImportRequest struct {
-	// Peer field of MessagesInitHistoryImportRequest.
+	// The Telegram chat where the history should be imported¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/import
 	Peer InputPeerClass
-	// File field of MessagesInitHistoryImportRequest.
+	// File with messages to import.
 	File InputFileClass
-	// MediaCount field of MessagesInitHistoryImportRequest.
+	// Number of media files associated with the chat that will be uploaded using messages
+	// uploadImportedMedia¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/method/messages.uploadImportedMedia
 	MediaCount int
 }
 
@@ -76,6 +90,17 @@ func (i *MessagesInitHistoryImportRequest) String() string {
 	}
 	type Alias MessagesInitHistoryImportRequest
 	return fmt.Sprintf("MessagesInitHistoryImportRequest%+v", Alias(*i))
+}
+
+// FillFrom fills MessagesInitHistoryImportRequest from given interface.
+func (i *MessagesInitHistoryImportRequest) FillFrom(from interface {
+	GetPeer() (value InputPeerClass)
+	GetFile() (value InputFileClass)
+	GetMediaCount() (value int)
+}) {
+	i.Peer = from.GetPeer()
+	i.File = from.GetFile()
+	i.MediaCount = from.GetMediaCount()
 }
 
 // TypeID returns type id in TL schema.
@@ -212,6 +237,22 @@ func (i *MessagesInitHistoryImportRequest) GetMediaCount() (value int) {
 }
 
 // MessagesInitHistoryImport invokes method messages.initHistoryImport#34090c3b returning error if any.
+// Import chat history from a foreign chat app into a specific Telegram chat, click here
+// for more info about imported chats »¹.
+//
+// Links:
+//  1. https://core.telegram.org/api/import
+//
+// Possible errors:
+//
+//	400 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
+//	400 IMPORT_FILE_INVALID: The specified chat export file is invalid.
+//	400 IMPORT_FORMAT_DATE_INVALID: The date specified in the import file is invalid.
+//	400 IMPORT_FORMAT_UNRECOGNIZED: The specified chat export file was exported from an unsupported chat app.
+//	400 PEER_ID_INVALID: The provided peer id is invalid.
+//	406 PREVIOUS_CHAT_IMPORT_ACTIVE_WAIT_%dMIN: Import for this chat is already in progress, wait %d minutes before starting a new one.
+//
+// See https://core.telegram.org/method/messages.initHistoryImport for reference.
 func (c *Client) MessagesInitHistoryImport(ctx context.Context, request *MessagesInitHistoryImportRequest) (*MessagesHistoryImport, error) {
 	var result MessagesHistoryImport
 

@@ -32,10 +32,13 @@ var (
 )
 
 // MessagesEditChatTitleRequest represents TL type `messages.editChatTitle#73783ffd`.
+// Changes chat name and sends a service message on it.
+//
+// See https://core.telegram.org/method/messages.editChatTitle for reference.
 type MessagesEditChatTitleRequest struct {
-	// ChatID field of MessagesEditChatTitleRequest.
+	// Chat ID
 	ChatID int64
-	// Title field of MessagesEditChatTitleRequest.
+	// New chat name, different from the old one
 	Title string
 }
 
@@ -71,6 +74,15 @@ func (e *MessagesEditChatTitleRequest) String() string {
 	}
 	type Alias MessagesEditChatTitleRequest
 	return fmt.Sprintf("MessagesEditChatTitleRequest%+v", Alias(*e))
+}
+
+// FillFrom fills MessagesEditChatTitleRequest from given interface.
+func (e *MessagesEditChatTitleRequest) FillFrom(from interface {
+	GetChatID() (value int64)
+	GetTitle() (value string)
+}) {
+	e.ChatID = from.GetChatID()
+	e.Title = from.GetTitle()
 }
 
 // TypeID returns type id in TL schema.
@@ -177,6 +189,18 @@ func (e *MessagesEditChatTitleRequest) GetTitle() (value string) {
 }
 
 // MessagesEditChatTitle invokes method messages.editChatTitle#73783ffd returning error if any.
+// Changes chat name and sends a service message on it.
+//
+// Possible errors:
+//
+//	400 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
+//	400 CHAT_ID_INVALID: The provided chat id is invalid.
+//	400 CHAT_NOT_MODIFIED: No changes were made to chat information because the new information you passed is identical to the current information.
+//	400 CHAT_TITLE_EMPTY: No chat title provided.
+//	400 PEER_ID_INVALID: The provided peer id is invalid.
+//
+// See https://core.telegram.org/method/messages.editChatTitle for reference.
+// Can be used by bots.
 func (c *Client) MessagesEditChatTitle(ctx context.Context, request *MessagesEditChatTitleRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

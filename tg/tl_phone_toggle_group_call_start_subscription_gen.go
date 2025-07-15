@@ -32,10 +32,13 @@ var (
 )
 
 // PhoneToggleGroupCallStartSubscriptionRequest represents TL type `phone.toggleGroupCallStartSubscription#219c34e6`.
+// Subscribe or unsubscribe to a scheduled group call
+//
+// See https://core.telegram.org/method/phone.toggleGroupCallStartSubscription for reference.
 type PhoneToggleGroupCallStartSubscriptionRequest struct {
-	// Call field of PhoneToggleGroupCallStartSubscriptionRequest.
+	// Scheduled group call
 	Call InputGroupCallClass
-	// Subscribed field of PhoneToggleGroupCallStartSubscriptionRequest.
+	// Enable or disable subscription
 	Subscribed bool
 }
 
@@ -71,6 +74,15 @@ func (t *PhoneToggleGroupCallStartSubscriptionRequest) String() string {
 	}
 	type Alias PhoneToggleGroupCallStartSubscriptionRequest
 	return fmt.Sprintf("PhoneToggleGroupCallStartSubscriptionRequest%+v", Alias(*t))
+}
+
+// FillFrom fills PhoneToggleGroupCallStartSubscriptionRequest from given interface.
+func (t *PhoneToggleGroupCallStartSubscriptionRequest) FillFrom(from interface {
+	GetCall() (value InputGroupCallClass)
+	GetSubscribed() (value bool)
+}) {
+	t.Call = from.GetCall()
+	t.Subscribed = from.GetSubscribed()
 }
 
 // TypeID returns type id in TL schema.
@@ -182,6 +194,14 @@ func (t *PhoneToggleGroupCallStartSubscriptionRequest) GetSubscribed() (value bo
 }
 
 // PhoneToggleGroupCallStartSubscription invokes method phone.toggleGroupCallStartSubscription#219c34e6 returning error if any.
+// Subscribe or unsubscribe to a scheduled group call
+//
+// Possible errors:
+//
+//	403 GROUPCALL_ALREADY_STARTED: The groupcall has already started, you can join directly using phone.joinGroupCall.
+//	400 GROUPCALL_INVALID: The specified group call is invalid.
+//
+// See https://core.telegram.org/method/phone.toggleGroupCallStartSubscription for reference.
 func (c *Client) PhoneToggleGroupCallStartSubscription(ctx context.Context, request *PhoneToggleGroupCallStartSubscriptionRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

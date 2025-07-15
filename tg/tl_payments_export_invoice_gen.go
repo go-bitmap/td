@@ -32,8 +32,14 @@ var (
 )
 
 // PaymentsExportInvoiceRequest represents TL type `payments.exportInvoice#f91b065`.
+// Generate an invoice deep link¹
+//
+// Links:
+//  1. https://core.telegram.org/api/links#invoice-links
+//
+// See https://core.telegram.org/method/payments.exportInvoice for reference.
 type PaymentsExportInvoiceRequest struct {
-	// InvoiceMedia field of PaymentsExportInvoiceRequest.
+	// Invoice
 	InvoiceMedia InputMediaClass
 }
 
@@ -66,6 +72,13 @@ func (e *PaymentsExportInvoiceRequest) String() string {
 	}
 	type Alias PaymentsExportInvoiceRequest
 	return fmt.Sprintf("PaymentsExportInvoiceRequest%+v", Alias(*e))
+}
+
+// FillFrom fills PaymentsExportInvoiceRequest from given interface.
+func (e *PaymentsExportInvoiceRequest) FillFrom(from interface {
+	GetInvoiceMedia() (value InputMediaClass)
+}) {
+	e.InvoiceMedia = from.GetInvoiceMedia()
 }
 
 // TypeID returns type id in TL schema.
@@ -157,6 +170,23 @@ func (e *PaymentsExportInvoiceRequest) GetInvoiceMedia() (value InputMediaClass)
 }
 
 // PaymentsExportInvoice invokes method payments.exportInvoice#f91b065 returning error if any.
+// Generate an invoice deep link¹
+//
+// Links:
+//  1. https://core.telegram.org/api/links#invoice-links
+//
+// Possible errors:
+//
+//	400 CURRENCY_TOTAL_AMOUNT_INVALID: The total amount of all prices is invalid.
+//	400 INVOICE_PAYLOAD_INVALID: The specified invoice payload is invalid.
+//	400 MEDIA_INVALID: Media invalid.
+//	400 PAYMENT_PROVIDER_INVALID: The specified payment provider is invalid.
+//	400 STARS_INVOICE_INVALID: The specified Telegram Star invoice is invalid.
+//	400 WEBDOCUMENT_MIME_INVALID: Invalid webdocument mime type provided.
+//	400 WEBDOCUMENT_URL_EMPTY: The passed web document URL is empty.
+//
+// See https://core.telegram.org/method/payments.exportInvoice for reference.
+// Can be used by bots.
 func (c *Client) PaymentsExportInvoice(ctx context.Context, invoicemedia InputMediaClass) (*PaymentsExportedInvoice, error) {
 	var result PaymentsExportedInvoice
 

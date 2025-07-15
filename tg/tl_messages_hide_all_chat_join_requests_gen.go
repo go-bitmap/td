@@ -32,14 +32,29 @@ var (
 )
 
 // MessagesHideAllChatJoinRequestsRequest represents TL type `messages.hideAllChatJoinRequests#e085f4ea`.
+// Dismiss or approve all join requests¹ related to a specific chat or channel.
+//
+// Links:
+//  1. https://core.telegram.org/api/invites#join-requests
+//
+// See https://core.telegram.org/method/messages.hideAllChatJoinRequests for reference.
 type MessagesHideAllChatJoinRequestsRequest struct {
-	// Flags field of MessagesHideAllChatJoinRequestsRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Approved field of MessagesHideAllChatJoinRequestsRequest.
+	// Whether to dismiss or approve all chat join requests »¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/invites#join-requests
 	Approved bool
-	// Peer field of MessagesHideAllChatJoinRequestsRequest.
+	// The chat or channel
 	Peer InputPeerClass
-	// Link field of MessagesHideAllChatJoinRequestsRequest.
+	// Only dismiss or approve join requests »¹ initiated using this invite link
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/invites#join-requests
 	//
 	// Use SetLink and GetLink helpers.
 	Link string
@@ -83,6 +98,20 @@ func (h *MessagesHideAllChatJoinRequestsRequest) String() string {
 	}
 	type Alias MessagesHideAllChatJoinRequestsRequest
 	return fmt.Sprintf("MessagesHideAllChatJoinRequestsRequest%+v", Alias(*h))
+}
+
+// FillFrom fills MessagesHideAllChatJoinRequestsRequest from given interface.
+func (h *MessagesHideAllChatJoinRequestsRequest) FillFrom(from interface {
+	GetApproved() (value bool)
+	GetPeer() (value InputPeerClass)
+	GetLink() (value string, ok bool)
+}) {
+	h.Approved = from.GetApproved()
+	h.Peer = from.GetPeer()
+	if val, ok := from.GetLink(); ok {
+		h.Link = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -251,6 +280,24 @@ func (h *MessagesHideAllChatJoinRequestsRequest) GetLink() (value string, ok boo
 }
 
 // MessagesHideAllChatJoinRequests invokes method messages.hideAllChatJoinRequests#e085f4ea returning error if any.
+// Dismiss or approve all join requests¹ related to a specific chat or channel.
+//
+// Links:
+//  1. https://core.telegram.org/api/invites#join-requests
+//
+// Possible errors:
+//
+//	400 CHANNELS_TOO_MUCH: You have joined too many channels/supergroups.
+//	400 CHANNEL_INVALID: The provided channel is invalid.
+//	400 CHANNEL_PRIVATE: You haven't joined this channel/supergroup.
+//	400 CHAT_ADMIN_REQUIRED: You must be an admin in this chat to do this.
+//	403 CHAT_WRITE_FORBIDDEN: You can't write in this chat.
+//	400 HIDE_REQUESTER_MISSING: The join request was missing or was already handled.
+//	400 INVITE_HASH_EXPIRED: The invite link has expired.
+//	400 PEER_ID_INVALID: The provided peer id is invalid.
+//	400 USER_CHANNELS_TOO_MUCH: One of the users you tried to add is already in too many channels/supergroups.
+//
+// See https://core.telegram.org/method/messages.hideAllChatJoinRequests for reference.
 func (c *Client) MessagesHideAllChatJoinRequests(ctx context.Context, request *MessagesHideAllChatJoinRequestsRequest) (UpdatesClass, error) {
 	var result UpdatesBox
 

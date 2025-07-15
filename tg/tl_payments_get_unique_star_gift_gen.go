@@ -32,6 +32,8 @@ var (
 )
 
 // PaymentsGetUniqueStarGiftRequest represents TL type `payments.getUniqueStarGift#a1974d72`.
+//
+// See https://core.telegram.org/method/payments.getUniqueStarGift for reference.
 type PaymentsGetUniqueStarGiftRequest struct {
 	// Slug field of PaymentsGetUniqueStarGiftRequest.
 	Slug string
@@ -66,6 +68,13 @@ func (g *PaymentsGetUniqueStarGiftRequest) String() string {
 	}
 	type Alias PaymentsGetUniqueStarGiftRequest
 	return fmt.Sprintf("PaymentsGetUniqueStarGiftRequest%+v", Alias(*g))
+}
+
+// FillFrom fills PaymentsGetUniqueStarGiftRequest from given interface.
+func (g *PaymentsGetUniqueStarGiftRequest) FillFrom(from interface {
+	GetSlug() (value string)
+}) {
+	g.Slug = from.GetSlug()
 }
 
 // TypeID returns type id in TL schema.
@@ -152,6 +161,8 @@ func (g *PaymentsGetUniqueStarGiftRequest) GetSlug() (value string) {
 }
 
 // PaymentsGetUniqueStarGift invokes method payments.getUniqueStarGift#a1974d72 returning error if any.
+//
+// See https://core.telegram.org/method/payments.getUniqueStarGift for reference.
 func (c *Client) PaymentsGetUniqueStarGift(ctx context.Context, slug string) (*PaymentsUniqueStarGift, error) {
 	var result PaymentsUniqueStarGift
 

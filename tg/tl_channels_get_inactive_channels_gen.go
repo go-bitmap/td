@@ -32,6 +32,9 @@ var (
 )
 
 // ChannelsGetInactiveChannelsRequest represents TL type `channels.getInactiveChannels#11e831ee`.
+// Get inactive channels and supergroups
+//
+// See https://core.telegram.org/method/channels.getInactiveChannels for reference.
 type ChannelsGetInactiveChannelsRequest struct {
 }
 
@@ -126,6 +129,9 @@ func (g *ChannelsGetInactiveChannelsRequest) DecodeBare(b *bin.Buffer) error {
 }
 
 // ChannelsGetInactiveChannels invokes method channels.getInactiveChannels#11e831ee returning error if any.
+// Get inactive channels and supergroups
+//
+// See https://core.telegram.org/method/channels.getInactiveChannels for reference.
 func (c *Client) ChannelsGetInactiveChannels(ctx context.Context) (*MessagesInactiveChats, error) {
 	var result MessagesInactiveChats
 

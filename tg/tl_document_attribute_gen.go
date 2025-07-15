@@ -32,10 +32,13 @@ var (
 )
 
 // DocumentAttributeImageSize represents TL type `documentAttributeImageSize#6c37c15c`.
+// Defines the width and height of an image uploaded as document
+//
+// See https://core.telegram.org/constructor/documentAttributeImageSize for reference.
 type DocumentAttributeImageSize struct {
-	// W field of DocumentAttributeImageSize.
+	// Width of image
 	W int
-	// H field of DocumentAttributeImageSize.
+	// Height of image
 	H int
 }
 
@@ -76,6 +79,15 @@ func (d *DocumentAttributeImageSize) String() string {
 	}
 	type Alias DocumentAttributeImageSize
 	return fmt.Sprintf("DocumentAttributeImageSize%+v", Alias(*d))
+}
+
+// FillFrom fills DocumentAttributeImageSize from given interface.
+func (d *DocumentAttributeImageSize) FillFrom(from interface {
+	GetW() (value int)
+	GetH() (value int)
+}) {
+	d.W = from.GetW()
+	d.H = from.GetH()
 }
 
 // TypeID returns type id in TL schema.
@@ -182,6 +194,9 @@ func (d *DocumentAttributeImageSize) GetH() (value int) {
 }
 
 // DocumentAttributeAnimated represents TL type `documentAttributeAnimated#11b58939`.
+// Defines an animated GIF
+//
+// See https://core.telegram.org/constructor/documentAttributeAnimated for reference.
 type DocumentAttributeAnimated struct {
 }
 
@@ -281,16 +296,22 @@ func (d *DocumentAttributeAnimated) DecodeBare(b *bin.Buffer) error {
 }
 
 // DocumentAttributeSticker represents TL type `documentAttributeSticker#6319d612`.
+// Defines a sticker
+//
+// See https://core.telegram.org/constructor/documentAttributeSticker for reference.
 type DocumentAttributeSticker struct {
-	// Flags field of DocumentAttributeSticker.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Mask field of DocumentAttributeSticker.
+	// Whether this is a mask sticker
 	Mask bool
-	// Alt field of DocumentAttributeSticker.
+	// Alternative emoji representation of sticker
 	Alt string
-	// Stickerset field of DocumentAttributeSticker.
+	// Associated stickerset
 	Stickerset InputStickerSetClass
-	// MaskCoords field of DocumentAttributeSticker.
+	// Mask coordinates (if this is a mask sticker, attached to a photo)
 	//
 	// Use SetMaskCoords and GetMaskCoords helpers.
 	MaskCoords MaskCoords
@@ -342,6 +363,22 @@ func (d *DocumentAttributeSticker) String() string {
 	}
 	type Alias DocumentAttributeSticker
 	return fmt.Sprintf("DocumentAttributeSticker%+v", Alias(*d))
+}
+
+// FillFrom fills DocumentAttributeSticker from given interface.
+func (d *DocumentAttributeSticker) FillFrom(from interface {
+	GetMask() (value bool)
+	GetAlt() (value string)
+	GetStickerset() (value InputStickerSetClass)
+	GetMaskCoords() (value MaskCoords, ok bool)
+}) {
+	d.Mask = from.GetMask()
+	d.Alt = from.GetAlt()
+	d.Stickerset = from.GetStickerset()
+	if val, ok := from.GetMaskCoords(); ok {
+		d.MaskCoords = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -530,30 +567,40 @@ func (d *DocumentAttributeSticker) GetMaskCoords() (value MaskCoords, ok bool) {
 }
 
 // DocumentAttributeVideo represents TL type `documentAttributeVideo#43c57c48`.
+// Defines a video
+//
+// See https://core.telegram.org/constructor/documentAttributeVideo for reference.
 type DocumentAttributeVideo struct {
-	// Flags field of DocumentAttributeVideo.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// RoundMessage field of DocumentAttributeVideo.
+	// Whether this is a round video
 	RoundMessage bool
-	// SupportsStreaming field of DocumentAttributeVideo.
+	// Whether the video supports streaming
 	SupportsStreaming bool
-	// Nosound field of DocumentAttributeVideo.
+	// Whether the specified document is a video file with no audio tracks
 	Nosound bool
-	// Duration field of DocumentAttributeVideo.
+	// Duration in seconds
 	Duration float64
-	// W field of DocumentAttributeVideo.
+	// Video width
 	W int
-	// H field of DocumentAttributeVideo.
+	// Video height
 	H int
-	// PreloadPrefixSize field of DocumentAttributeVideo.
+	// Number of bytes to preload when preloading videos (particularly video stories¹).
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/stories
 	//
 	// Use SetPreloadPrefixSize and GetPreloadPrefixSize helpers.
 	PreloadPrefixSize int
-	// VideoStartTs field of DocumentAttributeVideo.
+	// Floating point UNIX timestamp in seconds, indicating the frame of the video that
+	// should be used as static preview and thumbnail.
 	//
 	// Use SetVideoStartTs and GetVideoStartTs helpers.
 	VideoStartTs float64
-	// VideoCodec field of DocumentAttributeVideo.
+	// Codec used for the video, i.e. “h264”, “h265”, or “av1”
 	//
 	// Use SetVideoCodec and GetVideoCodec helpers.
 	VideoCodec string
@@ -620,6 +667,38 @@ func (d *DocumentAttributeVideo) String() string {
 	}
 	type Alias DocumentAttributeVideo
 	return fmt.Sprintf("DocumentAttributeVideo%+v", Alias(*d))
+}
+
+// FillFrom fills DocumentAttributeVideo from given interface.
+func (d *DocumentAttributeVideo) FillFrom(from interface {
+	GetRoundMessage() (value bool)
+	GetSupportsStreaming() (value bool)
+	GetNosound() (value bool)
+	GetDuration() (value float64)
+	GetW() (value int)
+	GetH() (value int)
+	GetPreloadPrefixSize() (value int, ok bool)
+	GetVideoStartTs() (value float64, ok bool)
+	GetVideoCodec() (value string, ok bool)
+}) {
+	d.RoundMessage = from.GetRoundMessage()
+	d.SupportsStreaming = from.GetSupportsStreaming()
+	d.Nosound = from.GetNosound()
+	d.Duration = from.GetDuration()
+	d.W = from.GetW()
+	d.H = from.GetH()
+	if val, ok := from.GetPreloadPrefixSize(); ok {
+		d.PreloadPrefixSize = val
+	}
+
+	if val, ok := from.GetVideoStartTs(); ok {
+		d.VideoStartTs = val
+	}
+
+	if val, ok := from.GetVideoCodec(); ok {
+		d.VideoCodec = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -951,22 +1030,32 @@ func (d *DocumentAttributeVideo) GetVideoCodec() (value string, ok bool) {
 }
 
 // DocumentAttributeAudio represents TL type `documentAttributeAudio#9852f9c6`.
+// Represents an audio file
+//
+// See https://core.telegram.org/constructor/documentAttributeAudio for reference.
 type DocumentAttributeAudio struct {
-	// Flags field of DocumentAttributeAudio.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Voice field of DocumentAttributeAudio.
+	// Whether this is a voice message
 	Voice bool
-	// Duration field of DocumentAttributeAudio.
+	// Duration in seconds
 	Duration int
-	// Title field of DocumentAttributeAudio.
+	// Name of song
 	//
 	// Use SetTitle and GetTitle helpers.
 	Title string
-	// Performer field of DocumentAttributeAudio.
+	// Performer
 	//
 	// Use SetPerformer and GetPerformer helpers.
 	Performer string
-	// Waveform field of DocumentAttributeAudio.
+	// Waveform: consists in a series of bitpacked 5-bit values. Example implementation:
+	// android¹.
+	//
+	// Links:
+	//  1) https://github.com/DrKLO/Telegram/blob/96dce2c9aabc33b87db61d830aa087b6b03fe397/TMessagesProj/jni/audio.c#L546
 	//
 	// Use SetWaveform and GetWaveform helpers.
 	Waveform []byte
@@ -1021,6 +1110,30 @@ func (d *DocumentAttributeAudio) String() string {
 	}
 	type Alias DocumentAttributeAudio
 	return fmt.Sprintf("DocumentAttributeAudio%+v", Alias(*d))
+}
+
+// FillFrom fills DocumentAttributeAudio from given interface.
+func (d *DocumentAttributeAudio) FillFrom(from interface {
+	GetVoice() (value bool)
+	GetDuration() (value int)
+	GetTitle() (value string, ok bool)
+	GetPerformer() (value string, ok bool)
+	GetWaveform() (value []byte, ok bool)
+}) {
+	d.Voice = from.GetVoice()
+	d.Duration = from.GetDuration()
+	if val, ok := from.GetTitle(); ok {
+		d.Title = val
+	}
+
+	if val, ok := from.GetPerformer(); ok {
+		d.Performer = val
+	}
+
+	if val, ok := from.GetWaveform(); ok {
+		d.Waveform = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -1256,8 +1369,11 @@ func (d *DocumentAttributeAudio) GetWaveform() (value []byte, ok bool) {
 }
 
 // DocumentAttributeFilename represents TL type `documentAttributeFilename#15590068`.
+// A simple document with a file name
+//
+// See https://core.telegram.org/constructor/documentAttributeFilename for reference.
 type DocumentAttributeFilename struct {
-	// FileName field of DocumentAttributeFilename.
+	// The file name
 	FileName string
 }
 
@@ -1295,6 +1411,13 @@ func (d *DocumentAttributeFilename) String() string {
 	}
 	type Alias DocumentAttributeFilename
 	return fmt.Sprintf("DocumentAttributeFilename%+v", Alias(*d))
+}
+
+// FillFrom fills DocumentAttributeFilename from given interface.
+func (d *DocumentAttributeFilename) FillFrom(from interface {
+	GetFileName() (value string)
+}) {
+	d.FileName = from.GetFileName()
 }
 
 // TypeID returns type id in TL schema.
@@ -1381,6 +1504,9 @@ func (d *DocumentAttributeFilename) GetFileName() (value string) {
 }
 
 // DocumentAttributeHasStickers represents TL type `documentAttributeHasStickers#9801d2f7`.
+// Whether the current document has stickers attached
+//
+// See https://core.telegram.org/constructor/documentAttributeHasStickers for reference.
 type DocumentAttributeHasStickers struct {
 }
 
@@ -1480,16 +1606,24 @@ func (d *DocumentAttributeHasStickers) DecodeBare(b *bin.Buffer) error {
 }
 
 // DocumentAttributeCustomEmoji represents TL type `documentAttributeCustomEmoji#fd149899`.
+// Info about a custom emoji
+//
+// See https://core.telegram.org/constructor/documentAttributeCustomEmoji for reference.
 type DocumentAttributeCustomEmoji struct {
-	// Flags field of DocumentAttributeCustomEmoji.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Free field of DocumentAttributeCustomEmoji.
+	// Whether this custom emoji can be sent by non-Premium users
 	Free bool
-	// TextColor field of DocumentAttributeCustomEmoji.
+	// Whether the color of this TGS custom emoji should be changed to the text color when
+	// used in messages, the accent color if used as emoji status, white on chat photos, or
+	// another appropriate color based on context.
 	TextColor bool
-	// Alt field of DocumentAttributeCustomEmoji.
+	// The actual emoji
 	Alt string
-	// Stickerset field of DocumentAttributeCustomEmoji.
+	// The emoji stickerset to which this emoji belongs.
 	Stickerset InputStickerSetClass
 }
 
@@ -1539,6 +1673,19 @@ func (d *DocumentAttributeCustomEmoji) String() string {
 	}
 	type Alias DocumentAttributeCustomEmoji
 	return fmt.Sprintf("DocumentAttributeCustomEmoji%+v", Alias(*d))
+}
+
+// FillFrom fills DocumentAttributeCustomEmoji from given interface.
+func (d *DocumentAttributeCustomEmoji) FillFrom(from interface {
+	GetFree() (value bool)
+	GetTextColor() (value bool)
+	GetAlt() (value string)
+	GetStickerset() (value InputStickerSetClass)
+}) {
+	d.Free = from.GetFree()
+	d.TextColor = from.GetTextColor()
+	d.Alt = from.GetAlt()
+	d.Stickerset = from.GetStickerset()
 }
 
 // TypeID returns type id in TL schema.
@@ -1722,6 +1869,8 @@ func (d *DocumentAttributeCustomEmoji) GetStickerset() (value InputStickerSetCla
 const DocumentAttributeClassName = "DocumentAttribute"
 
 // DocumentAttributeClass represents DocumentAttribute generic type.
+//
+// See https://core.telegram.org/type/DocumentAttribute for reference.
 //
 // Constructors:
 //   - [DocumentAttributeImageSize]

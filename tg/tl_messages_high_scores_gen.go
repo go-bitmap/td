@@ -32,10 +32,13 @@ var (
 )
 
 // MessagesHighScores represents TL type `messages.highScores#9a3bfd99`.
+// Highscores in a game
+//
+// See https://core.telegram.org/constructor/messages.highScores for reference.
 type MessagesHighScores struct {
-	// Scores field of MessagesHighScores.
+	// Highscores
 	Scores []HighScore
-	// Users field of MessagesHighScores.
+	// Users, associated to the highscores
 	Users []UserClass
 }
 
@@ -71,6 +74,15 @@ func (h *MessagesHighScores) String() string {
 	}
 	type Alias MessagesHighScores
 	return fmt.Sprintf("MessagesHighScores%+v", Alias(*h))
+}
+
+// FillFrom fills MessagesHighScores from given interface.
+func (h *MessagesHighScores) FillFrom(from interface {
+	GetScores() (value []HighScore)
+	GetUsers() (value []UserClass)
+}) {
+	h.Scores = from.GetScores()
+	h.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -207,4 +219,9 @@ func (h *MessagesHighScores) GetUsers() (value []UserClass) {
 		return
 	}
 	return h.Users
+}
+
+// MapUsers returns field Users wrapped in UserClassArray helper.
+func (h *MessagesHighScores) MapUsers() (value UserClassArray) {
+	return UserClassArray(h.Users)
 }

@@ -32,10 +32,13 @@ var (
 )
 
 // MessagesGetInlineGameHighScoresRequest represents TL type `messages.getInlineGameHighScores#f635e1b`.
+// Get highscores of a game sent using an inline bot
+//
+// See https://core.telegram.org/method/messages.getInlineGameHighScores for reference.
 type MessagesGetInlineGameHighScoresRequest struct {
-	// ID field of MessagesGetInlineGameHighScoresRequest.
+	// ID of inline message
 	ID InputBotInlineMessageIDClass
-	// UserID field of MessagesGetInlineGameHighScoresRequest.
+	// Get high scores of a certain user
 	UserID InputUserClass
 }
 
@@ -71,6 +74,15 @@ func (g *MessagesGetInlineGameHighScoresRequest) String() string {
 	}
 	type Alias MessagesGetInlineGameHighScoresRequest
 	return fmt.Sprintf("MessagesGetInlineGameHighScoresRequest%+v", Alias(*g))
+}
+
+// FillFrom fills MessagesGetInlineGameHighScoresRequest from given interface.
+func (g *MessagesGetInlineGameHighScoresRequest) FillFrom(from interface {
+	GetID() (value InputBotInlineMessageIDClass)
+	GetUserID() (value InputUserClass)
+}) {
+	g.ID = from.GetID()
+	g.UserID = from.GetUserID()
 }
 
 // TypeID returns type id in TL schema.
@@ -187,6 +199,15 @@ func (g *MessagesGetInlineGameHighScoresRequest) GetUserID() (value InputUserCla
 }
 
 // MessagesGetInlineGameHighScores invokes method messages.getInlineGameHighScores#f635e1b returning error if any.
+// Get highscores of a game sent using an inline bot
+//
+// Possible errors:
+//
+//	400 MESSAGE_ID_INVALID: The provided message id is invalid.
+//	400 USER_BOT_REQUIRED: This method can only be called by a bot.
+//
+// See https://core.telegram.org/method/messages.getInlineGameHighScores for reference.
+// Can be used by bots.
 func (c *Client) MessagesGetInlineGameHighScores(ctx context.Context, request *MessagesGetInlineGameHighScoresRequest) (*MessagesHighScores, error) {
 	var result MessagesHighScores
 

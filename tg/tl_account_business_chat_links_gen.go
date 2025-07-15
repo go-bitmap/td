@@ -32,12 +32,18 @@ var (
 )
 
 // AccountBusinessChatLinks represents TL type `account.businessChatLinks#ec43a2d1`.
+// Contains info about business chat deep links »¹ created by the current account.
+//
+// Links:
+//  1. https://core.telegram.org/api/business#business-chat-links
+//
+// See https://core.telegram.org/constructor/account.businessChatLinks for reference.
 type AccountBusinessChatLinks struct {
-	// Links field of AccountBusinessChatLinks.
+	// Links
 	Links []BusinessChatLink
-	// Chats field of AccountBusinessChatLinks.
+	// Mentioned chats
 	Chats []ChatClass
-	// Users field of AccountBusinessChatLinks.
+	// Mentioned users
 	Users []UserClass
 }
 
@@ -76,6 +82,17 @@ func (b *AccountBusinessChatLinks) String() string {
 	}
 	type Alias AccountBusinessChatLinks
 	return fmt.Sprintf("AccountBusinessChatLinks%+v", Alias(*b))
+}
+
+// FillFrom fills AccountBusinessChatLinks from given interface.
+func (b *AccountBusinessChatLinks) FillFrom(from interface {
+	GetLinks() (value []BusinessChatLink)
+	GetChats() (value []ChatClass)
+	GetUsers() (value []UserClass)
+}) {
+	b.Links = from.GetLinks()
+	b.Chats = from.GetChats()
+	b.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -250,4 +267,14 @@ func (b *AccountBusinessChatLinks) GetUsers() (value []UserClass) {
 		return
 	}
 	return b.Users
+}
+
+// MapChats returns field Chats wrapped in ChatClassArray helper.
+func (b *AccountBusinessChatLinks) MapChats() (value ChatClassArray) {
+	return ChatClassArray(b.Chats)
+}
+
+// MapUsers returns field Users wrapped in UserClassArray helper.
+func (b *AccountBusinessChatLinks) MapUsers() (value UserClassArray) {
+	return UserClassArray(b.Users)
 }

@@ -32,6 +32,8 @@ var (
 )
 
 // InputSavedStarGiftUser represents TL type `inputSavedStarGiftUser#69279795`.
+//
+// See https://core.telegram.org/constructor/inputSavedStarGiftUser for reference.
 type InputSavedStarGiftUser struct {
 	// MsgID field of InputSavedStarGiftUser.
 	MsgID int
@@ -71,6 +73,13 @@ func (i *InputSavedStarGiftUser) String() string {
 	}
 	type Alias InputSavedStarGiftUser
 	return fmt.Sprintf("InputSavedStarGiftUser%+v", Alias(*i))
+}
+
+// FillFrom fills InputSavedStarGiftUser from given interface.
+func (i *InputSavedStarGiftUser) FillFrom(from interface {
+	GetMsgID() (value int)
+}) {
+	i.MsgID = from.GetMsgID()
 }
 
 // TypeID returns type id in TL schema.
@@ -157,6 +166,8 @@ func (i *InputSavedStarGiftUser) GetMsgID() (value int) {
 }
 
 // InputSavedStarGiftChat represents TL type `inputSavedStarGiftChat#f101aa7f`.
+//
+// See https://core.telegram.org/constructor/inputSavedStarGiftChat for reference.
 type InputSavedStarGiftChat struct {
 	// Peer field of InputSavedStarGiftChat.
 	Peer InputPeerClass
@@ -201,6 +212,15 @@ func (i *InputSavedStarGiftChat) String() string {
 	}
 	type Alias InputSavedStarGiftChat
 	return fmt.Sprintf("InputSavedStarGiftChat%+v", Alias(*i))
+}
+
+// FillFrom fills InputSavedStarGiftChat from given interface.
+func (i *InputSavedStarGiftChat) FillFrom(from interface {
+	GetPeer() (value InputPeerClass)
+	GetSavedID() (value int64)
+}) {
+	i.Peer = from.GetPeer()
+	i.SavedID = from.GetSavedID()
 }
 
 // TypeID returns type id in TL schema.
@@ -312,6 +332,8 @@ func (i *InputSavedStarGiftChat) GetSavedID() (value int64) {
 }
 
 // InputSavedStarGiftSlug represents TL type `inputSavedStarGiftSlug#2085c238`.
+//
+// See https://core.telegram.org/constructor/inputSavedStarGiftSlug for reference.
 type InputSavedStarGiftSlug struct {
 	// Slug field of InputSavedStarGiftSlug.
 	Slug string
@@ -351,6 +373,13 @@ func (i *InputSavedStarGiftSlug) String() string {
 	}
 	type Alias InputSavedStarGiftSlug
 	return fmt.Sprintf("InputSavedStarGiftSlug%+v", Alias(*i))
+}
+
+// FillFrom fills InputSavedStarGiftSlug from given interface.
+func (i *InputSavedStarGiftSlug) FillFrom(from interface {
+	GetSlug() (value string)
+}) {
+	i.Slug = from.GetSlug()
 }
 
 // TypeID returns type id in TL schema.
@@ -440,6 +469,8 @@ func (i *InputSavedStarGiftSlug) GetSlug() (value string) {
 const InputSavedStarGiftClassName = "InputSavedStarGift"
 
 // InputSavedStarGiftClass represents InputSavedStarGift generic type.
+//
+// See https://core.telegram.org/type/InputSavedStarGift for reference.
 //
 // Constructors:
 //   - [InputSavedStarGiftUser]

@@ -32,40 +32,46 @@ var (
 )
 
 // StatsMegagroupStats represents TL type `stats.megagroupStats#ef7ff916`.
+// Supergroup statistics¹
+//
+// Links:
+//  1. https://core.telegram.org/api/stats
+//
+// See https://core.telegram.org/constructor/stats.megagroupStats for reference.
 type StatsMegagroupStats struct {
-	// Period field of StatsMegagroupStats.
+	// Period in consideration
 	Period StatsDateRangeDays
-	// Members field of StatsMegagroupStats.
+	// Member count change for period in consideration
 	Members StatsAbsValueAndPrev
-	// Messages field of StatsMegagroupStats.
+	// Message number change for period in consideration
 	Messages StatsAbsValueAndPrev
-	// Viewers field of StatsMegagroupStats.
+	// Number of users that viewed messages, for range in consideration
 	Viewers StatsAbsValueAndPrev
-	// Posters field of StatsMegagroupStats.
+	// Number of users that posted messages, for range in consideration
 	Posters StatsAbsValueAndPrev
-	// GrowthGraph field of StatsMegagroupStats.
+	// Supergroup growth graph (absolute subscriber count)
 	GrowthGraph StatsGraphClass
-	// MembersGraph field of StatsMegagroupStats.
+	// Members growth (relative subscriber count)
 	MembersGraph StatsGraphClass
-	// NewMembersBySourceGraph field of StatsMegagroupStats.
+	// New members by source graph
 	NewMembersBySourceGraph StatsGraphClass
-	// LanguagesGraph field of StatsMegagroupStats.
+	// Subscriber language graph (pie chart)
 	LanguagesGraph StatsGraphClass
-	// MessagesGraph field of StatsMegagroupStats.
+	// Message activity graph (stacked bar graph, message type)
 	MessagesGraph StatsGraphClass
-	// ActionsGraph field of StatsMegagroupStats.
+	// Group activity graph (deleted, modified messages, blocked users)
 	ActionsGraph StatsGraphClass
-	// TopHoursGraph field of StatsMegagroupStats.
+	// Activity per hour graph (absolute)
 	TopHoursGraph StatsGraphClass
-	// WeekdaysGraph field of StatsMegagroupStats.
+	// Activity per day of week graph (absolute)
 	WeekdaysGraph StatsGraphClass
-	// TopPosters field of StatsMegagroupStats.
+	// Info about most active group members
 	TopPosters []StatsGroupTopPoster
-	// TopAdmins field of StatsMegagroupStats.
+	// Info about most active group admins
 	TopAdmins []StatsGroupTopAdmin
-	// TopInviters field of StatsMegagroupStats.
+	// Info about most active group inviters
 	TopInviters []StatsGroupTopInviter
-	// Users field of StatsMegagroupStats.
+	// Info about users mentioned in statistics
 	Users []UserClass
 }
 
@@ -146,6 +152,45 @@ func (m *StatsMegagroupStats) String() string {
 	}
 	type Alias StatsMegagroupStats
 	return fmt.Sprintf("StatsMegagroupStats%+v", Alias(*m))
+}
+
+// FillFrom fills StatsMegagroupStats from given interface.
+func (m *StatsMegagroupStats) FillFrom(from interface {
+	GetPeriod() (value StatsDateRangeDays)
+	GetMembers() (value StatsAbsValueAndPrev)
+	GetMessages() (value StatsAbsValueAndPrev)
+	GetViewers() (value StatsAbsValueAndPrev)
+	GetPosters() (value StatsAbsValueAndPrev)
+	GetGrowthGraph() (value StatsGraphClass)
+	GetMembersGraph() (value StatsGraphClass)
+	GetNewMembersBySourceGraph() (value StatsGraphClass)
+	GetLanguagesGraph() (value StatsGraphClass)
+	GetMessagesGraph() (value StatsGraphClass)
+	GetActionsGraph() (value StatsGraphClass)
+	GetTopHoursGraph() (value StatsGraphClass)
+	GetWeekdaysGraph() (value StatsGraphClass)
+	GetTopPosters() (value []StatsGroupTopPoster)
+	GetTopAdmins() (value []StatsGroupTopAdmin)
+	GetTopInviters() (value []StatsGroupTopInviter)
+	GetUsers() (value []UserClass)
+}) {
+	m.Period = from.GetPeriod()
+	m.Members = from.GetMembers()
+	m.Messages = from.GetMessages()
+	m.Viewers = from.GetViewers()
+	m.Posters = from.GetPosters()
+	m.GrowthGraph = from.GetGrowthGraph()
+	m.MembersGraph = from.GetMembersGraph()
+	m.NewMembersBySourceGraph = from.GetNewMembersBySourceGraph()
+	m.LanguagesGraph = from.GetLanguagesGraph()
+	m.MessagesGraph = from.GetMessagesGraph()
+	m.ActionsGraph = from.GetActionsGraph()
+	m.TopHoursGraph = from.GetTopHoursGraph()
+	m.WeekdaysGraph = from.GetWeekdaysGraph()
+	m.TopPosters = from.GetTopPosters()
+	m.TopAdmins = from.GetTopAdmins()
+	m.TopInviters = from.GetTopInviters()
+	m.Users = from.GetUsers()
 }
 
 // TypeID returns type id in TL schema.
@@ -652,4 +697,9 @@ func (m *StatsMegagroupStats) GetUsers() (value []UserClass) {
 		return
 	}
 	return m.Users
+}
+
+// MapUsers returns field Users wrapped in UserClassArray helper.
+func (m *StatsMegagroupStats) MapUsers() (value UserClassArray) {
+	return UserClassArray(m.Users)
 }

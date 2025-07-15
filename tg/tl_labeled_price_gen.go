@@ -32,10 +32,19 @@ var (
 )
 
 // LabeledPrice represents TL type `labeledPrice#cb296bf8`.
+// This object represents a portion of the price for goods or services.
+//
+// See https://core.telegram.org/constructor/labeledPrice for reference.
 type LabeledPrice struct {
-	// Label field of LabeledPrice.
+	// Portion label
 	Label string
-	// Amount field of LabeledPrice.
+	// Price of the product in the smallest units of the currency (integer, not float/double)
+	// For example, for a price of US$ 1.45 pass amount = 145. See the exp parameter in
+	// currencies.json¹, it shows the number of digits past the decimal point for each
+	// currency (2 for the majority of currencies).
+	//
+	// Links:
+	//  1) https://core.telegram.org/bots/payments/currencies.json
 	Amount int64
 }
 
@@ -71,6 +80,15 @@ func (l *LabeledPrice) String() string {
 	}
 	type Alias LabeledPrice
 	return fmt.Sprintf("LabeledPrice%+v", Alias(*l))
+}
+
+// FillFrom fills LabeledPrice from given interface.
+func (l *LabeledPrice) FillFrom(from interface {
+	GetLabel() (value string)
+	GetAmount() (value int64)
+}) {
+	l.Label = from.GetLabel()
+	l.Amount = from.GetAmount()
 }
 
 // TypeID returns type id in TL schema.

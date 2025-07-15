@@ -32,6 +32,12 @@ var (
 )
 
 // AccountResetWallPapersRequest represents TL type `account.resetWallPapers#bb3b9804`.
+// Delete all installed wallpapers¹, reverting to the default wallpaper set.
+//
+// Links:
+//  1. https://core.telegram.org/api/wallpapers
+//
+// See https://core.telegram.org/method/account.resetWallPapers for reference.
 type AccountResetWallPapersRequest struct {
 }
 
@@ -126,6 +132,12 @@ func (r *AccountResetWallPapersRequest) DecodeBare(b *bin.Buffer) error {
 }
 
 // AccountResetWallPapers invokes method account.resetWallPapers#bb3b9804 returning error if any.
+// Delete all installed wallpapers¹, reverting to the default wallpaper set.
+//
+// Links:
+//  1. https://core.telegram.org/api/wallpapers
+//
+// See https://core.telegram.org/method/account.resetWallPapers for reference.
 func (c *Client) AccountResetWallPapers(ctx context.Context) (bool, error) {
 	var result BoolBox
 

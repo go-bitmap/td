@@ -32,32 +32,46 @@ var (
 )
 
 // InitConnectionRequest represents TL type `initConnection#c1cd5ea9`.
+// Initialize connection
+//
+// See https://core.telegram.org/constructor/initConnection for reference.
 type InitConnectionRequest struct {
-	// Flags field of InitConnectionRequest.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// APIID field of InitConnectionRequest.
+	// Application identifier (see. App configuration¹)
+	//
+	// Links:
+	//  1) https://core.telegram.org/myapp
 	APIID int
-	// DeviceModel field of InitConnectionRequest.
+	// Device model
 	DeviceModel string
-	// SystemVersion field of InitConnectionRequest.
+	// Operation system version
 	SystemVersion string
-	// AppVersion field of InitConnectionRequest.
+	// Application version
 	AppVersion string
-	// SystemLangCode field of InitConnectionRequest.
+	// Code for the language used on the device's OS, ISO 639-1 standard
 	SystemLangCode string
-	// LangPack field of InitConnectionRequest.
+	// Platform identifier (i.e. android, tdesktop, etc).
 	LangPack string
-	// LangCode field of InitConnectionRequest.
+	// Either an ISO 639-1 language code or a language pack name obtained from a language
+	// pack link¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/links#language-pack-links
 	LangCode string
-	// Proxy field of InitConnectionRequest.
+	// Info about an MTProto proxy
 	//
 	// Use SetProxy and GetProxy helpers.
 	Proxy InputClientProxy
-	// Params field of InitConnectionRequest.
+	// Additional initConnection parameters. For now, only the tz_offset field is supported,
+	// for specifying the timezone offset in seconds.
 	//
 	// Use SetParams and GetParams helpers.
 	Params JSONValueClass
-	// Query field of InitConnectionRequest.
+	// The query itself
 	Query bin.Object
 }
 
@@ -120,6 +134,37 @@ func (i *InitConnectionRequest) String() string {
 	}
 	type Alias InitConnectionRequest
 	return fmt.Sprintf("InitConnectionRequest%+v", Alias(*i))
+}
+
+// FillFrom fills InitConnectionRequest from given interface.
+func (i *InitConnectionRequest) FillFrom(from interface {
+	GetAPIID() (value int)
+	GetDeviceModel() (value string)
+	GetSystemVersion() (value string)
+	GetAppVersion() (value string)
+	GetSystemLangCode() (value string)
+	GetLangPack() (value string)
+	GetLangCode() (value string)
+	GetProxy() (value InputClientProxy, ok bool)
+	GetParams() (value JSONValueClass, ok bool)
+	GetQuery() (value bin.Object)
+}) {
+	i.APIID = from.GetAPIID()
+	i.DeviceModel = from.GetDeviceModel()
+	i.SystemVersion = from.GetSystemVersion()
+	i.AppVersion = from.GetAppVersion()
+	i.SystemLangCode = from.GetSystemLangCode()
+	i.LangPack = from.GetLangPack()
+	i.LangCode = from.GetLangCode()
+	if val, ok := from.GetProxy(); ok {
+		i.Proxy = val
+	}
+
+	if val, ok := from.GetParams(); ok {
+		i.Params = val
+	}
+
+	i.Query = from.GetQuery()
 }
 
 // TypeID returns type id in TL schema.

@@ -68,6 +68,13 @@ func (vec *StickerSetCoveredClassVector) String() string {
 	return fmt.Sprintf("StickerSetCoveredClassVector%+v", Alias(*vec))
 }
 
+// FillFrom fills StickerSetCoveredClassVector from given interface.
+func (vec *StickerSetCoveredClassVector) FillFrom(from interface {
+	GetElems() (value []StickerSetCoveredClass)
+}) {
+	vec.Elems = from.GetElems()
+}
+
 // TypeID returns type id in TL schema.
 //
 // See https://core.telegram.org/mtproto/TL-tl#remarks.
@@ -165,4 +172,9 @@ func (vec *StickerSetCoveredClassVector) GetElems() (value []StickerSetCoveredCl
 		return
 	}
 	return vec.Elems
+}
+
+// MapElems returns field Elems wrapped in StickerSetCoveredClassArray helper.
+func (vec *StickerSetCoveredClassVector) MapElems() (value StickerSetCoveredClassArray) {
+	return StickerSetCoveredClassArray(vec.Elems)
 }

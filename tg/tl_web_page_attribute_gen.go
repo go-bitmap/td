@@ -32,14 +32,20 @@ var (
 )
 
 // WebPageAttributeTheme represents TL type `webPageAttributeTheme#54b56617`.
+// Page theme
+//
+// See https://core.telegram.org/constructor/webPageAttributeTheme for reference.
 type WebPageAttributeTheme struct {
-	// Flags field of WebPageAttributeTheme.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Documents field of WebPageAttributeTheme.
+	// Theme files
 	//
 	// Use SetDocuments and GetDocuments helpers.
 	Documents []DocumentClass
-	// Settings field of WebPageAttributeTheme.
+	// Theme settings
 	//
 	// Use SetSettings and GetSettings helpers.
 	Settings ThemeSettings
@@ -85,6 +91,21 @@ func (w *WebPageAttributeTheme) String() string {
 	}
 	type Alias WebPageAttributeTheme
 	return fmt.Sprintf("WebPageAttributeTheme%+v", Alias(*w))
+}
+
+// FillFrom fills WebPageAttributeTheme from given interface.
+func (w *WebPageAttributeTheme) FillFrom(from interface {
+	GetDocuments() (value []DocumentClass, ok bool)
+	GetSettings() (value ThemeSettings, ok bool)
+}) {
+	if val, ok := from.GetDocuments(); ok {
+		w.Documents = val
+	}
+
+	if val, ok := from.GetSettings(); ok {
+		w.Settings = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -253,15 +274,36 @@ func (w *WebPageAttributeTheme) GetSettings() (value ThemeSettings, ok bool) {
 	return w.Settings, true
 }
 
+// MapDocuments returns field Documents wrapped in DocumentClassArray helper.
+func (w *WebPageAttributeTheme) MapDocuments() (value DocumentClassArray, ok bool) {
+	if !w.Flags.Has(0) {
+		return value, false
+	}
+	return DocumentClassArray(w.Documents), true
+}
+
 // WebPageAttributeStory represents TL type `webPageAttributeStory#2e94c3e7`.
+// Webpage preview of a Telegram story
+//
+// See https://core.telegram.org/constructor/webPageAttributeStory for reference.
 type WebPageAttributeStory struct {
-	// Flags field of WebPageAttributeStory.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Peer field of WebPageAttributeStory.
+	// Peer that posted the story
 	Peer PeerClass
-	// ID field of WebPageAttributeStory.
+	// Story ID¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/stories#watching-stories
 	ID int
-	// Story field of WebPageAttributeStory.
+	// May contain the story, if not the story should be fetched when and if needed using
+	// stories.getStoriesByID¹ with the above id and peer.
+	//
+	// Links:
+	//  1) https://core.telegram.org/method/stories.getStoriesByID
 	//
 	// Use SetStory and GetStory helpers.
 	Story StoryItemClass
@@ -310,6 +352,20 @@ func (w *WebPageAttributeStory) String() string {
 	}
 	type Alias WebPageAttributeStory
 	return fmt.Sprintf("WebPageAttributeStory%+v", Alias(*w))
+}
+
+// FillFrom fills WebPageAttributeStory from given interface.
+func (w *WebPageAttributeStory) FillFrom(from interface {
+	GetPeer() (value PeerClass)
+	GetID() (value int)
+	GetStory() (value StoryItemClass, ok bool)
+}) {
+	w.Peer = from.GetPeer()
+	w.ID = from.GetID()
+	if val, ok := from.GetStory(); ok {
+		w.Story = val
+	}
+
 }
 
 // TypeID returns type id in TL schema.
@@ -475,14 +531,32 @@ func (w *WebPageAttributeStory) GetStory() (value StoryItemClass, ok bool) {
 }
 
 // WebPageAttributeStickerSet represents TL type `webPageAttributeStickerSet#50cc03d3`.
+// Contains info about a stickerset »¹, for a webPage² preview of a stickerset deep
+// link »³ (the webPage⁴ will have a type of telegram_stickerset).
+//
+// Links:
+//  1. https://core.telegram.org/api/stickers
+//  2. https://core.telegram.org/constructor/webPage
+//  3. https://core.telegram.org/api/links#stickerset-links
+//  4. https://core.telegram.org/constructor/webPage
+//
+// See https://core.telegram.org/constructor/webPageAttributeStickerSet for reference.
 type WebPageAttributeStickerSet struct {
-	// Flags field of WebPageAttributeStickerSet.
+	// Flags, see TL conditional fields¹
+	//
+	// Links:
+	//  1) https://core.telegram.org/mtproto/TL-combinators#conditional-fields
 	Flags bin.Fields
-	// Emojis field of WebPageAttributeStickerSet.
+	// Whether this i s a custom emoji stickerset¹.
+	//
+	// Links:
+	//  1) https://core.telegram.org/api/custom-emoji
 	Emojis bool
-	// TextColor field of WebPageAttributeStickerSet.
+	// Whether the color of this TGS custom emoji stickerset should be changed to the text
+	// color when used in messages, the accent color if used as emoji status, white on chat
+	// photos, or another appropriate color based on context.
 	TextColor bool
-	// Stickers field of WebPageAttributeStickerSet.
+	// A subset of the stickerset in the stickerset.
 	Stickers []DocumentClass
 }
 
@@ -529,6 +603,17 @@ func (w *WebPageAttributeStickerSet) String() string {
 	}
 	type Alias WebPageAttributeStickerSet
 	return fmt.Sprintf("WebPageAttributeStickerSet%+v", Alias(*w))
+}
+
+// FillFrom fills WebPageAttributeStickerSet from given interface.
+func (w *WebPageAttributeStickerSet) FillFrom(from interface {
+	GetEmojis() (value bool)
+	GetTextColor() (value bool)
+	GetStickers() (value []DocumentClass)
+}) {
+	w.Emojis = from.GetEmojis()
+	w.TextColor = from.GetTextColor()
+	w.Stickers = from.GetStickers()
 }
 
 // TypeID returns type id in TL schema.
@@ -701,7 +786,14 @@ func (w *WebPageAttributeStickerSet) GetStickers() (value []DocumentClass) {
 	return w.Stickers
 }
 
+// MapStickers returns field Stickers wrapped in DocumentClassArray helper.
+func (w *WebPageAttributeStickerSet) MapStickers() (value DocumentClassArray) {
+	return DocumentClassArray(w.Stickers)
+}
+
 // WebPageAttributeUniqueStarGift represents TL type `webPageAttributeUniqueStarGift#cf6f6db8`.
+//
+// See https://core.telegram.org/constructor/webPageAttributeUniqueStarGift for reference.
 type WebPageAttributeUniqueStarGift struct {
 	// Gift field of WebPageAttributeUniqueStarGift.
 	Gift StarGiftClass
@@ -741,6 +833,13 @@ func (w *WebPageAttributeUniqueStarGift) String() string {
 	}
 	type Alias WebPageAttributeUniqueStarGift
 	return fmt.Sprintf("WebPageAttributeUniqueStarGift%+v", Alias(*w))
+}
+
+// FillFrom fills WebPageAttributeUniqueStarGift from given interface.
+func (w *WebPageAttributeUniqueStarGift) FillFrom(from interface {
+	GetGift() (value StarGiftClass)
+}) {
+	w.Gift = from.GetGift()
 }
 
 // TypeID returns type id in TL schema.
@@ -835,6 +934,8 @@ func (w *WebPageAttributeUniqueStarGift) GetGift() (value StarGiftClass) {
 const WebPageAttributeClassName = "WebPageAttribute"
 
 // WebPageAttributeClass represents WebPageAttribute generic type.
+//
+// See https://core.telegram.org/type/WebPageAttribute for reference.
 //
 // Constructors:
 //   - [WebPageAttributeTheme]
